@@ -1,0 +1,9 @@
+<svg width="75" viewBox="0 0 50 50"
+	xmlns="http://www.w3.org/2000/svg">
+	<circle fill="black" fill-opacity="0.4" cx="25" cy="25" r="25"></circle>
+	<path fill="white" fill-opacity="0.8" fill-rule="evenodd" d="M 25, 25
+																m -21, 0
+																a 21,21 0 1,0 42,0
+																a 21,21 0 1,0 -42,0
+																M18.5 14 v22 l17 -11z"></path>
+</svg>

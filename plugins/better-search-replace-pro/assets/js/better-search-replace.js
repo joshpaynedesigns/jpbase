@@ -73,7 +73,7 @@
 	function bsr_backup_database() {
 
 		var backup_submit = $( '#bsr-backup-submit' );
-		backup_submit.click( function( e ) {
+		backup_submit.on( 'click', function( e ) {
 
 			e.preventDefault();
 
@@ -97,7 +97,7 @@
 	 */
 	function bsr_import_database() {
 		var import_submit = $( '#bsr-import-submit' );
-		import_submit.click( function( e ) {
+		import_submit.on( 'click', function( e ) {
 
 			e.preventDefault();
 
@@ -167,7 +167,7 @@
 
 		var search_replace_submit = $( '#bsr-submit' );
 		var bsr_error_wrap = $( '#bsr-error-wrap' );
-		search_replace_submit.click( function( e ) {
+		search_replace_submit.on( 'click', function( e ) {
 
 			e.preventDefault();
 
@@ -239,7 +239,7 @@
 	 * Displays the "Profile Name" field.
 	 */
 	function bsr_save_profile() {
-		$('#save_profile').change( function() {
+		$('#save_profile').on( 'change', function() {
 			if ( this.checked ) {
 				$(this).closest('tr').next('tr').fadeIn('fast');
 			} else {

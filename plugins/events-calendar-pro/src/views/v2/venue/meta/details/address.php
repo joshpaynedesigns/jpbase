@@ -9,7 +9,7 @@
  *
  * @link http://m.tri.be/1aiy
  *
- * @version 5.0.0
+ * @version 5.2.0
  *
  * @var WP_Post $venue The venue post object.
  *
@@ -23,12 +23,7 @@ $address = tribe_get_full_address( $venue->ID );
 
 ?>
 <div class="tribe-events-pro-venue__meta-address tribe-common-b1 tribe-common-b2--min-medium">
-	<em
-		class="tribe-events-pro-venue__meta-address-icon tribe-common-svgicon"
-		aria-label="<?php esc_attr_e( 'Address', 'tribe-events-calendar-pro' ); ?>"
-		title="<?php esc_attr_e( 'Address', 'tribe-events-calendar-pro' ); ?>"
-	>
-	</em>
+	<?php $this->template( 'components/icons/map-pin', [ 'classes' => [ 'tribe-events-pro-venue__meta-address-icon-svg' ] ] ); ?>
 	<div class="tribe-events-pro-venue__meta-address-details">
 		<?php echo $address; ?>
 		<a

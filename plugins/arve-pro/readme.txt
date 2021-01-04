@@ -1,7 +1,7 @@
 === ARVE Pro Addon ===
 Donate link: https://nextgenthemes.com/donate/
 Requires at least: 4.9.0
-Tested up to: 5.2.2
+Tested up to: 5.6.0
 Requires PHP: 5.3.0
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,58 +18,38 @@ Please refer to [Installing and License Management](https://nextgenthemes.com/pl
 
 == Changelog ==
 
-= 2019-10-09 4.3.0 =
+= 2021-01-03 5.1.1 =
+* New: Vimeo play button style
 
-* Improved: SEO data for `description` and `uploadDate` is now filled in automatically!
-* Fix: Last version string was not updated correctly.
+= 2020-12-14 5.0.1 =
+* Fix: Issue with thumbnail positioning.
 
-= 2019-10-01 4.2.9 =
+= 2020-12-12 5.0.0-beta13 =
+* Fix: Error handling issue #2.
 
-* New: Auto thumbnails for Wistia
-* New: `img_srcset` shortcode attribute to manually set thumbnail `srcset` attribute `thumbnail` also needs to be set with a image url.
+= 2020-12-09 5.0.0-beta10 =
+* Fix: Error handling issue.
 
-= 2019-08-22 4.2.8 =
+= 2020-12-05 5.0.0-beta9 =
+* Fix: Some links not opening lightboxes.
 
-* Fix: Facebook thumbnails work again but only very small images at this point.
+= 2020-12-03 5.0.0-beta7 =
+* Fix: Thumbnail height calculation caused errors in some cases.
 
-= 2019-08-19 4.2.7 =
+= 2020-12-01 5.0.0-beta6 =
+* Fix: Rebuild oembed cache after activation and version updates.
 
-* Possible fix for Thumbnails not showing for Vimeo private videos.
-
-= 2019-08-05 4.2.6 =
-
-* Added `lightbox_maxwidth` shortcode attribute, default is 1200.
-
-= 2019-01-16 4.2.5 =
-
-* Fix: Titles not showing up.
-
-= 2018-12-14 4.2.4 =
-
-* Fix: Link lightbox thumbnail issue.
-
-= 2018-12-10 4.2.2 =
-
-* Fix: Auto updates work again.
-
-= 4.2.1 =
-
-* Fix: Load really all assets of that option is enabled.
-
-= 2018-11-28 4.2.0 =
-
-* Fix: Really load all Pro assets when the "Always load assets" option is enabled.
-
-= 2018-11-28 4.2.0 =
-
-* Improved: Prevent ARVE from loading high resolution thumbnails when they are not needed based on the 'Maximal Video Width' setting (defaults to your themes `$content_width` setting if not set) and `maxwidth` shortcode attribute. If you have specific pages where you display video in a grid or multiple in a row you can optimize by giving all videos that are displayed smaller on big screens then your content width or your global 'Maximal Video Width' setting a specific `maxwidth` attribute.
-
-= 2018-11-16 4.1.1 =
-
-* Fix HTML5 video displayed above thumbnail and titles.
+= 2020-11-28 5.0.0-beta5 =
+* New: Big Picture Lightbox script.
+* New: Option to go fullscreen when opening lightbox, at optionally stay fullscreen even after closing it.
+* New: (Only YouTube & Vimeo, HTML5) Go back to original preview after video ends.
+* New: Auto-pause/auto-reset other videos when another video is played.
+* New: Auto close Lightbox when Video ends (YouTube, Vimeo, HTML5 video)
+* Improved: Dropped dependencies: jQuery, Lity Lightbox, Object-Fit Polyfill.
+* Improved: Lots of code and build improvements.
+* Improved: When aligned get expanded, their align class will be removed. When a video end is detected (only YouTube, Vimeo, HTML5 Video) the original state is restored.
 
 = 2018-09-07 4.1.0 =
-
 * Note: PHP versions below 5.6 will no longer be tested and future versions will require at least PHP 5.6
 * Improved: Updated 3rd party libs Mobile Detect, objectFitPolyfill and Lity.
 * Improved: 3rd party assets are now loaded from jsDelivr CDN. If you do not want this you can load them from your site or let a CDN plugin pick them up with `add_filter( 'nextgenthemes_use_cdn', '__return_false' );` inside a mu-plugin.

@@ -9,7 +9,7 @@
  *
  * @link http://m.tri.be/1aiy
  *
- * @version 5.0.1
+ * @version 5.2.0
  *
  */
 ?>
@@ -30,5 +30,6 @@
 				);
 			?>
 		</span>
+		<?php $this->template( 'components/icons/caret-right', [ 'classes' => [ 'tribe-events-c-nav__next-icon-svg' ] ] ); ?>
 	</button>
 </li>

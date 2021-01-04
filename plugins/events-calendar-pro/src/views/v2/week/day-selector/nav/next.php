@@ -9,7 +9,7 @@
  *
  * @link http://m.tri.be/1aiy
  *
- * @version 5.0.1
+ * @version 5.2.0
  *
  */
 ?>
@@ -25,5 +25,6 @@
 		<span class="tribe-common-a11y-visual-hide">
 			<?php esc_html_e( 'Next week', 'tribe-events-calendar-pro' ); ?>
 		</span>
+		<?php $this->template( 'components/icons/caret-right', [ 'classes' => [ 'tribe-events-pro-week-day-selector__next-icon-svg' ] ] ); ?>
 	</a>
 </li>

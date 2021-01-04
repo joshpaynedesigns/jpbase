@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="68"
+	version="1.1"
+	xmlns:cc="http://creativecommons.org/ns#"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1024.6 717.4"
+	 style="enable-background: new 0 0 1024.6 717.4;" xml:space="preserve">
+	<style type="text/css">
+		.st0{ clip-path: url(#SVGID_2_); }
+		.st1{ fill: #2d2a2a; }
+		.st2{ fill: #323232; }
+		.st3{ fill: #151515; }
+		.st4{ fill: #0a0a05; }
+		.st5{ fill: #1a1a1a; }
+		.st6{ fill: #1f201f; }
+		.st7{ fill: #272727; }
+		.st8{ fill: #050505; }
+		.st9{ fill: #1f1f1f; }
+		.st10{ fill: #545454; }
+		.st11{ fill: #292929; }
+		.st12{ fill: #7b0c1a; }
+	</style>
+	<g>
+		<g>
+			<defs>
+				<path id="SVGID_1_" d="M1003.6,112.3c-11.8-43.9-46.4-78.5-90.3-90.3c-80.2-22-401-22-401-22S191.6,0,111.4,21.1
+				c-43,11.8-78.5,47.3-90.3,91.2C0,192.5,0,358.8,0,358.8s0,167.1,21.1,246.4c11.8,43.9,46.4,78.5,90.3,90.3
+				c81,21.9,400.9,21.9,400.9,21.9s320.7,0,400.9-21.1c43.9-11.8,78.5-46.4,90.3-90.3c21.1-80.2,21.1-246.5,21.1-246.5
+				S1025.5,192.5,1003.6,112.3z"/>
+			</defs>
+			<clipPath id="SVGID_2_">
+				<use href="#SVGID_1_"  style="overflow: visible;"/>
+			</clipPath>
+			<g class="st0">
+				<path class="st1" d="M0.3,104.5V-1.8h162.4l-50.5,212.6L0.3,104.5z"/>
+				<path class="st2" d="M112.2,210.8L655,109.2c16.4-36.2,50.3-111,50.3-111H162.7L112.2,210.8z"/>
+				<path class="st3" d="M655,109.2l222.5,138.3c43.3-40.2,146.8-135.3,146.8-135.3v-114H703.7L655,109.2"/>
+				<path class="st4" d="M493.3,347.7L112.2,210.8L655,109.2L493.3,347.7z"/>
+				<path class="st5" d="M112.2,210.8l294.3,321.3l86.8-184.4L112.2,210.8z"/>
+				<path class="st6" d="M0.3,104.5v324.2l395.2,73.9l10.9-12.4L0.3,104.5z"/>
+				<path class="st3" d="M0.3,428.6v244.3c0,0,114.4-62.4,151.1-82.5l244.1-87.9C264,477.9,0.3,428.6,0.3,428.6z"/>
+				<path class="st7" d="M0.3,672.9c0,0,114.4-62.4,151.1-82.5l519.1,45.2l270.9-133.2c24.8,12.3,82.9,41,82.9,41v175.9l-1024-0.1
+				V672.9z"/>
+				<path class="st8" d="M395.5,502.5l10.9-12.4l14.2-7.3l249.9,152.8l-519.1-45.2L395.5,502.5z"/>
+				<path class="st9" d="M420.6,482.8l72.7-135.1l177.2,287.9L420.6,482.8z"/>
+				<path class="st2" d="M941.4,502.4L670.5,635.6L493.3,347.7c0,0,123.1-183.9,161.7-238.5l222.5,138.3L941.4,502.4z"/>
+				<path class="st10" d="M1024.3,112.2L877.5,247.5L676.8,444c115.5-49.3,347.5-148.3,347.5-148.3V112.2z"/>
+				<path class="st11" d="M1024.3,543.4l-82.9-41L676.8,444c115.4-49.3,347.5-148.3,347.5-148.3V543.4z"/>
+			</g>
+		</g>
+		<polygon id="polygon9" class="st12" points="676.9,358.8 410.2,205.1 410.2,512.4 	"/>
+	</g>
+</svg>
