@@ -1,0 +1,20 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"removeComments": true,
+		"allowUnreachableCode": false,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"allowJs": false,
+		"esModuleInterop": true,
+	},
+	"includes": [
+		"src/*.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"build",
+		"src/**/*.spec.ts"
+	]
+}

@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.1.4\n"
+"Project-Id-Version: The Events Calendar PRO 5.3.0\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2020-07-23 05:40:56+00:00\n"
+"POT-Creation-Date: 2020-12-02 16:17:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-07-23 05:40\n"
+"PO-Revision-Date: 2020-12-02 16:17\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -162,12 +162,12 @@ msgstr ""
 msgid "Upcoming Events"
 msgstr ""
 
-#: src/Tribe/Assets.php:416
+#: src/Tribe/Assets.php:415
 msgctxt "Event title map marker prefix"
 msgid "%s: "
 msgstr ""
 
-#: src/Tribe/Assets.php:417
+#: src/Tribe/Assets.php:416
 msgid "Address: "
 msgstr ""
 
@@ -614,40 +614,40 @@ msgid ""
 "a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1571
+#: src/Tribe/Main.php:1610
 msgid "Support"
 msgstr ""
 
-#: src/Tribe/Main.php:1573
+#: src/Tribe/Main.php:1612
 msgid "View All Add-Ons"
 msgstr ""
 
-#: src/Tribe/Main.php:1802
+#: src/Tribe/Main.php:1841
 msgid "Week"
 msgstr ""
 
-#: src/Tribe/Main.php:1820
+#: src/Tribe/Main.php:1859
 msgid "Photo"
 msgstr ""
 
-#: src/Tribe/Main.php:1837
+#: src/Tribe/Main.php:1876
 msgid "Week Of"
 msgstr ""
 
-#: src/Tribe/Main.php:1915
+#: src/Tribe/Main.php:1954
 msgid "Events Calendar PRO"
 msgstr ""
 
-#: src/Tribe/Main.php:2019
+#: src/Tribe/Main.php:2058
 msgid "all"
 msgstr ""
 
-#: src/Tribe/Main.php:2020 src/admin-views/event-recurrence.php:113
+#: src/Tribe/Main.php:2059 src/admin-views/event-recurrence.php:113
 #: src/admin-views/event-recurrence.php:389
 msgid "week"
 msgstr ""
 
-#: src/Tribe/Main.php:2021
+#: src/Tribe/Main.php:2060
 msgid "photo"
 msgstr ""
 
@@ -1921,6 +1921,81 @@ msgctxt "featured events title"
 msgid "Featured %s"
 msgstr ""
 
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:37
+msgctxt "The title for the selected taxonomy section of the List Widget."
+msgid "Filters:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:46
+msgctxt "The label for the taxonomy and/or option in the List Widget."
+msgid "Operand:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:65
+msgctxt ""
+"The label for the option to filter the List Widget events via a taxonomy."
+msgid "Add a filter:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:66
+msgctxt "Placeholder label for taxonomy filter dropdown."
+msgid "Select a Taxonomy Term"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:144
+msgctxt "The title for the meta data section of the List Widget."
+msgid "Display:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:148
+msgctxt "The label for the option to enable cost display in the List Widget."
+msgid "Price"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:152
+msgctxt "The label for the option to enable venue display in the List Widget."
+msgid "Venue"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:156
+msgctxt "The label for the option to enable street display in the List Widget."
+msgid "Street"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:160
+msgctxt "The label for the option to enable city display in the List Widget."
+msgid "City"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:164
+msgctxt "The label for the option to enable region display in the List Widget."
+msgid "State (US) Or Province (Int)"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:168
+msgctxt ""
+"The label for the option to enable zip/postal code display in the List "
+"Widget."
+msgid "Postal Code"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:172
+msgctxt ""
+"The label for the option to enable country display in the List Widget."
+msgid "Country"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:176
+msgctxt "The label for the option to enable phone display in the List Widget."
+msgid "Phone"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:180
+msgctxt ""
+"The label for the option to enable organizer display in the List Widget."
+msgid "Organizer"
+msgstr ""
+
 #: src/admin-views/custom-fields/gutenberg.php:3
 msgid "Use in Block Editor"
 msgstr ""
@@ -2433,8 +2508,6 @@ msgid "No saved venues yet."
 msgstr ""
 
 #: src/admin-views/tribe-options-defaults.php:92
-#: src/views/v2/venue/meta/details/address.php:28
-#: src/views/v2/venue/meta/details/address.php:29
 msgid "Address"
 msgstr ""
 
@@ -2501,6 +2574,21 @@ msgstr ""
 msgid "Change the default view for Mobile users."
 msgstr ""
 
+#: src/admin-views/widget/components/taxonomy-filters.php:52
+msgctxt "\"Remove\" label for selected term."
+msgid "(remove)"
+msgstr ""
+
+#: src/admin-views/widget/components/taxonomy.php:41
+#: src/admin-views/widget-admin-advanced-list.php:129
+#: src/admin-views/widget-admin-advanced-list.php:137
+#: src/admin-views/widget-admin-this-week.php:162
+#: src/admin-views/widget-admin-this-week.php:170
+#: src/admin-views/widget-calendar.php:86
+#: src/admin-views/widget-calendar.php:93
+msgid "Select a Taxonomy Term"
+msgstr ""
+
 #: src/admin-views/widget-admin-advanced-list.php:13
 #: src/admin-views/widget-admin-calendar.php:13
 #: src/admin-views/widget-admin-countdown.php:14
@@ -2544,10 +2632,6 @@ msgid "Country"
 msgstr ""
 
 #: src/admin-views/widget-admin-advanced-list.php:38
-#: src/views/v2/organizer/meta/details/phone.php:28
-#: src/views/v2/organizer/meta/details/phone.php:29
-#: src/views/v2/venue/meta/details/phone.php:28
-#: src/views/v2/venue/meta/details/phone.php:29
 msgid "Phone"
 msgstr ""
 
@@ -2557,50 +2641,41 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:105
+#: src/admin-views/widget-admin-advanced-list.php:106
 #: src/admin-views/widget-admin-this-week.php:135
 #: src/admin-views/widget-calendar.php:50
 msgid "remove"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:118
+#: src/admin-views/widget-admin-advanced-list.php:119
 #: src/admin-views/widget-admin-this-week.php:150
 #: src/admin-views/widget-calendar.php:66
 msgid "Match all"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:121
+#: src/admin-views/widget-admin-advanced-list.php:122
 #: src/admin-views/widget-admin-this-week.php:155
 #: src/admin-views/widget-calendar.php:78
 msgid "Match any"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:125
+#: src/admin-views/widget-admin-advanced-list.php:126
 #: src/admin-views/widget-admin-this-week.php:159
 #: src/admin-views/widget-calendar.php:83
 msgid "Add a filter"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:128
-#: src/admin-views/widget-admin-advanced-list.php:136
-#: src/admin-views/widget-admin-this-week.php:162
-#: src/admin-views/widget-admin-this-week.php:170
-#: src/admin-views/widget-calendar.php:86
-#: src/admin-views/widget-calendar.php:93
-msgid "Select a Taxonomy Term"
-msgstr ""
-
-#: src/admin-views/widget-admin-advanced-list.php:142
+#: src/admin-views/widget-admin-advanced-list.php:143
 #: src/admin-views/widget-admin-venue.php:37
 msgid "Hide this widget if there are no upcoming events"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:146
+#: src/admin-views/widget-admin-advanced-list.php:147
 msgctxt "events list widget setting"
 msgid "Limit to featured events only"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:151
+#: src/admin-views/widget-admin-advanced-list.php:152
 #: src/admin-views/widget-admin-countdown.php:61
 #: src/admin-views/widget-admin-this-week.php:177
 #: src/admin-views/widget-admin-venue.php:42
@@ -2774,15 +2849,15 @@ msgstr ""
 msgid "Next Week <span>&raquo;</span>"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:257
+#: src/functions/template-tags/widgets.php:254
 msgid "%s for week of %s"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:274
+#: src/functions/template-tags/widgets.php:271
 msgid "<span>&laquo;</span> <span class=\"tribe-nav-label\">Previous</span>"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:294
+#: src/functions/template-tags/widgets.php:291
 msgid "<span class=\"tribe-nav-label\">Next</span> <span>&raquo;</span>"
 msgstr ""
 
@@ -2910,18 +2985,18 @@ msgstr ""
 
 #: src/views/v2/map/event-cards/event-card/actions/directions-spacer.php:24
 #: src/views/v2/map/event-cards/event-card/actions/directions.php:30
-#: src/views/v2/venue/meta/details/address.php:37
+#: src/views/v2/venue/meta/details/address.php:32
 msgid "Get Directions"
 msgstr ""
 
 #: src/views/v2/map/event-cards/event-card/event/date-time/featured.php:27
 #: src/views/v2/map/event-cards/event-card/event/date-time/featured.php:28
-#: src/views/v2/map/event-cards/event-card/event/date-time/featured.php:32
+#: src/views/v2/map/event-cards/event-card/event/date-time/featured.php:33
 #: src/views/v2/map/event-cards/event-card/tooltip/date-time/featured.php:27
 #: src/views/v2/map/event-cards/event-card/tooltip/date-time/featured.php:28
 #: src/views/v2/photo/event/date-time/featured.php:27
 #: src/views/v2/photo/event/date-time/featured.php:28
-#: src/views/v2/photo/event/date-time/featured.php:32
+#: src/views/v2/photo/event/date-time/featured.php:33
 #: src/views/v2/week/grid-body/events-day/event/date/featured.php:27
 #: src/views/v2/week/grid-body/events-day/event/date/featured.php:28
 #: src/views/v2/week/grid-body/events-day/event/title/featured.php:27
@@ -2944,11 +3019,11 @@ msgctxt "Address separator"
 msgid ", "
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:27
+#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:28
 msgid "Prev"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:35
+#: src/views/v2/map/event-cards/event-card/tooltip/navigation.php:36
 #: src/views/v2/week/mobile-events/nav/next-disabled.php:23
 #: src/views/v2/week/mobile-events/nav/next.php:27
 msgid "Next"
@@ -2999,17 +3074,17 @@ msgstr ""
 #. translators: %s: Event (plural or singular).
 #: src/views/v2/map/event-cards/nav/prev-disabled.php:19
 #: src/views/v2/map/event-cards/nav/prev-disabled.php:20
-#: src/views/v2/map/event-cards/nav/prev-disabled.php:28
+#: src/views/v2/map/event-cards/nav/prev-disabled.php:29
 #: src/views/v2/map/event-cards/nav/prev.php:24
 #: src/views/v2/map/event-cards/nav/prev.php:25
-#: src/views/v2/map/event-cards/nav/prev.php:32
+#: src/views/v2/map/event-cards/nav/prev.php:33
 #: src/views/v2/map/top-bar/nav/prev-disabled.php:15
 #: src/views/v2/map/top-bar/nav/prev.php:17
 #: src/views/v2/photo/nav/prev-disabled.php:19
 #: src/views/v2/photo/nav/prev-disabled.php:20
-#: src/views/v2/photo/nav/prev-disabled.php:28
+#: src/views/v2/photo/nav/prev-disabled.php:29
 #: src/views/v2/photo/nav/prev.php:24 src/views/v2/photo/nav/prev.php:25
-#: src/views/v2/photo/nav/prev.php:32
+#: src/views/v2/photo/nav/prev.php:33
 #: src/views/v2/photo/top-bar/nav/prev-disabled.php:15
 #: src/views/v2/photo/top-bar/nav/prev.php:17
 msgid "Previous %1$s"
@@ -3035,12 +3110,12 @@ msgid "Close modal"
 msgstr ""
 
 #. translators: %1$s: event (singular)
-#: src/views/v2/map/map/no-venue-modal.php:58
+#: src/views/v2/map/map/no-venue-modal.php:62
 msgid "This %1$s does not have a mappable address."
 msgstr ""
 
 #. translators: %s: Event (singular)
-#: src/views/v2/map/map/no-venue-modal.php:74
+#: src/views/v2/map/map/no-venue-modal.php:78
 msgid "View %s Details"
 msgstr ""
 
@@ -3053,26 +3128,14 @@ msgstr ""
 msgid "Click to toggle datepicker"
 msgstr ""
 
-#: src/views/v2/map/top-bar/datepicker.php:76
-#: src/views/v2/photo/top-bar/datepicker.php:76
+#: src/views/v2/map/top-bar/datepicker.php:77
+#: src/views/v2/photo/top-bar/datepicker.php:77
 #: src/views/v2/week/top-bar/datepicker.php:64
 msgid "Select date."
 msgstr ""
 
-#: src/views/v2/map.php:47 src/views/v2/photo.php:47 src/views/v2/week.php:51
+#: src/views/v2/map.php:49 src/views/v2/photo.php:49 src/views/v2/week.php:53
 msgid "Loading..."
-msgstr ""
-
-#: src/views/v2/organizer/meta/details/email.php:28
-#: src/views/v2/organizer/meta/details/email.php:29
-msgid "Email"
-msgstr ""
-
-#: src/views/v2/organizer/meta/details/website.php:28
-#: src/views/v2/organizer/meta/details/website.php:29
-#: src/views/v2/venue/meta/details/website.php:28
-#: src/views/v2/venue/meta/details/website.php:29
-msgid "Website"
 msgstr ""
 
 #. translators: %s: Events (plural)
@@ -3101,7 +3164,7 @@ msgstr ""
 
 #: src/views/v2/week/day-selector/nav/prev.php:22
 #: src/views/v2/week/day-selector/nav/prev.php:23
-#: src/views/v2/week/day-selector/nav/prev.php:26
+#: src/views/v2/week/day-selector/nav/prev.php:27
 #: src/views/v2/week/mobile-events/nav/prev-disabled.php:20
 #: src/views/v2/week/mobile-events/nav/prev-disabled.php:21
 #: src/views/v2/week/mobile-events/nav/prev.php:24
@@ -3132,9 +3195,26 @@ msgstr ""
 msgid "Ongoing"
 msgstr ""
 
-#: src/views/v2/week/mobile-events/nav/prev-disabled.php:23
-#: src/views/v2/week/mobile-events/nav/prev.php:27
+#: src/views/v2/week/mobile-events/nav/prev-disabled.php:24
+#: src/views/v2/week/mobile-events/nav/prev.php:28
 msgid "Previous"
+msgstr ""
+
+#: src/views/v2/widgets/widget-events-list/event/date/recurring.php:31
+#: src/views/v2/widgets/widget-events-list/event/date/recurring.php:32
+msgctxt "Recurring label for event in events list widget."
+msgid "Recurring"
+msgstr ""
+
+#. Translators: %1$s: Organizer label (singular)
+#: src/views/v2/widgets/widget-events-list/event/organizers.php:37
+msgctxt "Organizer label for event in events list widget."
+msgid "%1$s: "
+msgstr ""
+
+#: src/views/v2/widgets/widget-events-list/event/organizers.php:47
+msgctxt "Separator for event organizers in events list widget."
+msgid "and"
 msgstr ""
 
 #. Plugin Name of the plugin/theme

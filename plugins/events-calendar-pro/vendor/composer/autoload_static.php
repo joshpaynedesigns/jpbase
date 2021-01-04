@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit976c4c37c9d89bba5156f6cca43bf135
+class ComposerStaticInit7ae2a87e786a97312a135b0e7cf21102
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -60,14 +60,19 @@ class ComposerStaticInit976c4c37c9d89bba5156f6cca43bf135
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Photo_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Photo_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Venue_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Venue_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Week_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Week_View.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Admin_Template' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Admin_Template.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Hooks.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Taxonomy_Filter' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Advanced_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit976c4c37c9d89bba5156f6cca43bf135::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit976c4c37c9d89bba5156f6cca43bf135::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit976c4c37c9d89bba5156f6cca43bf135::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7ae2a87e786a97312a135b0e7cf21102::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7ae2a87e786a97312a135b0e7cf21102::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7ae2a87e786a97312a135b0e7cf21102::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.1.6';
+		const VERSION = '5.2.1.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -80,7 +80,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @deprecated 4.6
 		 *
 		 */
-		const REQUIRED_TEC_VERSION = '5.0.2';
+		const REQUIRED_TEC_VERSION = '5.3.1';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -1261,7 +1261,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			wp_enqueue_script(
 				Tribe__Events__Main::POSTTYPE . '-premium-recurrence',
 				tribe_events_pro_resource_url( 'events-recurrence.js' ),
-				[ Tribe__Events__Main::POSTTYPE.'-premium-admin', 'tribe-events-pro-handlebars', 'tribe-events-pro-moment', 'tribe-dropdowns', 'jquery-ui-dialog', 'tribe-buttonset' ],
+				[ Tribe__Events__Main::POSTTYPE . '-premium-admin', 'tribe-events-pro-handlebars', 'tribe-moment', 'tribe-dropdowns', 'jquery-ui-dialog', 'tribe-buttonset' ],
 				apply_filters( 'tribe_events_pro_js_version', self::VERSION ),
 				true
 			);
@@ -1520,12 +1520,51 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return void
 		 */
 		public function pro_widgets_init() {
-			unregister_widget( 'Tribe__Events__List_Widget' );
-			register_widget( 'Tribe__Events__Pro__Advanced_List_Widget' );
-			register_widget( 'Tribe__Events__Pro__Countdown_Widget' );
-			register_widget( 'Tribe__Events__Pro__Mini_Calendar_Widget' );
-			register_widget( 'Tribe__Events__Pro__Venue_Widget' );
-			register_widget( 'Tribe__Events__Pro__This_Week_Widget' );
+			// Widgets to register.
+			$registered_widget_classes = [
+				'Tribe__Events__Pro__Advanced_List_Widget',
+				'Tribe__Events__Pro__Countdown_Widget',
+				'Tribe__Events__Pro__Mini_Calendar_Widget',
+				'Tribe__Events__Pro__Venue_Widget',
+				'Tribe__Events__Pro__This_Week_Widget',
+			];
+
+			/**
+			 * Allows plugins and future updates to dis/enable widgets via filer.
+			 *
+			 * @since 5.2.0
+			 *
+			 * @param array<string> $registered_widget_classes An array of widget class names to register.
+			 */
+			$registered_widget_classes = apply_filters(
+				'tribe_events_pro_v1_registered_widget_classes',
+				$registered_widget_classes
+			);
+
+			foreach ( $registered_widget_classes as $widget ) {
+				register_widget( $widget );
+			}
+
+			// Widgets to unregister.
+			$unregistered_widget_classes = [
+				'Tribe__Events__List_Widget',
+			];
+
+			/**
+			 * Allows plugins and future updates to dis/enable widgets via filer.
+			 *
+			 * @since 5.2.0
+			 *
+			 * @param array<string> $unregistered_widget_classes An array of widget class names to unregister.
+			 */
+			$unregistered_widget_classes = apply_filters(
+				'tribe_events_pro_v1_unregistered_widget_classes',
+				$unregistered_widget_classes
+			);
+
+			foreach ( $unregistered_widget_classes as $widget ) {
+				unregister_widget( $widget );
+			}
 		}
 
 		/**
@@ -2044,6 +2083,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			tribe_register_provider( 'Tribe__Events__Pro__Service_Providers__ORM' );
 			tribe_register_provider( 'Tribe__Events__Pro__Service_Providers__RBE' );
 			tribe_register_provider( Tribe\Events\Pro\Views\V2\Service_Provider::class );
+			tribe_register_provider( Tribe\Events\Pro\Views\V2\Widgets\Service_Provider::class );
 			tribe_register_provider( Tribe\Events\Pro\Models\Service_Provider::class );
 			tribe_register_provider( Tribe__Events__Pro__Service_Providers__Templates::class );
 

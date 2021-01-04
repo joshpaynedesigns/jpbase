@@ -87,6 +87,33 @@ class Assets extends \tad_DI52_ServiceProvider {
 
 		tribe_asset(
 			$plugin,
+			'tribe-events-pro-widgets-v2-events-list-skeleton',
+			'widget-events-list-skeleton.css',
+			[
+				'tribe-events-widgets-v2-events-list-skeleton',
+			],
+			null,
+			[
+				'priority' => 15,
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-pro-widgets-v2-events-list-full',
+			'widget-events-list-full.css',
+			[
+				'tribe-events-widgets-v2-events-list-full',
+				'tribe-events-pro-widgets-v2-events-list-skeleton',
+			],
+			null,
+			[
+				'priority' => 15,
+			]
+		);
+
+		tribe_asset(
+			$plugin,
 			'tribe-events-pro-views-v2-nanoscroller',
 			'vendor/nanoscroller/jquery.nanoscroller.js',
 			[ 'jquery-ui-draggable' ],

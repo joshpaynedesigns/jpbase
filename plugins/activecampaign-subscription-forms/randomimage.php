@@ -4,8 +4,8 @@ header('P3P: CP="NON BUS INT NAV COM ADM CON CUR IVA IVD OTP PSA PSD TEL SAM"');
 @session_start();
 $alphanum = 'ABCDEFGHJKMNPQRSTVWXYZ23456789';
 $rand = substr(str_shuffle($alphanum), 0, 5);
-if ( !isset($_SESSION['image_random_value']) ) {
-	$_SESSION['image_random_value'] = array();
+if (!isset($_SESSION['image_random_value'])) {
+    $_SESSION['image_random_value'] = array();
 }
 $_SESSION['image_random_value'][md5($rand)] = time();
 $bgNum = rand(1, 4);
@@ -20,5 +20,3 @@ header("Pragma: no-cache");
 header('Content-type: image/jpeg');
 imagejpeg($image);
 imagedestroy($image);
-
-?>
