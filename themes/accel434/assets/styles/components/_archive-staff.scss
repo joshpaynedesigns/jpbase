@@ -1,0 +1,76 @@
+.staffTermSection {
+    clear: both;
+    margin-bottom: $base-spacing*3;
+    overflow: hidden;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.staffTermTitleLink {
+    color: $dark-gray;
+
+    &:hover {
+        color: $dark-gray;
+    }
+}
+
+.staffArchBlock {
+    margin-top: rem(60px);
+    text-align: center;
+
+    img {
+        margin-bottom: rem(16px);
+    }
+
+     &:first-of-type {
+         margin-top: 0;
+     }
+
+     @include media( $medium-screen-up ) {
+         @include span-columns(6);
+         @include omega-reset(4n);
+         @include omega(2n);
+
+         &:nth-child(1),
+         &:nth-child(2), {
+             margin-top: 0;
+         }
+     }
+
+     @include media( $large-screen-up ) {
+         @include span-columns(3);
+         @include omega-reset(2n);
+         @include omega(4n);
+
+         &:nth-child(1),
+         &:nth-child(2),
+         &:nth-child(3),
+         &:nth-child(4), {
+             margin-top: 0;
+         }
+     }
+}
+
+.staffArchBlockName {
+    font-size: em(18px);
+    line-height: 1;
+    margin-bottom: 7px;
+    font-weight: bold;
+
+    a {
+        color: $heading-font-color;
+
+        &:hover {
+            color: $action-color;
+        }
+    }
+}
+
+.staffArchBlockPosition {
+    font-size: em(16px);
+    line-height: 1;
+    margin-bottom: 3px;
+    color: #555;
+}

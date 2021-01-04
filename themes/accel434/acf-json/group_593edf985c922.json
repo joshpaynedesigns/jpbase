@@ -1,0 +1,88 @@
+{
+    "key": "group_593edf985c922",
+    "title": "Flex - Blog Section",
+    "fields": [
+        {
+            "key": "field_593edf98634ec",
+            "label": "Section Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5d7912d79b27b",
+            "label": "Posts Per Feed",
+            "name": "posts_per_feed",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 6,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 3,
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5b05a74f24cbb",
+            "label": "Category Filter",
+            "name": "blog_category",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-content-builder.php"
+            }
+        ]
+    ],
+    "menu_order": 9,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": 0,
+    "description": "",
+    "modified": 1568215830
+}

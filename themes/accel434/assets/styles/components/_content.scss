@@ -1,0 +1,70 @@
+/**
+ * Entries
+ */
+
+.entry {
+	position: relative;
+}
+
+.entry-footer {
+	border-top: $base-border;
+	padding-top: $base-spacing;
+}
+
+.entry-title {
+	// font-weight: 500;
+	// margin-bottom: 0;
+
+	a {
+		color: $base-font-color;
+
+		&:hover,
+		&:focus {
+			color: $action-color;
+		}
+	}
+}
+
+/**
+ * Entry Meta
+ */
+
+.entry-meta {
+	color: $base-font-color;
+	font-size: $base-font-size;
+	margin-bottom: 0;
+
+	span,
+	time,
+	a {
+		margin-right: 5px;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	a {
+		color: $action-color;
+
+		&:hover,
+		&:focus {
+			color: darken($action-color, 20);
+		}
+	}
+}
+
+.entry-terms {
+	display: block;
+	padding-bottom: 5px;
+
+	&:last-child {
+		padding-bottom: 0;
+	}
+
+	span,
+	time,
+	a {
+		margin-right: 0;
+	}
+}

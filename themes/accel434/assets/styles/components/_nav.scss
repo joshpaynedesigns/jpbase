@@ -1,0 +1,130 @@
+$sub-nav-bg-color: white;
+$sub-nav-link-color: rgba($base-font-color, 0.6);
+$sub-nav-link-color-hover: $base-font-color;
+
+.genesis-nav-menu {
+    clear: both;
+    font-family: $heading-font-family;
+    font-size: $base-font-size;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    .menu-item {
+        display: inline-block;
+        font-size: $base-font-size;
+        margin-bottom: 0;
+        text-align: left;
+        position: relative;
+
+        &:after {
+            content: '';
+            top: 100%;
+            width: 100%;
+            height: 20px;
+            position: absolute;
+            left: 0;
+        }
+
+        > a {
+            color: #666;
+            display: block;
+            padding: $small-spacing;
+            // text-transform: uppercase;
+            padding: 1em 0.8em;
+        }
+
+        a:hover,
+        a:focus,
+        &.current-menu-item > a,
+        &.current-menu-ancestor > a,
+        &.current-menu-parent > a,
+        &.menu-item-has-children.menu-item-hover > a {
+            color: #222;
+        }
+
+        &:hover,
+        &:focus {
+
+            > .sub-menu {
+                opacity: 1;
+                visibility: visible;
+                top: 100%;
+            }
+        }
+
+        &:last-child > a,
+        &.last > a {
+            padding-right: 0;
+        }
+
+        .sub-menu {
+            background: $sub-nav-bg-color;
+            margin: 10px 0 0 -15px;
+            padding: 30px 30px;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 250%;
+            width: 200px;
+            z-index: 100;
+            transition: all $medium-duration $base-timing;
+
+            li {
+                display: block;
+                margin: 0;
+
+                a {
+                    color: $sub-nav-link-color;
+                    padding: 0 0 1em 0;
+                    position: relative;
+                    font-size: em(14);
+
+                    &:hover {
+                        color: $sub-nav-link-color-hover;
+                    }
+                }
+
+                &.current-menu-item > a:hover,
+                &.current-menu-item > a:focus {
+                    color: $sub-nav-link-color-hover;
+                }
+                
+                &:last-child a {
+                    padding: 0;
+                }
+            }
+
+            .sub-menu {
+                margin: -41px 0 0 199px;
+            }
+
+            &.edge {
+                left: auto;
+                right: 0;
+            }
+        }
+
+        &.nav-button {
+
+            a {
+                font-size: em(14);
+                font-family: $heading-font-family;
+                line-height: 1em;
+                text-transform: uppercase;
+                background: $action-color;
+                padding: 0.8em 1em;
+                margin-left: 1em;
+                color: $white;
+                display: inline-block;
+                font-weight: bold;
+                -webkit-font-smoothing: antialiased;
+
+                &:hover {
+                    background: shade($action-color, 20%);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,162 @@
+{
+    "key": "group_593edc8ca97cd",
+    "title": "Flex - Content Section",
+    "fields": [
+        {
+            "key": "field_593edc9ec23b1",
+            "label": "Content Type",
+            "name": "content_type",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "full-width": "Full Width",
+                "fifty-fifty": "50\/50",
+                "thirty-seventy": "30\/70",
+                "seventy-thirty": "70\/30",
+                "thirty-three": "33\/33\/33"
+            },
+            "allow_null": 0,
+            "default_value": "full-width",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5ac6903b27f54",
+            "label": "Background Color",
+            "name": "background_color",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_5ac68f94629c6"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_5a37d583237d7",
+            "label": "Section Title",
+            "name": "section_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_593edcb5c23b2",
+            "label": "Content",
+            "name": "content",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_599b3f6975c70",
+            "label": "Second Content Block",
+            "name": "second_content_block",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_593edc9ec23b1",
+                        "operator": "!=",
+                        "value": "full-width"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_5a37d0ddbeb7d",
+            "label": "Third Content Block",
+            "name": "third_content_block",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_593edc9ec23b1",
+                        "operator": "==",
+                        "value": "thirty-three"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-content-builder.php"
+            }
+        ]
+    ],
+    "menu_order": 8,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1588357345
+}

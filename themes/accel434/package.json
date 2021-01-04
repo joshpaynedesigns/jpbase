@@ -1,0 +1,25 @@
+{
+  "name": "exodus",
+  "description": "Objectiv Startup for Genesis Framework",
+  "version": "1.0.1",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-cheerio": "^0.6.2",
+    "gulp-clean-css": "^2.0.2",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-svgmin": "^1.2.2",
+    "gulp-svgstore": "^6.0.0",
+    "node-bourbon": "4.2.3",
+    "node-neat": "1.7.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^7.1.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.1"
+  }
+}

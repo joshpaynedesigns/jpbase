@@ -1,0 +1,8 @@
+.breadcrumb {
+	font-size: $base-font-size;
+	margin-bottom: $small-spacing;
+
+	span:not(.breadcrumb-link-wrap) {
+		padding: 0 4px;
+	}
+}

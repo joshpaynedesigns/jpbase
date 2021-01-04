@@ -1,0 +1,103 @@
+{
+    "key": "group_593ee2fb3ff3c",
+    "title": "Flex - Ribbon CTA",
+    "fields": [
+        {
+            "key": "field_593ee2fb44fd7",
+            "label": "Line One Text",
+            "name": "line_one_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_593ee2fb44fe8",
+            "label": "Line Two Text",
+            "name": "line_two_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_59c94afcc58ab",
+            "label": "Link Details",
+            "name": "link_details",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5d0a9bb521b77",
+            "label": "Bar Color",
+            "name": "bar_color",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "blue": "Blue",
+                "light-blue": "Light Blue",
+                "medium-gray": "Medium Gray",
+                "dark-gray": "Dark Gray"
+            },
+            "allow_null": 0,
+            "default_value": "blue",
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-content-builder.php"
+            }
+        ]
+    ],
+    "menu_order": 4,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": 0,
+    "description": "",
+    "modified": 1588362377
+}

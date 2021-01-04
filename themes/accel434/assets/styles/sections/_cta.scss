@@ -1,0 +1,28 @@
+.cta-section.page-flexible-section {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    .section-title {
+        margin-top: 0;
+    }
+}
+
+.cta-content {
+    text-align: center;
+    padding: $base-spacing*4 0;
+    position: relative;
+    z-index: 100;
+    color: white;
+}
+
+.cta-overlay {
+    background-color: $dark-gray;
+    opacity: 0.5;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}

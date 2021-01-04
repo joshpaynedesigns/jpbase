@@ -1,0 +1,50 @@
+{
+    "key": "group_5ac68f94629c6",
+    "title": "Component - Background Color",
+    "fields": [
+        {
+            "key": "field_5ac68fb3d495f",
+            "label": "Background Color",
+            "name": "background_color",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "White",
+                "light-gray": "Light Gray",
+                "medium-gray": "Medium Gray",
+                "dark-gray": "Dark Gray",
+                "blue": "Blue",
+                "light-blue": "Light Blue"
+            },
+            "allow_null": 0,
+            "default_value": "white",
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 15,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1588357363
+}

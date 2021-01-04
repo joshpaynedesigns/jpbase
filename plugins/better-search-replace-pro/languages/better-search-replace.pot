@@ -1,0 +1,401 @@
+# Copyright (C) 2016 Expanded Fronts
+# This file is distributed under the GPL-3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Better Search Replace Pro 1.3.1\n"
+"Report-Msgid-Bugs-To: "
+"http://wordpress.org/support/plugin/better-search-replace\n"
+"POT-Creation-Date: 2016-01-14 07:31:13+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Expanded Fronts <support@expandedfronts.com>\n"
+"Language-Team: Expanded Fronts <support@expandedfronts.com>\n"
+"X-Generator: grunt-wp-i18n 0.4.9\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: better-search-replace.php:108
+msgid ""
+"Better Search Replace Pro has been installed successfully, but requires "
+"Better Search Replace (free version) to be deactivated."
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:176
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" "
+"class=\"thickbox\" href=\"%2$s\">View version %3$s details</a>."
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:183
+msgid ""
+"There is a new version of %1$s available. <a target=\"_blank\" "
+"class=\"thickbox\" href=\"%2$s\">View version %3$s details</a> or <a "
+"href=\"%4$s\">update now</a>."
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:323
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: includes/EDD_SL_Plugin_Updater.php:323
+msgid "Error"
+msgstr ""
+
+#: includes/class-bsr-admin.php:72
+msgid "No search string was defined, please enter a URL or string to search for."
+msgstr ""
+
+#: includes/class-bsr-admin.php:73
+msgid "Please select the tables that you want to update."
+msgstr ""
+
+#: includes/class-bsr-admin.php:74
+msgid ""
+"An error occurred processing your request. Try decreasing the \"Max Page "
+"Size\", or contact support."
+msgstr ""
+
+#: includes/class-bsr-admin.php:75
+msgid "Processing..."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Better Search Replace Pro"
+msgstr ""
+
+#: includes/class-bsr-admin.php:106
+msgid "Database imported successfully."
+msgstr ""
+
+#: includes/class-bsr-admin.php:112
+msgid ""
+"<p><strong>DRY RUN:</strong> <strong>%d</strong> tables were searched, "
+"<strong>%d</strong> cells were found that need to be updated, and "
+"<strong>%d</strong> changes were made.</p><p><a href=\"%s\" "
+"class=\"thickbox\" title=\"Dry Run Details\">Click here</a> for more "
+"details, or use the form below to run the search/replace.</p>"
+msgstr ""
+
+#: includes/class-bsr-admin.php:119
+msgid ""
+"<p>During the search/replace, <strong>%d</strong> tables were searched, "
+"with <strong>%d</strong> cells changed in <strong>%d</strong> "
+"updates.</p><p><a href=\"%s\" class=\"thickbox\" title=\"Search/Replace "
+"Details\">Click here</a> for more details.</p>"
+msgstr ""
+
+#: includes/class-bsr-admin.php:244
+msgid "<-- Back to overview"
+msgstr ""
+
+#: includes/class-bsr-admin.php:265
+msgid "Row %d, Column '%s'"
+msgstr ""
+
+#: includes/class-bsr-admin.php:274
+msgid "Table"
+msgstr ""
+
+#: includes/class-bsr-admin.php:274
+msgid "Changes Found"
+msgstr ""
+
+#: includes/class-bsr-admin.php:274
+msgid "Rows Updated"
+msgstr ""
+
+#: includes/class-bsr-admin.php:274
+msgid "Time"
+msgstr ""
+
+#: includes/class-bsr-admin.php:285
+msgid "View"
+msgstr ""
+
+#: includes/class-bsr-admin.php:298
+msgid " seconds"
+msgstr ""
+
+#: includes/class-bsr-ajax.php:187
+msgid "Processing table %d of %d: %s"
+msgstr ""
+
+#: includes/class-bsr-ajax.php:364
+msgid "Starting search/replace..."
+msgstr ""
+
+#: includes/class-bsr-ajax.php:401
+msgid "Backing up table: \"%s\"..."
+msgstr ""
+
+#: includes/class-bsr-ajax.php:504
+msgid "Running search/replace..."
+msgstr ""
+
+#: includes/class-bsr-db.php:96
+msgid "(%s MB)"
+msgstr ""
+
+#: includes/class-bsr-db.php:562
+msgid "Error updating row: %d."
+msgstr ""
+
+#: templates/bsr-backup-import.php:23 templates/bsr-backup-import.php:59
+msgid "Backup Database"
+msgstr ""
+
+#: templates/bsr-backup-import.php:26
+msgid ""
+"Click the button below to take a backup of your database, which can then be "
+"imported into another instance of Better Search Replace."
+msgstr ""
+
+#: templates/bsr-backup-import.php:33
+msgid "Run Search/Replace profile on backup: "
+msgstr ""
+
+#: templates/bsr-backup-import.php:39 templates/bsr-backup-import.php:86
+msgid "Please select..."
+msgstr ""
+
+#: templates/bsr-backup-import.php:48 templates/bsr-backup-import.php:95
+msgid "No profiles found."
+msgstr ""
+
+#: templates/bsr-backup-import.php:48 templates/bsr-backup-import.php:95
+msgid "Click here to create one."
+msgstr ""
+
+#: templates/bsr-backup-import.php:66 templates/bsr-backup-import.php:106
+msgid "Import Database"
+msgstr ""
+
+#: templates/bsr-backup-import.php:72
+msgid ""
+"Use the form below to import a database backup and run a saved profile on "
+"the resulting database."
+msgstr ""
+
+#: templates/bsr-backup-import.php:73
+msgid ""
+"Alternatively, you can upload the backup file to the wp-content/uploads/ "
+"directory manually and click \"Import Database\"."
+msgstr ""
+
+#: templates/bsr-backup-import.php:80
+msgid "Run Search/Replace profile after import: "
+msgstr ""
+
+#: templates/bsr-dashboard.php:37
+msgid "Search/Replace"
+msgstr ""
+
+#: templates/bsr-dashboard.php:38
+msgid "Backup/Import"
+msgstr ""
+
+#: templates/bsr-dashboard.php:39
+msgid "Settings"
+msgstr ""
+
+#: templates/bsr-dashboard.php:40
+msgid "Help"
+msgstr ""
+
+#: templates/bsr-help.php:25
+msgid "Help & Troubleshooting"
+msgstr ""
+
+#: templates/bsr-help.php:27
+msgid "Need some help, found a bug, or just have some feedback?"
+msgstr ""
+
+#: templates/bsr-help.php:31
+msgid ""
+"Check out the <a href=\"%s\" target=\"_blank\">documentation</a> or <a "
+"href=\"%s\" target=\"_blank\">open a support ticket</a>."
+msgstr ""
+
+#: templates/bsr-help.php:42
+msgid "Download System Info"
+msgstr ""
+
+#: templates/bsr-search-replace.php:23
+msgid "Load an existing profile?"
+msgstr ""
+
+#: templates/bsr-search-replace.php:31
+msgid "Create new profile"
+msgstr ""
+
+#: templates/bsr-search-replace.php:35
+msgid "Continue..."
+msgstr ""
+
+#: templates/bsr-search-replace.php:36
+msgid "Delete Profile"
+msgstr ""
+
+#: templates/bsr-search-replace.php:40
+msgid ""
+"This tool allows you to search and replace text in your database (supports "
+"serialized arrays and objects)."
+msgstr ""
+
+#: templates/bsr-search-replace.php:41
+msgid ""
+"To get started, use the form below to enter the text to be replaced and "
+"select the tables to update."
+msgstr ""
+
+#: templates/bsr-search-replace.php:42
+msgid ""
+"<strong>WARNING:</strong> Make sure you backup your database before using "
+"this plugin!"
+msgstr ""
+
+#: templates/bsr-search-replace.php:47
+msgid "Search for"
+msgstr ""
+
+#: templates/bsr-search-replace.php:52
+msgid "Replace with"
+msgstr ""
+
+#: templates/bsr-search-replace.php:57
+msgid "Select tables"
+msgstr ""
+
+#: templates/bsr-search-replace.php:60
+msgid "Select multiple tables with Ctrl-Click for Windows or Cmd-Click for Mac."
+msgstr ""
+
+#: templates/bsr-search-replace.php:65
+msgid "Case-Insensitive?"
+msgstr ""
+
+#: templates/bsr-search-replace.php:68
+msgid "Searches are case-sensitive by default."
+msgstr ""
+
+#: templates/bsr-search-replace.php:73
+msgid ""
+"Replace GUIDs<a "
+"href=\"http://codex.wordpress.org/Changing_The_Site_URL#Important_GUID_Note\""
+" target=\"_blank\">?</a>"
+msgstr ""
+
+#: templates/bsr-search-replace.php:76
+msgid "If left unchecked, all database columns titled 'guid' will be skipped."
+msgstr ""
+
+#: templates/bsr-search-replace.php:81
+msgid "Run as dry run?"
+msgstr ""
+
+#: templates/bsr-search-replace.php:84
+msgid ""
+"If checked, no changes will be made to the database, allowing you to check "
+"the results beforehand."
+msgstr ""
+
+#: templates/bsr-search-replace.php:89
+msgid "Save as profile?"
+msgstr ""
+
+#: templates/bsr-search-replace.php:92
+msgid "If checked, the above settings will be saved for future use."
+msgstr ""
+
+#: templates/bsr-search-replace.php:97
+msgid "Profile Name"
+msgstr ""
+
+#: templates/bsr-search-replace.php:110
+msgid "Run Search/Replace"
+msgstr ""
+
+#: templates/bsr-settings.php:39
+msgid "Max Page Size"
+msgstr ""
+
+#: templates/bsr-settings.php:43 templates/bsr-settings.php:55
+msgid "Current Setting: "
+msgstr ""
+
+#: templates/bsr-settings.php:45
+msgid ""
+"If you notice timeouts or are unable to backup/import the database, try "
+"decreasing this value."
+msgstr ""
+
+#: templates/bsr-settings.php:51
+msgid "Max Results"
+msgstr ""
+
+#: templates/bsr-settings.php:57
+msgid "The maximum amount of results to store when running a search or replace."
+msgstr ""
+
+#: templates/bsr-settings.php:63
+msgid "Enable Gzip?"
+msgstr ""
+
+#: templates/bsr-settings.php:68
+msgid "If enabled, backups will be compressed to reduce file size."
+msgstr ""
+
+#: templates/bsr-settings.php:75
+msgid "License Key"
+msgstr ""
+
+#: templates/bsr-settings.php:79
+msgid "Enter your license key for support and updates."
+msgstr ""
+
+#: templates/bsr-settings.php:86
+msgid "License Status"
+msgstr ""
+
+#: templates/bsr-settings.php:90
+msgid "active"
+msgstr ""
+
+#: templates/bsr-settings.php:92
+msgid "Deactivate License"
+msgstr ""
+
+#: templates/bsr-settings.php:94
+msgid "inactive"
+msgstr ""
+
+#: templates/bsr-settings.php:96
+msgid "Activate License"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://expandedfronts.com/products/better-search-replace-pro/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A small plugin for running a search/replace on your WordPress database."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Expanded Fronts"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://expandedfronts.com"
+msgstr ""

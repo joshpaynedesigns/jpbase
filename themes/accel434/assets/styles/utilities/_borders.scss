@@ -1,0 +1,45 @@
+// Border Radius
+.bbr {
+    border-radius: $base-border-radius;
+}
+
+.bbrtl {
+    border-top-left-radius: $base-border-radius;
+}
+
+.bbrtr {
+    border-top-right-radius: $base-border-radius;
+}
+
+.bbrbr {
+    border-bottom-right-radius: $base-border-radius;
+}
+
+.bbrbl {
+    border-bottom-right-radius: $base-border-radius;
+}
+
+.br50 {
+    border-radius: 50%;
+}
+
+// Border
+.base-border {
+    border: $base-border;
+}
+
+.base-border-top {
+    border-top: $base-border;
+}
+
+.base-border-bottom {
+    border-bottom: $base-border;
+}
+
+.base-border-left {
+    border-left: $base-border;
+}
+
+.base-border-right {
+    border-right: $base-border;
+}

@@ -1,0 +1,93 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: local('IBM Plex Sans'), url(/wp-content/plugins/activecampaign-subscription-forms/activecampaign-form-block/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+}
+
+.wp-activecampaign-form-block {
+  display: none;
+  color: #000000;
+  background-color: #FFFFFF;
+  border: 1px solid #1e1e1e;
+  padding: 14px 14px 10px 14px;
+
+  * {
+	font-family: 'IBM Plex Sans', Helvetica, sans-serif !important;
+  }
+
+  .activecampaign-block-header{
+	font-size: 20px;
+	line-height: 20px;
+	margin-bottom: 8px;
+	font-weight: bold;
+
+	.activecampaign-block-logo{
+	  display: inline-block;
+	  margin-right: 12px;
+
+	  svg{
+		vertical-align: middle;
+	  }
+	}
+  }
+
+  .activecampaign-block-inputs{
+	display: flex;
+	margin:0 -8px;
+	flex-wrap: wrap;
+
+	.activecampaign-form-select{
+	  flex-grow: 2;
+	  flex-basis: content-box;
+	  padding:0 8px;
+	}
+
+	.activecampaign-css-select{
+	  flex-grow: 1;
+	  flex-basis: content-box;
+	  padding:0 8px;
+	}
+
+	select{
+	  max-width: none;
+	}
+  }
+}
+
+.is-selected .wp-activecampaign-form-block{
+  display: block;
+}
+
+.block-editor-block-list__layout .block-editor-block-list__block:not([contenteditable]):focus:after{
+  display: none;
+  box-shadow: none;
+  border: none;
+}
+
+.editor-styles-wrapper{
+  .activecampaign-form-preview{
+	&.use-css{
+	  p, ol, ul, dl, dt{
+		// Override for editor style in preview, but only when css override should occur.
+		font-family: 'IBM Plex Sans', Helvetica, sans-serif !important;
+	  }
+	}
+
+	&.no-css{
+	  p, ol, ul, dl, dt{
+		//Overrideable
+	  }
+	}
+  }
+}
+
+.activecampaign-form-preview{
+  pointer-events: none;
+}
+
+
+

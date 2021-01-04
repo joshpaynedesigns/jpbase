@@ -1,0 +1,103 @@
+._form button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.primary-button a,
+.blue-button a,
+.light-blue-button a,
+.medium-gray-button a,
+.dark-gray-button a,
+.white-button a {
+    -webkit-font-smoothing: antialiased;
+    appearance: none;
+    background-color: $action-color;
+    // border-radius: $base-border-radius;
+    border: 2px solid transparent;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: $base-font-family;
+    font-size: em(18);
+    font-weight: bold;
+    line-height: 1;
+    padding: em(16px) em(60px);
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all $base-duration $base-timing;
+    user-select: none;
+    vertical-align: middle;
+
+    &:hover,
+    &:focus {
+        background-color: transparent;
+        color: $action-color;
+        border-color: $action-color;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+}
+
+.small-button {
+    display: inline-block;
+
+    a {
+        font-size: em(14px);
+        padding: 1em 3em;
+    }
+}
+
+@mixin button-set-up( $color: $action-color ) {
+    background-color: $color;
+
+    &:hover,
+    &:focus {
+        color: $color;
+        border-color: $color;
+        outline: none;
+    }
+
+}
+
+.primary-button a,
+.blue-button a,
+.blue-button input[type=submit] {
+    @include button-set-up( $blue );
+}
+
+.light-blue-button a,
+.light-blue-button input[type=submit] {
+    @include button-set-up( $light-blue );
+}
+
+.medium-gray-button a,
+.medium-gray-button input[type=submit] {
+    @include button-set-up( $medium-gray );
+}
+
+.dark-gray-button a,
+.dark-gray-button input[type=submit] {
+    @include button-set-up( $dark-gray );
+}
+
+.white-button a,
+.white-button input[type=submit] {
+    @include button-set-up( white );
+    color: $dark-gray;
+}
+
+.blue-button,
+.light-blue-button,
+.medium-gray-button,
+.dark-gray-button,
+.white-button {
+    display: inline-block;
+}

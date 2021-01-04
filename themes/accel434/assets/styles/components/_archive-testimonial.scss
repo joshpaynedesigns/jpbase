@@ -1,0 +1,13 @@
+.post-type-archive-testimonial {
+    .testimonial-block {
+        background-color: $light-gray;
+        display: inline-block;
+        margin-bottom: $base-spacing;
+        padding: 2rem;
+        width: 100%;
+
+        &:last-of-type {
+            margin-bottom: 0px;
+        }
+    }
+}

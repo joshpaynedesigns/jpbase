@@ -1,0 +1,27 @@
+.error404 {
+
+    .site-inner {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .content {
+        background-color: white;
+    }
+
+    .section-404 {
+        padding: $mobile-section-margin 0;
+        text-align: center;
+
+        @include media( $large-screen-up ) {
+            padding: $desk-section-margin 0;            
+        }
+
+        input {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 500px;
+            text-align: center;
+        }
+    }
+}

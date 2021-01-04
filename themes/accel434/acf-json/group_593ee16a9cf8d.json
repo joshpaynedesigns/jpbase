@@ -1,0 +1,199 @@
+{
+    "key": "group_593ee16a9cf8d",
+    "title": "Flex - Icon Blurb Section",
+    "fields": [
+        {
+            "key": "field_593ee16aa2174",
+            "label": "Background Color",
+            "name": "background_color",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "light-gray": "Light Gray",
+                "white": "White"
+            },
+            "allow_null": 0,
+            "default_value": "white",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_593ee16aa217d",
+            "label": "Section Title",
+            "name": "section_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_593ee16aa2186",
+            "label": "Sub Title",
+            "name": "sub_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_59c956f9d1631",
+            "label": "Section Button",
+            "name": "section_button",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_593ee16aa21ab",
+            "label": "Icon Blurbs",
+            "name": "icon_blurbs",
+            "type": "repeater",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "min": 3,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Icon Blurb",
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_593ee16aaba28",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "image",
+                    "instructions": "Displays above the blurb.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "svg,png"
+                },
+                {
+                    "key": "field_593ee16aaba1c",
+                    "label": "Icon Blurb URL",
+                    "name": "icon_blurb_url",
+                    "type": "link",
+                    "instructions": "The url you want people to be redirected to when they click the icon\/blurb. (Optional)",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array"
+                },
+                {
+                    "key": "field_593ee16aaba32",
+                    "label": "Blurb Title",
+                    "name": "blurb_title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_593ee16aaba3b",
+                    "label": "Blurb",
+                    "name": "blurb",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-content-builder.php"
+            }
+        ]
+    ],
+    "menu_order": 13,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": 0,
+    "description": "",
+    "modified": 1588795996
+}

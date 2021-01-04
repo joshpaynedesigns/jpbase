@@ -1,0 +1,125 @@
+.footer-widgets {
+    background-color: $secondary-background-color;
+    clear: both;
+    position: relative;
+    padding: $base-spacing*2 0;
+    color: #777;
+
+    @include media( $large-screen-up ) {
+        padding: em(82px) 0;
+    }
+
+    .widget-area  {
+        width: 100%;
+        margin-bottom: $base-spacing;
+        text-align: center;
+
+        @include media( $medium-screen-up ) {
+            @include span-columns(6);
+            @include omega-reset(4n);
+            @include omega(2n);
+        }
+
+        @include media( $large-screen-up ) {
+            @include span-columns(3);
+            @include omega-reset(2n);
+            @include omega(4n);
+            margin-bottom: 0;
+        }
+
+        .widget {
+            text-align: left;
+            clear: both;
+            min-width: 51%;
+
+            @include media( $large-screen-up ) {
+                display: inline-block;
+            }
+        }
+    }
+
+    .widget-title.widgettitle {
+        font-size: em(28px);
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .widget_objectiv_footer_contact {
+
+        .footer-logo {
+            max-width: 300px;
+            margin-bottom: 0.5em;
+        }
+
+        .get-directions {
+            margin-top: -0.5em;
+        }
+
+        .email {
+            word-break: break-word;
+        }
+
+        p {
+            margin-bottom: 0.5em;
+        }
+    }
+
+    ul.menu {
+        margin-bottom: $small-spacing;
+        padding: 0;
+
+        ul.sub-menu {
+            display: none;
+        }
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    .menu-item {
+        margin-bottom: 0.5em;
+
+        a {
+            color: $medium-gray;
+            position: relative;
+            transition: color $base-duration $base-timing;
+
+            &:hover {
+                color: $action-color;
+            }
+        }
+    }
+
+    .widget_media_image {
+        img {
+            display: block;
+        }
+    }
+
+}
+
+.social-links {
+    clear: both;
+    position: relative;
+    margin-top: 1em;
+
+    li {
+        display: inline;
+    }
+
+    svg {
+        background: #bbb;
+        fill: #fff;
+        height: 30px;
+        margin-right: 5px;
+        padding: 5px;
+        transition: all $base-duration $base-timing;
+        width: 30px;
+
+        &:hover {
+            background: $action-color;
+        }
+    }
+}

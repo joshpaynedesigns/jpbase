@@ -1,0 +1,50 @@
+.pagination {
+    display: block;
+    margin-bottom: $base-spacing;
+    text-align: center;
+    clear: both;
+
+    li,
+    .pagination-next,
+    .pagination-previous {
+        background: #fff;
+        border: $base-border;
+        border-radius: $base-border-radius;
+        display: inline-block;
+        transition: all $base-duration $base-timing;
+
+        a {
+            display: inline-block;
+            color: $base-font-color;
+            padding: $small-spacing $base-spacing;
+        }
+
+        &.active,
+        &:hover,
+        &:focus {
+            background: $action-color;
+            a {
+                color: white;
+            }
+        }
+
+        &:hover,
+        &:focus {
+            border: $base-border;
+            border-color: $action-color;
+            a {
+                color: white;
+            }
+        }
+
+        &.pagination-omission {
+             border: 0px;
+
+             &.active,
+             &:hover,
+             &:focus {
+                 background: transparent;
+             }
+         }
+    }
+}

@@ -1,0 +1,42 @@
+// Line Heights
+.lh1 {
+    line-height: 1;
+}
+
+// Text Align
+.tac {
+    text-align: center;
+}
+
+.tal {
+    text-align: left;
+}
+
+.tar {
+    text-align: right;
+}
+
+// Text Color
+.text-action {
+    color: $action-color;
+}
+
+.text-dark-gray {
+    color: $dark-gray;
+}
+
+.text-light-gray {
+    color: $light-gray;
+}
+
+.text-medium-gray {
+    color: $medium-gray;
+}
+
+.text-primary {
+    color: $primary-color;
+}
+
+.text-white {
+    color: white;
+}

@@ -1,0 +1,125 @@
+#flexible-section-repeater {
+
+	.page-flexible-section {
+
+		&.has-top-padding {
+			margin-top: $mobile-section-margin;
+		}
+
+		&.has-bot-padding {
+			margin-bottom: $mobile-section-margin;
+		}
+
+		@include media($large-screen-up) {
+			&.has-top-padding {
+				margin-top: $desk-section-margin;
+			}
+
+			&.has-bot-padding {
+				margin-bottom: $desk-section-margin;
+			}
+		}
+
+		&.color {
+            padding: $mobile-section-margin 0;
+            
+            @include media($large-screen-up) {
+                padding: $desk-section-margin 0;
+            }
+
+            &:first-child {
+            	margin-top: 0;
+            }
+
+            &:last-child {
+            	margin-bottom: 0;
+            }
+        }
+	}
+
+	.color {
+		&.primary-color,
+		&.blue {
+			background-color: $blue;
+
+			.section-title {
+				color: $white;
+			}
+		}
+
+		&.light-blue {
+			background-color: $light-blue;
+
+			.section-title {
+				color: $white;
+			}
+		}
+
+		&.light-gray {
+			background-color: $light-gray;
+		}
+
+		&.medium-gray {
+			background-color: $medium-gray;
+
+			.section-title {
+				color: $white;
+			}
+		}
+
+		&.dark-gray {
+			background-color: $dark-gray;
+
+			.section-title {
+				color: $white;
+			}
+		}
+
+		&.white {
+			background-color: white;
+		}
+	}
+
+}
+
+.section-title {
+	margin: 0 0 $small-spacing;
+	line-height: 1;
+	transition: all $base-duration $base-timing;
+}
+
+.section-pre-title {
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: all $base-duration $base-timing;
+	margin-bottom: 0;
+}
+
+.section-sub-title {
+	// font-weight: bold;
+	// text-transform: uppercase;
+	transition: all $base-duration $base-timing;
+}
+
+.section-post-title {
+	margin-bottom: 1rem;
+	transition: all $base-duration $base-timing;
+}
+
+.dark {
+	.section-pre-title,
+	.section-sub-title,
+	.section-title,
+	.section-post-title {
+		color: $dark-gray;
+	}
+}
+
+.light {
+	.section-pre-title,
+	.section-sub-title,
+	.section-title,
+	.section-post-title {
+		color: white;
+	}
+}

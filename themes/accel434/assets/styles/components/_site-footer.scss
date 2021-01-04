@@ -1,0 +1,37 @@
+.site-footer {
+    background-color: #818285;
+    font-size: em(14);
+    line-height: $base-line-height;
+    padding: $base-spacing 0;
+    text-align: center;
+    color: #fff;
+
+    .footer-right {
+        text-transform: uppercase;
+        margin-top: 10px;
+
+        a {
+            font-weight: bold;
+            color: #ccc;
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+
+    @include media($large-screen-up) {
+        .footer-left {
+            float: left;
+        }
+
+        .footer-right {
+            float: right;
+            margin-top: 0;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+    }
+}

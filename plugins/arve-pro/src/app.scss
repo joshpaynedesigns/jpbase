@@ -1,0 +1,112 @@
+/* stylelint-disable selector-max-id */
+#tinymce,
+#arve {
+
+  .arve-play-btn,
+  .arve-play-btn:focus,
+  .arve-play-btn:hover {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-radius: 0;
+  }
+
+  .arve-play-svg {
+    display: inline;
+  }
+
+  .arve-play-svg-youtube-bg,
+  .arve-play-svg-circle-bg,
+  .arve-play-svg-circle-fg {
+    transition: fill .5s cubic-bezier(.4, 0, 1, 1), fill-opacity .5s cubic-bezier(.4, 0, 1, 1);
+
+    /* fill: #1f1f1f; */
+
+    /* fill-opacity: .81; */
+  }
+
+  .arve-play-btn:hover .arve-play-svg-youtube-bg,
+  .arve-play-btn:hover .arve-play-svg-circle-fg {
+    transition: fill .5s cubic-bezier(0, 0, .2, 1), fill-opacity .5s cubic-bezier(0, 0, .2, 1);
+    fill: #cc181e;
+    fill-opacity: 1;
+  }
+
+  .arve-play-btn:hover .arve-play-svg-circle-fg {
+    fill: #fff;
+    fill-opacity: 1;
+  }
+
+  .arve-title {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1em;
+    margin: 0;
+    overflow: hidden;
+    color: #fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-image: linear-gradient(to top, rgba(0, 0, 0, .75), transparent);
+  }
+
+  .arve-wrapper[data-mode^="lazyload"] .arve-title {
+    display: block;
+  }
+
+  .arve-thumbnail {
+    object-fit: cover;
+  }
+
+  .arve-wrapper.arve-hover-effect-zoom[data-mode^="lazyload"] .arve-thumbnail {
+    transition-duration: .7s;
+    transition-property: transform;
+  }
+
+  .arve-wrapper.arve-hover-effect-zoom[data-mode^="lazyload"]:hover .arve-thumbnail {
+    transform: scale(1.2);
+  }
+
+  .arve-wrapper.arve-hover-effect-rectangle[data-mode^="lazyload"] .arve-play-btn::before {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    display: block;
+    content: "";
+    border: 2px solid #fff;
+    transition-duration: .7s;
+    transition-property: transform;
+    transform: scale(1.5);
+  }
+
+  .arve-wrapper.arve-hover-effect-rectangle[data-mode^="lazyload"] .arve-play-btn:hover::before {
+    transform: scale(1);
+  }
+
+  .arve-lity-container {
+    position: relative;
+    display: block;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  .arve-lity-container .arve-video {
+    max-height: 100%;
+  }
+}
+
+.arve-lazyload,
+.lity-hide {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}

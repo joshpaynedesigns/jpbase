@@ -1,0 +1,37 @@
+// Omega reset is useful for times when you go from one "span column" setting to another. If you go from 3 to 2 columns you'll likely need to reset 3n. And then when you go from 2 to 3 you'd likely need to reset 2n.
+@mixin omega-reset( $nth ) {
+ &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+ &:nth-child(#{$nth}+1) { clear: none }
+}
+
+// bg allows simply addition of background position, size and repeat. Defaults to center, cover and no-repeat.
+@mixin bg( $position: center, $size: cover, $repeat: no-repeat ) {
+	background-position: $position;
+	background-repeat: $repeat;
+	background-size: $size;
+}
+
+@mixin bg_overlay( $color: $action-color, $opacity: 0.7 ) {
+	position: relative;
+
+	&:before {
+		@include transition(all 1s ease-in-out);
+		background-color: rgba( $color, $opacity );
+		content: '';
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
+
+	.wrap {
+        position: relative;
+        z-index: 100;
+    }
+}
+
+@mixin base_transition() {
+	transition: all $base-duration $base-timing;
+}
