@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Pro Addon
  * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
  * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
- * Version:           4.3.0
+ * Version:           5.1.1
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL 3.0
@@ -17,63 +17,77 @@
  * Domain Path:       /languages
  */
 
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+namespace Nextgenthemes\ARVE\Pro;
 
-define( 'ARVE_PRO_VERSION', '4.3.0' );
-define( 'ARVE_PRO_FILE', __FILE__ );
-define( 'ARVE_PRO_URL', plugin_dir_url( __FILE__ ) );
-define( 'ARVE_PRO_NODE_URL', ARVE_PRO_URL . 'node_modules/' );
-define( 'ARVE_PRO_DIST_URL', ARVE_PRO_URL . 'dist/' );
+use \Nextgenthemes\ARVE;
 
-add_action( 'plugins_loaded', 'arve_pro_init' );
+const VERSION      = '5.1.1';
+const PLUGIN_FILE  = __FILE__;
+const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
+const PLUGIN_DIR   = __DIR__;
 
-function arve_pro_init() {
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 
-	if ( ! function_exists( 'arve_init' ) ) {
+function init() {
+
+	if ( ! function_exists( '\Nextgenthemes\ARVE\init' ) ) {
 		return;
 	}
 
-	require_once __DIR__ . '/admin/functions-admin.php';
-	require_once __DIR__ . '/public/class-mobile-detect.php';
-	require_once __DIR__ . '/public/functions-assets.php';
-	require_once __DIR__ . '/public/functions-filters.php';
-	require_once __DIR__ . '/public/functions-html-output.php';
-	require_once __DIR__ . '/public/functions-misc.php';
-	require_once __DIR__ . '/public/functions-shortcode-filters.php';
-	require_once __DIR__ . '/shared/functions-options.php';
+	if ( version_compare( get_option( 'nextgenthemes_arve_pro_version'), VERSION, '<' ) ) {
+		update_option( 'nextgenthemes_arve_oembed_recache', time() );
+		update_option( 'nextgenthemes_arve_pro_version', VERSION );
+	}
 
-	add_action( 'admin_init', 'arve_pro_action_register_settings' );
+	require_once __DIR__ . '/php/Admin/functions-admin.php';
+	require_once __DIR__ . '/php/functions-assets.php';
+	require_once __DIR__ . '/php/functions-filters.php';
+	require_once __DIR__ . '/php/functions-html-output.php';
+	require_once __DIR__ . '/php/functions-misc.php';
+	require_once __DIR__ . '/php/functions-shortcode-filters.php';
+	require_once __DIR__ . '/php/functions-tag-filters.php';
 
-	add_action( 'wp_enqueue_scripts', 'arve_pro_assets', 0 );
+	add_action( 'init', __NAMESPACE__ . '\register_assets' );
+	add_filter( 'nextgenthemes/arve/arve_html', __NAMESPACE__ . '\append_lightbox_link', 10, 2 );
+	add_filter( 'nextgenthemes/arve/iframe_html', __NAMESPACE__ . '\noscript_wrap', 10, 2 );
+	add_filter( 'nextgenthemes/arve/modes', __NAMESPACE__ . '\add_pro_modes' );
+	add_filter( 'nextgenthemes/arve/shortcode_args', __NAMESPACE__ . '\latest_youtube_video_from_channel' );
 
-	add_filter( 'arve_pro_ad', '__return_false' );
-	add_filter( 'arve_modes', 'arve_pro_filter_modes' );
-	add_filter( 'arve_shortcode_pairs', 'arve_pro_filter_shortcode_pairs' );
-	add_filter( 'mce_css', 'arve_pro_filter_mce_css' );
-	add_action( 'wp_enqueue_scripts', 'arve_pro_maybe_enqueue_assets', 11 );
-	add_filter( 'arve_output', 'arve_pro_filter_output', 10, 3 );
+	add_filter( 'wp_head', __NAMESPACE__ . '\html_js_class', 1 );
 
-	add_filter( 'nextgenthemes/arve/thumbnail', 'arve_pro_filter_thumbnail', 10, 2 );
-	add_filter( 'nextgenthemes/arve/title', 'arve_pro_filter_title', 10, 2 );
+	add_filter( 'shortcode_atts_arve', __NAMESPACE__ . '\sc_filter_extra_data', -200 );
 
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_latest_channel_video', -11 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_validate', -1 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_oembed_img_src_and_title', 1 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_default_seo_data', 1 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_img_src', 2 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_img_src_srcset', 3 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_inview_lazyload' );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_autoplay', 11 );
-	add_filter( 'shortcode_atts_arve', 'arve_pro_sc_filter_attr', 21 );
+	foreach ( [
+		#'src',
+		'validate',
+		'mode',
+		'autoplay',
+		'thumbnail',
+		'img_src',
+		'img_srcset',
+	] as $filter ) {
+		add_filter( "nextgenthemes/arve/sc_filter/$filter", __NAMESPACE__ . "\sc_filter_$filter" );
+	}
+
+	foreach ( [
+		'arve',
+		'button',
+		'iframe',
+		'thumbnail',
+		'title',
+		'video',
+	] as $tag ) {
+		add_filter( "nextgenthemes/arve/$tag", __NAMESPACE__ . "\\tag_filter_$tag", 10, 2 );
+	};
 }
 
-function arve_pro_activation_hook() {
+function activation_hook() {
 
-	if ( defined( 'ARVE_PRO_KEY' ) ) {
-		nextgenthemes_api_update_key_status( 'arve_pro', ARVE_PRO_KEY, 'activate' );
+	update_option( 'nextgenthemes_arve_oembed_recache', time() );
+
+	if ( defined( 'ARVE_PRO_KEY' ) && function_exists( '\Nextgenthemes\ARVE\Common\activate_product_key' ) ) {
+		\Nextgenthemes\ARVE\Common\activate_product_key( 'arve_pro', ARVE_PRO_KEY );
 	}
 }
 
-register_activation_hook( __FILE__, 'arve_pro_activation_hook' );
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );

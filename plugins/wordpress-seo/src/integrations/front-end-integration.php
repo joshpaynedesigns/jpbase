@@ -92,7 +92,6 @@ class Front_End_Integration implements Integration_Interface {
 		'Open_Graph\Article_Published_Time',
 		'Open_Graph\Article_Modified_Time',
 		'Open_Graph\Image',
-		'Open_Graph\FB_App_ID',
 	];
 
 	/**
@@ -166,7 +165,9 @@ class Front_End_Integration implements Integration_Interface {
 	];
 
 	/**
-	 * @inheritDoc
+	 * Returns the conditionals based on which this loadable should be active.
+	 *
+	 * @return array The conditionals.
 	 */
 	public static function get_conditionals() {
 		return [ Front_End_Conditional::class ];
@@ -198,7 +199,10 @@ class Front_End_Integration implements Integration_Interface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Registers the appropriate hooks to show the SEO metadata on the frontend.
+	 *
+	 * Removes some actions to remove metadata that WordPress shows on the frontend,
+	 * to avoid duplicate and/or mismatched metadata.
 	 */
 	public function register_hooks() {
 		\add_action( 'wp_head', [ $this, 'call_wpseo_head' ], 1 );

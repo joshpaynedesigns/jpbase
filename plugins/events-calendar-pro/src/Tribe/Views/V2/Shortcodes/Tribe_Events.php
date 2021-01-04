@@ -88,12 +88,8 @@ class Tribe_Events extends Shortcode_Abstract implements Shortcode_Interface {
 	protected function toggle_view_hooks( $toggle ) {
 		if ( $toggle ) {
 			add_filter( 'tribe_events_views_v2_url_query_args', [ $this, 'filter_view_query_args' ], 15, 3 );
-			add_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', '__return_false', 20 );
-			add_filter( 'tribe_events_filter_bar_views_v2_1_should_display_filters', '__return_false', 20 );
 		} else {
 			remove_filter( 'tribe_events_views_v2_url_query_args', [ $this, 'filter_view_query_args' ], 15 );
-			remove_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', '__return_false', 20 );
-			remove_filter( 'tribe_events_filter_bar_views_v2_1_should_display_filters', '__return_false', 20 );
 		}
 
 		/**

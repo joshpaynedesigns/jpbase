@@ -9,7 +9,7 @@
  *
  * @link http://m.tri.be/1aiy
  *
- * @version 5.0.1
+ * @version 5.2.0
  */
 ?>
 <div
@@ -29,4 +29,5 @@
 		placeholder="<?php esc_attr_e( 'In a location', 'tribe-events-calendar-pro' ); ?>"
 		aria-label="<?php printf( esc_attr__( 'Enter Location. Search for %s by Location.', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?>"
 	/>
+	<?php $this->template( 'components/icons/location', [ 'classes' => [ 'tribe-events-c-search__input-control-icon-svg' ] ] ); ?>
 </div>

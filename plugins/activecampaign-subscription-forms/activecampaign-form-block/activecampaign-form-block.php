@@ -47,20 +47,25 @@ function activecampaign_form_block_init() {
 
 	$all_settings = get_option("settings_activecampaign");
 
-	$settings = [ 'forms' => [] ];
+	$settings = [ 'forms' => [], 'connected' => true ];
 	// Best to do this formation in one spot
 	if(!empty($all_settings) && !empty($all_settings['forms'])){
 		foreach($all_settings['forms'] as $form){
-			$settings['forms'][$form['id']] = [
-				'script_container_id' => '_form_'.$form['id'],
-				'script_src' => activecampaign_form_script_src($all_settings, $form, false, null, true),
-				'name' => $form['name'],
-				'id' => $form['id'],
-				'version' => $form['version'],
-			];
+			$script_src = activecampaign_form_script_src($all_settings, $form, false, null, true);
+			if(isset($script_src)){
+				$settings['forms'][$form['id']] = [
+					'script_container_id' => '_form_'.$form['id'],
+					'script_src' => $script_src,
+					'name' => $form['name'],
+					'id' => $form['id'],
+					'version' => $form['version'],
+				];
+			}
 		}
 	}
-
+	elseif(empty($all_settings) || empty($all_settings['api_url']) || empty($all_settings['api_key'])){
+		$settings['connected'] = false;
+	}
 
 	$block_attributes = [
 		'formId'             => [

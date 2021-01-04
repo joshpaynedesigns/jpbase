@@ -2,7 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
 Requires at least: 2.0
-Tested up to: 5.5.1
+Tested up to: 5.6
 Stable tag: trunk
 
 Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -88,6 +88,10 @@ Please make sure that your login information is correct, and that you have at le
 7. Conversations chat widget
 
 == Changelog ==
+= 8.1.1 =
+* Improved error handling on expired credentials and misconfigurations
+* Shortening Block widget name to 'AC Forms'
+
 = 8.1.0 =
 * Improvements to Gutenberg Editor experience, including live preview of Form embeds
 * Background color bug fix

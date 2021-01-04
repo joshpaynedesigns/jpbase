@@ -2,7 +2,7 @@
 Contributors: deliciousbrains, mattshaw
 Tags: search replace, search and replace, update urls, database, search replace database, update database urls, update live url, better search replace, search&replace
 Requires at least: 3.0.1
-Tested up to: 4.9.1
+Tested up to: 5.6
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -89,7 +89,11 @@ This is likely an issue with your PHP memory limit. Try temporarily increasing i
 
 == Changelog ==
 
-= 1.3.7 - February 21, 2019 =
+= 1.3.8 - December 7, 2020 =
+* Improvement: WordPress 5.6 and PHP 8 compatible
+* Fix: Strings that have been serialized twice showing up as false-positives
+
+= 1.3.7 - February 26, 2019 =
 * Fix: Existing strings that match the "Replace with" string are not highlighted in results
 * Fix: Some special characters interfering with search/replace
 * Fix: Percentage sign not saved correctly in backups

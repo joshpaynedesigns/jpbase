@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
-Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, thatdudebutch,  zbtirrell, juanfra
+Contributors: ModernTribe, borkweb,bordoni, brianjessee, aguseo, camwynsp, cliffpaulick, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, peterchester, paulskim, reid.peifer, shane.pearlman, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 4.9.14
-Tested up to: 5.5.1
-Stable tag: 5.1.6
+Tested up to: 5.6.0
+Stable tag: 5.2.1.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -204,6 +204,18 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.2.0.1] 2020-12-21 =
+
+* Fix - Update The Events Calendar minimum required version to avoid activation issues.
+
+= [5.2.0] 2020-12-02 =
+
+* Fix - Ensure we don't have pieces of Filter Bar present when using shortcodes. [ECP-527]
+* Fix - Allow shortcode list widget to be redefined dynamically via a filter. [ECP-541]
+* Fix - Use the Time Format defined in WordPress General Settings for Week View grid headers. [ECP-357]
+* Tweak - Remove unused and the outdated `momentjs` library that was bundled with the plugin to use, in its place, the one bundled in The Events Calendar. [ECP-576]
+* Language - 18 new strings added, 34 updated, 0 fuzzied, and 2 obsoleted
 
 = [5.1.6] 2020-10-22 =
 

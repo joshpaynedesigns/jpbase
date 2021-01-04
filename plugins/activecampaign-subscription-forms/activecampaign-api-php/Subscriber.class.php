@@ -1,6 +1,5 @@
 <?php
 
-class AC_SubscriberWordPress extends AC_ContactWordPress {
+class AC_SubscriberWordPress extends AC_ContactWordPress
+{
 }
-
-?>

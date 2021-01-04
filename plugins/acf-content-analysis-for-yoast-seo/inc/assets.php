@@ -38,9 +38,8 @@ class Yoast_ACF_Analysis_Assets {
 		$config = Yoast_ACF_Analysis_Facade::get_registry()->get( 'config' );
 
 		// Post page enqueue.
-		if (
-			wp_script_is( WPSEO_Admin_Asset_Manager::PREFIX . 'post-edit' ) ||
-			wp_script_is( WPSEO_Admin_Asset_Manager::PREFIX . 'post-edit-classic' )
+		if ( wp_script_is( WPSEO_Admin_Asset_Manager::PREFIX . 'post-edit' )
+			|| wp_script_is( WPSEO_Admin_Asset_Manager::PREFIX . 'post-edit-classic' )
 		) {
 			wp_enqueue_script(
 				'yoast-acf-analysis-post',
