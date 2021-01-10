@@ -15,15 +15,22 @@ class FlexibleContentSectionItemOptions {
 	 */
 	protected $has_padding = false;
 
+    /**
+     * @var callable|null
+     */
+	protected $padding_filter = null;
+
 	/**
 	 * FlexibleContentSectionItemOptions constructor.
 	 *
 	 * @param callback $func
 	 * @param bool $has_padding
+     * @param callback $padding_filter
 	 */
-	public function __construct($func, $has_padding) {
+	public function __construct($func, $has_padding, $padding_filter) {
 		$this->setFunc($func);
 		$this->setHasPadding($has_padding);
+		$this->setPaddingFilter($padding_filter);
 	}
 
 	/**
@@ -39,6 +46,17 @@ class FlexibleContentSectionItemOptions {
 	public function setFunc( $func ) {
 		$this->func = $func;
 	}
+
+	public function getPaddingFilter() {
+	    return $this->padding_filter;
+    }
+
+    /**
+     * @param $padding_filter
+     */
+	public function setPaddingFilter ($padding_filter) {
+	    $this->padding_filter = $padding_filter;
+    }
 
 	/**
 	 * @return boolean

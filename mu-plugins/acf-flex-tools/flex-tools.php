@@ -70,12 +70,26 @@ class FlexibleContentSection {
 			$flex_field = get_field( $this->acf_name );
 		}
 
-		$cur_has_padding = FlexibleContentSectionItem::getInstance( get_row_layout() )->getOptions()->getHasPadding();
+		$cur_field = $flex_field[$next_count-1];
+		$fcs_cur_item = FlexibleContentSectionItem::getInstance( get_row_layout() );
+		$padding_filter = $fcs_cur_item->getOptions()->getPaddingFilter();
+        $cur_has_padding = $fcs_cur_item->getOptions()->getHasPadding();
+
+		if (!is_null($padding_filter)) {
+            $cur_has_padding = $padding_filter( $fcs_cur_item->getOptions()->getHasPadding(), $cur_field['acf_fc_layout'], $cur_field );
+        }
 
 		// $flex_field[$count+1]['acf_fc_layout'] gets the next acf name
 		if ( isset( $flex_field[ $next_count ]['acf_fc_layout'] ) ) {
-			$next_name        = $flex_field[ $next_count ]['acf_fc_layout'];
-			$next_has_padding = FlexibleContentSectionItem::getInstance( $next_name )->getOptions()->getHasPadding();
+			$next_name = $flex_field[ $next_count ]['acf_fc_layout'];
+			$title = $flex_field[ $next_count ]['section_title'];
+			$fcs_next_item = FlexibleContentSectionItem::getInstance( $next_name );
+			$next_padding_filter = $fcs_next_item->getOptions()->getPaddingFilter();
+            $next_has_padding = $fcs_next_item->getOptions()->getHasPadding();
+
+            if (!is_null($next_padding_filter)) {
+                $next_has_padding = $next_padding_filter( $fcs_next_item->getOptions()->getHasPadding(), $next_name, $flex_field[ $next_count ] );
+            }
 		}
 
 		// If the current item has padding

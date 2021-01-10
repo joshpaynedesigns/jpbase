@@ -16,8 +16,14 @@ class FlexibleContentSectionFactory {
 		$sections = FlexibleContentSectionUtility::getSections();
 
 		foreach($sections as $sec_acf_name => $options) {
+		    $padding_filter = null;
+
+		    if (property_exists($options, 'padding_filter')) {
+		        $padding_filter = $options->padding_filter;
+            }
+
 			new FlexibleContentSectionItem($sec_acf_name,
-				new FlexibleContentSectionItemOptions($options->func, $options->has_padding));
+				new FlexibleContentSectionItemOptions($options->func, $options->has_padding, $padding_filter));
 		}
 
 		return new FlexibleContentSection($acf_name);
