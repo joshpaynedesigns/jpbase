@@ -3,7 +3,7 @@
 return (object) array(
 	'acf_name'  => 'content_section',
 	'options'   => (object) array(
-	'func'      => function ($padding_classes = '') {
+    	'func'      => function ($padding_classes = '') {
             $p_loc = FlexibleContentSectionUtility::getSectionsDirectory();
             $fcta_loc = "$p_loc/content";
             $item = "$fcta_loc/item.php";
@@ -28,13 +28,13 @@ return (object) array(
             require($item);
         },
         'padding_filter' => function($has_padding, $section, $field) {
-	        if ($section === 'content_section') {
+            if ($section === 'content_section') {
                 $bg_color = $field['background_color'];
 
                 return $bg_color != 'white' ? false : $has_padding;
             }
 
-	        return $has_padding;
+            return $has_padding;
         },
         'has_padding'   => true,
 	)
