@@ -61,7 +61,7 @@ function oembed2args( $data, $url ) {
 // needed for private videos
 function vimeo_referer( $args, $url ) {
 
-	if ( Common\contains( $url, 'vimeo' ) ) {
+	if ( str_contains( $url, 'vimeo' ) ) {
 		$args['headers']['Referer'] = site_url();
 	}
 
@@ -80,11 +80,11 @@ function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 	$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
 
 	// Get the cached HTML
-	$cachekey      = '_oembed_' . $key_suffix;
-	$metadata      = get_post_custom( $post_id );
-	$cache_exists  = isset( $metadata[ $cachekey ][0] );
-	$cache_html    = $cache_exists ? strtolower( get_post_meta( $post_id, $cachekey, true ) ) : false;
-	// $cache_exists2 = metadata_exists( 'post', $post_id, $cachekey ); // TODO not sure of 'post' is always right for embeds outside of 
+	$cachekey     = '_oembed_' . $key_suffix;
+	$metadata     = get_post_custom( $post_id );
+	$cache_exists = isset( $metadata[ $cachekey ][0] );
+	$cache_html   = $cache_exists ? strtolower( get_post_meta( $post_id, $cachekey, true ) ) : false;
+	// $cache_exists2 = metadata_exists( 'post', $post_id, $cachekey ); // TODO not sure of 'post' is always right for embeds outside of
 
 	// time after a recache should be done
 	$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
@@ -96,13 +96,13 @@ function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
 		'open.spotify.com',
 		'secure.polldaddy.com',
 		'embed.tumblr.com',
-		'imgur.com'
+		'imgur.com',
 	];
 
 	// Check if we need to regenerate the oEmbed HTML:
 	if ( $cache_exists &&
 		$cache_time < $trigger_time &&
-		! Common\contains_any( $cache_html, $not_touching ) &&
+		! Common\str_contains_any( $cache_html, $not_touching ) &&
 		$GLOBALS['wp_embed']->usecache
 	) {
 		// What we need to skip the oembed cache part

@@ -13,6 +13,7 @@ return array(
     'Tribe\\Events\\Pro\\Rewrite\\Rewrite' => $baseDir . '/src/Tribe/Rewrite/Rewrite.php',
     'Tribe\\Events\\Pro\\Service_Providers\\Customizer' => $baseDir . '/src/Tribe/Service_Providers/Customizer.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Assets' => $baseDir . '/src/Tribe/Views/V2/Assets.php',
+    'Tribe\\Events\\Pro\\Views\\V2\\Customizer' => $baseDir . '/src/Tribe/Views/V2/Customizer.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Base_Handler' => $baseDir . '/src/Tribe/Views/V2/Geo_Loc/Base_Handler.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Geocoding_Handler' => $baseDir . '/src/Tribe/Views/V2/Geo_Loc/Geocoding_Handler.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Handler_Interface' => $baseDir . '/src/Tribe/Views/V2/Geo_Loc/Handler_Interface.php',

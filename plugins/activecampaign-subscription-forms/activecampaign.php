@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.1
+Version: 8.1.4
 Author URI: http://www.activecampaign.com
 */
 
@@ -52,6 +52,9 @@ Author URI: http://www.activecampaign.com
 ## version 8.0.3: Pluggable bug fix
 ## version 8.1.0: Improvements to Gutenberg Editor experience, including live preview of Form embeds. Background color bug fix. Shortcode support for optional 'css' and 'static' attributes that default to plugin settings. Avoiding global namespace conflicts of on-demand chunks bug fix.
 ## version 8.1.1: Improved error handling on expired credentials and misconfigurations. Shortening Block widget name to 'AC Forms'.
+## version 8.1.2: Simplifying plugin settings options. Dropping 'Global' CSS option for block, defaulting to 'Use ActiveCampaign CSS'. Converting to Dynamic Block pattern.
+## version 8.1.3: Hotfix for Default CSS option deprecation. Moving from global assignment to block/shortcode assignment. Allowing fallback for existing blocks without CSS setting.
+## version 8.1.4: Rolling back settings page form/css deprecations. We have improved testing workflows moving forward.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -103,6 +106,7 @@ function activecampaign_form_script_src($settings, $form, $static = false, $nost
 	}
 
     $source = sprintf("https://%s/f/embed.php?", $domain);
+
 	$css = (isset($settings["css"]) && isset($settings["css"][$form["id"]]))? $settings["css"][$form["id"]] : null;
 
     // Always passing params for JS eval in block editor
@@ -110,10 +114,10 @@ function activecampaign_form_script_src($settings, $form, $static = false, $nost
 
     $source .= sprintf("id=%d&%s", $form["id"], strtoupper(uniqid()));
 
-    $source .= (
-        (isset($nostyles) && $nostyles === true)
-        || (!isset($nostyles) && (!isset($css) || !$css))
-    )? "&nostyles=1" : "&nostyles=0";
+	$source .= (
+		(isset($nostyles) && $nostyles === true)
+		|| (!isset($nostyles) && (!isset($css) || !$css))
+	)? "&nostyles=1" : "&nostyles=0";
 
     $source .= ($preview)? "&preview=1" : "&preview=0";
 
@@ -141,13 +145,13 @@ function activecampaign_shortcodes($args)
                 }
 
                 // Use null default for undefined settings fallback
-                $nostyles = null;
-                if (isset($args["css"])) {
-                    if ($args["css"] === 1 || $args["css"] === '1' || $args["css"] === 'true') {
-                        $nostyles = false;
-                    } elseif ($args["css"] === 0 || $args["css"] === '0' || $args["css"] === 'false') {
-                        $nostyles = true;
-                    }
+				$nostyles = null;
+				if (isset($args["css"])) {
+					if ($args["css"] === 1 || $args["css"] === '1' || $args["css"] === 'true') {
+						$nostyles = false;
+					} elseif ($args["css"] === 0 || $args["css"] === '0' || $args["css"] === 'false') {
+						$nostyles = true;
+					}
                 }
 
                 return activecampaign_form_source($settings, $form, $static, $nostyles, $preview);

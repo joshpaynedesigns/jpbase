@@ -43,23 +43,6 @@ function latest_youtube_video_from_channel( $a ) {
 	return $a;
 }
 
-function pro_modes() {
-
-	return [
-		'lazyload'      => __( 'Lazyload', 'arve-pro' ),
-		'lightbox'      => __( 'Lightbox', 'arve-pro' ),
-		'link-lightbox' => __( 'Link -> Lightbox', 'arve-pro' ),
-	];
-}
-
-function add_pro_modes( $modes ) {
-	return array_merge( $modes, pro_modes() );
-}
-
-function html_js_class() {
-	echo '<script>document.documentElement.classList.add("js");</script>';
-}
-
 function append_lightbox_link( $html, array $a) {
 
 	if ( 'link-lightbox' === $a['mode'] ) {

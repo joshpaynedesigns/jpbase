@@ -80,14 +80,42 @@ function activecampaign_form_block_init() {
 			'type' => 'object',
 			'default' => $settings
 		],
+		// Indicates dynamic block update
+		'hasRenderCallback'	=> [
+			'type' => 'boolean',
+			'default' => false
+		],
+		'migrationVersion' => [
+			'type' => 'integer',
+			'default' => 0
+		]
 	];
 
 	register_block_type( 'activecampaign-form/activecampaign-form-block', [
 		'editor_script' => 'activecampaign-form-block-editor',
 		'editor_style'  => 'activecampaign-form-block-editor',
 		'style'         => 'activecampaign-form-block',
-		'attributes'    => $block_attributes
+		'attributes'    => $block_attributes,
+		'render_callback' => 'activecampaign_form_block_render'
 	] );
 
 
+}
+
+function activecampaign_form_block_render($attributes, $content){
+	// can compare $attributes['migrationVersion'] for conditional rendering based on attribute changes
+
+	// CSS support still needs global setting support for un-upgraded blocks
+	$css = ''; // global fallback
+	if(isset($attributes['useCss']) && $attributes['useCss'] === '0'){
+		$css = ' css=0';
+	}
+	elseif(isset($attributes['useCss']) && $attributes['useCss'] === '1'){
+		$css = ' css=1';
+	}
+
+	if(!empty($attributes['formId'])){
+		return "[activecampaign form=".$attributes['formId'].$css."]";
+	}
+	return "[activecampaign]";
 }

@@ -2,7 +2,7 @@
 Donate link: https://nextgenthemes.com/donate/
 Requires at least: 4.9.0
 Tested up to: 5.6.0
-Requires PHP: 5.3.0
+Requires PHP: 5.6.0
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,8 +18,21 @@ Please refer to [Installing and License Management](https://nextgenthemes.com/pl
 
 == Changelog ==
 
+= 2021-01-21 5.1.7 =
+* Fix: Wrong version check caused the plugin not working correctly.
+
+= 2021-01-21 5.1.4 =
+* Adjustment to new ARVE.
+
+= 2021-01-07 5.1.3 =
+* Fix: Removed no longer working Facebook auto thumbnail code.
+
+= 2021-01-06 5.1.2 =
+* Fix: Vimeo play button style not clickable.
+* Fix: vimeo play button line break issue.
+
 = 2021-01-03 5.1.1 =
-* New: Vimeo play button style
+* New: Vimeo play button style.
 
 = 2020-12-14 5.0.1 =
 * Fix: Issue with thumbnail positioning.

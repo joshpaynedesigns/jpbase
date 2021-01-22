@@ -1,8 +1,6 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-use function Nextgenthemes\ARVE\Common\starts_with;
-
 function shortcode( $a, $content = null ) {
 
 	$a = (array) $a;
@@ -79,44 +77,64 @@ function basic_tests( $tests ) {
 	return $html;
 }
 
-function build_video( array $input_atts ) {
+function error( $msg, $code = '' ) {
 
-	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
-		$pairs[ "track_{$n}" ]       = null;
-		$pairs[ "track_{$n}_label" ] = null;
-	}
+	return sprintf(
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span>',
+		'hidden' === $code ? ' hidden' : '',
+		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
+		// translators: Error message
+		sprintf( __( 'Error: %s', 'advanced-responsive-video-embedder' ), $msg )
+	);
+}
 
-	$a    = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+function add_error_html( array $a ) {
+
 	$html = '';
 
-	ksort( $a );
-	ksort( $input_atts );
-
-	if ( $a['errors']->has_errors() ) {
-
-		foreach ( $a['errors']->get_error_codes() as $code ) {
-			foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
-				$html .= sprintf(
-					'<span class="arve-error"%s>%s %s</span>',
-					'hidden' === $code ? ' hidden' : '',
-					__( '<abbr title="Advanced Responsive Video Embedder">ARVE</abbr> Error:', 'advanced-responsive-video-embedder' ),
-					$message
-				);
-			}
-		}
-
-		if ( '' !== $a['errors']->get_error_message( 'fatal' ) ) {
-			$html .= get_debug_info( $html, $a, $input_atts );
-			return $html;
+	foreach ( $a['errors']->get_error_codes() as $code ) {
+		foreach ( $a['errors']->get_error_messages( $code ) as $key => $message ) {
+			$html .= error( $message, $code );
 		}
 	}
 
-	$html .= build_html( $a );
-	$html .= get_debug_info( $html, $a, $input_atts );
+	return $html;
+}
 
-	wp_enqueue_script( 'arve' );
+function build_video( array $input_atts ) {
 
-	return apply_filters( 'nextgenthemes/arve/html', $html, $a );
+	$a    = array();
+	$html = '';
+
+	try {
+		Common\check_product_keys();
+
+		$a = shortcode_atts( shortcode_pairs(), $input_atts, 'arve' );
+		ksort( $a );
+		ksort( $input_atts );
+
+		$build_args = new ShortcodeArgs( $a['errors'] );
+		$a          = $build_args->get_done( $a );
+
+		$html .= add_error_html( $a );
+		$html .= build_html( $a );
+		$html .= get_debug_info( $html, $a, $input_atts );
+
+		wp_enqueue_script( 'arve' );
+
+		return apply_filters( 'nextgenthemes/arve/html', $html, $a );
+
+	} catch ( \Exception $e ) {
+		return error( $e->getMessage(), $e->getCode() ) .
+			get_debug_info( '', $a, $input_atts );
+	}
+}
+
+function arg_filters( array $a ) {
+
+	$args = new ShortcodeArgs( $a );
+
+	return $args->get_done();
 }
 
 function shortcode_option_defaults() {

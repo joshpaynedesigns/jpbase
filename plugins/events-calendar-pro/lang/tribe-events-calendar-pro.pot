@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.3.0\n"
+"Project-Id-Version: The Events Calendar PRO 5.2.1\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2020-12-02 16:17:39+00:00\n"
+"POT-Creation-Date: 2020-12-11 06:24:23+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-12-02 16:17\n"
+"PO-Revision-Date: 2020-12-11 06:24\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -1921,76 +1921,76 @@ msgctxt "featured events title"
 msgid "Featured %s"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:37
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:32
 msgctxt "The title for the selected taxonomy section of the List Widget."
 msgid "Filters:"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:46
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:41
 msgctxt "The label for the taxonomy and/or option in the List Widget."
 msgid "Operand:"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:65
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:60
 msgctxt ""
 "The label for the option to filter the List Widget events via a taxonomy."
 msgid "Add a filter:"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:66
+#: src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php:61
 msgctxt "Placeholder label for taxonomy filter dropdown."
 msgid "Select a Taxonomy Term"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:144
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:143
 msgctxt "The title for the meta data section of the List Widget."
 msgid "Display:"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:148
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:147
 msgctxt "The label for the option to enable cost display in the List Widget."
 msgid "Price"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:152
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:151
 msgctxt "The label for the option to enable venue display in the List Widget."
 msgid "Venue"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:156
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:155
 msgctxt "The label for the option to enable street display in the List Widget."
 msgid "Street"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:160
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:159
 msgctxt "The label for the option to enable city display in the List Widget."
 msgid "City"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:164
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:163
 msgctxt "The label for the option to enable region display in the List Widget."
 msgid "State (US) Or Province (Int)"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:168
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:167
 msgctxt ""
 "The label for the option to enable zip/postal code display in the List "
 "Widget."
 msgid "Postal Code"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:172
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:171
 msgctxt ""
 "The label for the option to enable country display in the List Widget."
 msgid "Country"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:176
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:175
 msgctxt "The label for the option to enable phone display in the List Widget."
 msgid "Phone"
 msgstr ""
 
-#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:180
+#: src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php:179
 msgctxt ""
 "The label for the option to enable organizer display in the List Widget."
 msgid "Organizer"
