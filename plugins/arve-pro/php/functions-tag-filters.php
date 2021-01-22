@@ -62,7 +62,7 @@ function is_lity( array $a ) {
 function tag_filter_arve( array $tag, array $a ) {
 
 	if ( 'link-lightbox' === $a['mode'] ) {
-		$tag['tag'] = 'span';
+		$tag['tag']                            = 'span';
 		$tag['attr']['data-lightbox-maxwidth'] = ARVE\options()['lightbox_maxwidth'];
 
 		if ( $a['src'] ) {
@@ -150,10 +150,10 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 
 	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
 
-		if ( is_numeric( $a['thumbnail'] )  ) {
+		if ( is_numeric( $a['thumbnail'] ) ) {
 
 			$image = wp_get_attachment_image_src( $a['thumbnail'], 'full' );
- 
+
 			if ( $image ) {
 				list( $src, $width, $height ) = $image;
 
@@ -173,7 +173,7 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 			);
 		} else {
 			$ratio  = empty( $a['aspect_ratio'] ) ? '16:9' : $a['aspect_ratio'];
-			$height = ARVE\new_height_from_aspect_ratio( $a['maxwidth'], $ratio );
+			$height = ARVE\height_from_width_and_ratio( $a['maxwidth'], $ratio );
 		}
 
 		$tag['tag']             = 'img';
@@ -197,6 +197,13 @@ function tag_filter_button( array $tag, array $a) {
 		return $tag;
 	}
 
+	if (
+		'html5' === $a['provider'] &&
+		empty( $a['img_src'] )
+	) {
+		$a['play_icon_style'] = 'none';
+	}
+
 	$svg      = '';
 	$svg_file = PLUGIN_DIR . "/svg/{$a['play_icon_style']}.svg";
 
@@ -209,12 +216,15 @@ function tag_filter_button( array $tag, array $a) {
 
 	$svg = \str_replace(
 		'<svg',
-		sprintf( '<svg class="%s" focusable="false" role="img"', esc_attr( 'arve-play-svg arve-play-svg--' . $a['play_icon_style'] ) ),
+		sprintf(
+			'<svg class="%s" focusable="false" role="img"',
+			esc_attr( 'arve-play-svg arve-play-svg--' . $a['play_icon_style'] )
+		),
 		$svg
 	);
 
 	if ( 'vimeo' === $a['play_icon_style'] ) {
-		$svg = '<div class="arve-play-btn-inner">' . $svg . '</div>';
+		$svg = '<span class="arve-play-btn-inner">' . $svg . '</span>';
 	}
 
 	$tag['tag']                 = 'button';

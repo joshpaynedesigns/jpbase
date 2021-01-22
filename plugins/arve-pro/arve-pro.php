@@ -6,9 +6,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       ARVE Pro Addon
- * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
+ * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
- * Version:           5.1.1
+ * Version:           5.1.7
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL 3.0
@@ -21,7 +21,7 @@ namespace Nextgenthemes\ARVE\Pro;
 
 use \Nextgenthemes\ARVE;
 
-const VERSION      = '5.1.1';
+const VERSION      = '5.1.7';
 const PLUGIN_FILE  = __FILE__;
 const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
 const PLUGIN_DIR   = __DIR__;
@@ -30,7 +30,9 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 
 function init() {
 
-	if ( ! function_exists( '\Nextgenthemes\ARVE\init' ) ) {
+	if ( ! defined('Nextgenthemes\ARVE\VERSION') ||
+		version_compare( \Nextgenthemes\ARVE\VERSION, '9.2.0', '<' )
+	) {
 		return;
 	}
 
@@ -50,23 +52,18 @@ function init() {
 	add_action( 'init', __NAMESPACE__ . '\register_assets' );
 	add_filter( 'nextgenthemes/arve/arve_html', __NAMESPACE__ . '\append_lightbox_link', 10, 2 );
 	add_filter( 'nextgenthemes/arve/iframe_html', __NAMESPACE__ . '\noscript_wrap', 10, 2 );
-	add_filter( 'nextgenthemes/arve/modes', __NAMESPACE__ . '\add_pro_modes' );
 	add_filter( 'nextgenthemes/arve/shortcode_args', __NAMESPACE__ . '\latest_youtube_video_from_channel' );
 
-	add_filter( 'wp_head', __NAMESPACE__ . '\html_js_class', 1 );
-
-	add_filter( 'shortcode_atts_arve', __NAMESPACE__ . '\sc_filter_extra_data', -200 );
+	add_filter( 'shortcode_atts_arve', __NAMESPACE__ . '\shortcode_atts_extra_data', -20 );
 
 	foreach ( [
-		#'src',
 		'validate',
-		'mode',
 		'autoplay',
 		'thumbnail',
 		'img_src',
 		'img_srcset',
 	] as $filter ) {
-		add_filter( "nextgenthemes/arve/sc_filter/$filter", __NAMESPACE__ . "\sc_filter_$filter" );
+		add_filter( "nextgenthemes/arve/args/$filter", __NAMESPACE__ . "\\arg_filter_$filter", 10, 2 );
 	}
 
 	foreach ( [

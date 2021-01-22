@@ -126,8 +126,8 @@ class Tribe__Events__Pro__Shortcodes__Events_List extends Tribe__Events__Pro__Sh
 	public function handle_shortcode_widget_taxonomy() {
 		$filters    = [];
 		$tag        = ! empty( $this->arguments['tag'] ) ? (array) $this->arguments['tag'] : [];
-		$tags       = ! empty( $this->arguments['tags'] ) ? implode( ',', $this->arguments['tags'] ) : [];
-		$tags       = array_filter( array_unique( array_merge( $tag, $tags ) ) );
+		$tags       = ! empty( $this->arguments['tags'] ) ? implode( ',', (array) $this->arguments['tags'] ) : [];
+		$tags       = array_filter( array_unique( array_merge( (array) $tag, (array) $tags ) ) );
 		$category   = ! empty( $this->arguments['category'] ) ? (array) $this->arguments['category'] : [];
 		$categories = ! empty( $this->arguments['categories'] ) ? implode( ',', $this->arguments['categories'] ) : [];
 		$categories = array_filter( array_unique( array_merge( $category, $categories ) ) );
@@ -171,7 +171,7 @@ class Tribe__Events__Pro__Shortcodes__Events_List extends Tribe__Events__Pro__Sh
 	 */
 	public function get_term_id( $param, $taxonomy ) {
 		$param    = preg_replace( '/^#/', '', $param );
-		$term_by  = is_numeric( $param )? 'ID' : 'slug';
+		$term_by  = is_numeric( $param ) ? 'ID' : 'slug';
 		$term_obj = get_term_by( $term_by, $param, $taxonomy );
 
 		if ( ! $term_obj instanceof \WP_Term ) {

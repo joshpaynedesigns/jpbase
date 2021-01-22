@@ -4,7 +4,7 @@ namespace Nextgenthemes\ARVE;
 function aspect_ratio_gcd( $aspect_ratio ) {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
-	$gcd = gcd( $width, $height );
+	$gcd                    = gcd( $width, $height );
 
 	$aspect_ratio = $width / $gcd . ':' . $height / $gcd;
 
@@ -55,7 +55,7 @@ function youtube_time_to_seconds( $yttime ) {
 
 	preg_match( $pattern, $yttime, $matches );
 
-	foreach( [ 'h', 'm', 's' ] as $m ) {
+	foreach ( [ 'h', 'm', 's' ] as $m ) {
 		if ( ! isset( $matches[ $m ] ) ) {
 			$matches[ $m ] = 0;
 		}
@@ -68,17 +68,10 @@ function youtube_time_to_seconds( $yttime ) {
 
 function new_height( $old_width, $old_height, $new_width ) {
 
-	$aspect_num   = $old_width / $old_height;
-	$new_height   = $new_width / $aspect_num;
+	$aspect_num = $old_width / $old_height;
+	$new_height = $new_width / $aspect_num;
 
 	return $new_height;
-}
-
-function new_height_from_aspect_ratio( $new_width, $aspect_ratio ) {
-
-	list( $old_width, $old_height ) = explode( ':', $aspect_ratio );
-
-	return new_height( $old_width, $old_height, $new_width );
 }
 
 /**
@@ -103,29 +96,29 @@ function disabled_on_feeds() {
 }
 
 function seconds_to_iso8601_duration( $time ) {
-    $units = array(
-        'Y' => 365*24*3600,
-        'D' =>     24*3600,
-        'H' =>        3600,
-        'M' =>          60,
-        'S' =>           1,
-    );
+	$units = array(
+		'Y' => 365 * 24 * 3600,
+		'D' => 24 * 3600,
+		'H' => 3600,
+		'M' => 60,
+		'S' => 1,
+	);
 
-    $str = 'P';
-    $istime = false;
+	$str    = 'P';
+	$istime = false;
 
-    foreach ( $units as $unitName => &$unit ) {
-        $quot  = intval($time / $unit);
-        $time -= $quot * $unit;
-        $unit  = $quot;
-        if ( $unit > 0 ) {
-            if ( ! $istime && in_array($unitName, array('H', 'M', 'S'))) { // There may be a better way to do this
-                $str .= 'T';
-                $istime = true;
-            }
-            $str .= strval($unit) . $unitName;
-        }
-    }
+	foreach ( $units as  $unit_name => $unit ) {
+		$quot  = intval($time / $unit);
+		$time -= $quot * $unit;
+		$unit  = $quot;
+		if ( $unit > 0 ) {
+			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true )) { // There may be a better way to do this
+				$str   .= 'T';
+				$istime = true;
+			}
+			$str .= strval($unit) . $unit_name;
+		}
+	}
 
-    return $str;
+	return $str;
 }

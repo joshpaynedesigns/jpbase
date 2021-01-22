@@ -13,6 +13,7 @@ use Tribe\Events\Views\V2\Assets as TEC_Assets;
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe__Main as Main;
 use Tribe__Utils__Array as Arr;
+use Taxonomy_Filter;
 
 /**
  * Class for the Advanced List Widget.
@@ -22,8 +23,6 @@ use Tribe__Utils__Array as Arr;
  * @package Tribe\Events\Pro\Views\V2\Widgets
  */
 class Widget_Advanced_List {
-
-	use Taxonomy_Filter;
 
 	/**
 	 * Default arguments to be merged into final arguments of the widget.
@@ -54,7 +53,7 @@ class Widget_Advanced_List {
 	 *
 	 * @param \Tribe__Template $template Current instance of the `Tribe__Template` that's being rendered.
 	 */
-	public function action_render_event_cost( $template ) {
+	public function render_event_cost( $template ) {
 		$template->template( 'widgets/widget-events-list/event/cost', $template->get_values() );
 	}
 
@@ -65,7 +64,7 @@ class Widget_Advanced_List {
 	 *
 	 * @param \Tribe__Template $template Current instance of the `Tribe__Template` that's being rendered.
 	 */
-	public function action_render_event_venue( $template ) {
+	public function render_event_venue( $template ) {
 		$template->template( 'widgets/widget-events-list/event/venue', $template->get_values() );
 	}
 
@@ -76,7 +75,7 @@ class Widget_Advanced_List {
 	 *
 	 * @param \Tribe__Template $template Current instance of the `Tribe__Template` that's being rendered.
 	 */
-	public function action_render_event_organizers( $template ) {
+	public function render_event_organizers( $template ) {
 		$template->template( 'widgets/widget-events-list/event/organizers', $template->get_values() );
 	}
 
@@ -89,7 +88,7 @@ class Widget_Advanced_List {
 	 *
 	 * @return string
 	 */
-	public function action_render_event_recurring_icon( $template ) {
+	public function render_event_recurring_icon( $template ) {
 		return $template->template( 'widgets/widget-events-list/event/date/recurring', $template->get_values() );
 	}
 
@@ -102,7 +101,7 @@ class Widget_Advanced_List {
 	 * @param \Tribe__Context $context        Context we are using to build the view.
 	 * @param View_Interface  $view           Which view we are using the template on.
 	 */
-	public function action_enqueue_assets( $should_enqueue, $context, $view ) {
+	public function enqueue_assets( $should_enqueue, $context, $view ) {
 		if ( ! $should_enqueue ) {
 			return;
 		}
@@ -184,7 +183,7 @@ class Widget_Advanced_List {
 		];
 
 		// Add the taxonomy filter controls.
-		$adv_admin_fields = array_merge( $adv_admin_fields, Taxonomy_Filter::get_taxonomy_admin_section() );
+		$adv_admin_fields = array_merge( $adv_admin_fields, tribe( 'pro.views.v2.widgets.taxonomy' )->get_taxonomy_admin_section() );
 
 		return Main::array_insert_after_key( 'limit', $admin_fields, $adv_admin_fields );
 	}
@@ -210,7 +209,7 @@ class Widget_Advanced_List {
 		$updated_instance['cost']      = ! empty( $new_instance['cost'] );
 		$updated_instance['organizer'] = ! empty( $new_instance['organizer'] );
 		$updated_instance['operand']   = ! empty( $new_instance['operand'] ) ? $new_instance['operand'] : false;
-		$updated_instance['filters']   = ! empty( $new_instance['filters'] ) ? $this->format_taxonomy_filters( $new_instance['filters'] ) : false;
+		$updated_instance['filters']   = ! empty( $new_instance['filters'] ) ? tribe( 'pro.views.v2.widgets.taxonomy' )->format_taxonomy_filters( $new_instance['filters'] ) : false;
 
 		return $updated_instance;
 	}
@@ -226,8 +225,9 @@ class Widget_Advanced_List {
 	 * @return array<string,mixed> $alterations The alterations to make to the context.
 	 */
 	public function filter_args_to_context( $alterations, $arguments ) {
-		$alterations['event_display'] = 'list';
-		$alterations['view']          = 'list';
+		$alterations['event_display']     = 'list';
+		$alterations['view']              = 'list';
+		$alterations['widget_tax_filter'] = true;
 
 		$alterations['widget_list_display'] = [
 			'cost'      => tribe_is_truthy( $arguments['cost'] ),
@@ -243,7 +243,8 @@ class Widget_Advanced_List {
 
 		// Handle tax filters.
 		if ( ! empty( $arguments['filters'] ) ) {
-			$alterations = array_merge( $alterations, $this->set_taxonomy_args( $arguments['filters'] ) );
+			$alterations            = array_merge( $alterations, tribe( 'pro.views.v2.widgets.taxonomy' )->set_taxonomy_args( $arguments['filters'] ) );
+			$alterations['operand'] = $arguments['operand'];
 		}
 
 		return $alterations;

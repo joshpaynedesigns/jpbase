@@ -1,6 +1,6 @@
 <?php
 /**
- * Provides methods for Widgets that behave include taxonomy filters.
+ * Utility class that provides methods for Widgets that include taxonomy filters.
  *
  * @since   5.2.0
  *
@@ -9,19 +9,14 @@
 
 namespace Tribe\Events\Pro\Views\V2\Widgets;
 
-use Tribe__Context as Context;
-
 /**
- * Trait Taxonomy_Filter
+ * Class Taxonomy_Filter
  *
  * @since   5.2.0
  *
  * @package Tribe\Events\Pro\Views\V2\Widgets
- *
- * @property Context $context The current View context.
  */
-trait Taxonomy_Filter {
-
+class Taxonomy_Filter {
 	/**
 	 * Get the admin structure for a widget taxonomy filter.
 	 *
@@ -29,7 +24,7 @@ trait Taxonomy_Filter {
 	 *
 	 * @return array<string,mixed> The additional structure
 	 */
-	public static function get_taxonomy_admin_section() {
+	public function get_taxonomy_admin_section() {
 		return [
 			'taxonomy_section' => [
 				'type'     => 'section',
@@ -142,7 +137,7 @@ trait Taxonomy_Filter {
 			return $field;
 		}
 
-		$tax_filters     = json_decode( $widgets_options[ $widget_obj->number ]['filters'], true );
+		$tax_filters = json_decode( $widgets_options[ $widget_obj->number ]['filters'], true );
 
 		if ( empty( $tax_filters ) ) {
 			return $field;
@@ -244,5 +239,64 @@ trait Taxonomy_Filter {
 		}
 
 		return $list_items;
+	}
+
+	/**
+	 * Add args before hading them off to the repository.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param array<string,mixed> $args    The arguments to be set on the View repository instance.
+	 * @param Tribe_Context       $context The context to use to setup the args.
+	 *
+	 * @return array<string,mixed> $args The arguments, ready to be set on the View repository instance.
+	 */
+	public function add_taxonomy_filters_repository_args( $args, $context ) {
+		if ( ! $context->get( 'widget_tax_filter' ) ) {
+			return $args;
+		}
+
+		if ( ! empty( $context->get( 'post_tag' ) ) ) {
+			$args['post_tag'] = $context->get( 'post_tag' );
+		}
+
+		if ( ! empty( $context->get( 'operand' ) ) ) {
+			$args['operand'] = $context->get( 'operand' );
+		}
+
+		return $args;
+	}
+
+	/**
+	 * Add repository args pre-query.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param array<string,mixed> $query_args An array of the query arguments the query will be
+	 *                                         initialized with.
+	 * @param WP_Query            $query      The query object, the query arguments have not been parsed yet.
+	 * @param Tribe__Repository   $repository The repository instance.
+	 *
+	 * @return array<string,mixed> $query_args The array of the query arguments.
+	 */
+	public function add_taxonomy_filters_repository_data( $query_args, $query, $repository ) {
+		if ( ! in_array( 'post_tag', $repository->taxonomies ) ) {
+			return $query_args;
+		}
+
+		if ( isset( $query_args['post_tag'] ) ) {
+			$query_args['tax_query']['post_tag_term_id_in'] = [
+				'taxonomy' => 'post_tag',
+				'field'    => 'term_id',
+				'terms'    => $query_args['post_tag'],
+				'operator' => 'IN',
+			];
+		}
+
+		if ( isset( $query_args['operand'] ) ) {
+			$query_args['tax_query']['relation'] = $query_args['operand'];
+		}
+
+		return $query_args;
 	}
 }

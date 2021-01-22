@@ -61,6 +61,8 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 		// Allow Hooks to be removed, by having the them registered to the container.
 		$this->container->singleton( Hooks::class, $hooks );
 		$this->container->singleton( 'pro.views.v2.widgets.hooks', $hooks );
+
+		$this->container->singleton( 'pro.views.v2.widgets.taxonomy', Taxonomy_Filter::class );
 	}
 
 	/**

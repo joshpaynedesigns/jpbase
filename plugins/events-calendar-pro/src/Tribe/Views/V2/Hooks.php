@@ -37,6 +37,7 @@ use Tribe\Events\Views\V2\Messages as TEC_Messages;
 use Tribe\Events\Views\V2\View;
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe__Context as Context;
+use Tribe__Customizer__Section as Customizer_Section;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Organizer as Organizer;
 use Tribe__Events__Pro__Main as Plugin;
@@ -139,11 +140,16 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_events_rewrite_matchers_to_query_vars_map', [ $this, 'filter_rewrite_query_vars_map' ] );
 		add_filter( 'tribe_events_rewrite_rules_custom', [ $this, 'filter_events_rewrite_rules_custom' ], 20 );
 
-		add_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', [ $this, 'filter_hide_filter_bar_organizer_venue' ], 10, 2 );
-		add_filter( 'tribe_events_filter_bar_views_v2_1_should_display_filters', [ $this, 'filter_hide_filter_bar_organizer_venue' ], 10, 2 );
+		add_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', [ $this, 'filter_hide_filter_bar' ], 10, 2 );
+		add_filter( 'tribe_events_filter_bar_views_v2_1_should_display_filters', [ $this, 'filter_hide_filter_bar' ], 10, 2 );
 
 		add_filter( 'tribe_events_views_v2_manager_view_label_domain', [ $this, 'filter_view_label_domain'], 10, 3 );
-		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12, 2 );
+		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12 );
+
+		// Customizer.
+		add_filter( 'tribe_customizer_pre_sections', [ $this, 'filter_customizer_sections' ], 30, 2 );
+		add_filter( 'tribe_customizer_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 3 );
+		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
 	}
 
 	/**
@@ -540,7 +546,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @param mixed $redirect_url URL which we will redirect to.
 	 *
-	 * @return string             Orginial URL redirect or False to prevent canonical redirect.
+	 * @return string             Original URL redirect or False to prevent canonical redirect.
 	 */
 	public function filter_prevent_canonical_redirect( $redirect_url = null ) {
 		return $this->container->make( Rewrite::class )->filter_prevent_canonical_redirect( $redirect_url );
@@ -867,10 +873,40 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		return $this->container->make( Rewrite::class )->filter_rewrite_query_vars_map( $query_vars_map );
 	}
 
+
+	/**
+	 * Filters the "should display filters" for ECP views.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param bool           $should_display_filters Boolean on whether to display filters or not.
+	 * @param View_Interface $view                   The View currently rendering.
+	 *
+	 * @return bool
+	 */
+	public function filter_hide_filter_bar( $should_display_filters, $view ) {
+		$slug     = $view->get_slug();
+		$wp_query = tribe_get_global_query_object();
+
+		// Don't show for organizers or venues.
+		if ( in_array( $slug, [ 'organizer', 'venue' ] ) ) {
+			return false;
+		}
+
+		// Don't show for a recurring event "all" page.
+		if ( 'all' === $slug || 'all' === $wp_query->get( 'eventDisplay' ) || $wp_query->tribe_is_recurrence_list ) {
+			return false;
+		}
+
+		return $should_display_filters;
+	}
+
 	/**
 	 * Filters the should display filters for organizer and venue views.
+	 * Superseded by filter_hide_filter_bar() above.
 	 *
 	 * @since 5.0.1
+	 * @deprecated 5.1.1
 	 *
 	 * @param bool           $should_display_filters Boolean on whether to display filters or not.
 	 * @param View_Interface $view                   The View currently rendering.
@@ -878,13 +914,9 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return bool
 	 */
 	public function filter_hide_filter_bar_organizer_venue( $should_display_filters, $view ) {
-		$slug = $view->get_slug();
+		_deprecated_function( __FUNCTION__, '5.1.1', 'filter_hide_filter_bar' );
 
-		if ( ! in_array( $slug, [ 'organizer', 'venue' ] ) ) {
-			return $should_display_filters;
-		}
-
-		return false;
+		return $this->filter_hide_filter_bar( $should_display_filters, $view );
 	}
 
 	/**
@@ -925,11 +957,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * Remove unused legacy stylesheets.
 	 *
 	 * @param array<string> $sheets Array of sheets to search for.
-	 * @param string        $css_template String containing the inline css to add.
 	 *
 	 * @return array Modified array of sheets to search for.
 	 */
-	public function customizer_inline_stylesheets( $sheets, $css_template ) {
+	public function customizer_inline_stylesheets( $sheets ) {
 		$v2_sheets = [ 'tribe-events-pro-views-v2-full' ];
 
 		// Unenqueue legacy sheets.
@@ -941,5 +972,61 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		return array_merge( $sheets, $v2_sheets );
+	}
+
+	/**
+	 * Filters the currently registered Customizer sections to add or modify them.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param array<string,array<string,array<string,int|float|string>>> $sections   The registered Customizer sections.
+	 * @param \Tribe___Customizer                                        $customizer The Customizer object.
+	 *
+	 * @return array<string,array<string,array<string,int|float|string>>> The filtered sections.
+	 */
+	public function filter_customizer_sections( $sections, $customizer ) {
+		if ( ! ( is_array( $sections ) && $customizer instanceof \Tribe__Customizer ) ) {
+			return $sections;
+		}
+
+		return $this->container->make( Customizer::class )->filter_sections( $sections, $customizer );
+	}
+
+	/**
+	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_global_elements_css_template( $css_template, $section, $customizer ) {
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section, $customizer );
+	}
+
+	/**
+	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Single Event section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_single_event_css_template( $css_template, $section, $customizer ) {
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section, $customizer );
 	}
 }

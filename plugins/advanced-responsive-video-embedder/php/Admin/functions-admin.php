@@ -10,7 +10,6 @@ function action_admin_init_setup_messages() {
 
 	if ( defined( 'ARVE_PRO_VERSION' ) ) {
 		$pro_version = ARVE_PRO_VERSION;
-
 	} elseif ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) ) {
 		$pro_version = \Nextgenthemes\ARVE\Pro\VERSION;
 	}
@@ -42,7 +41,9 @@ function action_admin_init_setup_messages() {
 
 	if ( display_pro_ad() ) {
 
-		$pro_ad_message = __( '<p>Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.</p>', 'advanced-responsive-video-embedder' );
+		$pro_ad_message = __( 'Hi, this is Nico(las Jonas) the author of the ARVE - Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+
+		$pro_ad_message = "<p>$pro_ad_message</p>";
 
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$pro_ad_message .= file_get_contents( __DIR__ . '/partials/pro-ad.html' );
@@ -138,25 +139,30 @@ function add_action_links( $links ) {
 function add_media_button() {
 
 	$options = ARVE\options();
-
 	add_thickbox();
+	?>
 
-	echo '<div id="arve-thickbox" style="display:none;">';
-	// phpcs:disable WordPress.WP.I18n.MissingTranslatorsComment
-	printf(
-		__( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			'<p>This button can open a optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%1$s">Shortcode UI plugin</a> active for this fuctionality.</p>
-
-			<p>The "Shortcake (Shortcode UI)" plugin also adds What You See Is What You Get functionality for ARVE Shortcodes to WordPress visual post editor. It is perfectly fine to pass on this and <a href="%2$s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier.</p>',
-			'advanced-responsive-video-embedder'
-		),
-		esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) ),
-		esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
-	);
-	// phpcs:enable WordPress.WP.I18n.MissingTranslatorsComment
-
-	echo '</div>';
-
+	<div id="arve-thickbox" style="display:none;">
+		<p>
+			<?php
+			printf(
+				// phpcs:ignore
+				Common\kses_basic( __( 'This button can open an optional ARVE a Shortcode creation dialog. ARVE needs the <a href="%s">Shortcode UI plugin</a> active for this fuctionality. It helps creating shortcodes and provides a preview in the Editor. But sadly Shortcode UI is not maintained anymore and there have been some know issues with Shortcode UI.', 'advanced-responsive-video-embedder' ) ),
+				esc_url( network_admin_url( 'plugin-install.php?s=Shortcode+UI&tab=search&type=term' ) )
+			);
+			?>
+		</p>
+		<p>
+			<?php
+			printf(
+				// phpcs:ignore
+				Common\kses_basic( __( 'It is perfectly fine to pass on this and <a href="%s">manually</a> write shortcodes or don\'t use shortcodes at all, but it makes things easier. And if you even switch to Gutenberg there is a ARVE Block all the settings in the sidebar waiting for you..', 'advanced-responsive-video-embedder' ) ),
+				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/' )
+			);
+			?>
+		</p>
+	</div>
+	<?php
 	printf(
 		'<button id="arve-btn" title="%s" data-mode="%s" class="arve-btn button add_media" type="button"><span class="wp-media-buttons-icon arve-icon"></span> %s</button>',
 		esc_attr__( 'ARVE Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
@@ -172,18 +178,33 @@ function register_shortcode_ui() {
 	foreach ( $settings as $k => $v ) :
 
 		if ( 'boolean' === $v['type'] ) {
-			$v['type']    = 'select';
+			$v['type'] = 'select';
 
 			if ( isset($v['option']) && true === $v['option'] ) {
 				$v['options'] = [
-					[ 'value' => '', 'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
+					[
+						'value' => '',
+						'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'yes',
+						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'no',
+						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+					],
 				];
 			} else {
 				$v['options'] = [
-					[ 'value' => 'no', 'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ) ],
-					[ 'value' => 'yes', 'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ) ],
+					[
+						'value' => 'no',
+						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
+					],
+					[
+						'value' => 'yes',
+						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
+					],
 				];
 			}
 		}
@@ -312,24 +333,6 @@ function params_section_description() {
 	<?php
 }
 
-function plugin_ver_status( $folder_and_filename ) {
-
-	$file = WP_PLUGIN_DIR . '/' . $folder_and_filename;
-
-	if ( ! is_file( $file ) ) {
-		return 'NOT INSTALLED';
-	}
-
-	$data = get_plugin_data( $file );
-	$out  = $data['Version'];
-
-	if ( ! is_plugin_active( $folder_and_filename ) ) {
-		$out .= ' INACTIVE';
-	}
-
-	return $out; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-}
-
 function debug_section_description() {
 	include_once __DIR__ . '/partials/debug-info.php';
 }
@@ -361,7 +364,7 @@ function admin_enqueue_scripts() {
 		Common\enqueue_asset(
 			[
 				'handle' => 'arve-admin-sc-ui',
-			    'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
+				'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
 				'src'    => plugins_url( 'build/shortcode-ui.js', ARVE\PLUGIN_FILE ),
 				'deps'   => [ 'shortcode-ui' ],
 			]

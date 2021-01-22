@@ -3,7 +3,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           9.1.3
+ * Version:           9.2.4
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -21,17 +21,17 @@
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '9.1.3';
-const PRO_VERSION_REQUIRED  = '5.0.0-beta5';
+const VERSION               = '9.2.4';
+const PRO_VERSION_REQUIRED  = '5.1.5';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
 const PLUGIN_DIR            = __DIR__;
 const VIDEO_FILE_EXTENSIONS = [ 'av1mp4', 'mp4', 'm4v', 'webm', 'ogv' ];
 const DEFAULT_MAXWIDTH      = 900;
 
-init();
+init_920();
 
-function init() {
+function init_920() {
 
 	add_option( 'arve_install_date', time() );
 
@@ -42,6 +42,7 @@ function init() {
 
 	require_once PLUGIN_DIR . '/php/Common/init.php';
 	require_once PLUGIN_DIR . '/php/EmbedChecker.php';
+	require_once PLUGIN_DIR . '/php/ShortcodeArgs.php';
 	require_once PLUGIN_DIR . '/php/functions-deprecated.php';
 	require_once PLUGIN_DIR . '/php/functions-assets.php';
 	require_once PLUGIN_DIR . '/php/functions-html-output.php';
@@ -72,30 +73,7 @@ function init() {
 	add_filter( 'oembed_ttl',                  __NAMESPACE__ . '\trigger_cache_rebuild', 10, 4 );
 	add_filter( 'embed_oembed_discover',       __NAMESPACE__ . '\reenable_oembed_cache' );
 
-	foreach ( [
-		'missing_attribute_check'         => -100,
-		'validate'                        => -99,
-		'detect_html5'                    => -35,
-		'detect_provider_and_id_from_url' => -30,
-		'aspect_ratio'                    => -10,
-		'thumbnail'                       => 10,
-		'video'                           => 10,
-		'liveleak_id_fix'                 => 10,
-		'maxwidth'                        => 10,
-		'dimensions'                      => 12,
-		'mode'                            => 14,
-		'autoplay'                        => 15,
-		'iframe_src'                      => 20,
-		// Maybe validate_again ?
-		'set_uid'                         => 90,
-	] as $filter => $priority ) {
-		add_filter( 'shortcode_atts_arve', __NAMESPACE__ . "\\sc_filter_{$filter}", $priority );
-	};
-	unset( $filter );
-	unset( $priority );
-
 	// Admin Hooks
-	add_action( 'nextgenthemes/arve/admin/settings_header', __NAMESPACE__ . '\Admin\settings_header' );
 	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
 
 	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );
