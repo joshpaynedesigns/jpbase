@@ -1,5 +1,12 @@
 #flexible-section-repeater {
     .content-section {
+
+        .content-section-wrap {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         p:last-child {
             margin-bottom: 0;
         }

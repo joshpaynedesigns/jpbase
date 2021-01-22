@@ -41,7 +41,7 @@ function location_single() {
                 <div class="location-details half">
                     <div class="address-div">
                         <h5 class="address"><?php echo $ad1; ?>, <?php echo $ad2; ?></h5>
-                        <a class="get-direction" href="https://www.google.com/maps/place/<?php echo $ad1; ?>, <?php echo $ad2; ?>" target=_blank" class="address">Get Directions</a>
+                        <a class="get-direction" href="https://www.google.com/maps/place/<?php echo $ad1; ?>, <?php echo $ad2; ?>" target="_blank" class="address">Get Directions</a>
                     </div>
                     <?php if ( ! empty( $phone ) ) : ?>
                         <div class="phone loc-info">
