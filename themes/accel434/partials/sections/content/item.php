@@ -2,7 +2,7 @@
 	<div class="wrap">
 		<?php obj_section_header( $title );  ?>
 		
-		<div class="content-section-blocks-wrap">
+		<div class="content-section-wrap">
 			<?php if ($content_blocks == 1 ) : ?>
 			
 				<div class="content-section-content">

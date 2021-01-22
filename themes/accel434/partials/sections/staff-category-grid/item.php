@@ -2,7 +2,7 @@
 	<section class="staff-cat-grid page-flexible-section <?php echo $padding_classes; ?>">
 		<div class="wrap">
 			<?php obj_section_header($section_title); ?>
-			<div class="archive-grid">
+			<div class="staffTermStaffGrid">
 				<?php foreach ( $staff_members as $s ) : ?>
 					<?php
 					$s_id = $s->ID;
