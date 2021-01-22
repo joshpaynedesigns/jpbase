@@ -174,15 +174,15 @@ function get_host_properties() {
 		],
 		'facebook' => [
 			'name'           => 'Facebook',
-			'oembed'         => true,
+			'oembed'         => false,
 			'regex'          => '#(?<id>https?://([a-z]+\.)?facebook\.com/[-.a-z0-9]+/videos/[^\s]+)#i',
 			'url_encode_id'  => true,
 			'embed_url'      => 'https://www.facebook.com/plugins/video.php?href=%s',
-			'auto_thumbnail' => true,
+			'auto_thumbnail' => false,
 			'tests'          => [
 				[
 					'url' => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
-					'id'  => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/',
+					'id'  => 'https://www.facebook.com/TheKillingsOfTonyBlair/videos/vb.551089058285349/562955837098671/?type=2&theater',
 				],
 				[
 					'url' => 'https://web.facebook.com/XTvideo/videos/10153906059711871/',
@@ -613,8 +613,8 @@ function get_host_properties() {
 					'id'  => 'GjL82KUHVb0&list=PLI46g-I12_9qGBq-4epxOay0hotjys5iA',
 				],
 				[
-				 	'url' => 'https://youtu.be/b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
-				 	'id'  => 'b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
+					'url' => 'https://youtu.be/b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
+					'id'  => 'b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
 				],
 			],
 			'specific_tests' => [

@@ -9,19 +9,17 @@ function label_text( $option ) {
 		<?php
 		echo esc_html( $option['label'] );
 
-		if (
-			Common\contains( __NAMESPACE__, 'ARVE' ) &&
-			! in_array( $option['tag'], [ 'main', 'html5', 'urlparams' ], true )
-		) {
+		if ( $option['premium'] ) {
 
 			printf(
-				' <a href="https://nextgenthemes.com/plugins/arve-%s">(%s)</a>',
-				esc_attr( str_replace( 'randomvideo', 'random-video', $option['tag'] ) ),
-				esc_html( ucfirst( $option['tag'] ) . ' Addon' )
+				' <span>(</span><a href="https://nextgenthemes.com/plugins/arve-%s">%s</a><span>)</span>',
+				esc_attr( $option['tag'] ),
+				esc_html( $option['tag_name'] )
 			);
 		}
 
-		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) : ?>
+		if ( ! empty( $option['tag'] ) && 'not' === $option['tag'] ) : // TODO this seems to be unused
+			?>
 			&nbsp;
 			<span class="button-primary button-primary--ngt-small">
 				<?= esc_html( $option['tag'] ); ?>
@@ -101,9 +99,9 @@ function print_licensekey_field( $key, $option ) {
 			<?php label_text( $option ); ?>
 			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" <?= esc_attr( $readonly ); ?> />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
-				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )">Deactivate</button>
+				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Deactivate</button>
 			<?php else : ?>
-				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )">Activate</button>
+				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Activate</button>
 			<?php endif; ?>
 			<br>
 			Status: <?= esc_html( "{{ vm.{$key}_status }}" ); ?>
@@ -164,7 +162,7 @@ function block_attr( $key, $option ) {
 	} else {
 		$block_attr = [
 			'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
-			'v-show' => 'sectionsDisplayed.' . $option['tag'],
+			'v-show' => "sectionsDisplayed['{$option['tag']}']",
 		];
 	}
 

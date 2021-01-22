@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 4.9.14
 Tested up to: 5.6.0
-Stable tag: 5.2.1.1
+Stable tag: 5.2.1.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -205,13 +205,25 @@ Our Premium Plugins:
 
 == Changelog ==
 
-= [5.2.0.1] 2020-12-21 =
+= [5.2.1.2] 2021-01-13 =
+
+* Fix - Version 5.2.1.1 rolled back some bugfixes that were shipped with version 5.2.1, this is to re-introduce those features with an update prompt.
+
+= [5.2.1.1] 2020-12-21 =
 
 * Fix - Update The Events Calendar minimum required version to avoid activation issues.
+
+= [5.2.1] 2020-12-15 =
+
+* Feature - V2 Customizer - Add background color css overrides. [TEC-3651]
+* Feature - V2 Customizer - Add Event Title color css overrides. [TEC-3334]
+* Feature - V2 Customizer - Add Event Date & Time color css overrides. [TEC-3675]
+* Language - 0 new strings added, 14 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.2.0] 2020-12-02 =
 
 * Fix - Ensure we don't have pieces of Filter Bar present when using shortcodes. [ECP-527]
+* Fix - Ensure we don't have pieces of Filter Bar present when on the recurring event "all events" page. [FBAR-210]
 * Fix - Allow shortcode list widget to be redefined dynamically via a filter. [ECP-541]
 * Fix - Use the Time Format defined in WordPress General Settings for Week View grid headers. [ECP-357]
 * Tweak - Remove unused and the outdated `momentjs` library that was bundled with the plugin to use, in its place, the one bundled in The Events Calendar. [ECP-576]

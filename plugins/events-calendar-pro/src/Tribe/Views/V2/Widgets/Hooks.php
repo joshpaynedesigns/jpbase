@@ -46,31 +46,31 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	protected function add_actions() {
 		add_action(
 			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event:event_meta',
-			[ $this, 'action_widget_events_list_event_meta_cost' ],
+			[ $this, 'widget_events_list_event_meta_cost' ],
 			10,
 			3
 		);
 		add_action(
 			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event:event_meta',
-			[ $this, 'action_widget_events_list_event_meta_venue' ],
+			[ $this, 'widget_events_list_event_meta_venue' ],
 			15,
 			3
 		);
 		add_action(
 			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event:event_meta',
-			[ $this, 'action_widget_events_list_event_meta_organizers' ],
+			[ $this, 'widget_events_list_event_meta_organizers' ],
 			20,
 			3
 		);
 		add_action(
 			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event/date:after_event_datetime',
-			[ $this, 'action_widget_events_list_event_recurring_icon' ],
+			[ $this, 'widget_events_list_event_recurring_icon' ],
 			10,
 			3
 		);
 		add_action(
 			'tribe_events_views_v2_widget_widget-events-list_after_enqueue_assets',
-			[ $this, 'action_widget_events_list_after_enqueue_assets' ],
+			[ $this, 'widget_events_list_after_enqueue_assets' ],
 			10,
 			3
 		);
@@ -90,12 +90,12 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		add_action(
 			'tribe_events_pro_v1_registered_widget_classes',
-			[ $this, 'action_deregister_v2_widgets' ]
+			[ $this, 'deregister_v1_widgets' ]
 		);
 
 		add_action(
 			'tribe_events_pro_v1_unregistered_widget_classes',
-			[ $this, 'action_unregister_v2_widgets' ]
+			[ $this, 'unregister_v1_widgets' ]
 		);
 	}
 
@@ -114,6 +114,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_events_views_v2_list_widget_template_vars', [ $this, 'filter_list_widget_template_vars' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_view_widget-events-list_template_vars', [ $this, 'filter_list_widget_template_vars' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_widget_field_data', [ $this, 'filter_taxonomy_filters_field_data' ], 10, 3 );
+		add_filter( 'tribe_events_views_v2_widget_repository_args', [ $this, 'filter_repository_taxonomy_args' ], 10, 2 );
+		add_filter( 'tribe_repository_events_query_args', [ $this, 'filter_repository_query_taxonomy_args' ], 10, 3 );
 		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'filter_add_full_stylesheet_to_customizer' ], 12, 2 );
 	}
 
@@ -126,8 +128,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param array<string> $name      Template name.
 	 * @param self          $template  Current instance of the Tribe__Template.
 	 */
-	public function action_widget_events_list_event_meta_cost( $file, $name, $template ) {
-		$this->container->make( Widget_Advanced_List::class )->action_render_event_cost( $template );
+	public function widget_events_list_event_meta_cost( $file, $name, $template ) {
+		$this->container->make( Widget_Advanced_List::class )->render_event_cost( $template );
 	}
 
 	/**
@@ -139,8 +141,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param array<string> $name      Template name.
 	 * @param self          $template  Current instance of the Tribe__Template.
 	 */
-	public function action_widget_events_list_event_meta_venue( $file, $name, $template ) {
-		$this->container->make( Widget_Advanced_List::class )->action_render_event_venue( $template );
+	public function widget_events_list_event_meta_venue( $file, $name, $template ) {
+		$this->container->make( Widget_Advanced_List::class )->render_event_venue( $template );
 	}
 
 	/**
@@ -152,8 +154,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param array<string> $name      Template name.
 	 * @param self          $template  Current instance of the Tribe__Template.
 	 */
-	public function action_widget_events_list_event_meta_organizers( $file, $name, $template ) {
-		$this->container->make( Widget_Advanced_List::class )->action_render_event_organizers( $template );
+	public function widget_events_list_event_meta_organizers( $file, $name, $template ) {
+		$this->container->make( Widget_Advanced_List::class )->render_event_organizers( $template );
 	}
 
 	/**
@@ -165,8 +167,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param array  $name      Template name.
 	 * @param self   $template  Current instance of the Tribe__Template.
 	 */
-	public function action_widget_events_list_event_recurring_icon( $file, $name, $template ) {
-		$this->container->make( Widget_Advanced_List::class )->action_render_event_recurring_icon( $template );
+	public function widget_events_list_event_recurring_icon( $file, $name, $template ) {
+		$this->container->make( Widget_Advanced_List::class )->render_event_recurring_icon( $template );
 	}
 
 	/**
@@ -178,8 +180,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param \Tribe__Context $context        Context we are using to build the view.
 	 * @param View_Interface  $view           Which view we are using the template on.
 	 */
-	public function action_widget_events_list_after_enqueue_assets( $should_enqueue, $context, $view ) {
-		$this->container->make( Widget_Advanced_List::class )->action_enqueue_assets( $should_enqueue, $context, $view );
+	public function widget_events_list_after_enqueue_assets( $should_enqueue, $context, $view ) {
+		$this->container->make( Widget_Advanced_List::class )->enqueue_assets( $should_enqueue, $context, $view );
 	}
 
 	/**
@@ -191,7 +193,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return array<string> $widgets The modified array of widget classes to register.
 	 */
-	public function action_deregister_v2_widgets( $widgets ) {
+	public function deregister_v1_widgets( $widgets ) {
 		unset( $widgets['Tribe__Events__Pro__Advanced_List_Widget'] );
 
 		return $widgets;
@@ -206,7 +208,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return array<string> $widgets The modified array of widget classes to unregister.
 	 */
-	public function action_unregister_v2_widgets( $widgets ) {
+	public function unregister_v1_widgets( $widgets ) {
 		$widgets[] = 'Tribe__Events__Pro__Advanced_List_Widget';
 
 		return $widgets;
@@ -217,7 +219,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @param array<string,mixed> $arguments   Current set of arguments.
+	 * @param array<string,mixed> $arguments Current set of arguments.
 	 *
 	 * @return array<string,mixed> The map of widget default arguments.
 	 */
@@ -323,7 +325,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param obj                 $widget_obj The widget object.
 	 */
 	public function add_taxonomy_input( $field, $widget_obj ) {
-		$this->container->make( Widget_Advanced_List::class )->add_taxonomy_input( $field, $widget_obj, $this->container );
+		$this->container->make( Taxonomy_Filter::class )->add_taxonomy_input( $field, $widget_obj, $this->container );
 	}
 
 	/**
@@ -336,7 +338,37 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param obj                 $widget_obj The widget object.
 	 */
 	public function filter_taxonomy_filters_field_data( $data, $field_name, $widget_obj ) {
-		return $this->container->make( Widget_Advanced_List::class )->add_taxonomy_filters_field_data( $data, $field_name, $widget_obj );
+		return $this->container->make( Taxonomy_Filter::class )->add_taxonomy_filters_field_data( $data, $field_name, $widget_obj );
+	}
+
+	/**
+	 * Add some repository args pre-query.
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param array<string,mixed> $args        The arguments, ready to be set on the View repository instance.
+	 * @param Tribe_Context       $context The context to use to setup the args.
+	 *
+	 * @return array<string,mixed> $args       The arguments, ready to be set on the View repository instance.
+	 */
+	public function filter_repository_taxonomy_args( $args, $context ) {
+		return $this->container->make( Taxonomy_Filter::class )->add_taxonomy_filters_repository_args( $args, $context );
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @since 5.1.1
+	 *
+	 * @param array<string,mixed> $query_args An array of the query arguments the query will be
+	 *                                         initialized with.
+	 * @param WP_Query            $query      The query object, the query arguments have not been parsed yet.
+	 * @param Tribe__Repository   $repository The repository instance.
+	 *
+	 * @return array<string,mixed> $query_args The array of the query arguments.
+	 */
+	public function filter_repository_query_taxonomy_args( $query_args, $query, $repository ) {
+		return $this->container->make( Taxonomy_Filter::class )->add_taxonomy_filters_repository_data( $query_args, $query, $repository );
 	}
 
 	/**

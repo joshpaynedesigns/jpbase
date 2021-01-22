@@ -88,6 +88,19 @@ Please make sure that your login information is correct, and that you have at le
 7. Conversations chat widget
 
 == Changelog ==
+= 8.1.4 =
+* Rolling back settings page form/css deprecations. We have improved testing workflows moving forward.
+
+= 8.1.3 =
+* Hotfix for Default CSS option deprecation
+* Moving from global assignment to block/shortcode assignment
+* Allowing fallback for existing blocks without CSS setting
+
+= 8.1.2 =
+* Simplifying plugin settings options
+* Dropping 'Global' CSS option for block, defaulting to 'Use ActiveCampaign CSS'
+* Converting to Dynamic Block pattern
+
 = 8.1.1 =
 * Improved error handling on expired credentials and misconfigurations
 * Shortening Block widget name to 'AC Forms'

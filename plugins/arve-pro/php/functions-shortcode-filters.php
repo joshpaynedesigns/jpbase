@@ -4,55 +4,7 @@ namespace Nextgenthemes\ARVE\Pro;
 use \Nextgenthemes\ARVE;
 use \Nextgenthemes\ARVE\Common;
 
-function sc_filter_upload_date( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
-
-	if ( empty( $a['upload_date'] ) && ! empty( $a['oembed_data']->upload_date ) ) {
-		$date             = strtotime( $a['oembed_data']->upload_date );
-		$a['upload_date'] = gmdate( 'c', $time );
-	}
-
-	return $a;
-}
-
-function sc_filter_description( array $a ) {
-
-	if ( empty( $a['description'] ) && ! empty( $a['oembed_data']->description ) ) {
-		$a['description'] = $a['oembed_data']->description;
-	}
-
-	return $a;
-}
-
-function sc_filter_mode( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
-
-	// if ( 'lazyload' === $a['mode'] && ARVE\options()['lazyload_mode_fallback'] && ! use_jsapi( $a ) ) {
-	// 	$a['mode'] = 'normal';
-	// }
-
-	if (
-		'html5' === $a['provider'] &&
-		in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) &&
-		empty( $a['img_src'] )
-	) {
-		$a['play_icon_style'] = 'none';
-	}
-
-	return $a;
-}
-
-function sc_filter_autoplay( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
+function arg_filter_autoplay( $autoplay, array $a ) {
 
 	if ( in_array(
 		$a['mode'],
@@ -63,10 +15,10 @@ function sc_filter_autoplay( array $a ) {
 		],
 		true
 	) ) {
-		$a['autoplay'] = true;
+		$autoplay = true;
 	}
 
-	return $a;
+	return $autoplay;
 }
 
 function early_sc_filter_latest_channel_video( array $a ) {
@@ -77,7 +29,7 @@ function early_sc_filter_latest_channel_video( array $a ) {
 
 	$prefix = 'https://www.youtube.com/channel/';
 
-	if ( ! Common\starts_with( $a['url'], $prefix ) ) {
+	if ( ! str_starts_with( $a['url'], $prefix ) ) {
 		return $a;
 	}
 
@@ -119,32 +71,7 @@ function early_sc_filter_latest_channel_video( array $a ) {
 	return $a;
 }
 
-function sc_filter_validate( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
-
-	if ( ! Common\has_valid_key( 'arve_pro' ) ) {
-
-		$a['errors']->add(
-			'fatal',
-			sprintf(
-				// Translators: URL.
-				__( '<a href="%s">ARVE Pro</a> License not activated or valid', 'arve-pro' ),
-				esc_url( 'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/' )
-			)
-		);
-	}
-
-	return $a;
-}
-
-function sc_filter_extra_data( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
+function shortcode_atts_extra_data( array $a ) {
 
 	$cur_post = get_post();
 	$oembeds  = [
@@ -189,10 +116,6 @@ function sc_filter_extra_data( array $a ) {
 
 function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
 
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
-
 	$thumb = Common\remote_get_json( $url, $remote_get_args, $json_name );
 
 	if ( is_wp_error( $thumb ) ) {
@@ -204,29 +127,21 @@ function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
 	return $a;
 }
 
-function sc_filter_thumbnail( array $a ) {
-
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
+function arg_filter_thumbnail( $thumbnail, array $a ) {
 
 	$thumb_id = get_post_thumbnail_id();
 
-	if ( 'featured' === $a['thumbnail'] && $thumb_id ) {
-		$a['thumbnail'] = $thumb_id;
+	if ( 'featured' === $thumbnail && $thumb_id ) {
+		$thumbnail = $thumb_id;
 	}
 
-	return $a;
+	return $thumbnail;
 }
 
-function sc_filter_img_src( array $a ) {
+function arg_filter_img_src( $img_src, array $a ) {
 
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
-	}
-
-	if ( ! empty( $a['img_src'] ) ) {
-		return $a;
+	if ( ! empty( $img_src ) ) {
+		return $img_src;
 	}
 
 	$id       = $a['id'];
@@ -252,53 +167,27 @@ function sc_filter_img_src( array $a ) {
 				preg_match( '#<meta property="og:image" content="([^"]+)#i', $html, $matches );
 
 				if ( ! empty( $matches[1] ) &&
-					Common\starts_with( $matches[1], 'http' ) &&
-					! Common\ends_with( $matches[1], 'logo.gif' )
+					str_starts_with( $matches[1], 'http' ) &&
+					! str_ends_with( $matches[1], 'logo.gif' )
 				) {
-					$a['img_src'] = $matches[1];
+					$img_src = $matches[1];
 				}
 			}
 			break;
-		case 'facebook':
-			$fb_vidid = false;
-
-			if ( $a['url'] ) {
-				preg_match( '~/videos/(?:[a-z]+\.[0-9]+/)?([0-9]+)~i', $a['url'], $matches );
-
-				if ( ! empty( $matches[1] ) ) {
-					$fb_vidid = $matches[1];
-				}
-			} elseif ( $a['id'] ) {
-				$fb_vidid = $a['id'];
-			}
-
-			$data = Common\remote_get_json( "https://graph.facebook.com/{$fb_vidid}/picture?redirect=false", [], 'data' );
-
-			if ( is_wp_error( $data ) ) {
-				$a['errors']->add( 'thumb-api-call', $data->get_error_message() );
-			} elseif ( ! empty( $data->url ) ) {
-				$a['img_src'] = $data->url;
-			} else {
-				$a['errors']->add( 'thumb-api-call', 'data->url is empty' );
-			}
-
-			break;
 	}
 
-	if ( empty( $a['img_src'] ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
-		$a['img_src']    = wp_get_attachment_image_url( $thumb_id, 'small' );
-		$a['img_srcset'] = wp_get_attachment_image_srcset( $$thumb_id, 'small' );
+	if ( empty( $img_src ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
+		$img_src = wp_get_attachment_image_url( $thumb_id, 'small' );
 	}
 
-	if ( empty( $a['img_src'] ) ) {
-		$a['img_src'] = $options['thumbnail_fallback'];
+	if ( empty( $img_src ) ) {
+		$img_src = $options['thumbnail_fallback'];
 	}
 
-	return $a;
+	return $img_src;
 }
 
 function get_image_size( $img_url ) {
-	#$response = wp_remote_get( $img_url );
 	$response = Common\remote_get_body( $img_url, [ 'timeout' => 2 ] );
 
 	if ( is_wp_error( $response ) ) {
@@ -308,23 +197,26 @@ function get_image_size( $img_url ) {
 	return getimagesizefromstring( $response );
 }
 
-function sc_filter_img_srcset( array $a ) {
+function arg_filter_img_srcset( $img_srcset, array $a ) {
 
-	if ( ARVE\has_fatal_error( $a ) ) {
-		return $a;
+	$thumb_id = get_post_thumbnail_id();
+	$options  = ARVE\options();
+
+	if ( empty( $img_srcset ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
+		$img_srcset = wp_get_attachment_image_srcset( $$thumb_id, 'small' );
 	}
 
-	if ( ! empty( $a['img_srcset'] )
+	if ( ! empty( $img_srcset )
 		|| empty( $a['img_src'] )
 		|| ! in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true )
 		|| ! function_exists( 'getimagesizefromstring' )
 	) {
-		return $a;
+		return $img_srcset;
 	}
 
 	$srcset = array();
 
-	if ( 'youtube' === $a['provider'] && Common\contains( $a['img_src'], 'i.ytimg.com' ) ) {
+	if ( 'youtube' === $a['provider'] && str_contains( $a['img_src'], 'i.ytimg.com' ) ) {
 
 		$mq     = "https://i.ytimg.com/vi/{$a['id']}/mqdefault.jpg";     // 320x180
 		$hq     = "https://i.ytimg.com/vi/{$a['id']}/hqdefault.jpg";     // 480x360
@@ -351,7 +243,7 @@ function sc_filter_img_srcset( array $a ) {
 		}
 		// phpcs:enable WordPress.PHP.StrictComparisons.LooseComparison
 
-	} elseif ( 'vimeo' === $a['provider'] && Common\contains( $a['img_src'], 'i.vimeocdn.com' ) ) {
+	} elseif ( 'vimeo' === $a['provider'] && str_contains( $a['img_src'], 'i.vimeocdn.com' ) ) {
 
 		foreach ( SRCSET_SIZES as $size ) :
 
@@ -370,7 +262,7 @@ function sc_filter_img_srcset( array $a ) {
 			$srcset_comb[] = "$url {$size}w";
 		}
 
-		$a['img_srcset'] = implode( ', ', $srcset_comb );
+		$img_srcset = implode( ', ', $srcset_comb );
 	}
 
 	foreach ( SRCSET_SIZES as $size ) {
@@ -381,5 +273,5 @@ function sc_filter_img_srcset( array $a ) {
 		}
 	}
 
-	return $a;
+	return $img_srcset;
 }
