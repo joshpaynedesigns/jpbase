@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Pro Addon
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
- * Version:           5.1.7
+ * Version:           5.1.10
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL 3.0
@@ -21,7 +21,7 @@ namespace Nextgenthemes\ARVE\Pro;
 
 use \Nextgenthemes\ARVE;
 
-const VERSION      = '5.1.7';
+const VERSION      = '5.1.10';
 const PLUGIN_FILE  = __FILE__;
 const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
 const PLUGIN_DIR   = __DIR__;
@@ -78,13 +78,12 @@ function init() {
 	};
 }
 
+register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
 function activation_hook() {
 
 	update_option( 'nextgenthemes_arve_oembed_recache', time() );
 
-	if ( defined( 'ARVE_PRO_KEY' ) && function_exists( '\Nextgenthemes\ARVE\Common\activate_product_key' ) ) {
-		\Nextgenthemes\ARVE\Common\activate_product_key( 'arve_pro', ARVE_PRO_KEY );
+	if ( function_exists( '\Nextgenthemes\ARVE\Common\activate_defined_key' ) ) {
+		\Nextgenthemes\ARVE\Common\activate_defined_key( __FILE__ );
 	}
 }
-
-register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );

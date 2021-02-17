@@ -3,7 +3,7 @@
  * Plugin Name:       ARVE Advanced Responsive Video Embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
- * Version:           9.2.4
+ * Version:           9.4.2
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL-3.0
@@ -21,7 +21,7 @@
 
 namespace Nextgenthemes\ARVE;
 
-const VERSION               = '9.2.4';
+const VERSION               = '9.4.2';
 const PRO_VERSION_REQUIRED  = '5.1.5';
 const NUM_TRACKS            = 3;
 const PLUGIN_FILE           = __FILE__;
@@ -55,6 +55,10 @@ function init_920() {
 	require_once PLUGIN_DIR . '/php/functions-validation.php';
 	require_once PLUGIN_DIR . '/php/functions-host-properties.php';
 	require_once PLUGIN_DIR . '/php/functions-settings.php';
+
+	if ( is_admin() ) {
+		require_once PLUGIN_DIR . '/php/Admin/vendor/autoload.php';
+	}
 	require_once PLUGIN_DIR . '/php/Admin/functions-admin.php';
 	require_once PLUGIN_DIR . '/php/Admin/functions-settings-page.php';
 
@@ -74,7 +78,8 @@ function init_920() {
 	add_filter( 'embed_oembed_discover',       __NAMESPACE__ . '\reenable_oembed_cache' );
 
 	// Admin Hooks
-	add_action( 'nextgenthemes/arve/admin/settings_sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
+	add_action( 'nextgenthemes/arve/admin/settings/sidebar', __NAMESPACE__ . '\Admin\settings_sidebar' );
+	add_action( 'nextgenthemes/arve/admin/settings/content', __NAMESPACE__ . '\Admin\settings_content' );
 
 	add_action( 'admin_bar_menu',        __NAMESPACE__ . '\Admin\action_admin_bar_menu', 100 );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\Admin\admin_enqueue_scripts' );

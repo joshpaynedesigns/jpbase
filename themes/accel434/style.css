@@ -636,7 +636,7 @@ a.alignright {
 img.centered,
 .aligncenter {
   display: block;
-  margin: 0 auto 3em; }
+  margin: 0 auto 1.5em; }
 
 img.alignnone,
 .alignnone {
@@ -645,12 +645,12 @@ img.alignnone,
 a.alignleft,
 img.alignleft,
 .wp-caption.alignleft {
-  margin: 0 3em 3em 0; }
+  margin: 0 1.5em 1.5em 0; }
 
 a.alignright,
 img.alignright,
 .wp-caption.alignright {
-  margin: 0 0 3em 3em; }
+  margin: 0 0 1.5em 1.5em; }
 
 .wp-caption-text {
   font-size: 0.75em;
@@ -2566,6 +2566,9 @@ Events Single
 #flexible-section-repeater .content-section p:last-child {
   margin-bottom: 0; }
 
+#flexible-section-repeater .content-section .content-section-content {
+  width: 100%; }
+
 #flexible-section-repeater .content-section .l-content,
 #flexible-section-repeater .content-section .r-content {
   float: left;
@@ -2902,10 +2905,18 @@ Events Single
   background-color: #0b406b; }
   #flexible-section-repeater .color.primary-color .section-title, #flexible-section-repeater .color.blue .section-title {
     color: #fff; }
+  #flexible-section-repeater .color.primary-color ul li:before, #flexible-section-repeater .color.blue ul li:before {
+    background-color: #fff; }
+  #flexible-section-repeater .color.primary-color ol, #flexible-section-repeater .color.blue ol {
+    color: #fff; }
 
 #flexible-section-repeater .color.light-blue {
   background-color: #5dc3bf; }
   #flexible-section-repeater .color.light-blue .section-title {
+    color: #fff; }
+  #flexible-section-repeater .color.light-blue ul li:before {
+    background-color: #fff; }
+  #flexible-section-repeater .color.light-blue ol {
     color: #fff; }
 
 #flexible-section-repeater .color.light-gray {
@@ -2915,10 +2926,18 @@ Events Single
   background-color: #777; }
   #flexible-section-repeater .color.medium-gray .section-title {
     color: #fff; }
+  #flexible-section-repeater .color.medium-gray ul li:before {
+    background-color: #fff; }
+  #flexible-section-repeater .color.medium-gray ol {
+    color: #fff; }
 
 #flexible-section-repeater .color.dark-gray {
   background-color: #222; }
   #flexible-section-repeater .color.dark-gray .section-title {
+    color: #fff; }
+  #flexible-section-repeater .color.dark-gray ul li:before {
+    background-color: #fff; }
+  #flexible-section-repeater .color.dark-gray ol {
     color: #fff; }
 
 #flexible-section-repeater .color.white {

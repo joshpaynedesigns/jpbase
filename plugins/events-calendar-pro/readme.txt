@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
-Contributors: ModernTribe, borkweb,bordoni, brianjessee, aguseo, camwynsp, cliffpaulick, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, peterchester, paulskim, reid.peifer, shane.pearlman, vicskf, zbtirrell, juanfra
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
-Donate link: http://m.tri.be/29
+Donate link: https://evnt.is/29
 Requires at least: 4.9.14
 Tested up to: 5.6.0
-Stable tag: 5.2.1.2
+Stable tag: 5.2.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@ A premium add-on to The Events Calendar plugin (required), enabling recurrence, 
 
 == Description ==
 
-<a href="http://m.tri.be/3r">Events Calendar PRO</a> is a awesomely dynamic add-on for The Events Calendar that adds more features and functionality to an already robust plugin.
+<a href="https://evnt.is/3r">Events Calendar PRO</a> is a awesomely dynamic add-on for The Events Calendar that adds more features and functionality to an already robust plugin.
 
 The Events Calendar allows you to create and manage events with ease from right within your WordPress dash; no shortcode is needed (nor is one available).  With Events Calendar PRO, you can go even further with recurring events, more calendar views (including Day and Week), Location Search, more widget options, and much more.
 
@@ -22,9 +22,9 @@ Plus, Events Calendar PRO users get access to our premium support forums. Need h
 
 = Features =
 
-The following lists the PRO-only features. For a list of The Events Calendar features, check out that plugin's readme.txt or check out <a href="http://m.tri.be/3s">the Product page</a>.
+The following lists the PRO-only features. For a list of The Events Calendar features, check out that plugin's readme.txt or check out <a href="https://evnt.is/3s">the Product page</a>.
 
-Just getting started? You'll want to watch and read through the <a href="http://m.tri.be/3t">New User Primer</a>.
+Just getting started? You'll want to watch and read through the <a href="https://evnt.is/3t">New User Primer</a>.
 
 * Advanced Views: Day, Week, Map, Photo
 * Venue and Organizer Pages
@@ -46,7 +46,7 @@ Remember, to use Events Calendar PRO you need to also be running The Events Cale
 3. When the popup appears select the the-events-calendar-x.x.zip file or events-calendar-pro-x.x.zip file from your desktop. (The 'x.x' will change depending on the current version number).
 4. Follow the on-screen instructions and wait as the upload completes.
 5. When it's finished, activate the plugin via the prompt. A message will show confirming activation was successful. A link to access the calendar directly on the frontend will be presented here as well.
-6. For access to new updates, make sure you have added your valid License Key under Events --> Settings --> Licenses. You can find your license key on your tri.be account at http://m.tri.be/3u.
+6. For access to new updates, make sure you have added your valid License Key under Events --> Settings --> Licenses. You can find your license key on your tri.be account at https://evnt.is/3u.
 
 That's it! Just configure your settings as you see fit, and you're on your way to creating events in style.
 
@@ -61,11 +61,11 @@ That's it! Just configure your settings as you see fit, and you're on your way t
 
 If this is your first time using The Events Calendar and Events Calendar PRO, you're in for a treat! Here are some basics we've found helpful for users jumping into it for the first time:
 
-* Our <a href="http://m.tri.be/3t">New User Primer</a> was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time.
-* <a href="http://m.tri.be/3v">Installation/Setup FAQs</a> from our Support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer.
-* <a href="http://m.tri.be/9u">Tutorials</a>, based on commonly-requested hacks and tweaks, which will provide you guidance towards accomplishing some highly sought-after tweaks.
+* Our <a href="https://evnt.is/3t">New User Primer</a> was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time.
+* <a href="https://evnt.is/3v">Installation/Setup FAQs</a> from our Support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer.
+* <a href="https://evnt.is/9u">Tutorials</a>, based on commonly-requested hacks and tweaks, which will provide you guidance towards accomplishing some highly sought-after tweaks.
 * Are you a developer looking to build a custom frontend view? We created an example plugin that demonstrates how to register a new view. You can download the plugin at GitHub here: https://github.com/moderntribe/tribe-events-agenda-view
-* Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. Need help finding your license key? Check out http://m.tri.be/3w
+* Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. Need help finding your license key? Check out https://evnt.is/3w
 
 Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event.
 
@@ -86,76 +86,76 @@ Note that we aren't going to say "tough luck" if you identify a plugin/theme con
 
 = I'm still stuck. Where do I go to file a bug or ask a question? =
 
-If you're already a PRO user, you're entitled access to our more actively-monitored <a href="http://m.tri.be/3x">PRO forums</a> at the theeventscalendar.com website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. No post should go more than 24-hours during that time without a response.
+If you're already a PRO user, you're entitled access to our more actively-monitored <a href="https://evnt.is/3x">PRO forums</a> at the theeventscalendar.com website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. No post should go more than 24-hours during that time without a response.
 
 = What add-ons are available for The Events Calendar and Events Calendar PRO, and where can I read more about them? =
 
 Currently, the following add-ons are available for The Events Calendar/Events Calendar PRO:
 
-* <a href="http://m.tri.be/18wi">Events Calendar PRO</a>, for adding premium calendar features like recurring events, advanced views, cool widgets, shortcodes, additional fields, and more!
-* <a href="http://m.tri.be/18wj">Event Tickets</a> (free), which allows you to collect RSVPs to events. It can run alongside The Events Calendar or as a standalone plugin that adds RSVP functionality to WordPress posts and pages.
-* <a href="http://m.tri.be/18wk">Event Tickets Plus</a>, which allows you to sell tickets for your events using your favorite e-commerce platform.
-* <a href="http://m.tri.be/2g">Community Events</a>, for allowing frontend event submission from your readers.
-* <a href="http://m.tri.be/18wl">Community Tickets</a>, which allows event organizers to sell tickets to the events they submit via Community Events.
-* <a href="http://m.tri.be/2h">Facebook Events</a>, for importing events directly from an organization or page on Facebook.
-* <a href="http://m.tri.be/fa">Filter Bar</a>, for adding advanced frontend filtering capabilities to your events calendar.
-* <a href="http://m.tri.be/18h9">iCal Importer</a>, for importing events any iCal feed or ICS file.
-* <a href="http://m.tri.be/2e">Eventbrite Tickets</a>, for selling tickets to your event directly through Eventbrite.
+* <a href="https://evnt.is/18wi">Events Calendar PRO</a>, for adding premium calendar features like recurring events, advanced views, cool widgets, shortcodes, additional fields, and more!
+* <a href="https://evnt.is/18wj">Event Tickets</a> (free), which allows you to collect RSVPs to events. It can run alongside The Events Calendar or as a standalone plugin that adds RSVP functionality to WordPress posts and pages.
+* <a href="https://evnt.is/18wk">Event Tickets Plus</a>, which allows you to sell tickets for your events using your favorite e-commerce platform.
+* <a href="https://evnt.is/2g">Community Events</a>, for allowing frontend event submission from your readers.
+* <a href="https://evnt.is/18wl">Community Tickets</a>, which allows event organizers to sell tickets to the events they submit via Community Events.
+* <a href="https://evnt.is/2h">Facebook Events</a>, for importing events directly from an organization or page on Facebook.
+* <a href="https://evnt.is/fa">Filter Bar</a>, for adding advanced frontend filtering capabilities to your events calendar.
+* <a href="https://evnt.is/18h9">iCal Importer</a>, for importing events any iCal feed or ICS file.
+* <a href="https://evnt.is/2e">Eventbrite Tickets</a>, for selling tickets to your event directly through Eventbrite.
 
 = I have a feature idea. What's the best way to tell you about it? =
 
-We've got a <a href="https://tribe.uservoice.com/forums/195723-feature-ideas">Modern Tribe UserVoice page</a> where we're actively watching for feature ideas from the community. Vote up existing feature requests or add your own, and help us shape the future of the products business in a way that best meets the community's needs.
+We've got a <a href="https://tribe.uservoice.com/forums/195723-feature-ideas">The Events Calendar UserVoice page</a> where we're actively watching for feature ideas from the community. Vote up existing feature requests or add your own, and help us shape the future of the products business in a way that best meets the community's needs.
 
 = I've still got questions. Do you have a bigger FAQ somewhere? =
 
-We do. If you check out our a href="http://m.tri.be/41">Frequently Asked Questions page</a> on the tri.be site, we've collected and addressed all of the common questions we see posed by users. In some cases we'll provide a Gist; in other cases we'll direct you to a tutorial; and in some situations we'll unfortunately say a certain capability is simply not possible. But the FAQ is a living, breathing document that we're actively updating based on commonly-seen requests.
+We do. If you check out our a href="https://evnt.is/41">Frequently Asked Questions page</a> on the tri.be site, we've collected and addressed all of the common questions we see posed by users. In some cases we'll provide a Gist; in other cases we'll direct you to a tutorial; and in some situations we'll unfortunately say a certain capability is simply not possible. But the FAQ is a living, breathing document that we're actively updating based on commonly-seen requests.
 
 == Documentation ==
 
-All of our documentation can be found at http://m.tri.be/42
+All of our documentation can be found at https://evnt.is/42
 
 Some docs you may find particularly useful are:
 
-* <a href="http://m.tri.be/3t">The Events Calendar New User Primer</a>
-* <a href="http://m.tri.be/43">The Themer's Guide to The Events Calendar</a>
-* <a href="http://m.tri.be/41">The Events Calendar FAQ</a>
+* <a href="https://evnt.is/3t">The Events Calendar New User Primer</a>
+* <a href="https://evnt.is/43">The Themer's Guide to The Events Calendar</a>
+* <a href="https://evnt.is/41">The Events Calendar FAQ</a>
 
-Tutorials are available at http://m.tri.be/44
+Tutorials are available at https://evnt.is/44
 
-For template tags, head over to our documentation page: http://m.tri.be/42
+For template tags, head over to our documentation page: https://evnt.is/42
 
 == Contributors ==
 
-The plugin is produced by <a href="http://m.tri.be/45">Modern Tribe Inc</a>.
+The plugin is produced by <a href="https://evnt.is/45">The Events Calendar</a>.
 
 = Current Contributors =
 
-<a href="https://profiles.wordpress.org/barryhughes">Barry Hughes</a>
 <a href="https://profiles.wordpress.org/brianjessee">Brian Jessee</a>
-<a href="https://profiles.wordpress.org/brook-tribe">Brook Harding</a>
-<a href="https://profiles.wordpress.org/cliffpaulick">Clifford Paulick</a>
-<a href="https://profiles.wordpress.org/MZAWeb">Daniel Dvorkin</a>
 <a href="https://profiles.wordpress.org/geoffgraham">Geoff Graham</a>
-<a href="https://profiles.wordpress.org/ggwicz">George Gecewicz</a>
 <a href="https://profiles.wordpress.org/bordoni">Gustavo Bordoni</a>
-<a href="https://profiles.wordpress.org/jazbek">Jessica Yazbek</a>
-<a href="https://profiles.wordpress.org/joshlimecuda">Josh Mallard</a>
 <a href="https://profiles.wordpress.org/leahkoerper">Leah Koerper</a>
 <a href="https://profiles.wordpress.org/lucatume">Luca Tumedei</a>
 <a href="https://profiles.wordpress.org/borkweb">Matthew Batchelder</a>
 <a href="https://profiles.wordpress.org/neillmcshea">Neill McShea</a>
-<a href="https://profiles.wordpress.org/mastromktg">Nick Mastromattei</a>
-<a href="https://profiles.wordpress.org/nicosantos”>Nico Santos</a>
 <a href="https://profiles.wordpress.org/peterchester">Peter Chester</a>
 <a href="https://profiles.wordpress.org/roblagatta">Rob La Gatta</a>
 <a href="https://profiles.wordpress.org/reid.peifer">Reid Peifer</a>
 <a href="https://profiles.wordpress.org/shane.pearlman">Shane Pearlman</a>
 <a href="https://profiles.wordpress.org/camwyn">Stephen Page</a>
-<a href="https://profiles.wordpress.org/thatdudebutch">Wayne Stratton</a>
 <a href="https://profiles.wordpress.org/zbtirrell">Zachary Tirrell</a>
 
 = Past Contributors =
 
+<a href="https://profiles.wordpress.org/barryhughes">Barry Hughes</a>
+<a href="https://profiles.wordpress.org/brook-tribe">Brook Harding</a>
+<a href="https://profiles.wordpress.org/cliffpaulick">Clifford Paulick</a>
+<a href="https://profiles.wordpress.org/MZAWeb">Daniel Dvorkin</a>
+<a href="https://profiles.wordpress.org/jazbek">Jessica Yazbek</a>
+<a href="https://profiles.wordpress.org/joshlimecuda">Josh Mallard</a>
+<a href="https://profiles.wordpress.org/mastromktg">Nick Mastromattei</a>
+<a href="https://profiles.wordpress.org/nicosantos”>Nico Santos</a>
+<a href="https://profiles.wordpress.org/thatdudebutch">Wayne Stratton</a>
+<a href="https://profiles.wordpress.org/ggwicz">George Gecewicz</a>
 <a href="https://profiles.wordpress.org/caseypatrickdriscoll">Casey Driscoll</a>
 <a href="https://profiles.wordpress.org/ckpicker">Casey Picker</a>
 <a href="https://profiles.wordpress.org/dancameron">Dan Cameron</a>
@@ -178,16 +178,16 @@ The plugin is produced by <a href="http://m.tri.be/45">Modern Tribe Inc</a>.
 
 = Translations =
 
-Modern Tribe’s premium plugins are translated by volunteers at <a href=“http://m.tri.be/194h”>translations.theeventscalendar.com</a>. There you can find a list of available languages, download translation files, or help update the translations. Thank you to everyone who helps to maintain our translations!
+The Events Calendar’s premium plugins are translated by volunteers at <a href=“https://evnt.is/194h”>translations.theeventscalendar.com</a>. There you can find a list of available languages, download translation files, or help update the translations. Thank you to everyone who helps to maintain our translations!
 
 == Add-Ons ==
 
-But wait: there's more! We've got a whole stable of plugins available to help you be awesome at what you do. Check out a full list of the products below, and over at the <a href="http://m.tri.be/46">Modern Tribe website.</a>
+But wait: there's more! We've got a whole stable of plugins available to help you be awesome at what you do. Check out a full list of the products below, and over at the <a href="https://evnt.is/46">The Events Calendar website.</a>
 
 Our Free Plugins:
 
 * <a href="https://wordpress.org/plugins/the-events-calendar/" target="_blank">The Events Calendar</a>
-* <a href="http://m.tri.be/18vx" target="_blank">Event Tickets</a>
+* <a href="https://evnt.is/18vx" target="_blank">Event Tickets</a>
 * <a href="http://wordpress.org/extend/plugins/advanced-post-manager/?ref=tec-readme" target="_blank">Advanced Post Manager</a>
 * <a href="http://wordpress.org/plugins/blog-copier/?ref=tec-readme" target="_blank">Blog Copier</a>
 * <a href="http://wordpress.org/plugins/image-rotation-repair/?ref=tec-readme" target="_blank">Image Rotation Widget</a>
@@ -195,23 +195,28 @@ Our Free Plugins:
 
 Our Premium Plugins:
 
-* <a href="http://m.tri.be/18vy" target="_blank">Event Tickets Plus</a>
-* <a href="http://m.tri.be/2e" target="_blank">The Events Calendar: Eventbrite Tickets</a>
-* <a href="http://m.tri.be/2g" target="_blank">The Events Calendar: Community Events</a>
-* <a href="http://m.tri.be/18vw" target="_blank">The Events Calendar: Community Tickets</a>
-* <a href="http://m.tri.be/2h" target="_blank">The Events Calendar: Facebook Events</a>
-* <a href="http://m.tri.be/18h9" target="_blank">The Events Calendar: iCal Importer</a>
-* <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
+* <a href="https://evnt.is/18vy" target="_blank">Event Tickets Plus</a>
+* <a href="https://evnt.is/2e" target="_blank">The Events Calendar: Eventbrite Tickets</a>
+* <a href="https://evnt.is/2g" target="_blank">The Events Calendar: Community Events</a>
+* <a href="https://evnt.is/18vw" target="_blank">The Events Calendar: Community Tickets</a>
+* <a href="https://evnt.is/2h" target="_blank">The Events Calendar: Facebook Events</a>
+* <a href="https://evnt.is/18h9" target="_blank">The Events Calendar: iCal Importer</a>
+* <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
 
-= [5.2.1.2] 2021-01-13 =
+= [5.2.2] 2021-01-28 =
 
-* Fix - Version 5.2.1.1 rolled back some bugfixes that were shipped with version 5.2.1, this is to re-introduce those features with an update prompt.
+* Feature - Add customizer support for custom location pins on map view when Views V2 is active. [TEC-3276]
+* Tweak - Change Hide Location Search helper text for v2 only. [ECP-488]
+* Fix - Correct override folder location in some week view template files
+* Tweak - Added filters: `tribe_events_pro_shortcodes_countdown_widget_class`, `tribe_events_views_v2_countdown_widget_args_to_context`
+* Language - 19 new strings added, 32 updated, 1 fuzzied, and 2 obsoleted
 
 = [5.2.1.1] 2020-12-21 =
 
 * Fix - Update The Events Calendar minimum required version to avoid activation issues.
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.2.1] 2020-12-15 =
 
@@ -337,19 +342,19 @@ Our Premium Plugins:
 * Feature - Compatibility with the new 5.0 views from The Events Calendar.
 * Feature - Created new Week, Photo, and Map views with all new HTML, CSS, and JavaScript.
 * Feature - Add upgrade path for new Week, Photo, and Map views making it opt-in for any existing users.
-* Feature - New templating engine to power the new Views. [See More](http://m.tri.be/1aid)
+* Feature - New templating engine to power the new Views. [See More](https://evnt.is/1aid)
 * Feature - Views initialization and instance includes more filters and actions to allow improved extensibility and customization. (See all filters below)
 * Feature - Views manager and bootstrapping classes were created to allow more control over where and when views will be initialized. (See filters related to those below)
 * Feature - Reduced maintenance burden of customizations by leveraging atomic templates for the new views. (See list of files now available below)
-* Feature - CSS uses a Block Element Modifier (BEM) methodology to improve reusability of components. [See More](http://m.tri.be/1aib)
+* Feature - CSS uses a Block Element Modifier (BEM) methodology to improve reusability of components. [See More](https://evnt.is/1aib)
 * Feature - New Views share one JavaScript Manager, which contains multiple jQuery actions and customization points.
 * Feature - View navigation relies on the WP Rest API, improving reliability and caching opportunities.
 * Feature - Event permalinks are now more consistent across navigation using `WP_Rewrite` to map params to their matching URL, which improves SEO.
 * Feature - Event data filtering used across all new views: `tribe_get_event_before`, `tribe_get_event`, `tribe_get_event_after`, `tribe_events_organizers_fetch_callback`, `tribe_events_venues_fetch_callback`
 * Feature - Venue data filtering used across all new views: `tribe_get_venue_object_before`, `tribe_get_venue_object`
 * Tweak - Custom Before and After HTML on the Events > Settings page will now prefer event view styling over the Theme's CSS.
-* Tweak - Lowered the reliance on the global `$wp_query` to create more consistent output and faster maintenance. [See More](http://m.tri.be/1aic)
-* Tweak - View overrides for the new views will look within a new folder in your theme to avoid conflicting with old The Events Calendar theme customizations [See More](http://m.tri.be/1aia)
+* Tweak - Lowered the reliance on the global `$wp_query` to create more consistent output and faster maintenance. [See More](https://evnt.is/1aic)
+* Tweak - View overrides for the new views will look within a new folder in your theme to avoid conflicting with old The Events Calendar theme customizations [See More](https://evnt.is/1aia)
 * Tweak - Flushing the rewrite rules on plugin activation so we can have the URLs working once the plugin is activated/reactivated [137112]
 * Tweak - Switch to a compact date while on week view in mobile [136789]
 * Fix - Ensure that the List Widget displays the month instead of the day for events in the current month of the following year [107605]
@@ -1228,7 +1233,7 @@ Fix - PHP notice when importing events from iCal importer [64747]
 * Tweak - Tweaked flexible handling of default values to work with The Events Calendar 3.10
 * Tweak - Ensured that old recurring events are cleaned up on schedule
 * Tweak - Suped up usability for events with short durations in Week View
-* Feature - Totally refactored WEEK VIEW! For more, see http://m.tri.be/18du (thanks to Lars - aka mending - for being the wind beneath our wings here!)
+* Feature - Totally refactored WEEK VIEW! For more, see https://evnt.is/18du (thanks to Lars - aka mending - for being the wind beneath our wings here!)
 * Feature - Added a new additional field type (textareas) to compliment the existing text field
 * Feature - Replaced scrolling library on week view for better performance and extensibility
 * Feature - Introduced batch processing of recurring events to further improve performance and scalability (thanks to Jen at Mauitime for starting us down this path!)
@@ -1375,7 +1380,7 @@ Fix - PHP notice when importing events from iCal importer [64747]
 
 = 3.5 =
 
-* Incorporated fully responsive styles and functionality for all Events views! For an overview of the changes, see <a href="http://m.tri.be/hv">this blog post</a>
+* Incorporated fully responsive styles and functionality for all Events views! For an overview of the changes, see <a href="https://evnt.is/hv">this blog post</a>
 * Changed how recurring events are stored, to give a unique post ID to each recurrence
 * Fixed an issue where the Category class wasn't properly being added to events when paging in Week View (thanks to Andy Fragen on the forums for reporting this!)
 * Fixed issue with popstate and bug in webkit when coming back from single venue view
@@ -1505,20 +1510,20 @@ Fix - PHP notice when importing events from iCal importer [64747]
 
 == Help ==
 
-Welcome to The Events Calendar and Events Calendar PRO, a full-featured events management system for WordPress. Thank you so much for using the labor of our love. We are Modern Tribe and we are here to help you be awesome.
+Welcome to The Events Calendar and Events Calendar PRO, a full-featured events management system for WordPress. Thank you so much for using the labor of our love. We are The Events Calendar and we are here to help you be awesome.
 
-If you aren't familiar with The Events Calendar and Events Calendar PRO, check out our <a href="http://m.tri.be/3t">new user primer.</a> It'll introduce you to the basics of what the plugin has to offer and will have you creating events in no time. From there, the resources below -- extensive template tag documentation, FAQs, video walkthroughs and more -- will give you a leg up as you dig deeper.
+If you aren't familiar with The Events Calendar and Events Calendar PRO, check out our <a href="https://evnt.is/3t">new user primer.</a> It'll introduce you to the basics of what the plugin has to offer and will have you creating events in no time. From there, the resources below -- extensive template tag documentation, FAQs, video walkthroughs and more -- will give you a leg up as you dig deeper.
 
 Additional resources available include:
 
-* <a href="http://m.tri.be/42">Documentation</a>
-* <a href="http://m.tri.be/3v">FAQ</a>
-* <a href="http://m.tri.be/4c">Help Videos</a>
-* <a href="http://m.tri.be/44">Tutorials</a>
-* <a href="http://m.tri.be/4b">Release Notes</a>
-* <a href="http://m.tri.be/3x">Forums</a>
+* <a href="https://evnt.is/42">Documentation</a>
+* <a href="https://evnt.is/3v">FAQ</a>
+* <a href="https://evnt.is/4c">Help Videos</a>
+* <a href="https://evnt.is/44">Tutorials</a>
+* <a href="https://evnt.is/4b">Release Notes</a>
+* <a href="https://evnt.is/3x">Forums</a>
 
-We hit the <a href="http://m.tri.be/3x">premium forums</a> daily during the week to help paid users with site integration, minor customization, troubleshooting, and more.
+We hit the <a href="https://evnt.is/3x">premium forums</a> daily during the week to help paid users with site integration, minor customization, troubleshooting, and more.
 
 Some things to consider before posting on the forum:
 

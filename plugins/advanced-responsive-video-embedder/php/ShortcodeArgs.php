@@ -5,7 +5,7 @@ class ShortcodeArgs {
 
 	private $errors;
 
-	public function __construct( $error_instance ) {
+	public function __construct( \WP_Error $error_instance ) {
 		$this->errors = $error_instance;
 	}
 
@@ -273,9 +273,9 @@ class ShortcodeArgs {
 			);
 		}
 
-		$options        = options();
 		$properties     = get_host_properties();
 		$input_provider = $a['provider'];
+		$check_url      = $a['url'] ? $a['url'] : $a['src'];
 
 		foreach ( $properties as $host_id => $host ) :
 
@@ -283,7 +283,7 @@ class ShortcodeArgs {
 				continue;
 			}
 
-			$preg_match = preg_match( $host['regex'], $a['url'], $matches );
+			$preg_match = preg_match( $host['regex'], $check_url, $matches );
 
 			if ( 1 !== $preg_match ) {
 				continue;
@@ -308,46 +308,6 @@ class ShortcodeArgs {
 		if ( ! $a['provider'] ) {
 			$a['provider'] = 'iframe';
 			$a['src']      = $a['src'] ? $a['src'] : $a['url'];
-			$a['id']       = $a['src'];
-		}
-
-		return $a;
-	}
-
-	private function special_iframe_src_mods( array $a ) {
-
-		switch ( $a['provider'] ) {
-			case 'youtube':
-				$yt_v    = Common\get_url_arg( $a['url'], 'v' );
-				$yt_list = Common\get_url_arg( $a['url'], 'list' );
-
-				if ( str_contains( $a['src'], '/embed/videoseries?' ) &&
-					$yt_v
-				) {
-					$a['src'] = str_replace( '/embed/videoseries?', "/embed/$yt_v?", $a['src'] );
-				}
-
-				if ( $yt_list ) {
-					$a['src']     = remove_query_arg( 'feature', $a['src'] );
-					$a['src']     = add_query_arg( 'list', $yt_list, $a['src'] );
-					$a['src_gen'] = add_query_arg( 'list', $yt_list, $a['src_gen'] );
-				}
-				break;
-			case 'vimeo':
-				$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
-				$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
-
-				$parsed_url = wp_parse_url( $a['url'] );
-
-				if ( ! empty( $parsed_url['fragment'] ) && str_starts_with( $parsed_url['fragment'], 't' ) ) {
-					$a['src']     .= '#' . $parsed_url['fragment'];
-					$a['src_gen'] .= '#' . $parsed_url['fragment'];
-				}
-				break;
-			case 'wistia':
-				$a['src']     = add_query_arg( 'dnt', 1, $a['src'] );
-				$a['src_gen'] = add_query_arg( 'dnt', 1, $a['src_gen'] );
-				break;
 		}
 
 		return $a;
@@ -359,14 +319,10 @@ class ShortcodeArgs {
 			return false;
 		}
 
-		if ( ! $a['provider'] || ! $a['id'] ) {
-			$this->errors->add( 'no-provider-and-id', 'Need Provider and ID to build iframe src' );
-			return false;
-		}
-
 		$options      = options();
-		$a['src_gen'] = build_iframe_src( $a );
-		$a            = special_iframe_src_mods( $a );
+		$a['src_gen'] = $this->build_iframe_src( $a );
+		$a['src_gen'] = special_iframe_src_mods( $a['src_gen'], $a );
+		$a['src']     = special_iframe_src_mods( $a['src'], $a, 'oembed src' );
 
 		$this->compare_oembed_src_with_generated_src( $a );
 
@@ -377,16 +333,82 @@ class ShortcodeArgs {
 		$a['src'] = iframe_src_args( $a['src'], $a );
 		$a['src'] = iframe_src_autoplay_args( $a['autoplay'], $a );
 
-		if ( 'youtube' === $a['provider'] && $options['youtube_nocookie'] ) {
-			$a['src'] = str_replace( 'https://www.youtube.com', 'https://www.youtube-nocookie.com', $a['src'] );
+		return $a['src'];
+	}
+
+	private function build_iframe_src( array $a ) {
+
+		if ( ! $a['provider'] || ! $a['id'] ) {
+
+			if ( $a['src'] ) {
+				return false;
+			} else {
+				throw new \Exception(
+					__( 'Need Provider and ID to build iframe src.', 'advanced-responsive-video-embedder' )
+				);
+			}
 		}
 
-		return $a['src'];
+		$options    = options();
+		$properties = get_host_properties();
+
+		if ( isset( $properties[ $a['provider'] ]['embed_url'] ) ) {
+			$pattern = $properties[ $a['provider'] ]['embed_url'];
+		} else {
+			$pattern = '%s';
+		}
+
+		if ( 'facebook' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+			$a['id'] = "https://www.facebook.com/facebook/videos/{$a['id']}/";
+
+		} elseif ( 'twitch' === $a['provider'] && is_numeric( $a['id'] ) ) {
+
+			$pattern = 'https://player.twitch.tv/?video=v%s';
+		}
+
+		if ( isset( $properties[ $a['provider'] ]['url_encode_id'] ) && $properties[ $a['provider'] ]['url_encode_id'] ) {
+			$a['id'] = rawurlencode( str_replace( '&', '&amp;', $a['id'] ) );
+		}
+
+		if ( 'brightcove' === $a['provider'] ) {
+			$src = sprintf( $pattern, $a['account_id'], $a['brightcove_player'], $a['brightcove_embed'], $a['id'] );
+		} else {
+			$src = sprintf( $pattern, $a['id'] );
+		}
+
+		switch ( $a['provider'] ) {
+
+			case 'youtube':
+				$t_arg         = Common\get_url_arg( $a['url'], 't' );
+				$time_continue = Common\get_url_arg( $a['url'], 'time_continue' );
+				$list_arg      = Common\get_url_arg( $a['url'], 'list' );
+
+				if ( $t_arg ) {
+					$src = add_query_arg( 'start', youtube_time_to_seconds( $t_arg ), $src );
+				}
+				if ( $time_continue ) {
+					$src = add_query_arg( 'start', youtube_time_to_seconds( $time_continue ), $src );
+				}
+
+				if ( $list_arg ) {
+					$src = add_query_arg( 'list', $list_arg, $src );
+				}
+				break;
+			case 'ted':
+				$lang = Common\get_url_arg( $a['url'], 'language' );
+				if ( $lang ) {
+					$src = str_replace( 'ted.com/talks/', "ted.com/talks/lang/{$lang}/", $src );
+				}
+				break;
+		}
+
+		return $src;
 	}
 
 	private function compare_oembed_src_with_generated_src( $a ) {
 
-		if ( ! $a['src'] ) {
+		if ( ! $a['src'] || ! $a['src_gen'] ) {
 			return;
 		}
 

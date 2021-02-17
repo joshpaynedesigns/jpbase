@@ -7,7 +7,7 @@
  *
  * See more documentation about our views templating system.
  *
- * @link http://m.tri.be/1aiy
+ * @link https://evnt.is/1aiy
  *
  * @version 5.2.0
  *
@@ -26,4 +26,3 @@ if ( empty( $phone ) ) {
 	<?php $this->template( 'components/icons/phone', [ 'classes' => [ 'tribe-events-pro-organizer__meta-phone-icon-svg' ] ] ); ?>
 	<span class="tribe-events-pro-organizer__meta-phone-text"><?php echo esc_html( $phone ); ?></span>
 </div>
-

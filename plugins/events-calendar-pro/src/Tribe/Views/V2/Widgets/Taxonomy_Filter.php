@@ -67,12 +67,14 @@ class Taxonomy_Filter {
 	 * Decodes and sets the taxonomy args in a format that WP can use.
 	 *
 	 * @since 5.2.0
+	 * @since TBD    Add $operand to handle Matching all.
 	 *
 	 * @param string|array<string,mixed> $filters The current 'filter' arguments.
+	 * @param string                     $operand The current Operand that we will use to determine how to build the classes.
 	 *
 	 * @return array<string,mixed> $filters The clean and ready filters argument.
 	 */
-	public function set_taxonomy_args( $filters ) {
+	public function set_taxonomy_args( $filters, $operand = 'OR' ) {
 		$filters = maybe_unserialize( $filters );
 
 		if ( is_string( $filters ) ) {
@@ -81,6 +83,12 @@ class Taxonomy_Filter {
 
 		// Remove empty elements from each sub-array, then from the top-level one.
 		$filters = array_filter( array_map( 'array_filter', (array) $filters ) );
+
+		if ( 'OR' === strtoupper( $operand ) ) {
+			return $filters;
+		}
+
+
 
 		return $filters;
 	}
@@ -140,6 +148,7 @@ class Taxonomy_Filter {
 		$tax_filters = json_decode( $widgets_options[ $widget_obj->number ]['filters'], true );
 
 		if ( empty( $tax_filters ) ) {
+			$field['disabled'] = $disabled;
 			return $field;
 		}
 
@@ -165,7 +174,7 @@ class Taxonomy_Filter {
 	 */
 	public function add_taxonomy_input( $field, $widget_obj, $container ) {
 		$data = $this->format_tax_data( $field, $widget_obj );
-		$container->make( Admin_Template::class )->template( 'widget/components/taxonomy', $data );
+		$container->make( Admin_Template::class )->template( 'widgets/components/taxonomy', $data );
 	}
 
 	/**

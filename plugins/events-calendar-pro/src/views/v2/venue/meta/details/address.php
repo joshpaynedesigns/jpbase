@@ -7,7 +7,7 @@
  *
  * See more documentation about our views templating system.
  *
- * @link http://m.tri.be/1aiy
+ * @link https://evnt.is/1aiy
  *
  * @version 5.2.0
  *
@@ -32,4 +32,3 @@ $address = tribe_get_full_address( $venue->ID );
 		><?php esc_html_e( 'Get Directions', 'tribe-events-calendar-pro' ); ?></a>
 	</div>
 </div>
-

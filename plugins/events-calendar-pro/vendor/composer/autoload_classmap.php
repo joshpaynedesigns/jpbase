@@ -46,9 +46,12 @@ return array(
     'Tribe\\Events\\Pro\\Views\\V2\\Views\\Photo_View' => $baseDir . '/src/Tribe/Views/V2/Views/Photo_View.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Views\\Venue_View' => $baseDir . '/src/Tribe/Views/V2/Views/Venue_View.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Views\\Week_View' => $baseDir . '/src/Tribe/Views/V2/Views/Week_View.php',
+    'Tribe\\Events\\Pro\\Views\\V2\\Views\\Widgets\\Countdown_View' => $baseDir . '/src/Tribe/Views/V2/Views/Widgets/Countdown_View.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Admin_Template' => $baseDir . '/src/Tribe/Views/V2/Widgets/Admin_Template.php',
+    'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Ajax' => $baseDir . '/src/Tribe/Views/V2/Widgets/Ajax.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Hooks' => $baseDir . '/src/Tribe/Views/V2/Widgets/Hooks.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Service_Provider' => $baseDir . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Taxonomy_Filter' => $baseDir . '/src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Advanced_List' => $baseDir . '/src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php',
+    'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Countdown' => $baseDir . '/src/Tribe/Views/V2/Widgets/Widget_Countdown.php',
 );

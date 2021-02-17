@@ -11,6 +11,10 @@
             margin-bottom: 0;
         }
 
+        .content-section-content {
+            width: 100%;
+        }
+
         .l-content,
         .r-content {
             @include span-columns(12);

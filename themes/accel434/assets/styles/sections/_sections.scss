@@ -45,12 +45,34 @@
 			.section-title {
 				color: $white;
 			}
+
+			ul {
+
+			    li:before {
+		            background-color: $white;
+		        }
+			}
+
+			ol {
+				color: $white;
+			}
 		}
 
 		&.light-blue {
 			background-color: $light-blue;
 
 			.section-title {
+				color: $white;
+			}
+
+			ul {
+
+			    li:before {
+		            background-color: $white;
+		        }
+			}
+
+			ol {
 				color: $white;
 			}
 		}
@@ -65,12 +87,34 @@
 			.section-title {
 				color: $white;
 			}
+
+			ul {
+
+			    li:before {
+		            background-color: $white;
+		        }
+			}
+
+			ol {
+				color: $white;
+			}
 		}
 
 		&.dark-gray {
 			background-color: $dark-gray;
 
 			.section-title {
+				color: $white;
+			}
+
+			ul {
+
+			    li:before {
+		            background-color: $white;
+		        }
+			}
+
+			ol {
 				color: $white;
 			}
 		}

@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.2.1.2';
+		const VERSION = '5.2.2';
 
 		/**
 		 * The Events Calendar Required Version
@@ -221,7 +221,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		/**
 		 * AJAX handler for the Widget Term Select2
 		 *
-		 * @todo   We need to mode this to use Tribe__Ajax__Dropdown class
+		 * @todo   We need to move this to use Tribe__Ajax__Dropdown class
 		 *
 		 * @return void
 		 */
@@ -232,7 +232,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$taxonomies = get_object_taxonomies( Tribe__Events__Main::POSTTYPE, 'objects' );
 			$taxonomies = array_reverse( $taxonomies );
 
-			$results = array();
+			$results = [];
 			foreach ( $taxonomies as $tax ) {
 				$group = array(
 					'text' => esc_attr( $tax->labels->name ),
@@ -247,7 +247,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				}
 
 				foreach ( $terms as $term ) {
-					// This is a workout to make #93598 work
+					// This is a workaround to make #93598 work
 					if ( $search && false === strpos( $term->name, $search ) ) {
 						continue;
 					}
@@ -804,11 +804,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$intro_text[] = '<p>' . __( "If this is your first time using The Events Calendar Pro, you're in for a treat and are already well on your way to creating a first event. Here are some basics we've found helpful for users jumping into it for the first time:", 'tribe-events-calendar-pro' ) . '</p>';
 			$intro_text[] = '<ul>';
 			$intro_text[] = '<li>';
-			$intro_text[] = sprintf( __( '%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time.', 'tribe-events-calendar-pro' ), '<a href="http://m.tri.be/4t" target="blank">', '</a>' );
+			$intro_text[] = sprintf( __( '%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time.', 'tribe-events-calendar-pro' ), '<a href="https://evnt.is/4t" target="blank">', '</a>' );
 			$intro_text[] = '</li><li>';
-			$intro_text[] = sprintf( __( '%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer.', 'tribe-events-calendar-pro' ), '<a href="http://m.tri.be/4u" target="blank">', '</a>' );
+			$intro_text[] = sprintf( __( '%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer.', 'tribe-events-calendar-pro' ), '<a href="https://evnt.is/4u" target="blank">', '</a>' );
 			$intro_text[] = '</li><li>';
-			$intro_text[] = sprintf( __( "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy.", 'tribe-events-calendar-pro' ), '<a href="http://m.tri.be/4v" target="blank">', '</a>' );
+			$intro_text[] = sprintf( __( "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy.", 'tribe-events-calendar-pro' ), '<a href="https://evnt.is/4v" target="blank">', '</a>' );
 			$intro_text[] = '</li></ul><p>';
 			$intro_text[] = __( "Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event.", 'tribe-events-calendar-pro' );
 			$intro_text[] = '</p>';
@@ -823,8 +823,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return string The content.
 		 */
 		public function add_help_tab_forumtext() {
-			$forum_text[] = '<p>' . sprintf( __( 'Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play.', 'tribe-events-calendar-pro' ), '<a href="http://m.tri.be/4w/" target="blank">', '</a>' ) . '</p>';
-			$forum_text[] = '<p>' . sprintf( __( "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response.", 'tribe-events-calendar-pro' ), '<a href="http://m.tri.be/4w/" target="blank">', '</a>', '<a href="http://wordpress.org/support/plugin/the-events-calendar" target="blank">', '</a>' ) . '</p>';
+			$forum_text[] = '<p>' . sprintf( __( 'Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play.', 'tribe-events-calendar-pro' ), '<a href="https://evnt.is/4w/" target="blank">', '</a>' ) . '</p>';
+			$forum_text[] = '<p>' . sprintf( __( "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response.", 'tribe-events-calendar-pro' ), '<a href="https://evnt.is/4w/" target="blank">', '</a>', '<a href="http://wordpress.org/support/plugin/the-events-calendar" target="blank">', '</a>' ) . '</p>';
 			$forum_text[] = '<p>' . __( "Our number one goal is helping you succeed, and to whatever extent possible, we'll help troubleshoot and guide your customizations or tweaks. While we won't build your site for you, and we can't guarantee we'll be able to get you 100% integrated with every theme or plugin out there, we'll do all we can to point you in the right direction and to make you -- and your client, as is often more importantly the case -- satisfied.", 'tribe-events-calendar-pro' ) . '</p>';
 			$forum_text[] = '<p>' . __( "Before posting a new thread, please do a search to make sure your issue hasn't already been addressed. When posting please make sure to provide as much detail about the problem as you can (with screenshots or screencasts if feasible), and make sure that you've identified whether a plugin / theme conflict could be at play in your initial message.", 'tribe-events-calendar-pro' ) . '</p>';
 			$forum_text = implode( $forum_text );
@@ -1448,9 +1448,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public function helpTabForumsLink( $content ) {
 			if ( get_option( 'pue_install_key_events_calendar_pro ' ) ) {
-				return 'http://m.tri.be/4x';
+				return 'https://evnt.is/4x';
 			} else {
-				return 'http://m.tri.be/4w';
+				return 'https://evnt.is/4w';
 			}
 		}
 
@@ -1608,9 +1608,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		public function addMetaLinks( $links, $file ) {
 			if ( $file == $this->pluginDir . 'events-calendar-pro.php' ) {
 				$anchor = __( 'Support', 'tribe-events-calendar-pro' );
-				$links[] = '<a href="http://m.tri.be/4z">' . $anchor . '</a>';
+				$links[] = '<a href="https://evnt.is/4z">' . $anchor . '</a>';
 				$anchor = __( 'View All Add-Ons', 'tribe-events-calendar-pro' );
-				$links[] = '<a href="http://m.tri.be/50">' . $anchor . '</a>';
+				$links[] = '<a href="https://evnt.is/50">' . $anchor . '</a>';
 			}
 
 			return $links;

@@ -1,6 +1,6 @@
 <?php
 /**
- * The main service provider for the version 2 of the Pro Widgets.
+ * The main service provider for version 2 of the Pro Widgets.
  *
  * @since   5.2.0
  *
@@ -10,6 +10,7 @@
 namespace Tribe\Events\Pro\Views\V2\Widgets;
 
 use Tribe\Events\Views\V2\Widgets\Widget_List;
+use Tribe\Events\Pro\Views\V2\Views\Widgets\Countdown_View;
 
 /**
  * Class Service_Provider
@@ -35,6 +36,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * Binds and sets up implementations.
 	 *
 	 * @since 5.2.0
+	 * @since TBD Added Countdown Widget, separated shortcode hooks.
 	 */
 	public function register() {
 		// Activate the compatibility coding for V1 and V2 Event List Widgets.
@@ -47,6 +49,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 
 		$this->register_hooks();
 		$this->hook_widgets();
+		$this->hook_widget_shortcodes();
 	}
 
 	/**
@@ -66,20 +69,31 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Function used to attach the hooks associated with this class.
+	 * Function used to attach the widget hooks associated with this class.
 	 *
 	 * @since 5.2.0
+	 * @since TBD Added Countdown Widget, separated shortcode hooks.
 	 */
 	public function hook_widgets() {
 		add_filter( 'tribe_widgets', [ $this, 'register_widget' ] );
 		add_filter( 'tribe_events_views', [ $this, 'add_views' ] );
-		add_filter( 'tribe_events_pro_shortcodes_list_widget_class', [ $this, 'alter_widget_class' ], 10, 2 );
+	}
+
+	/**
+	 * Function used to attach the shortcode hooks associated with this class.
+	 *
+	 * @since TBD Separated shortcode hooks. Renamed alter_widget_class function to indicate it is specific to the List Widget.
+	 */
+	public function hook_widget_shortcodes() {
+		add_filter( 'tribe_events_pro_shortcodes_list_widget_class', [ $this, 'alter_list_widget_class' ], 10, 2 );
+		add_filter( 'tribe_events_pro_shortcodes_countdown_widget_class', [ $this, 'alter_countdown_widget_class' ], 10, 2 );
 	}
 
 	/**
 	 * Add the widgets to register with WordPress.
 	 *
 	 * @since 5.2.0
+	 * @since TBD Added Countdown Widget.
 	 *
 	 * @param array<string,string> $widgets An array of widget classes to register.
 	 *
@@ -87,6 +101,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 */
 	public function register_widget( $widgets ) {
 		// $widgets['tribe_events_mini_calendar_widget'] = Widget_Mini_Calendar::class;
+		$widgets['tribe_events_countdown_widget'] = Widget_Countdown::class;
 
 		return $widgets;
 	}
@@ -95,6 +110,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * Add the widget views to the view manager.
 	 *
 	 * @since 5.2.0
+	 * @since TBD Added Countdown Widget view.
 	 *
 	 * @param array<string,string> $views An associative array of views in the shape `[ <slug> => <class> ]`.
 	 *
@@ -102,6 +118,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 */
 	public function add_views( $views ) {
 		// $views['widget-mini-calendar'] = Widget_Mini_Calendar_View::class;
+		$views['widget-countdown'] = Countdown_View::class;
 
 		return $views;
 	}
@@ -110,13 +127,28 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * Swaps in the new V2 widget for the old one in the widget shortcode.
 	 *
 	 * @since 5.2.0
+	 * @since TBD renamed to indicate this is specific to the List Widget.
 	 *
 	 * @param string              $widget_class The widget class name we're currently implementing.
 	 * @param array<string,mixed> $arguments    The widget arguments.
 	 *
 	 * @return string             $widget_class The modified (V2) widget class name we want to implement.
 	 */
-	public function alter_widget_class( $widget_class, $arguments ) {
+	public function alter_list_widget_class( $widget_class, $arguments ) {
 		return Widget_List::class;
+	}
+
+	/**
+	 * Swaps in the new Countdonw V2 widget for the old one in the widget shortcode.
+	 *
+	 * @since TBD
+	 *
+	 * @param string              $widget_class The widget class name we're currently implementing.
+	 * @param array<string,mixed> $arguments    The widget arguments.
+	 *
+	 * @return string             $widget_class The modified (V2) widget class name we want to implement.
+	 */
+	public function alter_countdown_widget_class( $widget_class, $arguments ) {
+		return Widget_Countdown::class;
 	}
 }

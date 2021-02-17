@@ -95,6 +95,15 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 				}
 			}
 
+			// In some instances, event_date_utc is populated, but event_date is not?
+			foreach( $events as $index => $event ) {
+				if ( ! empty( $event->event_date ) ) {
+					continue;
+				}
+
+				$events[ $index ]->event_date = tribe_get_start_date( $event->ID, false, Tribe__Date_Utils::DBDATETIMEFORMAT );
+			}
+
 			include( Tribe__Events__Pro__Main::instance()->pluginPath . 'src/admin-views/widget-admin-countdown.php' );
 		}
 
@@ -241,7 +250,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$output = '';
 
 			if ( $event ) {
-				$output .= '<div class="tribe-countdown-text"><a href="' . esc_url( $link ) . '">' . esc_attr( $event->post_title ) . '</a></div>';
+				$output .= '<div class="tribe-countdown-text tribe-common-h5"><a href="' . esc_url( $link ) . '">' . esc_attr( $event->post_title ) . '</a></div>';
 			}
 
 			return $output . '

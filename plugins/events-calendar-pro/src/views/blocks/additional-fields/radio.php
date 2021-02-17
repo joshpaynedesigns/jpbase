@@ -7,7 +7,7 @@
  *
  * See more documentation about our Blocks Editor templating system.
  *
- * @link http://m.tri.be/1ajx
+ * @link https://evnt.is/1ajx
  *
  * @version5.1.2
  *

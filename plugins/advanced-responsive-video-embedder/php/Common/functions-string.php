@@ -43,20 +43,3 @@ function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
 
 	return $str;
 }
-
-function kses_basic( $html_with_a ) {
-	return wp_kses(
-		$html_with_a,
-		[
-			'a'      => [
-				'href'   => [],
-				'target' => [],
-				'title'  => [],
-			],
-			'br'     => [],
-			'em'     => [],
-			'strong' => [],
-			'code'   => [],
-		]
-	);
-}

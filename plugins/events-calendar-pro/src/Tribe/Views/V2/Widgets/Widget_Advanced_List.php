@@ -243,7 +243,7 @@ class Widget_Advanced_List {
 
 		// Handle tax filters.
 		if ( ! empty( $arguments['filters'] ) ) {
-			$alterations            = array_merge( $alterations, tribe( 'pro.views.v2.widgets.taxonomy' )->set_taxonomy_args( $arguments['filters'] ) );
+			$alterations            = array_merge( $alterations, tribe( 'pro.views.v2.widgets.taxonomy' )->set_taxonomy_args( $arguments['filters'], $arguments['operand'] ) );
 			$alterations['operand'] = $arguments['operand'];
 		}
 

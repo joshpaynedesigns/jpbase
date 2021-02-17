@@ -193,6 +193,7 @@
 				return {
 					action: 'tribe_widget_dropdown_' + source,
 					disabled: $select.data( 'disabled' ),
+					selected: $select.data( 'selected' ),
 					search: search,
 					page: page,
 				};
@@ -263,6 +264,7 @@
 			}
 
 			$widget = $target.closest( 'div.widget' );
+			$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
 		}
 
 		// It might be a DOM object, so we try convert to jQuery
@@ -302,6 +304,8 @@
 					// check for conditional display of fields and process after saving
 					tribeWidget.conditional( this, $widget );
 				} );
+
+				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
 			}
 		}
 	};
@@ -325,6 +329,7 @@
 				var $widget = $( widget );
 				tribeWidget.setup( e, $widget );
 				tribeWidget.showFilters( e, $widget );
+				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
 			}
 		} )
 		.on( 'change', '.calendar-widget-add-filter', function( e ) {

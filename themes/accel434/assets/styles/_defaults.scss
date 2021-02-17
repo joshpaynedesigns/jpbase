@@ -47,7 +47,7 @@ a.alignright {
 img.centered,
 .aligncenter {
     display: block;
-    margin: 0 auto $base-spacing*2;
+    margin: 0 auto $base-spacing;
 }
 
 img.alignnone,
@@ -58,13 +58,13 @@ img.alignnone,
 a.alignleft,
 img.alignleft,
 .wp-caption.alignleft {
-    margin: 0 $base-spacing*2 $base-spacing*2 0;
+    margin: 0 $base-spacing $base-spacing 0;
 }
 
 a.alignright,
 img.alignright,
 .wp-caption.alignright {
-    margin: 0 0 $base-spacing*2 $base-spacing*2;
+    margin: 0 0 $base-spacing $base-spacing;
 }
 
 .wp-caption-text {

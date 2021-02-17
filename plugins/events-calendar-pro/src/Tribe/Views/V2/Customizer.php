@@ -155,6 +155,18 @@ class Customizer {
 			';
 		}
 
+		if (
+			$customizer->has_option( $section->ID, 'background_color_choice' )
+			&& 'custom' === $customizer->get_option( [ $section->ID, 'background_color_choice' ] )
+			&& $customizer->has_option( $section->ID, 'background_color' )
+		) {
+			$css_template .= '
+				.tribe-events-pro .tribe-events-pro-week-grid__event-link {
+					border-color: <%= global_elements.background_color %>;
+				}
+			';
+		}
+
 		return $css_template;
 	}
 

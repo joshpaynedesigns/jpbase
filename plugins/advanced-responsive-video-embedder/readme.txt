@@ -2,10 +2,10 @@
 Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
-Requires at least: 4.4.24
+Requires at least: 4.9.16
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 9.2.4
+Stable tag: 9.4.2
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,12 +26,12 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *  Takes over WordPress embeds with URLs on their own line and `[embed]` shortcodes.
 *  Can take over WP's default video file embeds.
 *  Has its own very powerful `[arve]` shortcode.
-*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI]() (not maintained). No more messing around with shortcodes and previewing.
+*  Optional <abbr title="What You See Is What You Get">WYSIWYG</abbr> support with [Shortcode UI](https://wordpress.org/plugins/shortcode-ui/) (not maintained). No more messing around with shortcodes and previewing.
 
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode provides with a nice UI with detailed settings descriptions in.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
 
 #### Both ####
 
@@ -55,7 +55,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, ARVE general iframe embed, Google Drive, ooyala, IMDB
+Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, Google Drive, ooyala, IMDB, rumble.com, ARVE general iframe embed
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -78,7 +78,7 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 ### [Pro Addon][20]
 
-**<big>10% off</big>** first year with discount code `settingspage`.
+**<big>10% off</big>** first year with discount code `wporg`.
 
 This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
@@ -99,7 +99,7 @@ This plugin is financed by purchases of the [Pro Addon][20]. The development and
 *   **Feel good about yourself**<br>
     for supporting my 8+ years work on this plugin. Tons of hours, weekends … always worked on improving it
 *   Show the latest video of a YouTube channel by using the channel URL (updated/cached hourly)
-*   **[Get the ARVE Pro][20]**
+*   **[Get ARVE Pro][20]**
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/
 
@@ -111,10 +111,6 @@ Display random video from:
 *  Vimeo Showcase
 *  Comma separated list of video URLs
 
-#### Supported Providers ####
-
-[All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, ARVE general iframe embed, Google Drive, ooyala, IMDB
 ### Thanks ###
 
 *   Of course all the customers who bought a addon.
@@ -136,9 +132,9 @@ Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/suppo
 
 ### How to get the pro version working? ###
 
-1. Go though the purchase process on [nextgenthemes.com/arve-pro/](https://nextgenthemes.com/arve-pro/)
+1. Go though the purchase process on [nextgenthemes.com](https://nextgenthemes.com/plugins/arve-pro/)
 1. Follow the 3 easy steps you get with the purchase receipt. It is basically downloading a arve-pro.zip and installing it through your WordPress Admin panel.
-1. After that you may want to switch your default mode to Lazyload or Lightbox or the ARVE settings page.
+1. After that you may want to switch your default mode to Lazyload or Lightbox on the ARVE settings page.
 
 ### Why are my videos not filling their container? ###
 
@@ -152,13 +148,17 @@ Feel free to ask.
 
 ### How do I embed videos from a unlisted providers / iframes? ###
 
-This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the [arve] shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe.
+This plugin not changes anything to usual HTML `<iframe>` embed codes you have to use the shortcodes or the Gutenberg Block. They will become `[arve url="https://..."]`. The url represents what is the `src` in HTML embeds. It works as simple as this, if the `[arve]` shortcode does not detect a known URL structure then it will treat the URL as a `src` for the iframe. 
 
 ### Why does my YouTube video not repeat/loop? ###
 
 This plugins embed is considered as 'custom player' by YouTube so you have to pass the video ID as playlist parameters to make the loop work.
 
 `[arve url="https://www.youtube.com/watch?v=pvRqvX413Ik" parameters="loop=1&playlist=pvRqvX413Ik"]`
+
+## Installation ##
+
+Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
 ## Screenshots ##
 
@@ -172,6 +172,32 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-28 9.4.2 ###
+
+* Fix: Include new library for notices.
+
+### 2021-01-28 9.4.1 ###
+
+* Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
+* Fix: rumble.com and other providers.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles would get applied late.
+
+### 2021-01-25 9.3.5 ###
+
+*  Fix: Avoid passing `null` to `str_contains`.
+*  Improved: Code related to the above.
+*  Improved: Added back Installation section to the readme.
+
+### 2021-01-24 9.3.0 ###
+
+Improved:
+*  Simplified CSS and reduced size.
+*  Security related escaping and filtering HTML output on settings page.
+*  No longer show save buttons on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameters settings. Found in the code from 8.0.
+*  Added in placeholders for text fields.
+*  General code improvements and removal of unused code.
+
 ### 2021-01-21 9.2.4 ###
 
 * Fix: Missing 'Normal' mode select
@@ -184,6 +210,7 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 * Fix: Compatibility with Astor Theme.
 * Improved: Added notes that Shortcode UI is not maintained to the button and readme.
+* Improved: Added notes about outdated PHP versions to settings page sidebar.
 * Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
 * Improved: Lots of code restructured and improved.
 

@@ -1,14 +1,14 @@
-# Copyright (C) 2020 Modern Tribe
+# Copyright (C) 2021 Modern Tribe
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.2.1\n"
+"Project-Id-Version: The Events Calendar PRO 5.2.2\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2020-12-11 06:24:23+00:00\n"
+"POT-Creation-Date: 2021-01-27 06:50:51+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-12-11 06:24\n"
+"PO-Revision-Date: 2021-01-27 06:50\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -195,7 +195,8 @@ msgstr ""
 msgid "Events Countdown"
 msgstr ""
 
-#: src/Tribe/Countdown_Widget.php:56 src/Tribe/Countdown_Widget.php:107
+#: src/Tribe/Countdown_Widget.php:56 src/Tribe/Countdown_Widget.php:116
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:286
 msgid "Hooray!"
 msgstr ""
 
@@ -243,132 +244,136 @@ msgstr ""
 msgid "Distance"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:187
+#: src/Tribe/Geo_Loc.php:190
 msgid "Map view search distance limit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:189
+#: src/Tribe/Geo_Loc.php:192
 msgid ""
 "Set the distance that the location search covers (find events within X "
 "distance units of location search input)."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:196
+#: src/Tribe/Geo_Loc.php:199
 msgid "Distance unit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:202 src/Tribe/Geo_Loc_Filter.php:23
-#: src/Tribe/Views/V2/Views/Map_View.php:456
+#: src/Tribe/Geo_Loc.php:205 src/Tribe/Geo_Loc_Filter.php:23
+#: src/Tribe/Views/V2/Views/Map_View.php:457
 msgid "Miles"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:203 src/Tribe/Geo_Loc_Filter.php:26
-#: src/Tribe/Views/V2/Views/Map_View.php:452
+#: src/Tribe/Geo_Loc.php:206 src/Tribe/Geo_Loc_Filter.php:26
+#: src/Tribe/Views/V2/Views/Map_View.php:453
 msgid "Kilometers"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:218
-msgid "Hide location search"
+#: src/Tribe/Geo_Loc.php:219
+msgid "Removes location search field from the Events Bar on all views."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:219
+#: src/Tribe/Geo_Loc.php:220
 msgid ""
-"Removes location search field from the events bar on all views except for "
+"Removes location search field from the Events Bar on all views except for "
 "map view."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:319
+#: src/Tribe/Geo_Loc.php:225
+msgid "Hide location search"
+msgstr ""
+
+#: src/Tribe/Geo_Loc.php:326
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:357
+#: src/Tribe/Geo_Loc.php:364
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:388
+#: src/Tribe/Geo_Loc.php:395
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:389 src/Tribe/Views/V2/Geo_Loc/Static_Handler.php:154
+#: src/Tribe/Geo_Loc.php:396 src/Tribe/Views/V2/Geo_Loc/Static_Handler.php:154
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:414
+#: src/Tribe/Geo_Loc.php:421
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:425
+#: src/Tribe/Geo_Loc.php:432
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:426
+#: src/Tribe/Geo_Loc.php:433
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:444
+#: src/Tribe/Geo_Loc.php:451
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:445
+#: src/Tribe/Geo_Loc.php:452
 msgid ""
 "for latitude and longitude to be auto-generated; otherwise, you'll only be "
 "able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:747
+#: src/Tribe/Geo_Loc.php:754
 msgid ""
 "The latitude and longitude for your venue could not be fetched. The Google "
 "Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:751
+#: src/Tribe/Geo_Loc.php:758
 msgid "Enter your API Key"
 msgstr ""
 
 #. translators: 1: Error response text, 2: URL
-#: src/Tribe/Geo_Loc.php:1298
+#: src/Tribe/Geo_Loc.php:1305
 msgctxt "debug geodata"
 msgid "Geocode request failed (%1$s - %2$s)"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1299
+#: src/Tribe/Geo_Loc.php:1306
 msgctxt "debug geodata"
 msgid "empty response"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1326
+#: src/Tribe/Geo_Loc.php:1333
 msgid ""
 "There was an error while trying to fix the Venues geolocation information: %s"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1373
+#: src/Tribe/Geo_Loc.php:1380
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1435
+#: src/Tribe/Geo_Loc.php:1442
 msgid ""
 "You have venues for which we don't have Geolocation information. <a "
 "href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1464
+#: src/Tribe/Geo_Loc.php:1471
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1607
+#: src/Tribe/Geo_Loc.php:1614
 msgctxt ""
 "The text of the link that will take the user to the Venue edit screen."
 msgid "update the venue address or use latitude & longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1617
+#: src/Tribe/Geo_Loc.php:1624
 msgctxt ""
 "The text of the link that will trigger an attempt to fix the Venues "
 "geolocation information."
 msgid "try again"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1626
+#: src/Tribe/Geo_Loc.php:1633
 msgctxt "tribe-events-calendar-pro"
 msgid ""
 "Geolocation could not be fixed for the Venue “%s” (ID: %d). Please %s and %s."
@@ -1817,7 +1822,7 @@ msgstr ""
 msgid "No results were found for events in or near <strong>\"%s\"</strong>."
 msgstr ""
 
-#: src/Tribe/Templates/Map.php:142 src/Tribe/Templates/Week.php:207
+#: src/Tribe/Templates/Map.php:142 src/Tribe/Templates/Week.php:208
 msgid ""
 "No matching events listed under %s. Please try viewing the full calendar for "
 "a complete list of events."
@@ -1831,20 +1836,19 @@ msgstr ""
 msgid "All %s"
 msgstr ""
 
+#. translators: %s: Search Term
 #. translators: the placeholder is the keyword(s), as the user entered it.
-#: src/Tribe/Templates/Week.php:202 src/Tribe/Views/V2/Messages.php:48
-msgid ""
-"There were no results found for <strong>\"%s\"</strong> this week. Try "
-"searching another week."
+#: src/Tribe/Templates/Week.php:203 src/Tribe/Views/V2/Messages.php:48
+msgid "There were no results found for <strong>\"%s\"</strong> this week."
 msgstr ""
 
-#: src/Tribe/Templates/Week.php:204
+#: src/Tribe/Templates/Week.php:205
 msgid ""
 "No results were found for events in or near <strong>\"%s\"</strong> this "
 "week. Try searching another week."
 msgstr ""
 
-#: src/Tribe/Templates/Week.php:209 src/Tribe/Views/V2/Messages.php:43
+#: src/Tribe/Templates/Week.php:210 src/Tribe/Views/V2/Messages.php:43
 msgid "No results were found for this week. Try searching another week."
 msgstr ""
 
@@ -1994,6 +1998,70 @@ msgstr ""
 msgctxt ""
 "The label for the option to enable organizer display in the List Widget."
 msgid "Organizer"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:140
+msgctxt "The label for the title field of the Countdown Widget."
+msgid "Title:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:149
+msgctxt "The label for the type field of the Countdown Widget."
+msgid "Countdown to:"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:157
+msgctxt "Label for the \"countdown to a single event\" option."
+msgid "Next upcoming event"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:166
+msgctxt "Label for the \"countdown to a single event\" option."
+msgid "Specific event"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:184
+msgctxt "The label for the event field of the Countdown Widget."
+msgid "Event:"
+msgstr ""
+
+#. Translators: 1: single event term
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:191
+msgid "Select an %1$s"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:208
+msgctxt ""
+"The label for the field to change the displayed text on countdown completion."
+msgid "Countdown Completed Text"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:213
+msgctxt ""
+"A note about what this shows when \"Next Event\" is the countdown type."
+msgid ""
+"On “Next Event” type of countdown, this text will only show when there are "
+"no events to show."
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:221
+msgctxt "The label for the option to show seconds in the countdown widget."
+msgid "Show seconds?"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:229
+msgctxt "The label for the option to enable JSON-LD in the List Widget."
+msgid "Generate JSON-LD data"
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:271
+msgctxt "The description of the Countdown Widget."
+msgid "Displays the time remaining until a specified event."
+msgstr ""
+
+#: src/Tribe/Views/V2/Widgets/Widget_Countdown.php:277
+msgctxt "The name of the Countdown Widget."
+msgid "Events Countdown"
 msgstr ""
 
 #: src/admin-views/custom-fields/gutenberg.php:3
@@ -2574,21 +2642,6 @@ msgstr ""
 msgid "Change the default view for Mobile users."
 msgstr ""
 
-#: src/admin-views/widget/components/taxonomy-filters.php:52
-msgctxt "\"Remove\" label for selected term."
-msgid "(remove)"
-msgstr ""
-
-#: src/admin-views/widget/components/taxonomy.php:41
-#: src/admin-views/widget-admin-advanced-list.php:129
-#: src/admin-views/widget-admin-advanced-list.php:137
-#: src/admin-views/widget-admin-this-week.php:162
-#: src/admin-views/widget-admin-this-week.php:170
-#: src/admin-views/widget-calendar.php:86
-#: src/admin-views/widget-calendar.php:93
-msgid "Select a Taxonomy Term"
-msgstr ""
-
 #: src/admin-views/widget-admin-advanced-list.php:13
 #: src/admin-views/widget-admin-calendar.php:13
 #: src/admin-views/widget-admin-countdown.php:14
@@ -2663,6 +2716,16 @@ msgstr ""
 #: src/admin-views/widget-admin-this-week.php:159
 #: src/admin-views/widget-calendar.php:83
 msgid "Add a filter"
+msgstr ""
+
+#: src/admin-views/widget-admin-advanced-list.php:129
+#: src/admin-views/widget-admin-advanced-list.php:137
+#: src/admin-views/widget-admin-this-week.php:162
+#: src/admin-views/widget-admin-this-week.php:170
+#: src/admin-views/widget-calendar.php:86
+#: src/admin-views/widget-calendar.php:93
+#: src/admin-views/widgets/components/taxonomy.php:41
+msgid "Select a Taxonomy Term"
 msgstr ""
 
 #: src/admin-views/widget-admin-advanced-list.php:143
@@ -2749,6 +2812,11 @@ msgstr ""
 
 #: src/admin-views/widget-calendar.php:8
 msgid "Number of events to list below the mini calendar:"
+msgstr ""
+
+#: src/admin-views/widgets/components/taxonomy-filters.php:52
+msgctxt "\"Remove\" label for selected term."
+msgid "(remove)"
 msgstr ""
 
 #: src/functions/php-min-version.php:51
@@ -3200,6 +3268,26 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
+#: src/views/v2/widgets/widget-countdown/timer.php:34
+msgctxt "The days duration label"
+msgid "days"
+msgstr ""
+
+#: src/views/v2/widgets/widget-countdown/timer.php:40
+msgctxt "The hours duration label"
+msgid "hours"
+msgstr ""
+
+#: src/views/v2/widgets/widget-countdown/timer.php:46
+msgctxt "The abbreviated minutes duration label"
+msgid "mins"
+msgstr ""
+
+#: src/views/v2/widgets/widget-countdown/timer.php:53
+msgctxt "The abbreviated seconds duration label"
+msgid "secs"
+msgstr ""
+
 #: src/views/v2/widgets/widget-events-list/event/date/recurring.php:31
 #: src/views/v2/widgets/widget-events-list/event/date/recurring.php:32
 msgctxt "Recurring label for event in events list widget."
@@ -3233,5 +3321,5 @@ msgid "Modern Tribe, Inc."
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://m.tri.be/20"
+msgid "https://evnt.is/20"
 msgstr ""

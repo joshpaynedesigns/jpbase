@@ -14,14 +14,26 @@ Lazyload, Lightbox and more for ARVE
 
 == Installation ==
 
-Please refer to [Installing and License Management](https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/)
+Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
-== Changelog ==
+## Changelog ##
+
+= 2021-01-30 5.1.10 =
+
+* Fix: Invisible videos
+
+= 2021-01-24 5.1.8 =
+
+* Improved: Corrected colors for Vimeo style play button.
+* Improved: Simplified CSS and reduced size.
+* Improved: Code improved and adjusted to ARVE 9.3.0
 
 = 2021-01-21 5.1.7 =
+
 * Fix: Wrong version check caused the plugin not working correctly.
 
 = 2021-01-21 5.1.4 =
+
 * Adjustment to new ARVE.
 
 = 2021-01-07 5.1.3 =

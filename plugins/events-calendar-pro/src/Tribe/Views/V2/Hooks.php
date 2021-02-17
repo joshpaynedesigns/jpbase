@@ -150,6 +150,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_customizer_pre_sections', [ $this, 'filter_customizer_sections' ], 30, 2 );
 		add_filter( 'tribe_customizer_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 3 );
 		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
+		add_filter( 'tribe_events_views_v2_view_map_template_vars', [ $this, 'filter_map_view_pin' ], 10, 2 );
 	}
 
 	/**
@@ -1028,5 +1029,17 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section, $customizer );
+	}
+
+	/**
+	 * Filters the location pin on the map view.
+	 *
+	 * @since TBD
+	 *
+	 * @param array          $template_vars The View template variables.
+	 * @param View_Interface $view          The current View instance.
+	 */
+	public function filter_map_view_pin( array $template_vars, View_Interface $view ) {
+		return $this->container->make( Map_View::class )->filter_map_view_pin( $template_vars, $view );
 	}
 }

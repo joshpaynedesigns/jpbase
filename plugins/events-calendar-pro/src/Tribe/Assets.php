@@ -457,7 +457,5 @@ class Tribe__Events__Pro__Assets {
 		$data = apply_filters( 'tribe_events_pro_geoloc_localize_script', $data, 'tribe-events-pro-geoloc' );
 
 		return $data;
-
 	}
-
 }

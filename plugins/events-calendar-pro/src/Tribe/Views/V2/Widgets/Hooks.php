@@ -68,9 +68,17 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			10,
 			3
 		);
+
 		add_action(
 			'tribe_events_views_v2_widget_widget-events-list_after_enqueue_assets',
 			[ $this, 'widget_events_list_after_enqueue_assets' ],
+			10,
+			3
+		);
+
+		add_action(
+			'tribe_events_views_v2_widget_widget-countdown_after_enqueue_assets',
+			[ $this, 'widget_events_countdown_after_enqueue_assets' ],
 			10,
 			3
 		);
@@ -97,6 +105,11 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			'tribe_events_pro_v1_unregistered_widget_classes',
 			[ $this, 'unregister_v1_widgets' ]
 		);
+
+		add_action(
+			'wp_ajax_tribe_widget_dropdown_events',
+			[ $this, 'ajax_get_events' ]
+		);
 	}
 
 	/**
@@ -119,6 +132,50 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'filter_add_full_stylesheet_to_customizer' ], 12, 2 );
 	}
 
+	/**
+	 * Stop registration of the v1 Widgets as needed.
+	 *
+	 * @since 5.2.0
+	 *
+	 * @param array<string> $widgets The array of widget classes to register.
+	 *
+	 * @return array<string> $widgets The modified array of widget classes to register.
+	 */
+	public function deregister_v1_widgets( $widgets ) {
+		unset( $widgets['Tribe__Events__Pro__Advanced_List_Widget'] );
+		unset( $widgets['Tribe__Events__Pro__Countdown_Widget'] );
+
+		return $widgets;
+	}
+
+	/**
+	 * Un-registration of the v1 Widgets as needed.
+	 *
+	 * @since 5.2.0
+	 *
+	 * @param array<string> $widgets The array of widget classes to unregister.
+	 *
+	 * @return array<string> $widgets The modified array of widget classes to unregister.
+	 */
+	public function unregister_v1_widgets( $widgets ) {
+		$widgets[] = 'Tribe__Events__Pro__Advanced_List_Widget';
+		$widgets[] = 'Tribe__Events__Pro__Countdown_Widget';
+
+		return $widgets;
+	}
+
+	/**
+	 * Creates the select2 event dropdown for widgets.
+	 *
+	 * @since TBD
+	 *
+	 * @return string The HTML to display.
+	 */
+	public function ajax_get_events() {
+		return $this->container->make( Ajax::class )->get_events();
+	}
+
+	/* ADVANCED LIST WIDGET HOOKS */
 	/**
 	 * Action to inject the cost meta into the events list widget event.
 	 *
@@ -185,33 +242,16 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Stop registration of the v1 Widgets as needed.
+	 * Action to enqueue assets for PRO version of events list widget.
 	 *
 	 * @since 5.2.0
 	 *
-	 * @param array<string> $widgets The array of widget classes to register.
-	 *
-	 * @return array<string> $widgets The modified array of widget classes to register.
+	 * @param boolean         $should_enqueue Whether assets are enqueued or not.
+	 * @param \Tribe__Context $context        Context we are using to build the view.
+	 * @param View_Interface  $view           Which view we are using the template on.
 	 */
-	public function deregister_v1_widgets( $widgets ) {
-		unset( $widgets['Tribe__Events__Pro__Advanced_List_Widget'] );
-
-		return $widgets;
-	}
-
-	/**
-	 * Un-registration of the v1 Widgets as needed.
-	 *
-	 * @since 5.2.0
-	 *
-	 * @param array<string> $widgets The array of widget classes to unregister.
-	 *
-	 * @return array<string> $widgets The modified array of widget classes to unregister.
-	 */
-	public function unregister_v1_widgets( $widgets ) {
-		$widgets[] = 'Tribe__Events__Pro__Advanced_List_Widget';
-
-		return $widgets;
+	public function widget_events_countdown_after_enqueue_assets( $should_enqueue, $context, $view ) {
+		$this->container->make( Widget_Countdown::class )->enqueue_assets( $should_enqueue, $context, $view );
 	}
 
 	/**
@@ -313,7 +353,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param obj                 $widget_obj The widget object.
 	 */
 	public function add_taxonomy_filters( $field, $widget_obj ) {
-		$this->container->make( Admin_Template::class )->template( 'widget/components/taxonomy-filters', $field );
+		$this->container->make( Admin_Template::class )->template( 'widgets/components/taxonomy-filters', $field );
 	}
 
 	/**

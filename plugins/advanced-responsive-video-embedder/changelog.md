@@ -4,6 +4,32 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-01-28 9.4.2 ###
+
+* Fix: Include new library for notices.
+
+### 2021-01-28 9.4.1 ###
+
+* Fix: (hopefully) Non dismissible admin notices. Also removed the notice that came with 9.0-beta completely.
+* Fix: rumble.com and other providers.
+* Improved: The __tiny__ JavaScript of ARVE is now loaded in the `<head>` with `<script async src=` this will deal with edge cases when styles would get applied late.
+
+### 2021-01-25 9.3.5 ###
+
+*  Fix: Avoid passing `null` to `str_contains`.
+*  Improved: Code related to the above.
+*  Improved: Added back Installation section to the readme.
+
+### 2021-01-24 9.3.0 ###
+
+Improved:
+*  Simplified CSS and reduced size.
+*  Security related escaping and filtering HTML output on settings page.
+*  No longer show save buttons on Debug Info tab. Nothing to save there.
+*  Added back info text for URL Parameters settings. Found in the code from 8.0.
+*  Added in placeholders for text fields.
+*  General code improvements and removal of unused code.
+
 ### 2021-01-21 9.2.4 ###
 
 * Fix: Missing 'Normal' mode select
@@ -16,6 +42,7 @@
 
 * Fix: Compatibility with Astor Theme.
 * Improved: Added notes that Shortcode UI is not maintained to the button and readme.
+* Improved: Added notes about outdated PHP versions to settings page sidebar.
 * Improved: Classic Tabs, new settings section for upcoming [ARVE sticky Videos](https://nextgenthemes.com/plugins/arve-sticky-videos/).
 * Improved: Lots of code restructured and improved.
 

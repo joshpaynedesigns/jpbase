@@ -100,7 +100,7 @@ function tag_filter_arve( array $tag, array $a ) {
 	}
 
 	if ( 'link-lightbox' === $a['mode'] ) {
-		$tag['attr']['class'] .= ' arve-hidden';
+		$tag['attr']['hidden'] = '';
 	}
 
 	return $tag;

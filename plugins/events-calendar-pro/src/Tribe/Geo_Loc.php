@@ -5,7 +5,7 @@
 *
 *
 * Created by:  Daniel Dvorkin
-* For:         Modern Tribe Inc. ( http://m.tri.be/20 )
+* For:         Modern Tribe Inc. ( https://evnt.is/20 )
 *
 * Date: 		9 / 18 / 12 12:31 PM
 *-------------------------------------------------------------------------------------*/
@@ -164,6 +164,9 @@ class Tribe__Events__Pro__Geo_Loc {
 	/**
 	 * Inject the GeoLoc settings into the general TEC settings screen
 	 *
+	 * @since 3.0
+	 * @since TBD Change tooltip text.
+	 *
 	 * @param $args
 	 * @param $id
 	 *
@@ -212,11 +215,15 @@ class Tribe__Events__Pro__Geo_Loc {
 				)
 			);
 		} elseif ( $id == 'display' ) {
+			$tooltip_text = tribe_events_views_v2_is_enabled()
+				? __( 'Removes location search field from the Events Bar on all views.', 'tribe-events-calendar-pro' )
+				: __( 'Removes location search field from the Events Bar on all views except for map view.', 'tribe-events-calendar-pro' );
+
 			$args = Tribe__Main::array_insert_after_key( 'tribeDisableTribeBar', $args, array(
 				'hideLocationSearch' => array(
 					'type'            => 'checkbox_bool',
 					'label'           => __( 'Hide location search', 'tribe-events-calendar-pro' ),
-					'tooltip'         => __( 'Removes location search field from the events bar on all views except for map view.', 'tribe-events-calendar-pro' ),
+					'tooltip'         => $tooltip_text,
 					'default'         => false,
 					'validation_type' => 'boolean',
 				),
