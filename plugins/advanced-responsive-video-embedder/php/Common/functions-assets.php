@@ -13,10 +13,10 @@ function is_script( $src ) {
 
 function deps_and_ver( $path ) {
 
-	$dv = [
-		'dependencies' => [],
+	$dv = array(
+		'dependencies' => array(),
 		'version'      => null,
-	];
+	);
 
 	if ( ! $path || ! is_file( $path ) ) {
 		return $dv;
@@ -29,7 +29,7 @@ function deps_and_ver( $path ) {
 		$dv = require $asset_php;
 
 		if ( 'css' === $pathinfo['extension'] ) {
-			$dv['dependencies'] = [];
+			$dv['dependencies'] = array();
 		}
 	} else {
 		$dv['version'] = filemtime( $path );
@@ -38,8 +38,8 @@ function deps_and_ver( $path ) {
 	return $dv;
 }
 
-function replace_extension($filename, $new_extension) {
-	$info = pathinfo($filename);
+function replace_extension( $filename, $new_extension ) {
+	$info = pathinfo( $filename );
 	$dir  = $info['dirname'] ? $info['dirname'] . DIRECTORY_SEPARATOR : '';
 
 	return $dir . $info['filename'] . '.' . $new_extension;
@@ -47,14 +47,14 @@ function replace_extension($filename, $new_extension) {
 
 function asset( array $args ) {
 
-	$defaults = [
+	$defaults = array(
 		'path'              => '',
 		'async'             => false,
 		'cdn_src'           => '',
 		'defer'             => true,
-		'deps'              => [],
+		'deps'              => array(),
 		'enqueue'           => false,
-		'enqueue_hooks'     => [],
+		'enqueue_hooks'     => array(),
 		'handle'            => '',
 		'in_footer'         => false,
 		'integrity'         => '',
@@ -65,7 +65,7 @@ function asset( array $args ) {
 		'inline_style'      => '',
 		'inline_script'     => '',
 		'inline_script_pos' => 'after',
-	];
+	);
 
 	$args         = wp_parse_args( $args, $defaults );
 	$deps_and_ver = deps_and_ver( $args['path'] );
@@ -156,7 +156,7 @@ function enqueue_script( $handle, $hook ) {
 
 function add_attr_to_asset( $type, array $args ) {
 
-	if ( ! in_array( $type, [ 'script', 'style' ], true ) ) {
+	if ( ! in_array( $type, array( 'script', 'style' ), true ) ) {
 		wp_die( 'first arg needs to be script or style' );
 	}
 

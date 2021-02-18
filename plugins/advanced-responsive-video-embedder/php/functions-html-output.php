@@ -6,26 +6,36 @@ use function \Nextgenthemes\ARVE\Common\get_var_dump;
 function build_html( array $a ) {
 
 	$options       = options();
-	$wrapped_video = arve_embed( arve_embed_inner_html( $a ), $a );
-	$wrapped_video = '<span class="arve-inner">' . $wrapped_video . '</span>';
+	$wrapped_video = build_tag(
+		array(
+			'name'       => 'inner',
+			'tag'        => 'span',
+			'inner_html' => arve_embed( arve_embed_inner_html( $a ), $a ),
+			'attr'       => array(
+				'class' => 'arve-inner',
+			),
+		),
+		$a
+	);
 
 	return build_tag(
-		[
+		array(
 			'name'       => 'arve',
 			'tag'        => 'div',
 			'inner_html' => $wrapped_video . promote_link( $a['arve_link'] ),
-			'attr'       => [
-				'class'          => $a['align'] ? 'arve align' . $a['align'] : 'arve',
-				'data-mode'      => $a['mode'],
-				'data-provider'  => $a['provider'],
-				'id'             => $a['uid'],
-				'style'          => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
+			'attr'       => array(
+				'class'         => $a['align'] ? 'arve align' . $a['align'] : 'arve',
+				'data-mode'     => $a['mode'],
+				'data-oembed'   => $a['oembed_data'] ? '1' : false,
+				'data-provider' => $a['provider'],
+				'id'            => $a['uid'],
+				'style'         => $a['maxwidth'] ? sprintf( 'max-width:%dpx;', $a['maxwidth'] ) : false,
 
 				// Schema.org
-				'itemscope'      => $options['seo_data'] ? '' : false,
-				'itemtype'       => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
-			],
-		],
+				'itemscope'     => $options['seo_data'] ? '' : false,
+				'itemtype'      => $options['seo_data'] ? 'http://schema.org/VideoObject' : false,
+			),
+		),
 		$a
 	);
 }
@@ -45,7 +55,9 @@ function build_iframe_tag( array $a ) {
 	}
 
 	if ( 'wistia' === $a['provider'] ) {
-		$class .= ' wistia_embed';
+		$class   .= ' wistia_embed';
+		$sandbox .= ' allow-forms';
+
 	}
 
 	if ( 'zoom' === $a['provider'] ) {
@@ -54,11 +66,11 @@ function build_iframe_tag( array $a ) {
 	}
 
 	return build_tag(
-		[
+		array(
 			'name'       => 'iframe',
 			'tag'        => 'iframe',
 			'inner_html' => '',
-			'attr'       => [
+			'attr'       => array(
 				'allow'           => $allow,
 				'allowfullscreen' => '',
 				'class'           => $class,
@@ -71,22 +83,22 @@ function build_iframe_tag( array $a ) {
 				'scrolling'       => 'no',
 				'src'             => $a['src'],
 				'width'           => $a['width'],
-			],
-		],
+			),
+		),
 		$a
 	);
 }
 
 function build_video_tag( array $a ) {
 
-	$autoplay = in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ? false : $a['autoplay'];
+	$autoplay = in_array( $a['mode'], array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ? false : $a['autoplay'];
 
 	return build_tag(
-		[
+		array(
 			'name'       => 'video',
 			'tag'        => 'video',
 			'inner_html' => $a['video_sources_html'] . build_tracks_html( $a ),
-			'attr'       => [
+			'attr'       => array(
 				// WPmaster
 				'autoplay'           => $autoplay,
 				'controls'           => $a['controls'],
@@ -99,10 +111,10 @@ function build_video_tag( array $a ) {
 				'data-arve'          => $a['uid'],
 				'class'              => 'arve-video fitvidsignore',
 				'muted'              => $autoplay ? 'muted by ARVE because autoplay is on' : $a['muted'],
-				'playsinline'        => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
-				'webkit-playsinline' => in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ? '' : false,
-			],
-		],
+				'playsinline'        => in_array( $a['mode'], array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
+				'webkit-playsinline' => in_array( $a['mode'], array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
+			),
+		),
 		$a
 	);
 }
@@ -127,13 +139,13 @@ function build_tracks_html( array $a ) {
 			get_language_name_from_code( $matches['lang'] ) :
 			$a[ "track_{$n}_label" ];
 
-		$attr = [
+		$attr = array(
 			'default' => ( 1 === $n ) ? true : false,
 			'kind'    => $matches['type'],
 			'label'   => $label,
 			'src'     => $a[ "track_{$n}" ],
 			'srclang' => $matches['lang'],
-		];
+		);
 
 		$tracks_html .= sprintf( '<track%s>', Common\attr( $attr ) );
 	}//end for
@@ -155,6 +167,8 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 	$html = '';
 
 	// phpcs:disable WordPress.Security.NonceVerification.Recommended
+	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export
+	// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
 	if ( isset( $_GET['arve-debug-options'] ) ) {
 		static $show_options_debug = true;
 
@@ -174,27 +188,25 @@ function get_debug_info( $input_html, array $a, array $input_atts ) {
 
 	if ( ! empty( $_GET['arve-debug-attr'] ) ) {
 		$debug_attr = sanitize_text_field( wp_unslash( $_GET['arve-debug-attr'] ) );
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 		$input_attr = isset( $input_atts[ $debug_attr ] ) ? print_r( $input_atts[ $debug_attr ], true ) : 'not set';
 		$html      .= sprintf(
 			'<pre style="%1$s">in %2$s: %3$s%2$s: %4$s</pre>',
 			esc_attr( $pre_style ),
 			esc_html( $debug_attr ),
 			esc_html( $input_attr ) . PHP_EOL,
-			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 			esc_html( print_r( $a[ $debug_attr ], true ) )
 		);
 	}
 
 	if ( isset( $_GET['arve-debug-atts'] ) ) {
-		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $input_atts ) ) );
-		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), get_var_dump( array_filter( $a ) ) );
+		$html .= sprintf( '<pre style="%s">in: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $input_atts ), true ) );
+		$html .= sprintf( '<pre style="%s">$a: %s</pre>', esc_attr( $pre_style ), var_export( array_filter( $a ), true ) );
 	}
 
 	if ( isset( $_GET['arve-debug-html'] ) ) {
 		$html .= sprintf( '<pre style="%s">%s</pre>', esc_attr( $pre_style ), esc_html( $input_html ) );
 	}
-	// phpcs:enable WordPress.Security.NonceVerification.Recommended
+	// phpcs:enable
 
 	return $html;
 }
@@ -206,13 +218,13 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $options['seo_data'] ) :
 
-		$metas = [
+		$metas = array(
 			'first_video_file' => 'contentURL',
 			'src'              => 'embedURL',
 			'upload_date'      => 'uploadDate',
 			'author_name'      => 'author',
 			'duration'         => 'duration',
-		];
+		);
 
 		foreach ( $metas as $key => $itemprop ) {
 
@@ -235,18 +247,18 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( ! empty( $a['img_src'] ) ) {
 
-		$tag = [ 'name' => 'thumbnail' ];
+		$tag = array( 'name' => 'thumbnail' );
 
 		if ( $options['seo_data'] ) {
 
-			$tag = [
+			$tag = array(
 				'name' => 'thumbnail',
 				'tag'  => 'meta',
-				'attr' => [
+				'attr' => array(
 					'itemprop' => 'thumbnailUrl',
 					'content'  => $a['img_src'],
-				],
-			];
+				),
+			);
 		}
 
 		$html .= build_tag( $tag, $a );
@@ -254,17 +266,17 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $a['title'] ) {
 
-		$tag = [ 'name' => 'title' ];
+		$tag = array( 'name' => 'title' );
 
 		if ( $options['seo_data'] ) {
-			$tag = [
+			$tag = array(
 				'name' => 'title',
 				'tag'  => 'meta',
-				'attr' => [
+				'attr' => array(
 					'itemprop' => 'name',
 					'content'  => trim( $a['title'] ),
-				],
-			];
+				),
+			);
 		}
 
 		$html .= build_tag( $tag, $a );
@@ -272,23 +284,23 @@ function arve_embed_inner_html( array $a ) {
 
 	if ( $a['description'] ) {
 
-		$tag = [ 'name' => 'description' ];
+		$tag = array( 'name' => 'description' );
 
 		if ( $options['seo_data'] ) {
-			$tag = [
+			$tag = array(
 				'name' => 'description',
 				'tag'  => 'meta',
-				'attr' => [
+				'attr' => array(
 					'itemprop' => 'description',
 					'content'  => trim( $a['description'] ),
-				],
-			];
+				),
+			);
 		}
 
 		$html .= build_tag( $tag, $a );
 	}
 
-	$html .= build_tag( [ 'name' => 'button' ], $a );
+	$html .= build_tag( array( 'name' => 'button' ), $a );
 
 	return $html;
 }
@@ -319,20 +331,25 @@ function build_tag( array $tag, array $a ) {
 
 		$html = '';
 
+		if ( ! empty($tag['inner_html']) ) {
+			$html = $tag['inner_html'];
+		}
 	} else {
 
 		if ( ! empty( $tag['inner_html'] )
 			|| ( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
 		) {
+			$inner_html = $tag['inner_html'] ? PHP_EOL . $tag['inner_html'] . PHP_EOL : '';
+
 			$html = sprintf(
-				PHP_EOL . '<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
+				'<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] ),
-				$tag['inner_html']
+				$inner_html
 			);
 		} else {
 			$html = sprintf(
-				PHP_EOL . '<%s%s>' . PHP_EOL,
+				'<%s%s>' . PHP_EOL,
 				esc_html( $tag['tag'] ),
 				Common\attr( $tag['attr'] )
 			);
@@ -348,7 +365,7 @@ function promote_link( $arve_link ) {
 		return sprintf(
 			'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
-			esc_attr( __( 'Embedded with ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
+			esc_attr( __( 'Powered by ARVE Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 			esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
 		);
 	}
@@ -368,16 +385,27 @@ function arve_embed( $html, array $a ) {
 	if ( '16:9' === $a['aspect_ratio'] ) {
 		$class .= ' arve-embed--16by9';
 	} elseif ( $a['aspect_ratio'] ) {
-		$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $a['aspect_ratio'] ) );
+		$ratio_span = build_tag(
+			array(
+				'name'       => 'ar',
+				'tag'        => 'span', // so we output it within <p>
+				'inner_html' => '',
+				'attr'       => array(
+					'class' => 'arve-ar',
+					'style' => sprintf( 'padding-top:%F%%', aspect_ratio_to_percentage( $a['aspect_ratio'] ) ),
+				),
+			),
+			$a
+		);
 	}
 
 	return build_tag(
-		[
+		array(
 			'name'       => 'embed',
 			'tag'        => 'span', // so we output it within <p>
 			'inner_html' => $ratio_span . $html,
-			'attr'       => [ 'class' => $class ],
-		],
+			'attr'       => array( 'class' => $class ),
+		),
 		$a
 	);
 }

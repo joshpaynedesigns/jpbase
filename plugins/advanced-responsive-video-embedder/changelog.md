@@ -4,6 +4,30 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
 
+### 2021-02-17 9.5.2-beta1 ###
+
+* Fix: Conflict with Notice library.
+* Changes to oembed data caching.
+
+### 2021-02-13 9.5.1-beta7 ###
+
+* Fixed and further simplified oembed caching.
+* Improved: Allow forms for Wistia.
+
+### 2021-02-13 9.5.1-beta1 ###
+
+* New video hosts support for
+  * [LBRY](https://lbry.com)
+  * [Odyssey](https://odysee.com)
+  * [mail.ru](https://my.mail.ru/videos/)
+  * [donnersender.ru](https://donnersender.ru)
+  * [banned.video](https://banned.video) & [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs, **not** their embed codes. ARVE works without using their JavaScript on your site.
+* Fix: Classic Video widget use with provider urls.
+* Fix: Filtered out link in new admin notices.
+* Improved: Caching system simplified and improved.
+* Improved: Added info if logged in user can not install plugins.
+* Improved: Make more tags filterable.
+
 ### 2021-01-28 9.4.2 ###
 
 * Fix: Include new library for notices.

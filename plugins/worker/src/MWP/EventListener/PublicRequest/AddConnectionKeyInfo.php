@@ -258,12 +258,13 @@ class MWP_EventListener_PublicRequest_AddConnectionKeyInfo implements Symfony_Ev
                     <li>
                         <?php
                         /** @handled function */
-                        /* translators: the first variable is a link to managewp.com and the second variable is a link to godaddy.com/pro */
-                        echo sprintf(wp_kses(__('Log into your <a href="%1$s" target="_blank">ManageWP</a> or <a href="%2$s" target="_blank">Pro Sites</a> account.', 'worker'), array('a' => array('href' => array(), 'target' => array()))), 'https://managewp.com/', 'https://godaddy.com/pro'); ?>
+                        echo esc_html__('Log into your account.', 'worker');
+
+                        ?>
                     </li>
                     <li><?php
                         /** @handled function */
-                        echo esc_html__('Click the Add website icon at the top left.', 'worker'); ?>
+                        echo esc_html__('Click the Add site button.', 'worker'); ?>
                     </li>
                     <li>
                         <?php
@@ -288,12 +289,12 @@ class MWP_EventListener_PublicRequest_AddConnectionKeyInfo implements Symfony_Ev
                     <li>
                         <?php
                         /** @handled function */
-                        /* translators: the first variable is a link to managewp.com and the second variable is a link to godaddy.com/pro */
-                        echo sprintf(wp_kses(__('Log into your <a href="%1$s" target="_blank">ManageWP</a> or <a href="%2$s" target="_blank">Pro Sites</a> account.', 'worker'), array('a' => array('href' => array(), 'target' => array()))), 'https://managewp.com/', 'https://godaddy.com/pro'); ?>
+                        echo esc_html__('Log into your account.', 'worker');
+                        ?>
                     </li>
                     <li><?php
                         /** @handled function */
-                        echo esc_html__('Click the Add website icon at the top left.', 'worker'); ?>
+                        echo esc_html__('Click the Add site button.', 'worker'); ?>
                     </li>
                     <li><?php
                         /** @handled function */

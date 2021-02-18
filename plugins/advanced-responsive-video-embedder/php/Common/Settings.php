@@ -2,30 +2,30 @@
 namespace Nextgenthemes\ARVE\Common;
 
 class Settings {
-	private static $no_reset_sections = [ 'debug', 'random-video', 'keys' ];
+	private static $no_reset_sections = array( 'debug', 'random-video', 'keys' );
 
-	public $sections             = [];
+	public $sections             = array();
 	private $menu_title          = '';
 	private $option_key          = '';
-	private $options             = [];
-	private $options_by_tag      = [];
-	private $options_defaults    = [];
-	private $premium_sections    = [];
+	private $options             = array();
+	private $options_by_tag      = array();
+	private $options_defaults    = array();
+	private $premium_sections    = array();
 	private $rest_namespace      = '';
-	private $settings            = [];
+	private $settings            = array();
 	private $settings_page_title = '';
 	private $slashed_namspace    = '';
 	private $slugged_namspace    = '';
 
 	public function __construct( $args ) {
 
-		$defaults = [
+		$defaults = array(
 			'menu_parent_slug'    => 'options-general.php',
-			'sections'            => [ 'main' => 'Main' ],
-			'premium_sections'    => [],
+			'sections'            => array( 'main' => 'Main' ),
+			'premium_sections'    => array(),
 			'settings_page_title' => 'Default Page Title',
 			'default_menu_title'  => 'Default Menu Title',
-		];
+		);
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -43,12 +43,12 @@ class Settings {
 			$this->options_defaults[ $key ] = $value['default'];
 		}
 
-		$this->options = (array) get_option( $this->slugged_namespace, [] );
+		$this->options = (array) get_option( $this->slugged_namespace, array() );
 		$this->options = $this->options + $this->options_defaults;
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'assets' ] );
-		add_action( 'rest_api_init', [ $this, 'register_rest_route' ] );
-		add_action( 'admin_menu', [ $this, 'register_setting_page' ] );
+		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
+		add_action( 'rest_api_init', array( $this, 'register_rest_route' ) );
+		add_action( 'admin_menu', array( $this, 'register_setting_page' ) );
 	}
 
 	public function set_defined_product_keys() {
@@ -63,7 +63,7 @@ class Settings {
 	}
 
 	public function get_options() {
-		$options = (array) get_option( $this->slugged_namespace, [] );
+		$options = (array) get_option( $this->slugged_namespace, array() );
 		$options = $options + $this->options_defaults;
 		return $options;
 	}
@@ -85,8 +85,6 @@ class Settings {
 
 				$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
 			}
-		} elseif ( 'nextgenthemes_arve' === $this->slugged_namespace ) {
-			update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		}
 
 		// remove all items from options that are not also in defaults.
@@ -102,17 +100,17 @@ class Settings {
 		register_rest_route(
 			$this->rest_namespace,
 			'/save',
-			[
-				'methods'              => 'POST',
-				'args'                 => $this->settings,
-				'permission_callback'  => function() {
+			array(
+				'methods'             => 'POST',
+				'args'                => $this->settings,
+				'permission_callback' => function() {
 					return current_user_can( 'manage_options' );
 				},
-				'callback'             => function( \WP_REST_Request $request ) {
+				'callback'            => function( \WP_REST_Request $request ) {
 					$this->save_options( $request->get_params() );
 					die( '1' );
 				},
-			]
+			)
 		);
 	}
 
@@ -124,47 +122,47 @@ class Settings {
 		}
 
 		enqueue_asset(
-			[
+			array(
 				'handle' => 'nextgenthemes-settings',
-				'src'    => plugin_or_theme_src( 'build/common/settings.css' ),
-				'path'   => dirname( dirname( __DIR__ ) ) . '/build/common/settings.css',
-			]
+				'src'    => plugin_or_theme_src( 'build/settings.css' ),
+				'path'   => dirname( dirname( __DIR__ ) ) . '/build/settings.css',
+			)
 		);
 
-		$settings_data = [
+		$settings_data = array(
 			'options'  => $this->options,
 			'home_url' => get_home_url(),
 			'rest_url' => esc_url( get_rest_url( null, $this->rest_namespace ) ),
 			'nonce'    => wp_create_nonce( 'wp_rest' ),
 			'settings' => $this->settings,
 			'sections' => $this->sections,
-		];
+		);
 
 		enqueue_asset(
-			[
+			array(
 				'handle'            => 'nextgenthemes-settings',
-				'src'               => plugin_or_theme_src( 'build/common/settings.js' ),
-				'path'              => dirname( dirname( __DIR__ ) ) . '/build/common/settings.js',
-				'deps'              => [ 'jquery' ],
+				'src'               => plugin_or_theme_src( 'build/settings.js' ),
+				'path'              => dirname( dirname( __DIR__ ) ) . '/build/settings.js',
+				'deps'              => array( 'jquery' ),
 				'inline_script'     => "var {$this->slugged_namespace} = " . \wp_json_encode( $settings_data ) . ';',
 				'inline_script_pos' => 'before',
-			]
+			)
 		);
 	}
 
 	public function print_settings_blocks() {
 
-		$description_allowed_html = [
-			'a'      => [
-				'href'   => [],
-				'target' => [],
-				'title'  => [],
-			],
-			'br'     => [],
-			'em'     => [],
-			'strong' => [],
-			'code'   => [],
-		];
+		$description_allowed_html = array(
+			'a'      => array(
+				'href'   => array(),
+				'target' => array(),
+				'title'  => array(),
+			),
+			'br'     => array(),
+			'em'     => array(),
+			'strong' => array(),
+			'code'   => array(),
+		);
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		foreach ( $this->settings as $key => $option ) {
@@ -177,8 +175,8 @@ class Settings {
 			if ( 'hidden' !== $field_type ) :
 				?>
 				<div 
-					class="<?= esc_attr($block_class); ?>"
-					v-show="sectionsDisplayed['<?= esc_attr($option['tag']); ?>']"
+					class="<?php echo esc_attr( $block_class ); ?>"
+					v-show="sectionsDisplayed['<?php echo esc_attr( $option['tag'] ); ?>']"
 				>
 				<!-- <div <?php #echo Admin\block_attr( $key, $option ); ?>> -->
 					<?php
@@ -211,11 +209,11 @@ class Settings {
 				$classes = in_array( $slug, $this->premium_sections, true ) ? 'nav-tab nav-tab--ngt-highlight' : 'nav-tab';
 				?>
 				<a 
-					@click="showSection('<?= esc_attr($slug) ?>')"
-					class="<?= esc_attr($classes) ?>"
-					v-bind:class='{ "nav-tab-active": sectionsDisplayed["<?= esc_attr($slug) ?>"] }'
+					@click="showSection('<?php echo esc_attr( $slug ); ?>')"
+					class="<?php echo esc_attr( $classes ); ?>"
+					v-bind:class='{ "nav-tab-active": sectionsDisplayed["<?php echo esc_attr( $slug ); ?>"] }'
 				>
-					<?= esc_html($name) ?>
+					<?php echo esc_html( $name ); ?>
 				</a>
 			<?php endforeach; ?>
 		</h2>
@@ -250,12 +248,12 @@ class Settings {
 		}
 
 		foreach ( $this->premium_sections as $slug ) {
-			$d_sections[] = sprintf( "sectionsDisplayed['%s']", esc_attr($slug) );
+			$d_sections[] = sprintf( "sectionsDisplayed['%s']", esc_attr( $slug ) );
 		}
 
 		$v_show = implode( ' || ', $d_sections );
 		?>
-		<div class="ngt-block" v-show="<?= $v_show // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" >
+		<div class="ngt-block" v-show="<?php echo $v_show; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" >
 			<p><?php esc_html_e( 'You may already set options for addons but they will only take effect if the associated addons are installed.', 'advanced-responsive-video-embedder' ); ?></p>
 		</div>
 		<?php
@@ -281,10 +279,10 @@ class Settings {
 
 				?>
 				<button
-					@click="resetOptions('<?= esc_attr($key); ?>')"
+					@click="resetOptions('<?php echo esc_attr( $key ); ?>')"
 					:disabled='isSaving'
 					class='button button--ngt-reset button-secondary'
-					v-show="sectionsDisplayed['<?= esc_attr( $key ); ?>']"
+					v-show="sectionsDisplayed['<?php echo esc_attr( $key ); ?>']"
 				>
 				<?php
 					printf(
@@ -314,22 +312,22 @@ class Settings {
 
 	public function print_outdated_php_msg() {
 
-		$link_only = [
-			'a' => [
-				'href'   => [],
-				'target' => [],
-				'title'  => [],
-			],
-		];
+		$link_only = array(
+			'a' => array(
+				'href'   => array(),
+				'target' => array(),
+				'title'  => array(),
+			),
+		);
 
-		if ( \version_compare(PHP_VERSION, '5.6.40', '<=') ) {
+		if ( \version_compare( PHP_VERSION, '5.6.40', '<=' ) ) {
 			?>
 			<div class="ngt-sidebar-box">
 				<p>
 					<?php
 					printf(
 						// translators: PHP version, URL, Contact URL
-						wp_kses( __('Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder'), $link_only ),
+						wp_kses( __( 'Your PHP version %1$s is very <a href="%2$s">outdated, insecure and slow</a>. No pressure, this plugin will continue to work with PHP 5.6, but at some undecided point I like to use features from PHP 7. If you can not update for some reason please tell <a href="%3$s">tell me</a>. WordPress itself planned to require PHP 7 in a feature release but decided not to persue this for now because so many people still run on outdated versions. WordPress already has beta support for 8.0 but I would not go with 8.0 just yet.', 'advanced-responsive-video-embedder' ), $link_only ),
 						esc_html( PHP_VERSION ),
 						esc_url( 'https://www.php.net/supported-versions' ),
 						esc_url( 'https://nextgenthemes.com/contact/' )
@@ -338,7 +336,7 @@ class Settings {
 				</p>
 			</div>
 			<?php
-		} elseif ( \version_compare(PHP_VERSION, '7.3.26', '<') ) {
+		} elseif ( \version_compare( PHP_VERSION, '7.3.26', '<' ) ) {
 			?>
 			<div class="ngt-sidebar-box">
 				<p>
@@ -395,7 +393,7 @@ class Settings {
 		// The URL slug for our settings page.
 		$menu_slug = $this->slugged_namespace;
 		// The callback function for rendering our settings page HTML.
-		$callback    = [ $this, 'print_admin_page' ];
+		$callback    = array( $this, 'print_admin_page' );
 		$parent_slug = $this->menu_parent_slug;
 
 		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback );

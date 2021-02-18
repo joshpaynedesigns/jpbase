@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
-function attr( array $attr = [] ) {
+function attr( array $attr = array() ) {
 
 	$html = '';
 
@@ -19,7 +19,7 @@ function attr( array $attr = [] ) {
 
 			$html .= sprintf( " %s='%s'", esc_html( $key ), wp_json_encode( $value ) );
 
-		} elseif ( in_array( $key, [ 'href', 'data-href', 'src', 'data-src' ], true ) ) {
+		} elseif ( in_array( $key, array( 'href', 'data-href', 'src', 'data-src' ), true ) ) {
 
 			$html .= sprintf( ' %s="%s"', esc_html( $key ), esc_url( $value ) );
 

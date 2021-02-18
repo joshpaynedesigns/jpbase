@@ -8,16 +8,16 @@ function nextgenthemes_settings_instance() {
 	if ( null === $inst ) {
 
 		$inst = new Settings(
-			[
+			array(
 				'namespace'           => 'nextgenthemes',
 				'settings'            => nextgenthemes_settings(),
-				'sections'            => [
+				'sections'            => array(
 					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
 					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
-				],
+				),
 				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
 				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-			]
+			)
 		);
 		$inst->set_defined_product_keys();
 	}
@@ -44,7 +44,7 @@ function migrate_old_licenses() {
 		$old_key        = get_option( "nextgenthemes_{$p}_key" );
 		$old_key_status = get_option( "nextgenthemes_{$p}_key_status" );
 
-		$new_options = get_option( 'nextgenthemes', [] );
+		$new_options = get_option( 'nextgenthemes', array() );
 
 		if ( $old_key ) {
 			$options       = (array) get_option( 'nextgenthemes' );
@@ -67,7 +67,7 @@ function nextgenthemes_settings() {
 	$products = get_products();
 
 	foreach ( $products as $p => $value ) {
-		$settings[ $p ] = [
+		$settings[ $p ] = array(
 			'default' => '',
 			'option'  => true,
 			'tag'     => 'keys',
@@ -75,9 +75,9 @@ function nextgenthemes_settings() {
 			'label'   => sprintf( esc_html__( '%s license Key', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
 			'ui'      => 'licensekey',
-		];
+		);
 
-		$settings[ $p . '_status' ] = [
+		$settings[ $p . '_status' ] = array(
 			'default' => '',
 			'option'  => true,
 			'tag'     => 'keys',
@@ -85,78 +85,76 @@ function nextgenthemes_settings() {
 			'label'   => sprintf( esc_html__( '%s license Key Status', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'string',
 			'ui'      => 'hidden',
-		];
+		);
 	}
 
 	foreach ( $products as $key => $value ) {
-		$settings[ $key . '_beta' ] = [
+		$settings[ $key . '_beta' ] = array(
 			'default' => false,
 			'option'  => true,
 			'tag'     => 'beta-updates',
 			// translators: Product name
 			'label'   => sprintf( esc_html__( '%s beta updates', 'advanced-responsive-video-embedder' ), $value['name'] ),
 			'type'    => 'boolean',
-		];
+		);
 	}
 
-	$settings['cdn'] = [
+	$settings['cdn'] = array(
 		'tag'     => 'keys',
 		'default' => false,
 		'option'  => true,
 		'label'   => esc_html__( 'Use jsDelivr CDN for some assets', 'advanced-responsive-video-embedder' ),
 		'type'    => 'boolean',
-	];
+	);
 
-	$settings['action'] = [
+	$settings['action'] = array(
 		'tag'     => 'keys',
 		'default' => '',
 		'option'  => true,
 		'label'   => esc_html__( 'Action', 'advanced-responsive-video-embedder' ),
 		'type'    => 'string',
 		'ui'      => 'hidden',
-	];
+	);
 
 	return $settings;
 }
 
 function get_products() {
 
-	$products = [
-		'arve_pro' => [
+	$products = array(
+		'arve_pro'           => array(
 			'namespace' => 'ARVE\Pro',
 			'name'      => 'ARVE Pro',
 			'id'        => 1253,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-pro/',
-		],
-		'arve_amp' => [
+		),
+		'arve_amp'           => array(
 			'namespace' => 'ARVE\AMP',
 			'name'      => 'ARVE AMP',
 			'id'        => 16941,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-amp/',
-		],
-		'arve_random_video' => [
+		),
+		'arve_random_video'  => array(
 			'namespace' => 'ARVE\RandomVideo',
 			'name'      => 'ARVE Random Video',
 			'id'        => 31933,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-random-video/',
-		],
-		'arve_sticky_videos' => [
+		),
+		'arve_sticky_videos' => array(
 			'namespace' => 'ARVE\StickyVideos',
 			'name'      => 'ARVE Sticky Videos',
 			'id'        => 42602,
 			'type'      => 'plugin',
 			'author'    => 'Nicolas Jonas',
 			'url'       => 'https://nextgenthemes.com/plugins/arve-sticky-videos/',
-		],
-	];
-
-	$products = apply_filters( 'nextgenthemes_products', $products );
+		),
+	);
 
 	foreach ( $products as $key => $value ) :
 

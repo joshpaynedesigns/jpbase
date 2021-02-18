@@ -17,7 +17,7 @@ function check_product_keys() {
 				$value['name']
 			);
 
-			throw new \Exception($msg);
+			throw new \Exception( $msg );
 		}
 	endforeach;
 }
@@ -55,12 +55,12 @@ function activate_defined_key( $file, $theme_name = '' ) {
 		return;
 	}
 
-	$path_parts = pathinfo($file);
+	$path_parts = pathinfo( $file );
 	$path_parts['filename'];
 
-	$product  = str_replace('-', '_', $path_parts['filename'] );
-	$key_name = strtoupper($product . '_KEY');
-	$key      = defined($key_name) ? constant($key_name) : false;
+	$product  = str_replace( '-', '_', $path_parts['filename'] );
+	$key_name = strtoupper( $product . '_KEY' );
+	$key      = defined( $key_name ) ? constant( $key_name ) : false;
 
 	if ( $key ) {
 		activate_product_key( $product, $key );
@@ -69,22 +69,22 @@ function activate_defined_key( $file, $theme_name = '' ) {
 
 function api_action( $item_id, $key, $action = 'check' ) {
 
-	if ( ! in_array( $action, [ 'activate', 'deactivate', 'check' ], true ) ) {
+	if ( ! in_array( $action, array( 'activate', 'deactivate', 'check' ), true ) ) {
 		wp_die( 'invalid action' );
 	}
 
 	// Call the custom API.
 	$response = remote_get_json(
 		'https://nextgenthemes.com',
-		[
+		array(
 			'timeout' => 10,
-			'body'    => [
+			'body'    => array(
 				'edd_action' => $action . '_license',
 				'license'    => sanitize_text_field( $key ),
 				'item_id'    => $item_id,
 				'url'        => home_url(),
-			],
-		]
+			),
+		)
 	);
 
 	// make sure the response came back okay

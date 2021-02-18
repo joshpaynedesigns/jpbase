@@ -18,6 +18,14 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2021-02-13 5.1.12 =
+
+* Compatibility with latest ARVE caching system.
+
+= 2021-02-10 5.1.11 =
+
+* Fix: Lightbox compatibility with Divi.
+
 = 2021-01-30 5.1.10 =
 
 * Fix: Invisible videos

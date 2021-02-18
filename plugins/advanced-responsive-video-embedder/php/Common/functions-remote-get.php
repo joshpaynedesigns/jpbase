@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Common;
 
 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralDomain
 
-function remote_get_json( $url, array $args = [], $json_name = false ) {
+function remote_get_json( $url, array $args = array(), $json_name = false ) {
 
 	$response = remote_get_body( $url, $args );
 
@@ -44,7 +44,7 @@ function remote_get_json( $url, array $args = [], $json_name = false ) {
 	return $response;
 }
 
-function remote_get_body( $url, array $args = [] ) {
+function remote_get_body( $url, array $args = array() ) {
 
 	$response      = wp_safe_remote_get( $url, $args );
 	$response_code = wp_remote_retrieve_response_code( $response );
@@ -82,7 +82,7 @@ function remote_get_body( $url, array $args = [] ) {
 	return $response;
 };
 
-function remote_get_body_cached( $url, array $args = [], $time = DAY_IN_SECONDS ) {
+function remote_get_body_cached( $url, array $args = array(), $time = DAY_IN_SECONDS ) {
 
 	$transient_name = 'nextgenthemes_remote_get_body_' . $url . wp_json_encode( $args );
 	$response       = get_transient( $transient_name );
@@ -94,4 +94,14 @@ function remote_get_body_cached( $url, array $args = [], $time = DAY_IN_SECONDS 
 	}
 
 	return $response;
+}
+
+function get_image_size( $img_url ) {
+	$response = remote_get_body( $img_url, [ 'timeout' => 0.5 ] );
+
+	if ( is_wp_error( $response ) ) {
+		return false;
+	}
+
+	return getimagesizefromstring( $response );
 }

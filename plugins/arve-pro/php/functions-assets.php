@@ -11,8 +11,7 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'lity',
-			'src'    => plugins_url( 'node_modules/lity/dist/lity.min.js', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'node_modules/lity/dist/lity.min.js', PLUGIN_FILE ),
+			'src'    => plugins_url( 'build/lity.min.js', PLUGIN_FILE ),
 			'deps'   => [ 'jquery' ],
 		]
 	);
@@ -20,8 +19,7 @@ function register_assets() {
 	Common\asset(
 		[
 			'handle' => 'lity',
-			'src'    => plugins_url( 'node_modules/lity/dist/lity.min.css', PLUGIN_FILE ),
-			'ver'    => Common\ver( VERSION, 'node_modules/lity/dist/lity.min.css', PLUGIN_FILE ),
+			'src'    => plugins_url( 'build/lity.min.css', PLUGIN_FILE ),
 		]
 	);
 
@@ -39,7 +37,7 @@ function register_assets() {
 			'handle' => 'arve-pro',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),
 			'ver'    => Common\ver( VERSION, 'build/main.css', PLUGIN_FILE ),
-			'deps'   => $use_lity ? [ 'arve-main', 'lity' ] : [ 'arve-main' ],
+			'deps'   => $use_lity ? [ 'lity' ] : [],
 			'mce'    => true,
 		]
 	);

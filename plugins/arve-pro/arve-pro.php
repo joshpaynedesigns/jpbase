@@ -8,7 +8,7 @@
  * Plugin Name:       ARVE Pro Addon
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
- * Version:           5.1.10
+ * Version:           5.1.14
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL 3.0
@@ -21,7 +21,7 @@ namespace Nextgenthemes\ARVE\Pro;
 
 use \Nextgenthemes\ARVE;
 
-const VERSION      = '5.1.10';
+const VERSION      = '5.1.14';
 const PLUGIN_FILE  = __FILE__;
 const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
 const PLUGIN_DIR   = __DIR__;
@@ -30,18 +30,17 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 
 function init() {
 
-	if ( ! defined('Nextgenthemes\ARVE\VERSION') ||
+	if ( ! defined( 'Nextgenthemes\ARVE\VERSION' ) ||
 		version_compare( \Nextgenthemes\ARVE\VERSION, '9.2.0', '<' )
 	) {
 		return;
 	}
 
-	if ( version_compare( get_option( 'nextgenthemes_arve_pro_version'), VERSION, '<' ) ) {
+	if ( version_compare( get_option( 'nextgenthemes_arve_pro_version' ), VERSION, '<' ) ) {
 		update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		update_option( 'nextgenthemes_arve_pro_version', VERSION );
 	}
 
-	require_once __DIR__ . '/php/Admin/functions-admin.php';
 	require_once __DIR__ . '/php/functions-assets.php';
 	require_once __DIR__ . '/php/functions-filters.php';
 	require_once __DIR__ . '/php/functions-html-output.php';
@@ -61,7 +60,6 @@ function init() {
 		'autoplay',
 		'thumbnail',
 		'img_src',
-		'img_srcset',
 	] as $filter ) {
 		add_filter( "nextgenthemes/arve/args/$filter", __NAMESPACE__ . "\\arg_filter_$filter", 10, 2 );
 	}
@@ -80,9 +78,6 @@ function init() {
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
 function activation_hook() {
-
-	update_option( 'nextgenthemes_arve_oembed_recache', time() );
-
 	if ( function_exists( '\Nextgenthemes\ARVE\Common\activate_defined_key' ) ) {
 		\Nextgenthemes\ARVE\Common\activate_defined_key( __FILE__ );
 	}
