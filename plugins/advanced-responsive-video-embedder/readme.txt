@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.9.16
 Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 9.4.2
+Stable tag: 9.5.2-beta3
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -55,7 +55,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Bitchute, Break, Brightcove, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Funny or Die, IGN, Kickstarter, LiveLeak, Livestream.com, kla.tv, Metacafe, myspace, Snotr, Spike, TED Talks, Twitch, Ustream, RuTube.ru, Viddler, vidspot.net, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist, mp4 or webm video files, Google Drive, ooyala, IMDB, rumble.com, ARVE general iframe embed
+Alugha, Archive.org, Banned.video, Bitchute, Break, Mail.ru, Brightcove, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, LiveLeak, Livestream.com, Metacafe, myspace, ooyala, Rumble.com, RuTube.ru, Snotr, Spike, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -171,6 +171,30 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+
+### 2021-02-17 9.5.2-beta1 ###
+
+* Fix: Conflict with Notice library.
+* Changes to oembed data caching.
+
+### 2021-02-13 9.5.1-beta7 ###
+
+* Fixed and further simplified oembed caching.
+* Improved: Allow forms for Wistia.
+
+### 2021-02-13 9.5.1-beta1 ###
+
+* New video hosts support for
+  * [LBRY](https://lbry.com)
+  * [Odyssey](https://odysee.com)
+  * [mail.ru](https://my.mail.ru/videos/)
+  * [donnersender.ru](https://donnersender.ru)
+  * [banned.video](https://banned.video) & [cantcensortruth.com](https://cantcensortruth.com) mirror site. Works directly with their URLs, **not** their embed codes. ARVE works without using their JavaScript on your site.
+* Fix: Classic Video widget use with provider urls.
+* Fix: Filtered out link in new admin notices.
+* Improved: Caching system simplified and improved.
+* Improved: Added info if logged in user can not install plugins.
+* Improved: Make more tags filterable.
 
 ### 2021-01-28 9.4.2 ###
 

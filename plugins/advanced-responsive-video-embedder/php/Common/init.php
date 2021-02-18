@@ -18,6 +18,7 @@ require_once __DIR__ . '/functions-assets.php';
 require_once __DIR__ . '/functions-remote-get.php';
 require_once __DIR__ . '/Admin/EDD/PluginUpdater.php';
 require_once __DIR__ . '/Admin/EDD/ThemeUpdater.php';
+require_once __DIR__ . '/Admin/Notices.php';
 require_once __DIR__ . '/Admin/functions-licensing.php';
 require_once __DIR__ . '/Admin/functions-settings.php';
 require_once __DIR__ . '/Admin/functions-notices.php';
@@ -28,7 +29,7 @@ if ( ! defined( 'NGT_COMMON_INIT' ) ) {
 
 	migrate_old_licenses();
 
-	add_action( 'init',       __NAMESPACE__ . '\nextgenthemes_settings_instance' );
+	add_action( 'init', __NAMESPACE__ . '\nextgenthemes_settings_instance' );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\init_edd_updaters', 0 );
 	add_action( 'admin_init', __NAMESPACE__ . '\Admin\activation_notices' );
 

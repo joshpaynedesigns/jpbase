@@ -23,7 +23,7 @@ function plugin_ver_status( $folder_and_filename ) {
 
 function print_active_plugins() {
 	$allplugins     = get_plugins();
-	$active_plugins = get_option( 'active_plugins', [] );
+	$active_plugins = get_option( 'active_plugins', array() );
 
 	echo "ACTIVE PLUGINS:\n";
 	foreach ( $allplugins as $plugin_path => $plugin ) {
@@ -43,7 +43,7 @@ function print_network_active_plugins() {
 
 	echo "NETWORK ACTIVE PLUGINS: \n";
 	$allplugins     = wp_get_active_network_plugins();
-	$active_plugins = get_site_option( 'active_sitewide_plugins', [] );
+	$active_plugins = get_site_option( 'active_sitewide_plugins', array() );
 	foreach ( $allplugins as $plugin_path ) {
 		$plugin_base = plugin_basename( $plugin_path );
 		// If the plugin isn't active, don't show it.

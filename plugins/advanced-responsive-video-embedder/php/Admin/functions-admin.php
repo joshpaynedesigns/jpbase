@@ -4,32 +4,29 @@ namespace Nextgenthemes\ARVE\Admin;
 use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
 use \Nextgenthemes\ARVE;
+use \Nextgenthemes\ARVE\Common\Admin\Notices;
 
 use function \Nextgenthemes\ARVE\Common\ver;
 use function \Nextgenthemes\ARVE\Common\attr;
 use function \Nextgenthemes\ARVE\Common\kses_basic;
 use function \Nextgenthemes\ARVE\Common\enqueue_asset;
 
-const ALLOWED_HTML = [
-	'a'      => [
-		'href'   => [],
-		'target' => [],
-		'title'  => [],
-	],
-	'p'      => [],
-	'br'     => [],
-	'em'     => [],
-	'strong' => [],
-	'code'   => [],
-	'ul'     => [],
-	'li'     => [],
-];
+const ALLOWED_HTML = array(
+	'a'      => array(
+		'href'   => array(),
+		'target' => array(),
+		'title'  => array(),
+	),
+	'p'      => array(),
+	'br'     => array(),
+	'em'     => array(),
+	'strong' => array(),
+	'code'   => array(),
+	'ul'     => array(),
+	'li'     => array(),
+);
 
 function action_admin_init_setup_messages() {
-
-	if ( ! function_exists('dnh_register_notice') ) {
-		return;
-	}
 
 	$pro_ver = false;
 
@@ -49,24 +46,24 @@ function action_admin_init_setup_messages() {
 			'https://nextgenthemes.com/plugins/arve/documentation/installing-and-license-management/'
 		);
 
-		dnh_register_notice(
+		Notices::instance()->register_notice(
 			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
 			'notice-error',
 			wp_kses( $msg, ALLOWED_HTML ),
-			[
+			array(
 				'cap' => 'update_plugins',
-			]
+			)
 		);
 	}
 
 	if ( display_pro_ad() ) {
-		dnh_register_notice(
+		Notices::instance()->register_notice(
 			'ngt-arve-addon-ad',
 			'notice-info',
 			wp_kses( ad_html(), ALLOWED_HTML ),
-			[
+			array(
 				'cap' => 'install_plugins',
-			]
+			)
 		);
 	}
 }
@@ -77,7 +74,7 @@ function ad_html() {
 
 	$html = "<p>$html</p><ul>";
 
-	$lis = [
+	$lis = array(
 		__( '<strong>Disable links in embeds</strong><br>For example: Clicking on a title in a YouTube embed will not open a new popup/tab/window. <strong>Prevent providers from leading your visitors away from your site!</strong>', 'advanced-responsive-video-embedder' ),
 		__( '<strong>Lazyload mode</strong><br>Make your site load <strong>faster</strong> by loading only a image instead of the entire video player on pageload.', 'advanced-responsive-video-embedder' ),
 		__( '<strong>Lightbox</strong><br>Shows the Video in a Lightbox after clicking a preview image or link.', 'advanced-responsive-video-embedder' ),
@@ -86,7 +83,7 @@ function ad_html() {
 			__( 'Expand on click and more, for a <strong><a href="%1$s">complete feature list</a></strong> please visit the <strong><a href="%1$s">official site</a></strong>.', 'advanced-responsive-video-embedder' ),
 			esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' )
 		),
-	];
+	);
 
 	foreach ( $lis as $li ) {
 		$html .= "<li>$li</li>";
@@ -145,7 +142,7 @@ function add_dashboard_widget() {
 		// (which has our new widget already but at the end).
 		$normal_dashboard = $GLOBALS['wp_meta_boxes']['dashboard']['normal']['core'];
 		// Backup and delete our new dashboard widget from the end of the array.
-		$arve_widget_backup = [ 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] ];
+		$arve_widget_backup = array( 'arve_dashboard_widget' => $normal_dashboard['arve_dashboard_widget'] );
 		unset( $normal_dashboard['arve_dashboard_widget'] );
 		// Merge the two arrays together so our widget is at the beginning.
 		$sorted_dashboard = array_merge( $arve_widget_backup, $normal_dashboard );
@@ -183,13 +180,13 @@ function add_action_links( $links ) {
 function add_media_button() {
 
 	$options   = ARVE\options();
-	$link_only = [
-		'a' => [
-			'href'   => [],
-			'target' => [],
-			'title'  => [],
-		],
-	];
+	$link_only = array(
+		'a' => array(
+			'href'   => array(),
+			'target' => array(),
+			'title'  => array(),
+		),
+	);
 	add_thickbox();
 	?>
 
@@ -231,32 +228,32 @@ function register_shortcode_ui() {
 		if ( 'boolean' === $v['type'] ) {
 			$v['type'] = 'select';
 
-			if ( isset($v['option']) && true === $v['option'] ) {
-				$v['options'] = [
-					[
+			if ( isset( $v['option'] ) && true === $v['option'] ) {
+				$v['options'] = array(
+					array(
 						'value' => '',
 						'label' => esc_html__( 'Default (settings page)', 'advanced-responsive-video-embedder' ),
-					],
-					[
+					),
+					array(
 						'value' => 'yes',
 						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					],
-					[
+					),
+					array(
 						'value' => 'no',
 						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					],
-				];
+					),
+				);
 			} else {
-				$v['options'] = [
-					[
+				$v['options'] = array(
+					array(
 						'value' => 'no',
 						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					],
-					[
+					),
+					array(
 						'value' => 'yes',
 						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					],
-				];
+					),
+				);
 			}
 		}
 		if ( 'string' === $v['type'] ) {
@@ -275,44 +272,44 @@ function register_shortcode_ui() {
 
 	shortcode_ui_register_for_shortcode(
 		'arve',
-		[
+		array(
 			'label'         => esc_html( 'ARVE' ),
 			'listItemImage' => 'dashicons-format-video',
 			'attrs'         => $attrs,
-		]
+		)
 	);
 }
 
 function admin_enqueue_styles() {
 
 	enqueue_asset(
-		[
+		array(
 			'handle' => 'advanced-responsive-video-embedder',
 			'src'    => plugins_url( 'build/admin.css', ARVE\PLUGIN_FILE ),
 			'ver'    => ver( ARVE\VERSION, 'build/admin.css', ARVE\PLUGIN_FILE ),
-		]
+		)
 	);
 }
 
 function admin_enqueue_scripts() {
 
 	enqueue_asset(
-		[
+		array(
 			'handle' => 'arve-admin',
 			'src'    => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
 			'path'   => ARVE\PLUGIN_DIR . '/build/admin.js',
-			'deps'   => [ 'jquery' ],
-		]
+			'deps'   => array( 'jquery' ),
+		)
 	);
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
 		enqueue_asset(
-			[
+			array(
 				'handle' => 'arve-admin-sc-ui',
 				'path'   => ARVE\PLUGIN_DIR . '/build/shortcode-ui.js',
 				'src'    => plugins_url( 'build/shortcode-ui.js', ARVE\PLUGIN_FILE ),
-				'deps'   => [ 'shortcode-ui' ],
-			]
+				'deps'   => array( 'shortcode-ui' ),
+			)
 		);
 	}
 }
@@ -322,12 +319,12 @@ function action_admin_bar_menu( $admin_bar ) {
 	if ( current_user_can( 'manage_options' ) && ARVE\options()['admin_bar_menu'] ) {
 
 		$admin_bar->add_menu(
-			[
+			array(
 				'id'    => 'arve-settings',
 				'title' => 'ARVE',
 				'href'  => get_admin_url() . 'options-general.php?page=nextgenthemes_arve',
-				'meta'  => [ 'title' => __( 'Advanced Responsive Video Embedder Settings', 'advanced-responsive-video-embedder' ) ],
-			]
+				'meta'  => array( 'title' => __( 'Advanced Responsive Video Embedder Settings', 'advanced-responsive-video-embedder' ) ),
+			)
 		);
 	}
 }

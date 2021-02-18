@@ -43,7 +43,7 @@ function latest_youtube_video_from_channel( $a ) {
 	return $a;
 }
 
-function append_lightbox_link( $html, array $a) {
+function append_lightbox_link( $html, array $a ) {
 
 	if ( 'link-lightbox' === $a['mode'] ) {
 
@@ -56,7 +56,7 @@ function append_lightbox_link( $html, array $a) {
 					'href'        => '#' . $a['uid'],
 					'data-target' => '#' . $a['uid'],
 					'role'        => 'button',
-					'class'       => 'arve-lightbox-link',
+					'class'       => 'arve-lightbox-link et_smooth_scroll_disabled',
 				],
 			],
 			$a

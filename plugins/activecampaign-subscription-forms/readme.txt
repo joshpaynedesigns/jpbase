@@ -2,6 +2,7 @@
 Contributors: activecampaign
 Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
 Requires at least: 2.0
+Requires PHP: 5.4
 Tested up to: 5.6
 Stable tag: trunk
 
@@ -13,9 +14,9 @@ Create personalized customer experiences across channels with the ActiveCampaign
 
 ActiveCampaign’s WordPress marketing automation plug-in makes it easy to:
 
-    * Embed ActiveCampaign forms directly into any post, page, or sidebar
-    * Use site tracking to track visitors to your website
-    * Enable live chat for accounts using Conversations, our site messaging platform
+* Embed ActiveCampaign forms directly into any post, page, or sidebar
+* Use site tracking to track visitors to your website
+* Enable live chat for accounts using Conversations, our site messaging platform
 
 <strong>Add ActiveCampaign forms to your WordPress site</strong>
 Collect leads and contact information with [ActiveCampaign forms](https://www.activecampaign.com/email-marketing/signup-forms), then push that data directly to your [ActiveCampaign CRM](https://www.activecampaign.com/sales-crm). You can trigger a welcome email series to follow up with contacts at their most engaged: right after they subscribe.
@@ -39,11 +40,12 @@ This section describes how to install the plugin and get it working. Please see 
 1. Upload the entire "activecampaign" zip file to the Plugins section of WordPress, or "Add New" plugin and search for "activecampaign."
 2. Visit the Settings > ActiveCampaign section in WordPress.
 3. Fill in your ActiveCampaign connection details, then hit Update.
-4. Choose which subscription forms to cache locally, any optional sub-settings for each, then hit Update again.
-5. Use `[activecampaign form=ID]` shortcode to display a form anywhere on your site where shortcode syntax is supported.
-6. Add optional shortcode parameters `css=1` or `css=0` to override the plugin setting's "Use ActiveCampaign's form CSS" value.
-7. Embed multiple forms onto a single page!
-8. Enable site tracking to have page visits tracked to ActiveCampaign.
+4. Configure your forms:
+    - Using Classic Editor? Choose which subscription forms to use in the widget and associated CSS settings for each, then hit Update Settings again. You can also copy your shortcodes from this section.
+    - Using the Gutenberg Block Editor? All your forms and CSS options will be available in AC Forms block.
+    - Using shortcodes? The `[activecampaign form=ID css=1]` shortcode will display a form anywhere on your site where shortcode syntax is supported. Toggle shortcode parameters `css=1` or `css=0` to override the plugin setting's "Use ActiveCampaign's form CSS" value.
+5. Embed multiple forms onto a single page!
+6. Enable site tracking to have page visits tracked to ActiveCampaign.
 
 == Frequently Asked Questions ==
 
@@ -81,13 +83,23 @@ Please make sure that your login information is correct, and that you have at le
 
 1. Settings page for ActiveCampaign plugin
 2. Configuring your form settings
-3. Using the [activecampaign] shortcode in a blog post
+3. Using the [activecampaign] Button in the Classic Editor
 4. Viewing the output of the [activecampaign] shortcode
-5. Adding a form to the sidebar
-6. Adding multiple forms
-7. Conversations chat widget
+5. Adding a shortcode to a Text widget in Appearance > Widgets
+6. Adding an AC Forms block into the Gutenberg Block Editor
+7. Editing the AC Forms block within the Gutenberg Block Editor
+8. Conversations chat widget
 
 == Changelog ==
+= 8.1.5 =
+* Updating Readme with up to date screenshots and better descriptions
+* Updating Plugin Settings with clearer descriptions of form and shortcode use cases
+* Fixing block editor CSS class input on dynamic div output
+* Fixing display of Site Tracking settings without forms
+* Site Tracking JS migrated to vgo() from pgo()
+* Fixing bug with Tracking ID fetch
+* Adding admin notice stack for future plugin updates
+
 = 8.1.4 =
 * Rolling back settings page form/css deprecations. We have improved testing workflows moving forward.
 

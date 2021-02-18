@@ -6,14 +6,14 @@ use \Nextgenthemes\ARVE\Common;
 
 function settings_content() {
 
-	$link_code_only = [
-		'code' => [],
-		'a'    => [
-			'href'   => [],
-			'target' => [],
-			'title'  => [],
-		],
-	];
+	$link_code_only = array(
+		'code' => array(),
+		'a'    => array(
+			'href'   => array(),
+			'target' => array(),
+			'title'  => array(),
+		),
+	);
 	?>
 
 	<div class="ngt-block" v-show="onlySectionDisplayed === 'urlparams'">
@@ -38,6 +38,12 @@ function settings_content() {
 
 function settings_sidebar() {
 
+	if ( ! current_user_can('install_plugins') ) {
+		echo '<div class="ngt-sidebar-box">';
+		esc_html_e( 'Note that you are logged in with a user who that can\'t install plugins, ask someone who can if you are interrested an addon.', 'advanced-responsive-video-embedder' );
+		echo '</div>';
+	}
+
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 		print_settings_box_html( '/partials/settings-sidebar-pro.html' );
 	}
@@ -60,8 +66,6 @@ function print_settings_box_html( $file ) {
 }
 
 function filter_save_options( $options ) {
-
-	update_option( 'nextgenthemes_arve_oembed_recache', time() );
 
 	$action            = json_decode( $options['action'] );
 	$options['action'] = '';

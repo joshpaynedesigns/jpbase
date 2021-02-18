@@ -17,10 +17,12 @@ class ActiveCampaignWordPress extends AC_ConnectorWordPress
     public $track_key;
     public $version = 1;
     public $debug = false;
+    public $v3_base;
 
     function __construct($url, $api_key, $api_user = "", $api_pass = "")
     {
         $this->url_base = $this->url = $url;
+        $this->v3_base = $url;
         $this->api_key = $api_key;
         parent::__construct($url, $api_key, $api_user, $api_pass);
     }
@@ -32,6 +34,26 @@ class ActiveCampaignWordPress extends AC_ConnectorWordPress
             $this->url_base = $this->url_base . "/2";
         }
     }
+
+    function api3($path, $params = array(), $json = true){
+    	// Only GET supported for now
+    	$params = array_merge($params, array(
+    		'api_key' => $this->api_key,
+		));
+		$args = array( 'headers' => array( 'user-agent' => 'ActiveCampaign WordPress Plugin' ) );
+		$request_url = $this->url_base.'/api/3/'.$path.'?'.http_build_query($params);
+		$response = wp_remote_get($request_url, $args);
+
+		// If the response code is actually based off WP_ERROR Send the error back instead;
+		if (is_object($response) && get_class($response) === 'WP_Error') {
+			foreach ($response->get_error_messages() as $error) {
+				echo $error . "<br />";
+			}
+			exit;
+		}
+
+		return ($json)? json_decode($response["body"]) : $response["body"];
+	}
 
     function api($path, $post_data = array())
     {
