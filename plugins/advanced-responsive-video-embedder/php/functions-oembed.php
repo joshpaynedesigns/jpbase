@@ -14,55 +14,71 @@ function add_oembed_providers() {
 
 function filter_oembed_dataparse( $result, $data, $url ) {
 
-	$a = oembed2args( $data, $url );
+	if ( $data && 'video' === $data->type ) {
+		unset($data->type);
+		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
 
-	if ( $a ) {
-		return build_video( $a );
+		if ( 'YouTube' === $data->provider_name ) {
+			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
+		}
+
+		foreach ( $data as $k => $v ) {
+			$data->$k = \esc_html($v);
+		}
+
+		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
 	}
 
 	return $result;
 }
 
-function oembed2args( $data, $url ) {
+function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 
-	if ( false === $data || 'video' !== $data->type || disabled_on_feeds() ) {
-		return false;
+	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
+
+	if ( ! empty( $matches[0] ) ) {
+
+		$attr['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+		$attr['url']         = $url;
+		$attr['post_id']     = (string) $post_ID;
+
+		$cache = build_video( $attr );
 	}
 
-	$provider = provider_name( $data->provider_name );
-
-	if ( 'facebook' === $provider ) {
-		preg_match( '/class="fb-video" data-href="([^"]+)"/', $data->html, $matches );
-	} else {
-		preg_match( '/<iframe [^>]*src="([^"]+)"/', $data->html, $matches );
-	}
-
-	if ( empty( $matches[1] ) ) {
-		return false;
-	}
-
-	if ( 'facebook' === $provider ) {
-		$src = 'https://www.facebook.com/plugins/video.php?href=' . rawurlencode( $matches[1] );
-	} else {
-		$src = $matches[1];
-	}
-
-	$a = [
-		'oembed_data' => $data,
-		'provider'    => $provider,
-		'src'         => $src,
-		'url'         => $url,
-	];
-
-	return apply_filters( 'nextgenthemes/arve/oembed2args', $a );
+	return $cache;
 }
 
-function provider_name($provider) {
-	$provider = preg_replace( '/[^a-z0-9]/', '', strtolower($provider) );
-	$provider = str_replace( 'wistiainc', 'wistia', $provider );
-	$provider = str_replace( 'rumblecom', 'rumble', $provider );
+function yt_srcset( $url ) {
 
-	return $provider;
+	$re = '@[a-z]+.jpg$@';
+
+	$mq     = preg_replace($re, 'mqdefault.jpg', $url, 1);     // 320x180
+	$sd     = preg_replace($re, 'sddefault.jpg', $url, 1);     // 640x480
+	$maxres = preg_replace($re, 'maxresdefault.jpg', $url, 1); // hd, fullhd ...
+
+	$size_sd     = Common\get_image_size( $sd );
+	$size_maxres = Common\get_image_size( $maxres );
+
+	$srcset[320] = $mq;
+	$srcset[480] = $url; // hqdefault.jpg 480x360
+
+	if ( $size_sd && 640 === $size_sd[0] ) {
+		$srcset[640] = $sd;
+	}
+	if ( $size_maxres && $size_maxres[0] >= 1280 ) {
+		$srcset[ $size_maxres[0] ] = $maxres;
+	}
+
+	if ( ! empty( $srcset ) ) {
+
+		foreach ( $srcset as $size => $url ) {
+			$srcset_comb[] = "$url {$size}w";
+		}
+
+		return implode( ', ', $srcset_comb );
+	}
+
+	return false;
 }
 
 // needed for private videos
@@ -73,60 +89,4 @@ function vimeo_referer( $args, $url ) {
 	}
 
 	return $args;
-}
-
-function trigger_cache_rebuild( $ttl, $url, $attr, $post_id ) {
-
-	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
-		return $ttl;
-	}
-
-	// Get the time when oEmbed HTML was last cached (based on the WP_Embed class)
-	$key_suffix    = md5( $url . serialize( $attr ) ); // phpcs:ignore
-	$cachekey_time = '_oembed_time_' . $key_suffix;
-	$cache_time    = get_post_meta( $post_id, $cachekey_time, true );
-
-	// Get the cached HTML
-	$cachekey     = '_oembed_' . $key_suffix;
-	$metadata     = get_post_custom( $post_id );
-	$cache_exists = isset( $metadata[ $cachekey ][0] );
-	$cache_html   = $cache_exists ? strtolower( get_post_meta( $post_id, $cachekey, true ) ) : false;
-	// $cache_exists2 = metadata_exists( 'post', $post_id, $cachekey ); // TODO not sure of 'post' is always right for embeds outside of
-
-	// time after a recache should be done
-	$trigger_time = get_option( 'nextgenthemes_arve_oembed_recache' );
-
-	$not_touching = [
-		'platform.twitter.com',
-		'embed.redditmedia.com',
-		'embedr.flickr.com',
-		'open.spotify.com',
-		'secure.polldaddy.com',
-		'embed.tumblr.com',
-		'imgur.com',
-	];
-
-	// Check if we need to regenerate the oEmbed HTML:
-	if ( $cache_exists &&
-		$cache_time < $trigger_time &&
-		! Common\str_contains_any( $cache_html, $not_touching ) &&
-		$GLOBALS['wp_embed']->usecache
-	) {
-		// What we need to skip the oembed cache part
-		$GLOBALS['wp_embed']->usecache = false;
-		$ttl                           = 0;
-
-		do_action( 'nextgenthemes/arve/oembed_recache' );
-	}
-
-	return $ttl;
-}
-
-function reenable_oembed_cache( $discover ) {
-
-	if ( did_action( 'nextgenthemes/arve/oembed_recache' ) ) {
-		$GLOBALS['wp_embed']->usecache = true;
-	}
-
-	return $discover;
 }

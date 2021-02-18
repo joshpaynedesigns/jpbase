@@ -54,11 +54,11 @@ function get_array_key_by_value( $array, $field, $value ) {
  *
  * @see array_insert_after()
  */
-function array_insert_before($key, array &$array, $new_key, $new_value) {
-	if (array_key_exists($key, $array)) {
+function array_insert_before( $key, array &$array, $new_key, $new_value ) {
+	if ( array_key_exists( $key, $array ) ) {
 		$new = array();
-		foreach ($array as $k => $value) {
-			if ($k === $key) {
+		foreach ( $array as $k => $value ) {
+			if ( $k === $key ) {
 				$new[ $new_key ] = $new_value;
 			}
 			$new[ $k ] = $value;
@@ -85,12 +85,12 @@ function array_insert_before($key, array &$array, $new_key, $new_value) {
  *
  * @see array_insert_before()
  */
-function array_insert_after($key, array &$array, $new_key, $new_value) {
-	if (array_key_exists($key, $array)) {
+function array_insert_after( $key, array &$array, $new_key, $new_value ) {
+	if ( array_key_exists( $key, $array ) ) {
 		$new = array();
-		foreach ($array as $k => $value) {
+		foreach ( $array as $k => $value ) {
 			$new[ $k ] = $value;
-			if ($k === $key) {
+			if ( $k === $key ) {
 				$new[ $new_key ] = $new_value;
 			}
 		}

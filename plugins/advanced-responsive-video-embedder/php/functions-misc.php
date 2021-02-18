@@ -1,6 +1,10 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
+function get_host_properties() {
+	return require __DIR__ . '/providers.php';
+}
+
 function aspect_ratio_gcd( $aspect_ratio ) {
 
 	list( $width, $height ) = explode( ':', $aspect_ratio );
@@ -55,7 +59,7 @@ function youtube_time_to_seconds( $yttime ) {
 
 	preg_match( $pattern, $yttime, $matches );
 
-	foreach ( [ 'h', 'm', 's' ] as $m ) {
+	foreach ( array( 'h', 'm', 's' ) as $m ) {
 		if ( ! isset( $matches[ $m ] ) ) {
 			$matches[ $m ] = 0;
 		}
@@ -108,15 +112,15 @@ function seconds_to_iso8601_duration( $time ) {
 	$istime = false;
 
 	foreach ( $units as  $unit_name => $unit ) {
-		$quot  = intval($time / $unit);
+		$quot  = intval( $time / $unit );
 		$time -= $quot * $unit;
 		$unit  = $quot;
 		if ( $unit > 0 ) {
-			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true )) { // There may be a better way to do this
+			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true ) ) { // There may be a better way to do this
 				$str   .= 'T';
 				$istime = true;
 			}
-			$str .= strval($unit) . $unit_name;
+			$str .= strval( $unit ) . $unit_name;
 		}
 	}
 

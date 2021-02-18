@@ -19,11 +19,11 @@ function create_url_handlers() {
 
 function url_handler( $provider, array $matches, array $attr, $url, $rawattr ) {
 
-	$info = [
+	$info = array(
 		'matches' => $matches,
 		'attr'    => $attr,
 		'rawattr' => $rawattr,
-	];
+	);
 
 	if ( is_array( $rawattr ) ) {
 		$a = $rawattr;

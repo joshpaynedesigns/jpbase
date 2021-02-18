@@ -22,7 +22,7 @@ function label_text( $option ) {
 			?>
 			&nbsp;
 			<span class="button-primary button-primary--ngt-small">
-				<?= esc_html( $option['tag'] ); ?>
+				<?php echo esc_html( $option['tag'] ); ?>
 			</span>
 		<?php endif; ?>
 	</span>
@@ -35,8 +35,8 @@ function print_boolean_field( $key, $option ) {
 		<label>
 			<input
 				type="checkbox"
-				v-model="<?= esc_attr( "vm.$key" ); ?>"
-				name="<?= esc_attr( "vm.$key" ); ?>"
+				v-model="<?php echo esc_attr( "vm.$key" ); ?>"
+				name="<?php echo esc_attr( "vm.$key" ); ?>"
 			>
 			{{ vm.$key }} <?php label_text( $option ); ?>
 		</label>
@@ -51,9 +51,9 @@ function print_boolean_radio_field( $key, $option ) {
 		<label>
 			<input
 				type="radio"
-				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				v-model="<?php echo esc_attr( "vm.$key" ); ?>"
 				v-bind:value="true"
-				name="<?= esc_attr( "vm.$key" ); ?>"
+				name="<?php echo esc_attr( "vm.$key" ); ?>"
 			>
 			Yes
 		</label>
@@ -61,9 +61,9 @@ function print_boolean_radio_field( $key, $option ) {
 		<label>
 			<input
 				type="radio"
-				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				v-model="<?php echo esc_attr( "vm.$key" ); ?>"
 				v-bind:value="false"
-				name="<?= esc_attr( "vm.$key" ); ?>"
+				name="<?php echo esc_attr( "vm.$key" ); ?>"
 			>
 			No
 		</label>
@@ -77,10 +77,10 @@ function print_string_field( $key, $option ) {
 		<label>
 			<?php label_text( $option ); ?>
 			<input
-				v-model="<?= esc_attr( "vm.$key" ); ?>"
+				v-model="<?php echo esc_attr( "vm.$key" ); ?>"
 				type="text"
 				class="large-text"
-				placeholder="<?= esc_attr( $option['placeholder'] ); ?>"
+				placeholder="<?php echo esc_attr( $option['placeholder'] ); ?>"
 			/>
 		</label>
 	</p>
@@ -91,7 +91,7 @@ function print_hidden_field( $key, $option ) {} // yes we need this nothing func
 
 function print_old_hidden_field( $key, $option ) {
 	?>
-	<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="hidden" />
+	<input v-model="<?php echo esc_attr( "vm.$key" ); ?>" type="hidden" />
 	<?php
 }
 
@@ -102,14 +102,14 @@ function print_licensekey_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" <?= esc_attr( $readonly ); ?> />
+			<input v-model="<?php echo esc_attr( "vm.$key" ); ?>" type="text" class="medium-text" style="width: 350px;" <?php echo esc_attr( $readonly ); ?> />
 			<?php if ( Common\has_valid_key( $key ) ) : ?>
-				<button @click="action( 'deactivate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Deactivate</button>
+				<button @click="action( 'deactivate', '<?php echo esc_attr( $key ); ?>' )" class="button button-secondary">Deactivate</button>
 			<?php else : ?>
-				<button @click="action( 'activate', '<?= esc_attr( $key ); ?>' )" class="button button-secondary">Activate</button>
+				<button @click="action( 'activate', '<?php echo esc_attr( $key ); ?>' )" class="button button-secondary">Activate</button>
 			<?php endif; ?>
 			<br>
-			Status: <?= esc_html( "{{ vm.{$key}_status }}" ); ?>
+			Status: <?php echo esc_html( "{{ vm.{$key}_status }}" ); ?>
 		</label>
 	</p>
 	<?php
@@ -122,8 +122,8 @@ function print_image_upload_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
-			<a class="button-secondary" @click="<?= esc_attr( "uploadImage('$key')" ); ?>">
+			<input v-model="<?php echo esc_attr( "vm.$key" ); ?>" type="text" class="large-text" />
+			<a class="button-secondary" @click="<?php echo esc_attr( "uploadImage('$key')" ); ?>">
 				<?php esc_html_e( 'Upload Image', 'advanced-responsive-video-embedder' ); ?>
 			</a>
 		</label>
@@ -136,7 +136,7 @@ function print_integer_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<input v-model="<?= esc_attr( "vm.$key" ); ?>" type="number" />
+			<input v-model="<?php echo esc_attr( "vm.$key" ); ?>" type="number" />
 		</label>
 	</p>
 	<?php
@@ -149,10 +149,10 @@ function print_select_field( $key, $option ) {
 	<p>
 		<label>
 			<?php label_text( $option ); ?>
-			<select v-model="<?= esc_attr( "vm.$key" ); ?>">
+			<select v-model="<?php echo esc_attr( "vm.$key" ); ?>">
 				<option disabled value="">Please select one</option>
 				<?php foreach ( $option['options'] as $k => $v ) : ?>
-					<option value="<?= esc_attr( $k ); ?>"><?= esc_html( $v ); ?></option>
+					<option value="<?php echo esc_attr( $k ); ?>"><?php echo esc_html( $v ); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</label>
@@ -165,10 +165,10 @@ function block_attr( $key, $option ) {
 	if ( empty( $option['tag'] ) ) {
 		$block_attr['class'] = "ngt-option-block ngt-option-block--$key";
 	} else {
-		$block_attr = [
+		$block_attr = array(
 			'class'  => "ngt-option-block ngt-option-block--$key ngt-option-block--{$option['tag']}",
 			'v-show' => "sectionsDisplayed['{$option['tag']}']",
-		];
+		);
 	}
 
 	return Common\attr( $block_attr );

@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.4
+Version: 8.1.5
 Author URI: http://www.activecampaign.com
 */
 
@@ -55,6 +55,7 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.2: Simplifying plugin settings options. Dropping 'Global' CSS option for block, defaulting to 'Use ActiveCampaign CSS'. Converting to Dynamic Block pattern.
 ## version 8.1.3: Hotfix for Default CSS option deprecation. Moving from global assignment to block/shortcode assignment. Allowing fallback for existing blocks without CSS setting.
 ## version 8.1.4: Rolling back settings page form/css deprecations. We have improved testing workflows moving forward.
+## version 8.1.5: Updating Readme with up to date screenshots and better descriptions. Updating Plugin Settings with clearer descriptions of form and shortcode use cases. Fixing block editor CSS class input on dynamic div output. Fixing display of Site Tracking settings without forms. Migrating Site Tracking JS to vgo() from pgo(). Fixing bug with Tracking ID fetch. Adding admin notice stack for future plugin updates.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -218,10 +219,7 @@ function activecampaign_plugin_options()
                 $account = $ac->api("account/view");
                 $instance["account_view"] = get_object_vars($account);
                 $instance["account"] = $account->account;
-
-                $user_me = $ac->api("user/me");
-                // the tracking ID from the Integrations page.
-                $instance["tracking_actid"] = $user_me->trackid;
+				$instance["tracking_actid"] = activecampaign_fetch_accountid($ac);
 
                 // get forms.
                 $instance = activecampaign_getforms($ac, $instance);
@@ -313,53 +311,23 @@ function activecampaign_plugin_options()
                     <p><img src="<?php echo plugins_url("activecampaign-subscription-forms"); ?>/settings1.png" /></p>
 
                     <?php
-            } else {
+            } else { // is connected
                 ?>
 
 
+            <hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
 
-                <?php
-            }
-
-            ?>
+            <h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
+            <p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Below is a list of your available ActiveCampaign forms. To add new forms go to <a href=\"http://" . $instance["account"] . "/app/forms\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Forms</a>. <br><br>Users of the Gutenberg Block Editor will find all forms and CSS options are available within the AC Forms block. <br><br>  Shortcodes can be used anywhere regardless of widgets in the following format: (where css=1 uses ActiveCampaign's suggested CSS and css=0 does not)<br><code>[activecampaign form=ID css=1]</code> or <code>[activecampaign form=ID css=0]</code> <br><br>Users of the Classic Editor experience can check the checkbox next to forms they would like to enable in the classic widget, and also manage their form's global CSS setting below.", "menu-activecampaign"); ?></p>
 
             <?php
 
             if (isset($instance["forms"]) && $instance["forms"]) {
-                ?>
 
-                    <hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />
-
-                    <h3><?php echo __("Subscription Forms", "menu-activecampaign"); ?></h3>
-                    <p style='font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5;'><?php echo __("Choose subscription forms to cache locally. To add new forms go to <a href=\"http://" . $instance["account"] . "/app/forms\" target=\"_blank\" style='color: #23538C !important;'>ActiveCampaign > Forms</a>.", "menu-activecampaign"); ?></p>
-
-                    <?php
 
                     // just a flag to know if ANY form is checked (chosen)
                     $form_checked = 0;
 
-                    // "Enable Site Tracking" toggle
-                    $settings_st_enabled = isset($instance["site_tracking"]) && (int)$instance["site_tracking"];
-                    $settings_st_checked = $settings_st_enabled ? "checked=\"checked\"" : "";
-
-                    // Site Tracking default option
-                    /* Default to "Track by default" option if any of these are true:
-                 1. It's already been chosen and saved
-                 2. Site tracking is just being enabled for the first time
-                 3. Site tracking was already enabled but the new default options are not set yet
-                    */
-                    $settings_st_default_on = (
-                    (
-                        isset($instance["activecampaign_site_tracking_default"]) &&
-                        (int)$instance["activecampaign_site_tracking_default"]
-                    )
-                    ||
-                    ! isset($instance["site_tracking"])
-                    ||
-                    ! isset($instance["activecampaign_site_tracking_default"])
-                    );
-                    $settings_st_default_on_checked = $settings_st_default_on ? "checked=\"checked\"" : "";
-                    $settings_st_default_off_checked = ! $settings_st_default_on_checked ? "checked=\"checked\"" : "";
 
                     foreach ($instance["forms"] as $form) {
                         // $instance["form_id"] is an array of form ID's (since we allow multiple now).
@@ -393,7 +361,7 @@ function activecampaign_plugin_options()
                         <hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin: 30px 0 20px 0;" />
 
                         <input type="checkbox" name="form_id[]" id="activecampaign_form_<?php echo $form["id"]; ?>" value="<?php echo $form["id"]; ?>" onclick="toggle_form_options(this.value, this.checked);" <?php echo $checked; ?> />
-                        <label for="activecampaign_form_<?php echo $form["id"]; ?>"><a href="http://<?php echo $instance["account"]; ?>/admin/main.php?action=form_edit&id=<?php echo $form["id"]; ?>" target="_blank"><?php echo $form["name"]; ?></a></label>
+                <label for="activecampaign_form_<?php echo $form["id"]; ?>"><?php echo $form["name"]; ?></label> (ID: <?php echo $form["id"]; ?>) - <a href="http://<?php echo $instance["account"]; ?>/app/forms/<?php echo $form["id"]; ?>" target="_blank">Edit in ActiveCampaign</a> - <a href="javascript:ac_copy_shortcode(<?php echo $form["id"]; ?>)">Copy Shortcode</a> <span style="opacity:0;" class="copied-alert" id="copied_alert_<?php echo $form["id"]; ?>">Copied!</span>
                         <br />
 
                         <div id="form_options_<?php echo $form["id"]; ?>" style="display: <?php echo $options_visibility; ?>; margin-left: 30px;">
@@ -417,8 +385,36 @@ function activecampaign_plugin_options()
                             <label for="activecampaign_form_css_<?php echo $form["id"]; ?>" style=""><?php echo __("Use ActiveCampaign's form CSS", "menu-activecampaign"); ?></label>
                         </div>
 
-                        <?php
+                    <?php
+                        } // End form foreach
+
+                    } else{ // End form if
+                        echo '<hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 30px;" />';
+                        echo '<h4>'.__("No forms were found", "menu-activecampaign").'</h4>';
                     }
+
+                    // "Enable Site Tracking" toggle
+                    $settings_st_enabled = isset($instance["site_tracking"]) && (int)$instance["site_tracking"];
+                    $settings_st_checked = $settings_st_enabled ? "checked=\"checked\"" : "";
+
+                    // Site Tracking default option
+                    /* Default to "Track by default" option if any of these are true:
+                    1. It's already been chosen and saved
+                    2. Site tracking is just being enabled for the first time
+                    3. Site tracking was already enabled but the new default options are not set yet
+                    */
+                    $settings_st_default_on = (
+                        (
+                            isset($instance["activecampaign_site_tracking_default"]) &&
+                            (int)$instance["activecampaign_site_tracking_default"]
+                        )
+                        ||
+                        ! isset($instance["site_tracking"])
+                        ||
+                        ! isset($instance["activecampaign_site_tracking_default"])
+                    );
+                    $settings_st_default_on_checked = $settings_st_default_on ? "checked=\"checked\"" : "";
+                    $settings_st_default_off_checked = ! $settings_st_default_on_checked ? "checked=\"checked\"" : "";
 
                     ?>
 
@@ -444,6 +440,10 @@ function activecampaign_plugin_options()
                             <a href="https://help.activecampaign.com/hc/en-us/articles/221542267-An-overview-of-Site-Tracking" target="_blank"><?php echo __("Learn more about site tracking"); ?></a>.
                         </p>
 
+                        <?php if(empty($instance['tracking_actid'])){ ?>
+                            <div class="notice notice-info is-dismissible"><p><?php echo __("ActiveCampaign Site Tracking Account ID could not be found. Site tracking will not work without this. Please contact support.", "menu-activecampaign"); ?></p></div>
+                        <?php } ?>
+
                         <div id="activecampaign_site_tracking_options" class="<?php echo (! $settings_st_enabled) ? 'disabled' : ''; ?>">
 
                             <input type="radio" id="activecampaign_site_tracking_default_on" name="activecampaign_site_tracking_default" value="1" <?php echo $settings_st_default_on_checked; ?> />
@@ -467,7 +467,27 @@ function activecampaign_plugin_options()
 
                     </div>
 
+                        <?php
+                    } // End $connected if
+
+                    ?>
+
                     <script type='text/javascript'>
+
+                        function ac_copy_shortcode(form_id){
+                            var input = document.createElement('input');
+                            var cssEl = document.getElementById('activecampaign_form_css_'+form_id);
+
+                            input.value = '[activecampaign form='+form_id+' css='+((cssEl && cssEl.checked)? '1':'0')+']';
+                            document.body.appendChild(input);
+                            input.select();
+                            input.setSelectionRange(0,100);
+                            document.execCommand('copy');
+                            document.body.removeChild(input);
+                            var alert = document.getElementById('copied_alert_'+form_id);
+                            alert.style.opacity = '1.0';
+                            setTimeout(function(){ alert.style.opacity = '0'; }, 1000);
+                        }
 
                         // shows or hides the sub-options section beneath each form checkbox.
                         function toggle_form_options(form_id, ischecked) {
@@ -554,13 +574,8 @@ function activecampaign_plugin_options()
 
                     </script>
 
-                    <?php
-            }
-
-            ?>
-
-            <p><button type="submit" style="font-size: 16px; margin-top: 25px; padding: 10px;"><?php echo __($button_value, "menu-activecampaign"); ?></button></p>
-            <?php wp_nonce_field('activecampaign_save_settings'); ?>
+                <p><button type="submit" style="font-size: 16px; margin-top: 25px; padding: 10px;"><?php echo __($button_value, "menu-activecampaign"); ?></button></p>
+                <?php wp_nonce_field('activecampaign_save_settings'); ?>
 
         </form>
 
@@ -580,7 +595,7 @@ function activecampaign_plugin_options()
 
                     ?>
 
-                    <p><?php echo __("Embed using"); ?><code>[activecampaign form=<?php echo $form_id; ?>]</code></p>
+                    <p><?php echo __("Embed using"); ?><code>[activecampaign form=<?php echo $form_id; ?> css=<?php echo (isset($instance["css"]) && !empty($instance["css"][$form["id"]]))? '1' : '0'; ?>]</code></p>
 
                     <hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 40px;" />
 
@@ -609,6 +624,28 @@ function ac_dbg($var, $continue = 0, $element = "pre")
     if (!$continue) {
         exit();
     }
+}
+
+function activecampaign_fetch_accountid($ac){
+    /*
+        It appears user/me doesn't always work, but for some reason that seems to be the only endpoint with
+        param level access to account ID. As a fallback, let's fetch the script via API and extract the Account ID
+    */
+
+	$user_me = $ac->api("user/me");
+    if(isset($user_me) && !empty($user_me->trackid)){
+		return $user_me->trackid;
+    }
+
+	// Try v3 code check
+    $script = $ac->api3('siteTracking/code', [], false);
+    //try regex to extract from script call.
+    $matches = [];
+    if(preg_match('/\'setAccount\', \'(\d*)\'\)/', $script, $matches) !== false && !empty($matches[1])){
+        return $matches[1];
+    }
+
+    return '';
 }
 
 function activecampaign_getforms($ac, $instance)
@@ -922,4 +959,37 @@ function activecampaign_frontend_scripts()
     wp_localize_script("site_tracking", "php_data", $data);
 }
 
-?>
+// Adding a notification mechanism
+
+function activecampaign_admin_notice(){
+    $screen = get_current_screen();
+	if( !$screen || $screen->base !== 'settings_page_activecampaign'){
+	    return;
+    }
+
+	$notices = [
+		'v8.1.5 - We have updated the descriptions around form settings below. Please take a moment to read. Also note, if you are handling site tracking manually (GDPR), all JavaScript references to pgo() are now using the properly documented vgo() method.'
+	];
+
+	$index = (int) get_option("activecampaign_notice_index", 0);
+
+	// Very first notice should get shown anyway since we have no count tracking yet
+    if(count($notices) === 1 && empty($index)){
+		$index = 0;
+    }
+	// Default to notices count so we never show notices on fresh installs
+    elseif(empty($index)){
+        $index = count($notices);
+    }
+	$initialIndex = $index;
+
+	for($i = $index; $i < count($notices); $i++){
+		echo '<div class="notice notice-info is-dismissible"><p>'.$notices[$i].'</p></div>';
+		$index++;
+	}
+
+	if($initialIndex !== $index){
+		update_option("activecampaign_notice_index", $index);
+    }
+}
+add_action('admin_notices', 'activecampaign_admin_notice');

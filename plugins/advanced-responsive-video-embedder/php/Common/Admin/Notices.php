@@ -1,4 +1,6 @@
 <?php
+namespace Nextgenthemes\ARVE\Common\Admin;
+
 /**
  * Dismissible Notices Handler.
  *
@@ -19,12 +21,12 @@
  * @copyright 2018 Julien Liabeuf
  */
 
-if ( ! class_exists( 'Dismissible_Notices_Handler' ) ) {
+if ( 'always' ) {
 
-	final class Dismissible_Notices_Handler {
+	final class Notices {
 
 		/**
-		 * @var Dismissible_Notices_Handler Holds the unique instance of the handler
+		 * @var Notices Holds the unique instance of the handler
 		 * @since 1.0
 		 */
 		private static $instance;
@@ -60,15 +62,15 @@ if ( ! class_exists( 'Dismissible_Notices_Handler' ) ) {
 		private $notices;
 
 		/**
-		 * Instantiate and return the unique Dismissible_Notices_Handler object
+		 * Instantiate and return the unique Notices object
 		 *
 		 * @since     1.0
-		 * @return object Dismissible_Notices_Handler Unique instance of the handler
+		 * @return object Notices Unique instance of the handler
 		 */
 		public static function instance() {
 
-			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Dismissible_Notices_Handler ) ) {
-				self::$instance = new Dismissible_Notices_Handler;
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Notices ) ) {
+				self::$instance = new Notices;
 				self::$instance->init();
 			}
 
@@ -88,7 +90,7 @@ if ( ! class_exists( 'Dismissible_Notices_Handler' ) ) {
 			if ( ! self::$instance->is_wp_compatible() ) {
 				self::$instance->spit_error(
 					sprintf(
-						/* translators: %s: required wordpress version */
+						/* translators: %s: required WordPress version */
 						esc_html__( 'The library can not be used because your version of WordPress is too old. You need version %s at least.', 'wp-dismissible-notices-handler' ),
 						self::$instance->wordpress_version_required
 					)

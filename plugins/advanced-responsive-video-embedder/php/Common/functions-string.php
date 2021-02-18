@@ -35,10 +35,10 @@ function remove_url_query( $url ) {
 
 function dashes_to_camel_case( $string, $capitalize_first_character = false ) {
 
-	$str = str_replace('-', '', ucwords($string, '-'));
+	$str = str_replace( '-', '', ucwords( $string, '-' ) );
 
 	if ( ! $capitalize_first_character ) {
-		$str = lcfirst($str);
+		$str = lcfirst( $str );
 	}
 
 	return $str;

@@ -146,6 +146,43 @@ function tag_filter_title( array $tag, array $a ) {
 	return $tag;
 }
 
+function srcset( array $a ) {
+
+	if ( empty( $a['img_src'] ) ) {
+		return false;
+	}
+
+	$srcset = false;
+
+	if ( $a['img_src'] && is_numeric( $a['thumbnail'] ) ) {
+		$srcset = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
+	} elseif ( ! empty( $a['oembed_data']->arve_srcset ) ) {
+		$srcset = $a['oembed_data']->arve_srcset;
+	}
+
+	if ( 'vimeo' === $a['provider'] && str_contains( $a['img_src'], 'i.vimeocdn.com' ) ) {
+
+		foreach ( SRCSET_SIZES as $size ) :
+
+			$url = preg_replace( '#^(.*)_([0-9x]+).jpg$#i', "$1_$size.jpg", $a['img_src'] );
+
+			$srcset_comb[] = "$url {$size}w";
+
+		endforeach;
+
+		$srcset = implode( ', ', $srcset_comb );
+	}
+
+	$thumb_id = get_post_thumbnail_id();
+	$options  = ARVE\options();
+
+	if ( empty( $srcset ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
+		$srcset = wp_get_attachment_image_srcset( $$thumb_id, 'small' );
+	}
+
+	return $srcset;
+}
+
 function tag_filter_thumbnail( array $tag, array $a ) {
 
 	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
@@ -179,7 +216,7 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 		$tag['tag']             = 'img';
 		$tag['attr']['alt']     = trim( $a['title'] );
 		$tag['attr']['src']     = $a['img_src'];
-		$tag['attr']['srcset']  = $a['img_srcset'];
+		$tag['attr']['srcset']  = srcset( $a );
 		$tag['attr']['class']   = 'arve-thumbnail';
 		$tag['attr']['loading'] = 'lazy';
 		$tag['attr']['width']   = $a['maxwidth'];
@@ -191,7 +228,7 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 	return $tag;
 }
 
-function tag_filter_button( array $tag, array $a) {
+function tag_filter_button( array $tag, array $a ) {
 
 	if ( ! in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
 		return $tag;

@@ -68,6 +68,10 @@ function activecampaign_form_block_init() {
 	}
 
 	$block_attributes = [
+		'className'             => [
+			'type'    => 'string',
+			'default' => ''
+		],
 		'formId'             => [
 			'type'    => 'string',
 			'default' => '0'
@@ -115,7 +119,7 @@ function activecampaign_form_block_render($attributes, $content){
 	}
 
 	if(!empty($attributes['formId'])){
-		return "[activecampaign form=".$attributes['formId'].$css."]";
+		return "<div class=\"{$attributes['className']}\">[activecampaign form=".$attributes['formId'].$css."]</div>";
 	}
-	return "[activecampaign]";
+	return "<div class=\"{$attributes['className']}\">[activecampaign]</div>";
 }
