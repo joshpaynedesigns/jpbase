@@ -11,9 +11,9 @@ function objectiv_footer() { ?>
 		</div>
 		<div class="footer-right">
 			<?php if ( is_front_page() ) : ?>
-				<div>Site by <a target="_blank" href="http://www.434marketing.com/">434 Marketing</a></div>
+				<div>Site by <a target="_blank" href="https://www.434marketing.com/">434 Marketing</a></div>
 			<?php else: ?>
-				<div>Site by <a target="_blank" rel="nofollow" href="http://www.434marketing.com/">434 Marketing</a></div>
+				<div>Site by <a target="_blank" rel="nofollow" href="https://www.434marketing.com/">434 Marketing</a></div>
 			<?php endif; ?>
 		</div>
 	</div>
