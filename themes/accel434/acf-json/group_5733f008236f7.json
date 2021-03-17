@@ -73,15 +73,15 @@
                 "pinterest": "Pinterest",
                 "youtube": "YouTube",
                 "linkedin": "LinkedIn",
-                "google": "Google+",
+                "vimeo": "Vimeo",
                 "flickr": "Flickr"
             },
             "default_value": [],
             "allow_null": 0,
             "multiple": 1,
             "ui": 0,
-            "ajax": 0,
             "return_format": "value",
+            "ajax": 0,
             "placeholder": ""
         },
         {
@@ -230,8 +230,8 @@
         },
         {
             "key": "field_5733f4c540355",
-            "label": "Google+ Link",
-            "name": "google_link",
+            "label": "Vimeo Link",
+            "name": "vimeo_link",
             "type": "url",
             "instructions": "",
             "required": 1,
@@ -240,7 +240,7 @@
                     {
                         "field": "field_5733f3b421ace",
                         "operator": "==",
-                        "value": "google"
+                        "value": "vimeo"
                     }
                 ]
             ],
@@ -1060,5 +1060,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1609787612
+    "modified": 1615996856
 }
