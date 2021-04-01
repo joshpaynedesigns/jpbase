@@ -14,17 +14,18 @@ function register_assets() {
 
 	Common\asset(
 		array(
-			'handle' => 'arve-main',
-			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
-			'path'   => PLUGIN_DIR . '/build/main.js',
-			'async'  => true,
-			'defer'  => false,
+			'handle'    => 'arve-main',
+			'src'       => plugins_url( 'build/main.js', PLUGIN_FILE ),
+			'path'      => PLUGIN_DIR . '/build/main.js',
+			'async'     => true,
+			'in_footer' => false,
+			'defer'     => false,
 		)
 	);
 
 	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.MissingVersion
-	wp_register_script( 'arve', null, array( 'arve-main' ), null, false );
-	wp_register_style( 'arve', null, array( 'arve-main' ), null, false );
+	wp_register_script( 'arve', null, array( 'arve-main' ), null, true );
+	wp_register_style( 'arve', null, array( 'arve-main' ), null, true );
 	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	if ( function_exists( 'register_block_type' ) ) :
@@ -56,6 +57,7 @@ function register_assets() {
 				'src'    => plugins_url( 'build/block.js', PLUGIN_FILE ),
 				'path'   => PLUGIN_DIR . '/build/block.js',
 				'deps'   => array( 'arve' ),
+				'footer' => 'false',
 			)
 		);
 		wp_localize_script( 'arve-block', 'ARVEsettings', $sc_settings );
@@ -110,7 +112,7 @@ function gutenberg_block( $args ) {
 		}
 	}
 
-	$args['gutenberg'] = 'true';
+	$args['origin_data']['from'] = 'gutenberg_block';
 
 	if ( isset( $args['align'] ) && in_array( $args['align'], array( 'wide', 'full' ), true ) ) {
 		$args['align'] = null;

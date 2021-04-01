@@ -15,8 +15,8 @@ function add_oembed_providers() {
 function filter_oembed_dataparse( $result, $data, $url ) {
 
 	if ( $data && 'video' === $data->type ) {
-		unset($data->type);
 		$data->arve_cachetime = gmdate('Y-m-d H:i:s');
+		$data->arve_url       = $url;
 
 		if ( 'YouTube' === $data->provider_name ) {
 			$data->arve_srcset = yt_srcset( $data->thumbnail_url );
@@ -29,23 +29,57 @@ function filter_oembed_dataparse( $result, $data, $url ) {
 		$result .= '<script type="application/json" data-arve-oembed>'.\wp_json_encode($data, JSON_UNESCAPED_UNICODE).'</script>';
 	}
 
+	$result .= '<template class="arve-filter-oembed-dataparse"></template>';
+
 	return $result;
 }
 
-function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
+function filter_embed_oembed_html( $cache, $url, $attr, $post_ID ) {
 
-	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $cache, $matches );
+	$a['errors'] = new \WP_Error();
+	$oembed_data = extract_oembed_json( $cache, $a );
 
-	if ( ! empty( $matches[0] ) ) {
+	if ( $oembed_data ) {
 
-		$attr['oembed_data'] = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
-		$attr['url']         = $url;
-		$attr['post_id']     = (string) $post_ID;
+		$a['url']         = $url;
+		$a['oembed_data'] = $oembed_data;
+		$a['origin_data'] = [
+			'from'    => 'filter_embed_oembed_html',
+			'post_id' => $post_ID,
+		];
 
-		$cache = build_video( $attr );
+		$cache = build_video( $a );
+	}
+
+	if ( isset( $_GET['arve-debug-oembed'] ) ) {
+		$cache .= '<template class="arve-filter-oembed-html"></template>';
 	}
 
 	return $cache;
+}
+
+function extract_oembed_json( $html, array $a ) {
+
+	\preg_match( '#(?<=data-arve-oembed>).*?(?=</script>)#s', $html, $matches );
+
+	if ( empty( $matches[0] ) ) {
+		return false;
+	}
+
+	$data = json_decode( $matches[0], false, 512, JSON_UNESCAPED_UNICODE );
+
+	if ( json_last_error() !== JSON_ERROR_NONE ) {
+
+		$error_code = "$url-extract-json";
+
+		$a['errors']->add( $error_code, 'json decode error code ' . json_last_error() );
+		$a['errors']->add_data(
+			compact('html', 'matches', 'data', 'a'),
+			$error_code
+		);
+	}
+
+	return $data;
 }
 
 function yt_srcset( $url ) {

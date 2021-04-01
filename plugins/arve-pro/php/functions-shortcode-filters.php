@@ -114,52 +114,51 @@ function shortcode_atts_extra_data( array $a ) {
 	return $a;
 }
 
-function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
-
-	$thumb = Common\remote_get_json( $url, $remote_get_args, $json_name );
-
-	if ( is_wp_error( $thumb ) ) {
-		$a['errors']->add( 'thumb-api-call', $thumb->get_error_message() );
-	} else {
-		$a['img_src'] = $thumb;
-	}
-
-	return $a;
-}
-
+/**
+ * 1. Manual thumbnail= id/url (you can use string 'featured' to force the use of featured image)
+ * 2. Oembed
+ * 3. Get remote without oembed
+ * 4. Post Image Fallback
+ * 5. Fallback from options page 
+ * 
+ */
 function arg_filter_thumbnail( $thumbnail, array $a ) {
 
+	$options  = ARVE\options();
 	$thumb_id = get_post_thumbnail_id();
 
 	if ( 'featured' === $thumbnail && $thumb_id ) {
 		$thumbnail = $thumb_id;
 	}
 
+	if ( empty( $thumbnail ) ) {
+		$thumbnail = get_thumb_from_api($thumbnail, $a);
+	}
+
+	if ( empty( $thumbnail ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
+		$thumbnail = $thumb_id;
+	}
+
+	if ( empty( $thumbnail ) && $options['thumbnail_fallback'] ) {
+		$thumbnail = $options['thumbnail_fallback'];
+	}
+
 	return $thumbnail;
 }
 
-function arg_filter_img_src( $img_src, array $a ) {
-
-	if ( ! empty( $img_src ) ) {
-		return $img_src;
-	}
-
-	$id       = $a['id'];
-	$provider = $a['provider'];
-	$thumb_id = get_post_thumbnail_id();
-	$options  = ARVE\options();
+function get_thumb_from_api( $thumbnail, array $a ) {
 
 	switch ( $a['provider'] ) {
 		case 'alugha':
-			$a = get_json_thumbnail(
+			$thumbnail = get_json_thumbnail(
 				$a,
-				"https://api.alugha.com/v1/videos/$id",
+				"https://api.alugha.com/v1/videos/{$a['id']}",
 				[],
 				'thumb'
 			);
 			break;
 		case 'liveleak':
-			$html = Common\remote_get_body( "http://www.liveleak.com/view?$id" );
+			$html = Common\remote_get_body_cached( "http://www.liveleak.com/view?{$a['id']}" );
 
 			if ( is_wp_error( $html ) ) {
 				$a['errors']->add( 'thumb-api-call', $html->get_error_message() );
@@ -170,19 +169,22 @@ function arg_filter_img_src( $img_src, array $a ) {
 					str_starts_with( $matches[1], 'http' ) &&
 					! str_ends_with( $matches[1], 'logo.gif' )
 				) {
-					$img_src = $matches[1];
+					$thumbnail = $matches[1];
 				}
 			}
 			break;
 	}
 
-	if ( empty( $img_src ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
-		$img_src = wp_get_attachment_image_url( $thumb_id, 'small' );
+	return $thumbnail;
+}
+
+function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
+
+	$thumb = Common\remote_get_json( $url, $remote_get_args, $json_name );
+
+	if ( is_wp_error( $thumb ) ) {
+		$a['errors']->add( 'thumb-api-call', $thumb->get_error_message() );
 	}
 
-	if ( empty( $img_src ) ) {
-		$img_src = $options['thumbnail_fallback'];
-	}
-
-	return $img_src;
+	return $thumb;
 }

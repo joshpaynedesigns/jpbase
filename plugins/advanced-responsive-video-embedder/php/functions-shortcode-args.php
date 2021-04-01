@@ -124,26 +124,26 @@ function args_validate( array $a ) {
 		switch ( $key ) {
 			case 'errors':
 				break;
-			case 'url_handler':
+			case 'origin_data':
 				if ( null !== $value && ! is_array( $value ) ) {
-					$a['errors']->add( 2, 'url_handler needs to be null or array' . $value );
+					$a['errors']->add( 'origin_data-type', 'origin_data needs to be null or array' . $value );
 				}
 				break;
 			case 'oembed_data':
 				if ( null !== $value && ! is_object( $value ) ) {
-					$a['errors']->add( 'oembed_data', 'oembed_data needs to be null or a object' );
+					$a['errors']->add( 'oembed_data-type', 'oembed_data needs to be null or a object' );
 				}
 				break;
 			default:
 				if ( null !== $value && ! is_string( $value ) ) {
-					$a['errors']->add( 2, "$key must be null or string" );
+					$a['errors']->add( 'wrong-type', "$key must be null or string" );
 				}
 				break;
 		}
 	}
 
-	foreach ( bool_shortcode_args() as $arg ) {
-		$a[ $arg ] = validate_bool( $a[ $arg ], $arg );
+	foreach ( bool_shortcode_args() as $attr_name ) {
+		$a[ $attr_name ] = validate_bool( $attr_name, $a );
 	};
 
 	$url_args = array_merge( VIDEO_FILE_EXTENSIONS, [ 'url' ] );
@@ -176,9 +176,9 @@ function validate_url( $url, $argname, array $a ) {
 }
 
 // phpcs:ignore Generic.Metrics.CyclomaticComplexity.TooHigh
-function validate_bool( $str, $attr_name ) {
+function validate_bool( $attr_name, $a ) {
 
-	switch ( $str ) {
+	switch ( $a[ $attr_name ] ) {
 		case 'true':
 		case '1':
 		case 'y':
@@ -195,6 +195,8 @@ function validate_bool( $str, $attr_name ) {
 		case 'off':
 			return false;
 		default:
+			$error_code = $attr_name . ' bool-validation';
+
 			$a['errors']->add(
 				$attr_name,
 				// Translators: %1$s = Attr Name, %2$s = Attribute array
@@ -202,9 +204,15 @@ function validate_bool( $str, $attr_name ) {
 					// Translators: Attribute Name
 					__( '%1$s <code>%2$s</code> not valid', 'advanced-responsive-video-embedder' ),
 					esc_html( $attr_name ),
-					esc_html( $str )
+					esc_html( $a[ $attr_name ] )
 				)
 			);
+
+			$a['errors']->add_data(
+				compact( 'attr_name', 'a' ),
+				$error_code
+			);
+
 			return null;
 	}//end switch
 }
@@ -479,7 +487,7 @@ function compare_oembed_src_with_generated_src( $a ) {
 function missing_attribute_check( array $a ) {
 
 	// Old shortcodes
-	if ( $a['legacy_sc'] ) {
+	if ( ! empty( $a['origin_data']['from'] ) && 'create_shortcodes' === $a['origin_data']['from'] ) {
 
 		if ( ! $a['id'] || ! $a['provider'] ) {
 			throw new \Exception( 'need id and provider' );
@@ -583,7 +591,7 @@ function height_from_width_and_ratio( $width, $ratio ) {
 		return false;
 	}
 
-	list( $old_width, $old_height ) = explode( ':', $ratio );
+	list( $old_width, $old_height ) = explode( ':', $ratio, 2 );
 
 	return new_height( $old_width, $old_height, $width );
 }
@@ -760,14 +768,14 @@ function args_detect_html5( array $a ) {
 
 	foreach ( VIDEO_FILE_EXTENSIONS as $ext ) :
 
-		if ( str_ends_with( $a['url'], ".$ext" ) &&
+		if ( str_ends_with( (string) $a['url'], ".$ext" ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];
 		}
 
 		if ( 'av1mp4' === $ext &&
-			str_ends_with( $a['url'], 'av1.mp4' ) &&
+			str_ends_with( (string) $a['url'], 'av1.mp4' ) &&
 			! $a[ $ext ]
 		) {
 			$a[ $ext ] = $a['url'];
