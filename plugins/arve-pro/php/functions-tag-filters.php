@@ -154,7 +154,7 @@ function srcset( array $a ) {
 
 	$srcset = false;
 
-	if ( $a['img_src'] && is_numeric( $a['thumbnail'] ) ) {
+	if ( is_numeric( $a['thumbnail'] ) ) {
 		$srcset = wp_get_attachment_image_srcset( $a['thumbnail'], 'small' );
 	} elseif ( ! empty( $a['oembed_data']->arve_srcset ) ) {
 		$srcset = $a['oembed_data']->arve_srcset;

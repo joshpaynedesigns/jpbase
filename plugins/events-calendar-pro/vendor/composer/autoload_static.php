@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc789d210b22a77605c055c6d86b48955
+class ComposerStaticInit6464a464402157322ea9513f55088823
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -21,8 +21,22 @@ class ComposerStaticInitc789d210b22a77605c055c6d86b48955
     );
 
     public static $classMap = array (
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Groups\\Event_Query' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Traits\\TEC_Control' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Traits/TEC_Control.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls_Manager' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls_Manager.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Manager_Abstract' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Manager_Abstract.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Service_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Shortcodes' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Shortcodes.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Traits\\Categories' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Traits/Categories.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Traits\\Tags' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Traits/Tags.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Traits\\Event_Query' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Traits/Event_Query.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Abstract' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Abstract.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Countdown' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Event_List' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Event_Single_Legacy' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Events_View' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php',
+        'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets_Manager' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets_Manager.php',
+        'Tribe\\Events\\Pro\\Integrations\\Fusion\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Fusion/Service_Provider.php',
         'Tribe\\Events\\Pro\\Models\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Models/Service_Provider.php',
         'Tribe\\Events\\Pro\\Rewrite\\Provider' => __DIR__ . '/../..' . '/src/Tribe/Rewrite/Provider.php',
         'Tribe\\Events\\Pro\\Rewrite\\Rewrite' => __DIR__ . '/../..' . '/src/Tribe/Rewrite/Rewrite.php',
@@ -42,9 +56,11 @@ class ComposerStaticInitc789d210b22a77605c055c6d86b48955
         'Tribe\\Events\\Pro\\Views\\V2\\Messages' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Messages.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Rewrite' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Rewrite.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Service_Provider.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Hooks.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Manager' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Manager.php',
-        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Abstract' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Abstract.php',
-        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Interface' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Interface.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Service_Provider.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Events_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Events_List.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Mini_Calendar' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Mini_Calendar.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Tribe_Events' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Tribe_Events.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Template\\Featured_Title' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Template/Featured_Title.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Template\\Title' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Template/Title.php',
@@ -62,21 +78,28 @@ class ComposerStaticInitc789d210b22a77605c055c6d86b48955
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Venue_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Venue_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Week_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Week_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Widgets\\Countdown_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Widgets/Countdown_View.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Views\\Widgets\\Venue_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Widgets/Venue_View.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Views\\Widgets\\Week_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Widgets/Week_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Admin_Template' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Admin_Template.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Ajax' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Ajax.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Assets.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Hooks.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Taxonomy_Filter' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Traits\\Widget_Shortcode' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Traits/Widget_Shortcode.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Advanced_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Advanced_List.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Countdown' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Countdown.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Featured_Venue' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Featured_Venue.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Month' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Month.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Widget_Week' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Week.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc789d210b22a77605c055c6d86b48955::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc789d210b22a77605c055c6d86b48955::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc789d210b22a77605c055c6d86b48955::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6464a464402157322ea9513f55088823::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6464a464402157322ea9513f55088823::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6464a464402157322ea9513f55088823::$classMap;
 
         }, null, ClassLoader::class);
     }

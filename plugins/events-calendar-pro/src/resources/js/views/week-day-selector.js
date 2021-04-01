@@ -114,7 +114,7 @@ tribe.events.views.weekDaySelector = {};
 
 				obj.closeDay( $header, $content );
 			} );
-	}
+	};
 
 	/**
 	 * Handle click event on day button
@@ -231,5 +231,5 @@ tribe.events.views.weekDaySelector = {};
 	};
 
 	// Configure on document ready
-	$document.ready( obj.ready );
+	$( obj.ready );
 } )( jQuery, tribe.events.views.weekDaySelector );
