@@ -362,6 +362,10 @@ class Customizer {
 				.tribe-common .tribe-common-form-control-toggle__input:checked {
 					background-color: <%= global_elements.accent_color %>;
 				}
+
+				.tribe-events-widget .tribe-events-widget-events-list__view-more-link {
+					color: <%= global_elements.accent_color %>;
+				}
 			';
 
 			// overrides for common base/full/typography/_ctas.pcss.
@@ -663,6 +667,50 @@ class Customizer {
 					color: <%= global_elements.accent_color %>;
 				}
 			';
+			
+			// Single Event styles overrides
+			// This is under filter_global_elements_css_template() in order to have
+			// access to global_elements.accent_color, which is under a different section.
+			if ( $this->should_add_single_view_v2_styles() ) {
+				$css_template .= '
+					.tribe-events-cal-links .tribe-events-gcal,
+					.tribe-events-cal-links .tribe-events-ical,
+					.tribe-events-event-meta a,
+					.tribe-events-event-meta a:active,
+					.tribe-events-event-meta a:visited,
+					.tribe-events-schedule .recurringinfo a,
+					.tribe-related-event-info .recurringinfo a,
+					.tribe-events-single ul.tribe-related-events li .tribe-related-events-title a,
+					.tribe-events-single-event-description a:active,
+					.tribe-events-single-event-description a:focus,
+					.tribe-events-single-event-description a:hover {
+						color: <%= global_elements.accent_color %>;
+					}
+					
+					.tribe-events-event-meta a:focus,
+					.tribe-events-event-meta a:hover {
+						color: ' . $accent_color_hover . ';
+					}
+					
+					.tribe-events-virtual-link-button {
+						background-color: <%= global_elements.accent_color %>;
+					}
+					
+					.tribe-events-virtual-link-button:active,
+					.tribe-events-virtual-link-button:focus,
+					.tribe-events-virtual-link-button:hover {
+						background-color: ' . $accent_color_hover . ';
+					}
+					
+					.tribe-events-single-event-description a,
+					.tribe-events-single-event-description a:active,
+					.tribe-events-single-event-description a:focus,
+					.tribe-events-single-event-description a:hover,
+					.tribe-events-content blockquote {
+						border-color: <%= global_elements.accent_color %>;
+					}
+				';
+			}
 		}
 
 		return $css_template;
@@ -698,9 +746,34 @@ class Customizer {
 	/**
 	 * Enqueues Customizer controls styles specific to Views v2 components.
 	 *
-	 * @since TBD
+	 * @since 5.4.0
 	 */
 	public function enqueue_customizer_controls_styles() {
 		tribe_asset_enqueue( 'tribe-customizer-views-v2-controls' );
+	}
+	
+	/**
+	 * Check whether the Single Event styles overrides can be applied
+	 *
+	 * @return false/true
+	 */
+	public function should_add_single_view_v2_styles() {
+		// Bail if not Single Event.
+		if ( ! tribe( Template_Bootstrap::class )->is_single_event() ) {
+			return false;
+		}
+
+		// Bail if Block Editor.
+		if ( has_blocks( get_queried_object_id() ) ) {
+			return false;
+		}
+		
+		// Use the function from provider.php to check if V2 is not enabled
+		// or the TRIBE_EVENTS_WIDGETS_V2_DISABLED constant is true.
+		if ( ! tribe_events_single_view_v2_is_enabled() ) {
+			return false;
+		}
+
+		return true;
 	}
 }

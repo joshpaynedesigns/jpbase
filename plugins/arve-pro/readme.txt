@@ -1,7 +1,7 @@
 === ARVE Pro Addon ===
 Donate link: https://nextgenthemes.com/donate/
 Requires at least: 4.9.0
-Tested up to: 5.6.0
+Tested up to: 5.7.0
 Requires PHP: 5.6.0
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -17,6 +17,15 @@ Lazyload, Lightbox and more for ARVE
 Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
 ## Changelog ##
+
+= 2021-03-11 5.1.17 =
+
+* Improved: Cachebusting for assets.
+* Tested with WP 5.7.0
+
+= 2021-02-20 5.1.16 =
+
+* Fix: Thumbnail not showing up in certain situations.
 
 = 2021-02-13 5.1.12 =
 

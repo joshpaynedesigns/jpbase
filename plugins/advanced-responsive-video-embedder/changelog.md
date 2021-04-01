@@ -2,7 +2,44 @@
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
-* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-03-25 9.5.10 ###
+
+* Fix: 'None numeric value' errors in some situations.
+
+### 2021-03-11 9.5.8 ###
+
+* Fix: Scripts wrongly moved to the `<head>` with the "Always load assets" option turned on.
+
+### 2021-03-11 9.5.7 ###
+
+* Minor tweak: Load main.js in `<head>`.
+* Tested with WP 5.7.0
+
+### 2021-03-09 9.5.6 ###
+
+* Improved: Load scripts with higher priority.
+* Fix: Error related to removed notice script.
+
+### 2021-03-08 9.5.5 ###
+
+* Fix: JSON decode error appearing. 
+* Fix: Error messages for no longer needed and not existing `.js` file.
+* Improved: Default width for sticky videos set to `500px`.
+* Tested with WP 5.7-RC2
+
+### 2021-03-02 9.5.4-beta1 ###
+
+* Fix: Possible conflict with PHP8 polyfills.
+* Fix: Unintentional newlines.
+* Improved: Tweaks to make debugging easier.
+* Options for [sticky videos](https://nextgenthemes.com/plugins/arve-sticky-videos/) are ready to use.
+
+### 2021-02-22 9.5.3-beta1 ###
+
+* Fix: Shortcode arguments not working in all situations.
+* Removed services that went down.
 
 ### 2021-02-17 9.5.2-beta1 ###
 

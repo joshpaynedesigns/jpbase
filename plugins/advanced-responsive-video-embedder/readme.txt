@@ -3,9 +3,9 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.6
+Tested up to: 5.7.0
 Requires PHP: 5.6
-Stable tag: 9.5.2-beta3
+Stable tag: 9.5.10
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -55,7 +55,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Break, Mail.ru, Brightcove, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, LiveLeak, Livestream.com, Metacafe, myspace, ooyala, Rumble.com, RuTube.ru, Snotr, Spike, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, vzaar, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
+Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, LiveLeak, Livestream.com, Metacafe, myspace, ooyala, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -76,11 +76,11 @@ I used a lot of high ranking plug-ins but they still broke my design. Downloaded
 
 [16]: https://wordpress.org/support/plugin/advanced-responsive-video-embedder/reviews/?filter=5
 
-### [Pro Addon][20]
+### [ARVE Pro][20] ###
 
 **<big>10% off</big>** first year with discount code `wporg`.
 
-This plugin is financed by purchases of the [Pro Addon][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
+This plugin is financed by purchases of [ARVE Pro][20]. The development and support of this plugins has become a job for me, so I hope you understand that I can not make all features gratis and that you [purchase it][20] to get extra features and support the development.
 
 *   **Disable links in embeds (killer feature!)**<br>
     For example: Clicking on a title in a YouTube embed will not open a new tab. **Prevent video hosts to lead your visitors away from your site!**
@@ -103,6 +103,15 @@ This plugin is financed by purchases of the [Pro Addon][20]. The development and
 
 [20]: https://nextgenthemes.com/plugins/arve-pro/
 
+### [ARVE Sticky Videos][23] ###
+
+Keep videos on the screen when scrolling.
+
+*  Choose if videos should be pinned to the top of the screen. Like the YouTube app for example.
+*  For bigger screen choose a corner where a video should be pinned to. Like last.fm [for example][23].
+
+  [23]: https://nextgenthemes.com/plugins/arve-sticky-videos/
+
 ### [Random Video Addon](https://nextgenthemes.com/plugins/arve-random-video/) ###
 
 Display random video from:
@@ -110,6 +119,18 @@ Display random video from:
 *  YouTube Playlist
 *  Vimeo Showcase
 *  Comma separated list of video URLs
+
+### [ARVE AMP][29] ###
+
+When you use the AMP or 'AMP for WP' plugin you need this.
+
+* It will display videos embedded with ARVE on AMP pages correctly
+* No options, just works
+* It creates `<amp-youtube>`, `<amp-vimeo>`, `<amp-dailymotion>` elements
+* For all other video hosts `<amp-video-iframe>` element is used
+* Video files are also supported with `<amp-video>`
+
+  [29]: https://nextgenthemes.com/plugins/arve-amp/
 
 ### Thanks ###
 
@@ -170,7 +191,44 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
-* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/random-video/#changelog)
+* [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-03-25 9.5.10 ###
+
+* Fix: 'None numeric value' errors in some situations.
+
+### 2021-03-11 9.5.8 ###
+
+* Fix: Scripts wrongly moved to the `<head>` with the "Always load assets" option turned on.
+
+### 2021-03-11 9.5.7 ###
+
+* Minor tweak: Load main.js in `<head>`.
+* Tested with WP 5.7.0
+
+### 2021-03-09 9.5.6 ###
+
+* Improved: Load scripts with higher priority.
+* Fix: Error related to removed notice script.
+
+### 2021-03-08 9.5.5 ###
+
+* Fix: JSON decode error appearing. 
+* Fix: Error messages for no longer needed and not existing `.js` file.
+* Improved: Default width for sticky videos set to `500px`.
+* Tested with WP 5.7-RC2
+
+### 2021-03-02 9.5.4-beta1 ###
+
+* Fix: Possible conflict with PHP8 polyfills.
+* Fix: Unintentional newlines.
+* Improved: Tweaks to make debugging easier.
+* Options for [sticky videos](https://nextgenthemes.com/plugins/arve-sticky-videos/) are ready to use.
+
+### 2021-02-22 9.5.3-beta1 ###
+
+* Fix: Shortcode arguments not working in all situations.
+* Removed services that went down.
 
 ### 2021-02-17 9.5.2-beta1 ###
 

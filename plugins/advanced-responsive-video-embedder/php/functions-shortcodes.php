@@ -1,9 +1,11 @@
 <?php
 namespace Nextgenthemes\ARVE;
 
-function shortcode( $a, $content = null ) {
+function shortcode( $a ) {
 
-	$a = (array) $a;
+	$a                        = (array) $a;
+	$a['errors']              = new \WP_Error();
+	$a['origin_data']['from'] = 'shortcode';
 
 	foreach ( $a as $k => $v ) {
 		if ( '' === $v ) {
@@ -11,31 +13,35 @@ function shortcode( $a, $content = null ) {
 		}
 	}
 
-	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, $content );
+	$override = apply_filters( 'nextgenthemes/arve/shortcode_override', '', $a, 'not used' );
 
 	if ( '' !== $override ) {
 		return $override;
 	}
 
-	$a['errors'] = new \WP_Error();
-	$a           = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
+	$a = apply_filters( 'nextgenthemes/arve/shortcode_args', $a );
 
 	if ( ! empty( $a['url'] ) ) {
 
-		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( $a, $a['url'] );
+		remove_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY );
+		$maybe_arve_html = $GLOBALS['wp_embed']->shortcode( array(), $a['url'] );
+		add_filter( 'embed_oembed_html', __NAMESPACE__ . '\filter_embed_oembed_html', OEMBED_HTML_PRIORITY, 4 );
 
-		if ( str_contains( $maybe_arve_html, 'class="arve' ) ) {
-			return $maybe_arve_html;
+		$oembed_data = extract_oembed_json( $maybe_arve_html, $a );
+
+		if ( $oembed_data ) {
+			$a['oembed_data']         = $oembed_data;
+			$a['origin_data']['from'] = 'shortcode oembed_data detected';
 		}
 	}
 
-	return build_video( $a, $content );
+	return build_video( $a );
 }
 
 function error( $msg, $code = '' ) {
 
 	return sprintf(
-		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s</span><br>' . PHP_EOL,
+		'<span class="arve-error"%s><abbr title="%s">ARVE</abbr> %s<br></span>' . PHP_EOL,
 		'hidden' === $code ? ' hidden' : '',
 		__( 'Advanced Responsive Video Embedder', 'advanced-responsive-video-embedder' ),
 		// translators: Error message
@@ -133,9 +139,10 @@ function create_shortcodes() {
 				if ( ! empty( $properties[ $provider ]['rebuild_url'] ) && ! empty( $a['id'] ) ) {
 					$a['url'] = sprintf( $properties[ $provider ]['rebuild_url'], $a['id'] );
 					unset( $a['id'] );
+					$a['origin_data']['from'] = 'create_shortcodes rebuild_url';
 					return shortcode( $a );
 				} else {
-					$a['legacy_sc'] = 'Legacy Shortcode';
+					$a['origin_data']['from'] = 'create_shortcodes';
 					return build_video( $a );
 				}
 			};
