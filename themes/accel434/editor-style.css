@@ -287,7 +287,6 @@ select {
 dl {
   margin-bottom: 1.5em; }
   dl dt {
-    font-weight: 600;
     margin-top: 0.5em; }
   dl dd {
     margin: 0; }
@@ -354,7 +353,8 @@ h1,
   font-family: "Arial", "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
   display: block; }
 
-h2 {
+h2,
+#post-title {
   font-size: 2.5em;
   font-weight: bold; }
 

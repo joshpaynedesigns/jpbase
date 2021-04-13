@@ -165,6 +165,10 @@ Events Single
 			padding: 0;
 		}
 
+		.tribe-events-back {
+			margin-bottom: 20px;
+		}
+
 		.tribe-events-content-wrap {
 			margin: 0 auto;
 			padding: 0;
@@ -174,9 +178,13 @@ Events Single
 			.tribe-events-single-event-title {
 				margin: 0;
 				padding: 0;
-				font-weight: normal;
-				text-transform: uppercase;
-				font-size: em(32);
+				font-weight: bold;
+				// text-transform: uppercase;
+				font-size: em(30);
+
+				@include media( $medium-screen-up ) {
+					font-size: em(40);
+				}
 			}
 
 			.tribe-events-schedule {
@@ -185,10 +193,39 @@ Events Single
 				margin: 0;
 				padding: 0;
 			}
+
+			.tribe-events-cal-links .tribe-events-gcal,
+			.tribe-events-cal-links .tribe-events-ical {
+				padding: 0;
+			}
 		}
 
 		.tribe-events-event-meta {
 			margin-bottom: 0;
+			background-color: #eee;
+			padding-left: 30px;
+
+			dt {
+				margin-bottom: 0;
+
+				&:not(:first-child) {
+					margin-top: 10px;
+				}
+			}
+
+			.tribe-events-address {
+				line-height: 20px;
+			}
+		}
+
+		.tribe-events-related-events-title {
+			border: none;
+			padding-top: 0;
+			margin-top: 3em;
+		}
+
+		ul.tribe-related-events {
+			margin-bottom: 4em;
 		}
 	}
 

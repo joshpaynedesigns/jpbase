@@ -6,7 +6,7 @@ add_filter ( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_
 // Force the post title to use h1
 add_filter( 'genesis_post_title_output', 'vrec_post_title_output', 15 );
 function vrec_post_title_output( $title ) {
-	$title = sprintf( '<h1 class="post-title">%s</h1>', get_the_title() );
+	$title = sprintf( '<h1 id="post-title">%s</h1>', get_the_title() );
 	return $title;
 }
 
