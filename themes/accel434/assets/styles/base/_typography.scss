@@ -37,7 +37,8 @@ h1,
     display: block;
 }
 
-h2 {
+h2,
+#post-title {
     font-size: em(40);
     font-weight: bold;
 }
