@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: https://evnt.is/29
 Requires at least: 4.9.14
 Tested up to: 5.7.0
-Stable tag: 5.5.0.1
+Stable tag: 5.5.0.2
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -207,6 +207,10 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.5.0.2] 2021-04-05 =
+
+* Fix - Correct `tribe_get_event_website_link_label` filter in template-tags to match params of all other usages.
 
 = [5.5.0.1] 2021-03-31 =
 
