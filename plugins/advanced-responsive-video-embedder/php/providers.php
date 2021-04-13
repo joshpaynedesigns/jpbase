@@ -342,7 +342,6 @@
 	'myspace' => [
 		'name'           => 'myspace',
 		'oembed'         => false,
-
 		'regex'          => '#https?://(www\\.)?myspace\\.com/.+/(?<id>[0-9]+)#i',
 		'embed_url'      => 'https://media.myspace.com/play/video/%s',
 		'auto_thumbnail' => false,
@@ -356,6 +355,23 @@
 	'ooyala' => [
 		'name'         => 'ooyala',
 		'requires_src' => true,
+	],
+	'qq' => [
+		'name'           => 'v.qq.com',
+		'oembed'         => false,
+		'regex'          => '#https?://v\.qq\.com/.+?(?<id>[a-z0-9]+).html#i',
+		'embed_url'      => 'https://v.qq.com/txp/iframe/player.html?vid=%s',
+		'auto_thumbnail' => false,
+		'tests'          => [
+			0 => [
+				'url' => 'https://v.qq.com/x/page/u0863pgoecf.html',
+				'id'  => 'u0863pgoecf',
+			],
+			1 => [
+				'url' => 'https://v.qq.com/x/cover/zf2z0xpqcculhcz/y0016tj0qvh.html',
+				'id'  => 'y0016tj0qvh',
+			],
+		],
 	],
 	'rumble' => [
 		'name'           => 'Rumble.com',
