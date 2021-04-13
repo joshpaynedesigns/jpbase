@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.5
+Version: 8.1.6
 Author URI: http://www.activecampaign.com
 */
 
@@ -56,6 +56,7 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.3: Hotfix for Default CSS option deprecation. Moving from global assignment to block/shortcode assignment. Allowing fallback for existing blocks without CSS setting.
 ## version 8.1.4: Rolling back settings page form/css deprecations. We have improved testing workflows moving forward.
 ## version 8.1.5: Updating Readme with up to date screenshots and better descriptions. Updating Plugin Settings with clearer descriptions of form and shortcode use cases. Fixing block editor CSS class input on dynamic div output. Fixing display of Site Tracking settings without forms. Migrating Site Tracking JS to vgo() from pgo(). Fixing bug with Tracking ID fetch. Adding admin notice stack for future plugin updates.
+## version 8.1.6: Improving credential check to fix permissions bug. Fixing non-inline form previews in block editor. Removing unnecessary Google Font loads on no-style embeds. Updating Plugin description.
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -218,7 +219,7 @@ function activecampaign_plugin_options()
                 // get account details.
                 $account = $ac->api("account/view");
                 $instance["account_view"] = get_object_vars($account);
-                $instance["account"] = $account->account;
+                $instance["account"] = property_exists($account, 'account')? $account->account : null;
 				$instance["tracking_actid"] = activecampaign_fetch_accountid($ac);
 
                 // get forms.
@@ -226,6 +227,14 @@ function activecampaign_plugin_options()
                 $instance = activecampaign_form_html($ac, $instance);
 
                 $connected = true;
+
+				// If fetches didn't return domain or account, we can't display embeds, so fail out. This can happen with non-admin API credentials
+				$domain = (isset($instance["account_view"]) && isset($instance["account_view"]["account"]))? $instance["account_view"]["account"] : null;
+				if(!isset($instance["account"]) || !isset($domain)){
+					$connected = false;
+					$instance = [];
+					echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: You entered valid credentials, but the associated API User is not an ActiveCampaign Admin group member. Please use API credentials from a User within the Admin group.", "menu-activecampaign") . "</p>";
+				}
             }
         } else {
             // one or both of the credentials fields is empty. it will just disconnect below because $instance is empty.
@@ -944,7 +953,7 @@ function activecampaign_frontend_scripts()
     // any data we need to access in JavaScript.
     $data = array(
         "ac_settings" => array(
-            "tracking_actid" => $settings["tracking_actid"],
+            "tracking_actid" => (!empty($settings["tracking_actid"]))? $settings["tracking_actid"]: null,
             "site_tracking_default" => 1,
         ),
         "user_email" => $user_email,

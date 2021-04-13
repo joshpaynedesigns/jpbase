@@ -3,7 +3,7 @@ Contributors: activecampaign
 Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
 Requires at least: 2.0
 Requires PHP: 5.4
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: trunk
 
 Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -32,6 +32,20 @@ Your website visitors want a human touch. Automation lets you scale that persona
 Don’t have an ActiveCampaign account? [Sign up for a free trial to get started](https://www.activecampaign.com/free).
 
 Ready to get started with the ActiveCampaign plug-in for WordPress? [Here’s how](https://help.activecampaign.com/hc/en-us/articles/222475388-WordPress-plugin).
+
+<strong>Description of ActiveCampaign</strong>
+ActiveCampaign's category-defining Customer Experience Automation Platform (CXA) helps over 130,000 businesses in 170 countries meaningfully engage with their customers. The platform gives businesses of all sizes access to 500+ pre-built automations that combine email marketing, marketing automation, CRM and machine learning for powerful segmentation and personalization across social, email, messaging, chat and text. Over 70% of ActiveCampaign's customers use its 300+ integrations including Shopify, Square, Facebook, and Salesforce. ActiveCampaign scores higher in customer satisfaction than any other solution in Marketing Automation on [G2.com](https://g2.com) and is the 2020 Top Rated Email Marketing Software on TrustRadius. Pricing starts at just $9/month. Start a free trial at [ActiveCampaign.com](https://activecampaign.com).
+
+== Screenshots ==
+
+1. Settings page for ActiveCampaign plugin
+2. Configuring your form settings
+3. Using the [activecampaign] Button in the Classic Editor
+4. Viewing the output of the [activecampaign] shortcode
+5. Adding a shortcode to a Text widget in Appearance > Widgets
+6. Adding an AC Forms block into the Gutenberg Block Editor
+7. Editing the AC Forms block within the Gutenberg Block Editor
+8. Conversations chat widget
 
 == Installation ==
 
@@ -79,18 +93,13 @@ All live chat messages will display in the Conversations inbox in your ActiveCam
 
 Please make sure that your login information is correct, and that you have at least one Integration form already created in the ActiveCampaign system.
 
-== Screenshots ==
-
-1. Settings page for ActiveCampaign plugin
-2. Configuring your form settings
-3. Using the [activecampaign] Button in the Classic Editor
-4. Viewing the output of the [activecampaign] shortcode
-5. Adding a shortcode to a Text widget in Appearance > Widgets
-6. Adding an AC Forms block into the Gutenberg Block Editor
-7. Editing the AC Forms block within the Gutenberg Block Editor
-8. Conversations chat widget
-
 == Changelog ==
+= 8.1.6 =
+* Improving credential check to fix permissions bug
+* Fixing non-inline form previews in block editor
+* Removing unnecessary Google Font loads on no-style embeds
+* Updating Plugin description
+
 = 8.1.5 =
 * Updating Readme with up to date screenshots and better descriptions
 * Updating Plugin Settings with clearer descriptions of form and shortcode use cases

@@ -223,7 +223,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 					 *
 					 * @param string the link label/text.
 					 */
-					$label  = apply_filters( 'tribe_get_event_website_link_label', $url_label );
+					$label  = apply_filters( 'tribe_get_event_website_link_label', $url_label, $postId );
 
 					$meta   = sprintf( '<a href="%s" target="%s">%s</a>',
 						esc_url( $meta ),
@@ -885,4 +885,3 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 		return apply_filters( 'tribe_events_mobile_default_view', $default_view );
 	}
 }//end if
-
