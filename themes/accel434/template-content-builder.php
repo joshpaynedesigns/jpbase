@@ -21,13 +21,14 @@ function objectiv_site_inner_attr( $attributes ) {
 add_action( 'objectiv_page_content', 'objectiv_flexible_sections' );
 function objectiv_flexible_sections() {
 	echo '<section id="flexible-section-repeater">';
-	if ( ! post_password_required() ) {
+	if ( post_password_required() ) {
+		echo '<div id="password-protected" class="wrap">';
+		the_content();
+		echo '</div>';
+	} else {
 		$fcs = FlexibleContentSectionFactory::create('page_flexible_sections');
 		$fcs->run();
 	}
-	echo '<div id="password-protected" class="wrap">';
-	the_content();
-	echo '</div>';
 	echo '</section>';
 }
 
