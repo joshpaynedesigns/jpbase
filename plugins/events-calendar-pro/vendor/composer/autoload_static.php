@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit67e1d323e3b749654e3c959a322a8390
+class ComposerStaticInit1e828ad25daced2aa96f0943c5a46734
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -61,6 +61,7 @@ class ComposerStaticInit67e1d323e3b749654e3c959a322a8390
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Service_Provider.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Events_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Events_List.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Mini_Calendar' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Mini_Calendar.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Week' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Week.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Tribe_Events' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Tribe_Events.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Template\\Featured_Title' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Template/Featured_Title.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Template\\Title' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Template/Title.php',
@@ -83,6 +84,7 @@ class ComposerStaticInit67e1d323e3b749654e3c959a322a8390
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Admin_Template' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Admin_Template.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Ajax' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Ajax.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Assets.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Compatibility' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Compatibility.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Hooks.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Widgets\\Taxonomy_Filter' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Taxonomy_Filter.php',
@@ -97,9 +99,9 @@ class ComposerStaticInit67e1d323e3b749654e3c959a322a8390
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit67e1d323e3b749654e3c959a322a8390::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit67e1d323e3b749654e3c959a322a8390::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit67e1d323e3b749654e3c959a322a8390::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1e828ad25daced2aa96f0943c5a46734::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1e828ad25daced2aa96f0943c5a46734::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1e828ad25daced2aa96f0943c5a46734::$classMap;
 
         }, null, ClassLoader::class);
     }

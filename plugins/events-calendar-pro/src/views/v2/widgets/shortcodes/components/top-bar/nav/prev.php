@@ -3,7 +3,7 @@
  * View: Top Bar Navigation Previous Template
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-pro/v2/widgets/widget-month/components/top-bar/nav/prev.php
+ * [your-theme]/tribe/events-pro/v2/widgets/shortcodes/components/top-bar/nav/prev.php
  *
  * See more documentation about our views templating system.
  *
@@ -11,7 +11,7 @@
  *
  * @var string $prev_url The URL to the previous page, if any, or an empty string.
  *
- * @version 5.3.0
+ * @version TBD
  *
  */
 ?>

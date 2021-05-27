@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit04258d8ec99e939f6ef9e20242fe4b4c
+class ComposerStaticInit2e4ace81736a83e6e7e125cdcb9da126
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -95,14 +95,15 @@ class ComposerStaticInit04258d8ec99e939f6ef9e20242fe4b4c
         'Tribe\\Events\\Views\\V2\\Widgets\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
         'Tribe\\Events\\Views\\V2\\Widgets\\Widget_Abstract' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_Abstract.php',
         'Tribe\\Events\\Views\\V2\\Widgets\\Widget_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Widgets/Widget_List.php',
+        'Tribe\\Events\\Views\\V2\\iCalendar\\Request' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/iCalendar/Request.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit04258d8ec99e939f6ef9e20242fe4b4c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit04258d8ec99e939f6ef9e20242fe4b4c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit04258d8ec99e939f6ef9e20242fe4b4c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2e4ace81736a83e6e7e125cdcb9da126::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2e4ace81736a83e6e7e125cdcb9da126::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2e4ace81736a83e6e7e125cdcb9da126::$classMap;
 
         }, null, ClassLoader::class);
     }

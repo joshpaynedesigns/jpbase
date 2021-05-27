@@ -21,7 +21,7 @@ if ( empty( $event->cost ) || empty( $display['cost'] ) ) {
 	return;
 }
 ?>
-<div class="tribe-events-widget-events-list__event-cost tribe-common-b2">
+<div class="tribe-common-b2 tribe-events-widget-events-list__event-cost">
 	<span class="tribe-events-widget-events-list__event-cost-price">
 		<?php echo esc_html( $event->cost ); ?>
 	</span>

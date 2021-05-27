@@ -5,7 +5,7 @@ Tags: optimize, image, convert, webp, resize, compress, lazy load, optimization,
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.1
-Stable tag: 6.1.1
+Stable tag: 6.1.5
 License: GPLv3
 
 Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
@@ -37,7 +37,7 @@ With Easy IO, images are automatically compressed, scaled to fit the page and de
 = Support =
 
 Stuck? Feeling like maybe you DO need that rocket science degree? [We provide free one-on-one email support to everyone](https://ewww.io/contact-us/).
-Do you have an idea to make EWWW IO even better? [Share it and vote on future features](https://feedback.ewww.io/)!
+Do you have an idea to make EWWW IO even better? [Share it and vote on future features](https://feedback.ewww.io/b/features)!
 Found a bug? Report the issue on [GitHub](https://github.com/nosilver4u/ewww-image-optimizer), and we'll get it fixed!
 
 = Bulk Optimize =
@@ -129,8 +129,28 @@ That's not a question, but since I made it up, I'll answer it. See this resource
 
 == Changelog ==
 
-* Feature requests can be viewed and submitted on our [feedback portal](https://feedback.ewww.io)
+* Feature requests can be viewed and submitted on our [feedback portal](https://feedback.ewww.io/b/features)
 * If you would like to help translate this plugin in your language, [join the team](https://translate.wordpress.org/projects/wp-plugins/ewww-image-optimizer/)
+
+= 6.1.5 =
+* changed: use core wp_getimagesize() for proper error handling
+* fixed: prevent erasing title attributes for admin users when Lazy Load and Resize Detection are enabled
+* fixed: creates empty file when image is too large for WebP conversion
+
+= 6.1.4 =
+* changed: better handling for API quotas
+* fixed: picture elements not parsed when using JS WebP with Lazy Load
+* fixed: bundled tools don't work if the binary/tool directory is mounted on a filesystem separate from wp-content/
+* fixed: bulk optimizer not finding images from cloud storage (like S3) when local versions are removed
+
+= 6.1.3 =
+* changed: bulk optimizer no longer skips image types set to "no compression" in WebP-only mode
+* fixed: CNAME setting from WP Offload Media triggers "unknown" error in Easy IO
+* fixed: missing EIO_LL_THRESHOLD variable for minified JS
+
+= 6.1.2 =
+* fixed: bug from bypass/exclusion code for bulk scanner in 6.1.1
+* fixed: running is_file on system binaries may trigger open_basedir warnings, use EWWWIO_OPEN_BASEDIR to override PHP's open_basedir restriction
 
 = 6.1.1 =
 * change: added setting to enable adding of missing width/height dimensions, disabled by default

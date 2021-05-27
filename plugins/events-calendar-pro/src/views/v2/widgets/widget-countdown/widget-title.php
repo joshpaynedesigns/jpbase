@@ -15,7 +15,7 @@
  */
 ?>
 <header class="tribe-events-widget-countdown__header">
-	<h2 class="tribe-events-widget-countdown__header-title tribe-common-h6 tribe-common-h--alt">
+	<h2 class="tribe-common-h6 tribe-common-h--alt tribe-events-widget-countdown__header-title">
 		<?php echo esc_html( $widget_title ); ?>
 	</h2>
 </header>

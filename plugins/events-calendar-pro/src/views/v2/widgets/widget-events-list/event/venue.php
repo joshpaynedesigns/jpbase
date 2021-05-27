@@ -35,12 +35,12 @@ if (
 
 $venue = $event->venues[0];
 ?>
-<div class="tribe-events-widget-events-list__event-venue tribe-common-b2">
+<div class="tribe-common-b2 tribe-events-widget-events-list__event-venue">
 
 	<?php if ( ! empty( $display['venue'] ) ) : ?>
 		<a
 			href="<?php echo esc_url( $venue->permalink ); ?>"
-			class="tribe-events-widget-events-list__event-venue-name tribe-common-b2--bold tribe-common-anchor-thin"
+			class="tribe-common-b2--bold tribe-common-anchor-thin tribe-events-widget-events-list__event-venue-name"
 		>
 			<?php echo wp_kses_post( $venue->post_title ); ?>
 		</a>

@@ -11,7 +11,6 @@ namespace Tribe\Events\Pro\Views\V2\Widgets;
 
 use \Tribe\Events\Views\V2\Widgets\Widget_Abstract;
 use Tribe__Context as Context;
-use Tribe__Date_Utils as Dates;
 
 /**
  * Class for the Countdown Widget.

@@ -16,9 +16,9 @@
  */
 
 $classes = [
-	'tribe-events-widget-countdown__complete',
 	'tribe-common-h6',
 	'tribe-common-h--alt',
+	'tribe-events-widget-countdown__complete',
 	'tribe-common-a11y-hidden' => ! $event_done,
 ];
 ?>
