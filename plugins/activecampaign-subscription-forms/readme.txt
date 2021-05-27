@@ -33,9 +33,6 @@ Don’t have an ActiveCampaign account? [Sign up for a free trial to get started
 
 Ready to get started with the ActiveCampaign plug-in for WordPress? [Here’s how](https://help.activecampaign.com/hc/en-us/articles/222475388-WordPress-plugin).
 
-<strong>Description of ActiveCampaign</strong>
-ActiveCampaign's category-defining Customer Experience Automation Platform (CXA) helps over 130,000 businesses in 170 countries meaningfully engage with their customers. The platform gives businesses of all sizes access to 500+ pre-built automations that combine email marketing, marketing automation, CRM and machine learning for powerful segmentation and personalization across social, email, messaging, chat and text. Over 70% of ActiveCampaign's customers use its 300+ integrations including Shopify, Square, Facebook, and Salesforce. ActiveCampaign scores higher in customer satisfaction than any other solution in Marketing Automation on [G2.com](https://g2.com) and is the 2020 Top Rated Email Marketing Software on TrustRadius. Pricing starts at just $9/month. Start a free trial at [ActiveCampaign.com](https://activecampaign.com).
-
 == Screenshots ==
 
 1. Settings page for ActiveCampaign plugin
@@ -46,6 +43,10 @@ ActiveCampaign's category-defining Customer Experience Automation Platform (CXA)
 6. Adding an AC Forms block into the Gutenberg Block Editor
 7. Editing the AC Forms block within the Gutenberg Block Editor
 8. Conversations chat widget
+
+== Description of ActiveCampaign ==
+
+ActiveCampaign's category-defining Customer Experience Automation Platform (CXA) helps over 145,000 businesses in 170 countries meaningfully engage with their customers. The platform gives businesses of all sizes access to 500+ pre-built automations that combine email marketing, marketing automation and CRM for powerful segmentation and personalization across social, email, messaging, chat and text. Over 100,000 of ActiveCampaign's customers use its 850+ integrations including Microsoft, Shopify, Square, Facebook, and Salesforce. ActiveCampaign scores higher in customer satisfaction than any other solution in Marketing Automation, CRM, and E-Commerce Personalization on [G2.com](https://g2.com) and is the Top Rated Email Marketing Software on TrustRadius. Pricing starts at just $9/month. Start a free trial at [ActiveCampaign.com](https://activecampaign.com).
 
 == Installation ==
 
@@ -94,6 +95,9 @@ All live chat messages will display in the Conversations inbox in your ActiveCam
 Please make sure that your login information is correct, and that you have at least one Integration form already created in the ActiveCampaign system.
 
 == Changelog ==
+= 8.1.7 =
+* Updated listing
+
 = 8.1.6 =
 * Improving credential check to fix permissions bug
 * Fixing non-inline form previews in block editor

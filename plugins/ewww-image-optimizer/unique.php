@@ -1265,10 +1265,7 @@ function ewww_image_optimizer_md5check( $path ) {
 }
 
 /**
- * Check the mimetype of the given file with various methods.
- *
- * Checks WebP files using a direct pattern match, then prefers fileinfo, getimagesize (for images
- * only), mime_content_type, and lastly the 'file' utility (only for binaries).
+ * Check the mimetype of the given file with magic mime strings/patterns.
  *
  * @param string $path The absolute path to the file.
  * @param string $case The type of file we are checking. Accepts 'i' for
@@ -1705,13 +1702,13 @@ function ewww_image_optimizer_find_nix_binary( $binary, $switch ) {
 		}
 	}
 	// If we still haven't found a usable binary, try a system-installed version.
-	if ( is_file( '/usr/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/bin/' . $binary, $switch ) ) {
+	if ( ewwwio_system_binary_exists( '/usr/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/bin/' . $binary, $switch ) ) {
 		return '/usr/bin/' . $binary;
-	} elseif ( is_file( '/usr/local/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/local/bin/' . $binary, $switch ) ) {
+	} elseif ( ewwwio_system_binary_exists( '/usr/local/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/local/bin/' . $binary, $switch ) ) {
 		return '/usr/local/bin/' . $binary;
-	} elseif ( is_file( '/usr/gnu/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/gnu/bin/' . $binary, $switch ) ) {
+	} elseif ( ewwwio_system_binary_exists( '/usr/gnu/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/gnu/bin/' . $binary, $switch ) ) {
 		return '/usr/gnu/bin/' . $binary;
-	} elseif ( is_file( '/usr/syno/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/syno/bin/' . $binary, $switch ) ) { // For synology diskstation OS.
+	} elseif ( ewwwio_system_binary_exists( '/usr/syno/bin/' . $binary ) && ewww_image_optimizer_tool_found( '/usr/syno/bin/' . $binary, $switch ) ) { // For synology diskstation OS.
 		return '/usr/syno/bin/' . $binary;
 	} elseif ( ewww_image_optimizer_tool_found( $binary, $switch ) ) {
 		return $binary;
@@ -1756,7 +1753,7 @@ function ewww_image_optimizer_gifsicle_resize( $file, $dst_x, $dst_y, $src_x, $s
 	ewwwio_debug_message( "width: $dst_w" );
 	ewwwio_debug_message( "height: $dst_h" );
 
-	list( $orig_w, $orig_h ) = getimagesize( $file );
+	list( $orig_w, $orig_h ) = wp_getimagesize( $file );
 
 	$outfile = "$file.tmp";
 	// Run gifsicle.
@@ -2536,7 +2533,7 @@ function ewww_image_optimizer( $file, $gallery_type = 4, $converted = false, $ne
 					// Retrieve the data from the PNG.
 					$input = imagecreatefrompng( $file );
 					// Retrieve the dimensions of the PNG.
-					list($width, $height) = getimagesize( $file );
+					list($width, $height) = wp_getimagesize( $file );
 					// Create a new image with those dimensions.
 					$output = imagecreatetruecolor( $width, $height );
 					if ( '' === $r ) {
@@ -2917,6 +2914,8 @@ function ewww_image_optimizer( $file, $gallery_type = 4, $converted = false, $ne
 	// If their cloud api license limit has been exceeded.
 	if ( 'exceeded' === $result ) {
 		return array( false, __( 'License exceeded', 'ewww-image-optimizer' ), $converted, $original );
+	} elseif ( 'exceeded quota' === $result ) {
+		return array( false, __( 'Soft Quota Reached', 'ewww-image-optimizer' ), $converted, $original );
 	}
 	if ( ! empty( $new_size ) ) {
 		// Set correct file permissions.
@@ -2973,6 +2972,10 @@ function ewww_image_optimizer_webp_create( $file, $orig_size, $type, $tool, $rec
 	} elseif ( 'image/png' === $type && ewww_image_optimizer_is_animated_png( $file ) ) {
 		ewwwio_debug_message( 'APNG found, WebP not possible' );
 		return esc_html__( 'APNG cannot be converted to WebP.', 'ewww-image-optimizer' );
+	}
+	list( $width, $height ) = wp_getimagesize( $file );
+	if ( $width > 16383 || $height > 16383 ) {
+		return esc_html__( 'Image dimensions too large for WebP conversion.', 'ewww-image-optimizer' );
 	}
 	if ( empty( $tool ) || 'image/gif' === $type ) {
 		ewww_image_optimizer_cloud_optimizer( $file, $type, false, $webpfile, 'image/webp' );

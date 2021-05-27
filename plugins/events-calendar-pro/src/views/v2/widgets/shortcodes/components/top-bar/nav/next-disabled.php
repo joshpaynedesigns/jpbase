@@ -3,13 +3,13 @@
  * View: Top Bar Navigation Next Disabled Template
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-pro/v2/widgets/widget-month/components/top-bar/nav/next-disabled.php
+ * [your-theme]/tribe/events-pro/v2/widgets/shortcodes/components/top-bar/nav/next-disabled.php
  *
  * See more documentation about our views templating system.
  *
  * @link http://evnt.is/1aiy
  *
- * @version 5.3.0
+ * @version TBD
  *
  */
 ?>
