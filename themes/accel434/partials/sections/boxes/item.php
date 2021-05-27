@@ -22,10 +22,10 @@
 					<div class="box tac box-item">
 				<?php endif; ?>
 
-					<h5 class="box-title"><?php echo $box_title ?></h5>
 					<?php if ( ! empty( $box_icon ) ) : ?>
 						<img class="box-icon" src="<?php echo $box_icon ?>" alt="<?php echo $box_title ?>">
 					<?php endif; ?>
+					<h5 class="box-title"><?php echo $box_title ?></h5>
 					<?php if ( ! empty( $box_text ) ) : ?>
 						<p class="box-text"><?php echo $box_text ?></p>
 					<?php endif; ?>
