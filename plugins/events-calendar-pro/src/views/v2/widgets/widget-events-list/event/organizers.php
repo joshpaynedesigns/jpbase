@@ -25,7 +25,7 @@ if ( empty( $count ) || empty( $display['organizer'] ) ) {
 <div class="tribe-events-widget-events-list__event-organizers">
 
 	<?php foreach ( $event->organizers as $index => $organizer ) : ?>
-		<div class="tribe-events-widget-events-list__event-organizer tribe-common-b2">
+		<div class="tribe-common-b2 tribe-events-widget-events-list__event-organizer">
 
 			<div class="tribe-events-widget-events-list__event-organizer-title-wrapper">
 				<?php if ( 0 === $index ) : ?>
@@ -50,7 +50,7 @@ if ( empty( $count ) || empty( $display['organizer'] ) ) {
 
 				<a
 					href="<?php echo esc_url( $organizer->permalink ); ?>"
-					class="tribe-events-widget-events-list__event-organizer-title-link tribe-common-b2--bold tribe-common-anchor-thin"
+					class="tribe-common-b2--bold tribe-common-anchor-thin tribe-events-widget-events-list__event-organizer-title-link"
 				>
 					<?php echo wp_kses_post( $organizer->post_title ); ?>
 				</a>

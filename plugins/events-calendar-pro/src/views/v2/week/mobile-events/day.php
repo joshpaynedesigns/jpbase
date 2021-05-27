@@ -71,5 +71,5 @@ if (
 	 	}
 	 }
 	?>
-
+	<?php $this->template( 'week/mobile-events/day/more-events', ['more_events' => $day['more_events'], 'more_url' => $day['day_url']] ); ?>
 </div>

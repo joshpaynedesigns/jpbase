@@ -899,7 +899,7 @@ function ewww_image_optimizer_should_resize( $file, $media = false ) {
 		$maxwidth  = ewww_image_optimizer_get_option( 'ewww_image_optimizer_maxmediawidth' );
 		$maxheight = ewww_image_optimizer_get_option( 'ewww_image_optimizer_maxmediaheight' );
 	}
-	list( $oldwidth, $oldheight ) = getimagesize( $file );
+	list( $oldwidth, $oldheight ) = wp_getimagesize( $file );
 	if ( ( $maxwidth && $oldwidth > $maxwidth ) || ( $maxheight && $oldheight > $maxheight ) ) {
 		ewwwio_debug_message( "$file ($oldwidth x $oldheight) larger than $maxwidth x $maxheight" );
 		return true;
@@ -1128,7 +1128,7 @@ function ewww_image_optimizer_media_scan( $hook = '' ) {
 				ewwwio_debug_message( "missing mime for $selected_id" );
 			}
 
-			if ( ! in_array( $mime, $enabled_types, true ) ) {
+			if ( ! in_array( $mime, $enabled_types, true ) && empty( $ewww_webp_only ) ) {
 				$skipped_ids[] = $selected_id;
 				continue;
 			}
@@ -1157,7 +1157,7 @@ function ewww_image_optimizer_media_scan( $hook = '' ) {
 					$s3_uploads = S3_Uploads::get_instance();
 					remove_filter( 'upload_dir', array( $s3_uploads, 'filter_upload_dir' ) );
 				}
-				if ( ewww_image_optimizer_stream_wrapped( $file_path ) ) {
+				if ( ewww_image_optimizer_stream_wrapped( $file_path ) || 0 === strpos( $file_path, 'http' ) ) {
 					$file_path = get_attached_file( $selected_id, true );
 				}
 				if ( class_exists( 'S3_Uploads' ) && method_exists( 'S3_Uploads', 'filter_upload_dir' ) ) {
@@ -1179,6 +1179,7 @@ function ewww_image_optimizer_media_scan( $hook = '' ) {
 			// Early check for bypass based on full-size path.
 			if ( apply_filters( 'ewww_image_optimizer_bypass', false, $file_path ) === true ) {
 				ewwwio_debug_message( "skipping $file_path as instructed" );
+				$skipped_ids[] = $selected_id;
 				ewww_image_optimizer_debug_log();
 				continue;
 			}
@@ -1914,9 +1915,15 @@ function ewww_image_optimizer_bulk_loop( $hook = '', $delay = 0 ) {
 		list( $file, $msg, $converted, $original ) = ewww_image_optimizer( $image->file, 1, false, false, 'full' === $image->resize );
 		// Gotta make sure we don't delete a pending record if the license is exceeded, so the license check goes first.
 		if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' ) ) {
-			$ewww_status = get_transient( 'ewww_image_optimizer_cloud_status' );
-			if ( ! empty( $ewww_status ) && preg_match( '/exceeded/', $ewww_status ) ) {
+			if ( 'exceeded' === get_transient( 'ewww_image_optimizer_cloud_status' ) ) {
 				$output['error'] = '<a href="https://ewww.io/buy-credits/" target="_blank">' . esc_html__( 'License Exceeded', 'ewww-image-optimizer' ) . '</a>';
+				delete_transient( 'ewww_image_optimizer_bulk_counter_measures' );
+				delete_transient( 'ewww_image_optimizer_bulk_current_image' );
+				ewwwio_ob_clean();
+				die( wp_json_encode( $output ) );
+			}
+			if ( 'exceeded quota' === get_transient( 'ewww_image_optimizer_cloud_status' ) ) {
+				$output['error'] = '<a href="https://docs.ewww.io/article/101-soft-quotas-on-unlimited-plans" data-beacon-article="608ddf128996210f18bd95d3" target="_blank">' . esc_html__( 'Soft quota reached, contact us for more', 'ewww-image-optimizer' ) . '</a>';
 				delete_transient( 'ewww_image_optimizer_bulk_counter_measures' );
 				delete_transient( 'ewww_image_optimizer_bulk_current_image' );
 				ewwwio_ob_clean();

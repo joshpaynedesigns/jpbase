@@ -80,4 +80,5 @@ return array(
     'Tribe\\Events\\Views\\V2\\Widgets\\Service_Provider' => $baseDir . '/src/Tribe/Views/V2/Widgets/Service_Provider.php',
     'Tribe\\Events\\Views\\V2\\Widgets\\Widget_Abstract' => $baseDir . '/src/Tribe/Views/V2/Widgets/Widget_Abstract.php',
     'Tribe\\Events\\Views\\V2\\Widgets\\Widget_List' => $baseDir . '/src/Tribe/Views/V2/Widgets/Widget_List.php',
+    'Tribe\\Events\\Views\\V2\\iCalendar\\Request' => $baseDir . '/src/Tribe/Views/V2/iCalendar/Request.php',
 );

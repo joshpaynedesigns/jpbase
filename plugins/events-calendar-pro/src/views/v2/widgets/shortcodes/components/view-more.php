@@ -1,9 +1,9 @@
 <?php
 /**
- * Widget: Month - View More Link
+ * Widget: Shortcode - View More Link
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-pro/v2/widgets/widget-month/view-more.php
+ * [your-theme]/tribe/events-pro/v2/widgets/shortcodes/components/view-more.php
  *
  * See more documentation about our views templating system.
  *
@@ -17,13 +17,13 @@
  */
 
 if ( empty( $view_more_link ) ) {
-	//return;
+	return;
 }
 ?>
-<div class="tribe-common-b1 tribe-common-b2--min-medium tribe-events-widget-month__view-more">
+<div class="tribe-common-b1 tribe-common-b2--min-medium tribe-events-widget-<?php echo esc_attr( $widget->get_slug() ); ?>__view-more">
 	<a
 		href="<?php echo esc_url( $view_more_link ); ?>"
-		class="tribe-common-anchor-thin tribe-events-widget-month__view-more-link"
+		class="tribe-common-anchor-thin tribe-events-widget-<?php echo esc_attr( $widget->get_slug() ); ?>__view-more-link"
 		title="<?php echo esc_attr( $view_more_title ); ?>"
 	>
 		<?php echo esc_html( $view_more_text ); ?>
