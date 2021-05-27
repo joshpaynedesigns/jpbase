@@ -2886,10 +2886,12 @@ Events Single
       -webkit-transform: scale(1.05);
               transform: scale(1.05); } }
   .boxes-section .box .box-icon {
-    height: 60px; }
+    height: 60px;
+    margin-bottom: 1em; }
   .boxes-section .box .box-title {
     color: #fff;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    margin-bottom: 0; }
   .boxes-section .box .box-text {
     color: #fff;
     margin-top: 0.5em;
