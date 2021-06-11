@@ -174,6 +174,11 @@ Events Single
 			padding: 0;
 			max-width: 1200px;
 			width: 90%;
+			margin-bottom: 4em;
+
+			@include media( $large-screen-up ) {
+				margin-bottom: 6em;
+			}
 			
 			.tribe-events-single-event-title {
 				margin: 0;
@@ -204,6 +209,7 @@ Events Single
 			margin-bottom: 0;
 			background-color: #eee;
 			padding-left: 30px;
+			position: relative;
 
 			dt {
 				margin-bottom: 0;
@@ -221,7 +227,11 @@ Events Single
 		.tribe-events-related-events-title {
 			border: none;
 			padding-top: 0;
-			margin-top: 3em;
+			margin-top: 2em;
+
+			@include media( $large-screen-up ) {
+				margin-top: 3em;
+			}
 		}
 
 		ul.tribe-related-events {
@@ -230,6 +240,6 @@ Events Single
 	}
 
 	#flexible-section-repeater .page-flexible-section:first-child {
-		margin-top: 4em !important;
+		margin-top: 0 !important;
 	}
 }
