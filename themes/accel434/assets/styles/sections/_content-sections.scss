@@ -16,7 +16,8 @@
         }
 
         .l-content,
-        .r-content {
+        .r-content,
+        .third-content {
             @include span-columns(12);
             @include omega();
         }
