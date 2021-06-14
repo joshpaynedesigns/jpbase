@@ -2596,14 +2596,16 @@ Events Single
   width: 100%; }
 
 #flexible-section-repeater .content-section .l-content,
-#flexible-section-repeater .content-section .r-content {
+#flexible-section-repeater .content-section .r-content,
+#flexible-section-repeater .content-section .third-content {
   float: left;
   display: block;
   margin-right: 2.35765%;
   width: 100%;
   margin-right: 0; }
   #flexible-section-repeater .content-section .l-content:last-child,
-  #flexible-section-repeater .content-section .r-content:last-child {
+  #flexible-section-repeater .content-section .r-content:last-child,
+  #flexible-section-repeater .content-section .third-content:last-child {
     margin-right: 0; }
 
 #flexible-section-repeater .content-section .l-content,
