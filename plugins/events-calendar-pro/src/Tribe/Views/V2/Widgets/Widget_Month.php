@@ -15,7 +15,6 @@ use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
 use Tribe\Events\Views\V2\Template as View_Template;
 
-
 /**
  * Class for the Month Widget.
  *
@@ -211,7 +210,7 @@ class Widget_Month extends Widget_Abstract {
 
 		$new_vars = [
 			'now'          => $now->format( 'F Y' ),
-			'request_date' => $request_date->format( 'F Y' ),
+			'request_date' => $request_date->format_i18n( 'F Y' ),
 			'prev_url'     => $template->get( 'prev_url' ),
 			'next_url'     => $template->get( 'next_url' )
 		];
