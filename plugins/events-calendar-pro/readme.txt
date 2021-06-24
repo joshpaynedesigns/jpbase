@@ -4,7 +4,7 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 4.9.16
-Stable tag: 5.7.0
+Stable tag: 5.7.1
 Tested up to: 5.7.2
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -207,6 +207,13 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= 5.7.1 [2021-06-23] =
+
+* Fix - Ensure Month Widget translates date in navigation. [ECP-851]
+* Fix - Ensure month name translates in the event card in Map view. [ECP-875]
+* Tweak - Remove incorrect aria-label from icons, pass icon label where needed. [TEC-3396]
+* Language - 0 new strings added, 9 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.7.0] 2021-05-27 =
 
