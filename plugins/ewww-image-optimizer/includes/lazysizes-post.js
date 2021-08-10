@@ -1,4 +1,3 @@
-lazysizesWebP('alpha', lazySizes.init);
 function shouldAutoScale(target){
 	if (eio_lazy_vars.skip_autoscale == 1) {
 		console.log('autoscale disabled globally');
@@ -78,7 +77,7 @@ function constrainSrc(url,objectWidth,objectHeight,objectType){
 			}
 			if('bg-cover'===objectType || 'img-crop'===objectType){
 				console.log('for ' + objectType);
-				return url + '?resize=' + objectWidth + ',' + objectHeight;
+				return url + '&resize=' + objectWidth + ',' + objectHeight;
 			}
 			if(objectHeight>objectWidth){
 				console.log('fallback height>width, using h param');
@@ -191,3 +190,4 @@ document.addEventListener('lazybeforeunveil', function(e){
 		target.setAttribute('data-src', webpsrc);
         }
 });
+/* lazySizes.init(); */

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
+class ComposerStaticInit9569cede6748b69e1da9be4a199a2737
 {
     public static $prefixLengthsPsr4 = array (
         'C' => 
@@ -553,6 +553,7 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexation_Action_Interface' => __DIR__ . '/../..' . '/src/deprecated/src/actions/indexation/indexation-action-interface.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Post_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/deprecated/src/actions/indexation/post-link-indexing-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Term_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/deprecated/src/actions/indexation/term-link-indexing-action.php',
+        'Yoast\\WP\\SEO\\Actions\\Indexing\\Abstract_Indexing_Action' => __DIR__ . '/../..' . '/src/actions/indexing/abstract-indexing-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Abstract_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/actions/indexing/abstract-link-indexing-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Indexable_General_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexing/indexable-general-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Indexable_Indexing_Complete_Action' => __DIR__ . '/../..' . '/src/actions/indexing/indexable-indexing-complete-action.php',
@@ -563,6 +564,7 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Indexation_Action_Interface' => __DIR__ . '/../..' . '/src/actions/indexing/indexation-action-interface.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Indexing_Complete_Action' => __DIR__ . '/../..' . '/src/actions/indexing/indexing-complete-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Indexing_Prepare_Action' => __DIR__ . '/../..' . '/src/actions/indexing/indexing-prepare-action.php',
+        'Yoast\\WP\\SEO\\Actions\\Indexing\\Limited_Indexing_Action_Interface' => __DIR__ . '/../..' . '/src/actions/indexing/limited-indexing-action-interface.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Post_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/actions/indexing/post-link-indexing-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexing\\Term_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/actions/indexing/term-link-indexing-action.php',
         'Yoast\\WP\\SEO\\Actions\\SEMrush\\SEMrush_Login_Action' => __DIR__ . '/../..' . '/src/actions/semrush/semrush-login-action.php',
@@ -600,7 +602,9 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Conditionals\\News_Conditional' => __DIR__ . '/../..' . '/src/conditionals/news-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\No_Conditionals' => __DIR__ . '/../..' . '/src/conditionals/no-conditionals-trait.php',
         'Yoast\\WP\\SEO\\Conditionals\\No_Tool_Selected_Conditional' => __DIR__ . '/../..' . '/src/conditionals/no-tool-selected-conditional.php',
+        'Yoast\\WP\\SEO\\Conditionals\\Norwegian_Readability_Conditional' => __DIR__ . '/../..' . '/src/deprecated/src/conditionals/norwegian-readability-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\Open_Graph_Conditional' => __DIR__ . '/../..' . '/src/conditionals/open-graph-conditional.php',
+        'Yoast\\WP\\SEO\\Conditionals\\Premium_Inactive_Conditional' => __DIR__ . '/../..' . '/src/conditionals/premium-inactive-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\Primary_Category_Conditional' => __DIR__ . '/../..' . '/src/conditionals/primary-category-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\SEMrush_Enabled_Conditional' => __DIR__ . '/../..' . '/src/conditionals/semrush-enabled-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\Schema_Blocks_Conditional' => __DIR__ . '/../..' . '/src/conditionals/schema-blocks-conditional.php',
@@ -722,9 +726,11 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Helpers\\Url_Helper' => __DIR__ . '/../..' . '/src/helpers/url-helper.php',
         'Yoast\\WP\\SEO\\Helpers\\User_Helper' => __DIR__ . '/../..' . '/src/helpers/user-helper.php',
         'Yoast\\WP\\SEO\\Helpers\\Woocommerce_Helper' => __DIR__ . '/../..' . '/src/helpers/woocommerce-helper.php',
+        'Yoast\\WP\\SEO\\Helpers\\Wordpress_Helper' => __DIR__ . '/../..' . '/src/helpers/wordpress-helper.php',
         'Yoast\\WP\\SEO\\Initializers\\Disable_Core_Sitemaps' => __DIR__ . '/../..' . '/src/initializers/disable-core-sitemaps.php',
         'Yoast\\WP\\SEO\\Initializers\\Initializer_Interface' => __DIR__ . '/../..' . '/src/initializers/initializer-interface.php',
         'Yoast\\WP\\SEO\\Initializers\\Migration_Runner' => __DIR__ . '/../..' . '/src/initializers/migration-runner.php',
+        'Yoast\\WP\\SEO\\Integrations\\Abstract_Exclude_Post_Type' => __DIR__ . '/../..' . '/src/integrations/abstract-exclude-post-type.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Addon_Installation\\Dialog_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/addon-installation/dialog-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Addon_Installation\\Installation_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/addon-installation/installation-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Admin_Columns_Cache_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/admin-columns-cache-integration.php',
@@ -739,17 +745,21 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Link_Count_Columns_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/link-count-columns-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Link_Count_Notification_Integration' => __DIR__ . '/../..' . '/src/deprecated/src/integrations/admin/link-count-notification-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Link_Count_Tools_Integration' => __DIR__ . '/../..' . '/src/deprecated/src/integrations/admin/link-count-tools-integration.php',
+        'Yoast\\WP\\SEO\\Integrations\\Admin\\Menu_Badge_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/menu-badge-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Migration_Error_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/migration-error-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Social_Templates_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/social-templates-integration.php',
+        'Yoast\\WP\\SEO\\Integrations\\Admin\\Workouts_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/workouts-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Alerts\\Abstract_Dismissable_Alert' => __DIR__ . '/../..' . '/src/integrations/alerts/abstract-dismissable-alert.php',
         'Yoast\\WP\\SEO\\Integrations\\Blocks\\Breadcrumbs_Block' => __DIR__ . '/../..' . '/src/integrations/blocks/breadcrumbs-block.php',
         'Yoast\\WP\\SEO\\Integrations\\Blocks\\Dynamic_Block' => __DIR__ . '/../..' . '/src/integrations/blocks/abstract-dynamic-block.php',
         'Yoast\\WP\\SEO\\Integrations\\Blocks\\Internal_Linking_Category' => __DIR__ . '/../..' . '/src/integrations/blocks/block-categories.php',
         'Yoast\\WP\\SEO\\Integrations\\Blocks\\Structured_Data_Blocks' => __DIR__ . '/../..' . '/src/integrations/blocks/structured-data-blocks.php',
         'Yoast\\WP\\SEO\\Integrations\\Breadcrumbs_Integration' => __DIR__ . '/../..' . '/src/integrations/breadcrumbs-integration.php',
+        'Yoast\\WP\\SEO\\Integrations\\Cleanup_Integration' => __DIR__ . '/../..' . '/src/integrations/cleanup-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Duplicate_Post_Integration' => __DIR__ . '/../..' . '/src/integrations/duplicate-post-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Estimated_Reading_Time' => __DIR__ . '/../..' . '/src/integrations/estimated-reading-time.php',
         'Yoast\\WP\\SEO\\Integrations\\Exclude_Oembed_Cache_Post_Type' => __DIR__ . '/../..' . '/src/integrations/exclude-oembed-cache-post-type.php',
+        'Yoast\\WP\\SEO\\Integrations\\Feature_Flag_Integration' => __DIR__ . '/../..' . '/src/integrations/feature-flag-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Front_End\\Backwards_Compatibility' => __DIR__ . '/../..' . '/src/integrations/front-end/backwards-compatibility.php',
         'Yoast\\WP\\SEO\\Integrations\\Front_End\\Category_Term_Description' => __DIR__ . '/../..' . '/src/integrations/front-end/category-term-description.php',
         'Yoast\\WP\\SEO\\Integrations\\Front_End\\Comment_Link_Fixer' => __DIR__ . '/../..' . '/src/integrations/front-end/comment-link-fixer.php',
@@ -769,7 +779,9 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\AMP' => __DIR__ . '/../..' . '/src/integrations/third-party/amp.php',
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\BbPress' => __DIR__ . '/../..' . '/src/integrations/third-party/bbpress.php',
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Elementor' => __DIR__ . '/../..' . '/src/integrations/third-party/elementor.php',
-        'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Elementor_Exclude_Post_Types' => __DIR__ . '/../..' . '/src/integrations/third-party/elementor-exclude-post-types.php',
+        'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Elementor_Exclude_Post_Types' => __DIR__ . '/../..' . '/src/deprecated/src/integrations/third-party/elementor.php',
+        'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Exclude_Elementor_Post_Types' => __DIR__ . '/../..' . '/src/integrations/third-party/exclude-elementor-post-types.php',
+        'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Exclude_WooCommerce_Post_Types' => __DIR__ . '/../..' . '/src/integrations/third-party/exclude-woocommerce-post-types.php',
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\Jetpack' => __DIR__ . '/../..' . '/src/integrations/third-party/jetpack.php',
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\The_Events_Calendar' => __DIR__ . '/../..' . '/src/integrations/third-party/the-events-calendar.php',
         'Yoast\\WP\\SEO\\Integrations\\Third_Party\\W3_Total_Cache' => __DIR__ . '/../..' . '/src/integrations/third-party/w3-total-cache.php',
@@ -834,6 +846,7 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexation_Modal_Presenter' => __DIR__ . '/../..' . '/src/deprecated/src/presenters/admin/indexation-modal-presenter.php',
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexation_Permalink_Warning_Presenter' => __DIR__ . '/../..' . '/src/deprecated/src/presenters/admin/indexation-permalink-warning-presenter.php',
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexation_Warning_Presenter' => __DIR__ . '/../..' . '/src/deprecated/src/presenters/admin/indexation-warning-presenter.php',
+        'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexing_Error_Presenter' => __DIR__ . '/../..' . '/src/presenters/admin/indexing-error-presenter.php',
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexing_Failed_Notification_Presenter' => __DIR__ . '/../..' . '/src/presenters/admin/indexing-failed-notification-presenter.php',
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexing_List_Item_Presenter' => __DIR__ . '/../..' . '/src/presenters/admin/indexing-list-item-presenter.php',
         'Yoast\\WP\\SEO\\Presenters\\Admin\\Indexing_Notification_Presenter' => __DIR__ . '/../..' . '/src/presenters/admin/indexing-notification-presenter.php',
@@ -933,9 +946,9 @@ class ComposerStaticInitf1986b5863811e83ef28f9d662745e52
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf1986b5863811e83ef28f9d662745e52::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf1986b5863811e83ef28f9d662745e52::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf1986b5863811e83ef28f9d662745e52::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9569cede6748b69e1da9be4a199a2737::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9569cede6748b69e1da9be4a199a2737::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9569cede6748b69e1da9be4a199a2737::$classMap;
 
         }, null, ClassLoader::class);
     }

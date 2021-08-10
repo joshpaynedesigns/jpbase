@@ -557,6 +557,14 @@ class Tribe_Events extends Shortcode_Abstract {
 			return;
 		}
 
+		/*
+		 * Make sure we aren't triggered before we expect to be.
+		 * If this isn't true, our query info will be suspect and our checks will fail.
+		 */
+		if ( ! did_action( 'wp_print_scripts' ) ) {
+			return;
+		}
+
 		/**
 		 * Triggers an action to allow other plugins or extensions to load assets.
 		 *
@@ -654,7 +662,7 @@ class Tribe_Events extends Shortcode_Abstract {
 
 		if ( $compatibility_required ) {
 			$container       = [ 'tribe-compatibility-container' ];
-			$classes         = array_merge( $container, $theme_compatibility->get_body_classes() );
+			$classes         = array_merge( $container, $theme_compatibility::get_compatibility_classes() );
 			$element_classes = new Element_Classes( $classes );
 			$html            .= '<div ' . $element_classes->get_attribute() . '>';
 		}

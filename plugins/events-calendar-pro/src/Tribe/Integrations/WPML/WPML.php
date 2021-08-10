@@ -110,7 +110,7 @@ class Tribe__Events__Pro__Integrations__WPML__WPML extends Tribe__Events__Integr
 	protected function hook_filters() {
 		$filters = Tribe__Events__Pro__Integrations__WPML__Filters::instance();
 
-		// Modern Tribe filters
+		// The Events Calendar filters
 		add_filter( 'tribe_events_pre_get_posts', array( $filters, 'filter_tribe_events_pre_get_posts' ), 10, 1 );
 		add_filter( 'tribe_events_pro_geocode_rewrite_slugs', array( $filters, 'filter_tribe_events_pro_geocode_rewrite_slugs' ) );
 		add_filter( 'tribe_events_rewrite_i18n_domains', array( $filters, 'filter_tribe_events_rewrite_i18n_domains' ) );

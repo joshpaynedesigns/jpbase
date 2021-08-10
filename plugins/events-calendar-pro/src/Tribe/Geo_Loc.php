@@ -5,7 +5,7 @@
 *
 *
 * Created by:  Daniel Dvorkin
-* For:         Modern Tribe Inc. ( https://evnt.is/20 )
+* For:         The Events Calendar. ( https://evnt.is/20 )
 *
 * Date: 		9 / 18 / 12 12:31 PM
 *-------------------------------------------------------------------------------------*/

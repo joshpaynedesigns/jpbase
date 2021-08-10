@@ -196,6 +196,10 @@ class Widget_Featured_Venue extends Widget_Abstract {
 	protected function args_to_context( array $arguments, Context $context ) {
 		$alterations = parent::args_to_context( $arguments, $context );
 
+		// Pagination to 1.
+		$alterations['page']  = 1;
+		$alterations['paged'] = 1;
+
 		// Add venue id
 		$alterations['venue'] = (int) absint( $arguments['venue_ID'] );
 

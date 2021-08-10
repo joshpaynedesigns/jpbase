@@ -106,38 +106,56 @@ $generated_i18n_strings = array(
 	// Reference: packages/js/src/components/AreaChartTable.js:25
 	__( 'The number of headers and header labels don\'t match.', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/CollapsibleCornerstone.js:22
+	// Reference: packages/js/src/components/CollapsibleCornerstone.js:23
 	__( 'Cornerstone content', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/CollapsibleCornerstone.js:25
+	// Reference: packages/js/src/components/CollapsibleCornerstone.js:26
 	__( 'Cornerstone content should be the most important and extensive articles on your site.', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/CollapsibleCornerstone.js:27
+	// Reference: packages/js/src/components/CollapsibleCornerstone.js:28
 	__( 'Learn more about Cornerstone Content.', 'wordpress-seo' ),
 
 	// Reference: packages/js/src/components/CornerstoneToggle.js:26
 	__( 'Mark as cornerstone content', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:234
+	// Reference: packages/js/src/components/Indexation.js:253
 	__( 'This feature includes and replaces the Text Link Counter and Internal Linking Analysis', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:263
+	// Reference: packages/js/src/components/Indexation.js:282
 	__( 'Stop SEO data optimization', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:279
+	// Reference: packages/js/src/components/Indexation.js:298
 	__( 'Start SEO data optimization', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:283
+	// Reference: packages/js/src/components/Indexation.js:302
 	__( 'SEO data optimization is disabled for non-production environments.', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:302
+	// Reference: packages/js/src/components/Indexation.js:321
 	__( 'Optimizing SEO data... This may take a while.', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/Indexation.js:314
-	__( 'Oops, something has gone wrong and we couldn\'t complete the optimization of your SEO data. Please click the button again to re-start the process.', 'wordpress-seo' ),
-
-	// Reference: packages/js/src/components/Indexation.js:349
+	// Reference: packages/js/src/components/Indexation.js:368
 	__( 'SEO data optimization complete', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:89
+	__( 'Error details', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:91
+	__( 'Request URL', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:92
+	__( 'Request method', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:93
+	__( 'Status code', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:94
+	__( 'Error message', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:95
+	__( 'Response', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/IndexingError.js:96
+	__( 'Error stack trace', 'wordpress-seo' ),
 
 	// Reference: packages/js/src/components/LocalSEOUpsell.js:76
 	__( 'Serving local customers?', 'wordpress-seo' ),
@@ -212,29 +230,32 @@ $generated_i18n_strings = array(
 	_n_noop( 'Upon saving, this setting will apply to all of your %1$s. %1$s that are manually configured will be left untouched.', 'Upon saving, these settings will apply to all of your %1$s. %1$s that are manually configured will be left untouched.', 'wordpress-seo' ),
 
 	// Reference: packages/js/src/components/SchemaTab.js:103
+	__( 'Read more about Schema.', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/SchemaTab.js:130
+	__( 'What type of page or content is this?', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/SchemaTab.js:132
+	__( 'Learn more about page or content types', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/SchemaTab.js:137
+	// Reference: packages/js/src/containers/SchemaTab.js:54
+	__( 'Page type', 'wordpress-seo' ),
+
+	// Reference: packages/js/src/components/SchemaTab.js:144
 	// Reference: packages/js/src/containers/SchemaTab.js:53
 	__( 'Article type', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/SchemaTab.js:29
+	// Reference: packages/js/src/components/SchemaTab.js:31
 	/* %1$s expands to the plural name of the current post type, %2$s expands to the current site wide default. */
 	__( 'Default for %1$s (%2$s)', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/SchemaTab.js:48
+	// Reference: packages/js/src/components/SchemaTab.js:50
 	/* %1$s expands to the plural name of the current post type, %2$s and %3$s expand to a link to the Search Appearance Settings page */
 	__( 'You can change the default type for %1$s in your %2$sSearch Appearance Settings%3$s.', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/SchemaTab.js:85
+	// Reference: packages/js/src/components/SchemaTab.js:82
 	__( 'Learn more about structured data with Schema.org', 'wordpress-seo' ),
-
-	// Reference: packages/js/src/components/SchemaTab.js:89
-	__( 'What type of page or content is this?', 'wordpress-seo' ),
-
-	// Reference: packages/js/src/components/SchemaTab.js:91
-	__( 'Learn more about page or content types', 'wordpress-seo' ),
-
-	// Reference: packages/js/src/components/SchemaTab.js:96
-	// Reference: packages/js/src/containers/SchemaTab.js:54
-	__( 'Page type', 'wordpress-seo' ),
 
 	// Reference: packages/js/src/components/SettingsReplacementVariableEditor.js:39
 	__( 'Modify your meta description by editing it right here', 'wordpress-seo' ),
@@ -308,12 +329,12 @@ $generated_i18n_strings = array(
 	// Reference: packages/js/src/components/contentAnalysis/SeoAnalysis.js:74
 	__( 'Would you like to add keyphrase synonyms?', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/fills/MetaboxFill.js:47
+	// Reference: packages/js/src/components/fills/MetaboxFill.js:50
 	// Reference: packages/js/src/components/modals/editorModals/GooglePreviewModal.js:16
 	// Reference: packages/js/src/elementor/components/modals/editorModals/GooglePreviewModal.js:16
 	__( 'Google preview', 'wordpress-seo' ),
 
-	// Reference: packages/js/src/components/fills/MetaboxFill.js:65
+	// Reference: packages/js/src/components/fills/MetaboxFill.js:68
 	// Reference: packages/js/src/components/fills/SidebarFill.js:63
 	// Reference: packages/js/src/elementor/components/fills/ElementorFill.js:76
 	__( 'Advanced', 'wordpress-seo' ),
