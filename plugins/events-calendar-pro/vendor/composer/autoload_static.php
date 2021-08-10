@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita072b4f846946bc0504f0b2ef4350302
+class ComposerStaticInite3f5cdba0e41edb931f24123cd89fd42
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -43,6 +43,9 @@ class ComposerStaticInita072b4f846946bc0504f0b2ef4350302
         'Tribe\\Events\\Pro\\Service_Providers\\Customizer' => __DIR__ . '/../..' . '/src/Tribe/Service_Providers/Customizer.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Assets.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Customizer' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Customizer.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Customizer/Hooks.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Section\\Events_Bar' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Customizer/Section/Events_Bar.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Customizer/Service_Provider.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Base_Handler' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Geo_Loc/Base_Handler.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Geocoding_Handler' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Geo_Loc/Geocoding_Handler.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Handler_Interface' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Geo_Loc/Handler_Interface.php',
@@ -101,9 +104,9 @@ class ComposerStaticInita072b4f846946bc0504f0b2ef4350302
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita072b4f846946bc0504f0b2ef4350302::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita072b4f846946bc0504f0b2ef4350302::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita072b4f846946bc0504f0b2ef4350302::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite3f5cdba0e41edb931f24123cd89fd42::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite3f5cdba0e41edb931f24123cd89fd42::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite3f5cdba0e41edb931f24123cd89fd42::$classMap;
 
         }, null, ClassLoader::class);
     }

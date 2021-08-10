@@ -227,6 +227,10 @@ class Widget_Advanced_List {
 		/* @var Taxonomy_Filter $taxonomy_filters */
 		$taxonomy_filters = tribe( 'pro.views.v2.widgets.taxonomy' );
 
+		// Pagination to 1.
+		$alterations['page']  = 1;
+		$alterations['paged'] = 1;
+
 		$alterations['event_display']     = 'list';
 		$alterations['view']              = 'list';
 

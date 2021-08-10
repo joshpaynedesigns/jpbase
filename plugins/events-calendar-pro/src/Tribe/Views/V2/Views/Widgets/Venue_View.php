@@ -43,9 +43,16 @@ class Venue_View extends Widget_View {
 		$context            = null !== $context ? $context : $this->context;
 		$args               = parent::setup_repository_args( $context );
 		$args['venue']      = $context->get( 'venue', false );
-		$args['ends_after'] = 'now';
+		$args['ends_after'] = $context->get( 'now', 'now' );
 
 		return $args;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_view_more_text() {
+		return esc_html__( 'View More', 'tribe-events-calendar-pro');
 	}
 
 	/**

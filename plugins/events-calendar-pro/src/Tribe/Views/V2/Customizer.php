@@ -43,7 +43,9 @@ class Customizer {
 	 *
 	 * @return string The filtered CSS template.
 	 */
-	public function filter_global_elements_css_template( $css_template, $section, $customizer ) {
+	public function filter_global_elements_css_template( $css_template, $section ) {
+		$customizer = tribe( 'customizer' );
+
 		// These allow us to continue to _not_ target the shortcode.
 		$apply_to_shortcode = apply_filters( 'tribe_customizer_should_print_shortcode_customizer_styles', false );
 		$tribe_events = $apply_to_shortcode ? '.tribe-events' : '.tribe-events:not( .tribe-events-view--shortcode )';
@@ -86,10 +88,17 @@ class Customizer {
 				.tribe-theme-enfold#top .tribe-events-pro .tribe-events-pro-photo__event-title-link,
 				.tribe-theme-enfold#top .tribe-events-pro .tribe-events-pro-map__event-tooltip-title-link,
 				.tribe-theme-enfold#top .tribe-events-pro .tribe-events-pro-week-grid__event-tooltip-title-link,
-				.tribe-theme-enfold#top .tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link {
+				.tribe-theme-enfold#top .tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:active,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:hover,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:focus {
 					color: <%= global_elements.event_title_color %>;
 				}
+			';
 
+			// Event Title overrides. - Link Underlines.
+			$css_template .= '
 				.tribe-events-pro .tribe-events-pro-photo__event-title-link:active,
 				.tribe-events-pro .tribe-events-pro-photo__event-title-link:hover,
 				.tribe-events-pro .tribe-events-pro-photo__event-title-link:focus,
@@ -101,24 +110,36 @@ class Customizer {
 				.tribe-events-pro .tribe-events-pro-week-grid__event-tooltip-title-link:focus,
 				.tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link:active,
 				.tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link:hover,
-				.tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link:focus {
+				.tribe-events-pro .tribe-events-pro-week-mobile-events__event-title-link:focus,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:active,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:hover,
+				.tribe-events-pro .tribe-events-pro-summary__event-title-link:focus {
 					border-color: <%= global_elements.event_title_color %>;
 				}
 			';
 		}
 
 		if ( $customizer->has_option( $section->ID, 'event_date_time_color' ) ) {
+			$color = $section->get_option('event_date_time_color');
+			$date_color     = new \Tribe__Utils__Color( $color );
+			$date_color_rgb = $date_color::hexToRgb( $color );
+			$date_css_rgb   = $date_color_rgb['R'] . ',' . $date_color_rgb['G'] . ',' . $date_color_rgb['B'];
+
 			// Event Date Time overrides.
-			$css_template .= '
+			$css_template .= "
 				.tribe-events-pro .tribe-events-pro-photo__event-datetime,
 				.tribe-events-pro .tribe-events-pro-map__event-datetime-wrapper,
 				.tribe-events-pro .tribe-events-pro-map__event-tooltip-datetime-wrapper,
+				.tribe-events-pro .tribe-events-pro-summary__event-datetime-wrapper {
+					color: <%= global_elements.event_date_time_color %>;
+				}
+
 				.tribe-events-pro .tribe-events-pro-week-grid__event-datetime,
 				.tribe-events-pro .tribe-events-pro-week-grid__event-tooltip-datetime,
 				.tribe-events-pro .tribe-events-pro-week-mobile-events__event-datetime {
-					color: <%= global_elements.event_date_time_color %>;
+					color: rgba({$date_css_rgb}, .88);
 				}
-			';
+			";
 		}
 
 		if ( $customizer->has_option( $section->ID, 'link_color' ) ) {

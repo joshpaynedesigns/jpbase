@@ -40,7 +40,7 @@ $is_sold_out = $et_loaded && $event->tickets->sold_out();
 		<span class="tribe-events-c-small-cta__price">
 			<?php echo esc_html( $event->cost ) ?>
 		</span>
-	<?php elseif ( $et_loaded ) : ?>
+	<?php elseif ( $et_loaded && $event->summary_view->has_rsvp ) : ?>
 		<a
 			href="<?php echo esc_url( $event->permalink . '#rsvp-now' ); ?>"
 			title="<?php echo esc_attr( $event->title ); ?>"

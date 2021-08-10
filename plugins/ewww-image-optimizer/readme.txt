@@ -3,9 +3,9 @@ Contributors: nosilver4u
 Donate link: https://ewww.io/donate/
 Tags: optimize, image, convert, webp, resize, compress, lazy load, optimization, lossless, lossy, seo, scale
 Requires at least: 5.4
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.1
-Stable tag: 6.1.7
+Stable tag: 6.2.1
 License: GPLv3
 
 Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
@@ -131,6 +131,42 @@ That's not a question, but since I made it up, I'll answer it. See this resource
 
 * Feature requests can be viewed and submitted on our [feedback portal](https://feedback.ewww.io/b/features)
 * If you would like to help translate this plugin in your language, [join the team](https://translate.wordpress.org/projects/wp-plugins/ewww-image-optimizer/)
+
+= 6.2.1 =
+* fixed: Lazy Load regression prevents above-the-fold CSS background images from loading
+* fixed: WebP Conversion for CMYK images leaves empty color profile attached
+
+= 6.2.0 =
+* added: PHP-based WebP Conversion via GD/Imagick in free mode when exec() is disabled
+* added: enable -sharp_yuv option for WebP conversion with the EIO_WEBP_SHARP_YUV override
+* added: WebP Conversion for CMYK images
+* added: webp-supported conditional class added to body tag when JS WebP is active
+* added: WP-CLI command can be run with --webp-only option
+* added: Lazy Load for iframes, add 'iframe' in exclusions to disable
+* added: compatibility with S3 Uploads 3.x
+* added: preserve metadata and apply lossless compression to linked versions of images via Easy IO with EIO_PRESERVE_LINKED_IMAGES constant
+* added: Easy IO rewrites URLs in existing picture elements
+* changed: JS WebP scripts moved to beginning of page footer
+* changed: native lazy loading is now enabled for right-sized PNG placeholders, override with EIO_DISABLE_NATIVE_LAZY constant
+* changed: add resume ability to Delete Originals tool
+* changed: move Easy IO check-in to wp_cron
+* fixed: empty .webp images sometimes produced when cwebp encounters an error
+* fixed: Bulk Optimizer for NextGEN loading incorrect script
+* fixed: Bulk Optimizer for NextGEN fails to verify nonce for selective optimization
+* fixed: Last Optimized times for Optimized Images table were incorrect
+* fixed: Add Missing Dimensions overwrites smaller width/height attribute if only one is set
+* fixed: replacing an existing attribute (like width) with a numeric value is broken
+
+= 6.1.9 =
+* fixed: Easy IO's Include All Resources compat with Oxygen Builder and Beaver Builder
+* fixed: regex to detect SVG images in use elements caused excessive backtracking
+* fixed: WebP version of full-size image not removed when attachment deleted due to undefined variable
+* fixed: Easy IO adds invalid zoom parameter of 1920 to srcset URL
+
+= 6.1.8 =
+* fixed: Lazy Load fails to auto-scale with img-crop class for Easy IO
+* fixed: WebP files sometimes fail to be re-generated after Photo Engine (WP/LR) sync
+* fixed: Lazy Load throws JS error in SCRIPT_DEBUG mode
 
 = 6.1.7 =
 * fixed: syntax error due to trailing comma after last parameter in function call(s).

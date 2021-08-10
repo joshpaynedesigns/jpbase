@@ -121,11 +121,8 @@ trait Widget_Shortcode {
 			'tribe-events-widget-shortcode',
 			'tribe-events-widget-shortcode-' . static::get_widget_slug(),
 		];
-		/**
-		 * @var Theme_Compatibility $theme_compatibility
-		 */
-		$theme_compatibility   = tribe( Theme_Compatibility::class );
-		$compatibility_classes = $theme_compatibility->get_container_classes();
+
+		$compatibility_classes = Theme_Compatibility::get_container_classes();
 		$container_classes     = array_merge( $compatibility_classes, $container_classes );
 
 
