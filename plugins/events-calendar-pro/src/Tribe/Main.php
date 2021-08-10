@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.7.1';
+		const VERSION = '5.8.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -789,7 +789,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return string The modified content.
 		 */
 		public function add_help_tab_getting_started_text() {
-			$getting_started_text[] = sprintf( __( "Thanks for buying Events Calendar PRO! From all of us at Modern Tribe, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there.", 'tribe-events-calendar-pro' ) );
+			$getting_started_text[] = sprintf( __( "Thanks for buying Events Calendar PRO! From all of us at The Events Calendar, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there.", 'tribe-events-calendar-pro' ) );
 			$content = implode( $getting_started_text );
 
 			return $content;
@@ -1335,21 +1335,25 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_events' ) )
 			) {
 
-				// Be sure we enqueue TEC scripts
-				tribe_asset_enqueue( 'tribe-events-calendar-script' );
-				$data_tec = tribe( 'tec.assets' )->get_js_calendar_script_data();
-				wp_localize_script( 'tribe-events-calendar-script', 'tribe_js_config', $data_tec );
+				if ( ! wp_script_is( 'tribe-events-calendar-script' ) ) {
+					// Be sure we enqueue TEC scripts when needed with the proper localization.
+					tribe_asset_enqueue( 'tribe-events-calendar-script' );
+					$data_tec = tribe( 'tec.assets' )->get_js_calendar_script_data();
+					wp_localize_script( 'tribe-events-calendar-script', 'tribe_js_config', $data_tec );
+				}
 
 				$dynamic_data = tribe('tec.assets' )->get_js_dynamic_data();
-				wp_localize_script('tribe-events-dynamic', 'tribe_dynamic_help_text', $dynamic_data );
+				wp_localize_script( 'tribe-events-dynamic', 'tribe_dynamic_help_text', $dynamic_data );
 
-				// Be sure we enqueue PRO when needed with the proper localization
-				tribe_asset_enqueue( 'tribe-events-pro' );
-				$data_pro = tribe( 'events-pro.assets' )->get_data_tribe_events_pro();
-				wp_localize_script( 'tribe-events-pro', 'TribeEventsPro', $data_pro );
+				if ( ! wp_script_is( 'tribe-events-pro' ) ) {
+					// Be sure we enqueue PRO when needed with the proper localization.
+					tribe_asset_enqueue( 'tribe-events-pro' );
+					$data_pro = tribe( 'events-pro.assets' )->get_data_tribe_events_pro();
+					wp_localize_script( 'tribe-events-pro', 'TribeEventsPro', $data_pro );
+				}
 
 				if ( ! tribe_is_using_basic_gmaps_api() ) {
-					// Be sure we enqueue PRO geoloc when needed with the proper localization
+					// Be sure we enqueue PRO geoloc when needed with the proper localization.
 					tribe_asset_enqueue( 'tribe-events-pro-geoloc' );
 					$data_geo = tribe( 'events-pro.assets' )->get_data_tribe_geoloc();
 					wp_localize_script( 'tribe-events-pro-geoloc', 'GeoLoc', $data_geo );

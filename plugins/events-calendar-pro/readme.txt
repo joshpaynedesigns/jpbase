@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
-Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
+Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 4.9.16
-Stable tag: 5.7.1
-Tested up to: 5.7.2
+Stable tag: 5.8.1
+Tested up to: 5.8.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -208,7 +208,25 @@ Our Premium Plugins:
 
 == Changelog ==
 
-= 5.7.1 [2021-06-23] =
+= [5.8.1] 2021-07-20 =
+
+* Fix - Prevent pagination from influencing the fetching of events for the Events List and Featured Venue widgets. [TEC-3954]
+* Fix - Show the correct cost on the Summary View for events that do not have event tickets or RSVPs yet have a cost value set. [ECP-904]
+* Fix - Ensure "Summary" gets translated correctly in view selector. [ECP-889]
+* Fix - Don't enqueue scripts (and localized scripts) if they're already enqueued. [ECP-880]
+* Fix - Don't try to enqueue scripts too early preventing them from being enqueued later. [ECP-888]
+* Tweak - Change the text of the Featured Venue Widget "view more" link. [ECP-878]
+* Tweak - Add empty alt tag to featured images in the map view if user doesn't explicitly define one. [ECP-395]
+* Language - 1 new strings added, 22 updated, 1 fuzzied, and 0 obsoleted
+
+= [5.8.0] 2021-07-01 =
+
+* Version - Events Calendar PRO 5.8.0 is only compatible with The Events Calendar 5.8.0 and higher.
+* Feature - Add new Events bar section to the Customizer for control of the Events Bar styles. [TEC-3672]
+* Tweak - Added filters: `tribe_customizer_should_print_shortcode_customizer_styles`
+* Language - 3 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.7.1] 2021-06-23 =
 
 * Fix - Ensure Month Widget translates date in navigation. [ECP-851]
 * Fix - Ensure month name translates in the event card in Map view. [ECP-875]

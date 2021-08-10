@@ -138,7 +138,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		// Customizer.
 		add_filter( 'tribe_customizer_pre_sections', [ $this, 'filter_customizer_sections' ], 30, 2 );
-		add_filter( 'tribe_customizer_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 3 );
+		add_filter( 'tribe_customizer_section_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 2 );
+
 		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
 		add_filter( 'tribe_events_views_v2_view_map_template_vars', [ $this, 'filter_map_view_pin' ], 10, 2 );
 	}
@@ -802,6 +803,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			'photo' !== $slug
 			&& 'week' !== $slug
 			&& 'map' !== $slug
+			&& 'summary' !== $slug
 		) {
 			return $domain;
 		}
@@ -860,12 +862,12 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return string The filtered CSS template.
 	 */
-	public function filter_global_elements_css_template( $css_template, $section, $customizer ) {
-		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+	public function filter_global_elements_css_template( $css_template, $section ) {
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
 			return $css_template;
 		}
 
-		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section, $customizer );
+		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section );
 	}
 
 	/**
