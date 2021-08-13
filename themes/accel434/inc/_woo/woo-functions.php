@@ -397,15 +397,37 @@ function cgd_shop_toolbar() {
 }
 
 // Change Variable product button text
-add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
-    global $product;
-    if ( $product->is_type( 'variable' ) ) {
-        $text = $product->is_purchasable() ? __( 'Select Size', 'woocommerce' ) : __( 'Read more', 'woocommerce' );
-    }
-    return $text;
-}, 10 );
+// add_filter( 'woocommerce_product_add_to_cart_text', function( $text ) {
+//     global $product;
+//     if ( $product->is_type( 'variable' ) ) {
+//         $text = $product->is_purchasable() ? __( 'Select Size', 'woocommerce' ) : __( 'Read more', 'woocommerce' );
+//     }
+//     return $text;
+// }, 10 );
 
 add_filter( 'facetwp_result_count', function( $output, $params ) {
     $output = $params['lower'] . '-' . $params['upper'] . ' of ' . $params['total'] . ' results';
     return $output;
 }, 10, 2 );
+
+// Add My Cart to header
+add_filter( 'wp_nav_menu_items', 'woo_menu_items', 10, 2 );
+function woo_menu_items( $items, $args ) {
+    global $woocommerce;
+
+    // return items if not the woo menu
+    if ( $args->menu->slug !== 'woo-menu' )
+        return $items;
+
+    $user_id = get_current_user_id();
+    $cart_url = $woocommerce->cart->get_cart_url();
+    $cart_count = $woocommerce->cart->cart_contents_count;
+
+    ob_start();
+    ?>
+    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-hover cart-number"><a class="cart-ajax" href="<?php echo $cart_url; ?>" itemprop="url"><span class="menu-item-name" itemprop="name">My Cart</span><span class="menu-item-number"><?php echo $cart_count; ?></span></a></li>
+    <?php
+
+    $woo_items = ob_get_clean();
+    return $items . $woo_items;
+}
