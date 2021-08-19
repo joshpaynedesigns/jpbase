@@ -157,6 +157,20 @@ code {
     display: block;
 }
 
+.aligncenter {
+    display: block;
+    margin: 0 auto $base-spacing;
+    text-align: center;
+}
+
+.alignleft {
+    margin: 0 $base-spacing $base-spacing 0;
+}
+
+.alignright {
+    margin: 0 0 $base-spacing $base-spacing;
+}
+
 // Font Colors
 .blue-font {
     color: $blue;
