@@ -456,6 +456,17 @@ code {
   margin-bottom: -0.5em;
   display: block; }
 
+.aligncenter {
+  display: block;
+  margin: 0 auto 1.5em;
+  text-align: center; }
+
+.alignleft {
+  margin: 0 1.5em 1.5em 0; }
+
+.alignright {
+  margin: 0 0 1.5em 1.5em; }
+
 .blue-font {
   color: #0b406b; }
 
