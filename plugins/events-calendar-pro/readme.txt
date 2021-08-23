@@ -3,8 +3,8 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Requires at least: 4.9.16
-Stable tag: 5.8.1
+Requires at least: 4.9.18
+Stable tag: 5.8.2
 Tested up to: 5.8.0
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -207,6 +207,12 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.8.2] 2021-08-17 =
+
+* Fix - Fix issue of month names not being translatable. This was caused by a missing moment js localization dependency. [ECP-739]
+* Fix - Add a new function to add "Additional Fields" category to the editor for WP >= 5.8. [ECP-922]
+* Language - 0 new strings added, 4 updated, 0 fuzzied, and 2 obsoleted
 
 = [5.8.1] 2021-07-20 =
 

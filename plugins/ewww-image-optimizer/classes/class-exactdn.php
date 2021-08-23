@@ -171,7 +171,9 @@ if ( ! class_exists( 'ExactDN' ) ) {
 			add_filter( $this->prefix . 'filter_page_output', array( $this, 'filter_page_output' ), 5 );
 
 			// Core image retrieval.
-			if ( ! function_exists( 'aq_resize' ) ) {
+			if ( defined( 'EIO_DISABLE_DEEP_INTEGRATION' ) && EIO_DISABLE_DEEP_INTEGRATION ) {
+				$this->debug_message( 'deep (image_downsize) integration disabled' );
+			} elseif ( ! function_exists( 'aq_resize' ) ) {
 				add_filter( 'image_downsize', array( $this, 'filter_image_downsize' ), 10, 3 );
 			} else {
 				$this->debug_message( 'aq_resize detected, image_downsize filter disabled' );
@@ -200,13 +202,19 @@ if ( ! class_exists( 'ExactDN' ) ) {
 
 			/* add_filter( 'fl_builder_render_assets_inline', '__return_true' ); */
 
-			// Filter for NextGEN image URLs within JS.
-			add_filter( 'ngg_pro_lightbox_images_queue', array( $this, 'ngg_pro_lightbox_images_queue' ) );
-			add_filter( 'ngg_get_image_url', array( $this, 'plugin_get_image_url' ) );
+			// Filter for FacetWP JSON responses.
+			add_filter( 'facetwp_render_output', array( $this, 'filter_facetwp_json_output' ) );
 
 			// Filter for Envira image URLs.
 			add_filter( 'envira_gallery_output_item_data', array( $this, 'envira_gallery_output_item_data' ) );
 			add_filter( 'envira_gallery_image_src', array( $this, 'plugin_get_image_url' ) );
+
+			// Filter for NextGEN image URLs within JS.
+			add_filter( 'ngg_pro_lightbox_images_queue', array( $this, 'ngg_pro_lightbox_images_queue' ) );
+			add_filter( 'ngg_get_image_url', array( $this, 'plugin_get_image_url' ) );
+
+			// Filter for Spotlight Social Media Feeds.
+			add_filter( 'spotlight/instagram/server/transform_item', array( $this, 'spotlight_instagram_response' ) );
 
 			// Filter for legacy WooCommerce API endpoints.
 			add_filter( 'woocommerce_api_product_response', array( $this, 'woocommerce_api_product_response' ) );
@@ -661,6 +669,7 @@ if ( ! class_exists( 'ExactDN' ) ) {
 				$this->exactdn_domain = $domain;
 			}
 		}
+
 		/**
 		 * Get the ExactDN option.
 		 *
@@ -789,9 +798,6 @@ if ( ! class_exists( 'ExactDN' ) ) {
 				}
 			}
 			$this->user_exclusions[] = 'plugins/anti-captcha/';
-			$this->user_exclusions[] = 'fusion-app';
-			$this->user_exclusions[] = 'themes/Avada/';
-			$this->user_exclusions[] = 'plugins/fusion-builder/';
 		}
 
 		/**
@@ -1359,7 +1365,8 @@ if ( ! class_exists( 'ExactDN' ) ) {
 					if ( ! empty( $exactdn_url ) ) {
 						$src = $exactdn_url;
 					}
-					if ( ! is_feed() && $srcset_fill && ( ! defined( 'EXACTDN_PREVENT_SRCSET_FILL' ) || ! EXACTDN_PREVENT_SRCSET_FILL ) && false !== strpos( $src, $this->exactdn_domain ) ) {
+					// This is just completely disabled now, no reason to do this with the lazy loader auto-scaling, and I don't know when it ever kicks in anymore...
+					if ( false && ! is_feed() && $srcset_fill && ( ! defined( 'EXACTDN_PREVENT_SRCSET_FILL' ) || ! EXACTDN_PREVENT_SRCSET_FILL ) && false !== strpos( $src, $this->exactdn_domain ) ) {
 						if ( ! $this->get_attribute( $images['img_tag'][ $index ], $this->srcset_attr ) && ! $this->get_attribute( $images['img_tag'][ $index ], 'sizes' ) ) {
 							$this->debug_message( "srcset filling with $src" );
 							$zoom = false;
@@ -1414,6 +1421,9 @@ if ( ! class_exists( 'ExactDN' ) ) {
 				} // End foreach().
 			} // End if();
 
+			// Process <a> elements in the page for image URLs.
+			$content = $this->filter_image_links( $content );
+
 			// Process <picture> elements in the page.
 			$content = $this->filter_picture_images( $content );
 
@@ -1444,6 +1454,60 @@ if ( ! class_exists( 'ExactDN' ) ) {
 			}
 			if ( $this->filtering_the_page && $this->get_option( $this->prefix . 'debug' ) && 0 !== strpos( $content, '{' ) && false === strpos( '$content', '<loc>' ) ) {
 				$content .= '<!-- Easy IO processing time: ' . $this->elapsed_time . ' seconds -->';
+			}
+			return $content;
+		}
+
+		/**
+		 * Parse the HTML for a/link elements to rewrite.
+		 *
+		 * @param string $content The HTML content to parse.
+		 * @return string The filtered HTML content.
+		 */
+		function filter_image_links( $content ) {
+			$this->debug_message( '<b>' . __METHOD__ . '()</b>' );
+			$elements = $this->get_elements_from_html( $content, 'a' );
+			if ( $this->is_iterable( $elements ) ) {
+				$args = array();
+				if ( defined( 'EIO_PRESERVE_LINKED_IMAGES' ) && EIO_PRESERVE_LINKED_IMAGES ) {
+					$args = array(
+						'lossy' => 0,
+						'strip' => 'none',
+					);
+				}
+				foreach ( $elements as $index => $element ) {
+					if ( false === strpos( $element, 'href' ) ) {
+						continue;
+					}
+					$this->debug_message( 'parsing a link for hrefs' );
+					$link_url = $this->get_attribute( $element, 'href' );
+					if ( empty( $link_url ) ) {
+						continue;
+					}
+					/** This filter is already documented in class-exactdn.php */
+					if ( apply_filters( 'exactdn_skip_image', false, $link_url, $element ) ) {
+						continue;
+					}
+					$full_link_url = $link_url;
+					// Check for relative urls that start with a slash.
+					if (
+						'/' === substr( $link_url, 0, 1 ) &&
+						'/' !== substr( $link_url, 1, 1 )
+					) {
+						$full_link_url = '//' . $this->upload_domain . $link_url;
+					}
+					if ( $this->validate_image_url( $full_link_url ) ) {
+						$exactdn_url = $this->generate_url( $full_link_url, $args );
+						if ( $exactdn_url && $exactdn_url !== $link_url && false !== strpos( $exactdn_url, $this->exactdn_domain ) ) {
+							$this->debug_message( 'updating link URL in element' );
+							$element = str_replace( $link_url, $exactdn_url, $element );
+							if ( $element && $element !== $elements[ $index ] ) {
+								$this->debug_message( 'updating link element in content' );
+								$content = str_replace( $elements[ $index ], $element, $content );
+							}
+						}
+					}
+				}
 			}
 			return $content;
 		}
@@ -2722,6 +2786,33 @@ if ( ! class_exists( 'ExactDN' ) ) {
 		}
 
 		/**
+		 * Parse template data from FacetWP that will be included in JSON response.
+		 * https://facetwp.com/documentation/developers/output/facetwp_render_output/
+		 *
+		 * @param array $output The full array of FacetWP data.
+		 * @return array The FacetWP data with Easy IO URLs.
+		 */
+		function filter_facetwp_json_output( $output ) {
+			$this->debug_message( '<b>' . __METHOD__ . '()</b>' );
+			if ( empty( $output['template'] ) || ! is_string( $output['template'] ) ) {
+				$this->debug_message( 'no template data available' );
+				if ( $this->function_exists( 'print_r' ) ) {
+					$this->debug_message( print_r( $output, true ) );
+				}
+				return $output;
+			}
+			$this->filtering_the_page = true;
+
+			$template = $this->filter_the_content( $output['template'] );
+			if ( $template ) {
+				$this->debug_message( 'template data modified' );
+				$output['template'] = $template;
+			}
+
+			return $output;
+		}
+
+		/**
 		 * Handle direct image urls within Plugins.
 		 *
 		 * @param string $image A url for an image.
@@ -2750,6 +2841,26 @@ if ( ! class_exists( 'ExactDN' ) ) {
 				return $this->generate_url( $image );
 			}
 			return $image;
+		}
+
+		/**
+		 * Handle images in Spotlight's Instagram response/endpoint.
+		 *
+		 * @param array $data The Instagram item data.
+		 * @return array The Instagram data with ExactDNified image urls.
+		 */
+		function spotlight_instagram_response( $data ) {
+			if ( is_array( $data ) && ! empty( $data['thumbnails']['s'] ) ) {
+				if ( $this->validate_image_url( $data['thumbnails']['s'] ) ) {
+					$data['thumbnails']['s'] = $this->generate_url( $data['thumbnails']['s'] );
+				}
+			}
+			if ( is_array( $data ) && ! empty( $data['thumbnails']['m'] ) ) {
+				if ( $this->validate_image_url( $data['thumbnails']['m'] ) ) {
+					$data['thumbnails']['m'] = $this->generate_url( $data['thumbnails']['m'] );
+				}
+			}
+			return $data;
 		}
 
 		/**
@@ -2822,6 +2933,9 @@ if ( ! class_exists( 'ExactDN' ) ) {
 		 * @return boolean True to skip the page, unchanged otherwise.
 		 */
 		function skip_page( $skip = false, $uri = '' ) {
+			if ( false !== strpos( $uri, '?brizy-edit' ) ) {
+				return true;
+			}
 			if ( false !== strpos( $uri, 'cornerstone=' ) || false !== strpos( $uri, 'cornerstone-endpoint' ) ) {
 				return true;
 			}
