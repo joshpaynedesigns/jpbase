@@ -941,8 +941,15 @@ tribe_events_pro_admin.recurrence = {
 		if ( ! end ) {
 			end = $rule.find( '[data-field="end"]' ).attr( 'placeholder' );
 		}
+		
+		/**
+		 * Gets the lang attribute of the page’s <html> element, which is set by WP on the server,
+		 * then passes the value to moment js to ensure that all the strings output are translatable. 
+		 */
+		moment.locale( document.documentElement.getAttribute( 'lang' ) );
 
 		var series_end_moment = moment( end, date_format );
+
 		var display_format = this.convert_date_format_php_to_moment( tribe_dynamic_help_text.date_with_year );
 
 		text = text.replace( '[count]', end_count );

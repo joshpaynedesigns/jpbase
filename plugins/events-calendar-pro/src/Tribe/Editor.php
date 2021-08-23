@@ -15,12 +15,18 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 	public function hook() {
 		add_action( 'tribe_events_pro_after_custom_field_content', array( $this, 'after_custom_field_content' ), 10, 3 );
 		add_filter( 'tribe_settings_after_save_additional-fields', array( $this, 'save_custom_field_values' ) );
-		add_action( 'block_categories', array( $this, 'register_additional_fields_category' ), 10, 2 );
 		add_filter( 'tribe_events_editor_default_template', array( $this, 'add_additional_fields_in_editor' ) );
 		add_filter( 'tribe_events_editor_default_classic_template', array( $this, 'add_additional_fields_in_editor' ) );
 		add_filter( 'tribe_blocks_editor_update_classic_content_params', array( $this, 'migrate_additional_fields_params_to_blocks' ), 10, 3 );
 		add_filter( 'tribe_events_editor_default_classic_template', array( $this, 'add_related_events_in_editor' ), 50 );
 		add_filter( 'tribe_events_editor_default_template', array( $this, 'add_related_events_in_editor' ), 50 );
+
+		global $wp_version;
+		if ( version_compare( $wp_version, '5.8', '<' ) ) {
+			add_action( 'block_categories', array( $this, 'register_additional_fields_category' ), 10, 2 );
+		} else {
+			add_action( 'block_categories_all', array( $this, 'register_additional_fields_category_all' ), 10, 2 );
+		}
 
 		$this->assets();
 	}
@@ -180,24 +186,70 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 	 *
 	 * @since 4.5
 	 *
-	 * @param $categories
-	 * @param $post
+	 * @param array<array<string|string>> $categories An array of categories each an array
+	 *                                                in the format property => value.
+	 * @param WP_Post                     $post       The post object we're editing.
 	 *
 	 * @return array
 	 */
 	public function register_additional_fields_category( $categories, $post ) {
+		// Handle where someone is using this outside of this object
+		global $wp_version;
+		if ( version_compare( $wp_version, '5.8', '>=' ) ) {
+			_deprecated_function( __FUNCTION__, '5.8.2', 'register_additional_fields_category_all' );
+		}
+
+		// Make sure it's an event post.
 		if ( ! tribe_is_event( $post ) ) {
 			return $categories;
 		}
 
 		return array_merge(
 			$categories,
-			array(
-				array(
+			[
+				[
 					'slug'  => 'tribe-events-pro-additional-fields',
 					'title' => __( 'Additional Fields', 'events-pro' ),
-				),
-			)
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add the event custom fields on post that are events only
+	 *
+	 * @since 4.5
+	 *
+	 * @param array<array<string|string>> $categories An array of categories each an array
+	 *                                                in the format property => value.
+	 * @param WP_Block_Editor_Context     $context    The Block Editor Context object.
+	 *                                                In WP versions prior to 5.8 this was the post object.
+	 *
+	 * @return array
+	 */
+	public function register_additional_fields_category_all( $categories, $context ) {
+		if ( ! $context instanceof WP_Block_Editor_Context ) {
+			return $categories;
+		}
+
+		// Make sure we have the post available.
+		if ( empty( $context->post ) ) {
+			return $categories;
+		}
+
+		// Make sure it's an event post.
+		if ( ! tribe_is_event( $context->post ) ) {
+			return $categories;
+		}
+
+		return array_merge(
+			$categories,
+			[
+				[
+					'slug'  => 'tribe-events-pro-additional-fields',
+					'title' => __( 'Additional Fields', 'events-pro' ),
+				],
+			]
 		);
 	}
 

@@ -119,6 +119,7 @@ return array(
     'Tribe\\Admin\\Notice\\Marketing\\Stellar_Sale' => $baseDir . '/src/Tribe/Admin/Notice/Marketing/Stellar_Sale.php',
     'Tribe\\Admin\\Notice\\Service_Provider' => $baseDir . '/src/Tribe/Admin/Notice/Service_Provider.php',
     'Tribe\\Admin\\Notice\\WP_Version' => $baseDir . '/src/Tribe/Admin/Notice/WP_Version.php',
+    'Tribe\\Admin\\Troubleshooting' => $baseDir . '/src/Tribe/Admin/Troubleshooting.php',
     'Tribe\\Customizer\\Control' => $baseDir . '/src/Tribe/Customizer/Control.php',
     'Tribe\\Customizer\\Controls\\Heading' => $baseDir . '/src/Tribe/Customizer/Controls/Heading.php',
     'Tribe\\Customizer\\Controls\\Radio' => $baseDir . '/src/Tribe/Customizer/Controls/Radio.php',
