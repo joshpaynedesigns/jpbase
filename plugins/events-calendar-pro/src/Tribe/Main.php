@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.8.2';
+		const VERSION = '5.9.0';
 
 		/**
 		 * The Events Calendar Required Version
@@ -2101,6 +2101,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			// Customizer support.
 			tribe_register_provider( Tribe\Events\Pro\Service_Providers\Customizer::class );
+
+			tribe_register_provider( Tribe\Events\Pro\Admin\Manager\Provider::class );
 		}
 
 		/**

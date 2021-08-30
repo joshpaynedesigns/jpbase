@@ -41,7 +41,11 @@
 			var hours = zeroPad( ( t.seconds % ( 60 * 60 * 24 ) / (60 * 60)) );
 			var minutes = zeroPad( ( t.seconds % ( 60 * 60 ) ) / ( 60 ) );
 			var seconds = zeroPad( ( t.seconds % 60 ) );
-			output = t.format.replace( 'DD', days ).replace( 'HH', hours ).replace( 'MM', minutes ).replace( 'SS', seconds );
+			output = t.format
+				.replace( 'DD', days )
+				.replace( 'HH', hours )
+				.replace( 'MM', minutes )
+				.replace( 'SS', seconds );
 		}
 		$( "#" + t.id ).html( output );
 	}
@@ -63,7 +67,7 @@
 				timers.push( new Timer( unique_id, seconds, format, complete ) );
 
 				// Kick off first update if we're at the end.
-				if ( index == countdown_timers.length - 1 ) {
+				if ( index == countdown_timers.length - 1 ) { // eslint-disable-line eqeqeq
 					updateTimers();
 				}
 			} );

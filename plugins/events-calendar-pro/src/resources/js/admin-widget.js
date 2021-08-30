@@ -114,13 +114,13 @@
 		 * @return {boolean}
 		 */
 		args.matcher = function ( term, text ) {
-			var result = text.toUpperCase().indexOf( term.toUpperCase() ) == 0;
+			var result = text.toUpperCase().indexOf( term.toUpperCase() ) == 0; // eslint-disable-line eqeqeq,max-len
 
 			if ( !result && 'undefined' !== typeof args.tags ) {
 				var possible = _.where( args.tags, { text: text } );
 				if ( args.tags.length > 0 && _.isObject( possible ) ) {
-					var test_value = obj.search_id( possible[0] );
-					result = test_value.toUpperCase().indexOf( term.toUpperCase() ) == 0;
+					var test_value = obj.search_id( possible[0] ); // eslint-disable-line no-undef
+					result = test_value.toUpperCase().indexOf( term.toUpperCase() ) == 0; // eslint-disable-line eqeqeq,max-len
 				}
 			}
 
@@ -151,7 +151,7 @@
 				callback( data );
 			};
 
-			args.createSearchChoice = function ( term, data ) {
+			args.createSearchChoice = function ( term, data ) { // eslint-disable-line no-unused-vars
 				if ( term.match( args.regexToken ) ) {
 					return { id: term, text: term };
 				}
@@ -209,7 +209,9 @@
 
 		var $this = $( conditional ),
 			field = $this.data( 'tribeConditionalField' ),
-			$conditionals = $widget.find( '.js-tribe-conditional' ).filter( '[data-tribe-conditional-field="' + field + '"]' ),
+			$conditionals = $widget
+				.find( '.js-tribe-conditional' )
+				.filter( '[data-tribe-conditional-field="' + field + '"]' ),
 			value = $this.val();
 
 		// First hide all conditionals
@@ -242,10 +244,10 @@
 		var $filterInput = $filter.find( '.calendar-widget-added-filters' );
 
 		if (
-			$filterInput.length && 
-			$filterInput.val() && 
-			$filterInput.val().length && 
-			null !== $filterInput.val() && 
+			$filterInput.length &&
+			$filterInput.val() &&
+			$filterInput.val().length &&
+			null !== $filterInput.val() &&
 			'null' !== $filterInput.val()
 		) {
 			$filter.addClass( 'calendar-widget-filters-container--show' );
@@ -290,11 +292,13 @@
 	tribeWidget.setup = function( e, $widget ) {
 		// If it's not set we try to figure it out from the Event
 		if ( 'undefined' === typeof $widget ) {
-			var $target = $( e.target ),
-				$widget;
+			var $target = $( e.target );
 
 			// Prevent weird non available widgets from going any further
-			if ( !$target.parents( '.widget-top' ).length || $target.parents( '#available-widgets' ).length ) {
+			if (
+				! $target.parents( '.widget-top' ).length ||
+				$target.parents( '#available-widgets' ).length
+			) {
 				return;
 			}
 
@@ -308,13 +312,19 @@
 		}
 
 		// If by this point it's not an jQuery Object we bail
-		if ( 'jQuery' === typeof $widget ) {
+		if ( 'jQuery' === typeof $widget ) { // eslint-disable-line valid-typeof
 			return;
 		}
 
 		// If we are not dealing with one of the Tribe Widgets
 		// Look for widgets embedded in site builder panels, don't bail if we find one
-		if ( !$widget.is( '[id*="tribe-"]' ) && ( $widget.is( '.so-content.panel-dialog' ) && !$widget.find( '[id^="widget-tribe-events-"]' ) ) ) {
+		if (
+			! $widget.is( '[id*="tribe-"]' ) &&
+			(
+				$widget.is( '.so-content.panel-dialog' ) &&
+				! $widget.find( '[id^="widget-tribe-events-"]' )
+			)
+		) {
 			return;
 		}
 
@@ -340,13 +350,16 @@
 					tribeWidget.conditional( this, $widget );
 				} );
 
-				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
+				$widget
+					.find( '[data-depends]' )
+					.trigger( 'setup.dependency' )
+					.trigger( 'verify.dependency' );
 			}
 		}
 	};
 
 	// Configure the Widgets by default
-	$( function ( event ) {
+	$( function ( event ) { // eslint-disable-line no-unused-vars
 		// Prevents problems on Customizer
 		if ( $( 'body' ).hasClass( 'wp-customizer' ) ) {
 			return;
@@ -365,10 +378,13 @@
 				var $widget = $( widget );
 				tribeWidget.setup( e, $widget );
 				tribeWidget.showFilters( $widget );
-				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
+				$widget
+					.find( '[data-depends]' )
+					.trigger( 'setup.dependency' )
+					.trigger( 'verify.dependency' );
 			}
 		} )
-		.on( 'change', '.calendar-widget-add-filter', function( e ) {
+		.on( 'change', '.calendar-widget-add-filter', function( e ) { // eslint-disable-line no-unused-vars,max-len
 			var $select = $( this );
 			var $widget = $select.parents( '.widget[id*="tribe-"]' );
 			var $list = $widget.find( '.calendar-widget-filter-list' );
@@ -402,7 +418,7 @@
 						return;
 					}
 
-					if ( option.id != term ) {
+					if ( option.id != term ) { // eslint-disable-line eqeqeq
 						return;
 					}
 
@@ -416,7 +432,10 @@
 			}
 
 			// Bail if we already have the term added.
-			if ( -1 !== $.inArray( term.id, values[ term_obj.taxonomy.name ] ) && -1 !== $.inArray( term, values[ term_obj.taxonomy.name ] ) ) {
+			if (
+				-1 !== $.inArray( term.id, values[ term_obj.taxonomy.name ] ) &&
+				-1 !== $.inArray( term, values[ term_obj.taxonomy.name ] )
+			) {
 				// Remove the Selected Option.
 				$select.val( '' );
 				return;
@@ -437,7 +456,10 @@
 				'href': '#',
 			} ).text( '(remove)' );
 			var $remove = $( '<span/>' ).append( $link );
-			var $li = $( '<li/>' ).addClass( 'calendar-widget-filter-item' ).html( term_obj.taxonomy.labels.name + ': ' + term_obj.text ).append( $remove );
+			var $li = $( '<li/>' )
+				.addClass( 'calendar-widget-filter-item' )
+				.html( term_obj.taxonomy.labels.name + ': ' + term_obj.text )
+				.append( $remove );
 
 			$list.append( $li );
 
@@ -476,7 +498,7 @@
 
 			tribeWidget.hideFilters( $widget );
 		} )
-		.on( 'click', '.so-close', function( e ) {
+		.on( 'click', '.so-close', function( e ) { // eslint-disable-line no-unused-vars
 			// Close select2 when we close a panel dialog
 			$( '.calendar-widget-add-filter' ).select2( 'close' );
 		} );
@@ -504,14 +526,14 @@
 					$this.attr( 'id', $id ).addClass( 'widget' );
 
 					// Set up widget
-					tribeWidget.setup( e, $this);
+					tribeWidget.setup( e, $this );
 
-					$( '.so-duplicate' ).on( 'click', function( e ) {
+					$( '.so-duplicate' ).on( 'click', function( e ) { // eslint-disable-line no-unused-vars
 						// Close select2 when we close a panel dialog
 						$( '.calendar-widget-add-filter' ).select2( 'close' );
 					} );
 
-					$( '.so-delete' ).on( 'click', function( e ) {
+					$( '.so-delete' ).on( 'click', function( e ) { // eslint-disable-line no-unused-vars
 						// Close select2 when we close a panel dialog
 						$( '.calendar-widget-add-filter' ).select2( 'close' );
 					} );

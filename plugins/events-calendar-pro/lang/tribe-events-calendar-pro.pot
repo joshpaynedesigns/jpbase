@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.8.1\n"
+"Project-Id-Version: The Events Calendar PRO 5.9.0\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2021-07-20 04:15:58+00:00\n"
+"POT-Creation-Date: 2021-08-24 02:35:35+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-07-20 04:15\n"
+"PO-Revision-Date: 2021-08-24 02:35\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -21,7 +21,7 @@ msgid ""
 "To begin using Events Calendar PRO, please install the latest version of"
 msgstr ""
 
-#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.8.1)  #-#-#-#-#
+#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.9.0)  #-#-#-#-#
 #. Author of the plugin/theme
 #: events-calendar-pro.php:176 events-calendar-pro.php:177
 #: src/Tribe/Integrations/Elementor/Service_Provider.php:124
@@ -214,6 +214,121 @@ msgctxt "additional field update"
 msgid "Working&hellip;"
 msgstr ""
 
+#: src/Tribe/Admin/Manager/Modal/Split_Single.php:37
+msgid "You are about to break this event out of its series."
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Modal/Split_Upcoming.php:37
+msgid "You are about to split this series in two."
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Page.php:89 src/admin-views/manager/page.php:36
+msgid "Events Manager"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Page.php:220
+msgctxt "Link ot the Events Manager page"
+msgid "Back to Manager"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Page.php:222
+msgctxt "Link ot the Events Manager page"
+msgid "Manager"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Page.php:418
+msgid "Edit %s"
+msgstr ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:484
+msgctxt "posts"
+msgid "Mine <span class=\"count\">(%s)</span>"
+msgid_plural "Mine <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:505
+msgctxt "posts"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:555
+msgctxt "posts"
+msgid "Sticky <span class=\"count\">(%s)</span>"
+msgid_plural "Sticky <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:694
+msgid "%s post updated."
+msgid_plural "%s posts updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Tribe/Admin/Manager/Page.php:695
+msgid "1 post not updated, somebody is editing it."
+msgstr ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:697
+msgid "%s post not updated, somebody is editing it."
+msgid_plural "%s posts not updated, somebody is editing them."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:699
+msgid "%s post permanently deleted."
+msgid_plural "%s posts permanently deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:701
+msgid "%s post moved to the Trash."
+msgid_plural "%s posts moved to the Trash."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: Number of posts.
+#: src/Tribe/Admin/Manager/Page.php:703
+msgid "%s post restored from the Trash."
+msgid_plural "%s posts restored from the Trash."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Tribe/Admin/Manager/Settings.php:46
+msgid "Calendar Manager"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Settings.php:47
+msgid ""
+"Enable the Calendar Manager as the default page for viewing Events on the "
+"Administration page."
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Shortcode.php:425
+msgid "Draft"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Shortcode.php:427
+msgid "Pending"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Shortcode.php:429
+msgid "Trashed"
+msgstr ""
+
+#: src/Tribe/Admin/Manager/Shortcode.php:431
+msgid "Ignored"
+msgstr ""
+
 #: src/Tribe/Advanced_List_Widget.php:22
 msgid "A widget that displays the next upcoming x events."
 msgstr ""
@@ -297,7 +412,7 @@ msgstr ""
 msgid "Related Events"
 msgstr ""
 
-#: src/Tribe/Editor.php:198 src/Tribe/Main.php:703
+#: src/Tribe/Editor.php:212 src/Tribe/Editor.php:250 src/Tribe/Main.php:703
 #: src/admin-views/event-meta-options.php:3
 msgid "Additional Fields"
 msgstr ""
@@ -2459,19 +2574,29 @@ msgstr ""
 msgid "Events Featured Venue"
 msgstr ""
 
-#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:77
+#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:78
 msgctxt "The View Selector background color setting label."
 msgid "View Dropdown Background Color"
 msgstr ""
 
-#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:83
+#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:84
 msgctxt "Label for the default option."
 msgid "Use Event Bar Color"
 msgstr ""
 
-#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:88
+#: src/Tribe/Views/V2/Customizer/Section/Events_Bar.php:89
 msgctxt "Label for option to set a custom color."
 msgid "Custom"
+msgstr ""
+
+#: src/Tribe/Views/V2/Customizer/Section/Global_Elements.php:52
+msgctxt "Label for the map pin control"
+msgid "Map Pin"
+msgstr ""
+
+#: src/Tribe/Views/V2/Customizer/Section/Global_Elements.php:57
+msgctxt "Notes on recommended image size for map pins."
+msgid "Google recommends a marker no more than 80px tall."
 msgstr ""
 
 #: src/Tribe/Views/V2/Geo_Loc/Services/Google_Maps.php:24
@@ -3120,6 +3245,51 @@ msgstr ""
 msgid ""
 "We will use the Google Maps API to get that information. Doing this may take "
 "a while (approximately 1 minute for every 200 venues)."
+msgstr ""
+
+#: src/admin-views/manager/create-new-event.php:39
+msgid "Add New %1$s on %2$s"
+msgstr ""
+
+#: src/admin-views/manager/create-new-event.php:46
+msgid "Add"
+msgstr ""
+
+#: src/admin-views/manager/modal/split-single-content.php:9
+msgid "You will be able to edit it independently from the original series."
+msgstr ""
+
+#: src/admin-views/manager/modal/split-single-content.php:10
+#: src/admin-views/manager/modal/split-upcoming-content.php:10
+msgid "This action cannot be undone."
+msgstr ""
+
+#: src/admin-views/manager/modal/split-single-content.php:11
+#: src/admin-views/manager/modal/split-upcoming-content.php:11
+msgid ""
+"When you break events from a series their URLs will change, so any users "
+"trying to use their original URLs will receive a 404 not found error. If "
+"this is a concern, consider using a suitable plugin to set up and manage "
+"redirects."
+msgstr ""
+
+#: src/admin-views/manager/modal/split-upcoming-content.php:9
+msgid ""
+"The event you selected and all subsequent events in the series will be "
+"separated into a new series of events that you can edit independently from "
+"the original series."
+msgstr ""
+
+#: src/admin-views/manager/page.php:39
+msgid "Add New"
+msgstr ""
+
+#: src/admin-views/manager/page.php:40
+msgid "List"
+msgstr ""
+
+#: src/admin-views/manager/page.php:60
+msgid "Undo"
 msgstr ""
 
 #: src/admin-views/recurrence/months.php:11

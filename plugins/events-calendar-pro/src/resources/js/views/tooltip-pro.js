@@ -66,7 +66,11 @@ tribe.events.views.tooltipPro = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterTooltipInitTheme.tribeEvents', tribe.events.views.manager.selectors.container, obj.handleAfterTooltipInitTheme );
+		$document.on(
+			'afterTooltipInitTheme.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.handleAfterTooltipInitTheme
+		);
 	};
 
 	// Configure on document ready

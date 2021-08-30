@@ -592,16 +592,39 @@ class Tribe_Events extends Shortcode_Abstract {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Determines if we should display the shortcode in a given page.
+	 *
+	 * @since 5.9.0
+	 *
+	 * @return mixed|void
 	 */
-	public function get_html() {
+	public function should_display() {
 		/**
 		 * On blocks editor shortcodes are being rendered in the screen which for some unknown reason makes the admin
 		 * URL soft redirect (browser history only) to the front-end view URL of that shortcode.
 		 *
 		 * @see TEC-3157
 		 */
-		if ( is_admin() && ! tribe( 'context' )->doing_ajax() ) {
+		$should_display = ! ( is_admin() && ! tribe( 'context' )->doing_ajax() );
+
+		/**
+		 * If we should display the shortcode.
+		 *
+		 * @since 5.9.0
+		 *
+		 * @param bool   $should_display Whether we should display or not.
+		 * @param static $shortcode      Instance of the shortcode we are dealing with.
+		 */
+		$should_display = apply_filters( 'tribe_events_shortcode_tribe_events_should_display', $should_display, $this );
+
+		return tribe_is_truthy( $should_display );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public function get_html() {
+		if ( ! $this->should_display() ) {
 			return '';
 		}
 

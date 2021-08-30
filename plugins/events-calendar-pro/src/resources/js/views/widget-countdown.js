@@ -100,9 +100,20 @@ tribe.events.pro.widgets.countdown = {};
 
 		if ( timer.seconds > 0 ) {
 			timer.elements.days.text( obj.zeroPad( ( timer.seconds ) / obj.constants.DAY_IN_SECONDS ) );
-			timer.elements.hours.text( obj.zeroPad( ( timer.seconds % obj.constants.DAY_IN_SECONDS ) / obj.constants.HOUR_IN_SECONDS ) );
-			timer.elements.minutes.text( obj.zeroPad( ( timer.seconds % obj.constants.HOUR_IN_SECONDS ) / obj.constants.MINUTE_IN_SECONDS ) );
-			timer.elements.seconds.length && timer.elements.seconds.text( obj.zeroPad( timer.seconds % obj.constants.MINUTE_IN_SECONDS ) );
+			timer.elements.hours.text(
+				obj.zeroPad(
+					( timer.seconds % obj.constants.DAY_IN_SECONDS ) / obj.constants.HOUR_IN_SECONDS
+				)
+			);
+			timer.elements.minutes.text(
+				obj.zeroPad(
+					( timer.seconds % obj.constants.HOUR_IN_SECONDS ) / obj.constants.MINUTE_IN_SECONDS
+				)
+			);
+			timer.elements.seconds.length &&
+				timer.elements.seconds.text(
+					obj.zeroPad( timer.seconds % obj.constants.MINUTE_IN_SECONDS )
+				);
 		} else {
 			timer.elements.time.addClass( obj.selectors.hidden.className() );
 			timer.elements.complete.removeClass( obj.selectors.hidden.className() );
@@ -186,7 +197,7 @@ tribe.events.pro.widgets.countdown = {};
 	 *
 	 * @return {void}
 	 */
-	obj.init = function( event, index, $container, data ) {
+	obj.init = function( event, index, $container, data ) { // eslint-disable-line no-unused-vars
 		// Return early if not countdown widget.
 		if ( ! $container.is( obj.selectors.countdownWidget ) ) {
 			return;
@@ -202,7 +213,11 @@ tribe.events.pro.widgets.countdown = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterSetup.tribeEvents', tribe.events.views.manager.selectors.container, obj.init );
+		$document.on(
+			'afterSetup.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.init
+		);
 	};
 
 	// Configure on document ready.

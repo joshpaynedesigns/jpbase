@@ -60,7 +60,9 @@
 
 			var content_title = title;
 			if ( link ) {
-				content_title = $( '<div/>' ).append( $( "<a/>" ).attr( 'href', link ).text( title ) ).html();
+				content_title = $( '<div/>' )
+					.append( $( "<a/>" ).attr( 'href', link ).text( title ) )
+					.html();
 			}
 
 			var content = TribeEventsPro.map_tooltip_event + content_title;
@@ -71,7 +73,7 @@
 
 			infoWindow.setContent( content );
 
-			google.maps.event.addListener( marker, 'click', function( event ) {
+			google.maps.event.addListener( marker, 'click', function( event ) { // eslint-disable-line no-unused-vars,max-len
 				infoWindow.open( tg.map, marker );
 			} );
 
@@ -87,13 +89,14 @@
 	try {
 		tg.geocoder = new google.maps.Geocoder();
 		tg.bounds = new google.maps.LatLngBounds();
-	} catch( e ) {};
+	} catch( e ) {} // eslint-disable-line no-empty
 
 	$( function() {
 
 		/**
 		 * @function tribe_test_location
-		 * @desc tribe_test_location clears the lat and lng values in event bar if needed. Also hides or shows the geofence filter if present.
+		 * @desc tribe_test_location clears the lat and lng values in event bar if needed.
+		 *       Also hides or shows the geofence filter if present.
 		 */
 		var $tribeBar = $( '#tribe-bar-geoloc' );
 		var $fence = $( '#tribe_events_filter_item_geofence' );
@@ -121,7 +124,7 @@
 		 *
 		 * @since 4.4.22
 		 */
-		$( '#tribe-bar-geoloc' ).on( 'keydown keyup', function( e ) {
+		$( '#tribe-bar-geoloc' ).on( 'keydown keyup', function( e ) { // eslint-disable-line no-unused-vars,max-len
 			$fence.toggle( this.value.trim() !== '' );
 		} );
 
@@ -139,7 +142,7 @@
 
 			var options = {
 				zoom     : 5,
-				center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ),
+				center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ), // eslint-disable-line max-len
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 
@@ -159,10 +162,10 @@
 			 */
 			$( 'body' ).trigger( 'map-created.tribe', [ tg.map, mapEl, options, tg.bounds ] );
 
-			var minLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.min_lat, TribeEventsPro.geocenter.min_lng );
+			var minLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.min_lat, TribeEventsPro.geocenter.min_lng ); // eslint-disable-line max-len
 			tg.bounds.extend( minLatlng );
 
-			var maxLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng );
+			var maxLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ); // eslint-disable-line max-len
 			tg.bounds.extend( maxLatlng );
 		}
 		if ( $().placeholder ) {
@@ -180,7 +183,7 @@
 
 			ts.view = 'map';
 
-			if ( tribe_display == 'past' ) {
+			if ( tribe_display == 'past' ) { // eslint-disable-line eqeqeq
 				ts.view = 'past';
 			}
 
@@ -190,14 +193,10 @@
 		if ( tt.map_view() && td.params ) {
 
 			var tp = td.params;
-			if ( tf.in_params( tp, "tribe_geosearch" ) >= 0 ) {
-			}
-			else {
+			if ( tf.in_params( tp, "tribe_geosearch" ) < 0 ) {
 				tp += '&action=tribe_geosearch';
 			}
-			if ( tf.in_params( tp, "tribe_paged" ) >= 0 ) {
-			}
-			else {
+			if ( tf.in_params( tp, "tribe_paged" ) < 0 ) {
 				tp += '&tribe_paged=1';
 			}
 
@@ -223,7 +222,8 @@
 
 		if ( tt.pushstate && tt.map_view() ) {
 
-			var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+			var isShortcode = $( document.getElementById( 'tribe-events' ) )
+				.is( '.tribe-events-shortcode' );
 
 			if ( ! isShortcode || false !== config.update_urls.shortcode.map ) {
 				history.replaceState( {
@@ -263,8 +263,10 @@
 
 				$geo_bar_input.val( $this.text() );
 
-				$( '#tribe-bar-geoloc-lat' ).val( tg.geocodes[$this.data( 'index' )].geometry.location.lat() );
-				$( '#tribe-bar-geoloc-lng' ).val( tg.geocodes[$this.data( 'index' )].geometry.location.lng() );
+				$( '#tribe-bar-geoloc-lat' )
+					.val( tg.geocodes[$this.data( 'index' )].geometry.location.lat() );
+				$( '#tribe-bar-geoloc-lng' )
+					.val( tg.geocodes[$this.data( 'index' )].geometry.location.lng() );
 
 				ts.do_string = true;
 				ts.pushstate = false;
@@ -292,8 +294,7 @@
 				$geo_options.hide();
 			} );
 
-			tf.snap( '#tribe-events-content-wrapper', '#tribe-events-content-wrapper', '#tribe-events-footer .tribe-events-nav-previous a, #tribe-events-footer .tribe-events-nav-next a' );
-
+			tf.snap( '#tribe-events-content-wrapper', '#tribe-events-content-wrapper', '#tribe-events-footer .tribe-events-nav-previous a, #tribe-events-footer .tribe-events-nav-next a' ); // eslint-disable-line max-len
 		}
 
 		/**
@@ -315,10 +316,10 @@
 			}
 
 			if ( td.default_permalinks ) {
-				if( !ts.params.hasOwnProperty( 'post_type' ) ){
+				if ( ! ts.params.hasOwnProperty( 'post_type' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 					ts.params['post_type'] = config.events_post_type;
 				}
-				if( !ts.params.hasOwnProperty( 'eventDisplay' ) ){
+				if ( ! ts.params.hasOwnProperty( 'eventDisplay' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 					ts.params['eventDisplay'] = 'map';
 				}
 			}
@@ -378,7 +379,8 @@
 			$.post( GeoLoc.ajaxurl, ts.params, function( response ) {
 
 				/**
-				 * DEPRECATED: tribe_ev_ajaxStart and tribe_ev_mapView_AjaxStart have been deprecated in 4.0. Use ajax-start.tribe and map-view-ajax-start.tribe instead
+				 * DEPRECATED: tribe_ev_ajaxStart and tribe_ev_mapView_AjaxStart have been deprecated in 4.0.
+				 *             Use ajax-start.tribe and map-view-ajax-start.tribe instead
 				 */
 				$( te ).trigger( 'tribe_ev_ajaxStart' ).trigger( 'tribe_ev_mapView_AjaxStart' );
 				$( te ).trigger( 'ajax-start.tribe' ).trigger( 'map-view-ajax-start.tribe' );
@@ -404,7 +406,7 @@
 					$( '#tribe-events-content' ).replaceWith( $the_content );
 
 					//If no events are returned, then hide Header
-					if ( response.total_count == 0 ) {
+					if ( response.total_count == 0 ) { // eslint-disable-line eqeqeq
 						$( '#tribe-events-header' ).hide();
 					}
 
@@ -423,7 +425,8 @@
 
 						$( '.tribe-events-page-title' ).html( ts.view_title );
 
-						var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+						var isShortcode = $( document.getElementById( 'tribe-events' ) )
+							.is( '.tribe-events-shortcode' );
 						var shouldUpdateHistory = ! isShortcode || false !== config.update_urls.shortcode.map;
 
 						if ( ts.do_string && shouldUpdateHistory ) {
@@ -446,7 +449,8 @@
 					}
 
 					/**
-					 * DEPRECATED: tribe_ev_ajaxSuccess and tribe_ev_mapView_AjaxSuccess have been deprecated in 4.0. Use ajax-success.tribe and map-view-ajax-success.tribe instead
+					 * DEPRECATED: tribe_ev_ajaxSuccess and tribe_ev_mapView_AjaxSuccess have been deprecated in 4.0.
+					 *             Use ajax-success.tribe and map-view-ajax-success.tribe instead
 					 */
 					$( te ).trigger( 'tribe_ev_ajaxSuccess' ).trigger( 'tribe_ev_mapView_AjaxSuccess' );
 					$( te ).trigger( 'ajax-success.tribe' ).trigger( 'map-view-ajax-success.tribe' );
@@ -475,7 +479,7 @@
 					return;
 				}
 				if ( ts.view === 'past' ) {
-					if ( ts.paged == '1' ) {
+					if ( ts.paged == '1' ) { // eslint-disable-line eqeqeq
 						ts.view = 'map';
 					}
 					else {
@@ -506,7 +510,7 @@
 					return;
 				}
 				if ( ts.view === 'map' ) {
-					if ( ts.paged == '1' ) {
+					if ( ts.paged == '1' ) { // eslint-disable-line eqeqeq
 						ts.view = 'past';
 					}
 					else {
@@ -535,14 +539,16 @@
 
 		}
 
+		/* eslint-disable max-len */
 		/**
 		 * @function tribe_events_bar_mapajax_actions
 		 * @desc On events bar submit, this function collects the current state of the bar and sends it to the map view ajax handler.
 		 * @param {event} e The event object.
 		 */
+		/* eslint-enable max-len */
 
 		function tribe_events_bar_mapajax_actions( e ) {
-			if ( tribe_events_bar_action != 'change_view' ) {
+			if ( tribe_events_bar_action != 'change_view' ) { // eslint-disable-line eqeqeq
 				e.preventDefault();
 				if ( ts.ajax_running ) {
 					return;
@@ -568,7 +574,10 @@
 			}
 		}
 
-		if ( (GeoLoc.map_view && $( 'form#tribe-bar-form' ).length && tt.live_ajax() && tt.pushstate) || (GeoLoc.map_view && tt.no_bar()) ) {
+		if (
+			( GeoLoc.map_view && $( 'form#tribe-bar-form' ).length && tt.live_ajax() && tt.pushstate ) ||
+			( GeoLoc.map_view && tt.no_bar() )
+		) {
 			$( '#tribe-events-bar' ).on( 'changeDate', '#tribe-bar-date', function( e ) {
 				tribe_events_bar_mapajax_actions( e );
 			} );
@@ -587,8 +596,8 @@
 
 		function deleteMarkers() {
 			if ( tg.markers && 'undefined' !== typeof google ) {
-				for ( i in tg.markers ) {
-					tg.markers[i].setMap( null );
+				for ( i in tg.markers ) { // eslint-disable-line no-undef
+					tg.markers[i].setMap( null ); // eslint-disable-line no-undef
 				}
 				tg.markers.length = 0;
 				tg.bounds = new google.maps.LatLngBounds();
@@ -624,7 +633,7 @@
 		if ( tt.map_view() ) {
 
 			$( 'form#tribe-bar-form' ).on( 'submit', function() {
-				if ( tribe_events_bar_action != 'change_view' ) {
+				if ( tribe_events_bar_action != 'change_view' ) { // eslint-disable-line eqeqeq
 					ts.paged = 1;
 					spin_start();
 
@@ -674,7 +683,8 @@
 								}
 								else {
 									/**
-									 * DEPRECATED: tribe_ev_reloadOldBrowser has been deprecated in 4.0. Use reload-old-browser.tribe instead
+									 * DEPRECATED: tribe_ev_reloadOldBrowser has been deprecated in 4.0.
+									 *             Use reload-old-browser.tribe instead
 									 */
 									$( te ).trigger( 'tribe_ev_reloadOldBrowser' );
 									$( te ).trigger( 'reload-old-browser.tribe' );
@@ -723,4 +733,4 @@
 
 	} );
 
-})( window, document, jQuery, tribe_ev.data, tribe_ev.events, tribe_ev.fn, tribe_ev.geoloc, tribe_ev.state, tribe_ev.tests, tribe_js_config, tribe_debug );
+})( window, document, jQuery, tribe_ev.data, tribe_ev.events, tribe_ev.fn, tribe_ev.geoloc, tribe_ev.state, tribe_ev.tests, tribe_js_config, tribe_debug ); // eslint-disable-line max-len

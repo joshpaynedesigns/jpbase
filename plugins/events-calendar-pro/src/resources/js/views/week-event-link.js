@@ -208,7 +208,7 @@ tribe.events.views.weekEventLink = {};
 	 *
 	 * @return {void}
 	 */
-	obj.deinit = function( event, jqXHR, settings ) {
+	obj.deinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		obj.deinitEventLink( $container );
 		$container.off( 'beforeAjaxSuccess.tribeEvents', obj.deinit );
@@ -244,7 +244,11 @@ tribe.events.views.weekEventLink = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterSetup.tribeEvents', tribe.events.views.manager.selectors.container, obj.init );
+		$document.on(
+			'afterSetup.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.init
+		);
 	};
 
 	// Configure on document ready

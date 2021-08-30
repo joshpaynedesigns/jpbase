@@ -48,7 +48,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		eventTooltipSlide: '[data-js="tribe-events-pro-map-event-tooltip-slide"]',
 		eventTooltipPrevButton: '[data-js="tribe-events-pro-map-event-tooltip-prev-button"]',
 		eventTooltipNextButton: '[data-js="tribe-events-pro-map-event-tooltip-next-button"]',
-		eventTooltipButtonDisabledClass: '.tribe-events-pro-map__event-tooltip-navigation-button--disabled',
+		eventTooltipButtonDisabledClass: '.tribe-events-pro-map__event-tooltip-navigation-button--disabled', // eslint-disable-line max-len
 		eventActionLinkDetails: '[data-js="tribe-events-pro-map-event-actions-link-details"]',
 		tribeCommonA11yHiddenClass: '.tribe-common-a11y-hidden',
 	};
@@ -61,7 +61,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 * @type {PlainObject}
 	 */
 	obj.state = {
-		mapsScriptLoaded: 'undefined' !== typeof window.google && 'undefined' !== typeof window.google.maps,
+		mapsScriptLoaded: 'undefined' !== typeof window.google && 'undefined' !== typeof window.google.maps, // eslint-disable-line max-len
 		zoom: 10,
 	};
 
@@ -90,12 +90,15 @@ tribe.events.views.mapProviderGoogleMaps = {};
 			var activeEventCardWrapperSelector = '[data-event-id="' + eventId + '"]';
 
 			var $buttons = $container.find( mapEventsSelectors.eventCardButton );
-			var $eventCardWrapper = $container.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector );
+			var $eventCardWrapper = $container
+				.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector );
 			var $button = $eventCardWrapper.find( mapEventsSelectors.eventCardButton );
 
 			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
 			tribe.events.views.mapEvents.selectEvent( $button );
-			if ( ! tribe.events.views.mapEventsScroller.isWithinScrollView( $container, $eventCardWrapper ) ) {
+			if (
+				! tribe.events.views.mapEventsScroller.isWithinScrollView( $container, $eventCardWrapper )
+			) {
 				tribe.events.views.mapEventsScroller.scrollTo( $container, $eventCardWrapper );
 			}
 		};
@@ -112,8 +115,8 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 * @return {PlainObject|boolean}
 	 */
 	obj.getEventFromState = function( state, eventId ) {
-		var eventObjects = state.events.filter( function( event, index ) {
-			return event.eventId == eventId;
+		var eventObjects = state.events.filter( function( event ) {
+			return event.eventId == eventId; // eslint-disable-line eqeqeq
 		} );
 
 		if ( eventObjects.length ) {
@@ -155,7 +158,8 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		if ( $tooltipSlider.length ) {
 			var state = $googleMapsPremium.data( 'tribeEventsState' );
 			var activeEventTooltipSlideSelector = '[data-event-id="' + state.activeEventId + '"]';
-			var $initialSlide = $tooltipSlider.find( obj.selectors.eventTooltipSlide + activeEventTooltipSlideSelector );
+			var $initialSlide = $tooltipSlider
+				.find( obj.selectors.eventTooltipSlide + activeEventTooltipSlideSelector );
 
 			state.slider = new Swiper( $tooltipSlider[0], {
 				initialSlide: $initialSlide.attr( 'data-slide-index' ),
@@ -219,11 +223,13 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 */
 	obj.handleEventClick = function( event, $container, $button ) {
 		var isPremium = $container.find( obj.selectors.map ).data( 'tribeEventsState' ).isPremium;
+		var $eventCardWrapper;
+		var detailsLink;
 
 		if ( ! isPremium ) {
 			// set google maps default iframe src
 			var $googleMapsDefault = $container.find( obj.selectors.googleMapsDefault );
-			var $eventCardWrapper = $button.closest( obj.selectors.eventCardWrapper );
+			$eventCardWrapper = $button.closest( obj.selectors.eventCardWrapper );
 			var currentSrc = $googleMapsDefault.attr( 'src' );
 			var src = $eventCardWrapper.attr( 'data-src' );
 			$container.trigger( 'closeNoVenueModal.tribeEvents' );
@@ -233,7 +239,9 @@ tribe.events.views.mapProviderGoogleMaps = {};
 				$googleMapsDefault.attr( 'src', src );
 			} else if ( ! src ) {
 				// If data-src does not exist for iframe (event does not have venue)
-				var detailsLink = $eventCardWrapper.find( obj.selectors.eventActionLinkDetails ).attr( 'href' );
+				detailsLink = $eventCardWrapper
+					.find( obj.selectors.eventActionLinkDetails )
+					.attr( 'href' );
 
 				$container.trigger( 'openNoVenueModal.tribeEvents' );
 				$container.trigger( 'setNoVenueModalLink.tribeEvents', [ detailsLink ] );
@@ -241,7 +249,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		} else {
 			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
 			var state = $googleMapsPremium.data( 'tribeEventsState' );
-			var $eventCardWrapper = $button.closest( obj.selectors.eventCardWrapper );
+			$eventCardWrapper = $button.closest( obj.selectors.eventCardWrapper );
 			var eventId = $eventCardWrapper.attr( 'data-event-id' );
 			var eventObject = obj.getEventFromState( state, eventId );
 
@@ -253,7 +261,12 @@ tribe.events.views.mapProviderGoogleMaps = {};
 			if ( eventObject ) {
 				// Open selected event tooltip
 				var $tooltipTemplate = $eventCardWrapper.find( obj.selectors.eventTooltipTemplate );
-				obj.openTooltip( state.tooltip, $tooltipTemplate[0].textContent, state.map, eventObject.marker );
+				obj.openTooltip(
+					state.tooltip,
+					$tooltipTemplate[0].textContent,
+					state.map,
+					eventObject.marker
+				);
 
 				// set active event id
 				state.activeEventId = eventId;
@@ -263,7 +276,9 @@ tribe.events.views.mapProviderGoogleMaps = {};
 				state.map.panTo( eventObject.marker.getPosition() );
 			} else {
 				// If event object does not exist (event does not have venue)
-				var detailsLink = $eventCardWrapper.find( obj.selectors.eventActionLinkDetails ).attr( 'href' );
+				detailsLink = $eventCardWrapper
+					.find( obj.selectors.eventActionLinkDetails )
+					.attr( 'href' );
 
 				$container.trigger( 'openNoVenueModal.tribeEvents' );
 				$container.trigger( 'setNoVenueModalLink.tribeEvents', [ detailsLink ] );
@@ -288,11 +303,9 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		 *
 		 * @since 4.7.7
 		 *
-		 * @param {Event} event event object.
-		 *
 		 * @return {void}
 		 */
-		return function( event ) {
+		return function() {
 			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
 			var state = $googleMapsPremium.data( 'tribeEventsState' );
 			var eventIds = marker.get( 'eventIds' );
@@ -302,13 +315,16 @@ tribe.events.views.mapProviderGoogleMaps = {};
 			var activeEventCardWrapperSelector = '[data-event-id="' + eventIds[0] + '"]';
 
 			var $buttons = $container.find( mapEventsSelectors.eventCardButton );
-			var $eventCardWrapper = $container.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector );
+			var $eventCardWrapper = $container
+				.find( mapEventsSelectors.eventCardWrapper + activeEventCardWrapperSelector );
 			var $button = $eventCardWrapper.find( mapEventsSelectors.eventCardButton );
 
 			// deselect all events and select active event
 			tribe.events.views.mapEvents.deselectAllEvents( $buttons );
 			tribe.events.views.mapEvents.selectEvent( $button );
-			if ( ! tribe.events.views.mapEventsScroller.isWithinScrollView( $container, $eventCardWrapper ) ) {
+			if (
+				! tribe.events.views.mapEventsScroller.isWithinScrollView( $container, $eventCardWrapper )
+			) {
 				tribe.events.views.mapEventsScroller.scrollTo( $container, $eventCardWrapper );
 			}
 
@@ -337,17 +353,15 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 *
 	 * @return {function}
 	 */
-	obj.handleMapClick = function( $container, map ) {
+	obj.handleMapClick = function( $container, map ) { // eslint-disable-line no-unused-vars
 		/**
 		 * Handle map click.
 		 *
 		 * @since 4.7.8
-		 *
-		 * @param {Event} event event object.
-		 *
+\		 *
 		 * @return {void}
 		 */
-		return function( event ) {
+		return function() {
 			var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
 			var state = $googleMapsPremium.data( 'tribeEventsState' );
 
@@ -435,7 +449,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		var $googleMapsPremium = $container.find( obj.selectors.googleMapsPremium );
 		var state = $googleMapsPremium.data( 'tribeEventsState' );
 
-		state.markers.forEach( function( marker, index ) {
+		state.markers.forEach( function( marker ) {
 			google.maps.event.clearInstanceListeners( marker );
 			marker.setMap( null );
 		} );
@@ -736,7 +750,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 		 *
 		 * @return {void}
 		 */
-		return function( script, textStatus, jqXHR ) {
+		return function( script, textStatus, jqXHR ) { // eslint-disable-line no-unused-vars
 			obj.state.mapsScriptLoaded = true;
 			obj.initMap( $container, data );
 			$container.on( 'afterMapEventClick.tribeEvents', obj.handleEventClick );
@@ -775,7 +789,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 	 *
 	 * @return {void}
 	 */
-	obj.deinit = function( event, jqXHR, settings ) {
+	obj.deinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		obj.deinitMap( $container );
 		$container.off( 'afterMapEventClick.tribeEvents', obj.handleEventClick );

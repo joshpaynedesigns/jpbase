@@ -3,6 +3,7 @@
  * Handles Views v2 Customizer settings.
  *
  * @since   5.1.1
+ * @deprecated 5.9.0
  *
  * @package Tribe\Events\Views\V2
  */
@@ -21,6 +22,7 @@ class Customizer {
 	 * Filters the currently registered Customizer sections to add or modify them.
 	 *
 	 * @since 5.1.1
+	 * @deprecated 5.9.0
 	 *
 	 * @param array<string,array<string,array<string,int|float|string>>> $sections   The registered Customizer sections.
 	 * @param \Tribe___Customizer                                        $customizer The Customizer object.
@@ -28,6 +30,7 @@ class Customizer {
 	 * @return array<string,array<string,array<string,int|float|string>>> The filtered sections.
 	 */
 	public function filter_sections( array $sections, $customizer ) {
+		_deprecated_function( __METHOD__, '5.9.0', 'Use functions in Views\V2\Customizer' );
 		// TODO Filter the sections.
 		return $sections;
 	}
@@ -36,6 +39,7 @@ class Customizer {
 	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
 	 *
 	 * @since 5.1.1
+	 * @deprecated 5.9.0
 	 *
 	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
 	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
@@ -44,6 +48,7 @@ class Customizer {
 	 * @return string The filtered CSS template.
 	 */
 	public function filter_global_elements_css_template( $css_template, $section ) {
+		_deprecated_function( __METHOD__, '5.9.0', 'Tribe\Events\Pro\Views\V2\Customizer\Section\Global_Elements->filter_global_elements_css_template()' );
 		$customizer = tribe( 'customizer' );
 
 		// These allow us to continue to _not_ target the shortcode.
@@ -140,45 +145,6 @@ class Customizer {
 					color: rgba({$date_css_rgb}, .88);
 				}
 			";
-		}
-
-		if ( $customizer->has_option( $section->ID, 'link_color' ) ) {
-			// Organizer/Venue Links Overrides.
-			$css_template .= '
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:visited,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:visited,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus,
-				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
-				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
-				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
-				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:visited,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:visited,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
-				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus {
-					color: <%= global_elements.link_color %>;
-				}
-
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
-				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
-				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus {
-					border-color: <%= global_elements.link_color %>;
-				}
-			';
 		}
 
 		if ( $customizer->has_option( $section->ID, 'accent_color' ) ) {
@@ -285,6 +251,45 @@ class Customizer {
 			';
 		}
 
+		if ( $customizer->has_option( $section->ID, 'link_color' ) ) {
+			// Organizer/Venue Links Overrides.
+			$css_template .= '
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:visited,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:visited,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus,
+				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
+				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
+				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
+				.tribe-theme-twentyseventeen .tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:visited,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:visited,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
+				.tribe-theme-enfold .tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus {
+					color: <%= global_elements.link_color %>;
+				}
+
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:active,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:focus,
+				.tribe-events-pro .tribe-events-pro-organizer__meta-website-link:hover,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:active,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:hover,
+				.tribe-events-pro .tribe-events-pro-venue__meta-website-link:focus {
+					border-color: <%= global_elements.link_color %>;
+				}
+			';
+		}
+
 		return $css_template;
 	}
 
@@ -292,6 +297,7 @@ class Customizer {
 	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
 	 *
 	 * @since 5.1.1
+	 * @deprecated 5.9.0
 	 *
 	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
 	 * @param \Tribe__Customizer__Section $section      The Single Event section.
@@ -300,6 +306,7 @@ class Customizer {
 	 * @return string The filtered CSS template.
 	 */
 	public function filter_single_event_css_template( $css_template, $section, $customizer ) {
+		_deprecated_function( __METHOD__, '5.9.0', 'Tribe\Events\Pro\Views\V2\Customizer\Section\Single_Event->filter_single_event_css_template()' );
 		return $css_template;
 	}
 }

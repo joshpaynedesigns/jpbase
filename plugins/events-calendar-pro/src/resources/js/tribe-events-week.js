@@ -141,9 +141,9 @@
 
 		function tribe_add_right_class() {
 
-			var $cols = ( $( '.tribe-week-grid-wrapper .tribe-grid-body .column' ).length > 6 ) ?
-				$( '.tribe-grid-body .column:eq(5), .tribe-grid-body .column:eq(6), .tribe-grid-body .column:eq(7)' ) :
-				$( '.tribe-grid-body .column:eq(4), .tribe-grid-body .column:eq(5)' );
+			var $cols = ( $( '.tribe-week-grid-wrapper .tribe-grid-body .column' ).length > 6 )
+				? $( '.tribe-grid-body .column:eq(5), .tribe-grid-body .column:eq(6), .tribe-grid-body .column:eq(7)' ) // eslint-disable-line max-len
+				: $( '.tribe-grid-body .column:eq(4), .tribe-grid-body .column:eq(5)' );
 
 			$cols.addClass( 'tribe-events-right' );
 		}
@@ -164,7 +164,10 @@
 
 			for ( var i = 1; i < 8; i++ ) {
 				if ( $ad_e.hasClass( 'tribe-dayspan' + i ) ) {
-					$ad.find( '.tribe-dayspan' + i ).children( 'div' ).css( 'width', ad_c_w * i + ((i * 2 - 2) * 4 + (i - 1)) + 'px' );
+					$ad
+						.find( '.tribe-dayspan' + i )
+						.children( 'div' )
+						.css( 'width', ad_c_w * i + ((i * 2 - 2) * 4 + (i - 1)) + 'px' );
 				}
 			}
 
@@ -227,7 +230,7 @@
 
 		function tribe_display_week_view() {
 
-			var $week_events = $( ".tribe-grid-body .tribe-grid-content-wrap .column > div[id*='tribe-events-event-']" );
+			var $week_events = $( ".tribe-grid-body .tribe-grid-content-wrap .column > div[id*='tribe-events-event-']" );  // eslint-disable-line max-len
 			var grid_height  = $( ".tribe-week-grid-inner-wrap" ).height();
 			var offset_top   = 5000;
 
@@ -247,14 +250,14 @@
 				var event_position_top = 0;
 
 				if ( $event_target.get(0) ) {
-					event_position_top = $event_target.offset().top - $event_target.parent().offset().top - $event_target.parent().scrollTop();
+					event_position_top = $event_target.offset().top - $event_target.parent().offset().top - $event_target.parent().scrollTop();  // eslint-disable-line max-len
 				}
 
 				// add the events minutes to the offset (relies on grid block being 60px, 1px per minute, nice)
 				event_position_top = parseInt( Math.round( event_position_top ) ) + parseInt( event_min );
 
 				// test if we've exceeded space because this event runs into next day
-				var free_space = parseInt( grid_height ) - parseInt( event_length ) - parseInt( event_position_top );
+				var free_space = parseInt( grid_height ) - parseInt( event_length ) - parseInt( event_position_top ); // eslint-disable-line max-len
 
 				if ( 0 > free_space ) {
 					event_length = event_length + free_space - 14;
@@ -358,7 +361,10 @@
 				$target_day = $( '.tribe-mobile-day[data-day="' + date + '"]' );
 			}
 
-			if ( ! $target_day.find( 'h5' ).length && $target_day.find( '.tribe-events-mobile' ).length ) {
+			if (
+				! $target_day.find( 'h5' ).length &&
+				$target_day.find( '.tribe-events-mobile' ).length
+			) {
 				$target_day.prepend( '<h5 class="tribe-mobile-day-date">' + day_attr + '</h5>' );
 			}
 		}
@@ -420,7 +426,8 @@
 				params = params + '&featured=1';
 			}
 
-			var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+			var isShortcode = $( document.getElementById( 'tribe-events' ) )
+				.is( '.tribe-events-shortcode' );
 
 			if ( ! isShortcode || false !== config.update_urls.shortcode.week ) {
 				history.replaceState({
@@ -470,15 +477,17 @@
 				} );
 			} );
 
+		/* eslint-disable max-len */
 		/**
 		 * @function tribe_events_bar_weekajax_actions
 		 * @desc On events bar submit, this function collects the current state of the bar and sends it to the week view ajax handler.
 		 * @param {event} e The event object.
 		 * @param {string} date Date passed by datepicker.
 		 */
+		/* eslint-enable max-len */
 
 		function tribe_events_bar_weekajax_actions( e, date ) {
-			if ( 'change_view' != tribe_events_bar_action ) {
+			if ( 'change_view' != tribe_events_bar_action ) { // eslint-disable-line eqeqeq
 				e.preventDefault();
 				if ( ts.ajax_running ) {
 					return;
@@ -497,7 +506,11 @@
 					let maskKey = ts.datepicker_format.toString();
 
 					if ( '0' !== ts.datepicker_format ) {
-						ts.date = tribeUtils.formatDateWithMoment( $tdate.bootstrapDatepicker( 'getDate' ), "tribeQuery", maskKey );
+						ts.date = tribeUtils.formatDateWithMoment(
+							$tdate.bootstrapDatepicker( 'getDate' ),
+							'tribeQuery',
+							maskKey
+						);
 					} else {
 						ts.date = $tdate.val();
 					}
@@ -526,12 +539,13 @@
 			tribe_events_bar_weekajax_actions( e, null );
 		} );
 
-		tf.snap( '#tribe-events-content', 'body', '#tribe-events-footer .tribe-events-nav-previous, #tribe-events-footer .tribe-events-nav-next' );
+		tf.snap( '#tribe-events-content', 'body', '#tribe-events-footer .tribe-events-nav-previous, #tribe-events-footer .tribe-events-nav-next' ); // eslint-disable-line max-len
 
 		$( te ).on( 'run-ajax.tribe', function() {
 			tribe_events_week_ajax_post();
 		} );
 
+		/* eslint-disable max-len */
 		/**
 		 * @function tribe_events_week_ajax_post
 		 * @desc The ajax handler for week view.
@@ -539,14 +553,13 @@
 		 * As post begins 'tribe_ev_ajaxStart' and 'tribe_ev_weekView_AjaxStart' are fired, and then 'tribe_ev_ajaxSuccess' and 'tribe_ev_weekView_ajaxSuccess' are fired on success.
 		 * Various functions in the events plugins hook into these events. They are triggered on the tribe_ev.events object.
 		 */
+		/* eslint-enable max-len */
 
 		function tribe_events_week_ajax_post() {
 
 			if ( tf.invalid_date( ts.date ) ) {
 				return;
 			}
-
-			var $tribe_header = $( '#tribe-events-header' );
 
 			$( '.tribe-events-grid' ).tribe_spin();
 			ts.pushcount    = 0;
@@ -568,19 +581,19 @@
 				ts.url_params = {};
 
 				if ( td.default_permalinks ) {
-					if ( ! ts.url_params.hasOwnProperty( 'eventDate' ) ) {
+					if ( ! ts.url_params.hasOwnProperty( 'eventDate' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 						ts.url_params['eventDate'] = ts.date;
 					}
-					if ( ! ts.url_params.hasOwnProperty( 'post_type' ) ) {
+					if ( ! ts.url_params.hasOwnProperty( 'post_type' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 						ts.url_params['post_type'] = config.events_post_type;
 					}
-					if ( ! ts.url_params.hasOwnProperty( 'eventDisplay' ) ) {
+					if ( ! ts.url_params.hasOwnProperty( 'eventDisplay' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 						ts.url_params['eventDisplay'] = ts.view;
 					}
 				}
 
 				// add shortcode display value
-				if ( ! ts.url_params.hasOwnProperty( 'tribe_event_display' ) ) {
+				if ( ! ts.url_params.hasOwnProperty( 'tribe_event_display' ) ) { // eslint-disable-line no-prototype-builtins,max-len
 					ts.url_params['tribe_event_display'] = ts.view;
 				}
 
@@ -621,7 +634,8 @@
 				// @endif
 
 				/**
-				 * DEPRECATED: tribe_ev_ajaxStart and tribe_ev_weekView_AjaxStart have been deprecated in 4.0. Use ajax-start.tribe and week-view-ajax-start.tribe instead
+				 * DEPRECATED: tribe_ev_ajaxStart and tribe_ev_weekView_AjaxStart have been deprecated in 4.0.
+				 *             Use ajax-start.tribe and week-view-ajax-start.tribe instead
 				 */
 				$( te ).trigger( 'tribe_ev_ajaxStart' ).trigger( 'tribe_ev_weekView_AjaxStart' );
 				$( te ).trigger( 'ajax-start.tribe' ).trigger( 'week-view-ajax-start.tribe' );
@@ -682,7 +696,8 @@
 							appended = true;
 						}
 
-						var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+						var isShortcode = $( document.getElementById( 'tribe-events' ) )
+							.is( '.tribe-events-shortcode' );
 						var shouldUpdateHistory = ! isShortcode || false !== config.update_urls.shortcode.week;
 
 						if ( ts.do_string && shouldUpdateHistory ) {
@@ -700,7 +715,8 @@
 						}
 
 						/**
-						 * DEPRECATED: tribe_ev_ajaxSuccess and tribe_ev_weekView_AjaxSuccess have been deprecated in 4.0. Use ajax-success.tribe and week-view-ajax-success.tribe instead
+						 * DEPRECATED: tribe_ev_ajaxSuccess and tribe_ev_weekView_AjaxSuccess have been deprecated in 4.0.
+						 *             Use ajax-success.tribe and week-view-ajax-success.tribe instead
 						 */
 						$( te ).trigger( 'tribe_ev_ajaxSuccess' ).trigger( 'tribe_ev_weekView_AjaxSuccess' );
 						$( te ).trigger( 'ajax-success.tribe' ).trigger( 'week-view-ajax-success.tribe' );
@@ -723,7 +739,7 @@
 		}
 
 		// Prevent double-tap to open link to single event
-		$( '.tribe-week-event a.url' ).on( 'click touchend', function( e ) {
+		$( '.tribe-week-event a.url' ).on( 'click touchend', function( e ) { // eslint-disable-line no-unused-vars,max-len
 			var el   = $( this );
 			var link = el.attr( 'href' );
 			window.location = link;
@@ -735,4 +751,4 @@
 		// @endif
 	} );
 
-})( window, document, jQuery, tribe_ev.data, tribe_ev.events, tribe_ev.fn, tribe_ev.state, tribe_ev.tests, tribe_js_config, tribe_debug );
+})( window, document, jQuery, tribe_ev.data, tribe_ev.events, tribe_ev.fn, tribe_ev.state, tribe_ev.tests, tribe_js_config, tribe_debug ); // eslint-disable-line max-len

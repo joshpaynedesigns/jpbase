@@ -39,7 +39,7 @@ tribe.events.views.weekGridScroller = {};
 	 * @type {PlainObject}
 	 */
 	obj.selectors = {
-		weekGridEventsRowOuterWrapper: '[data-js="tribe-events-pro-week-grid-events-row-outer-wrapper"]',
+		weekGridEventsRowOuterWrapper: '[data-js="tribe-events-pro-week-grid-events-row-outer-wrapper"]', // eslint-disable-line max-len
 		weekGridEventsRowWrapper: '[data-js="tribe-events-pro-week-grid-events-row-wrapper"]',
 		weekGridEventsRowWrapperClass: '.tribe-events-pro-week-grid__events-row-wrapper',
 		weekGridEventsRowWrapperActiveClass: '.tribe-events-pro-week-grid__events-row-wrapper--active',
@@ -77,7 +77,7 @@ tribe.events.views.weekGridScroller = {};
 				}
 			} );
 
-		var position = $firstEvent ? $firstEvent.position().top : position;
+		position = $firstEvent ? $firstEvent.position().top : position;
 
 		// Add 16px spacer to top of first event position
 		if ( position - 16 > 0 ) {
@@ -141,7 +141,7 @@ tribe.events.views.weekGridScroller = {};
 	 *
 	 * @return {void}
 	 */
-	obj.deinit = function( event, jqXHR, settings ) {
+	obj.deinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		obj.deinitScroller( $container );
 		$container.off( 'beforeAjaxSuccess.tribeEvents', obj.deinit );
@@ -176,7 +176,11 @@ tribe.events.views.weekGridScroller = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterSetup.tribeEvents', tribe.events.views.manager.selectors.container, obj.init );
+		$document.on(
+			'afterSetup.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.init
+		);
 	};
 
 	// Configure on document ready

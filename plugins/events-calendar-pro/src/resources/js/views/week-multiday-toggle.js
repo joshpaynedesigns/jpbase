@@ -107,7 +107,8 @@ tribe.events.views.weekMultidayToggle = {};
 
 		containerIds.forEach( function( toggleContent ) {
 			var $toggleContent = $multidayRow.find( '#' + toggleContent );
-			var $moreButtonWrapper = $toggleContent.siblings( obj.selectors.weekMultidayMoreButtonWrapper );
+			var $moreButtonWrapper = $toggleContent
+				.siblings( obj.selectors.weekMultidayMoreButtonWrapper );
 			var $moreButton = $moreButtonWrapper.find( obj.selectors.weekMultidayMoreButton )
 
 			togglesAndContainers.push( {
@@ -183,7 +184,7 @@ tribe.events.views.weekMultidayToggle = {};
 	 *
 	 * @return {void}
 	 */
-	obj.deinit = function( event, jqXHR, settings ) {
+	obj.deinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		obj.deinitToggle( $container );
 		$container.off( 'beforeAjaxSuccess.tribeEvents', obj.deinit );
@@ -202,7 +203,7 @@ tribe.events.views.weekMultidayToggle = {};
 	 *
 	 * @return {void}
 	 */
-	obj.init = function( event, index, $container, data ) {
+	obj.init = function( event, index, $container, data ) { // eslint-disable-line no-unused-vars
 		var $toggleButton = $container.find( obj.selectors.weekMultidayToggleButton );
 
 		if ( ! $toggleButton.length ) {
@@ -221,7 +222,11 @@ tribe.events.views.weekMultidayToggle = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterSetup.tribeEvents', tribe.events.views.manager.selectors.container, obj.init );
+		$document.on(
+			'afterSetup.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.init
+		);
 	};
 
 	// Configure on document ready
