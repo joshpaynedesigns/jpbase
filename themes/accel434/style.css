@@ -2216,9 +2216,6 @@ Events Single
     border: none;
     margin: 0;
     padding: 0; }
-  .single-tribe_events #tribe-events-pg-template .tribe-events-content-wrap .tribe-events-cal-links .tribe-events-gcal,
-  .single-tribe_events #tribe-events-pg-template .tribe-events-content-wrap .tribe-events-cal-links .tribe-events-ical {
-    padding: 0; }
 
 .single-tribe_events #tribe-events-pg-template .tribe-events-event-meta {
   margin-bottom: 0;

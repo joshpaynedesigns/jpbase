@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 var tribe_events_pro_admin = tribe_events_pro_admin || {};
 
 tribe_events_pro_admin.recurrence = {
@@ -170,11 +171,11 @@ tribe_events_pro_admin.recurrence = {
 			if ( data.custom.date.date ) {
 				data.custom.date.date = moment( data.custom.date.date ).format( this.date_format );
 			}
-		} catch ( e ) {}
+		} catch ( e ) {} // eslint-disable-line no-empty
 
 		this.$recurrence_staging.append( this.recurrence_template( data ) );
 
-		var $rule = this.$recurrence_staging.find( '.tribe-event-recurrence' );
+		var $rule = this.$recurrence_staging.find( '.tribe-event-recurrence' ); // eslint-disable-line es5/no-es6-methods,max-len
 
 		if ( is_new ) {
 			$rule.addClass( 'recurrence-new-rule' );
@@ -384,7 +385,7 @@ tribe_events_pro_admin.recurrence = {
 		var $rule = this.$recurrence_rules.filter( ':first' );
 		var rule_set = false;
 
-		this.$recurrence_rules.find( '[data-field="type"]' ).each( function() {
+		this.$recurrence_rules.find( '[data-field="type"]' ).each( function() { // eslint-disable-line es5/no-es6-methods,max-len
 			var $el = $( this );
 			if ( 'None' !== $el.data( 'value' ) ) {
 				rule_set = true;
@@ -411,7 +412,7 @@ tribe_events_pro_admin.recurrence = {
 
 		this.$exclusion_staging.append( this.exclusion_template( data ) );
 
-		var $rule = this.$exclusion_staging.find( '.tribe-event-exclusion' );
+		var $rule = this.$exclusion_staging.find( '.tribe-event-exclusion' ); // eslint-disable-line es5/no-es6-methods,max-len
 
 		if ( is_new ) {
 			$rule.addClass( 'exclusion-new-rule' );
@@ -476,7 +477,6 @@ tribe_events_pro_admin.recurrence = {
 	 * populate recurrence UI based on recurrence data
 	 */
 	my.populate_recurrence = function( data ) {
-		var i = 0;
 		my.operations_completed = 0;
 		my.total_operations = 0;
 
@@ -786,8 +786,6 @@ tribe_events_pro_admin.recurrence = {
 			return;
 		}
 
-		var $event_form = $rule.closest( '.eventForm' );
-
 		var date_format = this.date_format + ' hh:mm a';
 
 		var $start_date = $( document.getElementById( 'EventStartDate' ) );
@@ -799,7 +797,6 @@ tribe_events_pro_admin.recurrence = {
 
 		var $end_date   = $( document.getElementById( 'EventEndDate' ) );
 		var end_date    = $end_date.val();
-		var $selected_end_meridian = $event_form.find( '[name="EventEndMeridian"] option:selected' );
 
 		var $end_time   = $( document.getElementById( 'EventEndTime' ) );
 		var end_time    = $end_time.val().toUpperCase();
@@ -856,9 +853,9 @@ tribe_events_pro_admin.recurrence = {
 				month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.weekdays[ parseInt( month_day, 10 ) - 1 ] );
 			}
 		} else if ( 'yearly' === type ) {
-			var same_day     = $rule.find( '[data-field="year-same-day"] option:selected' ).val();
-			var month_number = $rule.find( '[data-field="custom-year-month-number"]' ).val();
-			var month_day    = $rule.find( '[data-field="custom-year-month-day"]' ).val();
+			var same_day     = $rule.find( '[data-field="year-same-day"] option:selected' ).val(); // eslint-disable-line no-redeclare,max-len
+			var month_number = $rule.find( '[data-field="custom-year-month-number"]' ).val(); // eslint-disable-line no-redeclare,max-len
+			var month_day    = $rule.find( '[data-field="custom-year-month-day"]' ).val(); // eslint-disable-line no-redeclare,max-len
 
 			var months       = [];
 			var month_values = $rule.find( '[data-field="custom-year-month"]' ).val();
@@ -902,7 +899,7 @@ tribe_events_pro_admin.recurrence = {
 				return;
 			}
 
-			var single_moment = moment( single_date, date_format );
+			var single_moment = moment( single_date, date_format ); // eslint-disable-line no-redeclare,max-len
 		}
 
 		// For single date rules, 'after' or 'never' will not be required
@@ -925,7 +922,7 @@ tribe_events_pro_admin.recurrence = {
 		// alternative when necessary (ie, if 'date-on-at' isn't available, use 'date-on' instead)
 		if (
 			'undefined' === typeof tribe_events_pro_recurrence_strings.recurrence[ key ]
-			&& key.endsWith( '-at' )
+			&& key.endsWith( '-at' ) // eslint-disable-line es5/no-es6-methods
 		) {
 			key = key.replace( /-at$/, '' );
 		}
@@ -993,8 +990,6 @@ tribe_events_pro_admin.recurrence = {
 	my.event.recurrence_type_changed = function() {
 		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
-
-		var val = $el.find( 'option:selected' ).val();
 
 		var $count_text = $rule.find( '.occurence-count-text' );
 		var end_count   = parseInt( $rule.find( '.recurrence_end_count' ).val(), 10 );
@@ -1075,7 +1070,7 @@ tribe_events_pro_admin.recurrence = {
 	/**
 	 * validates the recurrence data before submission occurs
 	 */
-	my.event.submit_validation = function() {
+	my.event.submit_validation = function( e ) {
 		if ( ! tribe_events_pro_admin.validate_recurrence() ) {
 			e.preventDefault();
 			e.stopPropagation();

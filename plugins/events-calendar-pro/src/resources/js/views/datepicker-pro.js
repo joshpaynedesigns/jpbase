@@ -1,4 +1,3 @@
-/* globals tribe, jQuery */
 /**
  * Makes sure we have all the required levels on the Tribe Object
  *
@@ -74,7 +73,7 @@ tribe.events.views.datepickerPro = {};
 	 * @return {void}
 	 */
 	obj.handleDisabledDayClick = function( event ) {
-		event.data.row.find( obj.selectors.datepickerDayNotDisabled ).click();
+		event.data.row.find( obj.selectors.datepickerDayNotDisabled ).click(); // eslint-disable-line es5/no-es6-methods,max-len
 	};
 
 	/**
@@ -87,7 +86,7 @@ tribe.events.views.datepickerPro = {};
 	 * @return {void}
 	 */
 	obj.bindRowEvents = function( event ) {
-		var $datepickerDays = event.data.container.find( obj.selectors.datepickerDays );
+		var $datepickerDays = event.data.container.find( obj.selectors.datepickerDays ); // eslint-disable-line es5/no-es6-methods,max-len
 		var config = { attributes: true, childList: true, subtree: true };
 
 		var $container = event.data.container;
@@ -135,13 +134,13 @@ tribe.events.views.datepickerPro = {};
 	 *
 	 * @since  4.7.9
 	 *
-	 * @param  {Event}       event    event object for 'afterDatepickerDeinit.tribeEvents' event
-	 * @param  {jqXHR}       jqXHR    Request object
+	 * @param  {Event}  event    event object for 'afterDatepickerDeinit.tribeEvents' event
+	 * @param  {jqXHR}  jqXHR    Request object
 	 * @param  {Object} settings Settings that this request was made with
 	 *
 	 * @return {void}
 	 */
-	obj.afterDeinit = function( event, jqXHR, settings ) {
+	obj.afterDeinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		$container
 			.off( 'afterDatepickerDeinit.tribeEvents', obj.afterDeinit )
@@ -166,8 +165,8 @@ tribe.events.views.datepickerPro = {};
 		var daysOfWeekDisabled = [];
 
 		if ( 'week' === data.slug ) {
-			[ 0, 1, 2, 3, 4, 5, 6 ].forEach( function( value, index ) {
-				if ( data.start_of_week == value ) {
+			[ 0, 1, 2, 3, 4, 5, 6 ].forEach( function( value ) {
+				if ( data.start_of_week == value ) { // eslint-disable-line eqeqeq
 					return;
 				}
 
@@ -196,10 +195,22 @@ tribe.events.views.datepickerPro = {};
 		}
 
 		$container
-			.on( 'afterDatepickerDeinit.tribeEvents', { container: $container, viewSlug: data.slug }, obj.afterDeinit )
-			.on( 'handleMutationMonthChange.tribeEvents', { container: $container, observer: tribe.events.views.datepicker.observer }, obj.bindRowEvents )
+			.on(
+				'afterDatepickerDeinit.tribeEvents',
+				{ container: $container, viewSlug: data.slug },
+				obj.afterDeinit
+			)
+			.on(
+				'handleMutationMonthChange.tribeEvents',
+				{ container: $container, observer: tribe.events.views.datepicker.observer },
+				obj.bindRowEvents
+			)
 			.find( tribe.events.views.datepicker.selectors.input )
-			.on( 'show', { container: $container, observer: tribe.events.views.datepicker.observer }, obj.bindRowEvents );
+			.on(
+				'show',
+				{ container: $container, observer: tribe.events.views.datepicker.observer },
+				obj.bindRowEvents
+			);
 	};
 
 	/**
@@ -210,8 +221,16 @@ tribe.events.views.datepickerPro = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'beforeDatepickerInit.tribeEvents', tribe.events.views.manager.selectors.container, obj.beforeInit );
-		$document.on( 'afterDatepickerInit.tribeEvents', tribe.events.views.manager.selectors.container, obj.afterInit );
+		$document.on(
+			'beforeDatepickerInit.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.beforeInit
+		);
+		$document.on(
+			'afterDatepickerInit.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.afterInit
+		);
 	};
 
 	// Configure on document ready
