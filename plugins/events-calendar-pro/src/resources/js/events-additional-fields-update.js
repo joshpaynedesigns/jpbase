@@ -7,7 +7,6 @@ jQuery( function( $ ) {
 	var $link   = $status.find( "a" );
 	var check   = tribe_additional_fields.update_check;
 
-
 	/**
 	 * Gracefully remove the update notice.
 	 */

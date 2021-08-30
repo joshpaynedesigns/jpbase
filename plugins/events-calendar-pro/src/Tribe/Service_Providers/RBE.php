@@ -10,8 +10,7 @@
  *
  * @since 4.7
  */
-class
-Tribe__Events__Pro__Service_Providers__RBE extends tad_DI52_ServiceProvider {
+class Tribe__Events__Pro__Service_Providers__RBE extends tad_DI52_ServiceProvider {
 	const OPTION_NAME = 'rbe_engine';
 	const VERSION_1 = 'v1';
 	const NONE = 'none';

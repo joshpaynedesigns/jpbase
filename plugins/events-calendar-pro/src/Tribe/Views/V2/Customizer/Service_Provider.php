@@ -8,7 +8,7 @@
 
 namespace Tribe\Events\Pro\Views\V2\Customizer;
 
-use Tribe\Events\Views\Pro\V2\Customizer;
+use Tribe\Events\Pro\Views\V2\Customizer\Section\Global_Elements;
 use Tribe\Events\Views\Pro\V2\Customizer\Section\Events_Bar;
 
 /**
@@ -19,9 +19,8 @@ use Tribe\Events\Views\Pro\V2\Customizer\Section\Events_Bar;
  * @package Tribe\Events\Views\Pro\V2\Customizer
  */
 class Service_Provider extends \tad_DI52_ServiceProvider {
-
 	/**
-	 * Binds and sets up implementations.
+	 * Registers the bindings and hooks the filters required for the ECP->TEC Customizer integration to work.
 	 *
 	 * @since 5.8.0
 	 */
@@ -30,7 +29,10 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 
 		$this->register_hooks();
 
+		// Events Bar overrides and additions.
 		tribe_register( Events_Bar::class, Events_Bar::class );
+		// Global Elements overrides and additions.
+		tribe_register( Global_Elements::class, Global_Elements::class );
 	}
 
 	/**

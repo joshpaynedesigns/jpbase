@@ -67,7 +67,11 @@ tribe.events.views.multidayEventsPro = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterMultidayEventsInitAllowedViews.tribeEvents', tribe.events.views.manager.selectors.container, obj.handleAfterMultidayEventsInitAllowedViews );
+		$document.on(
+			'afterMultidayEventsInitAllowedViews.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.handleAfterMultidayEventsInitAllowedViews
+		);
 	};
 
 	// Configure on document ready

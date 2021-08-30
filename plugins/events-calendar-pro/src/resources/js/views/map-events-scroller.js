@@ -78,7 +78,10 @@ tribe.events.views.mapEventsScroller = {};
 
 		// calculate offsets, all offset should be positive or 0 to be within scroller view
 		var offsetTop = $element.offset().top - $wrapper.offset().top;
-		var offsetBottom = $wrapper.offset().top + $wrapper.height() - $element.offset().top - $element.height();
+		var offsetBottom = $wrapper.offset().top +
+			$wrapper.height() -
+			$element.offset().top -
+			$element.height();
 
 		return 0 <= offsetTop && 0 <= offsetBottom;
 	};
@@ -132,7 +135,7 @@ tribe.events.views.mapEventsScroller = {};
 	 *
 	 * @return {void}
 	 */
-	obj.deinit = function( event, jqXHR, settings ) {
+	obj.deinit = function( event, jqXHR, settings ) { // eslint-disable-line no-unused-vars
 		var $container = event.data.container;
 		obj.deinitScroller( $container );
 		$container.off( 'beforeAjaxSuccess.tribeEvents', obj.deinit );
@@ -167,7 +170,11 @@ tribe.events.views.mapEventsScroller = {};
 	 * @return {void}
 	 */
 	obj.ready = function() {
-		$document.on( 'afterSetup.tribeEvents', tribe.events.views.manager.selectors.container, obj.init );
+		$document.on(
+			'afterSetup.tribeEvents',
+			tribe.events.views.manager.selectors.container,
+			obj.init
+		);
 	};
 
 	// Configure on document ready

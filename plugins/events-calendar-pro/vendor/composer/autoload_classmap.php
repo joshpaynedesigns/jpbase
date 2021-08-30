@@ -6,6 +6,16 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Assets' => $baseDir . '/src/Tribe/Admin/Manager/Assets.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Events_Table' => $baseDir . '/src/Tribe/Admin/Manager/Events_Table.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Hooks' => $baseDir . '/src/Tribe/Admin/Manager/Hooks.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Modal\\Split_Abstract' => $baseDir . '/src/Tribe/Admin/Manager/Modal/Split_Abstract.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Modal\\Split_Single' => $baseDir . '/src/Tribe/Admin/Manager/Modal/Split_Single.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Modal\\Split_Upcoming' => $baseDir . '/src/Tribe/Admin/Manager/Modal/Split_Upcoming.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Page' => $baseDir . '/src/Tribe/Admin/Manager/Page.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Provider' => $baseDir . '/src/Tribe/Admin/Manager/Provider.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Settings' => $baseDir . '/src/Tribe/Admin/Manager/Settings.php',
+    'Tribe\\Events\\Pro\\Admin\\Manager\\Shortcode' => $baseDir . '/src/Tribe/Admin/Manager/Shortcode.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Groups\\Event_Query' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Traits\\TEC_Control' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls/Traits/TEC_Control.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls_Manager' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls_Manager.php',
@@ -30,6 +40,7 @@ return array(
     'Tribe\\Events\\Pro\\Views\\V2\\Customizer' => $baseDir . '/src/Tribe/Views/V2/Customizer.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Hooks' => $baseDir . '/src/Tribe/Views/V2/Customizer/Hooks.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Section\\Events_Bar' => $baseDir . '/src/Tribe/Views/V2/Customizer/Section/Events_Bar.php',
+    'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Section\\Global_Elements' => $baseDir . '/src/Tribe/Views/V2/Customizer/Section/Global_Elements.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Customizer\\Service_Provider' => $baseDir . '/src/Tribe/Views/V2/Customizer/Service_Provider.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Base_Handler' => $baseDir . '/src/Tribe/Views/V2/Geo_Loc/Base_Handler.php',
     'Tribe\\Events\\Pro\\Views\\V2\\Geo_Loc\\Geocoding_Handler' => $baseDir . '/src/Tribe/Views/V2/Geo_Loc/Geocoding_Handler.php',

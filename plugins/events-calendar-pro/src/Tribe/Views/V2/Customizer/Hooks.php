@@ -18,6 +18,7 @@
 namespace Tribe\Events\Pro\Views\V2\Customizer;
 
 use Tribe\Events\Pro\Views\V2\Customizer\Section\Events_Bar;
+use Tribe\Events\Pro\Views\V2\Customizer\Section\Global_Elements;
 
 /**
  * Class Hooks
@@ -43,57 +44,110 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @since 5.8.0
 	 */
 	public function add_filters() {
-		add_filter( 'tribe_customizer_section_events_bar_default_settings', [ $this, 'filter_events_bar_default_settings'], 12, 2 );
-		add_filter( 'tribe_customizer_section_events_bar_content_settings', [ $this, 'filter_events_bar_content_settings'], 12, 2 );
 		add_filter( 'tribe_customizer_section_events_bar_content_controls', [ $this, 'filter_events_bar_content_controls'], 12, 2 );
+		add_filter( 'tribe_customizer_section_events_bar_content_settings', [ $this, 'filter_events_bar_content_settings'], 12, 2 );
 		add_filter( 'tribe_customizer_section_events_bar_css_template', [ $this, 'filter_events_bar_css_template'], 12, 2 );
+		add_filter( 'tribe_customizer_section_events_bar_default_settings', [ $this, 'filter_events_bar_default_settings'], 12, 2 );
+		add_filter( 'tribe_customizer_section_global_elements_content_controls', [ $this, 'filter_global_elements_content_controls'], 10, 2 );
+		add_filter( 'tribe_customizer_section_global_elements_content_settings', [ $this, 'filter_global_elements_content_settings'], 10, 2 );
+		add_filter( 'tribe_customizer_section_global_elements_css_template', [ $this, 'filter_global_elements_css_template'], 10, 2 );
 	}
 
 	/**
-	 * Filter the default settings for the events bar customizer section.
+	 * Filters the Events Bar defaults to add default view selector settings.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $arguments The existing default settings.
-	 * @param mixed $section                 The section instance we are dealing with (Events_Bar).
+	 * @param array<string|mixed>        $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of default values.
 	 */
 	public function filter_events_bar_default_settings( $arguments, $section ) {
 		return $this->container->make( Events_Bar::class )->filter_events_bar_default_settings( $arguments, $section );
 	}
 
 	/**
-	 * Filter the content settings for the events bar customizer section.
+	 * Filters the Events Bar settings to add view selector settings.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $arguments The existing content settings.
-	 * @param mixed $section                 The section instance we are dealing with (Events_Bar).
+	 * @param array<string|mixed>        $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of settings.
 	 */
 	public function filter_events_bar_content_settings( $arguments, $section ) {
 		return $this->container->make( Events_Bar::class )->filter_events_bar_content_settings( $arguments, $section );
  	}
 
-	/**
-	 * Filter the content controls for the events bar customizer section.
+	 /**
+	 * Filters the Events Bar controls to add view selector controls.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $arguments The existing content controls.
-	 * @param mixed $section                 The section instance we are dealing with (Events_Bar).
+	 * @param array<string|mixed>        $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of controls.
 	 */
 	public function filter_events_bar_content_controls( $arguments, $section ) {
 		return $this->container->make( Events_Bar::class )->filter_events_bar_content_controls( $arguments, $section );
 	}
 
 	/**
-	 * Filter the output CSS for the events bar customizer section.
+	 * Filters the Events Bar CSS output to add view selector styles.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param string $arguments The existing CSS string.
-	 * @param mixed  $section   The section instance we are dealing with (Events_Bar).
+	 * @param string                     $arguments The existing CSS output string.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return string The modified CSS output.
 	 */
 	public function filter_events_bar_css_template( $arguments, $section ) {
 		return $this->container->make( Events_Bar::class )->filter_events_bar_css_template( $arguments, $section );
+	}
+
+	/**
+	 * Filters the Events Bar settings to add view selector settings.
+	 *
+	 * @since 5.9.0
+	 *
+	 * @param array<string|mixed>        $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of settings.
+	 */
+	public function filter_global_elements_content_settings( $arguments, $section ) {
+		return $this->container->make( Global_Elements::class )->filter_global_elements_content_settings( $arguments, $section );
+ 	}
+
+	 /**
+	 * Filters the Events Bar controls to add view selector controls.
+	 *
+	 * @since 5.9.0
+	 *
+	 * @param array<string|mixed>        $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of controls.
+	 */
+	public function filter_global_elements_content_controls( $arguments, $section ) {
+		return $this->container->make( Global_Elements::class )->filter_global_elements_content_controls( $arguments, $section );
+	}
+
+	/**
+	 * Filters the Global Elements CSS output to ECP-specific styles.
+	 *
+	 * @since 5.9.0
+	 *
+	 * @param array                      $arguments The existing array of default values.
+	 * @param Tribe__Customizer__Section $section   The section instance we are dealing with.
+	 *
+	 * @return array<string|mixed> The modified array of default values.
+	 */
+	public function filter_global_elements_css_template( $arguments, $section ) {
+		return $this->container->make( Global_Elements::class )->filter_global_elements_css_template( $arguments, $section );
 	}
 }

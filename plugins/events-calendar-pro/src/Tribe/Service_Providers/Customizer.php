@@ -40,12 +40,11 @@ class Customizer extends \tad_DI52_ServiceProvider {
 		/* @var Tribe__Customizer $customizer */
 		$customizer = tribe( 'customizer' );
 
-		/* @var \Tribe__Events__Customizer__Global_Elements $global_elements_section */
 		$global_elements_section = tribe( 'tec.customizer.global-elements' );
 
 		$settings = $customizer->get_option( [ $global_elements_section->ID ] );
 
-		if  ( $customizer->has_option( $global_elements_section->ID, 'accent_color' ) ) {
+		if  ( isset( $settings['accent_color'] ) ) {
 			$accent_color     = new Tribe__Utils__Color( $settings['accent_color'] );
 			$accent_color_rgb = $accent_color::hexToRgb( $settings['accent_color'] );
 			$accent_css_rgb   = $accent_color_rgb['R'] . ',' . $accent_color_rgb['G'] . ',' . $accent_color_rgb['B'];
@@ -61,6 +60,13 @@ class Customizer extends \tad_DI52_ServiceProvider {
 			$accent_color_week_event_featured_hover = 'rgba(' . $accent_css_rgb . ',0.14);';
 			$background_color_secondary             = '#F7F6F6';
 			$background_color_secondary_hover       = '#F0EEEE';
+
+			// widget overrides
+			$template .= '
+				.tribe-theme-twentytwentyone .tribe-common button:not(:hover):not(:active):not(.has-background).tribe-events-calendar-month__day-cell--selected {
+					background-color: <%= global_elements.accent_color %>;
+				}
+			';
 
 			// overrides for ecp components/full/_datepicker.pcss.
 			$template .= '
@@ -216,6 +222,7 @@ class Customizer extends \tad_DI52_ServiceProvider {
 
 		return $template;
 	}
+
 	/**
 	 * Handle text color customizations for Pro.
 	 *
@@ -230,7 +237,7 @@ class Customizer extends \tad_DI52_ServiceProvider {
 	public function filter_text_color_css( $template ) {
 		_deprecated_function( __METHOD__, '5.1.4' );
 
-		$customizer   = Tribe__Customizer::instance();
+		$customizer   = tribe( 'customizer' );
 		$text_section = tribe( 'tec.customizer.text' );
 		$settings     = $customizer->get_option( [ $text_section->ID ] );
 

@@ -9,22 +9,23 @@
 namespace Tribe\Events\Pro\Views\V2\Customizer\Section;
 
 /**
- * Month View
+ * Events Bar
  *
  * @since 5.8.0
  */
 class Events_Bar {
 
 	/**
-	 * Add default settings for our injected controls.
+	 * Filters the Events Bar defaults to add default view selector settings.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $settings The default settings.
+	 * @param array<string|mixed>        $defaults       The existing array of default values.
+	 * @param Tribe__Customizer__Section $unused_section The section instance we are dealing with.
 	 *
-	 * @return array<string|mixed> $settings The adjusted settings.
+	 * @return array $defaults The modified array of default values.
 	 */
-	public function filter_events_bar_default_settings ( $defaults ) {
+	public function filter_events_bar_default_settings ( $defaults, $unused_section = null ) {
 		$pro_defaults = [
 			'view_selector_background_color_choice' => 'default',
 			'view_selector_background_color'        => '#FFFFFF',
@@ -34,22 +35,22 @@ class Events_Bar {
 	}
 
 	/**
-	 * Add content settings for our injected controls.
+	 * Filters the Events Bar settings to add view selector settings.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $settings The content settings.
+	 * @param array<string|mixed>        $settings       The existing array of settings.
 	 *
-	 * @return array<string|mixed> $settings The adjusted settings.
+	 * @return array $defaults The modified array of settings.
 	 */
 	public function filter_events_bar_content_settings ( $settings ) {
 		$pro_settings = [
 			'view_selector_background_color_choice' => [
-				'sanitize_callback'	   => 'sanitize_key',
+				'sanitize_callback'    => 'sanitize_key',
 				'sanitize_js_callback' => 'sanitize_key',
 			],
 			'view_selector_background_color'        => [
-				'sanitize_callback'	   => 'sanitize_hex_color',
+				'sanitize_callback'    => 'sanitize_hex_color',
 				'sanitize_js_callback' => 'maybe_hash_hex_color',
 			],
 		];
@@ -58,13 +59,13 @@ class Events_Bar {
 	}
 
 	/**
-	 * Add controls.
+	 * Filters the Events Bar controls to add view selector controls.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param array<string|mixed> $controls The existing controls.
+	 * @param array<string|mixed>        $controls       The existing array of controls.
 	 *
-	 * @return array<string|mixed> $controls The amended controls.
+	 * @return array $defaults The modified array of controls.
 	 */
 	public function filter_events_bar_content_controls ( $controls ) {
 		$customizer = tribe( 'customizer' );
@@ -77,7 +78,7 @@ class Events_Bar {
 				'label'       => esc_html_x(
 					'View Dropdown Background Color',
 					'The View Selector background color setting label.',
-					'the-events-calendar'
+					'tribe-events-calendar-pro'
 				),
 				'choices'     => [
 					'default' => esc_html_x(
@@ -85,13 +86,13 @@ class Events_Bar {
 						'Label for the default option.',
 						'the-events-calendar'
 					),
-					'custom'	  => esc_html_x(
+					'custom'  => esc_html_x(
 						'Custom',
 						'Label for option to set a custom color.',
-						'the-events-calendar'
+						'tribe-events-calendar-pro'
 					),
 				],
-				'active_callback' => function( $control ) use ( $customizer, $enabled_views ) {
+				'active_callback' => function( $control ) use ( $enabled_views ) {
 					return 3 < count( $enabled_views );
 				},
 			],
@@ -110,88 +111,47 @@ class Events_Bar {
 	}
 
 	/**
-	 * Add CSS based on out new controls.
+	 * Filters the Events Bar CSS template to add ECP-specific styles.
 	 *
 	 * @since 5.8.0
 	 *
-	 * @param string $css_template The existing CSS.
-	 * @param mixed $section       The section instance we are dealing with (Events_Bar).
+	 * @param string                     $css_template The current css output.
+	 * @param Tribe__Customizer__Section $section      The section instance we are dealing with.
 	 *
-	 * @return string $css_template The amended CSS.
+	 * @return string $css_template The modified css output.
 	 */
 	public function filter_events_bar_css_template ( $css_template, $section ) {
-		// These allow us to continue to _not_ target the shortcode.
-		$apply_to_shortcode = apply_filters( 'tribe_customizer_should_print_shortcode_customizer_styles', false );
-		$tribe_events       = $apply_to_shortcode ? '.tribe-events' : '.tribe-events:not( .tribe-events-view--shortcode )';
-
-		$css_template .= "\n/* PRO Injected Styles */\n";
-
-		if ( $section->should_include_setting_css( 'events_bar_text_color' ) ) {
-			$text_color_obj     = new \Tribe__Utils__Color( $section->get_option( 'events_bar_text_color' ) );
-			$text_color         = $text_color_obj->getRgb();
-			$text_color_rgb     = $text_color['R'] . ',' . $text_color['G'] . ',' . $text_color['B'];
-			$text_color_hover   = 'rgba(' . $text_color_rgb . ',0.12)';
-
-			$css_template .= "
-				{$tribe_events} .tribe-events-c-view-selector--labels:not(.tribe-events-c-view-selector--tabs) .tribe-events-c-view-selector__list-item-link:focus,
-				{$tribe_events} .tribe-events-c-view-selector--labels:not(.tribe-events-c-view-selector--tabs) .tribe-events-c-view-selector__list-item-link:hover {
-					background-color: $text_color_hover;
-				}
-			";
-			$css_template .= "
-				.tribe-common--breakpoint-medium{$tribe_events} .tribe-events-c-view-selector--labels .tribe-events-c-view-selector__button-text,
-				{$tribe_events} .tribe-events-c-view-selector--labels:not(.tribe-events-c-view-selector--tabs) .tribe-events-c-view-selector__list-item-text,
-				{$tribe_events} .tribe-events-c-view-selector--labels:not(.tribe-events-c-view-selector--tabs) .tribe-events-c-view-selector__list-item-link:focus .tribe-events-c-view-selector__list-item-text,
-				{$tribe_events} .tribe-events-c-view-selector--labels:not(.tribe-events-c-view-selector--tabs) .tribe-events-c-view-selector__list-item-link:hover .tribe-events-c-view-selector__list-item-text {
-					color: <%= tec_events_bar.events_bar_text_color %>;
-				}
-			";
-		}
-
-		if ( $section->should_include_setting_css( 'events_bar_icon_color_choice' ) ) {
-			if ( 'custom' === $section->get_option( 'events_bar_icon_color_choice' ) ) {
-				$color = "<%= tec_events_bar.events_bar_icon_color %>";
-			} elseif (
-				'accent' === $section->get_option( 'events_bar_icon_color_choice' )
-				&& $section->should_include_setting_css( 'accent_color', 'global_elements' )
-			) {
-				$color = "<%= global_elements.accent_color %>";
-			}
-
-			$css_template .= "
-				.tribe-events-c-view-selector__button-icon-caret-svg .tribe-common-c-svgicon__svg-fill {
-					 fill: {$color};
-				}";
-
-			// Summary view icon.
-			$css_template .= "
-			{$tribe_events}.tribe-common-c-svgicon .tribe-common-c-svgicon--summary .tribe-common-c-svgicon__svg-stroke tribe-events-c-view-selector__list-item-icon-svg,
-			{$tribe_events}.tribe-common-c-svgicon .tribe-common-c-svgicon--summary .tribe-events-c-view-selector__list-item-icon-svg path {
-				fill: none;
-				stroke: {$color};
-			}
-		";
-		}
-
+		$new_styles    = [];
 		$enabled_views = tribe_get_option( 'tribeEnableViews', [] );
 
+		// View Selector Drop-down background color.
 		if ( 3 < count( $enabled_views ) ) {
 			if ( $section->should_include_setting_css( 'view_selector_background_color_choice' ) ) {
-				$bg_color = 'tec_events_bar.view_selector_background_color';
+				$bg_color = $section->get_option( 'view_selector_background_color' );
 
 			} elseif ( $section->should_include_setting_css( 'events_bar_background_color_choice' ) ) {
-				$bg_color = 'tec_events_bar.events_bar_background_color';
+				$bg_color = 'custom' === $section->get_option( 'events_bar_background_color_choice' )
+					? $section->get_option( 'events_bar_background_color' )
+					: tribe( 'customizer' )->get_option( [ 'global_elements', 'events_bar_background_color' ] );
 			}
 
 			if ( ! empty( $bg_color ) ) {
-				$css_template .= "
-					{$tribe_events} .tribe-events-c-view-selector__content {
-						background-color: <%= {$bg_color} %>;
-					}
-				";
+				$new_styles[] = "--tec-color-background-view-selector: {$bg_color};";
 			}
 		}
 
-		return $css_template;
+		if ( empty( $new_styles ) ) {
+			return $css_template;
+		}
+
+		$new_css = sprintf(
+			':root {
+				/* Customizer-added ECP Events Bar styles */
+				%1$s
+			}',
+			implode( "\n", $new_styles )
+		);
+
+		return $css_template . $new_css;
 	}
 }

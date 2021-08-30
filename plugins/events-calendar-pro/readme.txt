@@ -4,7 +4,7 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 4.9.18
-Stable tag: 5.8.2
+Stable tag: 5.9.0
 Tested up to: 5.8.0
 Requires PHP: 5.6
 License: GPLv2 or later
@@ -207,6 +207,14 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.9.0] 2021-08-24 =
+
+* Version - Events Calendar PRO 5.9.0 is only compatible with The Events Calendar 5.9.0 and higher.
+* Feature - View events in a calendar format within the dashboard using the new Events Manager!
+* Feature - Stop compiling CSS custom props and leave them exposed and accessible to the Customizer and third parties. [TEC-3011]
+* Feature - Update hooked Customizer styles to account for surfaced CSS custom properties and for new TEC Customizer font controls. [TEC-3897]
+* Language - 2 new strings added, 5 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.8.2] 2021-08-17 =
 

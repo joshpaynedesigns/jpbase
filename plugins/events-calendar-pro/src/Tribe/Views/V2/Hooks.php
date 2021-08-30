@@ -135,12 +135,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		add_filter( 'tribe_events_views_v2_manager_view_label_domain', [ $this, 'filter_view_label_domain'], 10, 3 );
 		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12 );
-
-		// Customizer.
-		add_filter( 'tribe_customizer_pre_sections', [ $this, 'filter_customizer_sections' ], 30, 2 );
-		add_filter( 'tribe_customizer_section_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 2 );
-
-		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
 		add_filter( 'tribe_events_views_v2_view_map_template_vars', [ $this, 'filter_map_view_pin' ], 10, 2 );
 	}
 
@@ -659,13 +653,13 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 5.0.0
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string          $unused_file Complete path to include the PHP File.
+	 * @param array           $unused_name Template name.
+	 * @param Tribe__Template $template    Current instance of the Tribe__Template.
 	 *
 	 * @return string The organizer meta HTML.
 	 */
-	public function action_include_organizer_meta( $file, $name, $template ) {
+	public function action_include_organizer_meta( $unused_file, $unused_name, $template ) {
 		$view      = $template->get_view();
 
 		if ( 'organizer' !== $view->get_slug() ) {
@@ -686,13 +680,13 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 5.0.0
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string          $unused_file Complete path to include the PHP File.
+	 * @param array           $unused_name Template name.
+	 * @param Tribe__Template $template    Current instance of the Tribe__Template.
 	 *
 	 * @return string The venue meta HTML.
 	 */
-	public function action_include_venue_meta( $file, $name, $template ) {
+	public function action_include_venue_meta( $unused_file, $unused_name, $template ) {
 		$view    = $template->get_view();
 
 		if ( 'venue' !== $view->get_slug() ) {
@@ -834,62 +828,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Filters the currently registered Customizer sections to add or modify them.
-	 *
-	 * @since 5.1.1
-	 *
-	 * @param array<string,array<string,array<string,int|float|string>>> $sections   The registered Customizer sections.
-	 * @param \Tribe___Customizer                                        $customizer The Customizer object.
-	 *
-	 * @return array<string,array<string,array<string,int|float|string>>> The filtered sections.
-	 */
-	public function filter_customizer_sections( $sections, $customizer ) {
-		if ( ! ( is_array( $sections ) && $customizer instanceof \Tribe__Customizer ) ) {
-			return $sections;
-		}
-
-		return $this->container->make( Customizer::class )->filter_sections( $sections, $customizer );
-	}
-
-	/**
-	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
-	 *
-	 * @since 5.1.1
-	 *
-	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
-	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
-	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
-	 *
-	 * @return string The filtered CSS template.
-	 */
-	public function filter_global_elements_css_template( $css_template, $section ) {
-		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
-			return $css_template;
-		}
-
-		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section );
-	}
-
-	/**
-	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
-	 *
-	 * @since 5.1.1
-	 *
-	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
-	 * @param \Tribe__Customizer__Section $section      The Single Event section.
-	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
-	 *
-	 * @return string The filtered CSS template.
-	 */
-	public function filter_single_event_css_template( $css_template, $section, $customizer ) {
-		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
-			return $css_template;
-		}
-
-		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section, $customizer );
-	}
-
-	/**
 	 * Filters the location pin on the map view.
 	 *
 	 * @since 5.3.0
@@ -908,6 +846,79 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 ************************/
 
 	// @codingStandardsIgnoreStart
+
+
+
+	/**
+	 * Filters the currently registered Customizer sections to add or modify them.
+	 *
+	 * @since 5.1.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param array<string,array<string,array<string,int|float|string>>> $sections   The registered Customizer sections.
+	 * @param \Tribe___Customizer                                        $customizer The Customizer object.
+	 *
+	 * @return array<string,array<string,array<string,int|float|string>>> The filtered sections.
+	 */
+	public function filter_customizer_sections( $sections, $customizer ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		if ( ! ( is_array( $sections ) && $customizer instanceof \Tribe__Customizer ) ) {
+			return $sections;
+		}
+
+		return $this->container->make( Customizer::class )->filter_sections( $sections, $customizer );
+	}
+
+	/**
+	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.1.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_global_elements_css_template( $css_template, $section, $customizer = null ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		if ( null === $customizer ) {
+			$customizer = tribe( 'customizer' );
+		}
+
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section );
+	}
+
+	/**
+	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.1.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Single Event section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_single_event_css_template( $css_template, $section, $customizer = null ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		if ( null === $customizer ) {
+			$customizer = tribe( 'customizer' );
+		}
+
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section, $customizer );
+	}
+
 
 	/**
 	 * Filters the should display filters for organizer and venue views.
@@ -987,6 +998,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return string  Filtered version for the URL for shortcodes.
 	 */
 	public function filter_shortcode_view_url( $url, $canonical, $view ) {
+		_deprecated_function( __METHOD__, '5.5.0' );
 		return $this->container->make( Shortcodes\Manager::class )->filter_view_url( $url, $view );
 	}
 
@@ -1003,6 +1015,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return array<string,mixed> The filtered repository arguments.
 	 */
 	public function filter_view_repository_args( $repository_args, $context, $view ) {
+		_deprecated_function( __METHOD__, '5.5.0' );
 		return $this->container->make( Shortcodes\Tribe_Events::class )->filter_view_repository_args( $repository_args, $context, $view );
 	}
 
@@ -1017,6 +1030,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 */
 	public function action_disable_shortcode_v1() {
+		_deprecated_function( __METHOD__, '5.5.0' );
 		$this->container->make( Shortcodes\Manager::class )->disable_v1();
 	}
 
