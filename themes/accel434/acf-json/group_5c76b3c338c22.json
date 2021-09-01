@@ -11,7 +11,7 @@
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -25,42 +25,15 @@
             "return_format": "value"
         },
         {
-            "key": "field_5cd30ad2ddca3",
-            "label": "Hide Section Info",
-            "name": "hide_section_info",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "20",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5c76b3c33f60c",
             "label": "Section Title",
             "name": "section_title",
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5cd30ad2ddca3",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
-                "width": "40",
+                "width": "75",
                 "class": "",
                 "id": ""
             },
@@ -69,29 +42,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5c76b3c33f658",
-            "label": "Section Button",
-            "name": "section_button",
-            "type": "link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5cd30ad2ddca3",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "40",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array"
         },
         {
             "key": "field_5c76b3c33f67d",
@@ -235,7 +185,7 @@
     "hide_on_screen": [
         "the_content"
     ],
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1588357195
+    "modified": 1630513338
 }

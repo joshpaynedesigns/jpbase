@@ -16,6 +16,15 @@ return (object) array(
 
 		require($item);
 	},
-	'has_padding'   => true
+	'padding_filter' => function($has_padding, $section, $field) {
+            if ($section === 'boxes_section') {
+                $bg_color = $field['background_color'];
+
+                return $bg_color != 'white' ? false : $has_padding;
+            }
+
+            return $has_padding;
+        },
+        'has_padding'   => true,
 	)
 );
