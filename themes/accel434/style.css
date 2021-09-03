@@ -526,7 +526,8 @@ html {
     .fixed-header.no-banner .site-inner {
       padding-top: 69px; } }
 
-.single-post .site-inner,
+.single-post .post,
+.single-post .jump-table-content,
 .single-staff .site-inner,
 .single-tribe_venue .site-inner,
 .blog .site-inner,
@@ -536,7 +537,8 @@ html {
   margin-top: 4em;
   margin-bottom: 4em; }
   @media screen and (min-width: 900px) {
-    .single-post .site-inner,
+    .single-post .post,
+    .single-post .jump-table-content,
     .single-staff .site-inner,
     .single-tribe_venue .site-inner,
     .blog .site-inner,
@@ -2909,10 +2911,6 @@ Events Single
   @media screen and (min-width: 900px) {
     #flexible-section-repeater .page-flexible-section.color {
       padding: 6.25em 0; } }
-  #flexible-section-repeater .page-flexible-section.color:first-child {
-    margin-top: 0; }
-  #flexible-section-repeater .page-flexible-section.color:last-child {
-    margin-bottom: 0; }
 
 #flexible-section-repeater .color.primary-color, #flexible-section-repeater .color.blue {
   background-color: #0b406b; }
