@@ -9,7 +9,10 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.3
+ * @version 5.9.2
+ *
+ * @since   5.9.2   Remove incorrect aria-selected attribute.
+ * @since   5.0.3
  *
  * @var WP_Post $event        The event post object with properties added by the `tribe_get_event` function.
  * @var object  $map_provider Object with data of map provider.
@@ -116,7 +119,6 @@ $aria_label = sprintf(
 	<button
 		class="tribe-events-pro-map__event-card-button"
 		data-js="tribe-events-pro-map-event-card-button"
-		aria-selected="<?php echo esc_attr( $aria_selected ); ?>"
 		aria-controls="<?php echo esc_attr( $aria_controls ); ?>"
 		aria-expanded="<?php echo esc_attr( $aria_expanded ); ?>"
 		aria-label="<?php echo esc_attr( $aria_label ); ?>"

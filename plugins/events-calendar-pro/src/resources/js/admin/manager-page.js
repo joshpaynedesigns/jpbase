@@ -1,4 +1,3 @@
-/* globals tribe, jQuery, tribeEventsAdminManagerData */
 /**
  * Makes sure we have all the required levels on the Tribe Object.
  *
@@ -42,7 +41,7 @@ tribe.events.admin.manager.page = {};
 	obj.selectors = {
 		splitLink: '.tribe_events_page_tribe-admin-manager .tribe-split-all',
 		splitSingleLink: '.tribe_events_page_tribe-admin-manager .tribe-split-single',
-		splitLinkClose: '.tribe_events_page_tribe-admin-manager .tribe-dialog__wrapper .tribe-dialog__close-button--hidden',
+		splitLinkClose: '.tribe_events_page_tribe-admin-manager .tribe-dialog__wrapper .tribe-dialog__close-button--hidden', // eslint-disable-line max-len
 		splitLinkDialogCancel: '.tribe_events_page_tribe-admin-manager .tribe-dialog__button-cancel',
 		splitLinkDialogConfirm: '.tribe_events_page_tribe-admin-manager .tribe-dialog__button-continue',
 	};
@@ -64,7 +63,7 @@ tribe.events.admin.manager.page = {};
 	 *
 	 * @return {boolean} Always false because we use the dialog to choose to proceed or not.
 	 */
-	obj.handleSplitSingleLinkClick = function( event ) {
+	obj.handleSplitSingleLinkClick = function() {
 		let $el = $( this );
 		obj.splitLinkSelection = $el;
 
@@ -83,7 +82,7 @@ tribe.events.admin.manager.page = {};
 	 *
 	 * @return {boolean} Always false because we use the dialog to choose to proceed or not.
 	 */
-	obj.handleSplitLinkClick = function( event ) {
+	obj.handleSplitLinkClick = function() {
 		let $el = $( this );
 		obj.splitLinkSelection = $el;
 
@@ -122,8 +121,12 @@ tribe.events.admin.manager.page = {};
 	obj.ready = function() {
 		$document.on( 'click', obj.selectors.splitLink, obj.handleSplitLinkClick );
 		$document.on( 'click', obj.selectors.splitSingleLink, obj.handleSplitSingleLinkClick );
-		$document.on( 'click', obj.selectors.splitLinkDialogCancel, obj.handleSplitLinkDialogCancelClick );
-		$document.on( 'click', obj.selectors.splitLinkDialogConfirm, obj.handleSplitLinkDialogConfirmClick );
+		$document.on( 
+			'click', obj.selectors.splitLinkDialogCancel, obj.handleSplitLinkDialogCancelClick 
+		);
+		$document.on( 
+			'click', obj.selectors.splitLinkDialogConfirm, obj.handleSplitLinkDialogConfirmClick 
+		);
 	};
 
 	// Configure on document ready.

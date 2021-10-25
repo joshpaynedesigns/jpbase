@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.7
+Version: 8.1.8
 Author URI: http://www.activecampaign.com
 */
 
@@ -58,6 +58,7 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.5: Updating Readme with up to date screenshots and better descriptions. Updating Plugin Settings with clearer descriptions of form and shortcode use cases. Fixing block editor CSS class input on dynamic div output. Fixing display of Site Tracking settings without forms. Migrating Site Tracking JS to vgo() from pgo(). Fixing bug with Tracking ID fetch. Adding admin notice stack for future plugin updates.
 ## version 8.1.6: Improving credential check to fix permissions bug. Fixing non-inline form previews in block editor. Removing unnecessary Google Font loads on no-style embeds. Updating Plugin description.
 ## version 8.1.7: Updated listing
+## version 8.1.8: Updated listing
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");

@@ -63,6 +63,7 @@ tribe.events.views.mapEvents = {};
 	 * Deselect event by setting aria attribute and active class
 	 *
 	 * @since 4.7.7
+	 * @since 5.9.2   Remove incorrect aria-selected attribute.
 	 *
 	 * @param {jQuery} $button jQuery object of event button.
 	 *
@@ -70,7 +71,6 @@ tribe.events.views.mapEvents = {};
 	 */
 	obj.deselectEvent = function( $button ) {
 		$button
-			.attr( 'aria-selected', 'false' )
 			.closest( obj.selectors.eventCardWrapper )
 			.removeClass( obj.selectors.eventCardWrapperActiveClass.className() );
 
@@ -85,6 +85,7 @@ tribe.events.views.mapEvents = {};
 	 * Select event by setting aria attribute and active class
 	 *
 	 * @since 4.7.7
+	 * @since 5.9.2   Remove incorrect aria-selected attribute.
 	 *
 	 * @param {jQuery} $button jQuery object of event button.
 	 *
@@ -92,7 +93,6 @@ tribe.events.views.mapEvents = {};
 	 */
 	obj.selectEvent = function( $button ) {
 		$button
-			.attr( 'aria-selected', 'true' )
 			.closest( obj.selectors.eventCardWrapper )
 			.addClass( obj.selectors.eventCardWrapperActiveClass.className() );
 

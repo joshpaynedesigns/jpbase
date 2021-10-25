@@ -870,6 +870,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				$date_indices = array_keys( $date_keys );
 				$date_index   = reset( $date_indices );
 				$date_key     = $date_keys[ $date_index ];
+
 				if ( $date_key === $arguments['date'] ) {
 					// Let's only set it if we are sure.
 					$repository_args[ $date_index ] = $arguments['date'];
@@ -929,7 +930,6 @@ class Tribe_Events extends Shortcode_Abstract {
 
 			$arguments['week_events_per_day'] = $this->get_argument( 'week_events_per_day' );
 		}
-
 
 		return $this->alter_context( $view_context, $arguments );
 	}

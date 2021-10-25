@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.9.0\n"
+"Project-Id-Version: The Events Calendar PRO 5.9.1\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2021-08-24 02:35:35+00:00\n"
+"POT-Creation-Date: 2021-10-11 18:14:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2021-08-24 02:35\n"
+"PO-Revision-Date: 2021-10-11 18:14\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -21,7 +21,7 @@ msgid ""
 "To begin using Events Calendar PRO, please install the latest version of"
 msgstr ""
 
-#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.9.0)  #-#-#-#-#
+#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.9.1)  #-#-#-#-#
 #. Author of the plugin/theme
 #: events-calendar-pro.php:176 events-calendar-pro.php:177
 #: src/Tribe/Integrations/Elementor/Service_Provider.php:124
@@ -1805,7 +1805,7 @@ msgid "Times:"
 msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:13
-#: src/views/v2/photo/event/date-time.php:30
+#: src/views/v2/photo/event/date-time.php:33
 msgid "All day"
 msgstr ""
 
@@ -2646,8 +2646,12 @@ msgctxt "The archive for events, \"/organizer/\" URL string component."
 msgid "organizer"
 msgstr ""
 
-#: src/Tribe/Views/V2/Service_Provider.php:35
+#: src/Tribe/Views/V2/Service_Provider.php:36
 msgid "Summary"
+msgstr ""
+
+#: src/Tribe/Views/V2/Service_Provider.php:36
+msgid "summary"
 msgstr ""
 
 #. translators: %s: events label plural
@@ -3727,61 +3731,61 @@ msgstr ""
 msgid "Show only the first upcoming instance of recurring %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:259
-#: src/functions/template-tags/general.php:274
-#: src/functions/template-tags/general.php:289
-#: src/functions/template-tags/general.php:304
-#: src/functions/template-tags/general.php:319
-#: src/functions/template-tags/general.php:334
-#: src/functions/template-tags/general.php:349
-#: src/functions/template-tags/general.php:364
-#: src/functions/template-tags/general.php:379
+#: src/functions/template-tags/general.php:263
+#: src/functions/template-tags/general.php:278
+#: src/functions/template-tags/general.php:293
+#: src/functions/template-tags/general.php:308
+#: src/functions/template-tags/general.php:323
+#: src/functions/template-tags/general.php:338
+#: src/functions/template-tags/general.php:353
+#: src/functions/template-tags/general.php:368
+#: src/functions/template-tags/general.php:383
 msgid "No default set"
 msgstr ""
 
-#: src/functions/template-tags/general.php:261
+#: src/functions/template-tags/general.php:265
 msgid "The current default organizer is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:276
+#: src/functions/template-tags/general.php:280
 msgid "The current default venue is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:291
+#: src/functions/template-tags/general.php:295
 msgid "The current default address is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:306
+#: src/functions/template-tags/general.php:310
 msgid "The current default city is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:321
-#: src/functions/template-tags/general.php:336
+#: src/functions/template-tags/general.php:325
+#: src/functions/template-tags/general.php:340
 msgid "The current default state/province is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:351
+#: src/functions/template-tags/general.php:355
 msgid "The current default postal code/zip code is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:366
+#: src/functions/template-tags/general.php:370
 msgid "The current default country is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:381
+#: src/functions/template-tags/general.php:385
 msgid "The current default phone is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:576
-#: src/functions/template-tags/general.php:599
+#: src/functions/template-tags/general.php:580
+#: src/functions/template-tags/general.php:603
 msgid "Date out of range."
 msgstr ""
 
-#: src/functions/template-tags/general.php:715
+#: src/functions/template-tags/general.php:719
 msgid "Recurring %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:718
+#: src/functions/template-tags/general.php:722
 msgid "(See all)"
 msgstr ""
 
@@ -3968,26 +3972,26 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card.php:72
-#: src/views/v2/map/event-cards/event-card.php:90
+#: src/views/v2/map/event-cards/event-card.php:75
+#: src/views/v2/map/event-cards/event-card.php:93
 msgid "%1$s to %2$s."
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card.php:78
+#: src/views/v2/map/event-cards/event-card.php:81
 msgid "%1$s at %2$s to %3$s at %4$s."
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card.php:82
+#: src/views/v2/map/event-cards/event-card.php:85
 msgid "All Day."
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card.php:93
+#: src/views/v2/map/event-cards/event-card.php:96
 msgid "%1$s."
 msgstr ""
 
 #. translators: %1$s: event date tag, in M j. format, %2$s: event date time,
 #. %3$s: event title, %4$s: event (singular)
-#: src/views/v2/map/event-cards/event-card.php:102
+#: src/views/v2/map/event-cards/event-card.php:105
 msgid "%1$s %2$s %3$s. Click to select %4$s."
 msgstr ""
 
@@ -4127,7 +4131,7 @@ msgid "%1$s onwards"
 msgstr ""
 
 #. translators: events (plural)
-#: src/views/v2/week/day-selector/days/day.php:34
+#: src/views/v2/week/day-selector/days/day.php:37
 msgid "Has %s"
 msgstr ""
 
@@ -4166,18 +4170,18 @@ msgid_plural "+ %d More"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/views/v2/week/grid-body/multiday-events-day/more-events.php:22
+#: src/views/v2/week/grid-body/multiday-events-day/more-events.php:25
 msgid "+1 more"
 msgid_plural "+%s more"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: events (plural)
-#: src/views/v2/week/grid-body/multiday-events-row-header/multiday-events-row-header-toggle.php:30
+#: src/views/v2/week/grid-body/multiday-events-row-header/multiday-events-row-header-toggle.php:32
 msgid "Toggle multiday %s"
 msgstr ""
 
-#: src/views/v2/week/grid-header.php:27
+#: src/views/v2/week/grid-header.php:30
 msgid "Week of %s"
 msgstr ""
 
