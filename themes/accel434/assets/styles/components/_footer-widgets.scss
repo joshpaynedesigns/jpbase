@@ -31,6 +31,7 @@
             text-align: left;
             clear: both;
             min-width: 51%;
+            word-wrap: break-word;
 
             @include media( $large-screen-up ) {
                 display: inline-block;
