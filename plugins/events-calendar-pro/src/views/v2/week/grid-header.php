@@ -9,7 +9,10 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.0
+ * @version 5.9.2
+ *
+ * @since   5.9.2   Remove incorrect aria-selected attribute.
+ * @since   5.0.0
  *
  * @var bool  $has_multiday_events Boolean whether the week has multiday events or not.
  * @var array $days_of_week        An array of data of each day of the week, with '<Y-m-d>' as the key.
@@ -21,7 +24,7 @@ $empty_header_column_classes = [
 	'tribe-events-pro-week-grid__header-column--border-bottom' => ! $has_multiday_events,
 ];
 ?>
-<header class="tribe-events-pro-week-grid__header" role="rowgroup">
+<div class="tribe-events-pro-week-grid__header" role="rowgroup">
 
 	<h2 class="tribe-common-a11y-visual-hide" id="tribe-events-pro-week-header">
 		<?php printf( esc_html__( 'Week of %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?>
@@ -41,4 +44,4 @@ $empty_header_column_classes = [
 
 		<?php endforeach; ?>
 	</div>
-</header>
+</div>

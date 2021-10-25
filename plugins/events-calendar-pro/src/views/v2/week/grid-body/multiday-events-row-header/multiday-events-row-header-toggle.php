@@ -9,7 +9,10 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.2.0
+ * @version 5.9.2
+ *
+ * @since 5.9.2   Remove incorrect aria-selected attribute.
+ * @since 5.2.0
  *
  * @var string $multiday_toggle_controls A space-separated list of entries for the `aria-controls` attribute.
  */
@@ -19,7 +22,6 @@
 	class="tribe-events-pro-week-grid__multiday-toggle-button"
 	aria-controls="<?php echo esc_attr( $multiday_toggle_controls ) ?>"
 	aria-expanded="false"
-	aria-selected="false"
 	data-js="tribe-events-pro-week-multiday-toggle-button"
 >
 	<span class="tribe-common-a11y-visual-hide">

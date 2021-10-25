@@ -173,7 +173,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	/**
 	 * Saves the custom fields for a single event.
 	 *
-	 * In the case of fields where mutiple values have been assigned (or even if only
+	 * In the case of fields where multiple values have been assigned (or even if only
 	 * a single value was assigned - but the field type itself _supports_ multiple
 	 * values, such as a checkbox field) an additional set of records will be created
 	 * storing each value in a separate row of the postmeta table.
@@ -353,7 +353,7 @@ class Tribe__Events__Pro__Custom_Meta {
 			//Remove Vertical Bar for Checkbox Field
 			$values = $type == 'checkbox' ? str_replace( '|', '', $values ) : $values;
 
-			// The indicies of pre-existing custom fields begin with an underscore - so if
+			// The indices of pre-existing custom fields begin with an underscore - so if
 			// the index does not have an underscore we need to assign a new one
 			if ( 0 === strpos( $index, '_' ) ) {
 				$assigned_index = substr( $index, 1 );

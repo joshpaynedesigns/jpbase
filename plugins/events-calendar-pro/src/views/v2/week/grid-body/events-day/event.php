@@ -17,6 +17,7 @@
  *
  */
 use Tribe__Date_Utils as Dates;
+use Tribe__Events__Timezones as Timezones;
 
 $classes = [ 'tribe-events-pro-week-grid__event' ];
 
@@ -39,8 +40,9 @@ $data_js = [ 'tribe-events-pro-week-grid-event-link', 'tribe-events-tooltip' ];
 /**
  * Get start time in seconds
  */
-$start_time = Dates::time_between( $event->dates->start->format( 'Y-m-d 0:0:0' ), $event->dates->start->format( Dates::DBDATETIMEFORMAT ) );
+$start = Timezones::is_mode( 'site' ) ? $event->dates->start_site : $event->dates->start;
 
+$start_time = Dates::time_between( $start->format( 'Y-m-d 0:0:0' ), $start->format( Dates::DBDATETIMEFORMAT ) );
 ?>
 <article
 	<?php tribe_classes( $classes ) ?>
