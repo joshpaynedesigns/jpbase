@@ -218,14 +218,18 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 					 */
 					$target = apply_filters( 'tribe_get_event_website_link_target', '_self' );
 
+
+
+
 					/**
-					 * Filter the website link label
+					 * Filter any link label
 					 *
 					 * @since 3.0
 					 *
 					 * @param string the link label/text.
 					 */
 					$label  = apply_filters( 'tribe_get_event_website_link_label', $url_label, $post_id );
+
 
 					$meta   = sprintf(
 						'<a href="%s" target="%s">%s</a>',

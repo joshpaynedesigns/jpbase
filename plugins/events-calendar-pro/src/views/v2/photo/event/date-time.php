@@ -11,13 +11,14 @@
  *
  * @since 5.0.0
  * @since 5.1.1 Moved icons out to separate templates.
+ * @since 5.9.1
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  * @var obj     $date_formats Object containing the date formats.
  *
  * @see tribe_get_event() For the format of the event object.
  *
- * @version 5.1.1
+ * @version 5.9.1
  */
 
 $time_format = tribe_get_time_format();
@@ -25,12 +26,12 @@ $display_end_date = $event->dates->start_display->format( 'H:i' ) !== $event->da
 ?>
 <div class="tribe-events-pro-photo__event-datetime tribe-common-b2">
 	<?php $this->template( 'photo/event/date-time/featured' ); ?>
-	<?php if ( $event->all_day ) : ?>
+	<?php if ( $event->multiday ) : ?>
+		<?php echo $event->schedule_details->value(); ?>
+	<?php elseif ( $event->all_day ) : ?>
 		<time datetime="<?php echo esc_attr( $event->dates->start_display->format( 'Y-m-d' ) ) ?>">
 			<?php esc_attr_e( 'All day', 'tribe-events-calendar-pro' ); ?>
 		</time>
-	<?php elseif ( $event->multiday ) : ?>
-		<?php echo $event->schedule_details->value(); ?>
 	<?php else : ?>
 		<time datetime="<?php echo esc_attr( $event->dates->start_display->format( 'H:i' ) ) ?>">
 			<?php echo esc_html( $event->dates->start_display->format( $time_format ) ) ?>

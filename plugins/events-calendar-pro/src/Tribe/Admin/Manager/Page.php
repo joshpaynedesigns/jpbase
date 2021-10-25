@@ -109,12 +109,6 @@ class Page {
 		$parent = Tribe__Settings::$parent_page;
 		$title  = $this->get_page_title();
 
-		if ( tribe( Settings::class )->use_calendar_manager() ) {
-			$parent = add_query_arg( [
-				'page' => $this->get_page_slug(),
-			], $parent );
-		}
-
 		$page_hook = add_submenu_page(
 			$parent,
 			$title,
@@ -157,7 +151,7 @@ class Page {
 	 *
 	 * @return string
 	 */
-	public function get_edit_link( array $args = [], $label, $class ) {
+	public function get_edit_link( array $args, $label, $class ) {
 		$url = $this->get_link( $args );
 
 		$class_html   = '';
@@ -225,37 +219,61 @@ class Page {
 		return '<a href="' . esc_url( $this->get_link() ) . '" class="page-title-action tec-admin-manager__link">' . $button_title . '</a>';
 	}
 
+
 	/**
 	 * Removes the submenu so users cannot navigate to this particular submenu directly.
 	 *
-	 * @since 5.9.0
+	 * @since TBD
+	 *
 	 */
-	public function modify_events_visible_submenu() {
+	public function hide_events_manager_submenu_item() {
 		global $submenu;
 
-		foreach ( $submenu as $menu_index => $items ) {
-			if ( 'edit.php?post_type=' . TEC::POSTTYPE !== $menu_index ) {
-				continue;
-			}
+		$parent_page = 'edit.php?post_type=' . TEC::POSTTYPE;
+		if ( ! isset( $submenu[ $parent_page ] ) ) {
+			return;
+		}
 
-			foreach ( $items as $submenu_index => $item ) {
-				if (
-					'edit.php?post_type=' . TEC::POSTTYPE === $item[2]
-					&& tribe( Settings::class )->use_calendar_manager()
-				) {
-					$item[2] = $this->get_link();
+		foreach ( $submenu[ $parent_page ] as $submenu_index => $item ) {
+			if ( $this->get_page_slug() === $item[2] ) {
+				// Remove this link from menu
+				unset( $submenu[ $parent_page ][ $submenu_index ] );
 
-					// Replace the menu item for Editing events with Calendar Manager link.
-					$submenu[ $menu_index ][ $submenu_index ] = $item;
-				}
-
-				if ( $this->get_page_slug() !== $item[2] ) {
-					continue;
-				}
-
-				unset( $submenu[ $menu_index ][ $submenu_index ] );
+				return;
 			}
 		}
+	}
+
+	/**
+	 * Removes the submenu so users cannot navigate to this particular submenu directly.
+	 *
+	 * @since TBD
+	 *
+	 * @param string|null $submenu_file
+	 *
+	 * @return string|null
+	 */
+	public function change_default_events_menu_url( $submenu_file ) {
+		global $submenu;
+		$parent_page = 'edit.php?post_type=' . TEC::POSTTYPE;
+
+		if ( ! isset( $submenu[ $parent_page ] ) ) {
+			return $submenu_file;
+		}
+
+		foreach ( $submenu[ $parent_page ] as $submenu_index => $item ) {
+			if (
+				$parent_page === $item[2]
+				&& tribe( Settings::class )->use_calendar_manager()
+			) {
+				$item[2] = $this->get_link();
+
+				// Replace the menu item for Editing events with Calendar Manager link.
+				$submenu[ $parent_page ][ $submenu_index ] = $item;
+			}
+		}
+
+		return $submenu_file;
 	}
 
 	/**

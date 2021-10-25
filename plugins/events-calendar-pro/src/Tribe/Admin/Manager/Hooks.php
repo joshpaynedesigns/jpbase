@@ -45,7 +45,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	protected function add_actions() {
 		add_action( 'wp', [ $this, 'set_shortcode_to_display' ] );
 		add_action( 'admin_menu', [ $this, 'add_admin_menu_items' ], 15 );
-		add_action( 'admin_menu', [ $this, 'modify_events_visible_submenu' ], 25 );
+		add_action( 'admin_menu', [ $this, 'hide_events_manager_submenu_item' ], 25 );
 		add_action( 'tribe_events_views_v2_before_make_view_for_rest', [ $this, 'action_shortcode_toggle_hooks' ], 5, 3 );
 		add_action( 'wp_before_admin_bar_render', [ $this, 'modify_edit_events_link' ], 15 );
 		add_action( 'in_admin_footer', tribe_callback( Page::class, 'inject_manager_link' ) );
@@ -60,6 +60,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	protected function add_filters() {
 		add_filter( 'admin_title', [ $this, 'filter_admin_title' ], 15, 2 );
+		add_filter( 'submenu_file', [ $this, 'change_default_events_menu_url' ] );
 		add_filter( 'tribe-event-general-settings-fields', [ $this, 'filter_settings_general_tab' ], 25 );
 		add_filter( 'wp_redirect', [ $this, 'filter_edit_page_redirect_to_render_admin_manager' ] );
 	}
@@ -137,10 +138,25 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	/**
 	 * Removes the visible submenu from the admin to prevent users from navigating directly.
 	 *
+	 * This leverages the submenu_file filter as if it were an action, as it is the last action before
+	 * the rendering of the menu where we can alter the URL of the Events menu item.
+	 *
+	 * @since TBD
+	 *
+	 * @param string|null $submenu_file
+	 *
+	 */
+	public function change_default_events_menu_url( $submenu_file ) {
+		$this->container->make( Page::class )->change_default_events_menu_url( $submenu_file );
+	}
+
+	/**
+	 * Removes the visible submenu from the admin to prevent users from navigating directly.
+	 *
 	 * @since 5.9.0
 	 */
-	public function modify_events_visible_submenu() {
-		$this->container->make( Page::class )->modify_events_visible_submenu();
+	public function hide_events_manager_submenu_item() {
+		$this->container->make( Page::class )->hide_events_manager_submenu_item();
 	}
 
 	/**

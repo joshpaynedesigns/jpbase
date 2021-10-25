@@ -9,7 +9,10 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.0
+ * @version 5.9.2
+ *
+ * @since 5.9.2   Remove incorrect aria-selected attribute.
+ * @since 5.0.0
  *
  * @var string $multiday_toggle_controls A space-separated list of entries for the `aria-controls` attribute.
  * @var int    $more_events              The number of events not showing in the stack due to the toggle.
@@ -29,6 +32,5 @@ $more_text = sprintf(
 		data-js="tribe-events-pro-week-multiday-more-events"
 		aria-controls="<?php echo esc_attr( $multiday_toggle_controls ) ?>"
 		aria-expanded="false"
-		aria-selected="false"
 	><?php echo esc_html( $more_text ) ?></button>
 </div>

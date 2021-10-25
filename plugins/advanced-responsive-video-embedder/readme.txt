@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.9.16
 Tested up to: 5.7.1
 Requires PHP: 5.6
-Stable tag: 9.5.12
+Stable tag: 9.5.14
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2021-09-21 9.5.14 ###
+
+* Fix: Vimeo color bar thumbnail issue. (they changed their URLs)
+* Fix: Vimeo chat can now be embedded with ARVE `allow-forms` will be added to sandbox attribute. 
 
 ### 2021-04-22 9.5.12 ###
 

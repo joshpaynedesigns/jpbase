@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
-Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 4.9.18
-Stable tag: 5.9.0
-Tested up to: 5.8.0
+Stable tag: 5.9.2.1
+Tested up to: 5.8.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -207,6 +207,26 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.9.2.1] 2021-10-14 =
+
+* Fix - Fixed bug where our Events->Settings->General->"Calendar Manager" option could cause some child admin pages to not route properly. [ECP-962]
+
+= [5.9.2] 2021-10-12 =
+
+* Fix - Correct the handling of dates in the Week View when the Event setting is set to "site-wide" [ECP-881]
+* Fix - Add ability for translations of `summary` slug. [ECP-911]
+* Fix - Align the event cost and ticket section properly in the summary view. [ECP-919]
+* Fix - Remove incorrect aria-selected attribute from some elements. [ECP-394]
+* Fix - Prevent a PHP 8 deprecation notice for the get_edit_link() function. [ECP-958]
+* Language - 1 new strings added, 10 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.9.1] 2021-09-14 =
+
+* Fix - Now displaying multi-day all day events with date ranges for better UX on photo list view page [ECP-525]
+* Fix - Ensure we don't run any of the legacy Customizer and its deprecated functions. [ECP-941]
+* Fix - Use the correct text label for custom URL fields. [ECP-921]
+* Language - 0 new strings added, 14 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.9.0] 2021-08-24 =
 

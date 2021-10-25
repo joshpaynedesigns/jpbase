@@ -44,7 +44,7 @@ class Customizer extends \tad_DI52_ServiceProvider {
 
 		$settings = $customizer->get_option( [ $global_elements_section->ID ] );
 
-		if  ( isset( $settings['accent_color'] ) ) {
+		if  ( $global_elements_section->should_include_setting_css( 'accent_color' ) ) {
 			$accent_color     = new Tribe__Utils__Color( $settings['accent_color'] );
 			$accent_color_rgb = $accent_color::hexToRgb( $settings['accent_color'] );
 			$accent_css_rgb   = $accent_color_rgb['R'] . ',' . $accent_color_rgb['G'] . ',' . $accent_color_rgb['B'];

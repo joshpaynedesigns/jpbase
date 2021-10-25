@@ -229,7 +229,6 @@ class Week_View extends By_Day_View {
 		 * The start time has, but, to take the timezone settings into account.
 		 */
 		$use_site_timezone = Timezones::is_mode( 'site' );
-		$site_timezone     = Timezones::build_timezone_object();
 		$time_format       = get_option( 'time_format', Dates::TIMEFORMAT );
 		$event_times       = [];
 		$all_day           = [];
@@ -253,7 +252,8 @@ class Week_View extends By_Day_View {
 			}
 
 			/** @var \Tribe\Utils\Date_I18n_Immutable $start */
-			$start = $use_site_timezone ? $event->dates->start->setTimezone( $site_timezone ) : $event->dates->start;
+
+			$start = $use_site_timezone ? $event->dates->start_site : $event->dates->start;
 			$time  = $start->setTime( (int) $start->format( 'G' ), 0, 0 )->format_i18n( $time_format );
 
 			// ISO 8601 format, e.g. `2019-01-01T00:00:00+00:00`.
@@ -583,8 +583,9 @@ class Week_View extends By_Day_View {
 	 * @return string The full vertical position CSS class for the event, if required, else an empty string.
 	 */
 	protected function get_event_vertical_position_class( \WP_Post $event ) {
-		$start_hour    = (int) $event->dates->start->format( 'H' );
-		$start_minutes = (int) $event->dates->start->format( 'i' );
+		$start         = Timezones::is_mode( 'site' ) ? $event->dates->start_site : $event->dates->start; 
+		$start_hour    = (int) $start->format( 'H' );
+		$start_minutes = (int) $start->format( 'i' );
 
 		if ( 0 === $start_hour && $start_minutes <= 15 ) {
 			// Starts between `00:00` and `00:15`.
@@ -648,9 +649,16 @@ class Week_View extends By_Day_View {
 		 * Two events overlap if the start of the first is before the end of the second and if the start of the second
 		 * is before the end of the first.
 		 */
-		$ends_after_prev_starts  = $prev->dates->start < $event->dates->end;
-		$starts_before_prev_ends = $event->dates->start < $prev->dates->end;
-		$overlap                 = $ends_after_prev_starts && $starts_before_prev_ends;
+
+		if ( ! Timezones::is_mode( 'site' ) ) {
+			$ends_after_prev_starts  = $prev->dates->start < $event->dates->end;
+			$starts_before_prev_ends = $event->dates->start < $prev->dates->end;
+		} else {
+			$ends_after_prev_starts  = $prev->dates->start_site < $event->dates->end_site;
+			$starts_before_prev_ends = $event->dates->start_site < $prev->dates->end_site;
+		}
+
+		$overlap = $ends_after_prev_starts && $starts_before_prev_ends;
 
 		if ( ! $overlap ) {
 			return '';

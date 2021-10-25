@@ -622,8 +622,8 @@
 				'id'  => '-fEo3kgHFaw',
 			],
 			2 => [
-				'url' => 'https://www.youtube.com/watch?time_continue=1&v=eqnnyDa7C7Q&feature=emb_logo',
-				'id'  => 'eqnnyDa7C7Q',
+				'url' => 'https://www.youtube.com/watch?time_continue=1&v=lX8os2SB1i8&feature=emb_logo',
+				'id'  => 'lX8os2SB1i8',
 			],
 			4 => [
 				'url' => 'https://youtu.be/hRonZ4wP8Ys',
@@ -667,8 +667,8 @@
 		'auto_thumbnail' => true,
 		'tests'          => [
 			0 => [
-				'url' => 'https://www.youtube.com/playlist?list=PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
-				'id'  => 'PL3Esg-ZzbiUmeSKBAQ3ej1hQxDSsmnp-7',
+				'url' => 'https://www.youtube.com/playlist?list=PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
+				'id'  => 'PLF7uln2NT38hg0CbCsVAeHIeCMJgWT5Fo',
 			],
 			1 => [
 				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
