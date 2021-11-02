@@ -24,7 +24,7 @@
 
         .l-content,
         &.thirty-three .r-content {
-            margin-bottom: $base-spacing*2;
+            margin-bottom: $base-spacing;
             @include media($large-screen-up) {
                 margin-bottom: 0;
             }
