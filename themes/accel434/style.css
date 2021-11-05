@@ -1163,13 +1163,18 @@ body {
       .genesis-nav-menu .menu-item .sub-menu li {
         display: block;
         margin: 0; }
+        .genesis-nav-menu .menu-item .sub-menu li:after {
+          display: none; }
         .genesis-nav-menu .menu-item .sub-menu li a {
           color: rgba(85, 85, 85, 0.6);
           padding: 0 0 1em 0;
           position: relative;
           font-size: 0.875em; }
+          .genesis-nav-menu .menu-item .sub-menu li a:after {
+            display: none; }
           .genesis-nav-menu .menu-item .sub-menu li a:hover {
             color: #555; }
+        .genesis-nav-menu .menu-item .sub-menu li.current-menu-item > a,
         .genesis-nav-menu .menu-item .sub-menu li.current-menu-item > a:hover,
         .genesis-nav-menu .menu-item .sub-menu li.current-menu-item > a:focus {
           color: #555; }
