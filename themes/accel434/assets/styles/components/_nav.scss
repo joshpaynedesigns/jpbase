@@ -75,17 +75,26 @@ $sub-nav-link-color-hover: $base-font-color;
                 display: block;
                 margin: 0;
 
+                &:after {
+                    display: none;
+                }
+
                 a {
                     color: $sub-nav-link-color;
                     padding: 0 0 1em 0;
                     position: relative;
                     font-size: em(14);
 
+                    &:after {
+                        display: none;
+                    }
+
                     &:hover {
                         color: $sub-nav-link-color-hover;
                     }
                 }
 
+                &.current-menu-item > a,
                 &.current-menu-item > a:hover,
                 &.current-menu-item > a:focus {
                     color: $sub-nav-link-color-hover;
