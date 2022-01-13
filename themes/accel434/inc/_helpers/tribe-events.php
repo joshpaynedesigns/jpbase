@@ -7,7 +7,11 @@ function is_event_calendar_page() {
 
         $is_event_calendar = false; // Default is false so if everything falls through it returns that it is not an EC page
 
-        if( tribe_is_month() && !is_tax() ) { // Month View Page
+        if ( is_post_type_archive( 'tribe_events' ) ) { // Default Page
+
+            $is_event_calendar = true;
+
+        } elseif( tribe_is_month() && !is_tax() ) { // Month View Page
 
             $is_event_calendar = true;
 
