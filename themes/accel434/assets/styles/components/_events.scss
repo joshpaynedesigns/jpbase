@@ -197,11 +197,19 @@ Events Single
 				border: none;
 				margin: 0;
 				padding: 0;
+
+				h2 {
+					font-weight: bold;
+				}
 			}
 
 			.tribe-events-cal-links .tribe-events-gcal,
 			.tribe-events-cal-links .tribe-events-ical {
 				// padding: 0;
+			}
+
+			.tribe-events-cal-links .tribe-events-ics {
+				display: none;
 			}
 		}
 
