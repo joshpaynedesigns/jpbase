@@ -37,6 +37,8 @@ class View_Filters {
 	 */
 	protected $geo_loc_handler;
 
+	public static $option_mobile_default = 'mobile_default_view';
+
 	/**
 	 * View_Filters constructor.
 	 *
@@ -206,6 +208,37 @@ class View_Filters {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Get the class name for the default registered view.
+	 *
+	 * The use of the `wp_is_mobile` function is not about screen width, but about payloads and how "heavy" a page is.
+	 * All the Views are responsive, what we want to achieve here is serving users a version of the View that is
+	 * less "heavy" on mobile devices (limited CPU and connection capabilities).
+	 * This allows users to, as an example, serve the Month View to desktop users and the day view to mobile users.
+	 *
+	 * @since  4.9.4
+	 * @since 5.12.3 - Moved to ECP, where it belongs.
+	 *
+	 * @param string      $default_view The view slug for the default view.
+	 * @param string|null $type         The type of default View to return, either 'desktop' or 'mobile'.
+	 *
+	 * @return string The default View slug.
+	 *
+	 * @see wp_is_mobile()
+	 * @link https://developer.wordpress.org/reference/functions/wp_is_mobile/
+	 */
+	public function filter_tec_events_default_view( $default_view, $type ) {
+		if ( null === $type ) {
+			$type = wp_is_mobile() ? 'mobile' : 'desktop';
+		}
+
+		if ( 'desktop' === $type ) {
+			return $default_view;
+		}
+
+		return (string) tribe_get_option( self::$option_mobile_default, 'default' );
 	}
 
 	/**

@@ -223,7 +223,7 @@ class Page {
 	/**
 	 * Removes the submenu so users cannot navigate to this particular submenu directly.
 	 *
-	 * @since TBD
+	 * @since 5.10.0
 	 *
 	 */
 	public function hide_events_manager_submenu_item() {
@@ -247,7 +247,7 @@ class Page {
 	/**
 	 * Removes the submenu so users cannot navigate to this particular submenu directly.
 	 *
-	 * @since TBD
+	 * @since 5.10.0
 	 *
 	 * @param string|null $submenu_file
 	 *
@@ -751,10 +751,22 @@ class Page {
 	public function inject_manager_link() {
 		$helper = \Tribe__Admin__Helpers::instance();
 
-		// Are we on a post type screen?
+		// Are we on a post type edit screen?
 		$is_post_type = $helper->is_post_type_screen( TEC::POSTTYPE );
 
 		if ( ! $is_post_type ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+
+		// Are we on the event list screen?
+		if ( 'edit-' . TEC::POSTTYPE !== $screen->id ) {
+			return;
+		}
+
+		// But not on the manager already?
+		if ( $this->get_page_slug() === tribe_get_request_var( 'page', false )) {
 			return;
 		}
 

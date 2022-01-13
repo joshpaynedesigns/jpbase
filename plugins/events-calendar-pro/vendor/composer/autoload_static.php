@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3
+class ComposerStaticInit36988f9feee690763b259aa975fbd285
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -31,6 +31,7 @@ class ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3
         'Tribe\\Events\\Pro\\Admin\\Manager\\Provider' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Provider.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Settings' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Settings.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Shortcode' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Shortcode.php',
+        'Tribe\\Events\\Pro\\Event_Status\\Event_Status_Provider' => __DIR__ . '/../..' . '/src/Tribe/Event_Status/Event_Status_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Groups\\Event_Query' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Traits\\TEC_Control' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Traits/TEC_Control.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls_Manager' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls_Manager.php',
@@ -115,9 +116,9 @@ class ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit47d4a524cd896d10d32a6dd07c046ff3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit36988f9feee690763b259aa975fbd285::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit36988f9feee690763b259aa975fbd285::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit36988f9feee690763b259aa975fbd285::$classMap;
 
         }, null, ClassLoader::class);
     }

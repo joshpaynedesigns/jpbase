@@ -20,10 +20,10 @@ class AC_ConnectorWordPress
             // remove trailing slash
             $url = substr($url, 0, strlen($url) - 1);
         }
-        if ($api_key) {
-            $this->url = "{$url}{$base}/api.php?api_key={$api_key}";
-        } elseif ($api_user && $api_pass) {
+        if ($api_user && $api_pass) {
             $this->url = "{$url}{$base}/api.php?api_user={$api_user}&api_pass={$api_pass}";
+        } else {
+            $this->url = "{$url}{$base}/api.php?";
         }
         $this->api_key = $api_key;
     }
@@ -88,7 +88,7 @@ class AC_ConnectorWordPress
             }
         } elseif ($this->version == 2) {
             $method = $custom_method;
-            $url .= "?api_key=" . $this->api_key;
+            $url .= "?";
         }
         $debug_str1 = "";
         if ($this->use_curl) {
@@ -182,7 +182,7 @@ class AC_ConnectorWordPress
 
             $data = rtrim($data, "& ");
             if ($this->use_curl) {
-                curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:"));
+                curl_setopt($request, CURLOPT_HTTPHEADER, array("Expect:", "Api-Token: {$this->api_key}"));
                 $debug_str1 .= "curl_setopt(\$ch, CURLOPT_HTTPHEADER, array(\"Expect:\"));\n";
             }
             if ($this->debug) {
@@ -207,7 +207,9 @@ class AC_ConnectorWordPress
         } else {
             // Use native WordPress HTTP method.
             // We only need GET support because our WordPress plugin doesn't currently make any other type of requests.
-            $args = array( 'headers' => array( 'user-agent' => 'ActiveCampaign WordPress Plugin' ) );
+            $args = array( 'headers' => array(
+                'user-agent' => 'ActiveCampaign WordPress Plugin',
+                'Api-Token' => $this->api_key ) );
             $response = wp_remote_get($url, $args);
 
             // If the response code is actually based off WP_ERROR Send the error back instead;

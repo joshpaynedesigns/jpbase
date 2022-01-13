@@ -37,10 +37,9 @@ class ActiveCampaignWordPress extends AC_ConnectorWordPress
 
     function api3($path, $params = array(), $json = true){
     	// Only GET supported for now
-    	$params = array_merge($params, array(
-    		'api_key' => $this->api_key,
-		));
-		$args = array( 'headers' => array( 'user-agent' => 'ActiveCampaign WordPress Plugin' ) );
+        $args = array( 'headers' => array(
+            'user-agent' => 'ActiveCampaign WordPress Plugin',
+            'Api-Token' => $this->api_key ) );
 		$request_url = $this->url_base.'/api/3/'.$path.'?'.http_build_query($params);
 		$response = wp_remote_get($request_url, $args);
 

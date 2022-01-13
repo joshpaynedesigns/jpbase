@@ -111,10 +111,7 @@ class Widget_Month extends Widget_Abstract {
 	 */
 	public static function get_default_widget_options() {
 		return [
-			'description' => esc_html( sprintf(
-				_x( 'The %1$s calendar mini calendar widget', 'Description of the Events Calendar Widget.', 'tribe-events-calendar-pro' ),
-				tribe_get_event_label_plural_lowercase()
-			) ),
+			'description' => esc_html_x( 'Displays this month\'s events.', 'Description of the Events Calendar Widget.', 'tribe-events-calendar-pro' ),
 		];
 	}
 
@@ -454,6 +451,7 @@ class Widget_Month extends Widget_Abstract {
 		$default_args = $this->get_default_shortcode_args();
 		$args         = [
 			'month_events_per_day' => $this->arguments['count'],
+			'jsonld'               => $this->arguments['jsonld_enable'],
 		];
 
 		if ( ! empty( $this->arguments['filters'] ) ) {
