@@ -28,13 +28,22 @@ class Google_Maps implements Service_Interface {
 			);
 		}
 
-		$api_key = (string) tribe_get_option( API_Key::$api_key_option_name );
+		$url_string = 'https://maps.googleapis.com/maps/api/geocode/json';
 
-		$url = sprintf(
-			'https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s',
-			urlencode( $address ),
-			urlencode( $api_key )
-		);
+		$args = [
+			'address' => $address,
+			'key' => (string) tribe_get_option( API_Key::$api_key_option_name )
+		];
+
+		$args = apply_filters( 'tec_google_map_args', $args );
+
+		// Sanitize!
+		$args = array_combine( array_keys( $args ), array_map( 'urlencode', $args ) );
+
+		$url = add_query_arg( $args, $url_string );
+
+		// sprintf that takes an array.
+		$url  = apply_filters( 'tec_google_map_url', $url, $args, $url_string );
 
 		$response = wp_remote_get( $url );
 

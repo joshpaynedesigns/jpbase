@@ -368,7 +368,7 @@
 		tribeWidget.showFilters;
 
 		// This ensures that we set up the widgets that are already in place correctly
-		$( '.widget[id*="tribe-"]' ).each( tribeWidget.setup );
+		$( '.tribe-widget-form' ).each( tribeWidget.setup );
 	} );
 
 	$( document )
@@ -386,7 +386,7 @@
 		} )
 		.on( 'change', '.calendar-widget-add-filter', function( e ) { // eslint-disable-line no-unused-vars,max-len
 			var $select = $( this );
-			var $widget = $select.parents( '.widget[id*="tribe-"]' );
+			var $widget = $select.parents( '.tribe-widget-form' );
 			var $list = $widget.find( '.calendar-widget-filter-list' );
 			var $field = $widget.find( '.calendar-widget-added-filters' );
 			var values = $field.val() ? JSON.parse( $field.val() ) : {};
@@ -473,7 +473,7 @@
 		.on( 'click', '.calendar-widget-remove-filter', function ( e ) {
 			e.preventDefault();
 			var $link = $( this ),
-				$widget = $link.parents( '.widget[id*="tribe-"]' ),
+				$widget = $link.parents( '.tribe-widget-form' ),
 				$select = $widget.find( '.calendar-widget-add-filter' ).not( '.select2-container' ),
 				$field = $widget.find( '.calendar-widget-added-filters' ),
 				values = $field.val() ? JSON.parse( $field.val() ) : {},

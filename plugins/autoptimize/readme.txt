@@ -5,7 +5,7 @@ Donate link: http://blog.futtta.be/2013/10/21/do-not-donate-to-me/
 Requires at least: 4.9
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.9.2
+Stable tag: 2.9.5
 
 Autoptimize speeds up your website by optimizing JS, CSS, images (incl. lazy-load), HTML and Google Fonts, asyncing JS, removing emoji cruft and more.
 
@@ -13,9 +13,6 @@ Autoptimize speeds up your website by optimizing JS, CSS, images (incl. lazy-loa
 
 Autoptimize makes optimizing your site really easy. It can aggregate, minify and cache scripts and styles, injects CSS in the page head by default but can also inline critical CSS and defer the aggregated full CSS, moves and defers scripts to the footer and minifies HTML. You can optimize and lazy-load images (with support for WebP and AVIF formats), optimize Google Fonts, async non-aggregated JavaScript, remove WordPress core emoji cruft and more. As such it can improve your site's performance even when already on HTTP/2! There is extensive API available to enable you to tailor Autoptimize to each and every site's specific needs.
 If you consider performance important, you really should use one of the many caching plugins to do page caching. Some good candidates to complement Autoptimize that way are e.g. [Speed Booster pack](https://wordpress.org/plugins/speed-booster-pack/), [KeyCDN's Cache Enabler](https://wordpress.org/plugins/cache-enabler), [WP Super Cache](http://wordpress.org/plugins/wp-super-cache/) or if you use Cloudflare [WP Cloudflare Super Page Cache](https://wordpress.org/plugins/wp-cloudflare-page-cache/).
-
-> <strong>Premium Support</strong><br>
-> We provide great [Autoptimize Pro Support and Web Performance Optimization services](https://autoptimize.com/), check out our offering on [https://autoptimize.com/](https://autoptimize.com/)!
 
 (Speed-surfing image under creative commons [by LL Twistiti](https://www.flickr.com/photos/twistiti/818552808/))
 
@@ -327,6 +324,27 @@ You can get help on the [wordpress.org support forum](http://wordpress.org/suppo
 Just [fork Autoptimize on Github](https://github.com/futtta/autoptimize) and code away!
 
 == Changelog ==
+
+= 2.9.5 =
+* Better fix for PHP notice in autoptimizeImages.php.
+* Further improvements to the exit survey.
+
+= 2.9.4 =
+* Fix for 2 AMP compatibility issues (toolbar JS & lazyload JS).
+* Fix for PHP notice in autoptimizeImages.php.
+* Change default for "lazyload from nth image" from 0 to 2 (only applies to new installations).
+* Improvements to the exit survey.
+* Enjoy the end-of-year celebrations, there are great Autoptimize things to come in 2022! ;-)
+
+= 2.9.3 =
+* Improvement: add logic to autoptimize_404_handler.php to differentiate between different multisite sites.
+* Improvement: remove the different feeds (and all JS to switch between them) on the settings-page, keeping only the "Autoptimize news".
+* Improvement: reduced autoptimize_enable_site_config option lookups when on multisite and AO is active for network.
+* Fixed wrong variable name that caused PHP notices (but did not affect normal usage) to $w3tc_minify_on.
+* Fix for Autoptimize Toolbar being loaded on AMP pages for logged in administrators/ editors
+* Fix for CDN replacement edge case (if the CDN has the site_url in it).
+* Fix for service availability checks causing too many outgoing requests (root cause likely to be object caching resulting in the autoptimize_service_availability option not being updated)
+* Added "exit survey" when Autoptimize is deactivated (with the kind help of Shakeeb of RapidLoad, thanks brother!)
 
 = 2.9.2 =
 * New: page/ post settings now have a "Generate Critical CSS"-button (critical CSS needs to be active with valid API key)

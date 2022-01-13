@@ -18,6 +18,7 @@
 namespace Tribe\Events\Pro\Admin\Manager;
 
 use WP_REST_Request as Request;
+use Tribe__Admin__Helpers as Admin_Helpers;
 
 /**
  * Class Hooks.
@@ -63,6 +64,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'submenu_file', [ $this, 'change_default_events_menu_url' ] );
 		add_filter( 'tribe-event-general-settings-fields', [ $this, 'filter_settings_general_tab' ], 25 );
 		add_filter( 'wp_redirect', [ $this, 'filter_edit_page_redirect_to_render_admin_manager' ] );
+		add_filter( 'tec_events_views_v2_disable_tribe_bar', [ $this, 'filter_views_v2_disable_tribe_bar_on_event_manager_page' ] );
+		add_filter( 'tec_events_views_v2_hide_location_search', [ $this, 'filter_views_v2_hide_location_search_on_event_manager_page' ] );
 	}
 
 	/**
@@ -141,7 +144,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * This leverages the submenu_file filter as if it were an action, as it is the last action before
 	 * the rendering of the menu where we can alter the URL of the Events menu item.
 	 *
-	 * @since TBD
+	 * @since 5.10.0
 	 *
 	 * @param string|null $submenu_file
 	 *
@@ -190,5 +193,39 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		return add_query_arg( 'page', $this->container->make( Page::class )->get_page_slug(), $location );
+	}
+
+	/**
+	 * Determine whether to apply the `tribeDisableTribeBar` setting on the Events Manager page.
+	 *
+	 * @since 5.11.1
+	 *
+	 * @param boolean $apply_settings Whether to apply the setting or not.
+	 *
+	 * @return boolean Whether to apply the setting or not.
+	 */
+	public function filter_views_v2_disable_tribe_bar_on_event_manager_page( $apply_setting ) {
+		if ( Admin_Helpers::instance()->is_screen( 'tribe-admin-manager' ) ) {
+			return false;
+		}
+
+		return $apply_setting;
+	}
+
+	/**
+	 * Determine whether to apply the `hideLocationSearch` setting on the Events Manager page.
+	 *
+	 * @since 5.11.1
+	 *
+	 * @param boolean $apply_settings Whether to apply the setting or not.
+	 *
+	 * @return boolean Whether to apply the setting or not.
+	 */
+	public function filter_views_v2_hide_location_search_on_event_manager_page( $apply_setting ) {
+		if ( Admin_Helpers::instance()->is_screen( 'tribe-admin-manager' ) ) {
+			return false;
+		}
+
+		return $apply_setting;
 	}
 }

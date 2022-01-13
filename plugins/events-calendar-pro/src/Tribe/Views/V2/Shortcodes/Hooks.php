@@ -21,6 +21,7 @@ use Tribe\Events\Pro\Views\V2\Assets as Pro_Assets;
 use Tribe\Shortcode\Manager;
 use Tribe__Events__Pro__Shortcodes__Register as Legacy_Shortcodes;
 use WP_REST_Request as Request;
+use Tribe__Events__Main as TEC;
 
 /**
  * Class Hooks.
@@ -60,6 +61,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	public function add_filters() {
 		add_filter( 'tribe_shortcodes', [ $this, 'filter_tribe_shortcodes' ] );
 		add_filter( 'tribe_context_locations', [ $this, 'filter_context_locations' ] );
+		add_filter( 'tec_views_v2_subscribe_links_url_args', [ $this, 'filter_tec_views_v2_subscribe_links_url_args' ], 10, 2 );
 	}
 
 	/**
@@ -160,5 +162,61 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		// Hooks attached to the main calendar attribute on the shortcodes
 		remove_filter( 'tribe_events_get_link', [ $legacy_shortcodes_instance, 'shortcode_main_calendar_link' ], 10 );
+	}
+
+	/**
+	 * Filter the iCal link args to allow shortcodes
+	 * to pass through params that would be "hidden" in their params otherwise.
+	 *
+	 * @since 5.11.1
+	 *
+	 * @param array<string|mixed> $args The array of args (params) that will be added to the URL.
+	 * @param View_Interface      $view The view instance.
+	 * @return void
+	 */
+	public function filter_tec_views_v2_subscribe_links_url_args( $args, $view ) {
+		$view_url_args = $view->get_url_args();
+
+		// Shortcode is stripped out of the passthrough args already - it doesn't belong in the subscribe URL.
+		if ( empty( $view_url_args['shortcode'] ) ) {
+			return $args;
+		}
+
+		$database_args = tribe( Tribe_Events::class )->get_database_arguments( $view_url_args['shortcode'] );
+
+		if (
+			empty( $database_args['category'] )
+			&& empty( $database_args['tag'] )
+		) {
+			return $args;
+		}
+
+		// `tribe_events` allows multiple tags/categories, let's pass them all and let the repository handle it.
+
+		// If we have category args, add them.
+		if ( ! empty( $database_args['category'] ) ) {
+			$cats = [];
+
+			foreach( $database_args['category'] as $cat_id ) {
+				$cats[] = get_term( $cat_id )->slug;
+			}
+
+			// Note: WP allows us to use `,` (OR) or `+` (AND) for a separator -
+			// but our current rewrite rules break using `+` so we'll stick to `,` for now.
+			$args[TEC::TAXONOMY] = implode( ',', $cats );
+		}
+
+		// If we have tag args, add them.
+		if ( ! empty( $database_args['tag'] ) ) {
+			$tags = [];
+
+			foreach( $database_args['tag'] as $tag_id ) {
+				$tags[] = get_term( $tag_id )->slug;
+			}
+
+			$args['post_tag'] = implode( ',', $tags );
+		}
+
+		return $args;
 	}
 }

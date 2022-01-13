@@ -67,6 +67,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		'tax-operand'       => 'OR',
 		'tribe-bar'         => true,
 		'view'              => null,
+		'jsonld'            => true,
 
 		'month_events_per_day' => null,
 		'week_events_per_day'  => null,
@@ -228,6 +229,10 @@ class Tribe_Events extends Shortcode_Abstract {
 		) {
 			add_filter( "tribe_template_html:events/v2/month/top-bar/datepicker", '__return_false' );
 			add_filter( "tribe_template_html:events-pro/v2/week/top-bar/datepicker", '__return_false' );
+		}
+
+		if ( ! tribe_is_truthy( $this->get_argument( 'jsonld' ) ) ) {
+			add_filter( 'tribe_template_html:events/v2/components/json-ld-data', '__return_false' );
 		}
 	}
 
@@ -433,7 +438,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		$db_arguments       = $this->get_database_arguments();
 		$db_arguments['id'] = $shortcode_id;
 
-		// If the value is the same it's already on the Database.
+		// If the value is the same it's already in the Database.
 		if ( $db_arguments === $this->get_arguments() ) {
 			return true;
 		}
@@ -605,7 +610,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		 *
 		 * @see TEC-3157
 		 */
-		$should_display = ! ( is_admin() && ! tribe( 'context' )->doing_ajax() );
+		$should_display = true;
 
 		/**
 		 * If we should display the shortcode.
@@ -832,7 +837,6 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @return array The translated shortcode arguments.
 	 */
 	public function args_to_repository( array $repository_args, array $arguments, $context, $view ) {
-
 		if ( ! empty( $arguments['tag'] ) || ! empty( $arguments['category'] ) ) {
 			$operand = Arr::get( $arguments, 'tax-operand', 'OR' );
 
@@ -912,8 +916,13 @@ class Tribe_Events extends Shortcode_Abstract {
 		/* Week view/widget only. */
 		if ( false !== stripos( $view_slug, 'week' ) ) {
 			$offset = $this->get_argument( 'week_offset' );
-			if ( tribe_is_truthy( $offset ) && empty( $view_context->get( 'eventDate' ) ) ) {
-				$start_date  = Dates::build_date_object( $this->get_argument( 'date', 'now' ) );
+
+			if (
+				tribe_is_truthy( $offset )
+				&& empty( $view_context->get( 'eventDate' ) )
+			) {
+				$start_date = $this->get_argument( 'date', 'now' );
+				$start_date  = Dates::build_date_object( $start_date );
 				$is_negative = '-' === substr( $offset, 0, 1 );
 				// Set up for negative weeks.
 				$interval = ( $is_negative )
@@ -926,9 +935,22 @@ class Tribe_Events extends Shortcode_Abstract {
 				$start_date->add( $di );
 
 				$arguments['date'] = $start_date->format( Dates::DBDATEFORMAT );
+			} elseif ( ! empty( $view_context->get( 'eventDate' ) ) ) {
+				$start_date        = Dates::build_date_object( $view_context->get( 'eventDate' ) );
+				$arguments['date'] = $start_date->format( Dates::DBDATEFORMAT );
 			}
 
 			$arguments['week_events_per_day'] = $this->get_argument( 'week_events_per_day' );
+		} elseif ( false !== stripos( $view_slug, 'day' ) ) {
+			/* Day view/widget only. */
+			$event_date = $view_context->get( 'eventDate' );
+
+			if ( ! empty( $event_date ) ) {
+				$arguments['date'] = $event_date;
+			}
+		} else {
+			// works for month view,
+			$arguments['date'] = $view_context->get( 'tribe-bar-date' );
 		}
 
 		return $this->alter_context( $view_context, $arguments );

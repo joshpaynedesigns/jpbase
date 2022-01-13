@@ -136,6 +136,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_events_views_v2_manager_view_label_domain', [ $this, 'filter_view_label_domain'], 10, 3 );
 		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12 );
 		add_filter( 'tribe_events_views_v2_view_map_template_vars', [ $this, 'filter_map_view_pin' ], 10, 2 );
+
+		add_filter( 'tec_events_default_view', [ $this, 'filter_tec_events_default_view' ], 10, 2 );
 	}
 
 	/**
@@ -357,10 +359,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return array The filtered repository args.
 	 */
 	public function filter_events_views_v2_view_repository_args( array $repository_args = [], Context $context = null ) {
-		/** @var View_Filters $view_filters */
-		$view_filters = $this->container->make( View_Filters::class );
-
-		return $view_filters->filter_repository_args( $repository_args, $context );
+		return $this->container->make( View_Filters::class )->filter_repository_args( $repository_args, $context );
 	}
 
 	/**
@@ -374,10 +373,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return array Array of params with the hide_subsequent_recurrences added.
 	 */
 	public function filter_page_reset_ignored_params( array $arguments = [], View $view = null ) {
-		/** @var View_Filters $view_filters */
-		$view_filters = $this->container->make( View_Filters::class );
-
-		return $view_filters->add_recurrence_hide_to_page_reset_ignored_params( $arguments, $view );
+		return $this->container->make( View_Filters::class )->add_recurrence_hide_to_page_reset_ignored_params( $arguments, $view );
 	}
 
 	/**
@@ -389,10 +385,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @param View_Interface $view The current View instance.
 	 */
 	public function filter_events_views_v2_view_template_vars( array $template_vars, View_Interface $view ) {
-		/** @var View_Filters $view_filters */
-		$view_filters = $this->container->make( View_Filters::class );
-
-		return $view_filters->filter_template_vars( $template_vars, $view->get_context() );
+		return $this->container->make( View_Filters::class )->filter_template_vars( $template_vars, $view->get_context() );
 	}
 
 	/**
@@ -837,6 +830,21 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function filter_map_view_pin( array $template_vars, View_Interface $view ) {
 		return $this->container->make( Map_View::class )->filter_map_view_pin( $template_vars, $view );
+	}
+
+	/**
+	 * Get the class name for the default registered view.
+	 *
+	 * @since 5.12.3 - Moved to ECP, where it belongs.
+	 *
+	 * @param string $default_view The view slug for the default view.
+	 * @param string|null $type The type of default View to return, either 'desktop' or 'mobile'; defaults to `mobile`.
+	 *
+	 * @return string The filtered default View slug.
+	 *
+	 */
+	public function filter_tec_events_default_view( $default_view, $type ) {
+		return  $this->container->make( View_Filters::class )->filter_tec_events_default_view( $default_view, $type );
 	}
 
 	/************************

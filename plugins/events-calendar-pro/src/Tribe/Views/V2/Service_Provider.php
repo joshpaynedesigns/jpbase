@@ -13,6 +13,7 @@ use Tribe\Events\Pro\Views\V2\Geo_Loc\Handler_Interface as Geo_Loc_Handler;
 use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Google_Maps;
 use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Service_Interface as Geo_Loc_API_Service;
 use Tribe\Events\Pro\Views\V2\Views\Summary_View;
+use Tribe\Events\Pro\Event_Status\Event_Status_Provider;
 
 /**
  * Class Service_Provider
@@ -40,6 +41,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 		tribe_register_provider( Widgets\Service_Provider::class );
 		tribe_register_provider( Shortcodes\Service_Provider::class );
 		tribe_register_provider( Customizer\Service_Provider::class );
+		tribe_register_provider( Event_Status_Provider::class );
 
 		$this->register_geolocation_classes();
 

@@ -24,8 +24,19 @@ class Location_Search_Field implements View_Partial_Interface {
 	 * @return string
 	 */
 	public function render( \Tribe__Template $template ) {
-		$disable_tribe_bar    = tribe_is_truthy( tribe_get_option( 'tribeDisableTribeBar', false ) );
-		$hide_location_search = tribe_is_truthy( tribe_get_option( 'hideLocationSearch', false ) );
+		/**
+		 * Allow filtering to determine whether or not to apply the `tribeDisableTribeBar` setting on the Events Manager page.
+		 *
+		 * @since 5.11.1
+		 */
+		$disable_tribe_bar = apply_filters( 'tec_events_views_v2_disable_tribe_bar', tribe_get_option( 'tribeDisableTribeBar', false ) );
+
+		/**
+		 * Allow filtering to determine whether or not to apply the `hideLocationSearch` setting on the Events Manager page.
+		 *
+		 * @since 5.11.1
+		 */
+		$hide_location_search = apply_filters( 'tec_events_views_v2_hide_location_search', tribe_get_option( 'hideLocationSearch', false ) );
 
 		if ( $disable_tribe_bar || $hide_location_search || tribe_is_using_basic_gmaps_api() ) {
 			return '';

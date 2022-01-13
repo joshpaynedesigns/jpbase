@@ -74,7 +74,7 @@ class Tribe__Events__Pro__Assets {
 
 		tribe_asset(
 			$pro,
-			'tribe_events-premium-admin',
+			'tribe_events-premium-admin-style',
 			'events-admin.css',
 			[],
 			'admin_enqueue_scripts',
@@ -278,6 +278,62 @@ class Tribe__Events__Pro__Assets {
 			null,
 			array()
 		);
+
+		tribe_asset(
+			$pro,
+			'tec-pro-widget-blocks',
+			'app/widgets.js',
+			[
+				'react',
+				'react-dom',
+				'wp-components',
+				'wp-api',
+				'wp-api-request',
+				'wp-blocks',
+				'wp-i18n',
+				'wp-element',
+				'wp-editor',
+				'tec-widget-blocks',
+				'tribe-common-gutenberg-data',
+				'tribe-common-gutenberg-utils',
+				'tribe-common-gutenberg-store',
+				'tribe-common-gutenberg-icons',
+				'tribe-common-gutenberg-hoc',
+				'tribe-common-gutenberg-elements',
+				'tribe-common-gutenberg-components',
+			],
+			'enqueue_block_editor_assets',
+			[
+				'in_footer' => false,
+				'conditionals' => [ $this, 'is_edit_screen' ],
+				'priority'  => 201,
+			]
+		);
+
+		tribe_asset(
+			$pro,
+			'tec-pro-widget-blocks-styles',
+			'app/widgets.css',
+			[
+				'wp-widgets',
+			],
+			'enqueue_block_editor_assets',
+			[
+				'in_footer'    => false,
+				'conditionals' => [ $this, 'is_edit_screen' ],
+			]
+		);
+
+		tribe_asset(
+			$pro,
+			'tribe-events-pro-mini-calendar-block-styles',
+			'tribe-events-pro-mini-calendar-block.css',
+			[],
+			'wp_enqueue_scripts',
+			[
+				'in_footer'    => true,
+			]
+		);
 	}
 
 	/**
@@ -457,5 +513,18 @@ class Tribe__Events__Pro__Assets {
 		$data = apply_filters( 'tribe_events_pro_geoloc_localize_script', $data, 'tribe-events-pro-geoloc' );
 
 		return $data;
+	}
+
+	/**
+	 * Check whether the current page is an edit post type page.
+	 *
+	 * @since 5.11.1
+	 *
+	 * @return bool
+	 */
+	public function is_edit_screen() {
+		$current_screen = get_current_screen();
+
+		return 'post' === $current_screen->base;
 	}
 }

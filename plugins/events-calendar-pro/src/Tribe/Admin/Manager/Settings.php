@@ -43,8 +43,8 @@ class Settings {
 		return [
 			'default_admin_calendar_manager' => [
 				'type'            => 'checkbox_bool',
-				'label'           => esc_html__( 'Calendar Manager', 'tribe-events-calendar-pro' ),
-				'tooltip'         => esc_html__( 'Enable the Calendar Manager as the default page for viewing Events on the Administration page.', 'tribe-events-calendar-pro' ),
+				'label'           => esc_html__( 'Events Manager', 'tribe-events-calendar-pro' ),
+				'tooltip'         => esc_html__( 'Enable the Events Manager as the default page for viewing Events on the Administration page.', 'tribe-events-calendar-pro' ),
 				'default'         => false,
 				'validation_type' => 'boolean',
 			],
