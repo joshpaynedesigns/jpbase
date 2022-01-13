@@ -16,6 +16,7 @@ return array(
     'Tribe\\Events\\Pro\\Admin\\Manager\\Provider' => $baseDir . '/src/Tribe/Admin/Manager/Provider.php',
     'Tribe\\Events\\Pro\\Admin\\Manager\\Settings' => $baseDir . '/src/Tribe/Admin/Manager/Settings.php',
     'Tribe\\Events\\Pro\\Admin\\Manager\\Shortcode' => $baseDir . '/src/Tribe/Admin/Manager/Shortcode.php',
+    'Tribe\\Events\\Pro\\Event_Status\\Event_Status_Provider' => $baseDir . '/src/Tribe/Event_Status/Event_Status_Provider.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Groups\\Event_Query' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Traits\\TEC_Control' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls/Traits/TEC_Control.php',
     'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls_Manager' => $baseDir . '/src/Tribe/Integrations/Elementor/Controls_Manager.php',

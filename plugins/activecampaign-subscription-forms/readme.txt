@@ -3,7 +3,7 @@ Contributors: activecampaign
 Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
 Requires at least: 2.0
 Requires PHP: 5.4
-Tested up to: 5.7
+Tested up to: 5.8.2
 Stable tag: trunk
 
 Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -97,6 +97,9 @@ All live chat messages will display in the Conversations inbox in your ActiveCam
 Please make sure that your login information is correct, and that you have at least one Integration form already created in the ActiveCampaign system.
 
 == Changelog ==
+= 8.1.9 =
+* Updated authentication for internal API requests
+
 = 8.1.8 =
 * Updated listing
 

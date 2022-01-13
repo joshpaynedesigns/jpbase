@@ -61,6 +61,27 @@ function is_lity( array $a ) {
 
 function tag_filter_arve( array $tag, array $a ) {
 
+	$reset = ARVE\options()['reset_after_played'];
+
+	switch ( $reset ) {
+		default:
+		case 'enabled':
+			$reset = true;
+			break;
+		case 'disabled':
+			$reset = false;
+			break;
+		case 'disabled-for-vimeo':
+			if ( 'vimeo' === $a['provider'] ) {
+				$reset = false;
+			}
+			break;
+	}
+
+	if ( $reset ) {
+		$tag['attr']['data-reset-after-played'] = '';
+	}
+
 	if ( 'link-lightbox' === $a['mode'] ) {
 		$tag['tag']                            = 'span';
 		$tag['attr']['data-lightbox-maxwidth'] = ARVE\options()['lightbox_maxwidth'];

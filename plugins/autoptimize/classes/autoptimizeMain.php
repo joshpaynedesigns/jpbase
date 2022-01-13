@@ -60,7 +60,7 @@ class autoptimizeMain
         add_action( 'autoptimize_setup_done', array( $this, 'version_upgrades_check' ) );
         add_action( 'autoptimize_setup_done', array( $this, 'check_cache_and_run' ) );
         add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_ao_extra' ), 15 );
-        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_partners_tab' ), 20 );
+        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_admin_only_trinkets' ), 20 );
         add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_criticalcss' ), 11 );
         add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_notfound_fallback' ), 10 );
 
@@ -186,7 +186,7 @@ class autoptimizeMain
                 if ( class_exists( 'Jetpack' ) && apply_filters( 'autoptimize_filter_main_disable_jetpack_cdn', true ) && ( $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) ) ) {
                     add_filter( 'jetpack_force_disable_site_accelerator', '__return_true' );
                 }
-                
+
                 // Add "no cache found" notice.
                 add_action( 'admin_notices', 'autoptimizeMain::notice_nopagecache', 99 );
                 add_action( 'admin_notices', 'autoptimizeMain::notice_potential_conflict', 99 );
@@ -209,11 +209,12 @@ class autoptimizeMain
         }
     }
 
-    public function maybe_run_partners_tab()
+    public function maybe_run_admin_only_trinkets()
     {
-        // Loads partners tab code if in admin (and not in admin-ajax.php)!
+        // Loads partners tab and exit survey code if in admin (and not in admin-ajax.php)!
         if ( autoptimizeConfig::is_admin_and_not_ajax() ) {
             new autoptimizePartners();
+            new autoptimizeExitSurvey();
         }
     }
 
@@ -369,7 +370,7 @@ class autoptimizeMain
             if ( false === $ao_noptimize && array_key_exists( 'PageSpeed', $_GET ) && 'off' === $_GET['PageSpeed'] ) {
                 $ao_noptimize = true;
             }
-            
+
             // If page/ post check post_meta to see if optimize is off.
             if ( false === autoptimizeConfig::get_post_meta_ao_settings( 'ao_post_optimize' ) ) {
                 $ao_noptimize = true;
@@ -688,7 +689,7 @@ class autoptimizeMain
     public static function notice_installed()
     {
         echo '<div class="updated"><p>';
-        _e( 'Thank you for installing and activating Autoptimize. Please configure it under "Settings" -> "Autoptimize" to start improving your site\'s performance.', 'autoptimize' );
+        printf( __( 'Thank you for installing and activating Autoptimize. Please configure it under %sSettings -> Autoptimize%s to start improving your site\'s performance.', 'autoptimize' ), '<a href="options-general.php?page=autoptimize">', '</a>' );
         echo '</p></div>';
     }
 
@@ -715,12 +716,12 @@ class autoptimizeMain
             echo '</p></div>';
         }
     }
-    
+
     public static function notice_nopagecache()
     {
         /*
          * Autoptimize does not do page caching (yet) but not everyone knows, so below logic tries to find out if page caching is available and if not show a notice on the AO Settings pages.
-         * 
+         *
          * uses helper function in autoptimizeUtils.php
          */
         $_ao_nopagecache_notice      = __( 'It looks like your site might not have <strong>page caching</strong> which is a <strong>must-have for performance</strong>. If you are sure you have a page cache, you can close this notice, but when in doubt check with your host if they offer this or install a page caching plugin like for example', 'autoptimize' );
@@ -728,9 +729,8 @@ class autoptimizeMain
         $_ao_nopagecache_notice     .= ' <a href="' . $_ao_pagecache_install_url . 'wp+super+cache' . '">WP Super Cache</a>, <a href="' . $_ao_pagecache_install_url . 'keycdn+cache+enabler' . '">KeyCDN Cache Enabler</a>, ...';
         $_ao_nopagecache_dismissible = 'ao-nopagecache-forever'; // the notice is only shown once and will not re-appear when dismissed.
         $_is_ao_settings_page        = autoptimizeUtils::is_ao_settings();
-        $_found_pagecache            = false;
 
-        if ( current_user_can( 'manage_options' ) && $_is_ao_settings_page && PAnD::is_admin_notice_active( $_ao_nopagecache_dismissible ) && true === apply_filters( 'autopitmize_filter_main_show_pagecache_notice', true ) ) {
+        if ( current_user_can( 'manage_options' ) && $_is_ao_settings_page && PAnD::is_admin_notice_active( $_ao_nopagecache_dismissible ) && true === apply_filters( 'autoptimize_filter_main_show_pagecache_notice', true ) ) {
             if ( false === autoptimizeUtils::find_pagecache() ) {
                 echo '<div class="notice notice-info is-dismissible" data-dismissible="' . $_ao_nopagecache_dismissible . '"><p>';
                 echo $_ao_nopagecache_notice;
@@ -749,7 +749,7 @@ class autoptimizeMain
         $_ao_potential_conflict_dismissible = 'ao-potential-conflict-forever'; // the notice is only shown once and will not re-appear when dismissed.
         $_is_ao_settings_page               = autoptimizeUtils::is_ao_settings();
 
-        if ( current_user_can( 'manage_options' ) && $_is_ao_settings_page && PAnD::is_admin_notice_active( $_ao_potential_conflict_dismissible ) && true === apply_filters( 'autopitmize_filter_main_show_potential_conclict_notice', true ) ) {
+        if ( current_user_can( 'manage_options' ) && $_is_ao_settings_page && PAnD::is_admin_notice_active( $_ao_potential_conflict_dismissible ) && true === apply_filters( 'autoptimize_filter_main_show_potential_conclict_notice', true ) ) {
             $_potential_conflicts = autoptimizeUtils::find_potential_conflicts();
             if ( false !== $_potential_conflicts ) {
                 $_ao_potential_conflict_notice .= '<strong>' . $_potential_conflicts . '</strong>.';

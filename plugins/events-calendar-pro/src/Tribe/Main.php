@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.9.2.1';
+		const VERSION = '5.11.2';
 
 		/**
 		 * The Events Calendar Required Version
@@ -197,6 +197,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			add_filter( 'oembed_request_post_id', array( $this, 'oembed_request_post_id_for_recurring_events' ), 10, 2 );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_widget_assets' ) );
+			add_filter( 'tribe_allow_widget_on_post_page_edit_screen', [ $this, 'load_widget_assets_on_block_editor' ], 10, 2 );
 			add_action( 'wp_ajax_tribe_widget_dropdown_terms', array( $this, 'ajax_widget_get_terms' ) );
 
 			// Start the integrations manager
@@ -1297,6 +1298,24 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			wp_enqueue_script( 'tribe-admin-widget', tribe_events_pro_resource_url( 'admin-widget.js' ), array( 'jquery', 'underscore', 'tribe-select2' ), apply_filters( 'tribe_events_pro_js_version', self::VERSION ) );
 
+		}
+
+		/**
+		 * Load widget assets on block editor pages.
+		 *
+		 * @since 5.11.1
+		 *
+		 * @param boolean $load_assets Whether to load widget assets or not.
+		 * @param string  $hook        A string of the current page php file.
+		 *
+		 * @return boolean Whether to load the widget assets or not.
+		 */
+		public function load_widget_assets_on_block_editor( $load_assets, $hook ) {
+			if ( is_admin() && get_current_screen()->is_block_editor ) {
+				return true;
+			}
+
+			return $load_assets;
 		}
 
 		public function admin_enqueue_styles() {

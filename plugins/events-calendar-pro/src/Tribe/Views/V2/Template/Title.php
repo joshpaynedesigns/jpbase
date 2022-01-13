@@ -26,11 +26,15 @@ class Title extends \Tribe\Events\Views\V2\Template\Title {
 	 * @since 4.7.9
 	 * @since 5.1.4 - Add filter for plural events label.
 	 *
-	 * @param bool $depth A flag to indicate how to build the taxonomy archive page title.
+
+	 * @param string      $title     The input title.
+	 * @param  \WP_Term   $cat       The category term to use to build the title.
+	 * @param boolean     $depth     Whether to display the taxonomy hierarchy as part of the title.
+	 * @param null|string $separator The separator sequence to separate the title components.
 	 *
 	 * @return string The View title, or an empty string if the rendering View is not a PRO one.
 	 */
-	public function build_title( $title = '', $depth = true ) {
+	public function build_title( $title = '', $depth = true, $separator = ' &#8250; ' ) {
 		$context = $this->context ?: tribe_context();
 		$posts   = $this->get_posts();
 

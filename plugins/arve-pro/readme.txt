@@ -18,6 +18,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2021-12-08 5.2.0 =
+
+* New "Reset after played" option.
+
 = 2021-03-11 5.1.17 =
 
 * Improved: Cachebusting for assets.

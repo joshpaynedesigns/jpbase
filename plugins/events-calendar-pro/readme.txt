@@ -3,10 +3,10 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Requires at least: 4.9.18
-Stable tag: 5.9.2.1
-Tested up to: 5.8.1
-Requires PHP: 5.6
+Requires at least: 5.6
+Stable tag: 5.11.2
+Tested up to: 5.8.3
+Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -207,6 +207,36 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.11.2] 2022-01-10 =
+
+* Version - Events Calendar PRO 5.11.2 is only compatible with The Events Calendar 5.12.3 and higher.
+* Fix - Utilize new hooks in TEC to let ECP control showing mobile default view. [TEC-3826]
+* Fix - Ensure the modifications made through the `tribe_events_views_v2_category_title` are respected. [TEC-4110]
+* Tweak - Boost SEO for category archive pages by fixing the title tag. [TEC-4110]
+* Language - 0 new strings added, 6 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.11.1] 2021-12-14 =
+
+* Feature - Add filters to allow sending Google Maps a region and language param if desired. [ECP-977]
+* Fix - Avoid loading the same CSS file twice. [CE-13]
+* Fix - Correct pagination on shortcodes when the date parameter has been set. [ECP-362]
+* Fix - Properly observe the disabling of JSON-LD output on widget blocks in the block editor. [TEC-4077]
+* Tweak - Ensure the `Hide location search` setting doesn't get applied on the Event Manager page. [ECP-948]
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.11.0] 2021-12-02 =
+
+* Feature - Hook into new TEC subscribe to calendar functionality to adapt for shortcodes. [TEC-4131]
+* Language - 1 new strings added, 58 updated, 0 fuzzied, and 1 obsoleted
+
+= [5.10.0] 2021-11-17 =
+
+* Feature - Add a `Mini Calendar` block that is based on the `Mini Calendar` widget to the block editor which users can drag around to any position they want it to appear. [ECP-974]
+* Feature - Add event status options of scheduled, canceled, and postponed with display of the latter two on Pro views and widgets. [TEC-3465]
+* Tweak - Update the `Calendar Manager` label to `Events Manager` under the general event settings page in order to have a consistent nomenclature of features. [ECP-955]
+* Fix - Ensure the Calendar Manager link isn't inserted into inappropriate pages. [ECP-982]
+* Language - 0 new strings added, 16 updated, 1 fuzzied, and 1 obsoleted
 
 = [5.9.2.1] 2021-10-14 =
 

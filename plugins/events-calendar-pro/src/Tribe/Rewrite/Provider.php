@@ -116,12 +116,23 @@ class Provider extends \tad_DI52_ServiceProvider {
 			] )
 			->archive( [ '{{ photo }}' ], [ 'eventDisplay' => 'photo' ] )
 			->archive( [ '{{ photo }}', '{{ featured }}' ], [ 'eventDisplay' => 'photo', 'featured' => true ] )
+			->archive( [ '{{ photo }}', '{{ page }}', '(\d+)' ], [ 'eventDisplay' => 'photo', 'paged' => '%1' ] )
 			->archive( [ '{{ photo }}', '(\d{4}-\d{2}-\d{2})' ], [ 'eventDisplay' => 'photo', 'eventDate' => '%1' ] )
+			->archive( [ '{{ photo }}', '(\d{4}-\d{2}-\d{2})', '{{ page }}', '(\d+)' ], [ 'eventDisplay' => 'photo', 'eventDate' => '%1', 'paged' => '%2' ] )
 			->archive( [ '{{ photo }}', '(\d{4}-\d{2}-\d{2})', '{{ featured }}' ], [
 				'eventDisplay' => 'photo',
 				'eventDate'    => '%1',
 				'featured'     => true
 			] )
+			->archive( [ '{{ photo }}', '(\d{4}-\d{2}-\d{2})', '{{ page }}', '(\d+)', '{{ featured }}' ], [
+				'eventDisplay' => 'photo',
+				'eventDate'    => '%1',
+				'paged'        => '%2',
+				'featured'     => true
+			] )
+			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1' ] )
+			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})', '{{ page }}', '(\d+)' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1', 'paged' => '%2' ] )
+
 			->tax( [ '{{ photo }}' ], [ 'eventDisplay' => 'photo' ] )
 			->tax( [ '{{ photo }}', '{{ featured }}' ], [ 'eventDisplay' => 'photo', 'featured' => true ] )
 			->tag( [ '{{ photo }}' ], [ 'eventDisplay' => 'photo' ] )

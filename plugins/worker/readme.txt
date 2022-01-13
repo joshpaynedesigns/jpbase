@@ -2,7 +2,7 @@
 Contributors: managewp,freediver
 Tags: manage multiple sites, backup, security, migrate, performance, analytics, Manage WordPress, Managed WordPress, WordPress management, WordPress manager, WordPress management, site management, control multiple sites, WordPress management dashboard, administration, automate, automatic, comments, clone, dashboard, duplicate, google analytics, login, manage, managewp, multiple, multisite, remote, seo, spam
 Requires at least: 3.1
-Tested up to: 5.8
+Tested up to: 5.8.2
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/quick-guide-gplv3.html
@@ -55,6 +55,15 @@ Check out the [ManageWP promo video](https://vimeo.com/220647227).
 https://vimeo.com/220647227
 
 == Changelog ==
+= 4.9.13 =
+- Fix: Resolved old PHP version compatibility issues.
+
+= 4.9.12 =
+- Fix: Resolved Worker white-labeling not working as expected.
+
+= 4.9.11 =
+- Fix: Ensure full compatibility with PHP 8.1
+
 = 4.9.10 =
 - Fix: Resolved compatibility issue with WooCommerce payments
 - Fix: Set plugin version for MU plugin loader
