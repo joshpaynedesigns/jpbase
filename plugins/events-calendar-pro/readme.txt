@@ -1,10 +1,10 @@
 === The Events Calendar PRO ===
 
-Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.6
-Stable tag: 5.11.2
+Stable tag: 5.12.0
 Tested up to: 5.8.3
 Requires PHP: 7.1
 License: GPLv2 or later
@@ -52,9 +52,9 @@ That's it! Just configure your settings as you see fit, and you're on your way t
 
 = Requirements =
 
-* PHP 5.6 or greater (recommended: PHP 7.0 or greater)
-* WordPress 4.9 or above
-* jQuery 1.11.x
+* PHP 7.1 or greater (recommended: PHP 7.4 or greater)
+* WordPress 5.6 or above
+* jQuery 3.5.x
 * The Events Calendar 5.0 or newer
 
 = Where to Begin =
@@ -207,6 +207,11 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.12.0] 2022-01-19 =
+
+* Feature - Add an `Events Countdown` block to the block editor which is based on the `Events Countdown` widget. [ECP-1016]
+* Feature - Add an `Events Featured Venue` block to the block editor which is based on the `Events Featured Venue` widget. [ECP-1022]
 
 = [5.11.2] 2022-01-10 =
 

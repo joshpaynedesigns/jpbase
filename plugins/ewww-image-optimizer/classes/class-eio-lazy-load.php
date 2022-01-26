@@ -110,6 +110,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			}
 
 			add_filter( 'vc_get_vc_grid_data_response', array( $this, 'filter_page_output' ) );
+			add_filter( 'woocommerce_prl_ajax_response_html', array( $this, 'filter_page_output' ) );
 
 			// Filter for FacetWP JSON responses.
 			add_filter( 'facetwp_render_output', array( $this, 'filter_facetwp_json_output' ) );
@@ -324,7 +325,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 				}
 			}
 
-			$above_the_fold   = apply_filters( 'eio_lazy_fold', 1 );
+			$above_the_fold   = apply_filters( 'eio_lazy_fold', 0 );
 			$images_processed = 0;
 			$replacements     = array();
 
@@ -429,7 +430,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			if ( in_array( 'iframe', $this->user_element_exclusions, true ) ) {
 				$frames = '';
 			} else {
-				$frames = $this->get_elements_from_html( $buffer, 'iframe' );
+				$frames = $this->get_elements_from_html( $search_buffer, 'iframe' );
 			}
 			if ( $this->is_iterable( $frames ) ) {
 				foreach ( $frames as $index => $frame ) {
@@ -961,6 +962,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 						'skip-lazy',
 						'vimeo',
 						'about:blank',
+						'googletagmanager',
 					),
 					$this->user_exclusions
 				),
