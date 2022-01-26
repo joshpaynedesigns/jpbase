@@ -207,6 +207,7 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 			if ( ! is_string( $message ) && ! is_int( $message ) && ! is_float( $message ) ) {
 				return;
 			}
+			$message = "$message";
 			if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				WP_CLI::debug( $message );
 				return;
@@ -379,9 +380,18 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 		 * @return bool True for an AMP endpoint, false otherwise.
 		 */
 		function is_amp() {
+			// Just return false if we can't properly check yet.
+			if ( ! did_action( 'parse_request' ) ) {
+				return false;
+			}
 			if ( ! did_action( 'wp' ) ) {
 				return false;
 			}
+			global $wp_query;
+			if ( ! isset( $wp_query ) || ! ( $wp_query instanceof WP_Query ) ) {
+				return false;
+			}
+
 			if ( function_exists( 'amp_is_request' ) && amp_is_request() ) {
 				return true;
 			}
@@ -844,7 +854,7 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 
 			// NOTE: we don't want this for Easy IO as they might be using SWIS to deliver
 			// JS/CSS from a different CDN domain, and that will break with Easy IO!
-			if ( 'ExactDN' !== get_class( $this ) && 'EIO_Base' !== get_class( $this ) && function_exists( 'swis' ) && swis()->settings->get_option( 'cdn_domain' ) ) {
+			if ( 'ExactDN' !== get_class( $this ) && 'EIO_Base' !== get_class( $this ) && function_exists( 'swis' ) && is_object( swis()->settings ) && swis()->settings->get_option( 'cdn_domain' ) ) {
 				$this->allowed_urls[]    = swis()->settings->get_option( 'cdn_domain' );
 				$this->allowed_domains[] = $this->parse_url( swis()->settings->get_option( 'cdn_domain' ), PHP_URL_HOST );
 			}
@@ -859,7 +869,7 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 				$home_domain = $this->parse_url( $home_url, PHP_URL_HOST );
 				$site_domain = $this->parse_url( $site_url, PHP_URL_HOST );
 				// If the home domain does not match the upload url, and the site domain does match...
-				if ( false === strpos( $upload_dir['baseurl'], $home_domain ) && false !== strpos( $upload_dir['baseurl'], $site_domain ) ) {
+				if ( $home_domain && false === strpos( $upload_dir['baseurl'], $home_domain ) && $site_domain && false !== strpos( $upload_dir['baseurl'], $site_domain ) ) {
 					$this->debug_message( "using WP URL (via get_site_url) with $site_domain rather than $home_domain" );
 					$home_url = $site_url;
 				}
@@ -872,6 +882,14 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 			// But this is used by Easy IO, so it should be derived from the above logic instead, which already matches the site/home URLs against the upload URL.
 			$this->upload_domain     = $this->parse_url( $this->site_url, PHP_URL_HOST );
 			$this->allowed_domains[] = $this->upload_domain;
+			// For when plugins don't do a very good job of updating URLs for mapped multi-site domains.
+			if ( is_multisite() && false === strpos( $upload_dir['baseurl'], $this->upload_domain ) ) {
+				$this->debug_message( 'upload domain does not match the home URL' );
+				$origin_upload_domain = $this->parse_url( $upload_dir['baseurl'], PHP_URL_HOST );
+				if ( $origin_upload_domain ) {
+					$this->allowed_domains[] = $origin_upload_domain;
+				}
+			}
 			// Grab domain aliases that might point to the same place as the upload_domain.
 			if ( ! $this->s3_active && 0 !== strpos( $this->upload_domain, 'www' ) ) {
 				$this->allowed_domains[] = 'www.' . $this->upload_domain;
