@@ -3,6 +3,141 @@
     "title": "Theme Settings",
     "fields": [
         {
+            "key": "field_623235a0aca5b",
+            "label": "Alert Bar",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_623235b8aca5c",
+            "label": "Show Alert Bar",
+            "name": "show_alert_bar",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_623235c5aca5d",
+            "label": "Alert Bar Color",
+            "name": "alert_bar_color",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_623235b8aca5c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#F1413D",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_62323632aca5e",
+            "label": "Alert Bar Text Color",
+            "name": "alert_bar_text_color",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_623235b8aca5c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#ffffff",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_62323651aca5f",
+            "label": "Alert Bar Text",
+            "name": "alert_bar_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_623235b8aca5c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "70",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_62323671aca60",
+            "label": "Alert Bar Button",
+            "name": "alert_bar_button",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_623235b8aca5c",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
             "key": "field_5e3c87ead5d03",
             "label": "Header Settings",
             "name": "",
@@ -1060,5 +1195,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1615996856
+    "show_in_rest": 0,
+    "modified": 1647457979
 }
