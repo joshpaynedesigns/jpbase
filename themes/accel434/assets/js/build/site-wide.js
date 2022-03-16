@@ -64,13 +64,26 @@ var MobileMenu = {
 
 // SiteHeader Animation on scroll
 var scrollCheck = function () {
+	var alertBarHeight = jQuery('.alert-bar').outerHeight();
 	var position = jQuery(window).scrollTop();
-	if (position > 0) {
-		jQuery('.site-header, .site-title a').addClass('scrolled');
-		jQuery('.site-header, .site-title a').removeClass('unscrolled');
+	if (jQuery('body').hasClass('show-alert-bar')) {
+		if (position > alertBarHeight) {
+			jQuery('.site-header').css('top', 0);
+			jQuery('.site-header, .site-title a').addClass('scrolled');
+			jQuery('.site-header, .site-title a').removeClass('unscrolled');
+		} else {
+			jQuery('.site-header').css('top', alertBarHeight);
+			jQuery('.site-header, .site-title a').removeClass('scrolled');
+			jQuery('.site-header, .site-title a').addClass('unscrolled');
+		}
 	} else {
-		jQuery('.site-header, .site-title a').removeClass('scrolled');
-		jQuery('.site-header, .site-title a').addClass('unscrolled');
+		if (position > 0) {
+			jQuery('.site-header, .site-title a').addClass('scrolled');
+			jQuery('.site-header, .site-title a').removeClass('unscrolled');
+		} else {
+			jQuery('.site-header, .site-title a').removeClass('scrolled');
+			jQuery('.site-header, .site-title a').addClass('unscrolled');
+		}
 	}
 };
 
