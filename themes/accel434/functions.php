@@ -161,6 +161,11 @@ function child_theme_setup() {
 		if ($turn_on_fixed_header) {
 			$attributes['class'] .= ' fixed-header';
 		}
+        //Add class to Body when it's Alert Bar
+        $show_alert_bar = get_field('show_alert_bar', 'options');
+        if ($show_alert_bar) {
+            $attributes['class'] .= ' show-alert-bar';
+        }
 		// return the attributes
 		return $attributes;	 
 	}

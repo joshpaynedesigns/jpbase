@@ -102,3 +102,26 @@ function objectiv_header_search_box() { ?>
 	</div>
 	<?php
 }
+
+// Add Alert Bar to header
+add_action( 'genesis_before_header', 'alert_bar' );
+function alert_bar() { 
+	$show_alert_bar = get_field('show_alert_bar', 'option');
+	$alert_bar_color = get_field('alert_bar_color', 'option');
+	$alert_bar_text = get_field('alert_bar_text', 'option');
+	$alert_bar_text_color = get_field('alert_bar_text_color', 'option');
+	$alert_bar_button = get_field('alert_bar_button', 'option');
+	?>
+	<?php if ( $show_alert_bar ): ?>
+		<div class="alert-bar" style="background-color: <?php echo $alert_bar_color ?>;">
+			<div class="wrap">
+				<span class="alert-text" style="color: <?php echo $alert_bar_text_color ?>;"><?php echo $alert_bar_text ?></span>
+				<?php if ( ! empty( $alert_bar_button ) ) : ?>
+					<span class="white-button alert-button">
+						<a href="<?php echo $alert_bar_button['url'] ?>" target="<?php echo $alert_bar_button['target'] ?>"><?php echo $alert_bar_button['title'] ?></a>
+					</span>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif;
+}

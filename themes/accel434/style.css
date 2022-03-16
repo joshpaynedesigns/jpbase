@@ -954,6 +954,21 @@ body {
   width: 0%;
   left: 50%; }
 
+.alert-bar {
+  background: #0b406b;
+  color: white;
+  text-align: center;
+  padding: 1em 0; }
+  .alert-bar .alert-text p {
+    line-height: 1.5em;
+    font-size: 1.125em;
+    margin-bottom: 0;
+    display: inline-block; }
+  .alert-bar .alert-button a {
+    margin: 0.5em 0 0.5em 1em;
+    font-size: 0.75em;
+    padding: 0.5em 1em 0.4em 1em; }
+
 .site-header {
   background-color: #fff;
   position: relative;
@@ -967,8 +982,12 @@ body {
   /* Title Area */
   /* Header Right */ }
   .fixed-header .site-header {
-    position: fixed; }
-  .fixed-header .move-left .site-header {
+    position: absolute;
+    -webkit-transition: right 500ms ease, background-color 300ms ease;
+    transition: right 500ms ease, background-color 300ms ease; }
+    .fixed-header .site-header.scrolled {
+      position: fixed; }
+  .fixed-header .move-left .site-header.scrolled {
     right: 300px; }
   .site-header > .wrap {
     display: -webkit-box;
