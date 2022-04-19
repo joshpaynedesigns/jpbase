@@ -228,17 +228,23 @@ class Shortcode {
 	 * Modify the event object to change the permalinks.
 	 *
 	 * @since 5.9.0
+	 * @since 5.12.1 Temporarily remove this from the 'tribe_get_event' filter to prevent infinite loops.
 	 *
 	 * @param \WP_Post $event Current event being filtered.
 	 *
 	 * @return mixed
 	 */
 	public function filter_event_object( $event ) {
+		// Prevent infinite loops when post gets built.
+		remove_filter( 'tribe_get_event', [ $this, 'filter_event_object' ] );
 		$event->permalink = get_edit_post_link( $event->ID );
 
 		if ( 0 !== (int) $event->post_parent ) {
 			$event->permalink_all = get_edit_post_link( $event->post_parent );
 		}
+
+		// Make sure we add it back now!
+		add_filter( 'tribe_get_event', [ $this, 'filter_event_object' ] );
 
 		return $event;
 	}

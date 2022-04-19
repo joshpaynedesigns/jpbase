@@ -198,6 +198,8 @@ class autoptimizeStyles extends autoptimizeBase
         if ( $this->aggregate && apply_filters( 'autoptimize_filter_css_dontaggregate', false ) ) {
             $this->aggregate = false;
         }
+        // and the filter that should have been there to begin with.
+        $this->aggregate = apply_filters( 'autoptimize_filter_css_aggregate', $this->aggregate );
 
         // include inline?
         if ( apply_filters( 'autoptimize_css_include_inline', $options['include_inline'] ) ) {
@@ -214,6 +216,9 @@ class autoptimizeStyles extends autoptimizeBase
 
         // forcefully exclude CSS with data-noptimize attrib.
         $this->dontmove[] = 'data-noptimize';
+
+        // forcefully exclude inline CSS with ".wp-container-" which due to the random-ish nature busts AO's cache continuously.
+        $this->dontmove[] = '.wp-container-';
 
         // Should we defer css?
         // value: true / false.
@@ -486,7 +491,7 @@ class autoptimizeStyles extends autoptimizeBase
     private function check_datauri_exclude_list( $url )
     {
         static $exclude_list = null;
-        $no_datauris         = array();
+        static $no_datauris  = array();
 
         // Again, skip doing certain stuff repeatedly when loop-called.
         if ( null === $exclude_list ) {
@@ -868,7 +873,7 @@ class autoptimizeStyles extends autoptimizeBase
                             }
 
                             if ( ! empty( $code ) ) {
-                                $tmp_thiscss = preg_replace( '#(/\*FILESTART\*/.*)' . preg_quote( $import, '#' ) . '#Us', '/*FILESTART2*/' . $code . '$1', $thiscss );
+                                $tmp_thiscss = str_replace( $import, stripcslashes( $code ), $thiscss );
                                 if ( ! empty( $tmp_thiscss ) ) {
                                     $thiscss   = $tmp_thiscss;
                                     $import_ok = true;

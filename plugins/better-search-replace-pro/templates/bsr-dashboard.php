@@ -29,21 +29,32 @@ if ( 'bsr_settings' === $active_tab ) {
 
 ?>
 
-<div class="wrap">
+<div class="wrap" style="display: grid;">
 
-	<h1><?php _e( 'Better Search Replace Pro', 'better-search-replace' ); ?></h1>
+    <div class="bsr-notice-container">
+        <h2 class="hidden"></h2>
+    </div>
+
+	<div class="header">
+
+	<a href="?page=better-search-replace&tab=bsr_search_replace">
+		<img href="?page=better-search-replace&tab=bsr_search_replace" src="<?php echo plugin_dir_url( __FILE__ ) . '../assets/svg/logo-bsr.svg'; ?>" class="logo">
+	</a>
+
 	<?php settings_errors(); ?>
-
-	<div id="bsr-error-wrap"></div>
 
 	<?php BSR_Admin::render_result(); ?>
 
-	<h2 class="nav-tab-wrapper">
-		<a href="?page=better-search-replace&tab=bsr_search_replace" class="nav-tab <?php echo $active_tab == 'bsr_search_replace' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Search/Replace', 'better-search-replace' ); ?></a>
-		<a href="?page=better-search-replace&tab=bsr_backup_import" class="nav-tab <?php echo $active_tab == 'bsr_backup_import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Backup/Import', 'better-search-replace' ); ?></a>
-		<a href="?page=better-search-replace&tab=bsr_settings" class="nav-tab <?php echo $active_tab == 'bsr_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Settings', 'better-search-replace' ); ?></a>
-		<a href="?page=better-search-replace&tab=bsr_help" class="nav-tab <?php echo $active_tab == 'bsr_help' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Help', 'better-search-replace' ); ?></a>
-	</h2>
+	</div>
+
+	<div class="nav-tab-wrapper">
+		<ul>
+			<li><a href="?page=better-search-replace&tab=bsr_search_replace" class="nav-tab <?php echo $active_tab == 'bsr_search_replace' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Search/Replace', 'better-search-replace' ); ?></a></li>
+			<li><a href="?page=better-search-replace&tab=bsr_backup_import" class="nav-tab <?php echo $active_tab == 'bsr_backup_import' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Backup/Import', 'better-search-replace' ); ?></a></li>
+			<li><a href="?page=better-search-replace&tab=bsr_settings" class="nav-tab <?php echo $active_tab == 'bsr_settings' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Settings', 'better-search-replace' ); ?></a></li>
+			<li><a href="?page=better-search-replace&tab=bsr_help" class="nav-tab <?php echo $active_tab == 'bsr_help' ? 'nav-tab-active' : ''; ?>"><?php _e( 'Help', 'better-search-replace' ); ?></a></li>
+		</ul>
+	</div>
 
 	<form class="bsr-action-form" action="<?php echo $action; ?>" method="POST">
 

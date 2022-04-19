@@ -3,9 +3,9 @@ Contributors: futtta, optimizingmatters, zytzagoo, turl
 Tags: optimize, minify, performance, images, core web vitals, lazy-load, pagespeed, google fonts
 Donate link: http://blog.futtta.be/2013/10/21/do-not-donate-to-me/
 Requires at least: 4.9
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.6
-Stable tag: 2.9.5
+Stable tag: 3.0.3 
 
 Autoptimize speeds up your website by optimizing JS, CSS, images (incl. lazy-load), HTML and Google Fonts, asyncing JS, removing emoji cruft and more.
 
@@ -13,6 +13,9 @@ Autoptimize speeds up your website by optimizing JS, CSS, images (incl. lazy-loa
 
 Autoptimize makes optimizing your site really easy. It can aggregate, minify and cache scripts and styles, injects CSS in the page head by default but can also inline critical CSS and defer the aggregated full CSS, moves and defers scripts to the footer and minifies HTML. You can optimize and lazy-load images (with support for WebP and AVIF formats), optimize Google Fonts, async non-aggregated JavaScript, remove WordPress core emoji cruft and more. As such it can improve your site's performance even when already on HTTP/2! There is extensive API available to enable you to tailor Autoptimize to each and every site's specific needs.
 If you consider performance important, you really should use one of the many caching plugins to do page caching. Some good candidates to complement Autoptimize that way are e.g. [Speed Booster pack](https://wordpress.org/plugins/speed-booster-pack/), [KeyCDN's Cache Enabler](https://wordpress.org/plugins/cache-enabler), [WP Super Cache](http://wordpress.org/plugins/wp-super-cache/) or if you use Cloudflare [WP Cloudflare Super Page Cache](https://wordpress.org/plugins/wp-cloudflare-page-cache/).
+
+> <strong>Premium Support</strong><br>
+> We provide great [Autoptimize Pro Support and Web Performance Optimization services](https://misc.optimizingmatters.com/partners/?from=partnertab&partner=autoptimizepro), check out our offering on [https://accelera.autoptimize.com/](https://misc.optimizingmatters.com/partners/?from=partnertab&partner=autoptimizepro)!
 
 (Speed-surfing image under creative commons [by LL Twistiti](https://www.flickr.com/photos/twistiti/818552808/))
 
@@ -25,10 +28,6 @@ Just install from your WordPress "Plugins > Add New" screen and all will be well
 1. Go to `Settings > Autoptimize` and enable the options you want. Generally this means "Optimize HTML/ CSS/ JavaScript".
 
 == Frequently Asked Questions ==
-
-= Do you offer or recommend a course on how to speed up WordPress/ use Autoptimize? =
-
-There are many great resources online, both free and premium, but [the "Autoptimize Masterclass" by Load Labz](https://misc.optimizingmatters.com/partners/?from=faq&partner=loadlabz) stands out for the systematic and detailed approach in the video-based course. Have a look at the free sample class(es) and when interested make sure to use the `EarlyBird` coupon to get a discount!
 
 = What does the plugin do to help speed up my site? =
 
@@ -324,6 +323,35 @@ You can get help on the [wordpress.org support forum](http://wordpress.org/suppo
 Just [fork Autoptimize on Github](https://github.com/futtta/autoptimize) and code away!
 
 == Changelog ==
+
+= 3.0.3 =
+* fix for images being preloaded without this being configured when lazyload is on and per page/post settings are off.
+* ensure critical CSS schedule is always known.
+* when deferring non-aggregated JS, make the optimatization exclusions take the full script-tag into account instead of just the src URL.
+
+= 3.0.2 =
+* rollback automatic "minify inline CSS/ JS" which broke more then expected, this will come back as a separate default off option later and can now be enabled with a simple filter: `add_filter( 'autoptimize_html_minify_inline_js_css', '__return_true');` .
+* fix for "Call to undefined method autoptimizeOptionWrapper::delete_option()" in autoptimizeVersionUpdatesHandler.php 
+
+= 3.0.1 =
+* fix for minification of inline script with type text/template breaking the template (e.g. ninja forms), hat tip to @bobsled.
+* fix for regression in import of CSS-files where e.g. fontawesome CSS was broken due to being escaped again with help of @bobsled, thanks man!
+
+= 3.0.0 =
+* fundamental change for new installations: by default Autoptimize will not aggregate JS/ CSS any more (HTTP/2 is ubiquitous and there are other advantages to not aggregating esp. re. inline JS/ CSS and dependancies)
+* new: no API needed any more to create manual critical CSS rules. 
+* new: "Remove WordPress blocks CSS" option on the "Extra" tab to remove block- and global styles (and SVG).
+* new: compatibility logic for "edit with elementor", "revolution slider", for non-aggregated inline JS requiring jQuery even if not excluded (= auto-exclude of jQuery) and JS-heavy WordPress blocks (Gutenberg)
+* new: configure an image to be preloaded on a per page/ post basis for better LCP.
+* improvement: defer inline now also allowed if inline JS contains nonce or post_id.
+* improvement: settings export/ import on critical CSS tab now takes into account all Autoptimize settings, not just the critical CSS ones.
+* technical improvement: all criticalCSS classes were refactored, removing use of global variables.
+* technical improvement: automated unit tests on Travis-CI for PHP versions 7.2 to 8.1.
+* fix: stop Divi from clearing Autoptimize's cache [which is pretty counter-productive](https://blog.futtta.be/2018/11/17/warning-divi-purging-autoptimizes-cache/).
+* misc smaller fixes/ improvements, see the [GitHub commit log](https://github.com/futtta/autoptimize/commits/beta)
+
+= 2.9.5.1 =
+* fix for CSS cache growing too fast when inline CSS with variable selectors from WordPress 5.9 comment blocks is aggregated.
 
 = 2.9.5 =
 * Better fix for PHP notice in autoptimizeImages.php.

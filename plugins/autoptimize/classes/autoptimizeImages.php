@@ -562,6 +562,7 @@ class autoptimizeImages
          * filter for critical CSS.
          */
         $to_replace = array();
+        $to_preload = '';
 
         // hide noscript tags to avoid nesting noscript tags (as lazyloaded images add noscript).
         if ( $this->should_lazyload() ) {
@@ -572,6 +573,9 @@ class autoptimizeImages
                 $in
             );
         }
+
+        // get img preloads as set in post metabox.
+        $metabox_preloads = array_filter( array_map( 'trim', explode( ',', wp_strip_all_tags( autoptimizeConfig::get_post_meta_ao_settings( 'ao_post_preload' ) ) ) ) );
 
         // extract img tags.
         if ( preg_match_all( '#<img[^>]*src[^>]*>#Usmi', $in, $matches ) ) {
@@ -649,12 +653,22 @@ class autoptimizeImages
                     // then call add_lazyload-function with lpiq placeholder if set.
                     $tag = $this->add_lazyload( $tag, $placeholder );
                 }
+                
+                // add decoding="async" behind filter, not sure if I'll make it default true yet.
+                if ( true === apply_filters( 'autoptimize_filter_imgopt_add_decoding', true ) && false === strpos( $tag, ' decoding=' ) ) {
+                    $tag = str_replace( '<img ', '<img decoding="async" ', $tag );
+                }
 
                 $tag = apply_filters( 'autoptimize_filter_imgopt_tag_postopt' , $tag );
 
                 // and add tag to array for later replacement.
                 if ( $tag !== $orig_tag ) {
                     $to_replace[ $orig_tag ] = $tag;
+                }
+                
+                // and check if image needs to be prelaoded.
+                if ( ! empty( $metabox_preloads ) && is_array( $metabox_preloads ) && str_replace( $metabox_preloads, '', $tag ) !== $tag ) {
+                    $to_preload .= $this->create_img_preload_tag( $tag );
                 }
             }
         }
@@ -702,6 +716,17 @@ class autoptimizeImages
             $out = $this->process_picture_tag( $out, true, false );
         }
 
+        if ( ! empty( $metabox_preloads ) && is_array( $metabox_preloads ) && empty( $to_preload ) && false !== apply_filters( 'autoptimize_filter_imgopt_dopreloads', true ) ) {
+            // the preload was not in an img tag, so adding a non-responsive preload instead.
+            foreach( $metabox_preloads as $img_preload ) {
+                $to_preload .= '<link rel="preload" href="' . $img_preload . '" as="image">' ;
+            }
+        }
+
+        if ( ! empty( $to_preload ) ) {
+            $out = autoptimizeExtra::inject_preloads( $to_preload, $out );
+        }
+
         return $out;
     }
 
@@ -726,13 +751,17 @@ class autoptimizeImages
         $_max_width = apply_filters( 'autoptimize_filter_imgopt_max_width', 4999 );
         if ( $width > $_max_width ) {
             $_width = $_max_width;
-            $height = $_width / $width * $height;
+            if ( ! empty( $height ) && is_int( $height ) ) {
+                $height = $_width / $width * $height;
+            }
             $width  = $_width;
         }
         $_max_height = apply_filters( 'autoptimize_filter_imgopt_max_height', 4999 );
         if ( $height > $_max_height ) {
             $_height = $_max_height;
-            $width   = $_height / $height * $width;
+            if ( ! empty( $width ) && is_int( $width ) ) {
+                $width   = $_height / $height * $width;
+            }
             $height  = $_height;
         }
 
@@ -780,6 +809,7 @@ class autoptimizeImages
     {
         // only used is image optimization is NOT active but lazyload is.
         $to_replace = array();
+        $to_preload = '';
 
         // hide (no)script tags to avoid nesting noscript tags (as lazyloaded images add noscript).
         $out = autoptimizeBase::replace_contents_with_marker_if_exists(
@@ -789,11 +819,19 @@ class autoptimizeImages
             $in
         );
 
-        // extract img tags and add lazyload attribs.
+        // get img preloads as set in post metabox.
+        $metabox_preloads = array_filter( array_map( 'trim', explode( ',', wp_strip_all_tags( autoptimizeConfig::get_post_meta_ao_settings( 'ao_post_preload' ) ) ) ) );
+
+        // extract img tags and add lazyload attribs/ add preloads.
         if ( preg_match_all( '#<img[^>]*src[^>]*>#Usmi', $out, $matches ) ) {
             foreach ( $matches[0] as $tag ) {
                 if ( $this->should_lazyload( $out ) ) {
                     $to_replace[ $tag ] = $this->add_lazyload( $tag );
+                }
+                
+                // and check if image needs to be prelaoded.
+                if ( ! empty( $metabox_preloads ) && is_array( $metabox_preloads ) && str_replace( $metabox_preloads, '', $tag ) !== $tag ) {
+                    $to_preload .= $this->create_img_preload_tag( $tag );
                 }
             }
             $out = str_replace( array_keys( $to_replace ), array_values( $to_replace ), $out );
@@ -810,6 +848,17 @@ class autoptimizeImages
             'SCRIPT',
             $out
         );
+
+        if ( ! empty( $metabox_preloads ) && is_array( $metabox_preloads ) && empty( $to_preload ) && false !== apply_filters( 'autoptimize_filter_imgopt_dopreloads', true ) ) {
+            // the preload was not in an img tag, so adding a non-responsive preload instead.
+            foreach( $metabox_preloads as $img_preload ) {
+                $to_preload .= '<link rel="preload" href="' . $img_preload . '" as="image">' ;
+            }
+        }
+
+        if ( ! empty( $to_preload ) ) {
+            $out = autoptimizeExtra::inject_preloads( $to_preload, $out );
+        }
 
         return $out;
     }
@@ -879,7 +928,14 @@ class autoptimizeImages
             $noptimize_flag = ' data-noptimize="1"';
         }
 
-        $lazysizes_js = plugins_url( 'external/js/lazysizes.min.js?ao_version=' . AUTOPTIMIZE_PLUGIN_VERSION, __FILE__ );
+        $_extra = autoptimizeOptionWrapper::get_option( 'autoptimize_extra_settings', '' );
+        if ( is_array( $_extra ) && array_key_exists( 'autoptimize_extra_checkbox_field_0', $_extra ) && ! empty( $_extra['autoptimize_extra_checkbox_field_0'] ) ) {
+            // if "remove query strings" is active in "extra", then let's be consistant and not add one ourselves? :)
+            $lazysizes_js = plugins_url( 'external/js/lazysizes.min.js', __FILE__ );
+        } else {
+            $lazysizes_js = plugins_url( 'external/js/lazysizes.min.js?ao_version=' . AUTOPTIMIZE_PLUGIN_VERSION, __FILE__ );
+        }
+
         $cdn_url      = $this->get_cdn_url();
         if ( ! empty( $cdn_url ) ) {
             $cdn_url      = rtrim( $cdn_url, '/' );
@@ -895,6 +951,29 @@ class autoptimizeImages
         echo apply_filters( 'autoptimize_filter_imgopt_lazyload_cssoutput', '<noscript><style>.lazyload{display:none;}</style></noscript>' );
         echo apply_filters( 'autoptimize_filter_imgopt_lazyload_jsconfig', '<script' . $type_js . $noptimize_flag . '>window.lazySizesConfig=window.lazySizesConfig||{};window.lazySizesConfig.loadMode=1;</script>' );
         echo apply_filters( 'autoptimize_filter_imgopt_lazyload_js', '<script async' . $type_js . $noptimize_flag . ' src=\'' . $lazysizes_js . '\'></script>' );
+    }
+    
+    public static function create_img_preload_tag( $tag ) {
+        if ( false === apply_filters( 'autoptimize_filter_imgopt_dopreloads', true ) ) {
+            return '';
+        }
+
+        // clean up; remove tabs/ linebreaks/ spaces.
+        $tag = preg_replace( '/\s+/', ' ', $tag );
+
+        // rewrite img tag to link preload img.
+        $_from = array( '<img ', ' src=', ' sizes=', ' srcset=' );
+        $_to   = array( '<link rel="preload" as="image" ', ' href=', ' imagesizes=', ' imagesrcset=' );
+        $tag   = str_replace( $_from, $_to, $tag );
+        
+        // and remove title, alt, class and id.
+        $tag = preg_replace( '/ ((?:title|alt|class|id|loading)=".*")/Um', '', $tag );
+        if ( $tag !== str_replace( array(' title=', ' class=', ' alt=', ' id=' ), '', $tag ) ) {
+            // 2nd regex pass if still title/ class/ alt in case single quotes were used iso doubles.
+            $tag = preg_replace( '/ ((?:title|alt|class|id|loading)=\'.*\')/Um', '', $tag );
+        }
+
+        return $tag;
     }
 
     public static function get_cdn_url() {
@@ -1204,7 +1283,7 @@ class autoptimizeImages
             <tr id='autoptimize_imgopt_ngimg' <?php if ( ! array_key_exists( 'autoptimize_imgopt_checkbox_field_1', $options ) || ( isset( $options['autoptimize_imgopt_checkbox_field_1'] ) && '1' !== $options['autoptimize_imgopt_checkbox_field_1'] ) ) { echo 'class="hidden"'; } ?>>
                 <th scope="row"><?php _e( 'Load AVIF in supported browsers?', 'autoptimize' ); ?></th>
                 <td>
-                    <label><input type='checkbox' id='autoptimize_imgopt_ngimg_checkbox' name='autoptimize_imgopt_settings[autoptimize_imgopt_checkbox_field_4]' <?php if ( ! empty( $options['autoptimize_imgopt_checkbox_field_4'] ) && '1' === $options['autoptimize_imgopt_checkbox_field_3'] ) { echo 'checked="checked"'; } ?> value='1'><?php _e( 'Automatically serve AVIF image format to any browser that supports it.', 'autoptimize' ); ?></label>
+                    <label><input type='checkbox' id='autoptimize_imgopt_ngimg_checkbox' name='autoptimize_imgopt_settings[autoptimize_imgopt_checkbox_field_4]' <?php if ( ! empty( $options['autoptimize_imgopt_checkbox_field_4'] ) && '1' === $options['autoptimize_imgopt_checkbox_field_4'] ) { echo 'checked="checked"'; } ?> value='1'><?php _e( 'Automatically serve AVIF image format to any browser that supports it.', 'autoptimize' ); ?></label>
                 </td>
             </tr>
             <tr>

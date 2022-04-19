@@ -57,6 +57,13 @@ class autoptimizeVersionUpdatesHandler
                 $this->upgrade_from_2_7();
                 $major_update = true;
                 // No break, intentionally, so all upgrades are ran during a single request...
+            case '2.8':
+                // nothing
+            case '2.9':
+                if ( version_compare( autoptimizeOptionWrapper::get_option( 'autoptimize_version', 'none' ), '2.9.999', 'lt' ) ) {
+                    $this->upgrade_from_2_9_before_compatibility();
+                }
+                $major_update = false;
         }
 
         if ( true === $major_update ) {
@@ -262,7 +269,16 @@ class autoptimizeVersionUpdatesHandler
         $js_exclusions = get_option( 'autoptimize_js_exclude', '' );
         if ( strpos( $js_exclusions, 'js/jquery/jquery.js' ) !== false && strpos( $js_exclusions, 'js/jquery/jquery.min.js' ) === false ) {
             $js_exclusions .= ', js/jquery/jquery.min.js';
-            update_option( 'autoptimize_js_exclude', $js_exclusions );
+            autoptimizeOptionWrapper::update_option( 'autoptimize_js_exclude', $js_exclusions );
         }
+    }
+    
+    /**
+     * set an option to indicate the AO installation predates the compatibility logic, this way we 
+     * can avoid adding compatibility code that is likely not needed and maybe not wanted as it
+     * can introduce performance regressions.
+     */
+    private function upgrade_from_2_9_before_compatibility() {
+        autoptimizeOptionWrapper::update_option( 'autoptimize_installed_before_compatibility', true );
     }
 }

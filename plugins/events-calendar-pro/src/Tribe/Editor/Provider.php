@@ -9,12 +9,8 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 	 *
 	 */
 	public function register() {
-		// Return if we shouldn't load blocks or Events Pro Plugin is active
-		if (
-			! tribe( 'editor' )->should_load_blocks()
-			|| ! tribe( 'events.editor.compatibility' )->is_blocks_editor_toggled_on()
-			|| ! class_exists( 'Tribe__Events__Pro__Main' )
-		) {
+		// Return if we shouldn't load blocks.
+		if ( ! tribe( 'editor' )->should_load_blocks()) {
 			return;
 		}
 
@@ -28,7 +24,7 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		$this->container->singleton( 'events-pro.editor.meta', 'Tribe__Events__Pro__Editor__Meta' );
 		$this->container->singleton( 'events-pro.editor.recurrence.provider', 'Tribe__Events__Pro__Editor__Recurrence__Provider' );
 		$this->container->singleton( 'events-pro.editor.recurrence.queue-status', 'Tribe__Events__Pro__Editor__Recurrence__Queue_Status' );
-		$this->container->singleton( 'events-pro.editor.recurrence.blocks-meta', 'Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta' );
+		$this->container->singleton( 'events-pro.editor.recurrence.blocks-meta', Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::class );
 
 		// Singletons for pro blocks
 		$this->container->singleton( 'events-pro.editor.blocks.fields', 'Tribe__Events__Pro__Editor__Blocks__Additional_Fields' );
@@ -58,8 +54,8 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		tribe( 'events-pro.editor' )->hook();
 
 		// Setup the registration of blocks
-		add_action( 'tribe_editor_register_blocks', tribe_callback( 'events-pro.editor.blocks.fields', 'register' ) );
-		add_action( 'tribe_editor_register_blocks', tribe_callback( 'events-pro.editor.blocks.related-events', 'register' ) );
+		add_action( 'tribe_editor_register_blocks', [ tribe( 'events-pro.editor.blocks.fields' ), 'register' ] );
+		add_action( 'tribe_editor_register_blocks', [ tribe( 'events-pro.editor.blocks.related-events' ), 'register' ] );
 	}
 
 	/**

@@ -18,25 +18,31 @@ $profiles = BSR_Admin::get_profiles();
 
 
 <div class="metabox-holder">
+	<div class="inside">
 
-	<div class="postbox">
-		 <h3><?php _e( 'Backup Database', 'better-search-replace' ); ?></h3>
-		 <div class="inside">
+        <div id="bsr-error-wrap"></div>
 
-			<p><?php _e( 'Click the button below to take a backup of your database, which can then be imported into another instance of Better Search Replace.', 'better-search-replace' ); ?></p>
+		<div id="bsr-backup-form" class="panel">
 
-			<div id="bsr-backup-form">
+			<div class="panel-header">
+				 <h3><?php _e( 'Backup Database', 'better-search-replace' ); ?></h3>
+			</div>
 
-				<table>
+			<div class="panel-content">
 
-					<tr>
-						<td><label for="bsr_profile"><strong><?php _e( 'Run Search/Replace profile on backup: ', 'better-search-replace' ); ?></strong></label></td>
-						<td>
+				<div class="row">
+					<p><?php _e( 'Click the button below to take a backup of your database, which can then be imported into another instance of Better Search Replace.', 'better-search-replace' ); ?></p>
+				</div>
+
+				<!--Saved Profiles Dropdown-->
+				<div class="row">
+					<div class="input-text">
+						<label for="bsr_profile"><strong><?php _e( 'Run Search/Replace profile on backup ', 'better-search-replace' ); ?></strong></label>
 						<?php
 							if ( 0 !== count( $profiles ) ) {
 
-								echo '<select id="bsr_backup_profile" name="bsr_backup_profile">
-										<option>' . __( 'Please select...', 'better-search-replace' ) . '</option>';
+								echo '<select id="bsr_backup_profile" name="bsr_backup_profile" class="select">
+										<option>' . __( 'Please select a profile...', 'better-search-replace' ) . '</option>';
 
 								foreach ( $profiles as $k => $v ) {
 									echo '<option value="' . $k . '">' . $k . '</option>';
@@ -45,70 +51,73 @@ $profiles = BSR_Admin::get_profiles();
 								echo '</select>';
 
 							} else {
-								printf( '<span class="bsr-no-profiles">%s <a href="%s">%s</a></span>', __( 'No profiles found.', 'better-search-replace' ), get_admin_url() . 'tools.php?page=better-search-replace', __( 'Click here to create one.','better-search-replace' ) );
+								printf( '<span class="bsr-no-profiles">%s <a href="%s">%s</a></span>', __( 'No profiles found.', 'better-search-replace' ), get_admin_url() . 'tools.php?page=better-search-replace', __( 'Create your first profile now.','better-search-replace' ) );
 							}
 						?>
-				        </td>
-					</tr>
-
-				</table>
-
-				<br>
-				<?php wp_nonce_field( 'bsr_process_backup', 'bsr_nonce' ); ?>
-				<input type="hidden" name="action" value="bsr_process_backup" />
-				<button id="bsr-backup-submit" type="submit" class="button"><?php _e( 'Backup Database', 'better-search-replace' ); ?></button>
+					</div>
+				</div>
 			</div>
 
-		</div>
-	</div>
+            <!--Backup Database Button-->
+            <div class="row panel-footer">
+                <?php wp_nonce_field( 'bsr_process_backup', 'bsr_nonce' ); ?>
+                <input type="hidden" name="action" value="bsr_process_backup" />
+                <button id="bsr-backup-submit" type="submit" class="button button-primary button-md"><?php _e( 'Backup Database', 'better-search-replace' ); ?>
+                    <img src="<?php echo plugin_dir_url( __FILE__ ) . '../assets/svg/icon-arrow.svg'; ?>">
+                </button>
+            </div>
+        </div>
 
-	<div class="postbox">
-		<h3><?php _e( 'Import Database', 'better-search-replace' ); ?></h3>
+        <div id="bsr-import-form" class="panel">
 
-		<div class="inside">
+            <div class="panel-header">
+                 <h3><?php _e( 'Import Database', 'better-search-replace' ); ?></h3>
+            </div>
 
-			<div id="bsr-import-form">
+            <div class="panel-content">
 
-				<p><?php _e( 'Use the form below to import a database backup and run a saved profile on the resulting database.', 'better-search-replace' ); ?></p>
-				<p><?php _e( 'Alternatively, you can upload the backup file to the wp-content/uploads/ directory manually and click "Import Database".', 'better-search-replace' ); ?></p>
+                <div class="row">
+                    <p><?php _e( 'Use the form below to import a database backup and run a saved profile on the resulting database.', 'better-search-replace' ); ?></br>
+                    <?php _e( 'Alternatively, you can upload the backup file to the wp-content/uploads/ directory manually and click "Import Database".', 'better-search-replace' ); ?></p>
+                </div>
 
-				<input id="bsr-file-import" type="file" name="bsr_import_file">
+                <!--Import File Button-->
+                <div class="row import-file">
+                    <input id="bsr-file-import" type="file" name="bsr_import_file">
+                </div>
 
-				<table>
+                <!--Saved Profiles Dropdown-->
+                <div class="row">
+                    <div class="input-text">
+                        <label for="bsr_profile"><strong><?php _e( 'Run Search/Replace profile after import', 'better-search-replace' ); ?></strong></label>
+                        <?php
+                            if ( 0 !== count( $profiles ) ) {
 
-					<tr>
-						<td><label for="bsr_profile"><strong><?php _e( 'Run Search/Replace profile after import: ', 'better-search-replace' ); ?></strong></label></td>
-						<td>
-						<?php
-							if ( 0 !== count( $profiles ) ) {
+                                echo '<select id="bsr_import_profile" name="bsr_profile" class="select">
+                                        <option>' . __( 'Please select a profile...', 'better-search-replace' ) . '</option>';
 
-								echo '<select id="bsr_import_profile" name="bsr_profile">
-										<option>' . __( 'Please select...', 'better-search-replace' ) . '</option>';
+                                foreach ( $profiles as $k => $v ) {
+                                    echo '<option value="' . $k . '">' . $k . '</option>';
+                                }
 
-								foreach ( $profiles as $k => $v ) {
-									echo '<option value="' . $k . '">' . $k . '</option>';
-								}
+                                echo '</select>';
 
-								echo '</select>';
+                            } else {
+                                printf( '<span class="bsr-no-profiles">%s <a href="%s">%s</a></span>', __( 'No profiles found.', 'better-search-replace' ), get_admin_url() . 'tools.php?page=better-search-replace', __( 'Create your first profile now.','better-search-replace' ) );
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
 
-							} else {
-								printf( '<span class="bsr-no-profiles">%s <a href="%s">%s</a></span>', __( 'No profiles found.', 'better-search-replace' ), get_admin_url() . 'tools.php?page=better-search-replace', __( 'Click here to create one.','better-search-replace' ) );
-							}
-						?>
-				        </td>
-					</tr>
+            <!--Import Database Button-->
+            <div class="row panel-footer">
+                <?php wp_nonce_field( 'bsr_process_import', 'bsr_nonce' ); ?>
+                <input type="hidden" name="action" value="bsr_process_import" />
+                <button id="bsr-import-submit" type="submit" class="button button-primary button-md"><?php _e( 'Import Database', 'better-search-replace' ); ?>
+                <img src="<?php echo plugin_dir_url( __FILE__ ) . '../assets/svg/icon-arrow.svg'; ?>">
+              </button>
 
-				</table>
-
-				<br>
-				<?php wp_nonce_field( 'bsr_process_import', 'bsr_nonce' ); ?>
-				<input type="hidden" name="action" value="bsr_process_import" />
-				<button id="bsr-import-submit" type="submit" class="button"><?php _e( 'Import Database', 'better-search-replace' ); ?></button>
-
-			</div>
-		</div>
-
-	</div>
-
-
+            </div>
+    </div>
 </div>
