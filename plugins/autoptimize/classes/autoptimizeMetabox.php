@@ -23,7 +23,7 @@ class autoptimizeMetabox
 
     public function ao_metabox_add_box()
     {
-        $screens = array( 
+        $screens = array(
             'post',
             'page',
             // add extra types e.g. product or ... ?
@@ -42,7 +42,7 @@ class autoptimizeMetabox
 
     /**
      * Prints the box content.
-     * 
+     *
      * @param WP_Post $post The object for the current post/page.
      */
     function ao_metabox_content( $post )
@@ -50,7 +50,7 @@ class autoptimizeMetabox
         wp_nonce_field( 'ao_metabox', 'ao_metabox_nonce' );
 
         $ao_opt_value = $this->check_ao_opt_sanity( get_post_meta( $post->ID, 'ao_post_optimize', true ) );
-        
+
         $_ao_meta_sub_opacity = '';
         if ( 'on' !== $ao_opt_value['ao_post_optimize'] ) {
             $_ao_meta_sub_opacity = 'opacity:.33;';
@@ -62,9 +62,9 @@ class autoptimizeMetabox
                  <?php _e( 'Optimize this page?', 'autoptimize' ); ?>
             </label>
         </p>
-        <?php 
+        <?php
         $_ao_meta_js_style = '';
-        if ( 'on' !== get_option( 'autoptimize_js', false ) ) {
+        if ( 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_js', false ) ) {
             $_ao_meta_js_style = 'display:none;';
         }
         echo '<p class="ao_meta_sub" style="' . $_ao_meta_sub_opacity . $_ao_meta_js_style . '">';
@@ -74,9 +74,9 @@ class autoptimizeMetabox
                  <?php _e( 'Optimize JS?', 'autoptimize' ); ?>
             </label>
         </p>
-        <?php 
+        <?php
         $_ao_meta_css_style = '';
-        if ( 'on' !== get_option( 'autoptimize_css', false ) ) {
+        if ( 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_css', false ) ) {
             $_ao_meta_css_style = 'display:none;';
         }
         echo '<p class="ao_meta_sub" style="' . $_ao_meta_sub_opacity . $_ao_meta_css_style . '">';
@@ -86,9 +86,9 @@ class autoptimizeMetabox
                  <?php _e( 'Optimize CSS?', 'autoptimize' ); ?>
             </label>
         </p>
-        <?php 
+        <?php
         $_ao_meta_ccss_style = '';
-        if ( 'on' !== get_option( 'autoptimize_css_defer', false ) ) {
+        if ( 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_css_defer', false ) || 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_css', false ) ) {
             $_ao_meta_ccss_style = 'display:none;';
         }
         if ( 'on' !== $ao_opt_value['ao_post_css_optimize'] ) {
@@ -101,7 +101,7 @@ class autoptimizeMetabox
                  <?php _e( 'Inline critical CSS?', 'autoptimize' ); ?>
             </label>
         </p>
-        <?php 
+        <?php
         $_ao_meta_lazyload_style = '';
         if ( false === autoptimizeImages::should_lazyload_wrapper() ) {
             $_ao_meta_lazyload_style = 'display:none;';
@@ -113,6 +113,13 @@ class autoptimizeMetabox
                  <?php _e( 'Lazyload images?', 'autoptimize' ); ?>
             </label>
         </p>
+        <p class="ao_meta_sub" style="<?php echo $_ao_meta_sub_opacity ?>">
+            <label for="autoptimize_post_preload">
+                 <?php _e( 'LCP Image to preload', 'autoptimize' ); ?>
+            </label>
+            <input type="text" id="autoptimize_post_preload" name="ao_post_preload" value="<?php echo esc_attr( $ao_opt_value['ao_post_preload'] ) ?>">
+        </p>
+        <p>&nbsp;</p>
         <p>
             <?php
             // Get path + check if button should be enabled or disabled.
@@ -132,7 +139,7 @@ class autoptimizeMetabox
             }
 
             // if CSS opt and inline & defer are on and if we have a slug, the button can be active.
-            if ( false !== $_slug && 'on' === get_option( 'autoptimize_css', false ) && 'on' === get_option( 'autoptimize_css_defer', false ) && ! empty( apply_filters( 'autoptimize_filter_ccss_key', get_option( 'autoptimize_ccss_key', false ) ) ) && '2' === get_option( 'autoptimize_ccss_keyst', false ) ) {
+            if ( false !== $_slug && 'on' === autoptimizeOptionWrapper::get_option( 'autoptimize_css', false ) && 'on' === autoptimizeOptionWrapper::get_option( 'autoptimize_css_defer', false ) && ! empty( apply_filters( 'autoptimize_filter_ccss_key', autoptimizeOptionWrapper::get_option( 'autoptimize_ccss_key', false ) ) ) && '2' === autoptimizeOptionWrapper::get_option( 'autoptimize_ccss_keyst', false ) ) {
                 $_generate_disabled = false;
             }
             ?>
@@ -229,11 +236,13 @@ class autoptimizeMetabox
 
       // OK, we can have a look at the actual data now.
       // Sanitize user input.
-      foreach ( array( 'ao_post_optimize', 'ao_post_js_optimize', 'ao_post_css_optimize', 'ao_post_ccss', 'ao_post_lazyload' ) as $opti_type ) {
-          if ( isset( $_POST[$opti_type] ) ) {
-              $ao_meta_result[$opti_type] = 'on';
-          } else {
+      foreach ( array( 'ao_post_optimize', 'ao_post_js_optimize', 'ao_post_css_optimize', 'ao_post_ccss', 'ao_post_lazyload', 'ao_post_preload' ) as $opti_type ) {
+          if ( ! isset( $_POST[$opti_type] ) ) {
               $ao_meta_result[$opti_type] = '';
+          } else if ( 'on' === $_POST[$opti_type] ) {
+              $ao_meta_result[$opti_type] = 'on';
+          } else if ( in_array( $opti_type, array( 'ao_post_preload' ) ) ) {
+              $ao_meta_result[$opti_type] = $_POST[$opti_type];
           }
       }
 
@@ -252,11 +261,9 @@ class autoptimizeMetabox
                 $type = 'is_single';
             }
 
-            $path                = wp_strip_all_tags( $_POST['path'] );
-            $criticalcss_core    = new autoptimizeCriticalCSSCore();
-            $criticalcss_base    = new autoptimizeCriticalCSSBase();
-            $criticalcss_enqueue = new autoptimizeCriticalCSSEnqueue();
-            $_result = $criticalcss_enqueue->ao_ccss_enqueue( '', $path, $type );
+            $path = wp_strip_all_tags( $_POST['path'] );
+            $criticalcss = autoptimize()->criticalcss();
+            $_result = $criticalcss->enqueue( '', $path, $type );
 
             if ( $_result ) {
                 $response['code']   = '200';
@@ -285,6 +292,7 @@ class autoptimizeMetabox
             'ao_post_css_optimize' => 'on',
             'ao_post_ccss'         => 'on',
             'ao_post_lazyload'     => 'on',
+            'ao_post_preload'      => '',
         );
         return $ao_metabox_defaults;
     }

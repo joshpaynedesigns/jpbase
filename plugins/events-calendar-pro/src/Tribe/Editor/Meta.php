@@ -15,11 +15,10 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 	 * @return void
 	 */
 	public function register() {
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-		register_meta( 'post', $blocks_meta->get_rules_key(), $this->text() );
-		register_meta( 'post', $blocks_meta->get_exclusions_key(), $this->text() );
-		register_meta( 'post', $blocks_meta->get_description_key(), $this->text() );
+		register_meta( 'post', Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key, $this->text() );
+		register_meta( 'post', Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$description_key, $this->text() );
+		register_meta( 'post', Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$exclusions_key, $this->text() );
+
 		$this->register_additional_fields();
 
 		$this->hook();
@@ -95,12 +94,10 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 	 * @return array|null|string The attachment metadata value, array of values, or null.
 	 */
 	public function fake_blocks_response( $value, $post_id, $meta_key, $single ) {
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-		$valid_keys  = array(
-			$blocks_meta->get_exclusions_key(),
-			$blocks_meta->get_rules_key(),
-		);
+		$valid_keys  = [
+			Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$exclusions_key,
+			Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key,
+		];
 
 		if ( ! in_array( $meta_key, $valid_keys ) ) {
 			return $value;
@@ -113,8 +110,8 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 		}
 
 		$keys = array(
-			$blocks_meta->get_rules_key()      => 'rules',
-			$blocks_meta->get_exclusions_key() => 'exclusions',
+			Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key      => 'rules',
+			Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$exclusions_key => 'exclusions',
 		);
 		$key  = $keys[ $meta_key ];
 		if ( empty( $recurrence[ $key ] ) ) {
@@ -147,10 +144,7 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 	 * @return array|string
 	 */
 	public function fake_recurrence_description( $value, $post_id, $meta_key, $single ) {
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-
-		if ( $meta_key !== $blocks_meta->get_description_key() ) {
+		if ( $meta_key !== Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$description_key ) {
 			return $value;
 		}
 
@@ -195,10 +189,8 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 		if ( '_EventRecurrence' !== $meta_key ) {
 			return;
 		}
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-		delete_post_meta( $object_id, $blocks_meta->get_rules_key() );
-		delete_post_meta( $object_id, $blocks_meta->get_exclusions_key() );
+		delete_post_meta( $object_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key );
+		delete_post_meta( $object_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$exclusions_key );
 	}
 
 	/**
@@ -217,7 +209,7 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 		$editor = tribe( 'editor' );
 
 		// Return default on non classic editor
-		if ( ! $editor->is_classic_editor() ) {
+		if ( $editor->should_load_blocks() ) {
 			return $show_meta;
 		}
 
