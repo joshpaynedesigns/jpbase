@@ -16,7 +16,6 @@
  * @var string $request_date The date to display in the header.
  * @var string $layout       The layout choice - vertical or horizontal.
  */
-$foo = '';
 ?>
 <nav class="tribe-events-c-top-bar__nav">
 	<ul class="tribe-events-c-top-bar__nav-list">

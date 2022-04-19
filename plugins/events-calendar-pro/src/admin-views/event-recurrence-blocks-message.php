@@ -1,5 +1,5 @@
 <?php
-// Prevents this from showing when we shouldnt
+// Prevents this from showing when we shouldn't
 if ( tribe( 'events-pro.editor.meta' )->show_recurrence_classic_meta( true, $post_id ) ) {
 	return false;
 }

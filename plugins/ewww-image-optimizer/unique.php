@@ -158,8 +158,10 @@ function ewww_image_optimizer_set_defaults() {
 	add_option( 'exactdn_lossy', true );
 	add_option( 'exactdn_exclude', '' );
 	add_option( 'exactdn_sub_folder', false );
+	add_option( 'exactdn_prevent_db_queries', true );
 	add_option( 'ewww_image_optimizer_lazy_load', false );
-	add_option( 'ewww_image_optimizer_ll_autoscale', true );
+	add_option( 'ewww_image_optimizer_use_siip', false );
+	add_option( 'ewww_image_optimizer_use_lqip', false );
 	add_option( 'ewww_image_optimizer_ll_exclude', '' );
 	add_option( 'ewww_image_optimizer_ll_all_things', '' );
 	add_option( 'ewww_image_optimizer_disable_pngout', true );
@@ -188,6 +190,7 @@ function ewww_image_optimizer_set_defaults() {
 	add_site_option( 'exactdn_all_the_things', true );
 	add_site_option( 'exactdn_lossy', true );
 	add_site_option( 'exactdn_sub_folder', false );
+	add_site_option( 'exactdn_prevent_db_queries', true );
 	add_site_option( 'ewww_image_optimizer_ll_autoscale', true );
 }
 
@@ -1981,11 +1984,19 @@ function ewww_image_optimizer( $file, $gallery_type = 4, $converted = false, $ne
 	$file_group = 'unknown';
 	if ( function_exists( 'posix_getpwuid' ) ) {
 		$file_owner = posix_getpwuid( fileowner( $file ) );
-		$file_owner = 'xxxxxxxx' . substr( $file_owner['name'], -4 );
+		if ( $file_owner ) {
+			$file_owner = 'xxxxxxxx' . substr( $file_owner['name'], -4 );
+		} else {
+			$file_owner = 'unknown';
+		}
 	}
 	if ( function_exists( 'posix_getgrgid' ) ) {
 		$file_group = posix_getgrgid( filegroup( $file ) );
-		$file_group = 'xxxxx' . substr( $file_group['name'], -5 );
+		if ( $file_group ) {
+			$file_group = 'xxxxx' . substr( $file_group['name'], -5 );
+		} else {
+			$file_group = 'unknown';
+		}
 	}
 	ewwwio_debug_message( "permissions: $file_perms, owner: $file_owner, group: $file_group" );
 	$type = ewww_image_optimizer_mimetype( $file, 'i' );
@@ -3000,7 +3011,8 @@ function ewww_image_optimizer( $file, $gallery_type = 4, $converted = false, $ne
 function ewww_image_optimizer_webp_create( $file, $orig_size, $type, $tool, $recreate = false ) {
 	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
 	global $ewww_force;
-	$webpfile = $file . '.webp';
+	$orig_size = ewww_image_optimizer_filesize( $file );
+	$webpfile  = $file . '.webp';
 	if ( apply_filters( 'ewww_image_optimizer_bypass_webp', false, $file ) ) {
 		ewwwio_debug_message( "webp generation bypassed: $file" );
 		return '';
@@ -3126,7 +3138,7 @@ function ewww_image_optimizer_install_pngout() {
 	$tool_path = trailingslashit( EWWW_IMAGE_OPTIMIZER_TOOL_PATH );
 	if ( empty( $pngout_error ) ) {
 		if ( PHP_OS === 'Linux' || PHP_OS === 'FreeBSD' ) {
-			$download_result = download_url( 'http://static.jonof.id.au/dl/kenutils/pngout-' . $latest . '-' . $os_string . '-static.tar.gz' );
+			$download_result = download_url( 'http://www.jonof.id.au/files/kenutils/pngout-' . $latest . '-' . $os_string . '-static.tar.gz' );
 			if ( is_wp_error( $download_result ) ) {
 				$pngout_error = $download_result->get_error_message();
 			} else {
@@ -3176,7 +3188,7 @@ function ewww_image_optimizer_install_pngout() {
 			$latest          = '20200115';
 			$os_ext          = 'tar.gz';
 			$os_ext          = 'zip';
-			$download_result = download_url( 'http://static.jonof.id.au/dl/kenutils/pngout-' . $latest . '-macos.' . $os_ext );
+			$download_result = download_url( 'http://www.jonof.id.au/files/kenutils/pngout-' . $latest . '-macos.' . $os_ext );
 			if ( is_wp_error( $download_result ) ) {
 				$pngout_error = $download_result->get_error_message();
 			} else {

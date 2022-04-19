@@ -60,25 +60,21 @@ class Tribe__Events__Pro__Editor__Recurrence__Provider {
 	public function to_classic_format( $event_id ) {
 		/** @var Tribe__Events__Pro__Editor__Meta $meta */
 		$meta = tribe( 'events-pro.editor.meta' );
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-		$rules       = json_decode( $meta->get_value( $event_id, $blocks_meta->get_rules_key() ), true );
-		$exclusions  = json_decode( $meta->get_value( $event_id, $blocks_meta->get_exclusions_key() ), true );
+		$rules       = json_decode( $meta->get_value( $event_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key ), true );
+		$exclusions  = json_decode( $meta->get_value( $event_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$exclusions_key ), true );
 
 		// Don't do anything if the block does not have any data.
 		if ( is_null( $rules ) ) {
 			return false;
 		}
 
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
 		$data        = array(
 			'EventStartDate' => get_post_meta( $event_id, '_EventStartDate', true ),
 			'EventEndDate'   => get_post_meta( $event_id, '_EventEndDate', true ),
 			'recurrence'     => array(
 				'rules'       => $this->parse_rules( $rules ),
 				'exclusions'  => $this->parse_rules( $exclusions ),
-				'description' => get_post_meta( $event_id, $blocks_meta->get_description_key(), true ),
+				'description' => get_post_meta( $event_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$description_key, true ),
 			),
 		);
 		/**
@@ -160,9 +156,7 @@ class Tribe__Events__Pro__Editor__Recurrence__Provider {
 			return $is_recurring;
 		}
 
-		/** @var Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta $blocks_meta */
-		$blocks_meta = tribe( 'events-pro.editor.recurrence.blocks-meta' );
-		$rules       = get_post_meta( $post_id, $blocks_meta->get_rules_key(), true );
+		$rules       = get_post_meta( $post_id, Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta::$rules_key, true );
 
 		return ! empty( $rules );
 	}

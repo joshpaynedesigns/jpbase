@@ -72,12 +72,9 @@ class Tribe__Events__Pro__Editor__Recurrence__Queue_Status {
 
 		/** @var Tribe__Editor $editor */
 		$editor = tribe( 'editor' );
-		/** @var Tribe__Events__Editor__Compatibility $compatibility */
-		$compatibility        = tribe( 'events.editor.compatibility' );
-		$has_gutenberg_editor = $compatibility->is_blocks_editor_toggled_on() && ! $editor->is_classic_plugin_active();
 
 		// Save only the meta that does not have blocks when the Gutenberg editor is present.
-		if ( ! tribe( 'tec.gutenberg' )->should_display() || ! $has_gutenberg_editor ) {
+		if ( ! $editor->should_load_blocks() ) {
 			return;
 		}
 

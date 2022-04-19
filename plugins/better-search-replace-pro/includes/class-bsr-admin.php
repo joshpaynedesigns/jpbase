@@ -57,10 +57,12 @@ class BSR_Admin {
 	 */
 	public function enqueue_scripts( $hook ) {
 		if ( 'tools_page_better-search-replace' === $hook ) {
-			wp_enqueue_style( 'better-search-replace', BSR_URL . 'assets/css/better-search-replace.css', array(), $this->version, 'all' );
+            $min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_enqueue_style( 'better-search-replace', BSR_URL . "assets/css/better-search-replace$min.css", array(), $this->version, 'all' );
 			wp_enqueue_style( 'jquery-style', BSR_URL . 'assets/css/jquery-ui.min.css', array(), $this->version, 'all' );
 			wp_enqueue_script( 'jquery-ui-slider' );
-			wp_enqueue_script( 'better-search-replace', BSR_URL . 'assets/js/better-search-replace.min.js', array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( 'better-search-replace', BSR_URL . "assets/js/better-search-replace$min.js", array( 'jquery' ), $this->version, true );
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( 'thickbox' );
 
@@ -84,7 +86,7 @@ class BSR_Admin {
 	 * @access public
 	 */
 	public function bsr_menu_pages() {
-		$cap = apply_filters( 'bsr_capability', 'install_plugins' );
+		$cap = apply_filters( 'bsr_capability', 'manage_options' );
 		add_submenu_page( 'tools.php', __( 'Better Search Replace Pro', 'better-search-replace' ), __( 'Better Search Replace Pro', 'better-search-replace' ), $cap, 'better-search-replace', array( $this, 'bsr_menu_pages_callback' ) );
 	}
 
@@ -103,7 +105,7 @@ class BSR_Admin {
 	public static function render_result() {
 
 		if ( isset( $_GET['import'] ) ) {
-			echo '<div class="updated"><p>' . __( 'Database imported successfully.', 'better-search-replace' ) . '</p></div>';
+			echo '<div class="updated bsr-updated" style="display: none;"><p>' . __( 'Database imported successfully.', 'better-search-replace' ) . '</p></div>';
 		}
 
 		if ( isset( $_GET['result'] ) && $result = get_transient( 'bsr_results' ) ) {
@@ -124,7 +126,7 @@ class BSR_Admin {
 				);
 			}
 
-			echo '<div class="updated">' . $msg . '</div>';
+			echo '<div class="updated bsr-updated" style="display: none;">' . $msg . '</div>';
 
 		}
 
@@ -266,7 +268,7 @@ class BSR_Admin {
 					echo '</table></div>';
 				} else {
 					?>
-						<div style="padding:10px;">
+						<div style="padding: 32px; background-color: var(--color-white); min-height: 100%;">
 							<table id="bsr-results-table" class="widefat">
 								<thead>
 									<tr><th class="bsr-first"><?php _e( 'Table', 'better-search-replace' ); ?></th><th class="bsr-second"><?php _e( 'Changes Found', 'better-search-replace' ); ?></th><th class="bsr-third"><?php _e( 'Rows Updated', 'better-search-replace' ); ?></th><th class="bsr-fourth"><?php _e( 'Time', 'better-search-replace' ); ?></th></tr>
@@ -459,51 +461,66 @@ class BSR_Admin {
 
 	public function sanitize_license( $new ) {
 		$old = get_option( 'bsr_license_key' );
-		if( $old && $old != $new ) {
-			delete_option( 'bsr_license_status' ); // new license has been entered, so must reactivate
+
+		if ( ( $old && $old != $new ) || ! $old ) {
+			delete_option( 'bsr_license_status' );
+
+			if( isset( $_POST['bsr_license_deactivate'] ) ) {
+				return false;
+			}
+
+			$this->activate_license( $new );
 		}
+
 		return $new;
 	}
 
 	/**
 	 * Activates the license.
-	 * @access public
+     *
+	 * @param bool|string $new_license New license key to activate (optional).
 	 */
-	public function activate_license() {
-
-		// listen for our activate button to be clicked
-		if( isset( $_POST['bsr_license_activate'] ) ) {
-
-			// run a quick security check
-		 	if( ! check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) )
-				return; // get out if we didn't click the Activate button
-
-			// retrieve the license from the database
-			$license = trim( get_option( 'bsr_license_key' ) );
-
-
-			// data to send in our API request
-			$api_params = array(
-				'edd_action'=> 'activate_license',
-				'license' 	=> $license,
-				'item_name' => urlencode( BSR_NAME ), // the name of our product in EDD
-				'url'       => home_url()
-			);
-
-			// Call the custom API.
-			$response = wp_remote_post( BSR_API_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
-
-			// make sure the response came back okay
-			if ( is_wp_error( $response ) )
-				return false;
-
-			// decode the license data
-			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-
-			// $license_data->license will be either "valid" or "invalid"
-			update_option( 'bsr_license_status', $license_data->license );
-
+	public function activate_license( $new_license = false ) {
+		if( ! isset( $_POST['bsr_license_activate'] ) && ! $new_license ) {
+			return;
 		}
+
+		if( ! $new_license && ! check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) ) {
+			return;
+		}
+
+		$license = trim( get_option( 'bsr_license_key' ) );
+		if ( $new_license ) {
+			$license = trim( $new_license );
+		}
+
+		// data to send in our API request
+		$api_params = array(
+			'edd_action'=> 'activate_license',
+			'license' 	=> $license,
+			'item_name' => urlencode( BSR_NAME ), // the name of our product in EDD
+			'url'       => home_url()
+		);
+
+		// Call the custom API.
+		$response = wp_remote_post( BSR_API_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+
+		// make sure the response came back okay
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		// decode the license data
+		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		if ( ! isset( $license_data->license ) ) {
+			return false;
+		}
+
+		// $license_data->license will be either "valid" or "invalid"
+		update_option( 'bsr_license_status', $license_data->license );
+
+        return $license_data->license === 'valid';
 	}
 
 	/**
@@ -542,9 +559,10 @@ class BSR_Admin {
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 			// $license_data->license will be either "deactivated" or "failed"
-			if( $license_data->license == 'deactivated' )
+			if ( $license_data->license == 'deactivated' ) {
 				delete_option( 'bsr_license_status' );
-
+				delete_option( 'bsr_license_key' );
+			}
 		}
 	}
 
@@ -553,7 +571,7 @@ class BSR_Admin {
 	 * @access public
 	 */
 	public function download_backup() {
-		$cap = apply_filters( 'bsr_capability', 'install_plugins' );
+		$cap = apply_filters( 'bsr_capability', 'manage_options' );
 		if ( ! current_user_can( $cap ) ) {
 			return;
 		}
@@ -585,7 +603,7 @@ class BSR_Admin {
 	public function download_sysinfo() {
 		check_admin_referer( 'bsr_download_sysinfo', 'bsr_sysinfo_nonce' );
 
-		$cap = apply_filters( 'bsr_capability', 'install_plugins' );
+		$cap = apply_filters( 'bsr_capability', 'manage_options' );
 		if ( ! current_user_can( $cap ) ) {
 			return;
 		}

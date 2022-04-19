@@ -59,7 +59,7 @@
 		}).fail(function (response) {
 			$('.bsr-processing-wrap').remove();
 			$('.bsr-disabled').removeClass('bsr-disabled button-disabled' );
-			$('#bsr-error-wrap').html( '<div class="error"><p>' + bsr_object_vars.unknown + '</p></div>' );
+			$('#bsr-error-wrap').html( '<div class="error"><p>' + bsr_object_vars.unknown + '</p></div>' ).show();
 			if ( window.console && window.console.log ) {
 				console.log(response);
 			}
@@ -82,7 +82,7 @@
 				var data = $( '.bsr-action-form' ).serialize();
 
 				backup_submit.addClass( 'bsr-disabled button-disabled' );
-				$('#bsr-backup-form').append('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
+				$('#bsr-backup-form').after('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
 				$('.bsr-progress-wrap').append( '<p class="description bsr-description">' + bsr_object_vars.processing + '</p>' );
 				bsr_process_step( 'process_backup', 0, 0, data );
 
@@ -138,7 +138,7 @@
 						if ( ! import_submit.hasClass( 'button-disabled' ) ) {
 
 							import_submit.addClass( 'bsr-disabled button-disabled' );
-							$('#bsr-import-form').append('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
+							$('#bsr-import-form').after('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
 							$('.bsr-progress-wrap').append( '<p class="description bsr-description">Importing database...</p>' );
 							bsr_process_step( 'process_import', 0, 0, response );
 
@@ -174,16 +174,16 @@
 			if ( ! search_replace_submit.hasClass( 'button-disabled' ) ) {
 
 				if ( ! $( '#search_for' ).val() ) {
-					bsr_error_wrap.html( '<div class="error"><p>' + bsr_object_vars.no_search + '</p></div>' );
+					bsr_error_wrap.html( '<div class="error"><p>' + bsr_object_vars.no_search + '</p></div>' ).show();
 				} else if ( ! $( '#bsr-table-select' ).val() ) {
-					bsr_error_wrap.html( '<div class="error"><p>' + bsr_object_vars.no_tables + '</p></div>' );
+					bsr_error_wrap.html( '<div class="error"><p>' + bsr_object_vars.no_tables + '</p></div>' ).show();
 				} else {
 					var str 	= $( '.bsr-action-form' ).serialize();
 					var data 	= str.replace(/%5C/g, "#BSR_BACKSLASH#" );
 
-					bsr_error_wrap.html('');
+					bsr_error_wrap.html('').hide();
 					search_replace_submit.addClass( 'bsr-disabled button-disabled' );
-					$( '#bsr-submit-wrap' ).append('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
+					$( '#bsr-submit-wrap' ).before('<div class="bsr-processing-wrap"><div class="spinner is-active bsr-spinner"></div><div class="bsr-progress-wrap"><div class="bsr-progress"></div></div></div>');
 					$('.bsr-progress-wrap').append( '<p class="description bsr-description">' + bsr_object_vars.processing + '</p>' );
 					bsr_process_step( 'process_search_replace', 0, 0, data );
 				}
@@ -241,13 +241,68 @@
 	function bsr_save_profile() {
 		$('#save_profile').on( 'change', function() {
 			if ( this.checked ) {
-				$(this).closest('tr').next('tr').fadeIn('fast');
+				$(this).closest('label').next('div').fadeIn('fast');
 			} else {
-				$(this).closest('tr').next('tr').fadeOut('fast');
+				$(this).closest('label').next('div').fadeOut('fast');
 			}
 		});
 	}
 
 	bsr_init();
+
+	$( 'body' ).on( 'mouseover', '.tooltip', function( e ) {
+		var icon = $( this );
+		var bubble = $( this ).next();
+
+		// Close any that are already open
+		$( '.helper-message' ).not( bubble ).hide();
+
+		let iconWidth = icon.width();
+
+		var position = icon.position();
+		if ( bubble.hasClass( 'left' ) ) {
+			bubble.css({
+				'left': ( position.left - bubble.width() - icon.width() - 29 ) + 'px',
+				'top': ( position.top + icon.height() / 2 - 18 ) + 'px'
+			})
+		} else if ( bubble.hasClass( 'bottom' ) ) {
+			bubble.css( {
+				'left': ( ( position.left - bubble.width() / 2 ) - 5 ) + 'px',
+				'top': ( position.top + icon.height() + 19 ) + 'px'
+			} );
+		} else {
+			bubble.css( {
+				'left': ( position.left + icon.width() + 19 ) + 'px',
+				'top': ( position.top + icon.height() / 2 - 18 ) + 'px'
+			} );
+		}
+
+		bubble.toggle();
+	} );
+
+	$( 'body' ).on( 'mouseleave', '.tooltip', function( e ) {
+		$( '.helper-message' ).hide();
+	} );
+
+	$( '.notice.inline' )
+		.appendTo('.bsr-notice-container' )
+		.css( 'display', 'block' );
+
+	setTimeout(function() {
+		const $settings_saved_notice = $( '#setting-error-settings_updated' );
+		const $bsr_notices = $( '.bsr-updated' );
+
+		if ( $settings_saved_notice.length || $bsr_notices.length ) {
+			$( '<div class="bsr-inner-notice-container"></div>' ).prependTo( '.inside' );
+			$settings_saved_notice.prependTo( '.bsr-inner-notice-container' ).css( 'display', 'block' );
+			$bsr_notices.prependTo( '.bsr-inner-notice-container' ).css( 'display', 'block' );
+		}
+
+		$( '.bsr-inner-notice-container .notice-dismiss' ).on( 'click', function ( e ) {
+			if ( ! $bsr_notices.length ) {
+				$( '.bsr-inner-notice-container' ).remove();
+			}
+		});
+	}, 75);
 
 })( jQuery );

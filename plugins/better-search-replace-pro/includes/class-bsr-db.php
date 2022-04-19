@@ -500,8 +500,8 @@ class BSR_DB {
 								$table_report['changes'][] = array(
 									'row' 		=> $current_row,
 									'column' 	=> $column,
-									'from' 		=> utf8_encode( $data_to_fix ),
-									'to' 		=> utf8_encode( $edited_data )
+									'from' 		=> $data_to_fix,
+									'to' 		=> $edited_data
 								);
 
 							}
@@ -537,8 +537,8 @@ class BSR_DB {
 						$table_report['changes'][] = array(
 							'row' 		=> $current_row,
 							'column' 	=> $column,
-							'from' 		=> utf8_encode( $data_to_fix ),
-							'to' 		=> utf8_encode( $edited_data )
+							'from' 		=> $data_to_fix,
+							'to' 		=> $edited_data
 						);
 
 					}
