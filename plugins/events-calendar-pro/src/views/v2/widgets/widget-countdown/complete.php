@@ -26,5 +26,5 @@ $classes = [
 	<?php tribe_classes( $classes ); ?>
 	data-js="tribe-events-widget-countdown-complete"
 >
-	<?php echo esc_html( $complete ); ?>
+	<?php echo html_entity_decode( $complete ); ?>
 </p>

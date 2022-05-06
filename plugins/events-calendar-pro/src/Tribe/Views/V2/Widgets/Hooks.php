@@ -107,6 +107,27 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			3
 		);
 
+		add_action(
+			'tec_start_widget_form',
+			[ $this, 'enqueue_widget_admin_assets' ],
+			10,
+			2
+		);
+
+		add_action(
+			'admin_enqueue_scripts',
+			[ $this, 'enqueue_widget_admin_assets' ],
+			10,
+			2
+		);
+
+		add_action(
+			'wp_enqueue_scripts',
+			[ $this, 'enqueue_widget_admin_assets' ],
+			10,
+			2
+		);
+
 		add_action( 'tribe_plugins_loaded', [ $this, 'maybe_migrate_legacy_sidebars' ] );
 	}
 
@@ -220,6 +241,23 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		$views['widget-week']           = Week_View::class;
 
 		return $views;
+	}
+
+	public function enqueue_widget_admin_assets( $slug ) {
+		if ( is_admin() && get_current_screen()->is_block_editor ) {
+			tribe_asset_enqueue( 'tribe-select2' );
+			tribe_asset_enqueue( 'tribe-admin-widget' );
+		}
+
+		$widgets_manager = tribe( \Tribe\Widget\Manager::class );
+		$widgets         = $widgets_manager->get_registered_widgets();
+
+		if ( empty( $widgets[ $slug ] ) ) {
+			return;
+		}
+
+		tribe_asset_enqueue( 'tribe-select2' );
+		tribe_asset_enqueue( 'tribe-admin-widget' );
 	}
 
 	/**

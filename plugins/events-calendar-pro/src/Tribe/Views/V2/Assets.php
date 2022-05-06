@@ -57,7 +57,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 			'tribe-events-pro-views-v2-skeleton',
 			'views-skeleton.css',
 			[ 'tribe-events-views-v2-skeleton' ],
-			'wp_enqueue_scripts',
+			'wp_print_footer_scripts',
 			[
 				'priority'     => 10,
 				'conditionals' => [ $this, 'should_enqueue_frontend' ],
@@ -74,7 +74,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 				'tribe-events-pro-views-v2-skeleton',
 				'tribe-events-views-v2-full',
 			],
-			'wp_enqueue_scripts',
+			'wp_print_footer_scripts',
 			[
 				'priority'     => 10,
 				'conditionals' => [

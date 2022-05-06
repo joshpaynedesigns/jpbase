@@ -75,6 +75,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	protected function register_assets() {
 		$assets = new Assets( $this->container );
 		$assets->register();
+		$assets->register_admin_assets();
 
 		$this->container->singleton( Assets::class, $assets );
 	}
