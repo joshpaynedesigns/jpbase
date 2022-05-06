@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.6
-Stable tag: 5.12.2
-Tested up to: 5.9.2
+Stable tag: 5.13.1
+Tested up to: 5.9.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -208,6 +208,26 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [5.13.1] 2022-04-28 =
+
+* Version - Events Calendar PRO 5.13.1 is only compatible with The Events Calendar 5.14.2 and higher.
+* Feature - Add Elementor styling support to the `Events List` widget. [ECP-1104]
+* Feature - Add Elementor styling support to the `Event` widget. [ECP-1105]
+* Feature - Add Elementor styling support to the `Event Countdown` widget. [ECP-1075]
+* Tweak - Change action for script enqueues to ensure they are loaded in the correct order on FSE themes. [TEC-4267]
+* Tweak - Changed views: `v2/widgets/widget-countdown/complete`.
+* Fix - Ensure widget filter dropdowns populate correctly in page builders. [ECP-651]
+* Fix - Ensure fast-forward link respects categories from shortcodes. [ECP-957]
+* Language - 41 new strings added, 139 updated, 0 fuzzied, and 0 obsoleted.
+
+= [5.13.0] 2022-04-21 =
+
+* Feature - Added the ability to `exclude-category` and `exclude-tag` on the `[tribe_events]` shortcode. [ECP-1120]
+* Feature - Added the ability to restrict events by event `author`, `organizer`, and `venue` on `[tribe_events]` shortcode. [ECP-1123]
+* Feature - Elementor support for restricting events by category on the Events View Elementor widget. [ECP-1120]
+* Feature - Elementor support for restricting events by author, organizer, and venue on the Events View Elementor widget. [ECP-1123]
+* Language - 5 new strings added, 29 updated, 0 fuzzied, and 0 obsoleted
+
 = [5.12.2] 2022-03-17 =
 
 * Fix - Ensure the `Week View` is displayed correctly on Astra theme.  [ECP-1073]
@@ -372,7 +392,7 @@ Our Premium Plugins:
 
 = [5.4.0.2] 2021-03-04 =
 
-* Fix - Prevent fatal error in Elementor integration caused by an extra comma. `src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php@L94` [BTRIA-768]
+* Fix - Prevent fatal error in Elementor integration caused by an extra comma. `src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php@L94` [ECP-727]
 * Fix - Make sure we have not deprecated usage of `FILTER_SANITIZE_MAGIC_QUOTES` for PHP 7.4+.
 
 = [5.4.0.1] 2021-03-03 =

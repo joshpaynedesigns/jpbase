@@ -230,8 +230,8 @@ trait Widget_Shortcode {
 			/**
 			 * @var Tribe\Events\Pro\Views\V2\Shortcodes\Tribe_Events $shortcode.
 			 */
-			$shortcode = new Tribe_Events;
-			$widget_args        = $shortcode->get_database_arguments( $widget_id_raw );
+			$shortcode   = new Tribe_Events;
+			$widget_args = $shortcode->get_database_arguments( $widget_id_raw );
 		}
 
 		// Safety net.
@@ -244,6 +244,6 @@ trait Widget_Shortcode {
 		 */
 		$widget = new $widget_class;
 		$widget->setup( [], $widget_args );
-		$widget->toggle_hooks( true );
+		$widget->toggle_hooks( true, 'display' );
 	}
 }

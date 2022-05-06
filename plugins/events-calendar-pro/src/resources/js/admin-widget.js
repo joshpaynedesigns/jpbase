@@ -54,6 +54,11 @@
 			$select.select2( 'destroy' );
 		}
 
+		// If more than one version of select2 gets loaded, we can get duplicated dropdowns - and none of them work!
+		if ( $select.next().hasClass( 'select2-container' ) ) {
+			$select.next().remove();
+		}
+
 		if ( $( 'body' ).hasClass( 'wp-customizer' ) ) {
 			args.dropdownCssClass = 'tribe-customizer-select2';
 		}
@@ -65,20 +70,21 @@
 
 		// By default we allow The field to be cleared
 		args.allowClear = true;
-		if ( $select.is( '[data-prevent-clear]' ) ) {
+		if ( $select.data( 'prevent-clear' ) ) {
 			args.allowClear = false;
 		}
 
 		// If we are dealing with a Input Hidden we need to set the Data for it to work
-		if ( $select.is( '[data-options]' ) ) {
+		if ( $select.data( 'options' ) ) {
 			args.data = $select.data( 'options' );
 		}
 
-		// Prevents the Search box to show
-		if ( $select.is( '[data-hide-search]' ) ) {
+		// Prevents the Search box from showing
+		if ( $select.data( 'hide-search' ) ) {
 			args.minimumResultsForSearch = Infinity;
 		}
 
+		// Multiselect
 		if ( $select.is( '[multiple]' ) ) {
 			args.multiple = true;
 
@@ -128,7 +134,7 @@
 		};
 
 		// Select also allows Tags, so we go with that too
-		if ( $select.is( '[data-tags]' ) ) {
+		if ( $select.data( 'tags' ) ) {
 			args.tags = $select.data( 'options' );
 
 			args.initSelection = function ( element, callback ) {
@@ -165,7 +171,7 @@
 		}
 
 		// When we have a source, we do an AJAX call
-		if ( $select.is( '[data-source]' ) ) {
+		if ( $select.data( 'source' ) ) {
 			var source = $select.data( 'source' );
 
 			// For AJAX we reset the data
@@ -202,7 +208,7 @@
 
 		$select.on( 'open', function () {
 			$( '.select2-drop' ).css( 'z-index', 10000000 );
-		} ).select2TEC( args );
+		} ).trigger( 'change.select2' ).select2TEC( args );
 	};
 
 	tribeWidget.conditional = function( conditional, $widget ) {

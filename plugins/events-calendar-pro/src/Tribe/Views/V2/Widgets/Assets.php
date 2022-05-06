@@ -236,4 +236,27 @@ class Assets extends \tad_DI52_ServiceProvider {
 			);
 		}
 	}
+
+	public function register_admin_assets() {
+		if ( ! tribe_events_views_v2_is_enabled() ) {
+			return;
+		}
+
+		$plugin = Pro_Plugin::instance();
+
+		tribe_asset(
+			$plugin,
+			'tribe-admin-widget',
+			'admin-widget.js',
+			[
+				'jquery',
+				'underscore',
+				'tribe-select2',
+			],
+			null,
+			[
+				'priority'     => 5,
+			]
+		);
+	}
 }

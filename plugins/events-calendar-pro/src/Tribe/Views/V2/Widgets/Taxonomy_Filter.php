@@ -336,6 +336,17 @@ class Taxonomy_Filter {
 			unset( $args[ $taxonomy ] );
 		}
 
+		$operation = 'term_not_in';
+		foreach( [ 'post_tag', TEC::TAXONOMY ] as $taxonomy ) {
+			$key = 'exclude-' . $taxonomy;
+			if ( empty( $args[ $key ] ) ) {
+				continue;
+			}
+			$widget_view->get_repository()->by( $operation, $taxonomy, $args[ $key ] );
+
+			unset( $args[ $key ] );
+		}
+
 		// Makes sure tax query exists.
 		if ( empty( $args['tax_query'] ) ) {
 			$args['tax_query'] = [];
