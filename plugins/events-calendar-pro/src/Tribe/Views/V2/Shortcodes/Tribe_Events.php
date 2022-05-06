@@ -18,7 +18,6 @@ use Tribe\Events\Views\V2\View;
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe\Utils\Element_Classes;
 use Tribe__Context as Context;
-use Tribe__Date_Utils;
 use Tribe__Events__Main as TEC;
 use Tribe__Utils__Array as Arr;
 use Tribe__Date_Utils as Dates;
@@ -50,7 +49,9 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * {@inheritDoc}
 	 */
 	protected $default_arguments = [
+		'author'            => null,
 		'category'          => null,
+		'exclude-category'  => null,
 		'container-classes' => [],
 		'date'              => null,
 		'events_per_page'   => null,
@@ -63,11 +64,14 @@ class Tribe_Events extends Shortcode_Abstract {
 		'is-widget'         => false,
 		'keyword'           => null,
 		'main-calendar'     => false,
+		'organizer'         => null,
 		'tag'               => null,
+		'exclude-tag'       => null,
 		'tax-operand'       => 'OR',
 		'tribe-bar'         => true,
 		'view'              => null,
 		'jsonld'            => true,
+		'venue'             => null,
 
 		'month_events_per_day' => null,
 		'week_events_per_day'  => null,
@@ -104,18 +108,32 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * {@inheritDoc}
 	 */
 	protected $aliased_arguments = [
-		'cat'                   => 'category',
-		'cats'                  => 'category',
-		'tribe_events_category' => 'category',
-		'tribe_events_cat'      => 'category',
-		'categories'            => 'category',
-		'tags'                  => 'tag',
-		'event_tags'            => 'tag',
-		'event_tag'             => 'tag',
-		'post_tag'              => 'tag',
-		'post_tags'             => 'tag',
-		'start_date'            => 'date',
-		'week_layout'           => 'layout',
+		'cat'                           => 'category',
+		'categories'                    => 'category',
+		'cats'                          => 'category',
+		'tribe_events_cat'              => 'category',
+		'tribe_events_category'         => 'category',
+
+		'exclude-cat'                   => 'exclude-category',
+		'exclude-categories'            => 'exclude-category',
+		'exclude-cats'                  => 'exclude-category',
+		'exclude-tribe_events_category' => 'exclude-category',
+		'exclude-tribe_events_cat'      => 'exclude-category',
+
+		'event_tag'                     => 'tag',
+		'event_tags'                    => 'tag',
+		'post_tag'                      => 'tag',
+		'post_tags'                     => 'tag',
+		'tags'                          => 'tag',
+
+		'exclude-event_tag'             => 'exclude-tag',
+		'exclude-event_tags'            => 'exclude-tag',
+		'exclude-post_tag'              => 'exclude-tag',
+		'exclude-post_tags'             => 'exclude-tag',
+		'exclude-tags'                  => 'exclude-tag',
+
+		'start_date'                    => 'date',
+		'week_layout'                   => 'layout',
 	];
 
 	/**
@@ -165,6 +183,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		add_filter( 'tribe_events_views_v2_view_next_url', [ $this, 'filter_view_url' ], 10, 3 );
 		add_filter( 'tribe_events_views_v2_view_prev_url', [ $this, 'filter_view_url' ], 10, 3 );
 		add_filter( 'tribe_events_views_v2_view_week_breakpoints', [ $this, 'filter_week_view_breakpoints' ], 10, 2 );
+		add_filter( 'tribe_events_views_v2_ff_link_next_event', [ $this, 'filter_ff_link_next_event' ], 10, 2 );
 
 		// Removing tribe-bar when that argument is `false`.
 		if (
@@ -294,6 +313,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		remove_filter( 'tribe_events_views_v2_view_week_breakpoints', [ $this, 'filter_week_view_breakpoints' ], 10 );
 
 		remove_filter( 'tribe_events_views_v2_week_events_per_day', [ $this, 'views_v2_week_events_per_day' ], 10 );
+		remove_filter( 'tribe_events_views_v2_ff_link_next_event', [ $this, 'filter_ff_link_next_event' ], 10 );
 	}
 
 	/**
@@ -384,7 +404,13 @@ class Tribe_Events extends Shortcode_Abstract {
 		$map['category'] = static function ( $terms ) {
 			return Taxonomy::normalize_to_term_ids( $terms, TEC::TAXONOMY );
 		};
+		$map['exclude-category'] = static function ( $terms ) {
+			return Taxonomy::normalize_to_term_ids( $terms, TEC::TAXONOMY );
+		};
 		$map['tag']      = static function ( $terms ) {
+			return Taxonomy::normalize_to_term_ids( $terms, 'post_tag' );
+		};
+		$map['exclude-tag']      = static function ( $terms ) {
 			return Taxonomy::normalize_to_term_ids( $terms, 'post_tag' );
 		};
 
@@ -566,7 +592,10 @@ class Tribe_Events extends Shortcode_Abstract {
 		 * Make sure we aren't triggered before we expect to be.
 		 * If this isn't true, our query info will be suspect and our checks will fail.
 		 */
-		if ( ! did_action( 'wp_print_scripts' ) ) {
+		if (
+			! ( function_exists( 'wp_is_block_theme' ) && wp_is_block_theme() )
+			&& ! did_action( 'wp_print_scripts' )
+		) {
 			return;
 		}
 
@@ -837,7 +866,10 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @return array The translated shortcode arguments.
 	 */
 	public function args_to_repository( array $repository_args, array $arguments, $context, $view ) {
-		if ( ! empty( $arguments['tag'] ) || ! empty( $arguments['category'] ) ) {
+		if (
+			! empty( $arguments['tag'] )
+			|| ! empty( $arguments['category'] )
+		) {
 			$operand = Arr::get( $arguments, 'tax-operand', 'OR' );
 
 			// Makes sure tax query exists.
@@ -845,7 +877,12 @@ class Tribe_Events extends Shortcode_Abstract {
 				$repository_args['tax_query'] = [];
 			}
 
-			foreach ( [ 'tag' => 'post_tag', 'category' => TEC::TAXONOMY ] as $key => $taxonomy ) {
+			$items = [
+				'tag'              => 'post_tag',
+				'category'         => TEC::TAXONOMY,
+			];
+
+			foreach ( $items as $key => $taxonomy ) {
 				if ( empty( $arguments[ $key ] ) ) {
 					continue;
 				}
@@ -854,6 +891,44 @@ class Tribe_Events extends Shortcode_Abstract {
 					$repository_args['tax_query'],
 					Taxonomy::translate_to_repository_args( $taxonomy, $arguments[ $key ], $operand )
 				);
+
+			}
+
+			$repository_args['tax_query']['relation'] = $operand;
+		}
+
+		if (
+			! empty( $arguments['exclude-tag'] )
+			|| ! empty( $arguments['exclude-category'] )
+		) {
+			$operand = 'AND';
+
+			// Makes sure tax query exists.
+			if ( empty( $repository_args['tax_query'] ) ) {
+				$repository_args['tax_query'] = [];
+			}
+
+			$items = [
+				'exclude-tag'      => 'post_tag',
+				'exclude-category' => TEC::TAXONOMY,
+			];
+
+			foreach ( $items as $key => $taxonomy ) {
+				if ( empty( $arguments[ $key ] ) ) {
+					continue;
+				}
+
+				$repo = tribe_events();
+				$repo->by( 'term_not_in', $taxonomy, $arguments[ $key ] );
+				$built_query = $repo->build_query();
+
+				if ( ! empty( $built_query->query_vars['tax_query'] ) ) {
+					$repository_args['tax_query'] = array_merge_recursive(
+						$repository_args['tax_query'],
+						$built_query->query_vars['tax_query']
+					);
+				}
+
 			}
 
 			$repository_args['tax_query']['relation'] = $operand;
@@ -881,6 +956,72 @@ class Tribe_Events extends Shortcode_Abstract {
 				} else {
 					$repository_args[ $date_index ] = $date_key;
 				}
+			}
+		}
+
+		if ( ! empty( $arguments['author'] ) ) {
+			if ( ! is_numeric( $arguments['author'] ) ) {
+				$author = get_user_by( 'login', $arguments['author'] );
+			} else {
+				$author = get_user_by( 'id', $arguments['author'] );
+			}
+
+			if ( empty( $author->ID ) ) {
+				// -1, 0, and strings all prevent excluding posts by author. Using PHP_INT_MAX appropriately causes the filter to function.
+				$repository_args['author'] = PHP_INT_MAX;
+			} else {
+				$repository_args['author'] = $author->ID;
+			}
+		}
+
+		if ( ! empty( $arguments['organizer'] ) ) {
+			if ( ! is_numeric( $arguments['organizer'] ) ) {
+				$organizer_id = tribe_organizers()
+					->where( 'title', $arguments['organizer'] )
+					->per_page( 1 )
+					->fields( 'ids' )
+					->first();
+				if ( empty( $organizer_id ) ) {
+					$organizer_id = tribe_organizers()
+						->where( 'slug', $arguments['organizer'] )
+						->per_page( 1 )
+						->fields( 'ids' )
+						->first();
+				}
+			} else {
+				$organizer_id = $arguments['organizer'];
+			}
+
+			if ( empty( $organizer_id ) ) {
+				$repository_args['organizer'] = -1;
+			} else {
+				$repository_args['organizer'] = $organizer_id;
+			}
+		}
+
+		if ( ! empty( $arguments['venue'] ) ) {
+			if ( ! is_numeric( $arguments['venue'] ) ) {
+				$venue_id = tribe_venues()
+					->where( 'title', $arguments['venue'] )
+					->per_page( 1 )
+					->fields( 'ids' )
+					->first();
+
+				if ( empty( $venue_id ) ) {
+					$venue_id = tribe_venues()
+						->where( 'slug', $arguments['venue'] )
+						->per_page( 1 )
+						->fields( 'ids' )
+						->first();
+				}
+			} else {
+				$venue_id = $arguments['venue'];
+			}
+
+			if ( empty( $venue_id ) ) {
+				$repository_args['venue'] = -1;
+			} else {
+				$repository_args['venue'] = $venue_id;
 			}
 		}
 
@@ -1199,5 +1340,55 @@ class Tribe_Events extends Shortcode_Abstract {
 		}
 
 		return $shortcode_args['count'];
+	}
+
+	/**
+	 * Modify the events repository query for the fast-forward link.
+	 *
+	 * @since 5.14.2
+	 *
+	 * @param Tribe__Repository__Interface $next_event Current instance of the events repository class.
+	 * @param View_Interface               $view       The View currently rendering.
+	 *
+	 * @return Tribe__Repository__Interface $next_event The modified repository instance.
+	 */
+	public function filter_ff_link_next_event( $next_event, $view ) {
+		$shortcode = $view->get_context()->get( 'shortcode' );
+		if ( empty( $shortcode ) ) {
+			return $next_event;
+		}
+
+		$args = $this->get_database_arguments( $shortcode );
+
+		if ( ! empty( $args['category' ] ) ) {
+			$next_event = $next_event->where( 'category', (array) $args['category'] );
+		}
+
+		if ( ! empty( $args['tag'] ) ) {
+			$next_event = $next_event->where( 'tag', (array) $args['tag'] );
+		}
+
+		if ( ! empty( $args['exclude-category'] ) ) {
+			$next_event = $next_event->where( 'category_not_in', (array) $args['exclude-category'] );
+		}
+
+		if ( ! empty( $args['exclude-tag'] ) ) {
+			$next_event = $next_event->where( 'tag__not_in', (array) $args['exclude-tag'] );
+		}
+
+		if ( ! empty( $args['author'] ) ) {
+			$next_event = $next_event->where( 'author', $args['author'] );
+		}
+
+		if ( ! empty( $args['organizer'] ) ) {
+			$next_event = $next_event->where( 'organizer', $args['organizer'] );
+		}
+
+		if ( ! empty( $args['venue'] ) ) {
+			$next_event = $next_event->where( 'venue', $args['venue'] );
+		}
+
+
+		return $next_event;
 	}
 }

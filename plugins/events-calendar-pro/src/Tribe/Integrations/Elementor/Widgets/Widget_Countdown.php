@@ -10,6 +10,8 @@
 namespace Tribe\Events\Pro\Integrations\Elementor\Widgets;
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Text_Shadow;
 use Tribe\Events\Views\V2\Assets;
 
 class Widget_Countdown extends Widget_Abstract {
@@ -23,7 +25,7 @@ class Widget_Countdown extends Widget_Abstract {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected $widget_icon = 'fa fa-stopwatch';
+	protected $widget_icon = 'eicon-countdown';
 
 	/**
 	 * @var string
@@ -64,7 +66,7 @@ class Widget_Countdown extends Widget_Abstract {
 	 *
 	 * @since 5.4.0
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_event_query_section();
 
 		$this->start_controls_section(
@@ -93,13 +95,159 @@ class Widget_Countdown extends Widget_Abstract {
 			[
 				'label'       => __( 'Completion Message', 'tribe-events-calendar-pro' ),
 				'description' => __( 'Message to display when the countdown is complete.', 'tribe-events-calendar-pro' ),
-				'type'        => Controls_Manager::TEXT,
+				'type'        => Controls_Manager::TEXTAREA,
 				'label_block' => true,
 				'default'     => 'Hooray!',
 			]
 		);
 
 		$this->end_controls_section();
+
+		// Start style tab
+
+		$this->start_controls_section(
+			'event_countdown',
+			[
+				'label' => esc_html__( 'Event Countdown', 'tribe-events-calendar-pro' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		$this->add_control(
+			'style_warning',
+			[
+				'type' => Controls_Manager::RAW_HTML,
+				'raw' => esc_html__(
+					'The style of this widget is often affected by your theme and plugins. If you experience an issue, try switching to a basic WordPress theme and deactivate related plugins.',
+					'tribe-events-calendar-pro'
+				),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+			]
+		);
+
+		$this->add_control(
+			'heading_event_title_style',
+			[
+				'label' => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'event_title_color',
+			[
+				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tribe-events-widget-countdown__event-title-link' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'event_title_typography',
+				'selector' => '{{WRAPPER}} .tribe-events-widget-countdown__event-title',
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'event_title_text_shadow',
+				'selector' => '{{WRAPPER}} .tribe-events-widget-countdown__event-title',
+			]
+		);
+
+		$this->add_control(
+			'heading_countdown_number_style',
+			[
+				'label' => esc_html__( 'Countdown Number', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'countdown_number_color',
+			[
+				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tribe-events-widget .tribe-events-widget-countdown__number' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'countdown_number_typography',
+				'selector' => '{{WRAPPER}} .tribe-events-widget .tribe-events-widget-countdown__number',
+			]
+		);
+
+		$this->add_control(
+			'heading_countdown_text_style',
+			[
+				'label' => esc_html__( 'Countdown Text', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'countdown_text_color',
+			[
+				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tribe-events-widget .tribe-events-widget-countdown__under' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'countdown_text_typography',
+				'selector' => '{{WRAPPER}} .tribe-events-widget .tribe-events-widget-countdown__under',
+			]
+		);
+
+		$this->add_control(
+			'heading_completion_message_style',
+			[
+				'label' => esc_html__( 'Completion Message', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::HEADING,
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'completion_message_color',
+			[
+				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .tribe-events-widget-countdown__complete' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			[
+				'name' => 'completion_message_typography',
+				'selector' => '{{WRAPPER}} .tribe-events-widget-countdown__complete',
+			]
+		);
+
+		$this->end_controls_section();
+
+		// End style tab
 	}
 
 	/**

@@ -122,7 +122,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 			'the-events-calendar',
 			[
 				'title' => __( 'The Events Calendar', 'tribe-events-calendar-pro' ),
-				'icon'  => 'fa fa-calendar-alt',
+				'icon'  => 'eicon-calendar',
 			]
 		);
 	}

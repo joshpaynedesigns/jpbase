@@ -2,13 +2,13 @@
 # This file is distributed under the same license as the The Events Calendar PRO package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar PRO 5.12.1\n"
+"Project-Id-Version: The Events Calendar PRO 5.13.1\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2022-02-09 17:16:13+00:00\n"
+"POT-Creation-Date: 2022-04-26 21:14:48+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-02-09 17:16\n"
+"PO-Revision-Date: 2022-04-26 21:14\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
@@ -21,7 +21,7 @@ msgid ""
 "To begin using Events Calendar PRO, please install the latest version of"
 msgstr ""
 
-#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.12.1)  #-#-#-#-#
+#. #-#-#-#-#  tribe-events-calendar-pro.pot (The Events Calendar PRO 5.13.1)  #-#-#-#-#
 #. Author of the plugin/theme
 #: events-calendar-pro.php:176 events-calendar-pro.php:177
 #: src/Tribe/Integrations/Elementor/Service_Provider.php:124
@@ -45,7 +45,7 @@ msgid "Event Cats"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:92
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:306
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:310
 msgid "Title"
 msgstr ""
 
@@ -69,7 +69,8 @@ msgid "Recurring"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:102
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:345
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:349
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:764
 msgid "Description"
 msgstr ""
 
@@ -105,77 +106,77 @@ msgid "On and Before"
 msgstr ""
 
 #: src/Tribe/APM_Filters/Recur_Filter.php:15
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:84
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:109
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:122
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:135
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:148
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:162
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:175
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:188
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:201
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:214
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:309
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:322
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:335
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:348
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:361
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:374
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:389
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:414
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:443
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:471
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:503
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:517
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:531
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:553
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:566
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:579
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:592
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:605
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:631
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:644
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:657
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:670
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:733
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:86
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:127
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:140
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:153
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:166
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:180
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:193
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:206
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:219
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:232
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:313
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:326
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:339
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:352
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:365
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:378
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:393
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:418
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:447
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:475
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:507
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:521
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:535
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:557
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:570
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:583
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:596
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:609
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2229
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2242
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2255
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2268
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2331
 #: src/Tribe/Recurrence/Meta.php:307
 msgid "Yes"
 msgstr ""
 
 #: src/Tribe/APM_Filters/Recur_Filter.php:16
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:85
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:110
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:123
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:136
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:149
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:163
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:176
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:189
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:202
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:215
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:310
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:323
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:336
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:349
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:362
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:375
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:390
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:415
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:444
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:472
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:504
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:518
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:532
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:554
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:567
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:580
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:593
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:606
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:632
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:645
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:658
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:671
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:734
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:87
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:128
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:141
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:154
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:167
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:181
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:194
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:207
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:220
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:233
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:314
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:327
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:340
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:353
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:366
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:379
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:394
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:419
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:448
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:476
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:508
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:522
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:536
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:558
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:571
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:584
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:597
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:610
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2230
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2243
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2256
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2269
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2332
 msgid "No"
 msgstr ""
 
@@ -331,7 +332,7 @@ msgid "A widget that displays the next upcoming x events."
 msgstr ""
 
 #: src/Tribe/Advanced_List_Widget.php:27
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:37
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:39
 msgid "Events List"
 msgstr ""
 
@@ -405,11 +406,11 @@ msgid " and "
 msgstr ""
 
 #: src/Tribe/Editor/Blocks/Related_Events.php:26
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:576
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:580
 msgid "Related Events"
 msgstr ""
 
-#: src/Tribe/Editor.php:212 src/Tribe/Editor.php:250 src/Tribe/Main.php:706
+#: src/Tribe/Editor.php:212 src/Tribe/Editor.php:250 src/Tribe/Main.php:705
 #: src/admin-views/event-meta-options.php:3
 msgid "Additional Fields"
 msgstr ""
@@ -461,7 +462,7 @@ msgid "Hide location search"
 msgstr ""
 
 #: src/Tribe/Geo_Loc.php:326
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:481
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:485
 msgid "Map"
 msgstr ""
 
@@ -474,7 +475,8 @@ msgid "Near"
 msgstr ""
 
 #: src/Tribe/Geo_Loc.php:396
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:478
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:482
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1798
 #: src/Tribe/Views/V2/Geo_Loc/Static_Handler.php:154
 msgid "Location"
 msgstr ""
@@ -669,14 +671,17 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:257
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:273
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:285
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:420
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:385
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:429
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:424
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1086
 msgid "Date"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:147
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:261
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:250
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:279
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:297
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:326
 msgid "Custom"
 msgstr ""
 
@@ -726,7 +731,7 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:406
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:429
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:452
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:179
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:182
 msgid "Include"
 msgstr ""
 
@@ -735,7 +740,7 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:410
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:433
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:456
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:183
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:186
 msgid "Exclude"
 msgstr ""
 
@@ -752,12 +757,13 @@ msgid "Only Multi-day Events"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:400
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:174
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:508
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:177
 msgid "Featured Events"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:414
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:187
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:190
 msgid "Only Featured Events"
 msgstr ""
 
@@ -778,8 +784,8 @@ msgid "Only Recurring Events"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:469
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:233
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:199
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:254
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:235
 msgid "Category"
 msgstr ""
 
@@ -791,396 +797,681 @@ msgstr ""
 msgid "Event Query"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:39
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:41
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:111
 msgid "Event Countdown"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:73
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:76
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:298
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:100
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:75
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:86
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:302
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:626
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:103
 msgid "Content"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:81
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:83
 msgid "Display Seconds"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:94
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:96
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:223
 msgid "Completion Message"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:95
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:97
 msgid "Message to display when the countdown is complete."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:84
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:120
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:331
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:635
+msgid ""
+"The style of this widget is often affected by your theme and plugins. If you "
+"experience an issue, try switching to a basic WordPress theme and deactivate "
+"related plugins."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:131
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:346
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:647
+msgid "Event Title"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:140
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:176
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:204
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:232
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:354
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:402
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:438
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:477
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:550
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:592
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:634
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:682
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:718
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:761
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:794
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:828
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:862
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:896
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:930
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:659
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:698
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:737
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:776
+msgid "Text Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:167
+msgid "Countdown Number"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:195
+msgid "Countdown Text"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:94
 msgid "Maximum Events"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:85
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:95
 msgid "The maximum number of events this widget should show."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:99
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:223
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:117
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:270
 msgid "View Options"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:106
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:332
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:422
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:124
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:581
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:336
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:426
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:725
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1163
 msgid "Cost"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:119
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:433
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:440
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:137
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:623
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:437
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:444
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1436
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:202
 #: src/admin-views/tribe-options-defaults.php:58
 #: src/admin-views/widget-admin-advanced-list.php:39
 msgid "Organizer"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:132
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:461
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:468
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:150
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:665
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:465
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:472
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1708
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:213
 #: src/admin-views/tribe-options-defaults.php:75
 #: src/admin-views/widget-admin-advanced-list.php:32
 msgid "Venue"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:145
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:163
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:750
 #: src/admin-views/widget-admin-advanced-list.php:33
 msgid "Street"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:159
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:177
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:783
 #: src/admin-views/widget-admin-advanced-list.php:37
 msgid "Country"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:172
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:190
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:817
 #: src/admin-views/widget-admin-advanced-list.php:34
 msgid "City"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:185
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:203
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:851
 msgid "Region"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:198
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:216
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:885
 msgid "Zip"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:211
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:450
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:479
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:229
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:919
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:454
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:483
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1512
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1851
 #: src/admin-views/widget-admin-advanced-list.php:38
 #: src/views/v2/widgets/widget-featured-venue/venue/phone.php:25
 #: src/views/v2/widgets/widget-featured-venue/venue/phone.php:26
 msgid "Phone"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:226
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:167
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:247
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:170
 msgid "Event Options"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:36
-msgid "Event"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:322
+msgid "Notes On Event Styling"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:319
-msgid "Date/Time"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:393
+msgid "Month"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:358
-msgid "Featured Image"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:371
-msgid "Notices"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:385
-msgid "RSVP/Tickets"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:386
-msgid "RSVP/Tickets are not available in preview mode."
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:404
-msgid "Details"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:411
-msgid "Event Details"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:421
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:469
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:425
 msgid "Time"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:423
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:516
+msgid "Border Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:527
+msgid "Icon Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:542
+msgid "Calendar Link"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:673
+msgid "Venue Title"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:709
+msgid "Venue Details"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:40
+msgid "Event"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:323
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:686
+msgid "Date/Time"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:362
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:806
+msgid "Featured Image"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:375
+msgid "Notices"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:389
+msgid "RSVP/Tickets"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:390
+msgid "RSVP/Tickets are not available in preview mode."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:408
+msgid "Details"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:415
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1035
+msgid "Event Details"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:427
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1240
 msgid "Categories"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:424
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:428
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1317
 msgid "Tags"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:449
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:477
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:453
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:481
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1473
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1759
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:451
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:455
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1589
 msgid "Email"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:452
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:480
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:456
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:484
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1394
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1666
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1928
 #: src/views/v2/widgets/widget-featured-venue/venue/website.php:26
 #: src/views/v2/widgets/widget-featured-venue/venue/website.php:27
 msgid "Website"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:493
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:497
 msgid "Custom Content"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:500
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:504
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1970
 msgid "Custom Fields"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:513
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:517
 msgid "Before HTML"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:514
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:518
 msgid "Customizable HTML to display before the event."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:527
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:531
 msgid "After HTML"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:528
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:532
 msgid "Customizable HTML to display after the event."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:542
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:546
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2084
 msgid "Navigation"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:550
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:554
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2093
 msgid "All Events Link"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:563
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:567
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2132
 msgid "Calendar Links"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:589
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:593
 msgid "Footer"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:602
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:606
 msgid "Event Navigation"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:620
-msgid "Virtual"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:817
+msgid "Width"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:628
-msgid "Video Embed"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:855
+msgid "Max Width"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:641
-msgid "Watch Button"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:890
+msgid "Height"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:654
-msgid "Zoom Link"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:921
+msgid "Object Fit"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:667
-msgid "Zoom Dial-in Info"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:37
-msgid "Events View"
-msgstr ""
-
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:119
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:249
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:278
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:927
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:122
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:296
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:325
 msgid "Default"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:125
-msgid "Events Bar"
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:928
+msgid "Fill"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:929
+msgid "Cover"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:930
+msgid "Contain"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:952
+msgid "Opacity"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1000
+msgid "Border Radius"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1046
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1719
+msgid "Background Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1060
+msgid "Title Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1098
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1175
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1252
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1329
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1524
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1601
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1863
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2017
+msgid "Label Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1113
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1190
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1267
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1344
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1539
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1616
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1878
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2032
+msgid "Label Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1135
+msgid "Date Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1150
+msgid "Date Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1212
+msgid "Cost Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1227
+msgid "Cost Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1289
+msgid "Categories Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1304
+msgid "Categories Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1366
+msgid "Tags Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1381
+msgid "Tags Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1406
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1485
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1678
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1771
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1810
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1940
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2105
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2144
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2183
+msgid "Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1447
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1733
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1981
+msgid "Heading Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1561
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1900
+msgid "Phone Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1576
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1915
+msgid "Phone Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1638
+msgid "Email Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1653
+msgid "Email Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1835
+msgid "Link Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2054
+msgid "Custom Fields Color"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2069
+msgid "Custom Fields Typography"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2171
+msgid "Footer Navigation"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2218
+msgid "Virtual"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2226
+msgid "Video Embed"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2239
+msgid "Watch Button"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2252
+msgid "Zoom Link"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2265
+msgid "Zoom Dial-in Info"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:36
+msgid "Events View"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:128
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:142
+msgid "Events Bar"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:131
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:145
 msgid "Show"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:129
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:143
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:132
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:146
 msgid "Hide"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:139
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:142
 msgid "Filter Bar"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:153
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:156
 msgid "View"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:210
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:203
+msgid "Enter an organizer name or ID."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:214
+msgid "Enter a venue name or ID."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:224
+msgid "Author"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:225
+msgid "Enter an author login or ID."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:246
+msgid "Category Exclusion"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:257
 msgid "Keyword"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:211
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:258
 msgid "Enter a search keyword."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:212
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:259
 msgid "Use a search keyword to only show matching events."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:230
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:277
 msgid "View Start Date"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:231
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:278
 msgid "Date in YYY-MM-DD or YYYY-MM format"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:232
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:279
 msgid ""
 "Note: the Day View only supports YYYY-MM-DD date formats as well as relative "
 "date formats like \"yesterday\", \"today\", \"tomorrow\", \"+3 days\", etc."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:242
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:289
 msgid "Events Per Page"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:243
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:290
 msgid ""
 "The number of events to display per page in List, Map, Photo, and Summary "
 "View."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:258
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:287
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:305
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:334
 msgid "Event Count"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:271
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:318
 msgid "Month View Events Per Day"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:272
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:319
 msgid ""
 "The number of events to display per page day in month view. Defaults to the "
 "value set in Events > Settings."
 msgstr ""
 
-#: src/Tribe/Main.php:220
+#: src/Tribe/Main.php:219
 msgid "Month/Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:465 src/Tribe/Views/V2/Template/Title.php:56
+#: src/Tribe/Main.php:464 src/Tribe/Views/V2/Template/Title.php:56
 msgid "All %1$s for %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:471 src/Tribe/Views/V2/Template/Title.php:74
+#: src/Tribe/Main.php:470 src/Tribe/Views/V2/Template/Title.php:74
 msgid "%1$s for week of %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:531
+#: src/Tribe/Main.php:530
 msgctxt "debug recurrence"
 msgid "Unknown"
 msgstr ""
 
-#: src/Tribe/Main.php:549
+#: src/Tribe/Main.php:548
 msgctxt "debug recurrence"
 msgid "invalid date"
 msgstr ""
 
-#: src/Tribe/Main.php:580 src/Tribe/Main.php:593
+#: src/Tribe/Main.php:579 src/Tribe/Main.php:592
 msgctxt "debug recurrence"
 msgid "incorrect slug"
 msgstr ""
 
 #. Translators: 1: Error message, 2: URL
-#: src/Tribe/Main.php:617
+#: src/Tribe/Main.php:616
 msgctxt "debug recurrence"
 msgid ""
 "Invalid instance of a recurring event was requested (%1$s) redirecting to "
 "%2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:704 src/admin-views/tribe-options-defaults.php:42
+#: src/Tribe/Main.php:703 src/admin-views/tribe-options-defaults.php:42
 msgid "Default Content"
 msgstr ""
 
-#: src/Tribe/Main.php:723
+#: src/Tribe/Main.php:722
 msgid "Hide related events"
 msgstr ""
 
-#: src/Tribe/Main.php:724
+#: src/Tribe/Main.php:723
 msgid "Remove related events from the single event view (with classic editor)"
 msgstr ""
 
-#: src/Tribe/Main.php:736
+#: src/Tribe/Main.php:735
 msgid "Week Day Format"
 msgstr ""
 
-#: src/Tribe/Main.php:737
+#: src/Tribe/Main.php:736
 msgid ""
 "Enter the format to use for week days. Used when showing days of the week in "
 "Week view."
 msgstr ""
 
-#: src/Tribe/Main.php:750
+#: src/Tribe/Main.php:749
 msgid "Hide weekends on Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:751
+#: src/Tribe/Main.php:750
 msgid ""
 "Check this to only show weekdays on Week View. This also affects the Events "
 "by Week widget."
 msgstr ""
 
-#: src/Tribe/Main.php:763
+#: src/Tribe/Main.php:762
 msgid "Enable the Before HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Main.php:764
+#: src/Tribe/Main.php:763
 msgid ""
 "Check this to show the Before HTML from the text area below on events "
 "displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:776
+#: src/Tribe/Main.php:775
 msgid "Enable the After HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Main.php:777
+#: src/Tribe/Main.php:776
 msgid ""
 "Check this to show the After HTML from the text area below on events "
 "displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:795
+#: src/Tribe/Main.php:794
 msgid ""
 "Thanks for buying Events Calendar PRO! From all of us at The Events "
 "Calendar, we sincerely appreciate it. If you're looking for help with Events "
@@ -1189,14 +1480,14 @@ msgid ""
 "will help get you there."
 msgstr ""
 
-#: src/Tribe/Main.php:807
+#: src/Tribe/Main.php:806
 msgid ""
 "If this is your first time using The Events Calendar Pro, you're in for a "
 "treat and are already well on your way to creating a first event. Here are "
 "some basics we've found helpful for users jumping into it for the first time:"
 msgstr ""
 
-#: src/Tribe/Main.php:810
+#: src/Tribe/Main.php:809
 msgid ""
 "%sOur New User Primer%s was designed for folks in your exact position. "
 "Featuring both step-by-step videos and written walkthroughs that feature "
@@ -1204,7 +1495,7 @@ msgid ""
 "no time."
 msgstr ""
 
-#: src/Tribe/Main.php:812
+#: src/Tribe/Main.php:811
 msgid ""
 "%sInstallation/Setup FAQs%s from our support page can help give an overview "
 "of what the plugin can and cannot do. This section of the FAQs may be "
@@ -1212,7 +1503,7 @@ msgid ""
 "the new user primer."
 msgstr ""
 
-#: src/Tribe/Main.php:814
+#: src/Tribe/Main.php:813
 msgid ""
 "Take care of your license key. Though not required to create your first "
 "event, you'll want to get it in place as soon as possible to guarantee your "
@@ -1220,19 +1511,19 @@ msgid ""
 "you don't have it handy."
 msgstr ""
 
-#: src/Tribe/Main.php:816
+#: src/Tribe/Main.php:815
 msgid ""
 "Otherwise, if you're feeling adventurous, you can get started by heading to "
 "the Events menu and adding your first event."
 msgstr ""
 
-#: src/Tribe/Main.php:829
+#: src/Tribe/Main.php:828
 msgid ""
 "Written documentation can only take things so far...sometimes, you need help "
 "from a real person. This is where our %ssupport forums%s come into play."
 msgstr ""
 
-#: src/Tribe/Main.php:830
+#: src/Tribe/Main.php:829
 msgid ""
 "Users who have purchased an Events Calendar PRO license are granted total "
 "access to our %spremium support forums%s. Unlike at the %sWordPress.org "
@@ -1242,7 +1533,7 @@ msgid ""
 "than 24-hours without a response."
 msgstr ""
 
-#: src/Tribe/Main.php:831
+#: src/Tribe/Main.php:830
 msgid ""
 "Our number one goal is helping you succeed, and to whatever extent possible, "
 "we'll help troubleshoot and guide your customizations or tweaks. While we "
@@ -1252,7 +1543,7 @@ msgid ""
 "as is often more importantly the case -- satisfied."
 msgstr ""
 
-#: src/Tribe/Main.php:832
+#: src/Tribe/Main.php:831
 msgid ""
 "Before posting a new thread, please do a search to make sure your issue "
 "hasn't already been addressed. When posting please make sure to provide as "
@@ -1261,97 +1552,97 @@ msgid ""
 "conflict could be at play in your initial message."
 msgstr ""
 
-#: src/Tribe/Main.php:1492
+#: src/Tribe/Main.php:1496
 msgid "Settings"
 msgstr ""
 
-#: src/Tribe/Main.php:1520
+#: src/Tribe/Main.php:1524
 msgid "Venue updated. <a href=\"%s\">View venue</a>"
 msgstr ""
 
 #. translators: %s: date and time of the revision
-#: src/Tribe/Main.php:1522
+#: src/Tribe/Main.php:1526
 msgid "Venue published. <a href=\"%s\">View venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1523
+#: src/Tribe/Main.php:1527
 msgid "Venue submitted. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1525
+#: src/Tribe/Main.php:1529
 msgid ""
 "Venue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s"
 "\">Preview venue</a>"
 msgstr ""
 
 #. translators: Publish box date format, see http://php.net/date
-#: src/Tribe/Main.php:1527 src/Tribe/Main.php:1537
+#: src/Tribe/Main.php:1531 src/Tribe/Main.php:1541
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: src/Tribe/Main.php:1529
+#: src/Tribe/Main.php:1533
 msgid "Venue draft updated. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1531
+#: src/Tribe/Main.php:1535
 msgid "Organizer updated. <a href=\"%s\">View organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1536
 msgid "Organizer published. <a href=\"%s\">View organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1533
+#: src/Tribe/Main.php:1537
 msgid ""
 "Organizer submitted. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1535
+#: src/Tribe/Main.php:1539
 msgid ""
 "Organizer scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href="
 "\"%2$s\">Preview organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1539
+#: src/Tribe/Main.php:1543
 msgid ""
 "Organizer draft updated. <a target=\"_blank\" href=\"%s\">Preview organizer</"
 "a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1638
+#: src/Tribe/Main.php:1642
 msgid "Support"
 msgstr ""
 
-#: src/Tribe/Main.php:1640
+#: src/Tribe/Main.php:1644
 msgid "View All Add-Ons"
 msgstr ""
 
-#: src/Tribe/Main.php:1869
+#: src/Tribe/Main.php:1873
 msgid "Week"
 msgstr ""
 
-#: src/Tribe/Main.php:1887
+#: src/Tribe/Main.php:1891
 msgid "Photo"
 msgstr ""
 
-#: src/Tribe/Main.php:1904
+#: src/Tribe/Main.php:1908
 msgid "Week Of"
 msgstr ""
 
-#: src/Tribe/Main.php:1982
+#: src/Tribe/Main.php:1986
 msgid "Events Calendar PRO"
 msgstr ""
 
-#: src/Tribe/Main.php:2086
+#: src/Tribe/Main.php:2090
 msgid "all"
 msgstr ""
 
-#: src/Tribe/Main.php:2087 src/admin-views/event-recurrence.php:113
+#: src/Tribe/Main.php:2091 src/admin-views/event-recurrence.php:113
 #: src/admin-views/event-recurrence.php:389
 msgid "week"
 msgstr ""
 
-#: src/Tribe/Main.php:2088
+#: src/Tribe/Main.php:2092
 msgid "photo"
 msgstr ""
 

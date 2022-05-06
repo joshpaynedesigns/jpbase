@@ -141,7 +141,7 @@ class Event_Query extends Group_Control_Base {
 			'options'      => [
 				'date'       => [
 					'title' => __( 'Date', 'tribe-events-calendar-pro' ),
-					'icon'  => 'fa fa-calendar-alt',
+					'icon'  => 'eicon-calendar',
 				],
 				'custom'     => [
 					'title' => __( 'Custom', 'tribe-events-calendar-pro' ),
@@ -255,7 +255,7 @@ class Event_Query extends Group_Control_Base {
 			'options'      => [
 				'date'       => [
 					'title' => __( 'Date', 'tribe-events-calendar-pro' ),
-					'icon'  => 'fa fa-calendar-alt',
+					'icon'  => 'eicon-calendar',
 				],
 				'custom'     => [
 					'title' => __( 'Custom', 'tribe-events-calendar-pro' ),
