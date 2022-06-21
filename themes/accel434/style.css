@@ -1380,12 +1380,10 @@ body {
   font-size: 1em;
   margin-bottom: 0; }
   .entry-meta span,
-  .entry-meta time,
-  .entry-meta a {
+  .entry-meta time {
     margin-right: 5px; }
     .entry-meta span:last-child,
-    .entry-meta time:last-child,
-    .entry-meta a:last-child {
+    .entry-meta time:last-child {
       margin-right: 0; }
   .entry-meta a {
     color: #5dc3bf; }
