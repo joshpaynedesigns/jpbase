@@ -71,7 +71,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '5.13.1';
+		const VERSION = '5.14.2.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -696,9 +696,27 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		/**
 		 * Add the default settings tab
 		 *
+		 * @since 5.14.0 Add admin page and check if we're on TEC settings.
+		 *
 		 * @return void
 		 */
-		public function add_settings_tabs() {
+		public function add_settings_tabs( $admin_page ) {
+			$tec_settings_page_id = tribe( 'tec.main' )->settings()::$settings_page_id;
+
+			add_filter(
+				'tec_events_settings_tabs_ids',
+				function( $tabs ) {
+					$tabs[] = 'defaults';
+					$tabs[] = 'additional-fields';
+
+					return $tabs;
+				}
+			);
+
+			if ( ! empty( $admin_page ) && $tec_settings_page_id !== $admin_page ) {
+				return;
+			}
+
 			require_once( $this->pluginPath . 'src/admin-views/tribe-options-defaults.php' );
 			new Tribe__Settings_Tab( 'defaults', __( 'Default Content', 'tribe-events-calendar-pro' ), $defaultsTab );
 			// The single-entry array at the end allows for the save settings button to be displayed.
@@ -1493,7 +1511,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public function addLinksToPluginActions( $actions ) {
 			if ( class_exists( 'Tribe__Events__Main' ) ) {
-				$actions['settings'] = '<a href="' . Tribe__Settings::instance()->get_url() . '">' . esc_html__( 'Settings', 'tribe-events-calendar-pro' ) . '</a>';
+				$actions['settings'] = '<a href="' . tribe( 'tec.main' )->settings()->get_url() . '">' . esc_html__( 'Settings', 'tribe-events-calendar-pro' ) . '</a>';
 			}
 
 			return $actions;

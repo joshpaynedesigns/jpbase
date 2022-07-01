@@ -438,7 +438,9 @@ class Tribe__Events__Pro__Geo_Loc {
 		// Some helper text explaining the limitations of this field without a custom Google Maps API key.
 		if ( tribe_is_using_basic_gmaps_api() ) : ?>
 
-			<?php $apis_page_url = admin_url( sprintf( 'edit.php?page=tribe-common&tab=addons&post_type=%1$s', Tribe__Events__Main::POSTTYPE ) ); ?>
+			<?php
+			$apis_page_url = $link = tribe( 'tec.main' )->settings()->get_url( [ 'tab' => 'addons' ] );
+			?>
 
 			<tr>
 				<td class="tribe-table-field-label"></td>
@@ -745,11 +747,12 @@ class Tribe__Events__Pro__Geo_Loc {
 		}
 
 		delete_transient( 'tribe-google-over-limit' );
+
+		$link = tribe( 'tec.main' )->settings()->get_url( [ 'tab' => 'addons' ] );
 		?>
 		<div class="error">
 			<p>
 				<?php
-				$link = admin_url( 'edit.php?page=tribe-common&tab=addons&post_type=tribe_events' );
 				printf(
 					esc_html__(
 						'The latitude and longitude for your venue could not be fetched. The Google Maps API daily query limit has been reached!. %1$s ',
@@ -1425,17 +1428,7 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * If there are venues without geo data, offer the user to fix them.
 	 */
 	public function show_offer_to_fix_notice() {
-
-		$settings = Tribe__Settings::instance();
-		$url      = apply_filters( 'tribe_settings_url',
-			add_query_arg(
-				array(
-					'post_type' => Tribe__Events__Main::POSTTYPE,
-					'page'      => $settings->adminSlug,
-				),
-				admin_url( 'edit.php' )
-			)
-		);
+		$url = tribe( 'tec.main' )->settings()->get_url();
 
 		?>
 		<div class="updated">
@@ -1589,13 +1582,8 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * @return string The URL to fix the Venues.
 	 */
 	private function get_fix_venues_url() {
-		$settings = Tribe__Settings::instance();
-		$url      = apply_filters( 'tribe_settings_url', add_query_arg( array(
-			'post_type' => Tribe__Events__Main::POSTTYPE,
-			'page'      => $settings->adminSlug,
-		), admin_url( 'edit.php' ) ) );
-		$url      = add_query_arg( array( 'geoloc_fix_venues' => '1' ), $url );
-		$url      = wp_nonce_url( $url, 'geoloc_fix_venues' );
+		$url = tribe( 'tec.main' )->settings()->get_url( [ 'geoloc_fix_venues' => '1' ] );
+		$url = wp_nonce_url( $url, 'geoloc_fix_venues' );
 
 		return $url;
 	}

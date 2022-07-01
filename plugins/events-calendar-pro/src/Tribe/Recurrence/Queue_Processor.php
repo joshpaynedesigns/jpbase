@@ -195,7 +195,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 
 	protected function do_deletions() {
 		$instances_to_delete = $this->current_queue->instances_to_delete();
-		$deleted             = array();
+		$deleted             = [];
 
 		foreach ( $instances_to_delete as $instance_id => $start_date ) {
 			// Don't process more than the current batch size allows
@@ -204,7 +204,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			}
 
 			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
+				return [];
 			}
 
 			Tribe__Events__Pro__Recurrence__Meta::delete_unexcluded_event( $instance_id, $start_date );
@@ -222,7 +222,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 
 	protected function do_updates() {
 		$instances_to_update = $this->current_queue->instances_to_update();
-		$updated = array();
+		$updated = [];
 
 		foreach ( $instances_to_update as $instance_id => $date_duration ) {
 			// Don't process more than the current batch size allows
@@ -231,7 +231,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			}
 
 			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
+				return [];
 			}
 
 			$instance = new Tribe__Events__Pro__Recurrence__Instance( $this->current_event_id, $date_duration, $instance_id );
@@ -251,7 +251,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 		$exclusions = $this->current_queue->instances_to_exclude();
 
 		$instances_to_create = array_values( $this->current_queue->instances_to_create() );
-		$created             = array();
+		$created             = [];
 
 		try {
 			$sequence = new Tribe__Events__Pro__Recurrence__Sequence( $instances_to_create, $this->current_event_id );
@@ -259,7 +259,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			$exception = new Tribe__Exception( $e );
 			$exception->handle();
 
-			return;
+			return [];
 		}
 
 		foreach ( $sequence->get_sorted_sequence() as $key => $date_duration ) {
@@ -277,7 +277,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			}
 
 			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
+				return [];
 			}
 
 			$sequence_number = isset( $date_duration['sequence'] ) ? $date_duration['sequence'] : 1;

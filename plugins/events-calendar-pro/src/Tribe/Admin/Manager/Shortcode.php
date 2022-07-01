@@ -104,6 +104,7 @@ class Shortcode {
 		], 15, 3 );
 
 		add_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_include_event_status' ], 15, 3 );
+		add_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_include_hidden_from_upcoming' ], 15, 3 );
 		add_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_maybe_restrict_to_tickets' ], 15, 3 );
 		add_filter( 'tribe_events_views_v2_view_public_views', [ $this, 'filter_modify_public_views' ], 15 );
 		add_filter( 'tribe_get_event', [ $this, 'filter_event_object' ] );
@@ -148,6 +149,7 @@ class Shortcode {
 		], 15 );
 
 		remove_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_include_event_status' ], 15 );
+		remove_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_include_hidden_from_upcoming' ], 15 );
 		remove_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_maybe_restrict_to_tickets' ], 15, 3 );
 		remove_filter( 'tribe_events_views_v2_view_public_views', [ $this, 'filter_modify_public_views' ], 15 );
 		remove_filter( 'tribe_get_event', [ $this, 'filter_event_object' ] );
@@ -180,6 +182,28 @@ class Shortcode {
 		$post_stati = tribe( Page::class )->get_implicitly_requested_post_stati();
 
 		$repository_args['post_status'] = $post_stati;
+
+		return $repository_args;
+	}
+
+	/**
+	 * Filters the repository args to include all events that were hidden using the Hide From Upcoming meta setting.
+	 *
+	 * @since 4.15.1
+	 *
+	 * @param array          $repository_args An array of repository arguments that will be set for all Views.
+	 * @param Context        $context         The current render context object.
+	 * @param View_Interface $repository      The View that will use the repository arguments.
+	 *
+	 * @return array Repository arguments after modifying the hidden from upcoming.
+	 */
+	public function filter_include_hidden_from_upcoming( $repository_args, Context $context, View_Interface $repository ) {
+		if ( ! isset( $repository_args['hidden_from_upcoming'] ) ) {
+			return $repository_args;
+		}
+
+		// Removing means all events will show regardless of status.
+		unset( $repository_args['hidden_from_upcoming'] );
 
 		return $repository_args;
 	}

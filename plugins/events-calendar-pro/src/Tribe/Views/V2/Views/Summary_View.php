@@ -132,7 +132,7 @@ class Summary_View extends List_View {
 				$event_start_datetime = $event->dates->start_display->format( Dates::DBDATETIMEFORMAT );
 
 				// If we've found an event that starts earlier than the one that is already stored, let's use the event we found.
-				if ( $month_transition_datetime[ $event_month ] > $event_start_datetime ) {
+				if ( isset( $month_transition_datetime[ $event_month ] ) && $month_transition_datetime[ $event_month ] > $event_start_datetime ) {
 					$month_transition[ $event_month ]          = $event->ID;
 					$month_transition_datetime[ $event_month ] = $event_start_datetime;
 				}
