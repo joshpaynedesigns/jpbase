@@ -1,11 +1,11 @@
 === The Events Calendar ===
 
-Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, schedule, organizer
 Donate link: https://evnt.is/29
 Requires at least: 5.6
-Stable tag: 5.14.2.1
-Tested up to: 5.9.3
+Stable tag: 5.16.1.1
+Tested up to: 6.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -222,6 +222,52 @@ Previous versions of The Events Calendar are not cross-compatible with 5.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [5.16.1.1] 2022-06-15 =
+
+* Fix - correct issues with template paths when using FSE. [TEC-4401]
+
+= [5.16.1] 2022-06-09 =
+
+* Fix - Add rel="noindex" to links that point to empty Month and Day Views so as to not dilute SEO with empty results. [TEC-4354]
+* Fix - Clean up some borked CSS in some sections of the Elementor `Event` widget. [ECP-1105]
+* Fix - Fix admin links to work with the new admin page structure. [TEC-4380]
+* Tweak - Removed filters: `tribe_settings_admin_slug`, `tribe_settings_url`, `tribe_events_enable_month_view_cache`
+* Tweak - Changed views: `blocks/event-links`, `blocks/parts/subscribe-list`, `blocks/parts/subscribe-single`,
+                         `v2/components/subscribe-links/item`, `v2/components/subscribe-links/single`, `v2/day/nav/next`,
+                         `v2/day/nav/prev`, `v2/day/top-bar/nav/next`, `v2/day/top-bar/nav/prev`, `v2/month/mobile-events/nav/next`,
+                         `v2/month/mobile-events/nav/prev`, `v2/month/top-bar/nav/next`, `v2/month/top-bar/nav/prev`
+
+= [5.16.0] 2022-05-31 =
+
+* Feature - Add subscribe links for Outlook 365 and Outlook Live to the event views. [TEC-4168]
+* Feature - Add export links for Outlook 365 and Outlook Live to single events. [TEC-4168]
+* Feature - Update single event export to use a dropdown template to support more links. [TEC-4176]
+* Feature - Add Outlook ics as an option for Subscribe to Calendar that removes the X-WR-CALNAME from the file. Props to Andy Fragen @afragen [TEC-4188]
+* Fix - Prevent Redis Cache Pro fatals around date utilization and calculations on Views [TEC-4351]
+* Fix - Ensure all expected subscribe links show when using the default page template. [TEC-4313]
+* Fix - Put back the event website label for Classic editor. [TEC-4334]
+* Fix - Ensure that subscription links include events up to the limit, no matter the view settings. [TEC-4264]
+* Fix - On Event tag archives only show events with the tag, change the single event tag links to use the event tag archive, and add a link to event tag archive in the admin tag list. [TEC-4314]
+* Fix - Default event category in Global Import Settings to apply on new imports in Event Aggregator. [EA-426]
+* Fix - Add rel noindex and nofollow to the legacy iCal export button. [TEC-4354]
+* Language - 6 new strings added, 53 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.15.0.1] 2022-05-23 =
+
+* Fix - Prevent fatal when using Yoast due to missing function `tribe_is_month()` [BTRIA-1243]
+* Fix - Check if function exists for `get_current_screen` to avoid a fatal if not.
+
+= [5.15.0] 2022-05-19 =
+
+* Version - The Events Calendar 5.15.0 is only compatible with Event Tickets 5.4.0 and higher
+* Version - The Events Calendar 5.15.0 is only compatible with Events Calendar PRO 5.14.0 and higher
+* Version - The Events Calendar 5.15.0 is only compatible with Events Filterbar    5.3.0 and higher
+* Version - The Events Calendar 5.15.0 is only compatible with Events Virtual 1.10.0 and higher
+* Version - The Events Calendar 5.15.0 is only compatible with Events Community 4.9.0 and higher
+* Version - The Events Calendar 5.15.0 is only compatible with Eventbrite Tickets 4.6.11 and higher
+* Feature - Update Events menu to work with the new admin pages structure. [ET-1335]
+* Language - 1 new strings added, 395 updated, 2 fuzzied, and 3 obsoleted
 
 = [5.14.2.1] 2022-04-28 =
 

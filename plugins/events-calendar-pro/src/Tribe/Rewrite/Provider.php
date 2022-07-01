@@ -130,13 +130,17 @@ class Provider extends \tad_DI52_ServiceProvider {
 				'paged'        => '%2',
 				'featured'     => true
 			] )
-			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1' ] )
-			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})', '{{ page }}', '(\d+)' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1', 'paged' => '%2' ] )
-
 			->tax( [ '{{ photo }}' ], [ 'eventDisplay' => 'photo' ] )
 			->tax( [ '{{ photo }}', '{{ featured }}' ], [ 'eventDisplay' => 'photo', 'featured' => true ] )
 			->tag( [ '{{ photo }}' ], [ 'eventDisplay' => 'photo' ] )
-			->tag( [ '{{ photo }}', '{{ featured }}' ], [ 'eventDisplay' => 'photo', 'featured' => true ] );
+			->tag( [ '{{ photo }}', '{{ featured }}' ], [ 'eventDisplay' => 'photo', 'featured' => true ] )
+
+			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1' ] )
+			->archive( [ '{{ map }}', '(\d{4}-\d{2}-\d{2})', '{{ page }}', '(\d+)' ], [ 'eventDisplay' => 'map', 'eventDate' => '%1', 'paged' => '%2' ] )
+			->tax( [ '{{ map }}' ], [ 'eventDisplay' => 'map' ] )
+			->tax( [ '{{ map }}', '{{ featured }}' ], [ 'eventDisplay' => 'map', 'featured' => true ] )
+			->tag( [ '{{ map }}' ], [ 'eventDisplay' => 'map' ] )
+			->tag( [ '{{ map }}', '{{ featured }}' ], [ 'eventDisplay' => 'map', 'featured' => true ] );
 	}
 
 	/**

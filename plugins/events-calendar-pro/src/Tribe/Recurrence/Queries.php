@@ -21,7 +21,7 @@ class Tribe__Events__Pro__Recurrence__Queries {
 		if ( empty( $sql ) ) {
 			return '';
 		}
-		
+
 		// For month, week and day views we don't want to apply this logic - unless the current query
 		// belongs to a widget and just happens to be running inside one of those views
 		if ( ! isset( $query->query_vars['is_tribe_widget'] ) || ! $query->query_vars['is_tribe_widget'] ) {
