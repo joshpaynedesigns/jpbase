@@ -1,11 +1,11 @@
 === The Events Calendar PRO ===
 
-Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.6
-Stable tag: 5.13.1
-Tested up to: 5.9.3
+Stable tag: 5.14.2.1
+Tested up to: 6.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -207,6 +207,41 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [5.14.2.1] 2022-06-09 =
+
+* Fix - Correct an accidental reversion of 5.14.1.1.
+
+= [5.14.2] 2022-06-09 =
+
+* Fix - Add rel="noindex" to links that point to empty week views so as to not dilute SEO with empty results. [TEC-4354]
+* Fix - Squash bugs related to the Elementor styling support to the `Event` widget. [ECP-1105]
+* Tweak - Changed views: `v2/week/top-bar/nav/next`, `v2/week/top-bar/nav/prev`
+
+= [5.14.1.1] 2022-06-01 =
+
+* Fix - Using the "Recurring event instances" setting no longer triggers 404 for single event pages. [ECP-1174]
+
+= [5.14.1] 2022-05-31 =
+
+* Tweak - Replace Elementor widget usage of font awesome icons with built-in eicons. [ECP-1143]
+* Tweak - Add transport to Customizer to support live preview for view selector. [TEC-4055]
+* Fix - Events hidden from Upcoming List on the frontend will still show on the Events Manager. [ECP-1001]
+* Fix - Ensure we sort distances as numbers, not strings, in Map View. [ECP-1033]
+* Fix - Don't try to access an undefined index on the week view widget. [ECP-1165]
+* Fix - Prevent fatal error in PHP 8.0 in recurring events by ensure queue processor methods do_deletions, do_creations, and do_updates return an array.  [ECP-1112]
+* Fix - On Event tag archives only show events with the tag, change the single event tag links to use the event tag archive, and add link to event tag archive in the admin. [TEC-4314]
+* Language - 0 new strings added, 10 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.14.0.1] 2022-05-20 =
+
+* Fix - URL resolution for the Settings Page on Events Manager now pointing to the new pages correctly [ECP-1164]
+
+= [5.14.0] 2022-05-19 =
+
+* Version - Events Calendar PRO 5.14.0 is only compatible with The Events Calendar 5.15.0 and higher
+* Feature - Add compatibility to the new TEC admin menu system. [ET-1335]
+* Language - 0 new strings added, 150 updated, 0 fuzzied, and 43 obsoleted
 
 = [5.13.1] 2022-04-28 =
 

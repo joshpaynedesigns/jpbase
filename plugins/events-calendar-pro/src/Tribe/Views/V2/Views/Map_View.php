@@ -377,12 +377,16 @@ class Map_View extends View {
 
 		// Assign the distance in Kms.
 		$geo_loc->assign_distance_to_posts( $events, $lat_from, $lng_from );
+
+		// Sort by distances _before_ we add the unit string.
+		$events =  wp_list_sort( $events, 'distance', $direction );
+
 		// Convert the distance to the current unit.
 		array_walk( $events, static function ( \WP_Post $event ) {
 			$event->distance = tribe_get_distance_with_unit( $event->distance );
 		} );
 
-		return wp_list_sort( $events, 'distance', $direction );
+		return $events;
 	}
 
 	/**

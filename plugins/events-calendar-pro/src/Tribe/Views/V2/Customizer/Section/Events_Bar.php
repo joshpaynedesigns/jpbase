@@ -48,10 +48,12 @@ class Events_Bar {
 			'view_selector_background_color_choice' => [
 				'sanitize_callback'    => 'sanitize_key',
 				'sanitize_js_callback' => 'sanitize_key',
+				'transport'            => 'postMessage',
 			],
 			'view_selector_background_color'        => [
 				'sanitize_callback'    => 'sanitize_hex_color',
 				'sanitize_js_callback' => 'maybe_hash_hex_color',
+				'transport'            => 'postMessage',
 			],
 		];
 

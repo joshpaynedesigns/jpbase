@@ -31,6 +31,8 @@ class Tribe__Events__Pro__Editor__Configuration implements Tribe__Editor__Config
 			)
 		);
 
+		$admin_page_url = tribe( 'tec.main' )->settings()->get_url( [ 'tab' => 'additional-fields' ] );
+
 		$editor_config['eventsPRO'] = array_merge(
 			(array) $pro,
 			$this->localize(),
@@ -38,7 +40,7 @@ class Tribe__Events__Pro__Editor__Configuration implements Tribe__Editor__Config
 				'additional_fields_tab' => sprintf(
 					'%s%s',
 					trailingslashit( $editor_config['common']['admin_url'] ),
-					'edit.php?page=tribe-common&tab=additional-fields&post_type=tribe_events'
+					$admin_page_url
 				),
 			)
 		);

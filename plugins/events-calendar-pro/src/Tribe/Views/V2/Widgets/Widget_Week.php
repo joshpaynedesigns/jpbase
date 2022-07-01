@@ -355,6 +355,7 @@ class Widget_Week extends Widget_Abstract {
 			'week_events_per_day' => $this->arguments['count'],
 			'hide_weekends'       => $this->arguments['hide_weekends'] || tribe_get_option( 'week_view_hide_weekends' ),
 			'jsonld'              => $this->arguments['jsonld_enable'],
+			'date'                => ! empty( $this->arguments['date'] ) ? $this->arguments['date'] : '',
 		];
 
 		if ( ! empty( $this->arguments['filters'] ) ) {

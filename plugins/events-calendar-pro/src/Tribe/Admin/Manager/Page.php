@@ -9,6 +9,7 @@ use Tribe__Utils__Array as Arr;
 use Tribe__Events__Pro__Main as Pro;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Admin__Bar__Admin_Bar;
+use \Tribe\Events\Admin\Settings as TEC_Settings;
 
 
 /**
@@ -106,16 +107,22 @@ class Page {
 	 * @since 5.9.0
 	 */
 	public function add_submenu_page() {
-		$parent = Tribe__Settings::$parent_page;
-		$title  = $this->get_page_title();
+		$admin_pages = tribe( 'admin.pages' );
+		$parent      = tribe( TEC_Settings::class )->get_tec_events_menu_slug();
+		$title       = $this->get_page_title();
 
-		$page_hook = add_submenu_page(
-			$parent,
-			$title,
-			$title,
-			'edit_tribe_events',
-			$this->get_page_slug(),
-			[ $this, 'render' ]
+		$page_hook = $admin_pages->register_page(
+			[
+				'id'         => $this->get_page_slug(),
+				'parent'     => $parent,
+				'title'      => $title,
+				'path'       => $this->get_page_slug(),
+				'capability' => 'edit_tribe_events',
+				'callback'   => [
+					$this,
+					'render',
+				],
+			]
 		);
 
 		$this->set_page_hook( $page_hook );
