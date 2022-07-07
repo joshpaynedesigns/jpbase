@@ -88,6 +88,18 @@ function child_theme_setup() {
 	remove_action( 'genesis_after_header', 'genesis_do_nav' );
 	// add_action( 'genesis_header_right', 'genesis_do_nav' );
 
+    //CPT Archive Nav Fix
+    function fix_nav_menu( $query ) {
+        if (!is_admin()) {
+            if ( $query->get( 'post_type' ) === 'nav_menu_item' ) {
+                // $query->set( 'tax_query', '' );
+                $query->set( 'meta_key', '' );
+                $query->set( 'orderby', '' );
+            }
+        }
+    }
+    add_action( 'pre_get_posts', 'fix_nav_menu' );
+
 	//* Add HTML5 markup structure
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
 
