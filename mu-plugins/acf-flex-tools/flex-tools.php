@@ -32,12 +32,13 @@ class FlexibleContentSection {
 	 *  Runs the flexible content section
 	 */
 	public function run() {
+		$queried_object = get_queried_object();
 		// If ACF Pro is installed, run the setup
 		if(function_exists('the_flexible_field')) {
 			$count = 0;
 
 			// Call each sections display function based on the current layout in the loop - Found in functions.php
-			while ( the_flexible_field( $this->acf_name ) ):
+			while ( the_flexible_field( $this->acf_name, $queried_object ) ):
 
 				$next_count = $count + 1;
 				$padding = $this->getPaddingClasses($next_count);
