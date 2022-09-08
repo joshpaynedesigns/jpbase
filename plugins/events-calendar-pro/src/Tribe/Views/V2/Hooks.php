@@ -138,6 +138,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_events_views_v2_view_map_template_vars', [ $this, 'filter_map_view_pin' ], 10, 2 );
 
 		add_filter( 'tec_events_default_view', [ $this, 'filter_tec_events_default_view' ], 10, 2 );
+		add_filter( 'query_vars', [ $this, 'filter_include_query_vars' ] );
 	}
 
 	/**
@@ -190,6 +191,20 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		$views['map']       = Map_View::class;
 
 		return $views;
+	}
+
+	/**
+	 * Register the new variable available on the permalink structure
+	 *
+	 * @since 6.0.0
+	 *
+	 * @param $vars array An array with the query variables
+	 *
+	 * @return array
+	 */
+	public function filter_include_query_vars( array $vars ) : array {
+		$vars[] = 'tribe_recurrence_list';
+		return $vars;
 	}
 
 	/**

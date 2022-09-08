@@ -251,6 +251,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 			[
 				'jquery',
 				'underscore',
+				'tribe-dropdowns',
 				'tribe-select2',
 			],
 			null,

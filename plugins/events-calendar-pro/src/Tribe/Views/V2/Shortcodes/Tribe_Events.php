@@ -887,7 +887,7 @@ class Tribe_Events extends Shortcode_Abstract {
 					continue;
 				}
 
-				$repository_args['tax_query'] = array_merge_recursive(
+				$repository_args['tax_query'] = Arr::merge_recursive_query_vars(
 					$repository_args['tax_query'],
 					Taxonomy::translate_to_repository_args( $taxonomy, $arguments[ $key ], $operand )
 				);
@@ -923,7 +923,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				$built_query = $repo->build_query();
 
 				if ( ! empty( $built_query->query_vars['tax_query'] ) ) {
-					$repository_args['tax_query'] = array_merge_recursive(
+					$repository_args['tax_query'] = Arr::merge_recursive_query_vars(
 						$repository_args['tax_query'],
 						$built_query->query_vars['tax_query']
 					);

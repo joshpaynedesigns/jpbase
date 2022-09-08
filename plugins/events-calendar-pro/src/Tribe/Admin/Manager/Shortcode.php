@@ -8,6 +8,7 @@ use Tribe__Events__Main as TEC;
 use Tribe__Template;
 use Tribe__Context as Context;
 use Tribe__Utils__Array as Arr;
+use WP_Post;
 
 /**
  * Class Page
@@ -53,7 +54,7 @@ class Shortcode {
 			'month_events_per_day' => '20',
 			'hide-export'          => 'yes',
 			'tribe-bar'            => 'yes',
-			'filter-bar'           => 'no',
+			'filter-bar'           => 'yes',
 		];
 		$attributes_string = \Tribe\Shortcode\Utils::get_attributes_string( $args );
 
@@ -449,15 +450,20 @@ class Shortcode {
 	 * @return string
 	 */
 	public function filter_post_status_into_event_title( $title, $post_id ) {
-		$event = tribe_get_event( $post_id );
+		$event = get_post( $post_id );
 
-		if ( 'draft' === $event->post_status ) {
+		if ( ! ( $event instanceof WP_Post && $event->ID !== (int) $post_id ) ) {
+			return $title;
+		}
+		$post_status = $event->post_status;
+
+		if ( 'draft' === $post_status ) {
 			$title .= ' — ' . esc_html__( 'Draft', 'tribe-events-calendar-pro' );
-		} elseif ( 'pending' === $event->post_status ) {
+		} elseif ( 'pending' === $post_status ) {
 			$title .= ' — ' . esc_html__( 'Pending', 'tribe-events-calendar-pro' );
-		} elseif ( 'trash' === $event->post_status ) {
+		} elseif ( 'trash' === $post_status ) {
 			$title .= ' — ' . esc_html__( 'Trashed', 'tribe-events-calendar-pro' );
-		} elseif ( 'tribe-ignored' === $event->post_status ) {
+		} elseif ( 'tribe-ignored' === $post_status ) {
 			$title .= ' — ' . esc_html__( 'Ignored', 'tribe-events-calendar-pro' );
 		}
 
@@ -500,6 +506,21 @@ class Shortcode {
 	 * @return int
 	 */
 	protected function get_boundary_datetime_by_status( $fetch_start = true, $stati = [] ) {
+		/**
+		 * Filters the earliest or latest date value the Events Manager will use to render.
+		 *
+		 * @since 6.0.0
+		 *
+		 * @param int|null      $date        The date value, initially `null`.
+		 * @param bool          $fetch_start Whether to fetch the earliest date (`true`) or the latest (`false`).
+		 * @param array<string> $stati       A list of post stati to return the results for.
+		 */
+		$date = apply_filters( 'tec_events_pro_manager_boundary_datetime_by_status', null, $fetch_start, $stati );
+
+		if ( null !== $date ) {
+			return $date;
+		}
+
 		global $wpdb;
 
 		$stati = "('" . implode( "','", $stati ) . "')";
