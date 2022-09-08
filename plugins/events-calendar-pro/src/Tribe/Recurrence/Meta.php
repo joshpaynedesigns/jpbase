@@ -631,6 +631,16 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		$meta_builder    = new Tribe__Events__Pro__Recurrence__Meta_Builder( $event_id, $data );
 		$recurrence_meta = $meta_builder->build_meta();
 
+		/**
+		 * Filter the `_EventRecurrence` meta value before it's written to the database.
+		 *
+		 * @since 6.0.0
+		 *
+		 * @param array<string,mixed> $recurrence_meta The `_EventRecurrence` meta value.
+		 * @param int                 $post_id         The Event post ID.
+		 */
+		$recurrence_meta = apply_filters( 'tec_events_pro_recurrence_meta_update', $recurrence_meta, $event_id );
+
 		$updated = update_post_meta( $event_id, '_EventRecurrence', $recurrence_meta );
 
 		$events_saver = new Tribe__Events__Pro__Recurrence__Events_Saver( $event_id, $updated );
@@ -704,11 +714,15 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		}
 
 		wp_localize_script(
-			Tribe__Events__Main::POSTTYPE . '-premium-admin', 'tribe_events_pro_recurrence_strings',
-			array(
-				'date'       => self::date_strings(),
-				'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
-				'exclusion'  => array(),
+			Tribe__Events__Main::POSTTYPE . '-premium-admin',
+			'tribe_events_pro_recurrence_strings',
+			apply_filters(
+				'tribe_events_pro_recurrence_strings',
+				array(
+					'date'       => self::date_strings(),
+					'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
+					'exclusion'  => array(),
+				)
 			)
 		);
 	}
@@ -819,6 +833,16 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		}
 
 		$recurrence_data = self::recurrenceMetaDefault( $recurrence_data );
+
+		/**
+		 * Filter the `_EventRecurrence` meta value after it's read from the database.
+		 *
+		 * @since 6.0.0
+		 *
+		 * @param array<string,mixed> $recurrence_data The `_EventRecurrence` meta value.
+		 * @param int                 $post_id         The Event post ID.
+		 */
+		$recurrence_data = apply_filters( 'tec_events_pro_recurrence_meta_get', $recurrence_data, $post_id );
 
 		return apply_filters( 'Tribe__Events__Pro__Recurrence_Meta_getRecurrenceMeta', $recurrence_data );
 	}

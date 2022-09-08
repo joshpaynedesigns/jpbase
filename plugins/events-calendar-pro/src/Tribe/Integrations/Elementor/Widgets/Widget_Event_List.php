@@ -13,8 +13,11 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Tribe\Events\Views\V2\Assets;
+use Tribe\Events\Pro\Integrations\Elementor\Traits;
 
 class Widget_Event_List extends Widget_Abstract {
+	use Traits\Tags;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -58,6 +61,7 @@ class Widget_Event_List extends Widget_Abstract {
 				'phone',
 				'region',
 				'street',
+				'tag',
 				'venue',
 				'zip',
 			]
@@ -254,6 +258,17 @@ class Widget_Event_List extends Widget_Abstract {
 					'label'       => __( 'Category', 'tribe-events-calendar-pro' ),
 					'type'        => Controls_Manager::SELECT2,
 					'options'     => $this->get_event_categories(),
+					'label_block' => true,
+					'multiple'    => true,
+				]
+			);
+
+			$this->add_control(
+				'tag',
+				[
+					'label'       => __( 'Tag', 'tribe-events-calendar-pro' ),
+					'type'        => Controls_Manager::SELECT2,
+					'options'     => $this->get_event_tags(),
 					'label_block' => true,
 					'multiple'    => true,
 				]

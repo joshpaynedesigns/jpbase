@@ -18,6 +18,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Tribe\Events\Views\V2\Assets;
 use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Utils__Array as Arr;
+use Tribe__Events__Pro__Main;
 
 class Widget_Event_Single_Legacy extends Widget_Abstract {
 	use Traits\Event_Query;
@@ -50,6 +51,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$settings = $this->get_settings_for_display();
 		$event_query_settings = $this->get_event_query_settings( $settings );
 		$event_query_settings = $this->set_id_from_repository_if_unset( $event_query_settings );
+
+		// display the recurring events info tooltip
+		Tribe__Events__Pro__Main::instance()->enable_recurring_info_tooltip();
 
 		/** @var Template_Bootstrap $bootstrap */
 		$bootstrap = tribe( Template_Bootstrap::class );
@@ -107,7 +111,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			'before_html'        => '.tribe-events-before-html',
 			'calendar_links'     => '.tribe-events-cal-links',
 			'cost'               => '.tribe-events-cost',
-			'custom_fields'      => '.tribe-events-meta-group-other',
+			'custom_fields'      => '.tribe-events-meta-group-other, .tribe-block__additional-field',
 			'description'        => '.tribe-events-single-event-description',
 			'details_categories' => [
 				'.tribe-events-event-categories-label',
@@ -260,6 +264,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		tribe_asset_enqueue( 'tribe-events-v2-single-blocks' );
 		tribe_asset_enqueue( 'tribe-common-full-style' );
 		tribe_asset_enqueue( 'tribe-events-views-v2-full' );
+		tribe_asset_enqueue( 'tribe-events-v2-single-skeleton-full' );
 
 		if ( tribe_is_truthy( Arr::get( $settings, 'related-events' ) ) ) {
 			tribe_asset_enqueue( 'tribe-events-full-pro-calendar-style' );
@@ -762,7 +767,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-single-event-recurrence-description' => '--tec-color-background-secondary: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-single-event-recurrence-description, {{WRAPPER}} .tribe-events-schedule .recurringinfo' => '--tec-color-background-secondary: {{VALUE}};',
 				],
 			]
 		);
@@ -772,8 +777,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			[
 				'label' => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => 'var(--tec-color-text-primary)',
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-single-event-recurrence-description span' => '--tec-color-text-primary: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-single-event-recurrence-description span, {{WRAPPER}} .event-is-recurring' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -783,7 +789,14 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			[
 				'name' => 'recurring_event_label_typography',
 				'label' => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description span',
+				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description span, {{WRAPPER}} .event-is-recurring',
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon
+					'font_size' => [ 
+						'default' => [ 'size' => 14 ] 
+					],
+					'font_weight' => [ 'default' => 600 ],
+				],
 			]
 		);
 
@@ -792,8 +805,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			[
 				'label' => esc_html__( 'Link Color', 'tribe-events-calendar-pro' ),
 				'type' => Controls_Manager::COLOR,
+				'default' => 'var(--tec-color-accent-primary)',
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-single-event-recurrence-description a' => '--tec-color-link-accent: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-single-event-recurrence-description a, {{WRAPPER}} .event-is-recurring a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 			]
 		);
@@ -803,7 +817,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			[
 				'name' => 'recurring_event_link_typography',
 				'label' => esc_html__( 'Link Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description a',
+				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description a, {{WRAPPER}} .event-is-recurring a',
+				'fields_options' => [
+					'typography' => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon
+					'font_size' => [ 
+						'default' => [ 'size' => 14 ] 
+					],
+				],
 			]
 		);
 		// End recurring event section
@@ -1942,7 +1962,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-meta-group-other dt' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-meta-group-other dt, {{WRAPPER}} .tribe-block__additional-field h3' => 'color: {{VALUE}};',
 				],
 				'condition' => [
 					'custom_fields' => 'yes'
@@ -1954,7 +1974,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'event_custom_fields_label_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other dt',
+				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other dt, {{WRAPPER}} .tribe-block__additional-field h3',
 				'condition' => [
 					'custom_fields' => 'yes'
 				],
@@ -1979,7 +1999,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value, {{WRAPPER}} .tribe-block__additional-field' => 'color: {{VALUE}};',
 				],
 				'condition' => [
 					'custom_fields' => 'yes'
@@ -1991,7 +2011,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'event_custom_fields_description_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value',
+				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value, {{WRAPPER}} .tribe-block__additional-field',
 				'condition' => [
 					'custom_fields' => 'yes'
 				],

@@ -23,6 +23,15 @@ use Tribe__Events__Venue as Venue;
  */
 class Rewrite {
 	/**
+	 * A canary string rule used to know whether the rewrite rules have been filtered or not.
+	 *
+	 * @since 6.0.0
+	 *
+	 * @var string
+	 */
+	private $map_pagination_canary_key;
+
+	/**
 	 * Filters the base rewrite rules to add venue and organizer as translate-able pieces.
 	 *
 	 * @since 5.0.0
@@ -147,6 +156,10 @@ class Rewrite {
 	 * @return array The filtered geocode based rewrite rules.
 	 */
 	public function add_map_pagination_rules( array $rules, array $bases ) {
+		if ( $this->map_pagination_canary_key && isset( $rules[ $this->map_pagination_canary_key ] ) ) {
+			return $rules;
+		}
+
 		/*
 		 * We use this "hidden" dependency here and now because that's when we're sure the object was correctly built
 		 * and ready to provide the information we need.
@@ -211,6 +224,8 @@ class Rewrite {
 
 			$pagination_rules[ $key ] = $value;
 		}
+
+		$this->map_pagination_canary_key = key( $pagination_rules );
 
 		// It's important these rules are prepended to the pagination ones, not appended.
 		return $pagination_rules + $updated_rules + $rules;

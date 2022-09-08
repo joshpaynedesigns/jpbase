@@ -1,5 +1,30 @@
 <?php
-
+/**
+ * Implements a shortcode that wraps the existing advanced events list widget.
+ *
+ * Basic usage is as follows:
+ *
+ *     [tribe_events_list]
+ *
+ * Slightly more advanced usage, demonstrating tag and category filtering, is as follows:
+ *
+ *     [tribe_events_list tag="black-swan-event, #20, #60" categories="twist,samba, #491, groove"]
+ *
+ * Note that slugs and numeric IDs are both acceptable within comma separated lists of terms
+ * but IDs must be prefixed with a # symbol (this is because a number-only slug is possible, so
+ * we need to be able to differentiate between them).
+ *
+ * You can also control the amount of information that is displayed per event (just as you might
+ * if configuring the advanced list widget through its normal UI). For example, to include the
+ * venue city and organizer details, you could do:
+ *
+ *     [tribe_events_list city="1" organizer="1"]
+ *
+ * List of optional information attributes:
+ *
+ *     street, city, cost, country, organizer, phone, region, venue, zip
+ *
+ */
 namespace Tribe\Events\Pro\Views\V2\Shortcodes;
 
 use Tribe\Events\Views\V2\Widgets\Widget_List;
