@@ -133,6 +133,8 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * @since 5.4.0
 	 */
 	public function action_enqueue_resources() {
+		tribe_asset_enqueue( 'tribe-events-v2-single-skeleton' );
+		tribe_asset_enqueue( 'tribe-events-v2-single-skeleton-full' );
 		$this->container[ Widgets\Widget_Countdown::class ]->enqueue_editor_assets();
 		$this->container[ Widgets\Widget_Event_List::class ]->enqueue_editor_assets();
 		$this->container[ Widgets\Widget_Event_Single_Legacy::class ]->enqueue_editor_assets();

@@ -4,12 +4,17 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d
+class ComposerStaticInit2cc6cf2bc6cc2e4c381862443c16d0a9
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
         array (
             'Tribe\\Events\\Pro\\' => 17,
+            'TEC\\Events_Pro\\' => 15,
+        ),
+        'R' => 
+        array (
+            'RRule\\' => 6,
         ),
     );
 
@@ -18,9 +23,138 @@ class ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d
         array (
             0 => __DIR__ . '/../..' . '/src/Tribe',
         ),
+        'TEC\\Events_Pro\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/Events_Pro',
+        ),
+        'RRule\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rlanvin/php-rrule/src',
+        ),
     );
 
     public static $classMap = array (
+        'RRule\\RRule' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RRule.php',
+        'RRule\\RRuleInterface' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RRuleInterface.php',
+        'RRule\\RSet' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RSet.php',
+        'RRule\\RfcParser' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RfcParser.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Activation' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Activation.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Adapters\\Recurrence_Meta_Builder' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Adapters/Recurrence_Meta_Builder.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Links' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Links.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Lists\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Lists/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Notices\\Occurrence_Notices' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Notices\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Notices/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Duplicate\\Duplicate' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Duplicate/Duplicate.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Duplicate\\Url' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Duplicate/Url.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Block\\Ajax' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Block/Ajax.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Block\\Meta' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Block/Meta.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Block\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Block/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\Events_Metaboxes' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/Events_Metaboxes.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\Occurrences_List' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/Occurrences_List.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\Recurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/Recurrence.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\Series_Metaboxes' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/Series_Metaboxes.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Classic\\UI_Lock' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Classic/UI_Lock.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Context' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Context.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Event' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Event.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Manager\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Manager/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Editors\\Recurrence_Strings' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Editors/Recurrence_Strings.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Errors\\Requirement_Error' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Errors/Requirement_Error.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Abstract_Event_Rule_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Abstract_Event_Rule_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Daily_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Daily_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Date_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Date_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\From_Event_Rule_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/From_Event_Rule_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Monthly_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Monthly_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Weekly_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Weekly_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\Event_Rule_Converter\\Yearly_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/Event_Rule_Converter/Yearly_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\From_Blocks_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/From_Blocks_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\From_Event_Recurrence_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/From_Event_Recurrence_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\From_Rset_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/From_Rset_Converter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Occurrences\\Occurrences_Generator' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Occurrences/Occurrences_Generator.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\ID_Generator' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/ID_Generator.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Rules\\Date_Rule' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Rules/Date_Rule.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events_Manager\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events_Manager/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Full_Activation_Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Full_Activation_Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Gettext' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Gettext.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Integrations\\Filter_Bar\\Series_Filter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Integrations/Filter_Bar/Series_Filter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Integrations\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Integrations/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Legacy_Compat\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Legacy_Compat/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Process_Worker_Service' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Process_Worker_Service.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Reports\\Event_Report_Categories' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Reports/Event_Report_Categories.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Strategy\\Event_Tickets_With_Rules_Migration_Strategy' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Strategy/Event_Tickets_With_Rules_Migration_Strategy.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Strategy\\Migration_Message_Override' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Strategy/Migration_Message_Override.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Strategy\\Migration_Strategy_Guide' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Strategy/Migration_Strategy_Guide.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Strategy\\Multi_Rule_Event_Migration_Strategy' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Strategy/Multi_Rule_Event_Migration_Strategy.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Strategy\\Single_Rule_Event_Migration_Strategy' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Strategy/Single_Rule_Event_Migration_Strategy.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\String_Dictionary' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/String_Dictionary.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Migration\\Telemetry' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Migration/Telemetry.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Event' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Event.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Formatters\\RRule_Formatter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Formatters/RRule_Formatter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Formatters\\RSet_Formatter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Formatters/RSet_Formatter.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Occurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Occurrence.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Provisional_Post' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Provisional_Post.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Provisional_Post_Cache' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Provisional_Post_Cache.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Series.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Series_Relationship' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Series_Relationship.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Validators\\Valid_ExDate' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Validators/Valid_ExDate.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Validators\\Valid_RDate' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Validators/Valid_RDate.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Validators\\Valid_RRule' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Validators/Valid_RRule.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Validators\\Valid_RSet' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Validators/Valid_RSet.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Models\\Validators\\Valid_Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Models/Validators/Valid_Series.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\REST\\V1\\Notices' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/REST/V1/Notices.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\REST\\V1\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/REST/V1/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\Occurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/Occurrence.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\RSet_Builder' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/RSet_Builder.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\RSet_Wrapper' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/RSet_Wrapper.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\RfcParser' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/RfcParser.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Repository\\Events' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Repository/Events.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Repository\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Repository/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Admin_List' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Admin_List.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Autogenerated_Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Autogenerated_Series.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Post_Type' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Post_Type.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Providers\\Base' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Providers/Base.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Providers\\Modifications' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Providers\\Theme_Compatibility' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Providers/Theme_Compatibility.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Series\\Relationship' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Series/Relationship.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Tables\\Events' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Tables/Events.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Tables\\Occurrences' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Tables/Occurrences.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Tables\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Tables/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Tables\\Series_Relationships' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Tables/Series_Relationships.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Templates\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Templates/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Templates\\Series_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Templates/Series_Filters.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Templates\\Single_Event_Modifications' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Templates/Single_Event_Modifications.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Templates\\Templates' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Templates/Templates.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Traits\\With_Blocks_Editor_Recurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Traits/With_Blocks_Editor_Recurrence.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Traits\\With_Date_Operations' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Traits/With_Date_Operations.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Traits\\With_Event_Recurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Traits/With_Event_Recurrence.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Traits\\With_Ical_Strings' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Traits/With_Ical_Strings.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Blocks_Meta' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Blocks_Meta.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Controller.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Dates_Snapshot' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Dates_Snapshot.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Events' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Events.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Post_Ops' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Post_Ops.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Redirector' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Redirector.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Relationships' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Relationships.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Transient_Occurrence_Redirector' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Transient_Occurrence_Redirector.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Update_Controllers\\All' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Update_Controllers/All.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Update_Controllers\\Single' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Update_Controllers/Single.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Update_Controllers\\Upcoming' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Update_Controllers/Upcoming.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Update_Controllers\\Update_Controller_Interface' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Update_Controllers/Update_Controller_Interface.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Update_Controllers\\Update_Controller_Methods' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Update_Controllers/Update_Controller_Methods.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Updates\\Updates' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Updates/Updates.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Views\\V2\\By_Day_View_Compatibility' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Views/V2/By_Day_View_Compatibility.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Views\\V2\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Views/V2/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Condense_Events_Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Condense_Events_Series.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Custom_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Custom_Query_Filters.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Replace_Results' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Replace_Results.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Assets.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Events_Table' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Events_Table.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Hooks.php',
@@ -32,6 +166,7 @@ class ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d
         'Tribe\\Events\\Pro\\Admin\\Manager\\Settings' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Settings.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Shortcode' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Shortcode.php',
         'Tribe\\Events\\Pro\\Event_Status\\Event_Status_Provider' => __DIR__ . '/../..' . '/src/Tribe/Event_Status/Event_Status_Provider.php',
+        'Tribe\\Events\\Pro\\Integrations\\Brizy_Builder\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Brizy_Builder/Service_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Groups\\Event_Query' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls\\Traits\\TEC_Control' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls/Traits/TEC_Control.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Controls_Manager' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Controls_Manager.php',
@@ -74,7 +209,9 @@ class ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Hooks.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Manager' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Manager.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Service_Provider.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Event_Countdown' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Event_Countdown.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Events_List' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Events_List.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Featured_Venue' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Featured_Venue.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Mini_Calendar' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Mini_Calendar.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Shortcode_Tribe_Week' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Shortcode_Tribe_Week.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Shortcodes\\Tribe_Events' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Shortcodes/Tribe_Events.php',
@@ -116,9 +253,9 @@ class ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc39ac78a7f38444afa3c7a3369ddcf3d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2cc6cf2bc6cc2e4c381862443c16d0a9::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2cc6cf2bc6cc2e4c381862443c16d0a9::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2cc6cf2bc6cc2e4c381862443c16d0a9::$classMap;
 
         }, null, ClassLoader::class);
     }

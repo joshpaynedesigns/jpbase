@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Registers and Enqueues the assets
  *
@@ -23,6 +24,33 @@ class Tribe__Events__Pro__Assets {
 	 */
 	public function register() {
 		$pro = Tribe__Events__Pro__Main::instance();
+
+		tribe_asset(
+			$pro,
+			'tribe-admin-widget',
+			'admin-widget.js',
+			[ 'jquery', 'underscore', 'tribe-select2' ],
+			'admin_enqueue_scripts',
+			[
+				'conditionals' => static function () {
+					if ( ! function_exists( 'get_current_screen' ) ) {
+						return false;
+					}
+
+					$screen = get_current_screen();
+					if ( ! $screen instanceof \WP_Screen ) {
+						return false;
+					}
+
+					$hook = $screen->base;
+					if ( $screen->is_block_editor ) {
+						return true;
+					}
+
+					return 'widgets.php' !== $hook && 'customize.php' !== $hook;
+				}
+			]
+		);
 
 		// Vendor
 		tribe_assets(
@@ -50,16 +78,17 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		$api_url = 'https://maps.google.com/maps/api/js';
-
-		/**
-		 * Allows users to use a diferent Google Maps JS URL
-		 *
-		 * @deprecated  4.4.33
-		 *
-		 * @param string $url
-		 */
-		$google_maps_js_url = apply_filters( 'tribe_events_pro_google_maps_api', $api_url );
+		tribe_asset(
+			$pro,
+			'tec-events-pro-single',
+			'events-single.css',
+			[],
+			'wp_enqueue_scripts',
+			[
+				'groups'       => [ 'events-pro-styles' ],
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+			]
+		);
 
 		tribe_asset(
 			$pro,
@@ -83,77 +112,6 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
-			$pro,
-			'tribe-events-pro',
-			'tribe-events-pro.js',
-			[ 'jquery', 'tribe-events-calendar-script' ],
-			'wp_enqueue_scripts',
-			[
-				'conditionals' => [ $this, 'should_enqueue_frontend' ],
-				'in_footer'    => false,
-				'localize'     => [
-					'name' => 'TribeEventsPro',
-					'data' => [ $this, 'get_data_tribe_events_pro' ],
-				],
-			]
-		);
-
-		tribe_asset(
-			$pro,
-			'tribe-events-pro-photo',
-			'tribe-events-photo-view.js',
-			[ 'tribe-events-pro-isotope' ],
-			null,
-			[
-				'localize' => [
-					'name' => 'TribePhoto',
-					'data' => [
-						'ajaxurl'     => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ),
-						'tribe_paged' => tribe_get_request_var( 'tribe_paged', 0 ),
-					],
-				],
-			]
-		);
-
-		tribe_asset(
-			$pro,
-			'tribe-events-pro-week',
-			'tribe-events-week.js',
-			array( 'tribe-events-pro-slimscroll' ),
-			null,
-			array(
-				'localize' => array(
-					'name' => 'TribeWeek',
-					'data' => array(
-						'ajaxurl'   => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ),
-						'post_type' => Tribe__Events__Main::POSTTYPE,
-					),
-				),
-			)
-		);
-
-		$pro_ajax_maps_deps = array( 'jquery-placeholder' );
-
-		if ( ! tribe_is_using_basic_gmaps_api() ) {
-			// This dependency is only available when a custom gMaps API Key is being used.
-			$pro_ajax_maps_deps[] = 'tribe-events-google-maps';
-		}
-
-		tribe_asset(
-			$pro,
-			'tribe-events-pro-geoloc',
-			'tribe-events-ajax-maps.js',
-			$pro_ajax_maps_deps,
-			null,
-			array(
-				'localize' => array(
-					'name' => 'GeoLoc',
-					'data' => array( $this, 'get_data_tribe_geoloc' ),
-				),
-			)
-		);
-
 		tribe_assets(
 			$pro,
 			array(
@@ -162,6 +120,34 @@ class Tribe__Events__Pro__Assets {
 			),
 			array( 'tribe_venues_enqueue', 'tribe_events_enqueue' )
 		);
+
+		tribe_asset(
+			$pro,
+			'tribe_events-premium-admin',
+			'events-admin.js',
+			[ 'jquery-ui-datepicker', 'wp-util', 'tribe-timepicker' ],
+			[ 'tribe_venues_enqueue', 'tribe_events_enqueue' ],
+			[
+				'localize' => [
+					[
+						'name' => 'TribeEventsProAdmin',
+						'data' => apply_filters( 'tribe_events_pro_localize_script', [], 'TribeEventsProAdmin', Tribe__Events__Main::POSTTYPE.'-premium-admin' )
+					],
+					[
+						'name' => 'tribe_events_pro_recurrence_strings',
+						'data' => apply_filters(
+							'tribe_events_pro_recurrence_strings',
+							[
+								'date'       => Tribe__Events__Pro__Recurrence__Meta::date_strings(),
+								'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
+								'exclusion'  => [],
+							]
+						)
+					],
+				],
+			]
+		);
+
 
 		tribe_assets(
 			$pro,
@@ -223,53 +209,6 @@ class Tribe__Events__Pro__Assets {
 			)
 		);
 
-
-		tribe_asset(
-			$pro,
-			'tribe-mini-calendar',
-			'widget-calendar.js',
-			array( 'jquery' ),
-			null,
-			array(
-				'localize'     => array(
-					'name' => 'TribeMiniCalendar',
-					'data' => array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) ),
-				),
-			)
-		);
-
-		tribe_asset(
-			$pro,
-			'tribe-this-week',
-			'widget-this-week.js',
-			array( 'jquery' ),
-			null,
-			array(
-				'localize'     => array(
-					'name' => 'tribe_this_week',
-					'data' => array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) ),
-				),
-			)
-		);
-
-		tribe_asset(
-			$pro,
-			'tribe-events-countdown-widget',
-			'widget-countdown.js',
-			array( 'jquery' ),
-			null,
-			array()
-		);
-
-		tribe_asset(
-			$pro,
-			'widget-calendar-pro-style',
-			$this->get_widget_style_file(),
-			array(),
-			null,
-			array()
-		);
-
 		tribe_asset(
 			$pro,
 			Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
@@ -301,12 +240,13 @@ class Tribe__Events__Pro__Assets {
 				'tribe-common-gutenberg-hoc',
 				'tribe-common-gutenberg-elements',
 				'tribe-common-gutenberg-components',
+				'tribe-dropdowns',
 			],
 			'enqueue_block_editor_assets',
 			[
-				'in_footer' => false,
+				'in_footer'    => false,
 				'conditionals' => [ $this, 'is_edit_screen' ],
-				'priority'  => 201,
+				'priority'     => 201,
 			]
 		);
 
@@ -316,6 +256,7 @@ class Tribe__Events__Pro__Assets {
 			'app/widgets.css',
 			[
 				'wp-widgets',
+				'tribe-select2-css',
 			],
 			'enqueue_block_editor_assets',
 			[
@@ -331,9 +272,40 @@ class Tribe__Events__Pro__Assets {
 			[],
 			'wp_enqueue_scripts',
 			[
-				'in_footer'    => true,
+				'in_footer' => true,
 			]
 		);
+
+		tribe_asset(
+			$pro,
+			'tribe_events-premium-recurrence',
+			'events-recurrence.js',
+			[ 'tribe-events-admin', Tribe__Events__Main::POSTTYPE . '-premium-admin', 'tribe-events-pro-handlebars', 'tribe-moment', 'tribe-dropdowns', 'jquery-ui-dialog', 'tribe-buttonset' ],
+			[ 'tribe_events_enqueue', 'tribe_venue_enqueue' ],
+			[
+				'in_footer' => true,
+			]
+		);
+	}
+
+	/**
+	 * Enqueue any asset loading to specific actions.
+	 *
+	 * @since 6.0.0
+	 */
+	public function add_actions() {
+		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_dependencies' ] );
+	}
+
+	/**
+	 * Enqueue the dependency on any block editor page since because of widgets we might have special
+	 * needs for these pages.
+	 *
+	 * @since 6.0.0
+	 */
+	public function enqueue_dependencies() {
+		tribe_asset_enqueue( 'tribe-dependency' );
+		tribe_asset_enqueue( 'tribe-dependency-style' );
 	}
 
 	/**
@@ -345,6 +317,7 @@ class Tribe__Events__Pro__Assets {
 	 */
 	public function is_mobile_breakpoint() {
 		$mobile_break = tribe_get_mobile_breakpoint();
+
 		return $mobile_break > 0;
 	}
 
@@ -357,6 +330,7 @@ class Tribe__Events__Pro__Assets {
 	 */
 	public function is_style_option_tribe() {
 		$style_option = tribe_get_option( 'stylesheetOption', 'tribe' );
+
 		return 'tribe' === $style_option;
 	}
 
@@ -375,7 +349,7 @@ class Tribe__Events__Pro__Assets {
 			'tribe'    => 'tribe-events-pro-theme.css',
 			'full'     => 'tribe-events-pro-full.css',
 			'skeleton' => 'tribe-events-pro-skeleton.css',
-		) ;
+		);
 
 		// By default we go with `tribe`
 		$file = $stylesheets['tribe'];
@@ -412,7 +386,7 @@ class Tribe__Events__Pro__Assets {
 			'tribe'    => 'widget-theme.css',
 			'full'     => 'widget-full.css',
 			'skeleton' => 'widget-skeleton.css',
-		) ;
+		);
 
 		// By default we go with `tribe`
 		$file = $stylesheets['tribe'];
@@ -437,7 +411,7 @@ class Tribe__Events__Pro__Assets {
 	 * When to enqueue the Pro Styles on the front-end
 	 *
 	 * @since  4.4.30
-	 * @since 5.0.0 Cache the check value.
+	 * @since  5.0.0 Cache the check value.
 	 *
 	 * @return bool
 	 */
@@ -507,8 +481,8 @@ class Tribe__Events__Pro__Assets {
 		 *
 		 * @since  4.4.30  Removed the Third param
 		 *
-		 * @param  array   $data    JS variable
-		 * @param  string  $script  Which script this localizes
+		 * @param array  $data   JS variable
+		 * @param string $script Which script this localizes
 		 */
 		$data = apply_filters( 'tribe_events_pro_geoloc_localize_script', $data, 'tribe-events-pro-geoloc' );
 
