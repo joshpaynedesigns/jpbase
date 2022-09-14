@@ -3,7 +3,7 @@
 // Funtion to check if we are on a tribe events page
 function is_event_calendar_page() {
 
-    if ( class_exists( 'TribeEvents' ) ) {
+    if ( class_exists( 'Tribe__Events__Main' ) ) {
 
         $is_event_calendar = false; // Default is false so if everything falls through it returns that it is not an EC page
 
