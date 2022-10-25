@@ -59,15 +59,15 @@ function is_event_calendar_page() {
 
             $is_event_calendar = true;
 
-        } elseif( is_singular('tribe_events') ) { // Single Events
+        } elseif( tribe_is_event() && is_single() ) { // Single Events
 
             $is_event_calendar = true;
 
-        } elseif( is_singular('tribe_venue') ) { // Single Venues
+        } elseif( tribe_is_venue() ) { // Single Venues
 
             $is_event_calendar = true;
 
-        } elseif( is_singular('tribe_organizer') ) { // Single Organizers
+        } elseif( get_post_type() == 'tribe_organizer' && is_single() ) { // Single Organizers
 
             $is_event_calendar = true;
 
