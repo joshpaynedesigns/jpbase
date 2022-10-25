@@ -13,6 +13,8 @@ use TEC\Events\Custom_Tables\V1\Migration\Reports\Event_Report;
 use TEC\Events\Custom_Tables\V1\Migration\Reports\Site_Report;
 use TEC\Events\Custom_Tables\V1\Migration\State;
 use Tribe__Date_Utils as Dates;
+use Tribe__Events__Main as TEC;
+use Tribe__Events__Pro__Main as ECP;
 
 /**
  * Class Telemetry.
@@ -336,6 +338,10 @@ class Telemetry {
 		$preview_time = $data['completed_timestamp'] - $start_timestamp;
 
 		return [
+			'versions' => [
+				'the-events-calendar'	 => TEC::VERSION,
+				'events-calendar-pro'	 => ECP::VERSION,
+			],
 			'preview_time'     => $preview_time,
 			'estimated_time'   => $data['estimated_time_in_seconds'],
 			'events_previewed' => array_merge( [

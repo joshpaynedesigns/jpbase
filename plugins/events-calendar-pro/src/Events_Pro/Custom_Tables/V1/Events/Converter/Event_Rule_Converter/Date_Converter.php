@@ -31,7 +31,11 @@ class Date_Converter extends Abstract_Event_Rule_Converter {
 			$same_time = isset( $rule['custom']['same-time'] ) && tribe_is_truthy( $rule['custom']['same-time'] );
 
 			// Common to both: the date is correct, the time will not be correct.
-			$start = Datetime::createFromFormat( 'Y-m-d', $rule['custom']['date']['date'] );
+			$start = DateTime::createFromFormat( 'Y-m-d', $rule['custom']['date']['date'] );
+			// In case we have time in format (sometimes the case).
+			if ( ! $start ) {
+				$start = DateTime::createFromFormat( 'Y-m-d H:i:s', $rule['custom']['date']['date'] );
+			}
 
 			if ( ! $start ) {
 				throw Requirement_Error::due_to_malformed_information(

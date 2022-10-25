@@ -72,6 +72,32 @@ function bodhi_svgs_frontend_css() {
 add_action( 'wp_enqueue_scripts', 'bodhi_svgs_frontend_css' );
 
 /**
+ * Enqueue front end JS
+ */
+function bodhi_svgs_frontend_js() {
+
+	// get the settings
+	global $bodhi_svgs_options;
+
+	if ( !empty( $bodhi_svgs_options['sanitize_svg_front_end'] ) && $bodhi_svgs_options['sanitize_svg_front_end'] == 'on' && bodhi_svgs_advanced_mode() == true ) {
+	    
+	    // check where the JS should be placed, header or footer
+		if ( ! empty( $bodhi_svgs_options['js_foot_choice'] ) ) {
+			$bodhi_svgs_js_footer = true;
+		} else {
+			$bodhi_svgs_js_footer = false;
+		}
+
+		// enqueue dompurify library js
+		wp_enqueue_script( 'bodhi-dompurify-library', BODHI_SVGS_PLUGIN_URL . 'vendor/DOMPurify/DOMPurify.min.js', array(), '1.0.1', $bodhi_svgs_js_footer );
+
+	}
+
+}
+
+add_action( 'wp_enqueue_scripts', 'bodhi_svgs_frontend_js', 9 );
+
+/**
  * Enqueue and localize JS for IMG tag replacement
  */
 function bodhi_svgs_inline() {
@@ -149,18 +175,30 @@ function bodhi_svgs_inline() {
 
 		}
 
-		// create path for the correct js file
-		$bodhi_svgs_js_path = 'js/' . $bodhi_svgs_js_folder .'svgs-inline' . $bodhi_svgs_js_file . '.js' ;
+		// use vanilla js if user has enabled option in settings
+		if ( ! empty( $bodhi_svgs_options['use_vanilla_js'] ) ) {
 
-		wp_register_script( 'bodhi_svg_inline', BODHI_SVGS_PLUGIN_URL . $bodhi_svgs_js_path, array( 'jquery' ), '1.0.0', $bodhi_svgs_js_footer );
+			$bodhi_svgs_js_vanilla = '-vanilla';
+
+		}else{
+
+			$bodhi_svgs_js_vanilla = '';
+
+		}
+
+		// create path for the correct js file
+		$bodhi_svgs_js_path = 'js/' . $bodhi_svgs_js_folder .'svgs-inline' . $bodhi_svgs_js_vanilla . $bodhi_svgs_js_file . '.js' ;
+
+		wp_register_script( 'bodhi_svg_inline', BODHI_SVGS_PLUGIN_URL . $bodhi_svgs_js_path, array( 'jquery' ), '1.0.1', $bodhi_svgs_js_footer );
 		wp_enqueue_script( 'bodhi_svg_inline' );
 
 		wp_add_inline_script(
 			'bodhi_svg_inline',
 			sprintf(
-			  'cssTarget=%s;ForceInlineSVGActive=%s;',
+			  'cssTarget=%s;ForceInlineSVGActive=%s;frontSanitizationEnabled=%s;',
 			  json_encode($css_target_array),
-			  json_encode($force_inline_svg_active)
+			  json_encode($force_inline_svg_active),
+			  json_encode($bodhi_svgs_options['sanitize_svg_front_end'])
 			)
 		  );
 

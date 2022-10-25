@@ -29,10 +29,10 @@ function genesis_admin_plugins_api_result( $res, $action, $args ) {
 	if ( isset( $args->author ) && 'studiopress' === $args->author ) {
 		usort( $res->plugins, 'genesis_admin_plugins_sort_callback' );
 
-		// Bring Atomic Blocks to the top.
+		// Bring Genesis Blocks to the top.
 		foreach ( $res->plugins as $key => $plugin ) {
 			$plugin_data = (array) $plugin;
-			if ( 'atomic-blocks' === $plugin_data['slug'] ) {
+			if ( 'genesis-blocks' === $plugin_data['slug'] ) {
 				unset( $res->plugins[ $key ] );
 				array_unshift( $res->plugins, $plugin );
 			}

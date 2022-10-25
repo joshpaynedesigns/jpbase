@@ -3,6 +3,7 @@
 use TEC\Events\Custom_Tables\V1\Models\Event;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use Tribe__Events__Main as TEC;
 
 if ( ! function_exists( 'tribe_get_mapview_link' ) ) {
 	/**
@@ -17,15 +18,15 @@ if ( ! function_exists( 'tribe_get_mapview_link' ) ) {
 	function tribe_get_mapview_link( $term = null ) {
 		$wp_query = tribe_get_global_query_object();
 
-		if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars[ Tribe__Events__Main::TAXONOMY ] ) ) {
-			$term = $wp_query->query_vars[ Tribe__Events__Main::TAXONOMY ];
+		if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars[ TEC::TAXONOMY ] ) ) {
+			$term = $wp_query->query_vars[ TEC::TAXONOMY ];
 		}
 
 		apply_filters_deprecated( 'tribe_get_map_view_permalink', [ null ], '6.0.0' );
 
 		$args = [ 'view' => 'map' ];
 		if ( $term ) {
-			$args[ Tribe__Events__Main::TAXONOMY ] = $term;
+			$args[ TEC::TAXONOMY ] = $term;
 		}
 
 		return tribe_events_get_url( $args );
@@ -44,14 +45,14 @@ if ( ! function_exists( 'tribe_is_recurring_event' ) ) {
 	 */
 	function tribe_is_recurring_event( $post_id = null ) {
 
-		$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+		$post_id = TEC::postIdHelper( $post_id );
 
 		if ( empty( $post_id ) ) {
 			return false;
 		}
 
 		$post = get_post( $post_id );
-		if ( $post->post_type != Tribe__Events__Main::POSTTYPE ) {
+		if ( $post->post_type != TEC::POSTTYPE ) {
 			return false;
 		}
 
@@ -102,7 +103,7 @@ if ( ! function_exists( 'tribe_get_recurrence_start_dates' ) ) {
 	 * @return array Start times, as Y-m-d H:i:s
 	 */
 	function tribe_get_recurrence_start_dates( $post_id = null ) {
-		$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+		$post_id = TEC::postIdHelper( $post_id );
 
 		return Tribe__Events__Pro__Recurrence__Meta::get_start_dates( $post_id );
 	}
@@ -121,7 +122,7 @@ if ( ! function_exists( 'tribe_get_recurrence_start_dates' ) ) {
 if ( ! function_exists( 'tribe_get_recurrence_text' ) ) {
 	function tribe_get_recurrence_text( $post_id = null ) {
 
-		$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+		$post_id = TEC::postIdHelper( $post_id );
 
 		/**
 		 * Allow for filtering the textual version of event recurrence.
@@ -153,7 +154,7 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 		$cache_links          = tribe_get_var( $cache_key_links, [] );
 		$cache_parent_ids     = tribe_get_var( $cache_key_parent_ids, [] );
 
-		$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+		$post_id = TEC::postIdHelper( $post_id );
 
 		if ( ! isset( $cache_parent_ids[ $post_id ] ) ) {
 			$cache_parent_ids[ $post_id ] = wp_get_post_parent_id( $post_id );
@@ -164,7 +165,7 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 		$cache_id = $cache_parent_ids[ $post_id ] ? $cache_parent_ids[ $post_id ] : $post_id;
 
 		if ( ! isset( $cache_links[ $cache_id ] ) ) {
-			$tribe_ecp                = Tribe__Events__Main::instance();
+			$tribe_ecp                = TEC::instance();
 			$cache_links[ $cache_id ] = apply_filters( 'tribe_all_occurences_link', $tribe_ecp->getLink( 'all', $post_id ) );
 			tribe_set_var( $cache_key_links, $cache_links );
 		}
@@ -190,7 +191,7 @@ if ( ! function_exists( 'tribe_get_custom_fields' ) ) {
 	 * @return array $data of custom fields
 	 */
 	function tribe_get_custom_fields( $post_id = null ) {
-		$post_id      = Tribe__Events__Main::postIdHelper( $post_id );
+		$post_id      = TEC::postIdHelper( $post_id );
 		$data         = array();
 		$customFields = tribe_get_option( 'custom-fields', false );
 
@@ -479,7 +480,7 @@ if ( ! function_exists( 'tribe_get_week_permalink' ) ) {
 		}
 
 		if ( $term ) {
-			$args[ Tribe__Events__Main::TAXONOMY ] = $term;
+			$args[ TEC::TAXONOMY ] = $term;
 		}
 
 		apply_filters_deprecated( 'tribe_get_week_permalink', [ null, $week, $term ], '6.0.0' );
@@ -500,7 +501,7 @@ if ( ! function_exists( 'tribe_get_photo_permalink' ) ) {
 		$args = [ 'view' => 'photo' ];
 
 		if ( $term ) {
-			$args[ Tribe__Events__Main::TAXONOMY ] = $term;
+			$args[ TEC::TAXONOMY ] = $term;
 		}
 
 		apply_filters_deprecated( 'tribe_get_photo_view_permalink', [ null, $term ], '6.0.0' );
@@ -532,7 +533,7 @@ if ( ! function_exists( 'tribe_get_related_posts' ) ) {
 	 * @return array the related posts.
 	 */
 	function tribe_get_related_posts( $count = 3, $post = false ) {
-		$post_id = Tribe__Events__Main::postIdHelper( $post );
+		$post_id = TEC::postIdHelper( $post );
 
 		$args  = [
 			'posts_per_page' => $count,
@@ -722,7 +723,7 @@ if ( ! function_exists( 'tribe_display_saved_organizer' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_organizer() {
-		$current_organizer_id = Tribe__Events__Main::instance()->defaults()->organizer_id();
+		$current_organizer_id = TEC::instance()->defaults()->organizer_id();
 		$current_organizer = ( $current_organizer_id != 'none' && $current_organizer_id != 0 && $current_organizer_id ) ? tribe_get_organizer( $current_organizer_id ) : __( 'No default set', 'tribe-events-calendar-pro' );
 		$current_organizer = esc_html( $current_organizer );
 		echo '<p class="tribe-field-indent description">' . sprintf( __( 'The current default organizer is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $current_organizer . '</strong>' ) . '</p>';
@@ -739,7 +740,7 @@ if ( ! function_exists( 'tribe_display_saved_venue' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_venue() {
-		$current_venue_id = Tribe__Events__Main::instance()->defaults()->venue_id();
+		$current_venue_id = TEC::instance()->defaults()->venue_id();
 		$current_venue = ( $current_venue_id != 'none' && $current_venue_id != 0 && $current_venue_id ) ? tribe_get_venue( $current_venue_id ) : __( 'No default set', 'tribe-events-calendar-pro' );
 		$current_venue = esc_html( $current_venue );
 		echo '<p class="tribe-field-indent tribe-field-description description">' . sprintf( __( 'The current default venue is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $current_venue . '</strong>' ) . '</p>';
@@ -756,7 +757,7 @@ if ( ! function_exists( 'tribe_display_saved_address' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_address() {
-		$option = Tribe__Events__Main::instance()->defaults()->address();
+		$option = TEC::instance()->defaults()->address();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default address is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -773,7 +774,7 @@ if ( ! function_exists( 'tribe_display_saved_city' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_city() {
-		$option = Tribe__Events__Main::instance()->defaults()->city();
+		$option = TEC::instance()->defaults()->city();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default city is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -790,7 +791,7 @@ if ( ! function_exists( 'tribe_display_saved_state' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_state() {
-		$option = Tribe__Events__Main::instance()->defaults()->state();
+		$option = TEC::instance()->defaults()->state();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-state">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -807,7 +808,7 @@ if ( ! function_exists( 'tribe_display_saved_province' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_province() {
-		$option = Tribe__Events__Main::instance()->defaults()->province();
+		$option = TEC::instance()->defaults()->province();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-province">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -824,7 +825,7 @@ if ( ! function_exists( 'tribe_display_saved_zip' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_zip() {
-		$option = Tribe__Events__Main::instance()->defaults()->zip();
+		$option = TEC::instance()->defaults()->zip();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default postal code/zip code is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -841,7 +842,7 @@ if ( ! function_exists( 'tribe_display_saved_country' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_country() {
-		$option = Tribe__Events__Main::instance()->defaults()->country();
+		$option = TEC::instance()->defaults()->country();
 		$option = empty( $option[1] ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option[1];
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default country is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -859,7 +860,7 @@ if ( ! function_exists( 'tribe_display_saved_phone' ) ) {
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_phone() {
-		$option = Tribe__Events__Main::instance()->defaults()->phone();
+		$option = TEC::instance()->defaults()->phone();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
 		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default phone is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
@@ -875,7 +876,7 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 	 *
 	 */
 	function tribe_get_mobile_default_view() {
-		$default = Tribe__Events__Main::instance()->default_view();
+		$default = TEC::instance()->default_view();
 
 		// If there isn't a default mobile set, it will get the default from the normal settings
 		$default_view = tribe_get_option( 'mobile_default_view', 'default' );
@@ -894,27 +895,33 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 }
 
 if ( ! function_exists( 'tribe_update_event_with_series' ) ) {
-
 	/**
-	 * Updates an Event to be attached to a given Series post
+	 * Updates an Event to be attached to a given Series post.
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param WP_Post $event
-	 * @param WP_Post $series
+	 * @param WP_Post $event  A reference to the Event post.
+	 * @param WP_Post $series A reference to the Series post.
+	 *
+	 * @return bool Whether the Event was attached to the Series or not.
 	 */
-	function tribe_update_event_with_series( WP_Post $event, WP_Post $series ) {
-
-		if ( Tribe__Events__Main::POSTTYPE !== $event->post_type ) {
-			return;
+	function tribe_update_event_with_series( WP_Post $event, WP_Post $series ): bool {
+		if ( TEC::POSTTYPE !== $event->post_type || Series::POSTTYPE !== $series->post_type ) {
+			return false;
 		}
 
-		if ( Series::POSTTYPE !== $series->post_type ) {
-			return;
+		if ( Event::upsert( [ 'post_id' ], Event::data_from_post( $event->ID ) ) === false ) {
+			return false;
 		}
 
-		Event::upsert( [ 'post_id' ], Event::data_from_post( $event->ID ) );
-		$new_event = Event::find( $event->ID, 'post_id' );
-		tribe( Relationship::class )->attach_event( $new_event, $series );
+		$event_model = Event::find( $event->ID, 'post_id' );
+
+		if ( ! $event_model instanceof Event ) {
+			return false;
+		}
+
+		tribe( Relationship::class )->with_event( $event_model, [ $series->ID ] );
+
+		return true;
 	}
 }

@@ -12,6 +12,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\REST\V1;
 
 use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Occurrence_Notices;
 use TEC\Events_Pro\Custom_Tables\V1\Templates\Single_Event_Modifications;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector;
 use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
@@ -109,6 +110,7 @@ class Notices {
 	 * in order to find the right Occurrence if exists.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.2 Now the validation will take into account whether the ID was redirected from a recent update, instead of failing them.
 	 *
 	 * @param integer         $id      The ID we are using to locate and validate a WP_Post object.
 	 * @param WP_REST_Request $request The HTTP client request against the endpoint.
@@ -116,6 +118,11 @@ class Notices {
 	 * @return bool If the provided ID belongs to a valid occurrence or a valid Event post.
 	 */
 	public function validate( $id, WP_REST_Request $request ) {
+		// If we redirected this ID, let's fetch the correct one.
+		$redirect = tribe( Transient_Occurrence_Redirector::class )->get_redirect_data( $id );
+		if ( isset( $redirect['redirect_id'] ) ) {
+			$id = $redirect['redirect_id'];
+		}
 		$normalized_id = tribe( Single_Event_Modifications::class )->normalize_post_id( $id );
 		$post          = get_post( $normalized_id );
 		$request->set_param( '_id', $normalized_id );

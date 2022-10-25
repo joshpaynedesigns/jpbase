@@ -118,9 +118,13 @@ class BSR_AJAX {
 			$args = array();
 			parse_str( $_POST['bsr_data'], $args );
 
-			// Build the arguements for this run.
+			// Build the arguments for this run.
+			if ( ! isset( $args['select_tables'] ) || ! is_array( $args['select_tables'] ) ) {
+				$args['select_tables'] = array();
+			}
+
 			$args = array(
-				'select_tables'    => isset( $args['select_tables'] ) ? $args['select_tables'] : array(),
+				'select_tables'    => array_map( 'trim', $args['select_tables'] ),
 				'case_insensitive' => isset( $args['case_insensitive'] ) ? $args['case_insensitive'] : 'off',
 				'replace_guids'    => isset( $args['replace_guids'] ) ? $args['replace_guids'] : 'off',
 				'dry_run'          => isset( $args['dry_run'] ) ? $args['dry_run'] : 'off',
@@ -334,12 +338,13 @@ class BSR_AJAX {
 		);
 
 		// Any operations that should only be performed at the beginning.
-		if ( $step === 0 && $page === 0) {
+		if ( $step === 0 && $page === 0 ) {
 
-			// Delete the DB file if already exists.
-			if ( 0 === $page && file_exists( $db->file ) ) {
-				unlink( $db->file );
-			}
+			// Cleanup from any past failures.
+			BSR_Admin::delete_file();
+
+			// Generate a new salt for this backup.
+			$db->generate_salt();
 
 			// Maybe create temp tables and run a search/replace.
 			if ( $args['profile'] && ! $args['search_replace_complete'] ) {
@@ -411,7 +416,7 @@ class BSR_AJAX {
 			$percentage 	= '100%';
 
 			if ( '' !== get_option( 'bsr_enable_gzip' ) ) {
-				BSR_Admin::compress_file( $db->file );
+				BSR_Admin::compress_file( $db->get_file_path() );
 			}
 
 		}
@@ -474,8 +479,7 @@ class BSR_AJAX {
 			$percentage ='100%';
 
 			// Remove import file.
-			@unlink( $file );
-			@unlink( $file . '.gz' );
+			BSR_Admin::delete_file();
 		}
 
 		$bsr_data = array(
@@ -526,14 +530,16 @@ class BSR_AJAX {
 	 * @access public
 	 */
 	public function upload_import() {
-
 		// Bail if not authorized.
 		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
 			return;
 		}
 
-		$db 	= new BSR_DB;
-		$file 	= $db->file;
+		BSR_Admin::delete_file();
+		$db = new BSR_DB;
+		$db->generate_salt();
+
+		$file        = $db->get_file_path();
 		$upload_dir  = wp_upload_dir();
 		$manual_file = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';
 
@@ -543,13 +549,8 @@ class BSR_AJAX {
 			$ext = substr( $_FILES['bsr_import_file']['name'], -3 );
 
 			if ( 'sql' === $ext || '.gz' === $ext ) {
-
-				// Delete old file.
-				@unlink( $db->file );
-				@unlink( $db->file . '.gz' );
-
 				$temp = $_FILES['bsr_import_file']['tmp_name'];
-				$dest = $db->file;
+				$dest = $file;
 				$upload_method 	= 'ajax';
 
 				if ( '.gz' === $ext ) {
@@ -559,9 +560,8 @@ class BSR_AJAX {
 				move_uploaded_file( $temp, $dest );
 
 				if ( '.gz' === $ext ) {
-					BSR_Admin::decompress_file( $dest, $db->file );
+					BSR_Admin::decompress_file( $dest, $file );
 				}
-
 			}
 
 		} elseif ( file_exists( $manual_file ) ) {
@@ -585,7 +585,6 @@ class BSR_AJAX {
 		echo json_encode( $result );
 		exit;
 	}
-
 
 }
 

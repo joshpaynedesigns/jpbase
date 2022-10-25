@@ -353,14 +353,18 @@ class Single_Event_Modifications {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array $terms      Array of found terms.
-	 * @param array $taxonomies An array of taxonomies.
-	 * @param array $args       An array of get_terms() arguments.
+	 * @param array      $terms      Array of found terms.
+	 * @param array|null $taxonomies An array of taxonomies.
+	 * @param array      $args       An array of get_terms() arguments (term query_vars).
 	 *
 	 * @return  array An array with the terms found.
 	 * @see   get_terms()
 	 */
-	public function redirect_get_terms( array $terms, array $taxonomies, array $args ): array {
+	public function redirect_get_terms( $terms, $taxonomies, $args ): array {
+		if ( ! ( is_array( $terms ) && is_array( $taxonomies ) && is_array( $args ) ) ) {
+			return $terms;
+		}
+
 		// This was already populated, move on.
 		if ( ! empty( $terms ) ) {
 			return $terms;

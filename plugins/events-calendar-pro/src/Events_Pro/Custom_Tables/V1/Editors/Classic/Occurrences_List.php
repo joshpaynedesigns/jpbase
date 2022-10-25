@@ -7,11 +7,14 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Editors\Classic;
 
 use DateTime;
 use Generator;
+use TEC\Events\Custom_Tables\V1\Migration\String_Dictionary as Strings;
 use TEC\Events\Custom_Tables\V1\Models\Event;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator as Provisional_ID_Generator;
+use TEC\Events_Pro\Custom_Tables\V1\Migration\String_Dictionary;
 use TEC\Events_Pro\Custom_Tables\V1\Tables\Events;
 use TEC\Events_Pro\Custom_Tables\V1\Tables\Series_Relationships;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Post_Actions;
 use Tribe__Date_Utils as Dates;
 use Tribe__Timezones as Timezones;
 use WP_List_Table;
@@ -49,9 +52,8 @@ class Occurrences_List extends WP_List_Table {
 	 * @since 6.0.0
 	 *
 	 * @param WP_Post|null         $series_post The instance of the series post.
-	 * @param array<string, mixed> $args        The arguments to customize the List view.
 	 */
-	public function __construct( WP_Post $series_post = null, $args = [] ) {
+	public function __construct( WP_Post $series_post = null ) {
 		$this->series_post = $series_post;
 
 		parent::__construct( [
@@ -162,7 +164,7 @@ class Occurrences_List extends WP_List_Table {
 	 * @since 6.0.0
 	 * @return array<string, string> An array with the columns ID names and display name.
 	 */
-	public function get_columns() {
+	public function get_columns(): array {
 		return [
 			'title'      => __( 'Title', 'tribe-events-calendar-pro' ),
 			'start_date' => __( 'Start Date', 'tribe-events-calendar-pro' ),
@@ -188,30 +190,15 @@ class Occurrences_List extends WP_List_Table {
 				//Display the cell
 				switch ( $column_name ) {
 					case 'title':
-						$post = get_post( $occurrence->post_id );
-						if ( $post instanceof WP_Post ) {
-							echo esc_html( _draft_or_post_title( $post ) );
-							_post_states( $post );
-						}
+						$this->print_title( $occurrence );
 						break;
 					case 'start_date':
-						$event = Event::where('event_id', $occurrence->event_id )->first();
-						$timezone = $event instanceof Event ? $event->timezone : 'UTC';
-						$format     = tribe_get_date_format( true );
-						echo Dates::immutable( $occurrence->start_date, $timezone )->format( $format );
-
-						if ( $occurrence->has_recurrence ) {
-							echo '<svg style="margin-left: 10px;" viewBox="0 0 12 12" width="12" height="12"><title>' . __( 'Recurring', 'tribe-events-calendar-pro' ) . '</title><use xlink:href="#recurring" /></svg>';
-						}
+						$this->print_start_date_entry( $occurrence );
 
 						break;
 					case 'actions':
-						$occurrence_post_id = tribe( Provisional_ID_Generator::class )->current() + $occurrence->occurrence_id;
+						$this->print_actions_entry( $occurrence );
 
-						$edit = sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_edit_post_link( $occurrence_post_id ), 'Edit' );
-						$view = sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_permalink( $occurrence_post_id ), 'View' );
-
-						printf( '%s - %s', $edit, $view );
 						break;
 				}
 				echo '</td>';
@@ -261,7 +248,7 @@ class Occurrences_List extends WP_List_Table {
 	 * @since 6.0.0
 	 * @return array<string, string> An array to control the views that are displayed above the list of events.
 	 */
-	protected function extra_tablenav( $which ) {
+	protected function extra_tablenav( $which ): void {
 		$current = tribe_get_request_var( 'view', 'upcoming' );
 		?>
 		<input
@@ -287,5 +274,85 @@ class Occurrences_List extends WP_List_Table {
 			<?php endif; ?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Print the content of the actions column.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param Occurrence $occurrence The occurrence object.
+	 *
+	 * @return void Prints the content of the actions column.
+	 */
+	private function print_actions_entry( Occurrence $occurrence ): void {
+		$occurrence_post_id = tribe( Provisional_ID_Generator::class )->current() + $occurrence->occurrence_id;
+
+		$actions = [
+				'edit' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_edit_post_link( $occurrence_post_id ), 'Edit' ),
+				'view' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_permalink( $occurrence_post_id ), 'View' ),
+		];
+
+		$actions = array_merge( $actions, tribe( Post_Actions::class )->get_occurrence_action_links( $occurrence ) );
+
+		/**
+		 * Allows filtering of the actions available for an Occurrence in the list view.
+		 *
+		 * @since 6.0.1
+		 *
+		 * @param array<string, string> $actions    An array of actions with the action name as the key and the action link as the value.
+		 * @param Occurrence            $occurrence A reference to the Occurrence object.
+		 */
+		$actions = apply_filters( 'tec_events_pro_custom_tables_v1_occurrence_list_actions', $actions, $occurrence );
+
+		echo wp_kses( implode( ' - ', $actions ), [
+				'a' => [
+						'class'      => [],
+						'data-*'     => true,
+						'href'       => [],
+						'target'     => [],
+						'rel'        => [],
+						'noreferrer' => [],
+						'noopener'   => [],
+				],
+		] );
+	}
+
+	/**
+	 * Print the content of the start date column.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param Occurrence $occurrence The occurrence object.
+	 *
+	 * @return void Prints the content of the start date column.
+	 */
+	private function print_start_date_entry( Occurrence $occurrence ): void {
+		$event = Event::where( 'event_id', $occurrence->event_id )->first();
+		$timezone = $event instanceof Event ? $event->timezone : 'UTC';
+		$format = tribe_get_date_format( true );
+		echo Dates::immutable( $occurrence->start_date, $timezone )->format( $format );
+
+		if ( $occurrence->has_recurrence ) {
+			echo '<svg style="margin-left: 10px;" viewBox="0 0 12 12" width="12" height="12"><title>' . __( 'Recurring', 'tribe-events-calendar-pro' ) . '</title><use xlink:href="#recurring" /></svg>';
+		}
+	}
+
+
+	/**
+	 * Print the content of the title column.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param Occurrence $occurrence The occurrence object.
+	 *
+	 * @return void Prints the content of the title column.
+	 */
+	private function print_title( Occurrence $occurrence ): void {
+		$post = get_post( $occurrence->post_id );
+		if ( $post instanceof WP_Post ) {
+			echo esc_html( _draft_or_post_title( $post ) );
+			_post_states( $post );
+		}
 	}
 }

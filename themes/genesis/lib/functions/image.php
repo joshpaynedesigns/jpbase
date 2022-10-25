@@ -112,6 +112,8 @@ function genesis_get_image( $args = [] ) {
 		return false;
 	}
 
+	$url = ! empty( $url ) ? $url : '';
+
 	// Source path, relative to the root.
 	$src = str_replace( home_url(), '', $url );
 

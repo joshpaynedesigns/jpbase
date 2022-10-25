@@ -21,56 +21,6 @@ function arg_filter_autoplay( $autoplay, array $a ) {
 	return $autoplay;
 }
 
-function early_sc_filter_latest_channel_video( array $a ) {
-
-	if ( empty( $a['url'] ) ) {
-		return $a;
-	}
-
-	$prefix = 'https://www.youtube.com/channel/';
-
-	if ( ! str_starts_with( $a['url'], $prefix ) ) {
-		return $a;
-	}
-
-	$re = '@https://www\.youtube\.com/channel/(?<channel_id>[a-z0-9_-]+)@mi';
-
-	preg_match( $re, $a['url'], $matches, PREG_OFFSET_CAPTURE, 0 );
-
-	$transient_name = 'arve_pro_latest_from_channel_' . $matches['channel_id'];
-	$a['url']       = get_transient( $transient_name );
-
-	if ( false === $a['url'] ) {
-
-		$response = Common\remote_get_body( 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $channel_id );
-
-		if ( is_wp_error( $response ) ) {
-			return $a;
-		}
-
-		$xml = simplexml_load_string( $body );
-
-		if ( false === $xml || empty( $xml->entry[0]->children( 'yt', true )->videoId[0] ) ) {
-
-			$a['errors']->add(
-				'video not detected',
-				sprintf(
-					// Translators: URL.
-					__( 'Latest video from <a href="%s">channel</a> could not be detected: ', 'arve-pro' ),
-					esc_url( $channel_url )
-				)
-			);
-
-		} else {
-
-			$a['url'] = 'https://youtube.com/watch?v=' . (string) $xml->entry[0]->children( 'yt', true )->videoId[0];
-			set_transient( $transient_name, $a['url'], HOUR_IN_SECONDS );
-		}
-	}
-
-	return $a;
-}
-
 function shortcode_atts_extra_data( array $a ) {
 
 	$cur_post = get_post();
@@ -119,8 +69,8 @@ function shortcode_atts_extra_data( array $a ) {
  * 2. Oembed
  * 3. Get remote without oembed
  * 4. Post Image Fallback
- * 5. Fallback from options page 
- * 
+ * 5. Fallback from options page
+ *
  */
 function arg_filter_thumbnail( $thumbnail, array $a ) {
 

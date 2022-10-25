@@ -869,7 +869,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .tribe-events-calendar-month__calendar-event-datetime' => '--tec-color-text-event-date: {{VALUE}}; --tec-color-text-event-date-secondary: {{VALUE}};',
+					'{{WRAPPER}} .tribe-events-calendar-month__calendar-event-datetime' => '--tec-color-text-event-date: {{VALUE}}; --tec-color-text-secondary-event-date: {{VALUE}};',
 				],
 			]
 		);

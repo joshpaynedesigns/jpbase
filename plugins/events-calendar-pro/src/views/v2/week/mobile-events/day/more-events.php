@@ -32,7 +32,7 @@ if ( empty( $more_events ) || empty( $more_url ) || empty( $view->get_context()-
 		<?php
 		echo esc_html(
 			sprintf(
-				_n( '+ %d More', '+ %d More', $more_events, 'the-events-calendar' ),
+				_n( '+ %d More', '+ %d More', $more_events, 'tribe-events-calendar-pro' ),
 				$more_events
 			)
 		)

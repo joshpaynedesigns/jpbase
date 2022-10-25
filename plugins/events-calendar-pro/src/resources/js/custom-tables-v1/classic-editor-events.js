@@ -73,7 +73,8 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	 *
 	 * @since 6.0.0
 	 *
-	 * @return {void} The function will apply different new default values to rows that require it.
+	 * @return {void} The function will apply different new default values to
+	 *     rows that require it.
 	 */
 	obj.setNewRecurrenceDefaults = function () {
 		// requestAnimationFrame is required here so the updates happen after DOM modifications.
@@ -99,7 +100,8 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	 *
 	 * @since 6.0.0
 	 *
-	 * @return {void} The function will apply different new default values to rows that require it.
+	 * @return {void} The function will apply different new default values to
+	 *     rows that require it.
 	 */
 	obj.setNewExclusionDefaults = function () {
 
@@ -169,9 +171,11 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	};
 
 	/**
-	 * Hides the recurrence description section and sets the description input to a blank string.
+	 * Hides the recurrence description section and sets the description input to
+	 * a blank string.
 	 *
-	 * @todo This function should be converted to template modifications when integrated into ECP.
+	 * @todo This function should be converted to template modifications when
+	 *     integrated into ECP.
 	 *
 	 * @since 6.0.0
 	 *
@@ -195,8 +199,10 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param {array<MutationRecord>} mutations A set of Mutation Records detected by the Mutation Observer.
-	 * @param {MutationObserver} observer A reference to the Mutation Observer instance that is observing the changes.
+	 * @param {array<MutationRecord>} mutations A set of Mutation Records
+	 *     detected by the Mutation Observer.
+	 * @param {MutationObserver} observer A reference to the Mutation Observer
+	 *     instance that is observing the changes.
 	 *
 	 * @return {void}
 	 */
@@ -294,7 +300,8 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 
 	/**
 	 * New update rule recurrence text function to replace the old function.
-	 * This replaces tribe_events_pro_admin.recurrence.update_rule_recurrence_text.
+	 * This replaces
+	 * tribe_events_pro_admin.recurrence.update_rule_recurrence_text.
 	 *
 	 * @since 6.0.0
 	 *
@@ -313,11 +320,12 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 		) {
 			/**
 			 * If tecEventDetails.occurrence is array, this is a new event.
-			 * If tecEventDetails.occurrence.has_recurrence is false, this is a single event.
-			 * If tecEventDetails.occurrence.has_recurrence is true and tecEventDetails.occurrence.isFirst
-			 * is true, this is a recurring event and we are editing the first occurrence.
-			 * For the above 3 scenarios, replace [first_occurrence_date] with start date from the edit
-			 * event screen.
+			 * If tecEventDetails.occurrence.has_recurrence is false, this is a
+			 * single event. If tecEventDetails.occurrence.has_recurrence is true and
+			 * tecEventDetails.occurrence.isFirst is true, this is a recurring event
+			 * and we are editing the first occurrence. For the above 3 scenarios,
+			 * replace [first_occurrence_date] with start date from the edit event
+			 * screen.
 			 */
 			const dateFormat = tribe_events_pro_admin.recurrence.date_format + ' hh:mm a';
 			const $startDate = $document.find( obj.selectors.eventStartDate );
@@ -327,7 +335,8 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 
 		} else {
 			/**
-			 * Otherwise, use the event start date passed in tecEventDetails to replace
+			 * Otherwise, use the event start date passed in tecEventDetails to
+			 * replace
 			 * [first_occurrence_date].
 			 */
 			startMoment = moment( tecEventDetails.event.start_date );
@@ -349,8 +358,8 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	 */
 	obj.setupRecurrenceTextModification = function () {
 		/**
-		 * Replace tribe_events_pro_admin.recurrence.update_rule_recurrence_text with
-		 * obj.updateRuleRecurrenceText.
+		 * Replace tribe_events_pro_admin.recurrence.update_rule_recurrence_text
+		 * with obj.updateRuleRecurrenceText.
 		 */
 		obj.classicUpdateRuleRecurrenceText = tribe_events_pro_admin.recurrence.update_rule_recurrence_text;
 		tribe_events_pro_admin.recurrence.update_rule_recurrence_text = obj.updateRuleRecurrenceText;
@@ -386,13 +395,14 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 			obj.hideRecurrenceDescription();
 			obj.setupMutationObserver();
 			obj.bindEvents();
+
+			// Fire an Event after the ready code did run.
+			const readyEvent = new Event( 'TECClassicEditorEventsReady' );
+			readyEvent.object = obj;
+			document.dispatchEvent( readyEvent );
 		} );
 		obj.setupRecurrenceTextModification();
 
-		// Fire an Event after the ready code did run.
-		const readyEvent = new Event( 'TECClassicEditorEventsReady' );
-		readyEvent.object = obj;
-		document.dispatchEvent( readyEvent );
 	};
 
 	$( obj.ready );

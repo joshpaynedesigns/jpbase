@@ -185,6 +185,28 @@ class Provider extends \tad_DI52_ServiceProvider {
 			]
 		);
 
+		tribe_asset(
+			$plugin,
+			'tec-events-pro-edit-link-prompt',
+			'custom-tables-v1/edit-link-prompt.js',
+			[
+				'jquery', // Required to listen on jQuery events.
+			],
+			'admin_enqueue_scripts',
+			[
+				'in_footer'    => true,
+				'priority'     => 200,
+				'conditionals' => [
+					'operator' => 'OR',
+					$context->is_series_post_screen(),
+					static function () {
+						return tribe_context()->is( 'event_manager' );
+					},
+				],
+				'groups'       => [ static::$series_group_key ],
+			]
+		);
+
 		/**
 		 * Classic & Block Events assets.
 		 */
@@ -211,6 +233,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 							'allEvents' => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
 							'upcomingSetting' => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
 							'thisEvent' => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'thisEventHelpText' => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
 							'allDay' => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
 							'effectThisAndFollowingEventsWarning' => sprintf( esc_attr__( 'These changes will affect this %1$s and all following %2$s', 'tribe-events-calendar-pro' ), $singular_label_lower, $plural_label_lower ),
 						];
@@ -316,6 +339,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 							'allEvents' => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
 							'upcomingSetting' => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
 							'thisEvent' => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'thisEventHelpText' => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
 							'allDay' => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
 							'effectThisAndFollowingEventsWarning' => sprintf( esc_attr__( 'These changes will affect this %1$s and all following %2$s', 'tribe-events-calendar-pro' ), $singular_label_lower, $plural_label_lower ),
 						];
@@ -681,7 +705,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @return array<string,array<string,string>>> The map of localized strings.
+	 * @return array<string,array<string,string>> The map of localized strings.
 	 */
 	public function get_recurrence_strings() {
 		return apply_filters(

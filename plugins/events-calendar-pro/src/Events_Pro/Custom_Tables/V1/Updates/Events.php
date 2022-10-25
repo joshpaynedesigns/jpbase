@@ -122,7 +122,7 @@ class Events {
 	 *
 	 * @return int|false The number of occurrences deleted or false if missing sequence.
 	 */
-	public function prune_occurrences( $post_id ) {
+	public function prune_occurrences( int $post_id ) {
 		$current_sequence = ECP_Occurrence::get_sequence( $post_id );
 
 		/*
@@ -153,7 +153,7 @@ class Events {
 	 * @param int        $post_id    The post ID of the Event to move the dates of.
 	 * @param Occurrence $occurrence A reference to the Occurrence to move the Event to.
 	 */
-	public function move_event_date( $post_id, Occurrence $occurrence ) {
+	public function move_event_date( int $post_id, Occurrence $occurrence ): void {
 		update_post_meta( $post_id, '_EventStartDate', $occurrence->start_date );
 		update_post_meta( $post_id, '_EventStartDateUTC', $occurrence->start_date_utc );
 		update_post_meta( $post_id, '_EventEndDate', $occurrence->end_date );
@@ -175,6 +175,7 @@ class Events {
 			}
 		}
 		unset( $exclusion );
+		update_post_meta( $post_id, '_EventRecurrence', $recurrence );
 	}
 
 	/**
@@ -188,7 +189,7 @@ class Events {
 	 * @return array<string,mixed>|false The updated `_EventRecurrence` format contents,
 	 *                                   or `false` if the update failed.
 	 */
-	public function set_until_limit_on_event( $post_id, $date ) {
+	public function set_until_limit_on_event( int $post_id, string $date ) {
 		$post_id = Occurrence::normalize_id( $post_id );
 
 		$recurrence = (array) get_post_meta( $post_id, '_EventRecurrence', true );
@@ -332,7 +333,7 @@ class Events {
 	 *
 	 * @return bool Whether the meta was saved or not.
 	 */
-	public function save_recurrence_meta( $post_id, array $data ) {
+	public function save_recurrence_meta( int $post_id, array $data ): bool {
 		// Do not update recurrence meta on preview.
 		if ( isset( $data['wp-preview'] ) && $data['wp-preview'] === 'dopreview' ) {
 			return false;
@@ -372,7 +373,7 @@ class Events {
 	 * @return bool Whether the Series to Event relationship information was available
 	 *              in the request and could be saved correctly, `false` otherwise.
 	 */
-	public function update_relationships( $post_id, $request ) {
+	public function update_relationships( int $post_id, WP_REST_Request $request): bool {
 		$post = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post || TEC::POSTTYPE !== $post->post_type ) {
@@ -418,7 +419,7 @@ class Events {
 	 *
 	 * @return bool If valid request to delete transients.
 	 */
-	public function delete_occurrence_transients( $post_id ) {
+	public function delete_occurrence_transients( $post_id ): bool {
 		if ( $this->provisional_post->is_provisional_post_id( $post_id ) ) {
 			return false;
 		}
@@ -446,7 +447,7 @@ class Events {
 	 *                      Series relationships table; the ones that might be affected in the
 	 *                      posts and postmeta tables will not be counted. False if invalid operation.
 	 */
-	public function delete( $post_id ) {
+	public function delete( int $post_id ) {
 		if ( TEC::POSTTYPE !== get_post_type( $post_id ) ) {
 			// Not an Event post.
 			return false;
@@ -494,7 +495,7 @@ class Events {
 	 *
 	 * @return bool Whether the two sets are equal or not.
 	 */
-	public function compare_recurrence_meta( $a, $b, $ignore_dates = true ) {
+	public function compare_recurrence_meta( $a, $b, bool $ignore_dates = true ): bool {
 		if ( ! is_array( $a ) && is_array( $b ) ) {
 			return false;
 		}
@@ -526,7 +527,7 @@ class Events {
 	 *
 	 * @see   wpdb::prepare() For the format to use to provide the `$where` argument.
 	 */
-	public function transfer_occurrences_from_to( $from_id, $to_id, $where = '1 = 1', ...$where_values ) {
+	public function transfer_occurrences_from_to( int $from_id, int $to_id, string $where = '1 = 1', ...$where_values ): void {
 		global $wpdb;
 		$occurrences = Occurrences::table_name( true );
 		$sequence = ECP_Occurrence::get_sequence( $to_id );
@@ -717,7 +718,7 @@ class Events {
 	 *                               or `null` to indicate the match logic should not apply
 	 *                               (e.g. it's a single Event).
 	 */
-	public function get_occurrence_match( $tec_occurrence, $result, $post_id ) {
+	public function get_occurrence_match( ?Occurrence $tec_occurrence, Occurrence $result, int $post_id ) {
 		if ( empty( get_post_meta( $post_id, '_EventRecurrence', true ) ) ) {
 			// Not recurring, let TEC apply its default logic.
 			return $tec_occurrence;
@@ -784,14 +785,19 @@ class Events {
 	 * @param string|array<string,mixed>|null $exclusions_meta_value The exclusions meta value that will be used for
 	 *                                                               the conversion, if not provided, then the
 	 *                                                               current one will be read from the database.
-	 *
+	 * @param DateTimeImmutable|null          $dtstart               The Event DTSTART.
+	 * @param DateTimeImmutable|null          $dtend                 The Event DTEND.
 	 * @return array<string,mixed>|false Either the converted set of Recurrence rules and exclusions,
-	 *                                   if found and matched for the specified Event in the Request,
-	 *                                   `false` otherwise.
+	 *                                                               if found and matched for the specified Event in the
+	 *                                                               Request, `false` otherwise.
 	 */
-	public function convert_request_recurrence_meta( $post_id, $rules_meta_value = null, $exclusions_meta_value = null, DateTimeImmutable $dtstart = null, DateTimeImmutable $dtend = null ) {
-		$post_id = (int) $post_id;
-
+	public function convert_request_recurrence_meta(
+		int $post_id,
+		$rules_meta_value = null,
+		$exclusions_meta_value = null,
+		DateTimeImmutable $dtstart = null,
+		DateTimeImmutable $dtend = null
+	) {
 		try {
 			if ( is_null( $dtstart ) || is_null( $dtend ) ) {
 				return false;
@@ -854,7 +860,7 @@ class Events {
 	 *
 	 * @see   \Tribe__Events__Pro__Editor__Recurrence__Provider::parse_rules() for the original method.
 	 */
-	private function parse_rules( $rules ) {
+	private function parse_rules( ?array $rules ): array {
 		if ( null === $rules ) {
 			return [];
 		}
@@ -881,7 +887,7 @@ class Events {
 	 *
 	 * @return array<string,mixed> The set of date updates to commit.
 	 */
-	public function adjust_request_dates( WP_REST_Request $request, Occurrence $occurrence ) {
+	public function adjust_request_dates( WP_REST_Request $request, Occurrence $occurrence ): array {
 		if ( empty( $request->get_param( 'id' ) ) ) {
 			return [];
 		}
@@ -988,7 +994,7 @@ class Events {
 	 *
 	 * @return false|int Either the number of updated rows, or `false` if the update failed.
 	 */
-	public function update_occurrence_from_post( $occurrence_id, $post_id ) {
+	public function update_occurrence_from_post( int $occurrence_id, int $post_id ) {
 		$event_data = Event::data_from_post( $post_id );
 
 		if ( empty( $event_data ) ) {
@@ -1018,7 +1024,7 @@ class Events {
 	 * @return array<string,mixed>|false The updated `_EventRecurrence` format contents,
 	 *                                   or `false` if the update failed.
 	 */
-	public function set_count_limit_on_event( $post_id, $count ) {
+	public function set_count_limit_on_event( int $post_id, int $count ) {
 		$post_id = Occurrence::normalize_id( $post_id );
 
 		$recurrence = (array) get_post_meta( $post_id, '_EventRecurrence', true );
@@ -1078,7 +1084,7 @@ class Events {
 	 * @return array<string,mixed> The recurrence rule, its `same-time`, and related entries,
 	 *                             normalized.
 	 */
-	private function normalize_rule( array $rule, $timezone ) {
+	private function normalize_rule( array $rule, $timezone ): ?array {
 		try {
 			return Date_Rule::from_event_recurrence_format( $rule )->to_event_recurrence_format();
 		} catch ( Exception $e ) {
@@ -1097,7 +1103,7 @@ class Events {
 	 *
 	 * @return array The updated rules set.
 	 */
-	public function replace_rdates_in_rules( array $rules_set, array $rdates_set ) {
+	public function replace_rdates_in_rules( array $rules_set, array $rdates_set ): array {
 		$rules_set = array_values( array_filter( $rules_set, [ $this, 'is_rrule' ] ) );
 		if ( ! empty( $rdates_set ) ) {
 			array_push( $rules_set, ...$rdates_set );
@@ -1119,7 +1125,7 @@ class Events {
 	 *                                  `false` to indicate no recurrence meta could be found in the
 	 *                                  request.
 	 */
-	public function get_event_recurrence_format_meta( $post_id, WP_REST_Request $request = null ) {
+	public function get_event_recurrence_format_meta( int $post_id, WP_REST_Request $request = null ) {
 		$request_meta = $this->get_request_meta( $request );
 		$recurrence_meta = $request !== null ? $request->get_param( 'recurrence' ) : null;
 
@@ -1170,7 +1176,7 @@ class Events {
 	 *                                  request object, or `null` if no meta was
 	 *                                  defined in the object.
 	 */
-	public function get_request_meta( $request ) {
+	public function get_request_meta( WP_REST_Request $request ): ?array {
 		if ( ! $request instanceof WP_REST_Request ) {
 			return null;
 		}

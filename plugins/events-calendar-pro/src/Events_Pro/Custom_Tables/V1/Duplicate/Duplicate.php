@@ -151,7 +151,7 @@ class Duplicate {
 	 *
 	 * @return string Teh duplicate link html.
 	 */
-	protected function get_duplicate_link( $post ) {
+	protected function get_duplicate_link( WP_Post $post ): string {
 		$aria_label = sprintf(
 			'%1$s %2$s.',
 				esc_html_x(
@@ -163,6 +163,10 @@ class Duplicate {
 			);
 
 		$post_id = $this->get_post_id( $post );
+
+		if( ! $post_id ) {
+			return '';
+		}
 
 		ob_start();
 		?>
@@ -324,6 +328,7 @@ class Duplicate {
 						'_EventEndDateUTC'            => $event->end_date_utc,
 						'_EventAllDay'                => $event->all_day,
 						'_EventTimezone'              => $event->timezone,
+						'_EventTimezoneAbbr'          => get_post_meta( $event->ID, '_EventTimezoneAbbr', true ),
 						'_EventHideFromUpcoming'      => get_post_meta( $event->ID, '_EventHideFromUpcoming', true ),
 						'_tribe_featured'             => $event->featured,
 						'_EventVenueID'               => tribe_get_venue_id( $event->ID ),
@@ -336,6 +341,10 @@ class Duplicate {
 						'_EventCurrencySymbol'        => get_post_meta( $event->ID, '_EventCurrencySymbol', true ),
 						'_EventCurrencyPosition'      => get_post_meta( $event->ID, '_EventCurrencyPosition', true ),
 						'_EventRecurrence'            => get_post_meta( $event->ID, '_EventRecurrence', true ),
+						'_EventCostDescription'       => get_post_meta( $event->ID, '_EventCostDescription', true ),
+						'_EventCurrencyCode'          => get_post_meta( $event->ID, '_EventCurrencyCode', true ),
+						'_EventDateTimeSeparator'     => get_post_meta( $event->ID, '_EventDateTimeSeparator', true ),
+						'_EventTimeRangeSeparator'    => get_post_meta( $event->ID, '_EventTimeRangeSeparator', true ),
 				],
 		];
 
@@ -387,13 +396,19 @@ class Duplicate {
 	 * @param WP_Post $duplicated The duplicated event post object, as decorated by the `tribe_get_event` function.
 	 * @param WP_Post $event      The event post object, as decorated by the `tribe_get_event` function.
 	 */
-	public function save_recurrences( $duplicated, $event ) {
+	public function save_recurrences( WP_Post $duplicated, WP_Post $event ): void {
 		$post_id = $this->get_post_id( $event );
 
+		if ( ! $post_id ) {
+			return;
+		}
+
 		$rset = Event::find( $post_id, 'post_id' )->rset;
+
 		if ( empty( $rset ) ) {
 			return;
 		}
+
 		//TODO DUPLICATE - from here to the upsert might be unnecessary depending on the coding to solve the update prompt
 		$event_model = Event::find( $post_id, 'post_id' );
 		$data = [
@@ -430,8 +445,13 @@ class Duplicate {
 	 * @param WP_Post $duplicated The duplicated event post object, as decorated by the `tribe_get_event` function.
 	 * @param WP_Post $event      The event post object, as decorated by the `tribe_get_event` function.
 	 */
-	public function save_additional_meta( $duplicated, $event  ) {
+	public function save_additional_meta( WP_Post $duplicated, WP_Post $event  ): void {
 		$post_id = $this->get_post_id( $event );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
 		$all_meta = get_post_meta( $post_id );
 		$prefix = '_ecp_custom_';
 
@@ -469,7 +489,7 @@ class Duplicate {
 	 * @param WP_Post $duplicated The duplicated event post object, as decorated by the `tribe_get_event` function.
 	 * @param WP_Post $event      The event post object, as decorated by the `tribe_get_event` function.
 	 */
-	public function save_virtual_meta( $duplicated, $event ) {
+	public function save_virtual_meta( WP_Post $duplicated, WP_Post $event ): void {
 		if ( ! class_exists( Virtual_Meta::class ) ) {
 			return;
 		}
@@ -480,6 +500,11 @@ class Duplicate {
 
 		// Save the default virtual data.
 		$post_id = $this->get_post_id( $event );
+
+		if ( ! $post_id ) {
+			return;
+		}
+
 		$virtual_meta = Virtual_Meta::$virtual_event_keys;
 
 		/**
@@ -562,9 +587,10 @@ class Duplicate {
 	 *
 	 * @param WP_Post $event The event post object, as decorated by the `tribe_get_event` function.
 	 *
-	 * @return int The post id for an event.
+	 * @return int|null The post id for an event, or `null` if no Occurrence for the provisional
+	 *                  post ID can be found.
 	 */
-	protected function get_post_id( $event ) {
+	protected function get_post_id( WP_Post $event ): ?int {
 		$is_provisional = $this->provisional_post->is_provisional_post_id( $event->ID );
 
 		if ( ! $is_provisional ) {
@@ -573,7 +599,9 @@ class Duplicate {
 
 		$occurrence_id = $this->provisional_post->normalize_provisional_post_id( $event->ID );
 
-		return Occurrence::find( $occurrence_id, 'occurrence_id' )->post_id;
+		$model = Occurrence::find( $occurrence_id, 'occurrence_id' );
+
+		return $model instanceof Occurrence ? $model->post_id : null;
 	}
 
 	/**

@@ -17,8 +17,6 @@ use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Migration\State;
 use TEC\Events\Custom_Tables\V1\Provider as TEC_Provider;
 use Throwable;
-use Tribe__Events__Pro__Main;
-use Tribe__Template;
 
 /**
  * Class Provider

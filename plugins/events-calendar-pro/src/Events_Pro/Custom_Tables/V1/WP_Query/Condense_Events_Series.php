@@ -97,7 +97,11 @@ class Condense_Events_Series {
 	 *
 	 * @return string The filtered `WHERE` query, if required.
 	 */
-	public function hide_subsequent_recurrences( $where, WP_Query $query ) {
+	public function hide_subsequent_recurrences( $where, $query ) {
+		if ( ! $query instanceof WP_Query ) {
+			return $where;
+		}
+
 		remove_filter( 'posts_where', [ $this, 'hide_subsequent_recurrences' ], 200 );
 
 		$occurrences_table         = Occurrences::table_name( true );

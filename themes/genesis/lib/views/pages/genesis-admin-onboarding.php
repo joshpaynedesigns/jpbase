@@ -129,8 +129,7 @@ $genesis_onboarding_nav_menus = genesis_onboarding_navigation_menus();
 				<ul>
 					<li><a href="https://wordpress.org/gutenberg/"><?php esc_html_e( 'Gutenberg Intro', 'genesis' ); ?></a></li>
 					<li><a href="https://studiopress.blog"><?php esc_html_e( 'StudioPress Blog', 'genesis' ); ?></a></li>
-					<li><a href="https://gutenberg.news"><?php esc_html_e( 'Gutenberg News', 'genesis' ); ?></a></li>
-					<li><a href="https://atomicblocks.com"><?php esc_html_e( 'Atomic Blocks', 'genesis' ); ?></a></li>
+					<li><a href="https://developer.wpengine.com/genesis-blocks"><?php esc_html_e( 'Genesis Blocks', 'genesis' ); ?></a></li>
 				</ul>
 			</section>
 		</aside>

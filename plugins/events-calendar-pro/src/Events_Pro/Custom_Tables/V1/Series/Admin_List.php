@@ -36,9 +36,13 @@ class Admin_List {
 	 *
 	 * @param array<string, string> $columns An array with the available columns.
 	 *
-	 * @return array
+	 * @return array The filtered columns.
 	 */
-	public function include_custom_columns( array $columns = [] ) {
+	public function include_custom_columns( $columns = [] ) {
+		if ( ! is_array( $columns ) ) {
+			return $columns;
+		}
+
 		$columns['start_date']  = __( 'Start Date', 'tribe-events-calendar-pro' );
 		$columns['events'] = __( 'Events', 'tribe-events-calendar-pro' );
 		// Remove the post type publish date.
@@ -54,10 +58,15 @@ class Admin_List {
 	 *
 	 * @param array<string> $columns An array with the available columns.
 	 *
-	 * @return array
+	 * @return array The filtered columns.
 	 */
-	public function include_sortable_columns( array $columns = [] ) {
+	public function include_sortable_columns( $columns = [] ) {
+		if ( ! is_array( $columns ) ) {
+			return $columns;
+		}
+
 		$columns['start_date'] = [ 'start_date', 'desc' ];
+
 		return $columns;
 	}
 
@@ -69,13 +78,13 @@ class Admin_List {
 	 * @param string $column  The ID name of the column.
 	 * @param int    $post_id The ID of the Series Post
 	 */
-	public function custom_column( $column, $post_id ) {
+	public function custom_column( string $column, int $post_id ) {
 		switch ( $column ) {
 			case 'start_date':
-				$occurrence = $this->get_first_related_occurrence( $post_id );
+				$relationship = $this->get_start_date_relationship( $post_id );
 
-				if ( $occurrence instanceof Model ) {
-					$start_date = Dates::immutable( $occurrence->start_date, $occurrence->timezone );
+				if ( $relationship !== null ) {
+					$start_date = Dates::immutable( $relationship->start_date, $relationship->timezone );
 					$format     = tribe_get_date_format( true );
 					echo esc_html( $start_date->format( $format ) );
 
@@ -114,7 +123,7 @@ class Admin_List {
 	 *
 	 * @return int The number of Events related to the Series.
 	 */
-	private function get_recurring_events_count( $post_id ) {
+	private function get_recurring_events_count( int $post_id ): int {
 		global $wpdb;
 		$events                 = Events::table_name( true );
 		$series_relationships   = Series_Relationships::table_name( true );
@@ -145,7 +154,7 @@ class Admin_List {
 	 *
 	 * @return int The number of Occurrences related to a Series.
 	 */
-	protected function get_occurrence_count( $post_id ) {
+	protected function get_occurrence_count( int $post_id ): int {
 		return tribe( EventsRepo::class )->get_occurrence_count_for_series( $post_id );
 	}
 
@@ -156,16 +165,17 @@ class Admin_List {
 	 *
 	 * @param int $post_id The post ID of the Series to find the first Occurrence for.
 	 *
-	 * @return Occurrence|null Either a reference to the model of the first related Occurrence, or `null`
-	 *                         if no related Occurrence could be found.
+	 * @return Series_Relationship|null A reference to the Series Relationship for the Event or `null` if not found;
+	 *                                  note the Model instance will include the first related Event date fields.
 	 */
-	protected function get_first_related_occurrence( $post_id ) {
-		$occurrence = Series_Relationship::where( 'series_post_id', $post_id )
-		                                 ->join( Events::table_name( true ), 'event_id', 'event_id' )
-		                                 ->order_by( 'start_date' )
-		                                 ->first();
+	protected function get_start_date_relationship( int $post_id ): ?Series_Relationship {
+		/** @var Series_Relationship $series_relationship */
+		$series_relationship = Series_Relationship::where( 'series_post_id', $post_id )
+			->join( Events::table_name( true ), 'event_id', 'event_id' )
+			->order_by( 'start_date' )
+			->first();
 
-		return $occurrence;
+		return $series_relationship;
 	}
 
 	/**
@@ -178,7 +188,7 @@ class Admin_List {
 	 *
 	 * @return array<string,string>
 	 */
-	public function filter_series_rows_clauses( $clauses, $query ) {
+	public function filter_series_rows_clauses( array $clauses, WP_Query $query ): array {
 		global $wpdb;
 		// Are we on the Series list view?
 		$on_series_page = is_admin()

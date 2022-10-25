@@ -21,12 +21,12 @@ use Tribe\Events\Pro\Views\V2\Views\Widgets\Countdown_View;
 use Tribe\Events\Pro\Views\V2\Views\Widgets\Venue_View;
 use Tribe\Events\Pro\Views\V2\Views\Widgets\Week_View;
 use Tribe\Events\Pro\Views\V2\Widgets\Traits\Widget_Shortcode;
-use Tribe\Events\Test\WP_Screen;
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe\Events\Views\V2\Views\Widgets\Widget_View;
 use Tribe\Events\Views\V2\Widgets\Widget_Abstract;
 use Tribe\Events\Views\V2\Widgets\Widget_List;
 use \Tribe\Events\Pro\Views\V2\Shortcodes\Tribe_Events as Tribe_Events_Shortcode;
+use WP_Screen;
 
 /**
  * Class Hooks.

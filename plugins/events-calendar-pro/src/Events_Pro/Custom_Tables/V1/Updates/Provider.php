@@ -14,6 +14,7 @@ use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
+use WP_Error;
 use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
@@ -50,6 +51,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 
 		add_filter( 'tec_events_pro_recurrence_meta_get', [ $this, 'add_off_pattern_start_flag' ], 10, 2 );
 		add_filter( 'tec_events_pro_recurrence_meta_update', [ $this, 'add_off_pattern_start_flag' ], 10, 2 );
+		add_filter( 'post_row_actions', [ $this, 'add_update_links' ], 20, 2 );
 	}
 
 	/**
@@ -58,7 +60,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 */
-	public function hook_to_watch_for_post_updates() {
+	public function hook_to_watch_for_post_updates(): void {
 		/*
 	   * Add the `_EventRecurrence` meta to the meta keys that should be watched for updates.
 	   */
@@ -70,7 +72,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 */
-	public function hook_to_delete_event() {
+	public function hook_to_delete_event(): void {
 		add_action( 'tec_events_custom_tables_v1_delete_post', [ $this, 'commit_delete' ], 10, 1 );
 		add_action( 'tec_events_custom_tables_v1_delete_post', [ $this, 'delete_occurrence_transients' ], 10, 1 );
 
@@ -97,7 +99,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @since 6.0.0
 	 *
 	 */
-	public function hook_to_redirect_post_updates() {
+	public function hook_to_redirect_post_updates(): void {
 		/**
 		 * When TEC would redirect a Classic Editor request, apply the plugin redirection logic.
 		 * On Single and Upcoming type of updates, create new posts and redirect the
@@ -122,7 +124,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @since 6.0.0
 	 *
 	 */
-	public function hook_to_commit_post_updates() {
+	public function hook_to_commit_post_updates(): void {
 		/*
 	    * In the AFTER-WRITE, BEFORE-READ portion of the code, we'll need the `_EventRecurrence` meta
 	    * to be saved.
@@ -164,6 +166,49 @@ class Provider extends Service_Provider implements Provider_Contract {
 		 */
 		add_action( 'update_post_meta', [ $this, 'sync_blocks_recurrence_meta' ], 10, 4 );
 		add_action( 'delete_post_meta', [ $this, 'sync_blocks_recurrence_meta' ], 10, 4 );
+
+		/**
+		 * These evaluate and redirect the page and subsequent requests to the appropriate ID in cases an occurrence was pruned.
+		 */
+		add_action( 'tec_events_custom_tables_v1_updated_post', [ $this, 'resolve_potential_redirect' ], 10, 3 );
+		add_filter( 'tec_events_custom_tables_v1_redirect_post_location', [
+			$this,
+			'classic_redirect_post_location'
+		], 10, 2 );
+	}
+
+	/**
+	 * This will use the logic that handles scenarios redirecting pruned occurrences to the proper destination
+	 * occurrence, for the classic editor.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param string  $location The URL being filtered.
+	 * @param numeric $post_id  The event post ID.
+	 *
+	 * @return string The redirected location
+	 */
+	public function classic_redirect_post_location( $location, $post_id ) {
+		return $this->container->make( Controller::class )->classic_redirect_post_location( (string) $location, (int) $post_id );
+	}
+
+	/**
+	 * Evaluates context and occurrence requests to determine if this occurrence was pruned and needs to have the ID
+	 * redirected to a new occurrence ID. This logic is used for both block and classic editor.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param bool            $updated Whether this event was updated.
+	 * @param numeric         $post_id The post ID for this event.
+	 * @param WP_REST_Request $request The request object being used for these updates.
+	 *
+	 * @return bool The update flag.
+	 * @throws \Exception
+	 */
+	public function resolve_potential_redirect( $updated, $post_id, WP_REST_Request $request ) {
+		remove_action( 'tec_events_custom_tables_v1_updated_post', [ $this, 'resolve_potential_redirect' ], 10, 3 );
+
+		return $this->container->make( Controller::class )->resolve_potential_redirect( (bool) $updated, (int) $post_id, $request );
 	}
 
 	/**
@@ -172,6 +217,11 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @since 6.0.0
 	 */
 	public function unregister() {
+		remove_action( 'tec_events_custom_tables_v1_updated_post', [ $this, 'resolve_potential_redirect' ], 10 );
+		remove_filter( 'tec_events_custom_tables_v1_redirect_post_location', [
+			$this,
+			'classic_redirect_post_location'
+		], 10 );
 		remove_action( 'tec_events_custom_tables_v1_redirect_classic_editor_event_post',
 			[ $this, 'redirect_classic_editor_request' ] );
 		remove_action( 'tec_events_custom_tables_v1_redirect_rest_event_post', [ $this, 'redirect_rest_request' ] );
@@ -195,7 +245,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int    $meta_id    The unique value for the entry in custom fields table, unused.
+	 * @param array|int    $meta_id    The unique value for the entry in custom fields table, unused.
 	 * @param int    $object_id  The ID of the post whose meta is being updated.
 	 * @param string $meta_key   The meta key of the filtered update.
 	 * @param mixed  $meta_value The value of the filtered update.
@@ -203,7 +253,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return void The method will update the Block Editor format recurrence meta converting the
 	 *              input value in the `_EventRecurrence` format.
 	 */
-	public function sync_blocks_recurrence_meta( $meta_id, $object_id, $meta_key, $meta_value ) {
+	public function sync_blocks_recurrence_meta( $meta_id, int $object_id, string $meta_key, $meta_value ): void {
 		$this->container->make( Controller::class )
 		                ->sync_from_classic_format( $object_id, $meta_key, $meta_value );
 	}
@@ -223,7 +273,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return bool Whether the custom tables should be updated or not, taking the input
 	 *              value into account.
 	 */
-	public function should_update_custom_tables( $should_update, $post_id, $request ) {
+	public function should_update_custom_tables( bool $should_update, int $post_id, WP_REST_Request $request ): bool {
 		return $this->container->make( Controller::class )
 		                       ->should_update_custom_tables( $should_update, $post_id, $request );
 	}
@@ -237,7 +287,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @param WP_REST_Request $request A reference to the Request object that triggered
 	 *                                 the delete operation.
 	 */
-	public function commit_delete( $post_id ) {
+	public function commit_delete( int $post_id ): void {
 		$this->container->make( Controller::class )->delete( $post_id );
 	}
 
@@ -248,7 +298,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @param numeric $post_id The post ID to delete occurrence transients for.
 	 */
-	public function delete_occurrence_transients( $post_id ) {
+	public function delete_occurrence_transients( $post_id ): void {
 		$this->container->make( Controller::class )->delete_occurrence_transients( $post_id );
 	}
 
@@ -263,7 +313,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return void The method does not return any value: its side-effect
 	 *              is the update of some super-global, request, values.
 	 */
-	public function redirect_classic_editor_request() {
+	public function redirect_classic_editor_request(): void {
 		$this->container->make( Controller::class )->redirect_classic_editor_request();
 	}
 
@@ -281,9 +331,10 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return void The method will have the side-effect of updating the request information
 	 *              in the Request object and in the reques super-globals.
 	 */
-	public function redirect_rest_request( WP_REST_Request $request ) {
+	public function redirect_rest_request( WP_REST_Request $request ): void {
 		$this->container->make( Controller::class )->redirect_request( $request );
 	}
+
 
 	/**
 	 * Filters the list of meta keys that should be watched for changes to,
@@ -299,7 +350,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return array<string> The filtered list of watched meta keys, including
 	 *                       the one that will model and Event recurrence rules.
 	 */
-	public function track_pro_meta_keys( array $meta_keys ) {
+	public function track_pro_meta_keys( array $meta_keys ): array {
 		$meta_keys[] = '_EventRecurrence';
 
 		return $meta_keys;
@@ -321,7 +372,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @return bool Whether the updates were applied correctly or not.
 	 */
-	public function commit_post_updates_after( $updated, $post_id, WP_REST_Request $request ) {
+	public function commit_post_updates_after( bool $updated, int $post_id, WP_REST_Request $request ): bool {
 		if ( ! $updated ) {
 			// If the Event was not correctly updated, do not proceed.
 			return $updated;
@@ -338,7 +389,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @param int                 $event_id The Event post ID.
 	 * @param array<string,mixed> $data     The Event update data, as provided by the TEC API.
 	 */
-	public function save_recurrence_meta( $event_id, array $data = [] ) {
+	public function save_recurrence_meta( int $event_id, array $data = [] ): void {
 		$this->container->make( Controller::class )->save_recurrence_meta( $event_id, $data );
 	}
 
@@ -350,7 +401,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @param int $post_id The ID of the Event post the Occurrences are being saved for.
 	 */
-	public function prune_occurrences_by_sequence( $post_id ) {
+	public function prune_occurrences_by_sequence( int $post_id ): void {
 		$this->container->make( Controller::class )->prune_occurrences_by_sequence( $post_id );
 	}
 
@@ -368,7 +419,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @return Occurrence|null Either the reference to an existing Occcurrence matching the one
 	 *                          that should be inserted, or `null` to indicate none was found.
 	 */
-	public function get_occurrence_match( $occurrence, $result, $post_id ) {
+	public function get_occurrence_match( ?Occurrence $occurrence, Occurrence $result, int $post_id ): ?Occurrence {
 		return $this->container->make( Events::class )->get_occurrence_match( $occurrence, $result, $post_id );
 	}
 
@@ -378,7 +429,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 */
-	private function hook_into_post_ops() {
+	private function hook_into_post_ops(): void {
 		// Filters the unique post slug generated for an Occurrence.
 		add_filter( 'wp_unique_post_slug', [ $this, 'unique_post_slug_for_occurrence' ], 10, 6 );
 	}
@@ -397,7 +448,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @return string The filtered unique post slug.
 	 */
-	public function unique_post_slug_for_occurrence( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug ) {
+	public function unique_post_slug_for_occurrence( string $slug, int $post_ID, string $post_status, string $post_type, int $post_parent, string $original_slug ): string {
 		return $this->container->make( Post_Ops::class )
 		                       ->get_occurrence_post_slug( $slug, $post_ID, $post_type, $original_slug );
 	}
@@ -411,7 +462,15 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * @param WP_REST_Response $response A reference to the REST response generated for the delete or trash request.
 	 * @param WP_REST_Request  $request  A reference to the REST request that triggered the post trash or deletion.
 	 */
-	public function redirect_deleted_occurrence( WP_Post $post, WP_REST_Response $response, WP_REST_Request $request ) {
+	public function redirect_deleted_occurrence( $post, $response, $request ) {
+		if ( ! (
+			$post instanceof WP_Post
+			&& $response instanceof WP_REST_Response
+			&& $response instanceof WP_REST_Request
+		) ) {
+			return;
+		}
+
 		$this->container->make( Controller::class )->redirect_deleted_occurrence( $post, $response, $request );
 	}
 
@@ -421,13 +480,17 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array<string,mixed> $recurrence_meta The Event recurrence meta in the format used by the
+	 * @param array<string,mixed>|string $recurrence_meta The Event recurrence meta in the format used by the
 	 *                                             `_EventRecurrence` meta value.
 	 * @param int                 $post_id         The Event post ID.
 	 *
-	 * @return array<string,mixed> The Event recurrence meta updated to add the flag.
+	 * @return array<string,mixed>|string The Event recurrence meta updated to add the flag.
 	 */
-	public function add_off_pattern_start_flag( $recurrence_meta, $post_id ) {
+	public function add_off_pattern_start_flag( $recurrence_meta, int $post_id ) {
+		if ( ! is_array( $recurrence_meta ) ) {
+			return $recurrence_meta;
+		}
+
 		return $this->container->make( Controller::class )
 		                       ->add_off_pattern_flag_to_meta_value( $recurrence_meta, $post_id );
 	}
@@ -443,18 +506,43 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param WP_REST_Response $response A reference to the REST response generated for the delete request.
-	 * @param array|callable   $handler  The handler picked by WordPress for the delete request.
-	 * @param WP_REST_Request  $request  A reference to the REST request that triggered the delete request.
+	 * @param WP_REST_Response|WP_Error|null $response A reference to the REST response generated for the delete request.
+	 * @param null                           $handler  The handler picked by WordPress for the delete request.
+	 * @param WP_REST_Request|null           $request  A reference to the REST request that triggered the delete request.
 	 *
-	 * @return WP_REST_Response The REST response generated for the delete request, unmodified since
-	 *                          this filter is used as an action to modify the Request object.
+	 * @return WP_REST_Response|WP_Error|null The REST response generated for the delete request, unmodified since
+	 *                                        this filter is used as an action to modify the Request object.
 	 */
-	public function redirect_trash_delete_request( $response = null, $handler = null, WP_REST_Request $request = null ) {
+	public function redirect_trash_delete_request( $response = null, $handler = null, $request = null ) {
+		if ( ! $request instanceof WP_REST_Request ) {
+			return $response;
+		}
+
 		$this->container->make( Controller::class )
 		                ->redirect_delete_request( $request );
 
 		// Return the response unmodified: we use this filter as an action.
 		return $response;
+	}
+
+	/**
+	 * Filters the available post actions to add the direct update links.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param array   $actions The available post actions.
+	 * @param WP_Post $post    The post object.
+	 *
+	 * @return array The available post actions with the direct update links added.
+	 */
+	public function add_update_links( array $actions, WP_Post $post ): array {
+		$more_actions = $this->container->make( Post_Actions::class )
+			->get_post_update_links( $post );
+
+		if ( ! count( $more_actions ) ) {
+			return $actions;
+		}
+
+		return array_merge( $actions, $more_actions );
 	}
 }

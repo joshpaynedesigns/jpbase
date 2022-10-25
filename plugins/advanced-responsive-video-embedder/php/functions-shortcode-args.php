@@ -78,15 +78,13 @@ function arg_maxwidth( array $a ) {
 
 		if ( in_array( $a['align'], array( 'left', 'right', 'center' ), true ) ) {
 			$a['maxwidth'] = (int) $options['align_maxwidth'];
+		} elseif ( is_gutenberg() ) {
+			$a['maxwidth'] = false;
 		} elseif ( empty( $options['maxwidth'] ) ) {
 			$a['maxwidth'] = (int) empty( $GLOBALS['content_width'] ) ? DEFAULT_MAXWIDTH : $GLOBALS['content_width'];
 		} else {
 			$a['maxwidth'] = (int) $options['maxwidth'];
 		}
-	}
-
-	if ( $a['maxwidth'] < 50 ) {
-		$a['errors']->add( 'maxw', __( 'Maxwidth needs to be 50+', 'advanced-responsive-video-embedder' ) );
 	}
 
 	return $a['maxwidth'];
@@ -228,6 +226,8 @@ function validate_align( array $a ) {
 		case 'left':
 		case 'right':
 		case 'center':
+		case 'wide':
+		case 'full':
 			break;
 		default:
 			$a['errors']->add(
@@ -250,8 +250,8 @@ function validate_aspect_ratio( array $a ) {
 
 	$ratio = explode( ':', $a['aspect_ratio'] );
 
-	if ( empty( $ratio[0] ) || ! is_numeric( $ratio[0] ) ||
-		empty( $ratio[1] ) || ! is_numeric( $ratio[1] )
+	if ( empty( $ratio[0] ) || ! ctype_digit( (string) $ratio[0] ) ||
+		empty( $ratio[1] ) || ! ctype_digit( (string) $ratio[1] )
 	) {
 		$a['errors']->add(
 			'aspect_ratio',
@@ -271,7 +271,7 @@ function arg_img_src( array $a ) {
 
 	if ( $a['thumbnail'] ) :
 
-		if ( is_numeric( $a['thumbnail'] ) ) {
+		if ( ctype_digit( (string) $a['thumbnail'] ) ) {
 
 			$img_src = wp_get_attachment_image_url( $a['thumbnail'], 'small' );
 
@@ -369,8 +369,18 @@ function arg_iframe_src( array $a ) {
 
 	$a['src'] = iframe_src_args( $a['src'], $a );
 	$a['src'] = iframe_src_autoplay_args( $a['autoplay'], $a );
+	$a['src'] = iframe_src_jsapi_arg( $a['src'], $a );
 
 	return $a['src'];
+}
+
+function iframe_src_jsapi_arg( $src, $a ) {
+
+	if ( function_exists('Nextgenthemes\ARVE\Pro\init') && 'youtube' === $a['provider'] ) {
+		$src = add_query_arg( [ 'enablejsapi' => 1 ], $src );
+	}
+
+	return $src;
 }
 
 function build_iframe_src( array $a ) {
@@ -445,7 +455,7 @@ function build_iframe_src( array $a ) {
 	return $src;
 }
 
-function compare_oembed_src_with_generated_src( $a ) {
+function compare_oembed_src_with_generated_src( array $a ) {
 
 	if ( empty($a['src']) || empty($a['src_gen']) ) {
 		return;
@@ -666,7 +676,7 @@ function iframe_src_args( $src, array $a ) {
 
 	$options = options();
 
-	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', $a['parameters'] ) );
+	$parameters     = wp_parse_args( preg_replace( '!\s+!', '&', (string) $a['parameters'] ) );
 	$params_options = array();
 
 	if ( ! empty( $options[ 'url_params_' . $a['provider'] ] ) ) {
@@ -797,7 +807,14 @@ function args_detect_html5( array $a ) {
 		}
 
 		if ( $a[ $ext ] ) {
-			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', get_video_type( $ext ), $a[ $ext ] );
+
+			$source = array(
+				'src'  => $a[ $ext ],
+				'type' => get_video_type( $ext ),
+			);
+
+			$a['video_sources'][]     = $source;
+			$a['video_sources_html'] .= sprintf( '<source type="%s" src="%s">', $source['type'], $source['src'], $a[ $ext ] );
 
 			if ( empty( $a['first_video_file'] ) ) {
 				$a['first_video_file'] = $a[ $ext ];
@@ -808,7 +825,53 @@ function args_detect_html5( array $a ) {
 
 	if ( $a['video_sources_html'] ) {
 		$a['provider'] = 'html5';
+		$a['tracks']   = detect_tracks( $a );
 	}
 
 	return $a;
+}
+
+function detect_tracks( array $a ) {
+
+	$tracks = array();
+
+	for ( $n = 1; $n <= NUM_TRACKS; $n++ ) {
+
+		if ( empty( $a[ "track_{$n}" ] ) ) {
+			return array();
+		}
+
+		preg_match(
+			'#-(?<type>captions|chapters|descriptions|metadata|subtitles)-(?<lang>[a-z]{2}).vtt$#i',
+			$a[ "track_{$n}" ],
+			$matches
+		);
+
+		$label = empty( $a[ "track_{$n}_label" ] ) ?
+			get_language_name_from_code( $matches['lang'] ) :
+			$a[ "track_{$n}_label" ];
+
+		$track_attr = array(
+			'default' => ( 1 === $n ) ? true : false,
+			'kind'    => $matches['type'],
+			'label'   => $label,
+			'src'     => $a[ "track_{$n}" ],
+			'srclang' => $matches['lang'],
+		);
+
+		$tracks[] = $track_attr;
+	}//end for
+
+	return $tracks;
+}
+
+function tracks_html( array $tracks ) {
+
+	$html = '';
+
+	foreach ( $tracks as $track_attr ) {
+		$html .= sprintf( '<track%s>', Common\attr( $track_attr ) );
+	}
+
+	return $html;
 }

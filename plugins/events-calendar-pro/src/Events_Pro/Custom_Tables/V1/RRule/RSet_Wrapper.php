@@ -124,7 +124,7 @@ class RSet_Wrapper extends RSet {
 	 *
 	 * @throws Exception If there's any issue building the DTSTART date object from the provided information.
 	 */
-	public function __construct( $string = null, $default_dtstart = null, $excludable_dtstart = false ) {
+	public function __construct( $string = null, $default_dtstart = null, bool $excludable_dtstart = false ) {
 		$dtstart_normalized_string = $this->parse_dtstart( $string, $default_dtstart );
 		$dstart_object = Dates::immutable( $this->dtstart );
 		$this->excludable_dtstart = (bool) $excludable_dtstart;
@@ -525,7 +525,7 @@ class RSet_Wrapper extends RSet {
 		while ( true ) {
 			foreach ( $this->rlist_iterator->current() as $date ) {
 				if ( $date !== null ) {
-					$this->rlist_heap->insert($date);
+					$this->rlist_heap->insert( $date );
 				}
 			}
 
@@ -540,7 +540,10 @@ class RSet_Wrapper extends RSet {
 			$occurrence = $this->rlist_heap->top();
 			$this->rlist_heap->extract(); // remove the occurrence from the heap
 
-			if ( $occurrence == $previous_occurrence ) {
+			if (
+				( $previous_occurrence !== null && $occurrence <= $previous_occurrence )
+				|| in_array( $occurrence, $this->cache, false )
+			) {
 				continue; // skip, was already considered
 			}
 

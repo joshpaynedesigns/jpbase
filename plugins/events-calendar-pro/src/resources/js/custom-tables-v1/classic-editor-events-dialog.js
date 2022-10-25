@@ -148,13 +148,18 @@ tec.classicEditorEventsDialog = tec.classicEditorEventsDialog || {};
 			.join( ' ' );
 		const id = 'tec-events-pro-dialog__radio-input--' + settings.type;
 
-		// @todo: move this to a template.
-		return '<div class="' + classes + '">' +
+		 let html = '<div class="' + classes + '">' +
 			'<input type="radio" name="_tec_update_type" value="' + settings.type + '" class="' + inputClasses + '" id="' + id + '" ' + checked + ' />' +
 			'<label class="' + labelClasses + '" for="' + id + '">' +
-			settings.label +
-			'</label>' +
-			'</div>';
+			settings.label;
+
+		 if ( settings.labelHelpText ) {
+			html += '<div><em style="font-style: italic; color: gray; font-size: 90%">'+settings.labelHelpText+'</em></div>';
+		 }
+
+		 html += '</label></div>';
+
+		 return html;
 	};
 
 	/**
@@ -271,6 +276,7 @@ tec.classicEditorEventsDialog = tec.classicEditorEventsDialog || {};
 			settings.push( {
 				type: obj.updateType.single,
 				label: obj.getDialogThisEventLabel(),
+				labelHelpText: obj.l10n.thisEventHelpText,
 				classes: [],
 				inputClasses: [],
 				labelClasses: [],

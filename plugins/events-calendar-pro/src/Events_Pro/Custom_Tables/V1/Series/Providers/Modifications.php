@@ -101,7 +101,11 @@ class Modifications extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return array<string, array<string>> $messages An associative array with the set of  messages for post types.
 	 */
-	public function series_updated_messages( array $messages ) {
+	public function series_updated_messages( $messages ) {
+		if ( ! is_array( $messages ) ) {
+			return $messages;
+		}
+
 		global $post, $post_ID;
 
 		$post_ID   = isset( $post_ID ) ? (int) $post_ID : 0;

@@ -5,7 +5,7 @@ _deprecated_file( __FILE__, '6.0.0' );
  * @deprecated 6.0.0
  */
 class Tribe__Events__Pro__Countdown_Widget extends \Tribe\Events\Pro\Views\V2\Widgets\Widget_Countdown {
-	public function __construct() {
+	public function __construct( $id_base = '', $name = '', $widget_options = [], $control_options = [] ) {
 		_deprecated_function( __METHOD__, '6.0.0' );
 
 		parent::__construct();

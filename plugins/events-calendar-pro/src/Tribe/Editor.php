@@ -209,7 +209,7 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 			[
 				[
 					'slug'  => 'tribe-events-pro-additional-fields',
-					'title' => __( 'Additional Fields', 'events-pro' ),
+					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
 				],
 			]
 		);
@@ -247,7 +247,7 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 			[
 				[
 					'slug'  => 'tribe-events-pro-additional-fields',
-					'title' => __( 'Additional Fields', 'events-pro' ),
+					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
 				],
 			]
 		);

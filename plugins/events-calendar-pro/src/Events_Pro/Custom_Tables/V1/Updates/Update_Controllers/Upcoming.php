@@ -10,21 +10,14 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers;
 
-use DateTimeZone;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Updates\Requests;
 use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Provider as Notices_Provider;
-use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\From_Blocks_Converter;
-use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
-use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post_Cache;
-use TEC\Events_Pro\Custom_Tables\V1\RRule\Occurrence as RRule_Ocurrence;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Events;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Occurrence_Redirector;
 use WP_Post;
 use WP_REST_Request;
-use Tribe__Date_Utils as Dates;
-use Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta as Blocks_Meta;
-use Tribe__Events__Pro__Editor__Recurrence__Blocks as Classic_2_Blocks_Converter;
 
 /**
  * Class Upcoming
@@ -212,8 +205,8 @@ class Upcoming implements Update_Controller_Interface {
 			$occurrence->start_date,
 			$this->request
 		) ) {
-			$id = $occurrence->provisional_id;
-			$this->occurrence_redirector->set_redirected_id( $id, $id, null, true );
+			// Set flag to evaluate an occurrence being moved to a new ID.
+			tribe( Controller::class )->set_should_redirect_occurrence( true );
 		}
 
 		$this->save_rest_request_recurrence_meta( $this->first_post_id, $this->request, true );

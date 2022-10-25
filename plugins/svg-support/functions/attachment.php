@@ -298,10 +298,10 @@ function bodhi_svgs_dimension_fallback( $image, $attachment_id, $size, $icon ) {
 	// only manipulate for svgs
 	if ( get_post_mime_type($attachment_id) == 'image/svg+xml' ) {
 
-		if ( !isset($image[1]) or $image[1] === 0 ) {
+		if ( isset($image[1]) && $image[1] === 0 ) {
 			$image[1] = 1;
 		}
-		if ( !isset($image[2]) or $image[2] === 0 ) {
+		if ( isset($image[2]) && $image[2] === 0 ) {
 			$image[2] = 1;
 		}
 

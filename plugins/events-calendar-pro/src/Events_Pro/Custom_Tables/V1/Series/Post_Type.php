@@ -53,7 +53,9 @@ class Post_Type {
 			'author',
 		],
 		'show_in_menu'       => false,
-		'rewrite'            => [],
+		'rewrite'            => [
+			'with_front' => false,
+		],
 		'has_archive'        => false,
 	];
 
@@ -99,7 +101,6 @@ class Post_Type {
 	 * @since 6.0.0
 	 */
 	public function __construct() {
-		$this->post_type                = static::POSTTYPE;
 		$this->singular_label           = $this->get_label_singular();
 		$this->singular_label_lowercase = $this->get_label_singular_lowercase();
 		$this->plural_label             = $this->get_label_plural();
@@ -171,6 +172,10 @@ class Post_Type {
 	 * @return WP_Error|WP_Post_Type The registered post type or error if it was not registered correctly.
 	 */
 	public function register_post_type() {
+		if ( post_type_exists( static::POSTTYPE ) ) {
+			return get_post_type_object( static::POSTTYPE );
+		}
+
 		return register_post_type( static::POSTTYPE, $this->get_post_type_args() );
 	}
 
@@ -254,5 +259,23 @@ class Post_Type {
 	 */
 	public function is_same_type( WP_Post $post = null ) {
 		return $post instanceof WP_Post && $post->post_type === static::POSTTYPE;
+	}
+
+	/**
+	 * Registers the Series post type or throws on failure.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @return WP_Post_Type The registered Series post type.
+	 *
+	 * @throws \RuntimeException If the post type registration fails.
+	 */
+	public function register_post_type_or_fail(): WP_Post_Type {
+		$registered = $this->register_post_type();
+		if ( ! $registered instanceof WP_Post_Type ) {
+			throw new \RuntimeException( 'Failed to register the Series post type' );
+		}
+
+		return $registered;
 	}
 }
