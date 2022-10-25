@@ -25,33 +25,6 @@ class Tribe__Events__Pro__Assets {
 	public function register() {
 		$pro = Tribe__Events__Pro__Main::instance();
 
-		tribe_asset(
-			$pro,
-			'tribe-admin-widget',
-			'admin-widget.js',
-			[ 'jquery', 'underscore', 'tribe-select2' ],
-			'admin_enqueue_scripts',
-			[
-				'conditionals' => static function () {
-					if ( ! function_exists( 'get_current_screen' ) ) {
-						return false;
-					}
-
-					$screen = get_current_screen();
-					if ( ! $screen instanceof \WP_Screen ) {
-						return false;
-					}
-
-					$hook = $screen->base;
-					if ( $screen->is_block_editor ) {
-						return true;
-					}
-
-					return 'widgets.php' !== $hook && 'customize.php' !== $hook;
-				}
-			]
-		);
-
 		// Vendor
 		tribe_assets(
 			$pro,
@@ -112,12 +85,11 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_assets(
+		tribe_asset(
 			$pro,
-			array(
-				array( 'tribe_events-premium-admin-style', 'events-admin.css', array() ),
-				array( 'tribe_events-premium-admin', 'events-admin.js', array( 'jquery-ui-datepicker', 'wp-util', 'tribe-timepicker' ) ),
-			),
+			'tribe_events-premium-admin-style',
+			'events-admin.css',
+			array(),
 			array( 'tribe_venues_enqueue', 'tribe_events_enqueue' )
 		);
 

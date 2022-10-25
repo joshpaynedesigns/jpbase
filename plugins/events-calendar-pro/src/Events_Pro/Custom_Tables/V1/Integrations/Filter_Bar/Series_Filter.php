@@ -212,6 +212,11 @@ class Series_Filter extends Filter implements Builder_Where_Contract {
 		if ( empty( $this->joinClause ) ) {
 			$this->setup_join_clause();
 		}
+
+		if ( stripos( $posts_join, $this->joinClause ) !== false ) {
+			return $posts_join;
+		}
+
 		return $posts_join . " \n " . $this->joinClause;
 	}
 
@@ -226,6 +231,11 @@ class Series_Filter extends Filter implements Builder_Where_Contract {
 		if ( empty( $this->whereClause ) ) {
 			$this->setup_where_clause();
 		}
+
+		if ( stripos( $posts_where, $this->whereClause ) !== false ) {
+			return $posts_where;
+		}
+
 		return $posts_where . " \n " .  $this->whereClause;
 	}
 

@@ -10,6 +10,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Series;
 
 
 use TEC\Events\Custom_Tables\V1\Models\Event;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Series as Series_Model;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
 use WP_Post;
@@ -48,8 +49,8 @@ class Relationship {
 			 * so make sure that the previous one (if any) reflects this change, empty state of series.
 			 */
 			Series_Relationship::where( 'event_id', $event->event_id )
-			                   ->where( 'event_post_id', $event->post_id )
-			                   ->delete();
+				->where( 'event_post_id', $event->post_id )
+				->delete();
 
 			return;
 		}
@@ -57,9 +58,9 @@ class Relationship {
 		// Insert all the items of the series.
 		foreach ( $series as $series_post_id ) {
 			$has_relationship = Series_Relationship::where( 'event_id', $event->event_id )
-			                                       ->where( 'event_post_id', $event->post_id )
-			                                       ->where( 'series_post_id', $series_post_id )
-			                                       ->exists();
+				->where( 'event_post_id', $event->post_id )
+				->where( 'series_post_id', $series_post_id )
+				->exists();
 
 			if ( $has_relationship ) {
 				// This relationship already exists nothing to do, move on with the next one.
@@ -75,9 +76,9 @@ class Relationship {
 
 		// Delete all the items that are no longer associated with this event.
 		Series_Relationship::where( 'event_id', $event->event_id )
-		                   ->where( 'event_post_id', $event->post_id )
-		                   ->where_not_in( 'series_post_id', $series )
-		                   ->delete();
+			->where( 'event_post_id', $event->post_id )
+			->where_not_in( 'series_post_id', $series )
+			->delete();
 	}
 
 	/**
@@ -133,6 +134,8 @@ class Relationship {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
 	 * Attach an event into a series, if the series is not provided a new one is created out of the
 	 * post associated with the event.
 	 *
@@ -184,6 +187,7 @@ class Relationship {
 	}
 
 	/**
+>>>>>>> b968ec70d1dd194e53b66faf5e2a8a2364022037
 	 * Remove the relationship between a series post and the events associated with that series.
 	 *
 	 * @since 6.0.0

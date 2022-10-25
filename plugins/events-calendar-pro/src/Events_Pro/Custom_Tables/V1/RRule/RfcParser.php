@@ -131,7 +131,8 @@ class RfcParser extends Original_Rfc_Parser {
 			$end_date = new DateTimeImmutable( $components[1], $tz );
 		}
 
-		if ( $start_date >= $end_date ) {
+		// We allow for start and end dates to be equal, but not end before start.
+		if ( $start_date > $end_date ) {
 			throw new InvalidArgumentException(
 				'Invalid period in RDATE: start date must must be before end date.'
 			);

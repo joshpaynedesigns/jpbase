@@ -12,11 +12,12 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Models;
 use TEC\Events\Custom_Tables\V1\Models\Event as Event;
 use TEC\Events\Custom_Tables\V1\Models\Formatters\Boolean_Formatter;
 use TEC\Events\Custom_Tables\V1\Models\Formatters\Integer_Key_Formatter;
-use TEC\Events\Custom_Tables\V1\Models\Occurrence as Model;
+use TEC\Events\Custom_Tables\V1\Models\Occurrence as Occurrence_Model;
 use TEC\Events\Custom_Tables\V1\Models\Validators\Ignore_Validator;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\RRule\RSet_Wrapper;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Post_Links\Single_Edit_Post_Link;
 use Tribe__Cache as Cache;
 use Tribe__Date_Utils as Dates;
 use Tribe__Utils__Array as Arr;
@@ -39,6 +40,7 @@ class Occurrence {
 	 * @var Provisional_Post
 	 */
 	private $provisional_post;
+
 	/**
 	 * ${CARET}
 	 *
@@ -47,6 +49,7 @@ class Occurrence {
 	 * @var Cache
 	 */
 	private $cache;
+
 	/**
 	 * ${CARET}
 	 *
@@ -72,7 +75,7 @@ class Occurrence {
 	 *
 	 * @return array<string,array<string,mixed>> The filtered extensions map.
 	 */
-	public function extend( array $extensions = [] ) {
+	public function extend( array $extensions = [] ): array {
 		return wp_parse_args( [
 			'validators' => [
 				'has_recurrence' => Ignore_Validator::class,
@@ -86,8 +89,15 @@ class Occurrence {
 			],
 			'properties' => [
 				'provisional_id' => [ $this, 'get_provisional_id' ],
-				'is_rdate'       => [ $this, 'get_is_rdate' ]
-			]
+				'is_rdate'       => [ $this, 'get_is_rdate' ],
+
+			],
+			'methods'    => [
+				'get_single_edit_post_link' => function () {
+					/** @var Occurrence_Model $this Bound at run time to the Closure. */
+					return ( new Single_Edit_Post_Link( $this ) )->__toString();
+				}
+			],
 		], $extensions );
 	}
 
@@ -101,17 +111,17 @@ class Occurrence {
 	 *
 	 * @return int The normalized Occurrence post ID.
 	 */
-	public function normalize_occurrence_post_id( $id ) {
+	public function normalize_occurrence_post_id( int $id ): int {
 		if ( ! $this->provisional_post->is_provisional_post_id( $id ) ) {
 			return $id;
 		}
 
-		$occurrence = Model::find(
+		$occurrence = Occurrence_Model::find(
 			$this->provisional_post->normalize_provisional_post_id( $id ),
 			'occurrence_id'
 		);
 
-		return $occurrence instanceof Model ? $occurrence->post_id : $id;
+		return $occurrence instanceof Occurrence_Model ? $occurrence->post_id : $id;
 	}
 
 	/**
@@ -126,7 +136,7 @@ class Occurrence {
 	 *
 	 * @return int The sequence value, or `0` if no sequence could be found.
 	 */
-	public static function get_sequence( $post_id ) {
+	public static function get_sequence( int $post_id ): int {
 		global $wpdb;
 		$occurrences = Occurrences::table_name( true );
 		$sequence    = $wpdb->get_var(

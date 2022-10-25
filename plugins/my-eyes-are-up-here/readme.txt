@@ -1,10 +1,10 @@
 === My Eyes Are Up Here ===
-Contributors: interconnectit, sanchothefat, spectacula, AndyWalmsley
+Contributors: interconnectit, spectacula
 Donate link: https://myeyesareuphere.interconnectit.com/donate/
 Tags: thumbnails, image editing, image, featured image
 Requires at least: 3.8.1
-Tested up to: 5.0.2
-Stable tag: 1.1.10
+Tested up to: 6.0.2
+Stable tag: 1.1.11
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

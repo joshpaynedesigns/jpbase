@@ -7,6 +7,7 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Exception;
+use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Ical_Strings;
 use WP_Post;
 use RRule\RRule;
 use TEC\Events\Custom_Tables\V1\Traits\With_Reflection;
@@ -18,6 +19,7 @@ use Tribe__Timezones as Timezones;
 
 class From_Rset_Converter {
 	use With_Reflection;
+	use With_Ical_Strings;
 
 	/**
 	 * A map from recurrence types to the ascending weight they should have in a sort; heavier will
@@ -49,7 +51,7 @@ class From_Rset_Converter {
 	 *
 	 * @throws Exception If there's any issue building the dates for the event.
 	 */
-	public function convert_to_event_recurrence( $rset_data, $post_id ) {
+	public function convert_to_event_recurrence( $rset_data, $post_id ): array {
 		$post_id = $post_id instanceof WP_Post ? $post_id->ID : $post_id;
 
 		$use_default_duration = false;
@@ -59,98 +61,10 @@ class From_Rset_Converter {
 		}
 
 		$tz = Timezones::build_timezone_object( get_post_meta( $post_id, '_EventTimezone', true ) );
-		$event_start = Dates::build_date_object( get_post_meta( $post_id, '_EventStartDate', true ), $tz );
-		$event_end = Dates::build_date_object( get_post_meta( $post_id, '_EventEndDate', true ), $tz );
-		$event_start_timestamp = $event_start->format( 'U' );
-		$event_end_timestamp = $event_end->format( 'U' );
-		$event_duration = $event_end_timestamp - $event_start_timestamp;
+		$dtstart = Dates::immutable( get_post_meta( $post_id, '_EventStartDate', true ), $tz );
+		$dtend = Dates::immutable( get_post_meta( $post_id, '_EventEndDate', true ), $tz );
 
-		$converted = [
-			'rules'      => [],
-			'exclusions' => [],
-		];
-
-		$rset_data = (array) $rset_data;
-
-		/** @var RSet_Wrapper $rset */
-		foreach ( $rset_data as $key_duration => $rset ) {
-			$rset_object = new RSet_Wrapper( $rset, $event_start );
-			$rset_duration = $rset_object->get_duration();
-			if ( $rset_duration !== null ) {
-				// If the RSET has enough information to determine the duration, use it.
-				$duration = $rset_duration;
-			} else {
-				$duration = $use_default_duration ? $event_duration : $key_duration;
-			}
-
-			$rrules = $rset_object->getRRules();
-
-			/*
-			 * The RSET should contain at most one RRULE, we drop any other just in case.
-			 *
-			 * @var RRule $rrule
-			 */
-			$rrule = count( $rrules ) ? reset( $rrules ) : null;
-
-			if ( $rrule instanceof RRule) {
-				$converted_rrule = $this->convert_rrule_to_old( $rrule, $duration, $event_start, $event_duration );
-
-				if ( isset( $converted_rrule['end-count'] ) ) {
-					// Increase the COUNT if the DSTART is not included in the RRULE: Legacy quirk.
-					$first_occurrence = $rrule->offsetGet( 0 );
-					if ( ! empty( $first_occurrence ) && $first_occurrence->format( 'U' ) !== $event_start_timestamp ) {
-						/*
-						 * Legacy would include the DTSTART in the COUNT limit of an RRULE even when not included in
-						 * the RRULE: let's account for that.
-						 */
-						$converted_rrule['end-count'] ++;
-					}
-				}
-
-				$converted['rules'][] = $converted_rrule;
-			}
-
-			foreach ( $rset_object->getDates() as $rdate ) {
-				// Occurrence instances will model RDATE with diff. start and end times from the default ones.
-				$rdate_start    = $rdate instanceof Occurrence ? $rdate->start() : $rdate;
-				$rdate_duration = $rdate instanceof Occurrence ? $rdate->get_duration() : $event_duration;
-
-				if ( $rdate_start->format( 'U' ) === $event_start_timestamp && $rdate_duration = $event_duration ) {
-					// The RDATE was added to model the DTSTART: Legacy will already add that.
-					continue;
-				}
-
-				$converted['rules'][] = $this->convert_rdate_to_old( $rdate, $rdate_duration, $event_start, $event_duration );
-			}
-
-			foreach ( $rset_object->getExDates() as $exdate ) {
-				$exdate                    = $exdate instanceof Occurrence ? $exdate->start() : $exdate;
-				$converted['exclusions'][] = $this->convert_exdate_to_old( $exdate, $duration, $event_start, $event_duration );
-			}
-
-			// The RSET should contain at most one EXRULE, we drop any other just in case.
-			$exrules = $rset_object->getExRules();
-			$exrule  = count( $exrules ) ? reset( $exrules ) : null;
-			if ( $exrule instanceof RRule) {
-				$converted['exclusions'][] = $this->convert_exrule_to_old( $exrule, $duration, $event_start, $event_duration );
-			}
-		}
-
-		/*
-		 * The `array_filter` call makes sure empty rules and exclusion specifications are dropped.
-		 * The `convert_rule_to_old` method will not build back rules that yield no occurrences.
-		 */
-		$converted['rules']      = array_values( array_unique( array_filter( $converted['rules'] ), SORT_REGULAR ) );
-		$converted['exclusions'] = array_values( array_unique( array_filter( $converted['exclusions'] ), SORT_REGULAR ) );
-
-		// We cannot know so let's leave this empty.
-		$converted['description'] = null;
-
-		// Sort the converted rules by type to clean up the output.
-		usort( $converted['rules'], [ $this, 'sort_rules_by_type' ] );
-		usort( $converted['exclusions'], [ $this, 'sort_rules_by_type' ] );
-
-		return $converted;
+		return $this->convert_to_event_recurrence_from_dates( $rset_data, $dtstart, $dtend, $use_default_duration );
 	}
 
 
@@ -325,29 +239,29 @@ class From_Rset_Converter {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param DateTime $start          The occurrence date object.
-	 * @param int      $duration       This rdates duration.
-	 * @param DateTime $event_start    The event start date.
-	 * @param int      $event_duration The main event duration.
+	 * @param DateTime          $start          The occurrence date object.
+	 * @param int               $duration       This rdates duration.
+	 * @param DateTimeImmutable $dtstart        The event start date.
+	 * @param int               $event_duration The main event duration.
 	 *
 	 * @return array An array of information representing the occurrence date in the legacy format.
 	 * @throws Exception If there's any issue building the date objects.
 	 */
-	protected function convert_rdate_to_old( DateTimeInterface $start, $duration, DateTime $event_start, $event_duration ) {
+	protected function convert_rdate_to_old( DateTimeInterface $start, int $duration, DateTimeImmutable $dtstart, int $event_duration ): array {
 		/*
 		 * If the start time is `00:00:00` there's a chance this rule set
 		 * is the default one, let's adjust the start time to the
 		 * event start time if that's the case.
 		 */
 		$this_is_midnight  = '00:00:00' === $start->format( 'H:i:s' );
-		$event_is_midnight = '00:00:00' === $event_start->format( 'H:i:s' );
+		$event_is_midnight = '00:00:00' === $dtstart->format( 'H:i:s' );
 
 
 		if ( $this_is_midnight && ! $event_is_midnight ) {
-			$start->setTime(
-				$event_start->format( 'H' ),
-				$event_start->format( 'i' ),
-				$event_start->format( 's' )
+			$start = $start->setTime(
+				$dtstart->format( 'H' ),
+				$dtstart->format( 'i' ),
+				$dtstart->format( 's' )
 			);
 		}
 
@@ -357,7 +271,7 @@ class From_Rset_Converter {
 		$end->setTimestamp( $start->getTimestamp() );
 		$end->add( new DateInterval( "PT{$duration}S" ) );
 
-		$event_start_time = $event_start->format( 'H:i:s' );
+		$event_start_time = $dtstart->format( 'H:i:s' );
 		$same_time        = $the_start_time === $event_start_time && $duration === $event_duration;
 
 		$converted = [
@@ -381,9 +295,9 @@ class From_Rset_Converter {
 			$converted['custom']['end-time']   = $end->format( 'g:ia' );
 			$converted['custom']['end-day']    = $this->old_format_end_day( $start, $end );
 		}
-		$event_end = clone $event_start;
-		$event_end->add( new DateInterval( 'PT' . (int) $event_duration . 'S' ) );
-		$converted['EventStartDate'] = $event_start->format( 'Y-m-d H:i:s' );
+		$event_end = clone $dtstart;
+		$event_end = $event_end->add( new DateInterval( 'PT' . $event_duration . 'S' ) );
+		$converted['EventStartDate'] = $dtstart->format( 'Y-m-d H:i:s' );
 		$converted['EventEndDate']   = $event_end->format( 'Y-m-d H:i:s' );
 
 		return $converted;
@@ -394,16 +308,16 @@ class From_Rset_Converter {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param DateTime $start       The exclusion date exclusion object.
-	 * @param int       $duration    The exclusion duration.
-	 * @param DateTime $event_start The event start date.
-	 * @param int       $event_duration The event duration.
+	 * @param DateTime          $start          The exclusion date exclusion object.
+	 * @param int               $duration       The exclusion duration.
+	 * @param DateTimeImmutable $dtstart        The event start date.
+	 * @param int               $event_duration The event duration.
 	 *
 	 * @return array An array of information representing the exclusion date in the legacy format.
 	 * @throws Exception If there's any issue building the date objects.
 	 */
-	protected function convert_exdate_to_old( DateTime $start, $duration, DateTime $event_start, $event_duration ) {
-		$converted = $this->convert_rdate_to_old( $start, $duration, $event_start, $event_duration );
+	protected function convert_exdate_to_old( DateTime $start, int $duration, DateTimeImmutable $dtstart, int $event_duration ): array {
+		$converted = $this->convert_rdate_to_old( $start, $duration, $dtstart, $event_duration );
 		// Exclusion dates always span the whole day.
 		$converted['custom']['same-time'] = 'yes';
 		unset( $converted['custom']['start-time'], $converted['custom']['end-time'], $converted['custom']['end-day'] );
@@ -420,14 +334,16 @@ class From_Rset_Converter {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param RRule    $rrule          The rule object.
-	 * @param int      $duration       The rule duration.
-	 * @param DateTime $event_start    The event start date.
-	 * @param int      $event_duration The event duration.
+	 * @param RRule             $rrule          The rule object.
+	 * @param int               $duration       The rule duration.
+	 * @param DateTimeImmutable $dtstart        The event start date.
+	 * @param int               $event_duration The event duration.
 	 *
 	 * @return array The occurrence rule information in the legacy format.
+	 *
+	 * @throws \ReflectionException If there's an issue accessing one of the RSET private properties.
 	 */
-	protected function convert_rrule_to_old( RRule $rrule, $duration, DateTime $event_start, $event_duration ) {
+	protected function convert_rrule_to_old( RRule $rrule, int $duration, DateTimeImmutable $dtstart, int $event_duration ): array {
 		$rrule_data  = $rrule->getRule();
 		$occurrences = $rrule->getOccurrences( 1 );
 
@@ -443,13 +359,10 @@ class From_Rset_Converter {
 			return [];
 		}
 
-		$event_start_date = DateTimeImmutable::createFromMutable( $event_start );
-		$event_end_date   = $event_start_date->add( new DateInterval( 'PT' . (int) $event_duration . 'S' ) );
-
-		$the_start_time = $event_start_date->format( 'H:i:s' );
-
-		$event_start_time = $event_start->format( 'H:i:s' );
-		$same_time        = $the_start_time === $event_start_time && $duration === $event_duration;
+		$event_end_date = $dtstart->add( new DateInterval( 'PT' . (int) $event_duration . 'S' ) );
+		$the_start_time = $dtstart->format( 'H:i:s' );
+		$event_start_time = $dtstart->format( 'H:i:s' );
+		$same_time = $the_start_time === $event_start_time && $duration === $event_duration;
 		$type = ucwords( strtolower( $rrule_data['FREQ'] ) );
 
 		$converted = [
@@ -459,7 +372,7 @@ class From_Rset_Converter {
 					'interval'  => (string) (int) $rrule_data['INTERVAL'],
 					'type'      => $type,
 				],
-			'EventStartDate' => $event_start_date->format( 'Y-m-d H:i:s' ),
+			'EventStartDate' => $dtstart->format( 'Y-m-d H:i:s' ),
 			'EventEndDate'   => $event_end_date->format( 'Y-m-d H:i:s' ),
 		];
 
@@ -501,7 +414,7 @@ class From_Rset_Converter {
 		} elseif ( 'Yearly' === $type ) {
 			$converted['custom']['year'] = [
 				// A comma-separated list of month numbers.
-				'month'    => empty( $rrule_data['BYMONTH'] ) ? [ $event_start_date->format( 'n' ) ] : [ $rrule_data['BYMONTH'] ],
+				'month'    => empty( $rrule_data['BYMONTH'] ) ? [ $dtstart->format( 'n' ) ] : [ $rrule_data['BYMONTH'] ],
 				'same-day' => 'yes',
 			];
 
@@ -548,7 +461,7 @@ class From_Rset_Converter {
 		if ( $rrule_data['UNTIL'] instanceof DateTime ) {
 			$converted['end-type'] = 'On';
 			$until                 = clone $rrule_data['UNTIL'];
-			$until->setTimezone( $event_start->getTimezone() );
+			$until->setTimezone( $dtstart->getTimezone() );
 			$converted['end'] = $until->format( 'Y-m-d' );
 		} elseif ( null !== $rrule_data['COUNT'] ) {
 			$converted['end-type']              = 'After';
@@ -565,18 +478,131 @@ class From_Rset_Converter {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param RRule    $exrule         The exclusion rule object.
-	 * @param int      $duration       The rule duration.
-	 * @param DateTime $event_start    The event start date.
-	 * @param int      $event_duration The event duration.
+	 * @param RRule             $exrule         The exclusion rule object.
+	 * @param int               $duration       The rule duration.
+	 * @param DateTimeImmutable $event_start    The event start date.
+	 * @param int               $event_duration The event duration.
 	 *
 	 * @return array The exclusion rule information in the legacy format.
 	 */
-	protected function convert_exrule_to_old( RRule $exrule, $duration, DateTime $event_start, $event_duration ) {
+	protected function convert_exrule_to_old( RRule $exrule, int $duration, DateTimeImmutable $event_start, int $event_duration ): array {
 		$converted = $this->convert_rrule_to_old( $exrule, $duration, $event_start, $event_duration );
 		// Exclusion dates always span the whole day.
 		$converted['custom']['same-time'] = 'yes';
 		unset( $converted['custom']['start-time'], $converted['custom']['end-time'], $converted['custom']['end-day'] );
+
+		return $converted;
+	}
+
+	/**
+	 * Converts a recurrence rule from the iCalendar RSET format to the one used in the `_EventRecurrence` meta field.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param array<int,string>|string $rset_data            Either a set of RSETs, or a single RSET definition.
+	 * @param DateTimeImmutable        $dtstart              The event start date.
+	 * @param DateTimeImmutable        $dtend                The event end date.
+	 * @param bool                     $use_default_duration Whether to use the default duration.
+	 *
+	 * @return array<array>|array Either a set of converted RSETs, or the converted RSET.
+	 *
+	 * @throws \ReflectionException If there's an issue accessing one of the RSET private properties.
+	 */
+	public function convert_to_event_recurrence_from_dates(
+		$rset_data,
+		DateTimeImmutable $dtstart,
+		DateTimeImmutable $dtend,
+		bool $use_default_duration = false
+	): array {
+		$event_start_timestamp = $dtstart->format( 'U' );
+		$event_end_timestamp = $dtend->format( 'U' );
+		$event_duration = $event_end_timestamp - $event_start_timestamp;
+
+		$converted = [
+			'rules'      => [],
+			'exclusions' => [],
+		];
+
+		$rset_data = (array) $rset_data;
+
+		/** @var RSet_Wrapper $rset */
+		foreach ( $rset_data as $key_duration => $rset ) {
+			$rset = $this->normalize_until_date( $rset, $dtstart->getTimezone() );
+			$rset_object = new RSet_Wrapper( $rset, $dtstart );
+			$rset_duration = $rset_object->get_duration();
+			if ( $rset_duration !== null ) {
+				// If the RSET has enough information to determine the duration, use it.
+				$duration = $rset_duration;
+			} else {
+				$duration = $use_default_duration ? $event_duration : $key_duration;
+			}
+
+			$rrules = $rset_object->getRRules();
+
+			/*
+			 * The RSET should contain at most one RRULE, we drop any other just in case.
+			 *
+			 * @var RRule $rrule
+			 */
+			$rrule = count( $rrules ) ? reset( $rrules ) : null;
+
+			if ( $rrule instanceof RRule ) {
+				$converted_rrule = $this->convert_rrule_to_old( $rrule, $duration, $dtstart, $event_duration );
+
+				if ( isset( $converted_rrule['end-count'] ) ) {
+					// Increase the COUNT if the DSTART is not included in the RRULE: Legacy quirk.
+					$first_occurrence = $rrule->offsetGet( 0 );
+					if ( ! empty( $first_occurrence ) && $first_occurrence->format( 'U' ) !== $event_start_timestamp ) {
+						/*
+						 * Legacy would include the DTSTART in the COUNT limit of an RRULE even when not included in
+						 * the RRULE: let's account for that.
+						 */
+						$converted_rrule['end-count'] ++;
+					}
+				}
+
+				$converted['rules'][] = $converted_rrule;
+			}
+
+			foreach ( $rset_object->getDates() as $rdate ) {
+				// Occurrence instances will model RDATE with diff. start and end times from the default ones.
+				$rdate_start = $rdate instanceof Occurrence ? $rdate->start() : $rdate;
+				$rdate_duration = $rdate instanceof Occurrence ? $rdate->get_duration() : $event_duration;
+
+				if ( $rdate_start->format( 'U' ) === $event_start_timestamp && $rdate_duration = $event_duration ) {
+					// The RDATE was added to model the DTSTART: Legacy will already add that.
+					continue;
+				}
+
+				$converted['rules'][] = $this->convert_rdate_to_old( $rdate, $rdate_duration, $dtstart, $event_duration );
+			}
+
+			foreach ( $rset_object->getExDates() as $exdate ) {
+				$exdate = $exdate instanceof Occurrence ? $exdate->start() : $exdate;
+				$converted['exclusions'][] = $this->convert_exdate_to_old( $exdate, $duration, $dtstart, $event_duration );
+			}
+
+			// The RSET should contain at most one EXRULE, we drop any other just in case.
+			$exrules = $rset_object->getExRules();
+			$exrule = count( $exrules ) ? reset( $exrules ) : null;
+			if ( $exrule instanceof RRule ) {
+				$converted['exclusions'][] = $this->convert_exrule_to_old( $exrule, $duration, $dtstart, $event_duration );
+			}
+		}
+
+		/*
+		 * The `array_filter` call makes sure empty rules and exclusion specifications are dropped.
+		 * The `convert_rule_to_old` method will not build back rules that yield no occurrences.
+		 */
+		$converted['rules'] = array_values( array_unique( array_filter( $converted['rules'] ), SORT_REGULAR ) );
+		$converted['exclusions'] = array_values( array_unique( array_filter( $converted['exclusions'] ), SORT_REGULAR ) );
+
+		// We cannot know so let's leave this empty.
+		$converted['description'] = null;
+
+		// Sort the converted rules by type to clean up the output.
+		usort( $converted['rules'], [ $this, 'sort_rules_by_type' ] );
+		usort( $converted['exclusions'], [ $this, 'sort_rules_by_type' ] );
 
 		return $converted;
 	}

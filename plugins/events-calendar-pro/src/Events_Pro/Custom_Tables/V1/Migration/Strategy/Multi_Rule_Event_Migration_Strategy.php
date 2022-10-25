@@ -22,7 +22,6 @@ use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\From_Rset_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\From_Event_Recurrence_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series;
 use TEC\Events_Pro\Custom_Tables\V1\RRule\Occurrence as Date_Occurrence;
-use TEC\Events_Pro\Custom_Tables\V1\RRule\RfcParser;
 use TEC\Events_Pro\Custom_Tables\V1\RRule\RSet_Wrapper;
 use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Blocks_Editor_Recurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Date_Operations;
@@ -281,6 +280,34 @@ class Multi_Rule_Event_Migration_Strategy implements Strategy_Interface {
 			throw new Migration_Exception( sprintf( "Failed to set cloned event $clone_id post type." ) );
 		}
 
+		// Clone categories
+		$term_objects = wp_get_object_terms( $source_id, TEC::TAXONOMY );
+
+		if ( $term_objects instanceof WP_Error ) {
+			throw new Migration_Exception( sprintf( "Failed to clone event $source_id. Category terms: %s", $term_objects->get_error_message() ) );
+		}
+
+		$category_ids = wp_list_pluck( $term_objects, 'term_id' );
+		$new_terms    = wp_set_post_terms( $clone_id, $category_ids, TEC::TAXONOMY );
+
+		if ( $new_terms instanceof WP_Error ) {
+			throw new Migration_Exception( sprintf( "Failed to clone event $source_id. Setting new category terms: %s", $new_terms->get_error_message() ) );
+		}
+
+		// Clone tags
+		$term_objects = wp_get_object_terms( $source_id, 'post_tag' );
+
+		if ( $term_objects instanceof WP_Error ) {
+			throw new Migration_Exception( sprintf( "Failed to clone event $source_id. Tag terms: %s", $term_objects->get_error_message() ) );
+		}
+
+		$tag_ids   = wp_list_pluck( $term_objects, 'term_id' );
+		$new_terms = wp_set_post_terms( $clone_id, $tag_ids, 'post_tag' );
+
+		if ( $new_terms instanceof WP_Error ) {
+			throw new Migration_Exception( sprintf( "Failed to clone event $source_id. Setting new tag terms: %s", $new_terms->get_error_message() ) );
+		}
+
 		// Flush the post cache to avoid the transitional post type from sticking.
 		clean_post_cache( $clone_id );
 
@@ -415,8 +442,8 @@ class Multi_Rule_Event_Migration_Strategy implements Strategy_Interface {
 		// Backup the Event original `_EventRecurrence` meta to have a state to go back to.
 		update_post_meta( $this->post_id, '_EventRecurrenceBackup', $this->recurrence_meta );
 
-		$series = Series::vinsert( [ [ 'title' => $source_post->post_title ] ] );
-		$series_post = get_post( reset( $series ) );
+		$series = Series::vinsert( [ 'title' => $source_post->post_title ] );
+		$series_post = get_post( $series );
 
 		if ( ! $series_post instanceof WP_Post ) {
 			throw new Migration_Exception( 'Failed to get Series post.' );

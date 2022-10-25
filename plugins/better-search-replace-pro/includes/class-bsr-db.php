@@ -26,12 +26,6 @@ class BSR_DB {
 	public $page_size;
 
 	/**
-	 * The name of the backup file.
-	 * @var string
-	 */
-	public $file;
-
-	/**
 	 * The WordPress database class.
 	 * @var WPDB
 	 */
@@ -47,7 +41,54 @@ class BSR_DB {
 		$this->wpdb         = $wpdb;
 		$this->page_size    = $this->get_page_size();
 		$this->max_results  = $this->get_max_results();
-		$this->file         = get_temp_dir() . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';		
+	}
+
+	/**
+	 * Generates a new salt to use for the filepath.
+	 *
+	 * @return string
+	 */
+	public function generate_salt() {
+		$salt = date( 'YmdHis' ) . '-' . wp_generate_password( 5, false, false );
+		update_option( 'bsr_backup_salt', $salt );
+		return $salt;
+	}
+
+	/**
+	 * Gets the current salt, returning false if it doesn't exist.
+	 *
+	 * @return string|bool
+	 */
+	public function get_salt() {
+		return get_option( 'bsr_backup_salt', false );
+	}
+
+	/**
+	 * Deletes the salt used to generate the backup filepath.
+	 *
+	 * @return bool
+	 */
+	public function delete_salt() {
+		return delete_option( 'bsr_backup_salt' );
+	}
+
+	/**
+	 * Gets the path to the BSR backup file.
+	 *
+	 * @return string
+	 */
+	public function get_file_path() {
+		$salt = $this->get_salt();
+
+		if ( ! $salt ) {
+			$salt = $this->generate_salt();
+		}
+
+		return sprintf(
+			'%sbsr_db_backup-%s.sql',
+			get_temp_dir(),
+			$salt
+		);
 	}
 
 	/**
@@ -124,6 +165,10 @@ class BSR_DB {
 	 * @return int
 	 */
 	public function get_pages_in_table( $table ) {
+		if ( false === $this->table_exists( $table ) ) {
+			return 0;
+		}
+
 		$table 	= esc_sql( $table );
 		$rows 	= $this->wpdb->get_var( "SELECT COUNT(*) FROM `$table`" );
 		$pages 	= ceil( $rows / $this->page_size );
@@ -162,7 +207,7 @@ class BSR_DB {
 	public function get_total_pages_from_file( $file = '' ) {
 
 		if ( $file === '' ) {
-			$file = $this->file;
+			$file = $this->get_file_path();
 		}
 
 		// The defaults.
@@ -213,6 +258,10 @@ class BSR_DB {
 			$backup_table = str_replace( 'bsrtmp_', '', $table );
 		} else {
 			$backup_table = $table;
+		}
+
+		if ( false === $this->table_exists( $table ) ) {
+			return array( 'table_complete' => 1, 'total_pages' => 0 );
 		}
 
 		if ( 0 === $current_page ) {
@@ -274,7 +323,7 @@ class BSR_DB {
 		}
 
 		// Store the contents and finish up the export.
-		@file_put_contents( $this->file, $results, FILE_APPEND );
+		@file_put_contents( $this->get_file_path(), $results, FILE_APPEND );
 		return array( 'table_complete' => $done, 'total_pages' => $pages );
 	}
 
@@ -391,6 +440,11 @@ class BSR_DB {
 	public function get_columns( $table ) {
 		$primary_key 	= null;
 		$columns 		= array();
+
+		if ( false === $this->table_exists( $table ) ) {
+			return array( $primary_key, $columns );
+		}
+
 		$fields  		= $this->wpdb->get_results( 'DESCRIBE ' . $table );
 
 		if ( is_array( $fields ) ) {
@@ -735,4 +789,14 @@ class BSR_DB {
 		return $unserialized_string;
 	}
 
+	/**
+	 * Checks whether a table exists in DB.
+	 *
+	 * @param $table
+	 *
+	 * @return bool
+	 */
+	private function table_exists( $table ) {
+		return in_array( $table, $this->get_tables() );
+	}
 }

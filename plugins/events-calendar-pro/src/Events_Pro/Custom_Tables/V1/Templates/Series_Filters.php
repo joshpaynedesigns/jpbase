@@ -84,7 +84,7 @@ class Series_Filters {
 	 * @return array<string,mixed> The updated View repository arguments.
 	 */
 	public function filter_repository_args( $repository_args, $context ) {
-		if ( ! is_array( $repository_args ) ) {
+		if ( ! ( is_array( $repository_args ) && $context instanceof Context ) ) {
 			return $repository_args;
 		}
 
@@ -295,7 +295,9 @@ class Series_Filters {
 	 * @return string The modified URL, if required.
 	 */
 	public function redirect_series_requests( $redirect_url, $requested_url ) {
-		// @todo do not use hard-coded slugs for URL frags (past is fine).
+		if ( ! ( is_string( $redirect_url ) && is_string( $requested_url ) ) ) {
+			return $redirect_url;
+		}
 
 		global $wp;
 		$q      = $wp->query_vars;

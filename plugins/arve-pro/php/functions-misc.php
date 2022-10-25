@@ -4,15 +4,6 @@ namespace Nextgenthemes\ARVE\Pro;
 use \Nextgenthemes\ARVE\Common;
 use function Nextgenthemes\ARVE\options;
 
-function use_jsapi( $a ) {
-
-	if ( in_array( $a['provider'], [ 'youtube', 'vimeo' ], true ) ) {
-		return true;
-	}
-
-	return false;
-}
-
 function json_api_call( $api_url, $atts ) {
 
 	$wp_remote_get_args = [];
@@ -32,13 +23,6 @@ function json_api_call( $api_url, $atts ) {
 	}
 
 	$response = Common\remote_get_json( $api_url, $wp_remote_get_args );
-}
-
-function is_pro_mode( $mode ) {
-
-	$pro_modes = array_flip( get_pro_modes() );
-
-	return ( in_array( $mode, $pro_modes, true ) ) ? true : false;
 }
 
 function is_mobile() {

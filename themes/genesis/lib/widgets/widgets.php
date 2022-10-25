@@ -30,7 +30,7 @@ add_action( 'admin_init', 'genesis_handle_dismissing_block_widget_editor_notice'
  */
 function genesis_handle_dismissing_block_widget_editor_notice() {
 	// Only handle dismissing the block widget editor notice if "?genesis_widget_block_editor_dismiss=1" is in the URL.
-	if ( filter_input( INPUT_GET, 'genesis_widget_block_editor_dismiss', FILTER_SANITIZE_STRING ) !== '1' ) {
+	if ( filter_input( INPUT_GET, 'genesis_widget_block_editor_dismiss' ) !== '1' ) {
 		// Exit early.
 		return;
 	}
@@ -41,7 +41,7 @@ function genesis_handle_dismissing_block_widget_editor_notice() {
 	}
 
 	// If the nonce fails, do nothing.
-	if ( ! wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce', FILTER_SANITIZE_STRING ), 'genesis-widget-block-editor-dismiss' ) ) {
+	if ( ! wp_verify_nonce( filter_input( INPUT_GET, '_wpnonce' ), 'genesis-widget-block-editor-dismiss' ) ) {
 		return;
 	}
 

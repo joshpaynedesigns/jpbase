@@ -10,15 +10,17 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 
+use DateTime;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
-use TEC\Events\Custom_Tables\V1\Updates\Requests;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Event_Recurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers\Update_Controller_Interface as Update_Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Occurrence_Redirector;
 use WP_Post;
-use WP_REST_Request as Request;
+use WP_REST_Request;
 use Tribe__Events__Main as TEC;
 use WP_REST_Response;
 
@@ -94,6 +96,37 @@ class Controller {
 	 */
 	private $blocks_meta;
 
+
+	/**
+	 * A flag that can be set in context specific scenarios during updates, to flag whether
+	 * an occurrence may be pruned or some other operation, needing to be redirected to a specific
+	 * instance.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @var bool
+	 */
+	protected static $should_redirect_occurrence = false;
+
+	/**
+	 * The unmutated request object from the original request.
+	 * Should not make any changes here.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @var WP_REST_Request
+	 */
+	protected $original_request;
+
+	/**
+	 * The utility object for handling provisional post IDs.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @var Provisional_Post
+	 */
+	protected $provisional_post;
+
 	/**
 	 * Controller constructor.
 	 *
@@ -112,14 +145,28 @@ class Controller {
 		Updates $updates,
 		Events $events,
 		Occurrence_Redirector $occurrence_redirector,
-		Blocks_Meta $blocks_meta
+		Blocks_Meta $blocks_meta,
+		Provisional_Post $provisional_post
 	) {
 		$this->requests              = $requests;
 		$this->redirector            = $redirector;
 		$this->updates               = $updates;
 		$this->events                = $events;
 		$this->occurrence_redirector = $occurrence_redirector;
-		$this->blocks_meta = $blocks_meta;
+		$this->blocks_meta           = $blocks_meta;
+		$this->provisional_post      = $provisional_post;
+		$this->set_original_request( $this->requests->from_http_request() );
+	}
+
+	/**
+	 * Set the original request, used for various evaluations, such as when and if an occurrence should be redirected.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param WP_REST_Request $request The request objected meant to be used as an evaluation of the original request state.
+	 */
+	public function set_original_request( WP_REST_Request $request ) {
+		$this->original_request = $request;
 	}
 
 	/**
@@ -172,13 +219,13 @@ class Controller {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Request $request         A reference to the object modeling
+	 * @param WP_REST_Request $request A reference to the object modeling
 	 *                                 the Request to redirect.
 	 *
 	 * @return int|false Either the post ID the request has been redirected to,
 	 *                   or `false` if the request was not redirected.
 	 */
-	public function redirect_request( Request $request ) {
+	public function redirect_request( WP_REST_Request $request ) {
 		if ( ( $redirected_id = $this->redirect_removed_occurrence( $request ) ) ) {
 			$this->redirector->redirect_request( $request, $redirected_id );
 		}
@@ -271,15 +318,15 @@ class Controller {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int     $post_id The Event post ID.
-	 * @param Request $request A reference to the Request object that triggered the
-	 *                         updated.
+	 * @param int             $post_id The Event post ID.
+	 * @param WP_REST_Request $request A reference to the Request object that triggered the
+	 *                                 updated.
 	 *
 	 * @return true The method will always return `true` to indicate the update was
 	 *              successful: Event to Series relationship for an Event post and
 	 *              Request couple could not be created for good reasons.
 	 */
-	public function commit_post_updates_after( $post_id, Request $request ) {
+	public function commit_post_updates_after( $post_id, WP_REST_Request $request ) {
 		$this->events->update_relationships( $post_id, $request );
 
 		return true;
@@ -291,16 +338,16 @@ class Controller {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param bool    $should_update         Whether the post custom tables should be updated or not,
+	 * @param bool            $should_update Whether the post custom tables should be updated or not,
 	 *                                       according to The Events Calendar default logic and previous
 	 *                                       methods filtering the value.
-	 * @param int     $post_id               The ID of the post currently being updated.
-	 * @param Request $request               A reference to object modeling the current Request.
+	 * @param int             $post_id       The ID of the post currently being updated.
+	 * @param WP_REST_Request $request       A reference to object modeling the current Request.
 	 *
 	 * @return bool Whether the custom tables should be updated or not, taking the input
 	 *              value into account.
 	 */
-	public function should_update_custom_tables( $should_update, $post_id, Request $request ) {
+	public function should_update_custom_tables( $should_update, $post_id, WP_REST_Request $request ) {
 		return $should_update || $request->has_param( Relationship::EVENTS_TO_SERIES_REQUEST_KEY );
 	}
 
@@ -310,13 +357,13 @@ class Controller {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Request $request A reference to the Request to check.
+	 * @param WP_REST_Request $request A reference to the Request to check.
 	 *
 	 * @return int Either the post ID the request should be redirected to, or `0`
 	 *             if the request is not for a removed Occurrence and should not
 	 *             be redirected.
 	 */
-	private function redirect_removed_occurrence( Request $request ) {
+	private function redirect_removed_occurrence( WP_REST_Request $request ) {
 		$request_id = $request->get_param( 'id' );
 
 		$data = $this->occurrence_redirector->get_redirect_data( $request_id );
@@ -416,15 +463,15 @@ class Controller {
 	 *
 	 * @param WP_Post          $post     A reference to the post object that is being deleted or trashed.
 	 * @param WP_REST_Response $response A reference to the REST response generated for the delete or trash request.
-	 * @param Request          $request  A reference to the REST request that triggered the post trash or deletion.
+	 * @param WP_REST_Request  $request  A reference to the REST request that triggered the post trash or deletion.
 	 *
 	 * @return void The method will modify the response data.
 	 */
-	public function redirect_deleted_occurrence( WP_Post $post, WP_REST_Response $response, Request $request ): void {
+	public function redirect_deleted_occurrence( WP_Post $post, WP_REST_Response $response, WP_REST_Request $request ): void {
 		$occurrence_redirect_data = $this->occurrence_redirector->get_occurrence_redirect_response( $request->get_param( 'id' ) );
 		// Either redirect to the correct Occurrence, or to the Events list.
-		$location = $occurrence_redirect_data->location
-		            ?? admin_url( '/edit.php?post_type=' . TEC::POSTTYPE );
+		$location                            = $occurrence_redirect_data->location
+		                                       ?? admin_url( '/edit.php?post_type=' . TEC::POSTTYPE );
 		$response->data['_tec_redirect_url'] = $location;
 	}
 
@@ -436,11 +483,11 @@ class Controller {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Request $request A reference to the request that triggered the post deletion.
+	 * @param WP_REST_Request $request A reference to the request that triggered the post deletion.
 	 *
 	 * @return false|int Either the post ID to redirect to, or `false` if the request should not be redirected.
 	 */
-	public function redirect_delete_request( Request $request ) {
+	public function redirect_delete_request( WP_REST_Request $request ) {
 		$id = $request->has_param( 'id' ) ? $request->get_param( 'id' ) : null;
 
 		if ( empty( $id ) || $request->get_method() !== \WP_REST_Server::DELETABLE ) {
@@ -463,5 +510,146 @@ class Controller {
 		$request->set_param( 'force', $force );
 
 		return $this->redirect_request( $request );
+	}
+
+	/**
+	 * Checks if the conditions are set for a redirect from the originating
+	 * occurrence ID. If so, will store a transient with flags on what type of
+	 * redirect should occur.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param bool            $updated Whether an occurrence update happened.
+	 * @param int             $post_id The post ID for this occurrence.
+	 *
+	 * @return bool Occurrences update flag.
+	 * @throws \Exception
+	 */
+	public function resolve_potential_redirect( bool $updated, int $post_id ): bool {
+		// If we updated our occurrences, should we do a redirect?
+		$original_request = $this->original_request;
+		// Did anything update and are the appropriate conditions right for a redirected ID to be set?
+		if ( $updated && $this->should_redirect_occurrence( $original_request ) ) {
+			// Get original non mutated ID from request.
+			$from_id = self::get_id( $original_request );
+
+			// Find our request start date, so we can locate the occurrence we want.
+			$request_start_date = null;
+			$meta               = $original_request->get_param( 'meta' );
+			if ( $original_request->get_param( 'EventStartDate' ) ) {
+				$request_start_date = $original_request->get_param( 'EventStartDate' ) . ' ' . $original_request->get_param( 'EventStartTime' );
+			} else if ( isset( $meta['_EventStartDate'] ) ) {
+				$request_start_date = $meta['_EventStartDate'];
+			}
+
+			// Did we move this occurrence? Find it again.
+			$occurrence = null;
+			if ( $request_start_date ) {
+				$request_start_date = new DateTime( $request_start_date );
+				$occurrence         = Occurrence::where(
+					'start_date', '=', $request_start_date->format( 'Y-m-d H:i:s' ) )
+				                                ->where( 'post_id', $post_id )
+				                                ->order_by( 'start_date', 'ASC' )
+				                                ->first();
+			}
+
+			// If we didn't find the adjusted occurrence let's grab the first one for this recurring event.
+			if ( ! $occurrence ) {
+				$occurrence = Occurrence::where( 'post_id', $post_id )
+				                        ->order_by( 'start_date', 'ASC' )
+				                        ->first();
+			}
+
+			if ( $occurrence instanceof Occurrence ) {
+				// Store the new ID that will be used by either block or classic requests.
+				tribe( Transient_Occurrence_Redirector::class )
+					->set_redirected_id(
+						$occurrence->provisional_id,
+						$from_id,
+						null,
+						false
+					);
+			}
+		}
+
+		return $updated;
+	}
+
+	/**
+	 * Try and locate the occurrence or post ID from this request object.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param WP_REST_Request $request A reference to the current request object.
+	 *
+	 * @return null|int Either the ID of the post targeted by the request, or `null` if not set.
+	 */
+	public static function get_id( WP_REST_Request $request ): ?int {
+		if ( $request->get_param( 'id' ) ) {
+			return (int) $request->get_param( 'id' );
+		}
+		if ( $request->get_param( 'post_ID' ) ) {
+			return (int) $request->get_param( 'post_ID' );
+		}
+		if ( $request->get_param( 'post' ) ) {
+			return (int) $request->get_param( 'post' );
+		}
+
+		return null;
+	}
+
+	/**
+	 * This will filter the WP redirect location if we have an occurrence ID that was adjusted.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param string $location The URL to redirect to.
+	 * @param int    $post_id  The post ID.
+	 *
+	 * @return string The correct URL to redirect to.
+	 */
+	public function classic_redirect_post_location( string $location, int $post_id ): string {
+		$redirect = tribe( Transient_Occurrence_Redirector::class )->get_redirect_data( self::get_id( $this->original_request ) );
+		if ( isset( $redirect['redirect_id'] ) ) {
+			return get_edit_post_link( $redirect['redirect_id'], 'internal' );
+		}
+
+		return $location;
+	}
+
+	/**
+	 * Checks if the occurrence for this request should be redirected. This looks at several indicators including an
+	 * explicitly set flag that will be used in context heavy situations.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return bool Whether we should setup a redirect for this request or not.
+	 */
+	public function should_redirect_occurrence( WP_REST_Request $request ): bool {
+		$request_id = self::get_id( $request );
+
+		return self::$should_redirect_occurrence
+		       && $this->requests->is_update_request( $request )
+		       && $this->provisional_post->is_provisional_post_id( $request_id )
+		       // Only redirect if this occurrence is gone
+		       && ! Occurrence::find( tribe(ID_Generator::class)->unprovide_id( $request_id ) );
+	}
+
+	/**
+	 * Sets a flag where the occurrence may be redirected. Other indicators will be evaluated as well, but this flag is
+	 * required to set up the redirect transient.
+	 *
+	 * @since 6.0.2
+	 *
+	 * @param bool $should_redirect Sets flag that this request may need to redirect to another occurrence.
+	 *
+	 * @return $this A reference to this, for chaining purposes.
+	 */
+	public function set_should_redirect_occurrence( bool $should_redirect ): Controller {
+		self::$should_redirect_occurrence = $should_redirect;
+
+		return $this;
 	}
 }

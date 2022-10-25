@@ -32,6 +32,14 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 	protected $user_element_exclusions = array();
 
 	/**
+	 * A list of user-defined page/URL exclusions, populated by validate_user_exclusions().
+	 *
+	 * @access protected
+	 * @var array $user_page_exclusions
+	 */
+	protected $user_page_exclusions = array();
+
+	/**
 	 * Base64-encoded placeholder image.
 	 *
 	 * @access protected
@@ -166,6 +174,18 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 		if ( empty( $uri ) ) {
 			$uri = $this->request_uri;
 		}
+		if ( $this->is_iterable( $this->user_page_exclusions ) ) {
+			foreach ( $this->user_page_exclusions as $page_exclusion ) {
+				if ( '/' === $page_exclusion && '/' === $uri ) {
+					return false;
+				} elseif ( '/' === $page_exclusion ) {
+					continue;
+				}
+				if ( false !== strpos( $uri, $page_exclusion ) ) {
+					return false;
+				}
+			}
+		}
 		if ( false !== strpos( $uri, 'bricks=run' ) ) {
 			return false;
 		}
@@ -197,6 +217,9 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 			return false;
 		}
 		if ( false !== strpos( $uri, '?fl_builder' ) ) {
+			return false;
+		}
+		if ( false !== strpos( $uri, '?giveDonationFormInIframe' ) ) {
 			return false;
 		}
 		if ( '/print/' === substr( $uri, -7 ) ) {
@@ -386,7 +409,7 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 		}
 
 		$body_tags        = $this->get_elements_from_html( $buffer, 'body' );
-		$body_webp_script = '<script data-cfasync="false" data-no-defer="1">if(ewww_webp_supported){document.body.classList.add("webp-support");}</script>';
+		$body_webp_script = '<script data-cfasync="false" data-no-defer="1">if(typeof ewww_webp_supported==="undefined"){var ewww_webp_supported=!1}if(ewww_webp_supported){document.body.classList.add("webp-support")}</script>';
 		if ( $this->is_iterable( $body_tags ) && ! empty( $body_tags[0] ) && false !== strpos( $body_tags[0], '<body' ) ) {
 			// Add the WebP script right after the opening tag.
 			$buffer = str_replace( $body_tags[0], $body_tags[0] . "\n" . $body_webp_script, $buffer );
@@ -406,7 +429,7 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 				if ( ! $this->validate_tag( $image ) ) {
 					continue;
 				}
-				$file = $images['img_url'][ $index ];
+				$file = trim( $images['img_url'][ $index ] );
 				ewwwio_debug_message( "parsing an image: $file" );
 				if ( strpos( $image, 'jetpack-lazy-image' ) && $this->validate_image_url( $file ) ) {
 					$new_image = $image;
@@ -543,7 +566,7 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 				if ( strpos( $image, 'data-src=' ) && strpos( $image, 'data-srcset=' ) && strpos( $image, 'lazyload' ) ) {
 					// EWWW IO Lazy Load.
 					$new_image = $image;
-					$real_file = $this->get_attribute( $new_image, 'data-src' );
+					$real_file = trim( $this->get_attribute( $new_image, 'data-src' ) );
 					ewwwio_debug_message( "checking webp for Lazy Load data-src: $real_file" );
 					if ( $this->validate_image_url( $real_file ) ) {
 						ewwwio_debug_message( 'found webp for Lazy Load' );
@@ -571,7 +594,7 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 					if ( ! $this->validate_tag( $image ) ) {
 						continue;
 					}
-					$file = $this->get_attribute( $image, 'src' );
+					$file = trim( $this->get_attribute( $image, 'src' ) );
 					if ( ( empty( $file ) || strpos( $image, 'R0lGODlhAQABAIAAAAAAAP' ) ) && strpos( $image, ' data-srcset=' ) && strpos( $this->get_attribute( $image, 'class' ), 'lazyload' ) ) {
 						$new_image = $image;
 						$srcset    = $this->get_attribute( $new_image, 'data-srcset' );
@@ -649,13 +672,13 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 						ewwwio_debug_message( "found webp for ngg data-thumbnail: $thumb" );
 					}
 				}
-				$bg_image   = $this->get_attribute( $link, 'data-bg' );
+				$bg_image   = $this->get_attribute( $link, 'data-back' );
 				$link_class = $this->get_attribute( $link, 'class' );
 				if ( $link_class && $bg_image && false !== strpos( $link_class, 'lazyload' ) ) {
-					ewwwio_debug_message( "checking a/link for LL data-bg: $bg_image" );
+					ewwwio_debug_message( "checking a/link for LL data-back: $bg_image" );
 					if ( $this->validate_image_url( $bg_image ) ) {
-						$this->set_attribute( $link, 'data-bg-webp', $this->generate_url( $bg_image ) );
-						ewwwio_debug_message( 'found webp for LL data-bg' );
+						$this->set_attribute( $link, 'data-back-webp', $this->generate_url( $bg_image ) );
+						ewwwio_debug_message( 'found webp for LL data-back' );
 					}
 				}
 				if ( $link !== $links[ $index ] ) {
@@ -697,13 +720,13 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 						$buffer = str_replace( $listitems[ $index ], $listitem, $buffer );
 					}
 				}
-				$bg_image = $this->get_attribute( $listitem, 'data-bg' );
+				$bg_image = $this->get_attribute( $listitem, 'data-back' );
 				$li_class = $this->get_attribute( $listitem, 'class' );
 				if ( $li_class && $bg_image && false !== strpos( $li_class, 'lazyload' ) ) {
-					ewwwio_debug_message( "checking div for LL data-bg: $bg_image" );
+					ewwwio_debug_message( "checking div for LL data-back: $bg_image" );
 					if ( $this->validate_image_url( $bg_image ) ) {
-						$this->set_attribute( $listitem, 'data-bg-webp', $this->generate_url( $bg_image ) );
-						ewwwio_debug_message( 'found webp for LL data-bg' );
+						$this->set_attribute( $listitem, 'data-back-webp', $this->generate_url( $bg_image ) );
+						ewwwio_debug_message( 'found webp for LL data-back' );
 						$buffer = str_replace( $listitems[ $index ], $listitem, $buffer );
 					}
 				}
@@ -727,12 +750,12 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 						$buffer = str_replace( $divs[ $index ], $div, $buffer );
 					}
 				}
-				$bg_image = $this->get_attribute( $div, 'data-bg' );
+				$bg_image = $this->get_attribute( $div, 'data-back' );
 				if ( $div_class && $bg_image && false !== strpos( $div_class, 'lazyload' ) ) {
-					ewwwio_debug_message( "checking div for LL data-bg: $bg_image" );
+					ewwwio_debug_message( "checking div for LL data-back: $bg_image" );
 					if ( $this->validate_image_url( $bg_image ) ) {
-						$this->set_attribute( $div, 'data-bg-webp', $this->generate_url( $bg_image ) );
-						ewwwio_debug_message( 'found webp for LL data-bg' );
+						$this->set_attribute( $div, 'data-back-webp', $this->generate_url( $bg_image ) );
+						ewwwio_debug_message( 'found webp for LL data-back' );
 						$buffer = str_replace( $divs[ $index ], $div, $buffer );
 					}
 				}
@@ -747,12 +770,12 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 					continue;
 				}
 				$class    = $this->get_attribute( $section, 'class' );
-				$bg_image = $this->get_attribute( $section, 'data-bg' );
+				$bg_image = $this->get_attribute( $section, 'data-back' );
 				if ( $class && $bg_image && false !== strpos( $class, 'lazyload' ) ) {
-					ewwwio_debug_message( "checking section for LL data-bg: $bg_image" );
+					ewwwio_debug_message( "checking section for LL data-back: $bg_image" );
 					if ( $this->validate_image_url( $bg_image ) ) {
-						$this->set_attribute( $section, 'data-bg-webp', $this->generate_url( $bg_image ) );
-						ewwwio_debug_message( 'found webp for LL data-bg' );
+						$this->set_attribute( $section, 'data-back-webp', $this->generate_url( $bg_image ) );
+						ewwwio_debug_message( 'found webp for LL data-back' );
 						$buffer = str_replace( $sections[ $index ], $section, $buffer );
 					}
 				}
@@ -767,12 +790,12 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 					continue;
 				}
 				$class    = $this->get_attribute( $span, 'class' );
-				$bg_image = $this->get_attribute( $span, 'data-bg' );
+				$bg_image = $this->get_attribute( $span, 'data-back' );
 				if ( $class && $bg_image && false !== strpos( $class, 'lazyload' ) ) {
-					ewwwio_debug_message( "checking span for LL data-bg: $bg_image" );
+					ewwwio_debug_message( "checking span for LL data-back: $bg_image" );
 					if ( $this->validate_image_url( $bg_image ) ) {
-						$this->set_attribute( $span, 'data-bg-webp', $this->generate_url( $bg_image ) );
-						ewwwio_debug_message( 'found webp for LL data-bg' );
+						$this->set_attribute( $span, 'data-back-webp', $this->generate_url( $bg_image ) );
+						ewwwio_debug_message( 'found webp for LL data-back' );
 						$buffer = str_replace( $spans[ $index ], $span, $buffer );
 					}
 				}
@@ -939,6 +962,11 @@ class EIO_JS_Webp extends EIO_Page_Parser {
 			if ( is_array( $user_exclusions ) ) {
 				foreach ( $user_exclusions as $exclusion ) {
 					if ( ! is_string( $exclusion ) ) {
+						continue;
+					}
+					$exclusion = trim( $exclusion );
+					if ( 0 === strpos( $exclusion, 'page:' ) ) {
+						$this->user_page_exclusions[] = str_replace( 'page:', '', $exclusion );
 						continue;
 					}
 					if (

@@ -9,6 +9,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 
+use WP_Post;
 use WP_REST_Request;
 
 /**
@@ -47,7 +48,7 @@ class Redirector {
 	 *
 	 * @param int $post_id The post ID to redirect the HTTP super-globals to.
 	 */
-	public function redirect_http_superglobals( $post_id ) {
+	public function redirect_http_superglobals( int $post_id ): void {
 		// Point the Classic Editor request to this event.
 		if ( isset( $_POST['post_ID'] ) ) {
 			// Edit request.
@@ -73,7 +74,7 @@ class Redirector {
 	 *
 	 * @return string The new nonce that has been generated for the Request.
 	 */
-	public function update_request_nonce( $post_id, $action ) {
+	public function update_request_nonce( int $post_id, string $action ): string {
 		$full_action = $this->get_nonce_action( $action, $post_id );
 
 		/**
@@ -105,7 +106,7 @@ class Redirector {
 	 * @return string The name of the action that should be used to verify or create a request
 	 *                nonce.
 	 */
-	private function get_nonce_action( $action, $post_id ) {
+	private function get_nonce_action( string $action, int $post_id ): string {
 		$action_map = [
 			'editpost' => 'update-post_' . $post_id,
 			'trash'    => 'trash-post_' . $post_id,
@@ -113,6 +114,38 @@ class Redirector {
 			'untrash'  => 'untrash-post_' . $post_id,
 		];
 
-		return isset( $action_map[ $action ] ) ? $action_map[ $action ] : $action . '_' . $post_id;
+		return $action_map[ $action ] ?? ( $action . '_' . $post_id );
+	}
+
+	/**
+	 * Hook on the `replace_editor` filter as an action to redirect the request to the single
+	 * post edit.
+	 *
+	 * While the Classic Editor flow implies a reload of the edit screen, the Blocks Editor does
+	 * not and this will create issues with what is localized on the page. We work around this
+	 * by redirecting the request to the single post edit screen.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @return void The user is redirected to the single post edit screen if the Event is using
+	 *              the Blocks Editor.
+	 */
+	public function redirect_to_edit_link( ?int $post_id ): void {
+		if ( empty( $post_id ) || ! use_block_editor_for_post( $post_id ) ) {
+			// If not using the Blocks Editor, do not redirect.
+			return;
+		}
+
+		add_filter( 'replace_editor', function ( bool $replace, WP_Post $post ) use ( $post_id ): bool {
+			if ( $post->ID !== $post_id ) {
+				// Only redirect the post in question.
+				return $replace;
+			}
+
+			wp_redirect( get_edit_post_link( $post->ID, 'url' ) );
+			tribe_exit();
+
+			return $replace;
+		}, 10, 2 );
 	}
 }

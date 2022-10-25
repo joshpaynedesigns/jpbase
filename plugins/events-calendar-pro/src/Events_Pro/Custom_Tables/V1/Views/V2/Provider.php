@@ -85,10 +85,10 @@ class Provider extends Service_Provider {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array $events Which events were just selected.
+	 * @param array|WP_Post $events Which events were just selected.
 	 */
 	public function prime_series_relationship_cache( $events ) {
-		Series_Relationship::prime_cache( $events );
+		Series_Relationship::prime_cache( (array) $events );
 	}
 
 	/**
@@ -96,12 +96,12 @@ class Provider extends Service_Provider {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array<int> $post_ids The set of post IDs to prime the cache for.
-	 * @param array<int|WP_Post> $posts The set of Event posts to prime the cache for.
+	 * @param array<int>         $post_ids The set of post IDs to prime the cache for.
+	 * @param array<int|WP_Post> $posts    The set of Event posts to prime the cache for.
 	 *
 	 * @return array<int> The set of post IDs to prime the cache for.
 	 */
-	public function include_series_input_posts_prime_cache( $post_ids, $posts ) {
+	public function include_series_input_posts_prime_cache( array $post_ids, array $posts ): array {
 		// Prime the cache first.
 		$all = Series_Relationship::prime_cache( $posts );
 
@@ -125,7 +125,7 @@ class Provider extends Service_Provider {
 	 *
 	 * @return string The template path, modified if required.
 	 */
-	public function replace_template_files( $file, $name, Tribe__Template $template ) {
+	public function replace_template_files( string $file, array $name, Tribe__Template $template ): string {
 		$template_name = implode( '/', $name );
 
 		$redirection_map = [

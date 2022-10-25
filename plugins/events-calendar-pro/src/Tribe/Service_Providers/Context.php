@@ -10,6 +10,7 @@ namespace Tribe\Events\PRO\Service_Providers;
 
 use Tribe__Context;
 use Tribe__Utils__Array as Arr;
+use Tribe__Events__Main as TEC;
 
 class Context extends \tad_DI52_ServiceProvider {
 
@@ -67,6 +68,15 @@ class Context extends \tad_DI52_ServiceProvider {
 					Tribe__Context::REQUEST_VAR => [ 'tribe-bar-geoloc-lat', 'tribe_geoloc_lat' ],
 					Tribe__Context::QUERY_VAR   => [ 'tribe_geoloc_lat' ],
 				],
+			],
+			'event_manager' => [
+				'read' => [
+					Tribe__Context::FUNC => static function (): bool {
+						return ( tribe_get_request_var( 'page', false ) === 'tribe-admin-manager'
+						         && tribe_get_request_var( 'post_type', false ) === TEC::POSTTYPE )
+						       || ( ( $url = tribe_get_request_var( 'url' ) ) && strpos( $url, 'shortcode=admin-manager' ) !== false );
+					},
+				]
 			],
 		] );
 

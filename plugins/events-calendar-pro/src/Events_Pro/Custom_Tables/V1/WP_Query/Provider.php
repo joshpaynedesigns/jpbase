@@ -259,7 +259,11 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 *
 	 * @return mixed The original results, replaced if required.
 	 */
-	public function replace_posts_results( $posts, WP_Query $wp_query = null ) {
+	public function replace_posts_results( $posts, $wp_query = null ) {
+		if ( ! $wp_query instanceof WP_Query ) {
+			return $posts;
+		}
+
 		return $this->container->make( Replace_Results::class )->replace( $posts, $wp_query );
 	}
 
@@ -305,7 +309,11 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 *
 	 * @return string The updated where clause.
 	 */
-	public function normalize_occurrence_id( $where, WP_Query $query = null ) {
+	public function normalize_occurrence_id( $where, $query = null ) {
+		if ( ! $query instanceof WP_Query ) {
+			return $where;
+		}
+
 		if ( $query === null ) {
 			return $where;
 		}
@@ -357,7 +365,9 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 *
 	 * @return mixed The original meta value as worked out by WordPress, unmodified by the call.
 	 */
-	public function hydrate_tec_occurrence_meta( $meta_value, int $object_id, string $meta_key ) {
+	public function hydrate_tec_occurrence_meta( $meta_value, $object_id, $meta_key ) {
+		$object_id = (int) $object_id;
+
 		if ( $meta_key !== '_tec_occurrence' ) {
 			// Smaller optimization to avoid the service locator resolution only to bail out.
 			return $meta_value;

@@ -223,20 +223,20 @@ class From_Event_Recurrence_Converter {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param DateTimeInterface|string|int string $start_date The Event start date.
-	 * @param DateTimeInterface|string|int $end_date The Event end date.
+	 * @param DateTimeInterface|string|int $dtstart  string $start_date The Event start date.
+	 * @param DateTimeInterface|string|int $dtend    The Event end date.
 	 * @param DateTimezone|string          $timezone The Event timezone object or name.
-	 * @param array<string,mixed> The Event recurrence rules in the `_EventRecurrence` meta format.
+	 * @param array<string,mixed>          $rules    The Event recurrence rules in the `_EventRecurrence` meta format.
 	 *
 	 * @return array<int,string> A map from durations to the RSET format recurrence rules converted
 	 *                           for the Event.
 	 *
 	 * @throws Requirement_Error If there's any issue building from the provided data.
 	 */
-	public function convert_to_rset( $start_date, $end_date, $timezone, $rules ) {
+	public function convert_to_rset( $dtstart, $dtend, $timezone, array $rules ): array {
 		$this->timezone = Timezones::build_timezone_object( Timezones::get_valid_timezone( $timezone ) );
-		$this->start_date = Dates::immutable( $start_date, $this->timezone );
-		$this->end_date = Dates::immutable( $end_date, $this->timezone );
+		$this->start_date = Dates::immutable( $dtstart, $this->timezone );
+		$this->end_date = Dates::immutable( $dtend, $this->timezone );
 		$this->duration_in_seconds = $this->end_date->format( 'U' ) - $this->start_date->format( 'U' );
 		$this->rules = $rules;
 
@@ -288,7 +288,7 @@ class From_Event_Recurrence_Converter {
 	 *
 	 * @throws Requirement_Error If required data is missing from the payload.
 	 */
-	protected function convert_to_new_format( array $data, $include_dtstart = true ) {
+	protected function convert_to_new_format( array $data, bool $include_dtstart = true ) {
 		if ( ! $this->contains_old_format_ruleset( $data ) ) {
 			return false;
 		}
@@ -308,7 +308,6 @@ class From_Event_Recurrence_Converter {
 
 		$dtstart = $this->build_start_date( $data );
 		$default_duration = $this->get_default_duration( $data );
-		$event_timezone = $data['EventTimezone'];
 
 		/*
 		 * We support at most 1 RRULE, 0-n RDATEs.

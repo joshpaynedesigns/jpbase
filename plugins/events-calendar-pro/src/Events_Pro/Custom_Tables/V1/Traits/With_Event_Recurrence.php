@@ -99,7 +99,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return array<array<string,mixed>> The sorted set of recurrence rules.
 	 */
-	protected function sort_rules_by_count( array $rules ) {
+	protected function sort_rules_by_count( array $rules ): array {
 		$rule_index_to_count_map = array_map( [ $this, 'guess_rule_count' ], $rules );
 		arsort( $rule_index_to_count_map, SORT_NUMERIC );
 
@@ -117,7 +117,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return int The number of recurrence Rules that would map to an iCalendar standard RRULE.
 	 */
-	private function count_rrules( $rules ) {
+	private function count_rrules( array $rules ): int {
 		if ( ! is_array( $rules ) ) {
 			return 0;
 		}
@@ -134,7 +134,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return bool Whether the rule is an RRULE or not.
 	 */
-	private function is_rrule( $rule ): bool {
+	private function is_rrule( array $rule ): bool {
 		if ( ! is_array( $rule ) ) {
 			return false;
 		}
@@ -156,7 +156,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return bool Whether the rule is an RDATE or not.
 	 */
-	private function is_rdate( $rule ) {
+	private function is_rdate( array $rule ): bool {
 		return is_array( $rule )
 		       && (
 			       ( isset( $rule['custom']['type'] ) && $rule['custom']['type'] === 'Date' )
@@ -170,10 +170,10 @@ trait With_Event_Recurrence {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param       int $post_id The Event post ID.
-	 * @param array<string,mixed> $rule The
+	 * @param int|null            $post_id The Event post ID.
+	 * @param array<string,mixed> $rule    The recurrence rule in the format used by the `_EventRecurrence` meta value.
 	 *
-	 * @return array<DateTimeImmutable|DateInterval> The date-related objects.
+	 * @return array{DateTimeImmutable, DateTimeImmutable, int} The date-related objects.
 	 */
 	private function build_date_data_from_rule( int $post_id = null, array $rule = null ): array {
 		$timezone     = Timezones::build_timezone_object( get_post_meta( $post_id, '_EventTimezone', true ) );
@@ -200,16 +200,16 @@ trait With_Event_Recurrence {
 	 *
 	 * @param array<string,array> $rule    The recurrence rule in the format used in the
 	 *                                     `_EventRecurrence` meta.
-	 * @param int                 $post_id The Event post ID.
+	 * @param int|null            $post_id The Event post ID.
 	 *
 	 * @return bool Whether the rule DTSTART is off-pattern or not.
 	 */
-	private function is_daily_rule_dtstart_off_pattern( array $rule, $post_id ) {
+	private function is_daily_rule_dtstart_off_pattern( array $rule, ?int $post_id = null ): bool {
 		if ( tribe_is_truthy( $rule['custom']['same-time'] ) ) {
 			return false;
 		}
 
-		list( $start, $end, $duration ) = $this->build_date_data_from_rule( $post_id, $rule );
+		[ $start, $end, $duration ] = $this->build_date_data_from_rule( $post_id, $rule );
 
 		return ! $this->diff_time_data_matches( $start, $end, $duration, $rule['custom'] );
 	}
@@ -224,12 +224,12 @@ trait With_Event_Recurrence {
 	 *
 	 * @param array<string,array> $rule    The recurrence rule in the format used in the
 	 *                                     `_EventRecurrence` meta.
-	 * @param int                 $post_id The Event post ID.
+	 * @param int|null            $post_id The Event post ID.
 	 *
 	 * @return bool Whether the rule DTSTART is off-pattern or not.
 	 */
-	private function is_weekly_rule_dstart_off_pattern( array $rule, $post_id ) {
-		list( $start, $end, $duration ) = $this->build_date_data_from_rule( $post_id, $rule );
+	private function is_weekly_rule_dstart_off_pattern( array $rule, ?int $post_id = null ): bool {
+		[ $start, $end, $duration ] = $this->build_date_data_from_rule( $post_id, $rule );
 		$same_day = in_array( $start->format( 'N' ), $rule['custom']['week']['day'], false );
 
 		if ( ! $same_day ) {
@@ -253,12 +253,12 @@ trait With_Event_Recurrence {
 	 *
 	 * @param array<string,array> $rule    The recurrence rule in the format used in the
 	 *                                     `_EventRecurrence` meta.
-	 * @param int                 $post_id The Event post ID.
+	 * @param int|null            $post_id The Event post ID.
 	 *
 	 * @return bool Whether the rule DTSTART is off-pattern or not.
 	 */
-	private function is_monthly_rule_dstart_off_pattern( array $rule, $post_id ) {
-		list( $start, $end, $duration ) = $this->build_date_data_from_rule( $post_id, $rule );
+	private function is_monthly_rule_dstart_off_pattern( array $rule, ?int $post_id = null ): bool {
+		[ $start, $end, $duration ] = $this->build_date_data_from_rule( $post_id, $rule );
 
 		if ( ! ( $this->is_same_month_day( $rule, $start, 'month' ) ) ) {
 			return true;
@@ -277,12 +277,12 @@ trait With_Event_Recurrence {
 	 *
 	 * @param array<string,array> $rule    The recurrence rule in the format used in the
 	 *                                     `_EventRecurrence` meta.
-	 * @param int                 $post_id The Event post ID.
+	 * @param int|null            $post_id The Event post ID.
 	 *
 	 * @return bool Whether the rule DTSTART is off-pattern or not.
 	 */
-	private function is_yearly_rule_dstart_off_pattern( array $rule, $post_id ) {
-		list( $start, $end, $duration ) = $this->build_date_data_from_rule( $post_id, $rule );
+	private function is_yearly_rule_dstart_off_pattern( array $rule, ?int $post_id = null ): bool {
+		[ $start, $end, $duration ] = $this->build_date_data_from_rule( $post_id, $rule );
 
 		if ( ! ( $this->is_same_month_day( $rule, $start, 'year' ) ) ) {
 			return true;
@@ -316,7 +316,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return bool Whether the rule is actually on a different time than the DTSTART or not.
 	 */
-	private function diff_time_data_matches( $start, $end, $duration, $custom ) {
+	private function diff_time_data_matches( DateTimeImmutable $start, DateTimeImmutable $end, int $duration, array $custom ): bool {
 		if ( ! isset( $custom['start-time'], $custom['end-time'], $custom['end-day'] ) ) {
 			return true;
 		}
@@ -345,7 +345,7 @@ trait With_Event_Recurrence {
 	 *
 	 * @return bool Whether the rule month day is actually not the same as the DTSTART or not.
 	 */
-	private function is_same_month_day( array $rule, $start, $type_key ) {
+	private function is_same_month_day( array $rule, DateTimeImmutable $start, string $type_key ): bool {
 		$int_to_ordinal_map    = [
 			1   => 'First',
 			2   => 'Second',
@@ -459,7 +459,7 @@ trait With_Event_Recurrence {
 	 * @return array<string,array> The updated exclusion rule, in the format used by the
 	 *                             `_EventRecurrence` meta.
 	 */
-	private function add_off_pattern_flag_to_exclusion( $rule, $post_id, $reset = false ) {
+	private function add_off_pattern_flag_to_exclusion( array $rule, int $post_id, bool $reset = false ): array {
 		return $this->add_off_pattern_flag_to_rule( $rule, $post_id, $reset );
 	}
 
@@ -469,16 +469,16 @@ trait With_Event_Recurrence {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array<string,array> $event_recurrence_meta The Event recurrence meta, in the
-	 *                                                   format used by the `_EventRecurrence`
-	 *                                                   meta.
-	 * @param int                 $post_id               The Event post ID.
-	 * @param bool                $reset                 Whether to reset the flag or respect the one
-	 *                                                   already set, if found.
+	 * @param array<string,array>|string $event_recurrence_meta The Event recurrence meta, in the
+	 *                                                          format used by the `_EventRecurrence`
+	 *                                                          meta.
+	 * @param int                        $post_id               The Event post ID.
+	 * @param bool                       $reset                 Whether to reset the flag or respect the one
+	 *                                                          already set, if found.
 	 *
-	 * @return array<string,array> The updated Event recurrence meta.
+	 * @return array<string,array>|string The updated Event recurrence meta, or the input value if not valid.
 	 */
-	public function add_off_pattern_flag_to_meta_value( $event_recurrence_meta, $post_id, $reset = false ) {
+	public function add_off_pattern_flag_to_meta_value( $event_recurrence_meta, int $post_id, bool $reset = false ) {
 		if ( ! ( is_array( $event_recurrence_meta ) && isset( $event_recurrence_meta['rules'] ) ) ) {
 			return $event_recurrence_meta;
 		}
@@ -581,7 +581,7 @@ trait With_Event_Recurrence {
 	 *
 	 * Blocks Editor data is, at times, inconsistent in its handling of the same time fields.
 	 *
-	 * @since TBD
+	 * @since 6.0.1
 	 *
 	 * @param array<string,mixed> $rule    The rule in the format used in the Blocks Editor.
 	 * @param DateTimeImmutable   $dtstart The start date of the Event to use to set the time.
@@ -591,11 +591,12 @@ trait With_Event_Recurrence {
 	 */
 	private function normalize_blocks_format_rule_same_time( array $rule, DateTimeImmutable $dtstart, DateTimeImmutable $dtend ): array {
 		$time_format = get_option( 'time_format', Dates::TIMEFORMAT );
-		if ( isset( $rule['isOffStart'] ) && $rule['isOffStart'] === false ) {
+		if ( isset( $rule['isOffStart'] ) && $rule['isOffStart'] === false && $rule['type'] !== 'single' ) {
 			$rule['_start_time_input'] = $dtstart->format( $time_format );
 			$rule['start_time'] = $dtstart->format( Dates::DBTIMEFORMAT );
 			$rule['_end_time_input'] = $dtend->format( $time_format );
 			$rule['end_time'] = $dtend->format( Dates::DBTIMEFORMAT );
+			$rule['same-time'] = 'yes';
 		}
 
 		return $rule;

@@ -33,6 +33,14 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 		protected $user_element_exclusions = array();
 
 		/**
+		 * A list of user-defined page/URL exclusions, populated by validate_user_exclusions().
+		 *
+		 * @access protected
+		 * @var array $user_page_exclusions
+		 */
+		protected $user_page_exclusions = array();
+
+		/**
 		 * A list of user-defined inclusions to lazy load for "external" CSS background images.
 		 *
 		 * @access protected
@@ -160,7 +168,10 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			add_filter( 'eio_allow_admin_lazyload', array( $this, 'allow_admin_lazyload' ) );
 
 			// Load the appropriate JS.
-			if ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) {
+			if (
+				defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG
+				|| defined( strtoupper( $this->prefix ) . 'SCRIPT_DEBUG' ) && constant( strtoupper( $this->prefix ) . 'SCRIPT_DEBUG' )
+			) {
 				// Load the non-minified and separate versions of the lazy load scripts.
 				add_action( 'wp_enqueue_scripts', array( $this, 'debug_script' ), 1 );
 			} else {
@@ -199,6 +210,18 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			if ( empty( $uri ) ) {
 				$uri = $this->request_uri;
 			}
+			if ( $this->is_iterable( $this->user_page_exclusions ) ) {
+				foreach ( $this->user_page_exclusions as $page_exclusion ) {
+					if ( '/' === $page_exclusion && '/' === $uri ) {
+						return false;
+					} elseif ( '/' === $page_exclusion ) {
+						continue;
+					}
+					if ( false !== strpos( $uri, $page_exclusion ) ) {
+						return false;
+					}
+				}
+			}
 			if ( false !== strpos( $uri, 'bricks=run' ) ) {
 				return false;
 			}
@@ -232,6 +255,9 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			if ( false !== strpos( $uri, '?fl_builder' ) ) {
 				return false;
 			}
+			if ( false !== strpos( $uri, '?giveDonationFormInIframe' ) ) {
+				return false;
+			}
 			if ( '/print/' === substr( $uri, -7 ) ) {
 				return false;
 			}
@@ -257,6 +283,9 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			}
 			if ( ! did_action( 'parse_query' ) ) {
 				return $should_process;
+			}
+			if ( function_exists( 'affwp_is_affiliate_portal' ) && affwp_is_affiliate_portal() ) {
+				return false;
 			}
 			if ( $this->is_amp() ) {
 				return false;
@@ -466,6 +495,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 					$this->debug_message( "possible replacement at $position" );
 					$images_processed++;
 					if ( $images_processed <= $above_the_fold ) {
+						$this->debug_message( 'image above fold threshold' );
 						continue;
 					}
 					if ( empty( $replacement['orig'] ) || empty( $replacement['lazy'] ) ) {
@@ -492,12 +522,6 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 		function parse_img_tag( $image, $file = '' ) {
 			$this->debug_message( '<b>' . __METHOD__ . '()</b>' );
 			global $exactdn;
-			if ( ! $file ) {
-				$file = $this->get_attribute( $image, 'src' );
-			}
-			$file = str_replace( '&#038;', '&', esc_url( $file ) );
-			$this->set_attribute( $image, 'data-src', $file, true );
-			$srcset = $this->get_attribute( $image, 'srcset' );
 
 			if (
 				! empty( $_POST['action'] ) && // phpcs:ignore WordPress.Security.NonceVerification
@@ -514,6 +538,13 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			if ( in_array( 'img', $this->user_element_exclusions, true ) ) {
 				return $image;
 			}
+
+			if ( ! $file ) {
+				$file = $this->get_attribute( $image, 'src' );
+			}
+			$file = str_replace( '&#038;', '&', esc_url( trim( $file ) ) );
+			$this->set_attribute( $image, 'data-src', $file, true );
+			$srcset = $this->get_attribute( $image, 'srcset' );
 
 			$physical_width  = false;
 			$physical_height = false;
@@ -566,13 +597,6 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 				$placeholder_types[] = 'siip';
 			}
 
-			if ( // This isn't super helpful. It makes PIIPs that don't help with auto-scaling.
-				false && ( ! $physical_width || ! $physical_height ) &&
-				$width_attr && is_numeric( $width_attr ) && $height_attr && is_numeric( $height_attr )
-			) {
-				$physical_width  = $width_attr;
-				$physical_height = $height_attr;
-			}
 			foreach ( $placeholder_types as $placeholder_type ) {
 				switch ( $placeholder_type ) {
 					case 'lqip':
@@ -746,12 +770,12 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 								$webp_image_urls = apply_filters( 'eio_ll_multiple_bg_images_for_webp', $bg_image_urls );
 								$bg_image_urls   = wp_json_encode( $bg_image_urls );
 								$webp_image_urls = wp_json_encode( $webp_image_urls );
-								$this->set_attribute( $element, 'data-bg', $bg_image_urls );
+								$this->set_attribute( $element, 'data-back', $bg_image_urls );
 								if ( $bg_image_urls !== $webp_image_urls ) {
-									$this->set_attribute( $element, 'data-bg-webp', $webp_image_urls );
+									$this->set_attribute( $element, 'data-back-webp', $webp_image_urls );
 								}
 							} elseif ( ! empty( $bg_image_urls[0] ) ) {
-								$this->set_attribute( $element, 'data-bg', $bg_image_urls[0] );
+								$this->set_attribute( $element, 'data-back', $bg_image_urls[0] );
 							}
 							$element = str_replace( $style, $new_style, $element );
 						}
@@ -862,6 +886,11 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 						if ( ! is_string( $exclusion ) ) {
 							continue;
 						}
+						$exclusion = trim( $exclusion );
+						if ( 0 === strpos( $exclusion, 'page:' ) ) {
+							$this->user_page_exclusions[] = str_replace( 'page:', '', $exclusion );
+							continue;
+						}
 						if (
 							'a' === $exclusion ||
 							'div' === $exclusion ||
@@ -961,6 +990,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 						'owl-lazy',
 						'preload-me',
 						'skip-lazy',
+						'soliloquy-image',
 						'timthumb.php?',
 						'wpcf7_captcha/',
 					),
@@ -1233,6 +1263,7 @@ if ( ! class_exists( 'EIO_Lazy_Load' ) ) {
 			$plugin_file = constant( strtoupper( $this->prefix ) . 'PLUGIN_FILE' );
 			wp_enqueue_script( 'eio-lazy-load-pre', plugins_url( '/includes/lazysizes-pre.js', $plugin_file ), array(), $this->version, EIO_LL_FOOTER );
 			wp_enqueue_script( 'eio-lazy-load-uvh', plugins_url( '/includes/ls.unveilhooks.js', $plugin_file ), array(), $this->version, EIO_LL_FOOTER );
+			wp_enqueue_script( 'eio-lazy-load-uvh-addon', plugins_url( '/includes/ls.unveilhooks-addon.js', $plugin_file ), array(), $this->version, EIO_LL_FOOTER );
 			wp_enqueue_script( 'eio-lazy-load-post', plugins_url( '/includes/lazysizes-post.js', $plugin_file ), array(), $this->version, EIO_LL_FOOTER );
 			wp_enqueue_script( 'eio-lazy-load', plugins_url( '/includes/lazysizes.js', $plugin_file ), array(), $this->version, EIO_LL_FOOTER );
 			if ( defined( strtoupper( $this->prefix ) . 'LAZY_PRINT' ) && constant( strtoupper( $this->prefix ) . 'LAZY_PRINT' ) ) {

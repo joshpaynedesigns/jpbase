@@ -39,7 +39,7 @@ class Series_Metaboxes {
 	 *
 	 * @return array<string,mixed> The filtered list of linked post types.
 	 */
-	public function remove_series_from_linked_metaboxes( $linked_posttypes ) {
+	public function remove_series_from_linked_metaboxes( array $linked_posttypes ): array {
 		unset( $linked_posttypes[ Series_Post_Type::POSTTYPE ] );
 
 		return $linked_posttypes;
@@ -50,7 +50,7 @@ class Series_Metaboxes {
 	 *
 	 * @since 6.0.0
 	 */
-	public function events_list() {
+	public function events_list(): void {
 		$series_post_id = get_the_ID();
 		$series_post    = $series_post_id ? get_post( $series_post_id ) : null;
 		$events_list    = new Occurrences_List( $series_post );
@@ -64,7 +64,7 @@ class Series_Metaboxes {
 	 *
 	 * @since 6.0.0
 	 */
-	public function relationship() {
+	public function relationship(): void {
 		$field_name = Relationship::SERIES_TO_EVENTS_REQUEST_KEY;
 		$events     = $this->get_events();
 
@@ -97,7 +97,7 @@ class Series_Metaboxes {
 	 *
 	 * @return WP_Post[] A list of posts representing the ordered Events that match the criteria.
 	 */
-	private function get_events() {
+	private function get_events(): array {
 		$events        = Events::table_name( true );
 		$occurrence    = Occurrences::table_name( true );
 		$relationships = Series_Relationships::table_name( true );
@@ -164,7 +164,7 @@ class Series_Metaboxes {
 	 *
 	 * @param WP_Post $post A reference to the Series post object.
 	 */
-	public function show_series_title( $post ) {
+	public function show_series_title( WP_Post $post ): void {
 		include __DIR__ . '/partials/show-series-title.php';
 	}
 }
