@@ -20,6 +20,7 @@ use TEC\Events\Custom_Tables\V1\Models\Validators\Valid_Event;
 use TEC\Events\Custom_Tables\V1\Models\Validators\Valid_Event_Model;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Validators\Valid_Series;
 use WP_Post;
+use function WP_CLI\Utils\iterator_map;
 
 /**
  * Class Series_Relationship
@@ -69,11 +70,11 @@ class Series_Relationship extends Model {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param  string  $value  The raw value from the database.
+	 * @param string $value The raw value from the database.
 	 *
 	 * @return int The formatted attribute value.
 	 */
-	public function get_event_post_id_attribute( $value ) {
+	public function get_event_post_id_attribute( string $value ): int {
 		return (int) $value;
 	}
 
@@ -82,11 +83,11 @@ class Series_Relationship extends Model {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param  string  $value  The raw value from the database.
+	 * @param string $value The raw value from the database.
 	 *
 	 * @return int The formatted attribute value.
 	 */
-	public function get_event_id_attribute( $value ) {
+	public function get_event_id_attribute( string $value ): int {
 		return (int) $value;
 	}
 
@@ -95,11 +96,11 @@ class Series_Relationship extends Model {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param  string  $value  The raw value from the database.
+	 * @param string $value The raw value from the database.
 	 *
 	 * @return int The formatted attribute value.
 	 */
-	public function get_series_post_id_attribute( $value ) {
+	public function get_series_post_id_attribute( string $value ): int {
 		return (int) $value;
 	}
 
@@ -108,11 +109,11 @@ class Series_Relationship extends Model {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param  string  $value  The raw value from the database.
+	 * @param string $value The raw value from the database.
 	 *
 	 * @return int The formatted attribute value.
 	 */
-	public function get_series_id_attribute( $value ) {
+	public function get_series_id_attribute( string $value ): int {
 		return (int) $value;
 	}
 
@@ -126,7 +127,7 @@ class Series_Relationship extends Model {
 	 *
 	 * @return string
 	 */
-	public static function get_cache_key( $post_id, $by_occurrence = false ) {
+	public static function get_cache_key( $post_id, bool $by_occurrence = false ): string {
 		$cache_key = 'tec_series_relationships_%1$d' . ( $by_occurrence ? '_occurrence' : '' );
 		return sprintf( $cache_key, $post_id );
 	}
@@ -140,7 +141,7 @@ class Series_Relationship extends Model {
 	 *
 	 * @return array
 	 */
-	public static function prime_cache( $posts ) {
+	public static function prime_cache( array $posts ): array {
 		$cache = tribe_cache();
 
 		// Prevents Errors for posts that don't have occurrence ID.
@@ -149,32 +150,36 @@ class Series_Relationship extends Model {
 		} );
 
 		$occurrences = wp_list_pluck( $posts, '_tec_occurrence' );
-		$post_ids = array_unique( wp_list_pluck( $occurrences, 'post_id' ) );
-		$all = [];
+		$to_fetch = array_unique( wp_list_pluck( $occurrences, 'post_id' ) );
 
 		// Prevent running a Query for already primed cache post IDs.
-		foreach ( $post_ids as $i => $id ) {
+		[ $all, $to_fetch ] = array_reduce( $to_fetch, static function ( array $carry, int $id ) use ( $cache ): array {
 			$cache_key = static::get_cache_key( $id );
 			if ( isset( $cache[ $cache_key ] ) ) {
-				$all[] = $cache[ $cache_key ];
-				unset( $post_ids[ $i ] );
+				$carry[0][] = $cache[ $cache_key ];
 			} else {
-				$cache[ $cache_key ] = null;
+				$carry[1][] = $id;
 			}
-		}
 
-		if ( empty( $post_ids ) ) {
+			return $carry;
+		}, [ [], [] ] );
+
+		if ( empty( $to_fetch ) ) {
 			return array_filter( $all );
 		}
 
-		$all = array_merge( $all, static::where_in( 'event_post_id', $post_ids )->get() );
-		$all = array_filter( $all );
+		$fetched_relationships = [];
+		if ( count( $to_fetch ) ) {
+			$generator = static::where_in( 'event_post_id', $to_fetch )->all();
+			$fetched_relationships = iterator_to_array( $generator, false );
+		}
+
+		$all = array_filter( array_merge( $all, $fetched_relationships ) );
 
 		$series_relationship_ids = wp_list_pluck( $all, 'event_post_id' );
-		$series_relationship_ids = array_filter( $series_relationship_ids, 'is_numeric' );
-		$series_relationship_ids = array_flip( $series_relationship_ids );
+		$series_relationship_ids = array_flip( array_filter( $series_relationship_ids, 'is_numeric' ) );
 
-		foreach( $post_ids as $event_post_id ) {
+		foreach ( $to_fetch as $event_post_id ) {
 			$relationship = null;
 			if ( isset( $series_relationship_ids[ $event_post_id ] ) ) {
 				$relationship_key = $series_relationship_ids[ $event_post_id ];

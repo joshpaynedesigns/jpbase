@@ -32,8 +32,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	public function register() {
 		$this->container->singleton( self::class, $this );
 		$this->container->singleton( Events::class, Events::class );
-		// Avoid TEC from filtering.
-		$this->container->make( TEC_Provider::class )->unregister();
+
 		/*
 		 * When the Pro repository needs the callback to create or update an Event recurrences,
 		 * let's return one that will avoid the default logic.
@@ -45,7 +44,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 			add_filter( 'tribe_repository_event_recurrence_create_callback', [
 				$this,
 				'create_recurrence_callback'
-			], 20 );
+			], 20, 4 );
 		}
 		if ( ! has_filter( 'tribe_repository_event_recurrence_update_callback', [
 			$this,
@@ -54,13 +53,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 			add_filter( 'tribe_repository_event_recurrence_update_callback', [
 				$this,
 				'create_recurrence_callback'
-			], 20 );
-		}
-		if ( ! has_filter( 'tribe_repository_events_create_callback', [ $this, 'update_callback' ] ) ) {
-			add_filter( 'tribe_repository_events_create_callback', [ $this, 'update_callback' ], 20, 2 );
-		}
-		if ( ! has_filter( 'tribe_repository_events_update_callback', [ $this, 'update_callback' ] ) ) {
-			add_filter( 'tribe_repository_events_update_callback', [ $this, 'update_callback' ], 20, 2 );
+			], 20, 4 );
 		}
 	}
 
@@ -80,16 +73,6 @@ class Provider extends Service_Provider implements Provider_Contract {
 			[ $this, 'create_recurrence_callback' ],
 			20
 		);
-		remove_filter(
-			'tribe_repository_events_create_callback',
-			[ $this, 'update_callback' ],
-			20
-		);
-		remove_filter(
-			'tribe_repository_events_update_callback',
-			[ $this, 'update_callback' ],
-			20
-		);
 	}
 
 	/**
@@ -98,25 +81,16 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 *
+	 * @param callable                  $callback           The callback that should be used to update the Event
+	 *                                                      recurrence information.
+	 * @param int                       $post_id            The post ID to update the recurrence information for.
+	 * @param array<string,mixed>       $recurrence_payload The recurrence payload.
+	 * @param ?array<string,mixed>|null $postarr            The rest of the Event creation data.
+	 *
 	 * @return callable The filtered Occurrence creation callback.
 	 */
-	public function create_recurrence_callback() {
-		return $this->container->make( Events::class )->create_recurrence_callback();
-	}
-
-	/**
-	 * Replaces the default Event Repository create and update callback with one that will operate on
-	 * custom tables.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @param callable            $repository_callback The default repository callback.
-	 * @param array<string,mixed> $postarr             An array of datat to create or update the Event.
-	 *
-	 * @return callable The callback that will handle upsertions of an Event custom tables data
-	 *                  in the context of a repository call.
-	 */
-	public function update_callback( $repository_callback, array $postarr = [] ) {
-		return $this->container->make( Events::class )->update_callback( $repository_callback, $postarr );
+	public function create_recurrence_callback( callable $callback, int $post_id, array $recurrence_payload = [], ?array $postarr = null ): callable {
+		return $this->container->make( Events::class )
+			->create_recurrence_callback( $post_id, $recurrence_payload, $postarr );
 	}
 }

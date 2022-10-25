@@ -3,60 +3,11 @@ namespace Nextgenthemes\ARVE\Pro;
 
 use \Nextgenthemes\ARVE;
 
-// add_filter( 'nextgenthemes/arve/iframe', __NAMESPACE__ . '\no_tag_when_lity', 10, 2 );
-// add_filter( 'nextgenthemes/arve/video', __NAMESPACE__ . '\no_tag_when_lity', 10, 2 );
-
-// function is_lity( array $a ) {
-// 	$later = true;
-// 	return $later && in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true );
-// }
-
-// function no_tag_when_lity( $tag, array $a ) {
-
-// 	if ( is_lity( $a ) ) {
-// 		$tag['tag'] = false;
-// 	}
-
-// 	return $tag;
-// }
-
-/// add_filter( 'nextgenthemes/arve/arve', __NAMESPACE__ . '\after_arve_', 10, 2 );
-
-// function after_embed( $html, array $a ) {
-
-// 	#return $html . '<div style="background: red;">hello</div>';
-
-// 	if ( is_lity( $a ) ) {
-
-// 		if ( 'html5' === $a['provider'] ) {
-// 			$vid = ARVE\build_video_tag( $a );
-// 		} else {
-// 			$vid = ARVE\build_iframe_tag( $a );
-// 		}
-
-// 		add_filter( 'nextgenthemes/arve/embed', __NAMESPACE__ . '\make_embed_lity_container', 10, 2 );
-// 		$html = ARVE\arve_embed( '<noscript>' . $vid . '</noscript>', $a );
-// 		remove_filter( 'nextgenthemes/arve/embed', __NAMESPACE__ . '\make_embed_lity_container' );
-// 	}
-
-// 	return $html;
-// }
-
-// function make_embed_lity_container( array $tag, array $a ) {
-// 	$tag['attr']['class'] .= ' arve-embed--lity arve-lity-container';
-// 	return $tag;
-// }
-
 function noscript_wrap( $html, array $a ) {
 	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ) {
 		$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
 	}
 	return $html;
-}
-
-function is_lity( array $a ) {
-	$later = true;
-	return $later && in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true );
 }
 
 function tag_filter_arve( array $tag, array $a ) {
@@ -83,25 +34,11 @@ function tag_filter_arve( array $tag, array $a ) {
 	}
 
 	if ( 'link-lightbox' === $a['mode'] ) {
-		$tag['tag']                            = 'span';
-		$tag['attr']['data-lightbox-maxwidth'] = ARVE\options()['lightbox_maxwidth'];
-
-		if ( $a['src'] ) {
-			$tag['attr']['data-iframe-src'] = $a['src'];
-		}
+		$tag['tag'] = 'span';
 	}
 
 	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && ! empty( $a['hover_effect'] ) ) {
 		$tag['attr']['class'] .= ' arve-hover-effect-' . $a['hover_effect'];
-	}
-
-	if ( in_array( $a['mode'], [ 'lightbox', 'link-lightbox' ], true ) ) {
-		$tag['attr']['data-lightbox']          = ARVE\options()['lightbox_script'];
-		$tag['attr']['data-lightbox-maxwidth'] = ARVE\options()['lightbox_maxwidth'];
-
-		if ( $a['src'] ) {
-			$tag['attr']['data-iframe-src'] = $a['src'];
-		}
 	}
 
 	if ( 'lazyload' === $a['mode'] && $a['grow'] ) {
@@ -114,10 +51,6 @@ function tag_filter_arve( array $tag, array $a ) {
 
 	if ( 100 !== $a['volume'] ) {
 		$tag['attr']['data-volume'] = $a['volume'];
-	}
-
-	if ( use_jsapi( $a ) ) {
-		$tag['attr']['data-jsapi'] = $a['provider'];
 	}
 
 	if ( 'link-lightbox' === $a['mode'] ) {
@@ -136,10 +69,6 @@ function tag_filter_video( array $tag, array $a ) {
 
 function tag_filter_iframe( array $tag, array $a ) {
 
-	if ( 'youtube' === $a['provider'] && use_jsapi( $a ) ) {
-		$tag['attr']['src'] = add_query_arg( [ 'enablejsapi' => 1 ], $tag['attr']['src'] );
-	}
-
 	if ( $a['disable_links'] && ! empty( $tag['attr']['sandbox'] ) ) {
 
 		$sandbox_arr = \explode( ' ', $tag['attr']['sandbox'] );
@@ -157,11 +86,10 @@ function tag_filter_iframe( array $tag, array $a ) {
 
 function tag_filter_title( array $tag, array $a ) {
 
-	if ( ! $a['hide_title'] && in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
+	if ( ! $a['hide_title'] && in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && $a['title'] ) {
 		$tag['tag']           = 'h5';
 		$tag['inner_html']    = trim( $a['title'] );
 		$tag['attr']['class'] = 'arve-title';
-		unset( $tag['attr']['content'] );
 	}
 
 	return $tag;
@@ -185,7 +113,7 @@ function srcset( array $a ) {
 
 		foreach ( SRCSET_SIZES as $size ) :
 
-			$url = preg_replace( '#^(.*)_([0-9x]+).jpg$#i', "$1_$size.jpg", $a['img_src'] );
+			$url = preg_replace( '#^(.*)_([0-9x]{3,9}(\.jpg)?)$#i', "$1_$size", $a['img_src'] );
 
 			$srcset_comb[] = "$url {$size}w";
 
@@ -206,45 +134,46 @@ function srcset( array $a ) {
 
 function tag_filter_thumbnail( array $tag, array $a ) {
 
-	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
-
-		if ( is_numeric( $a['thumbnail'] ) ) {
-
-			$image = wp_get_attachment_image_src( $a['thumbnail'], 'full' );
-
-			if ( $image ) {
-				list( $src, $width, $height ) = $image;
-
-				$height = ARVE\new_height(
-					$width,
-					$height,
-					$a['maxwidth']
-				);
-			}
-		} elseif ( ! empty( $a['oembed_data']->thumbnail_width ) &&
-			! empty( $a['oembed_data']->thumbnail_height )
-		) {
-			$height = ARVE\new_height(
-				$a['oembed_data']->thumbnail_width,
-				$a['oembed_data']->thumbnail_height,
-				$a['maxwidth']
-			);
-		} else {
-			$ratio  = empty( $a['aspect_ratio'] ) ? '16:9' : $a['aspect_ratio'];
-			$height = ARVE\height_from_width_and_ratio( $a['maxwidth'], $ratio );
-		}
-
-		$tag['tag']             = 'img';
-		$tag['attr']['alt']     = trim( $a['title'] );
-		$tag['attr']['src']     = $a['img_src'];
-		$tag['attr']['srcset']  = srcset( $a );
-		$tag['attr']['class']   = 'arve-thumbnail';
-		$tag['attr']['loading'] = 'lazy';
-		$tag['attr']['width']   = $a['maxwidth'];
-		$tag['attr']['height']  = $height;
-
-		unset( $tag['attr']['content'] );
+	if ( ! in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) || empty( $a['img_src'] ) ) {
+		return $tag;
 	}
+
+	$width = 480;
+
+	if ( is_numeric( $a['thumbnail'] ) ) {
+
+		$image = wp_get_attachment_image_src( $a['thumbnail'], 'full' );
+
+		if ( $image ) {
+			list( , $att_width, $att_height ) = $image;
+
+			$height = ARVE\new_height(
+				$att_width,
+				$att_height,
+				$width
+			);
+		}
+	} elseif ( ! empty( $a['oembed_data']->thumbnail_width ) &&
+		! empty( $a['oembed_data']->thumbnail_height )
+	) {
+		$height = ARVE\new_height(
+			$a['oembed_data']->thumbnail_width,
+			$a['oembed_data']->thumbnail_height,
+			$width
+		);
+	} else {
+		$ratio  = empty( $a['aspect_ratio'] ) ? '16:9' : $a['aspect_ratio'];
+		$height = ARVE\height_from_width_and_ratio( $width, $ratio );
+	}
+
+	$tag['tag']             = 'img';
+	$tag['attr']['alt']     = trim( $a['title'] );
+	$tag['attr']['src']     = $a['img_src'];
+	$tag['attr']['srcset']  = srcset( $a );
+	$tag['attr']['class']   = 'arve-thumbnail';
+	$tag['attr']['loading'] = 'lazy';
+	$tag['attr']['width']   = $width;
+	$tag['attr']['height']  = $height;
 
 	return $tag;
 }
@@ -285,13 +214,40 @@ function tag_filter_button( array $tag, array $a ) {
 		$svg = '<span class="arve-play-btn-inner">' . $svg . '</span>';
 	}
 
+	if ( 'lightbox' === $a['mode'] ) {
+		$tag['attr'] = bigger_picture_attr($a);
+	}
+
 	$tag['tag']                 = 'button';
 	$tag['inner_html']          = $svg;
 	$tag['role']                = 'presentation';
 	$tag['attr']['type']        = 'button';
 	$tag['attr']['class']       = 'arve-play-btn arve-play-btn--' . $a['play_icon_style'];
 	$tag['attr']['data-target'] = '#' . $a['uid'];
-	$tag['attr']['aria-label']  = 'Play';
+	$tag['attr']['aria-label']  = __( 'Play', 'arve-pro' );
 
 	return $tag;
+}
+
+function bigger_picture_attr( array $a ) {
+
+	$ratio = $a['aspect_ratio'] ? $a['aspect_ratio'] : '16:9';
+
+	if ( 'html5' === $a['provider'] ) {
+		$attr['href']         = $a['video_sources'][0]['src'];
+		$attr['data-sources'] = wp_json_encode( $a['video_sources'], 0, 2);
+		$attr['data-tracks']  = wp_json_encode( $a['tracks'], 0, 2);
+	} else {
+		$attr['href']        = $a['url'];
+		$attr['data-iframe'] = ARVE\iframe_src_autoplay_args( true, $a );
+	}
+
+	$attr['data-target'] = '#' . $a['uid'];
+	$attr['data-width']  = ARVE\options()['lightbox_maxwidth'];
+	$attr['data-height'] = ARVE\height_from_width_and_ratio( $attr['data-width'], $ratio );
+	$attr['data-thumb']  = $a['img_src'];
+
+	$attr['aria-label'] = __( 'Play', 'arve-pro' );
+
+	return $attr;
 }

@@ -64,12 +64,16 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 		 *
 		 * @param bool Whether to lock the interface or not.
 		 */
-		$lock_rules_ui = apply_filters( 'tec_events_pro_lock_rules_ui', false );
+		$lock_rules_ui           = apply_filters( 'tec_events_pro_lock_rules_ui', false );
+		$rules_container_classes = [ 'recurrence-container' ];
+		if ( $lock_rules_ui ) {
+			$rules_container_classes[] = 'recurrence-container--lock';
+		}
 		?>
-		<div class="recurrence-rules-container">
+		<div <?php tribe_classes( $rules_container_classes ); ?>>
 			<?php
 			if ( $lock_rules_ui ) {
-				echo '<div class="recurrence-rules-lock-overlay"></div>';
+				echo '<div class="recurrence-lock-overlay"></div>';
 			}
 			?>
 			<div id="tribe-recurrence-staging"></div>
@@ -321,13 +325,16 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 							   value="<?php esc_attr_e( _x( 'events', 'occurence count text', 'tribe-events-calendar-pro' ) ) ?>"/>
 					</div>
 					<div class="tribe-event-recurrence-description"></div>
-					<div class="tribe-dependent tribe-recurrence-details-option" data-depends="#recurrence_rule_--_type"
-						 data-condition-not-empty>
+					<?php if ( ! $lock_rules_ui ): ?>
+						<div class="tribe-dependent tribe-recurrence-details-option"
+							 data-depends="#recurrence_rule_--_type"
+							 data-condition-not-empty>
 					<span class="tribe-handle" title="Click to toggle">
 						<span class="show"><?php esc_html_e( 'Show Details', 'tribe-events-calendar-pro' ); ?></span>
 						<span class="hide"><?php esc_html_e( 'Hide Details', 'tribe-events-calendar-pro' ); ?></span>
 					</span>
-					</div>
+						</div>
+					<?php endif; ?>
 				</div>
 
 			</script>
@@ -406,12 +413,16 @@ $rule_prefix = 'exclusion';
 		 *
 		 * @param bool Whether to lock the interface or not.
 		 */
-		$lock_exclusions_ui = apply_filters( 'tec_events_pro_lock_exclusions_ui', false );
+		$lock_exclusions_ui           = apply_filters( 'tec_events_pro_lock_exclusions_ui', false );
+		$exclusions_container_classes = [ 'recurrence-container' ];
+		if ( $lock_exclusions_ui ) {
+			$exclusions_container_classes[] = 'recurrence-container--lock';
+		}
 		?>
-		<div class="recurrence-exclusions-container">
+		<div <?php tribe_classes( $exclusions_container_classes ); ?>>
 			<?php
 			if ( $lock_exclusions_ui ) {
-				echo '<div class="recurrence-exclusions-lock-overlay"></div>';
+				echo '<div class="recurrence-lock-overlay"></div>';
 			}
 			?>
 			<div id="tribe-exclusion-staging"></div>
@@ -636,18 +647,20 @@ $rule_prefix = 'exclusion';
 						</div>
 					</div>
 					<div class="tribe-event-recurrence-description"></div>
-					<div
+					<?php if ( ! $lock_exclusions_ui ): ?>
+						<div
 							class="tribe-dependent tribe-recurrence-details-option"
 							data-depends="#exclusion_rule_--_type"
 							data-condition-relation="and"
 							data-condition-not-empty
 							data-condition-not="Date"
-					>
+						>
 					<span class="tribe-handle" title="Click to toggle">
 						<span class="show"><?php esc_html_e( 'Show Details', 'tribe-events-calendar-pro' ); ?></span>
 						<span class="hide"><?php esc_html_e( 'Hide Details', 'tribe-events-calendar-pro' ); ?></span>
 					</span>
-					</div>
+						</div>
+					<?php endif; ?>
 				</div>
 			</script>
 			<button id="tribe-add-exclusion"

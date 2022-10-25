@@ -43,16 +43,26 @@ class Provider extends Service_Provider implements Provider_Contract {
 	}
 
 	/**
+	 * We are handling this notice with overrides defined in Occurrence_Notices.
+	 * All handling should be delegated there.
+	 *
 	 * @since 6.0.0
+	 * @since 6.0.2 Removing several other messages (draft and published) to allow Occurrence_Notices to take over.
 	 *
-	 * @param $messages
+	 * @param array $messages
 	 *
-	 * @return array
+	 * @return array The filtered messages.
 	 */
-	public function remove_default_message( $messages ) {
+	public function remove_default_message( $messages = [] ) {
+		if ( ! is_array( $messages ) ) {
+			return $messages;
+		}
+
 		if ( isset( $messages[ Tribe__Events__Main::POSTTYPE ][1] ) ) {
-			// Remove the main "updated" message for Events.
-			$messages[ Tribe__Events__Main::POSTTYPE ][1] = false;
+			// Remove the main "updated" and "published" message for Events.
+			$messages[ Tribe__Events__Main::POSTTYPE ][1]  = false;
+			$messages[ Tribe__Events__Main::POSTTYPE ][6]  = false;
+			$messages[ Tribe__Events__Main::POSTTYPE ][10] = false;
 		}
 
 		return $messages;

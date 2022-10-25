@@ -27,6 +27,9 @@ function latest_youtube_video_from_channel( $a ) {
 		$xml = simplexml_load_string( $response );
 
 		if ( false === $xml || empty( $xml->entry[0]->children( 'yt', true )->videoId[0] ) ) {
+
+			$channel_url = 'https://youtube.com/channel/' . $matches['channel'];
+
 			$a['errors']->add(
 				'fatal',
 				sprintf(
@@ -45,23 +48,19 @@ function latest_youtube_video_from_channel( $a ) {
 
 function append_lightbox_link( $html, array $a ) {
 
-	if ( 'link-lightbox' === $a['mode'] ) {
-
-		$html .= ARVE\build_tag(
-			[
-				'name'       => 'lightbox-link',
-				'tag'        => 'a',
-				'inner_html' => trim( $a['title'] ),
-				'attr'       => [
-					'href'        => '#' . $a['uid'],
-					'data-target' => '#' . $a['uid'],
-					'role'        => 'button',
-					'class'       => 'arve-lightbox-link et_smooth_scroll_disabled',
-				],
-			],
-			$a
-		);
+	if ( 'link-lightbox' !== $a['mode'] ) {
+		return $html;
 	}
+
+	$html .= ARVE\build_tag(
+		[
+			'name'       => 'lightbox-link',
+			'tag'        => 'a',
+			'inner_html' => trim( $a['title'] ),
+			'attr'       => bigger_picture_attr( $a ),
+		],
+		$a
+	);
 
 	return $html;
 }

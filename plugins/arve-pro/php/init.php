@@ -6,7 +6,7 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
 function init() {
 
 	if ( ! defined( 'Nextgenthemes\ARVE\VERSION' ) ||
-		version_compare( \Nextgenthemes\ARVE\VERSION, '9.2.0', '<' )
+		version_compare( \Nextgenthemes\ARVE\VERSION, '9.7.14', '<' )
 	) {
 		return;
 	}

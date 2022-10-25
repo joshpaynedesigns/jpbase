@@ -116,8 +116,9 @@ class Single_Rule_Event_Migration_Strategy implements Strategy_Interface {
 
 		$event_model->occurrences()->save_occurrences();
 		$post = get_post( $this->post_id );
-		$series_post_ids = (array) Series_Model::vinsert( [ [ 'title' => $post->post_title ] ], [ 'post_status' => $post->post_status ] );
-		tribe( Relationship::class )->with_event( $event_model, $series_post_ids );
+
+		$series_post_id = Series_Model::vinsert( [ 'title' => $post->post_title ], [ 'post_status' => $post->post_status ] );
+		tribe( Relationship::class )->with_event( $event_model, [ $series_post_id ] );
 
 		// Check if any occurrences created.
 		$count = Occurrence::where( 'post_id', '=', $this->post_id )
@@ -126,9 +127,7 @@ class Single_Rule_Event_Migration_Strategy implements Strategy_Interface {
 			throw new Migration_Exception( 'No occurrences created.' );
 		}
 
-		foreach ( $series_post_ids as $series_id ) {
-			$event_report->add_series( get_post( $series_id ) );
-		}
+		$event_report->add_series( get_post( $series_post_id ) );
 
 		return $event_report->add_strategy( self::get_slug() )
 		                    ->set( 'is_single', false )

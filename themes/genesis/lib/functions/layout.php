@@ -537,7 +537,7 @@ function genesis_get_structural_wrap( $context = '', $output = 'open' ) {
 		$wraps[0] = str_replace( $swap, $map[ $swap ], $wraps[0] );
 	}
 
-	if ( ! in_array( $context, (array) $wraps[0], true ) ) {
+	if ( ! is_array( $wraps ) || ! in_array( $context, $wraps[0], true ) ) {
 		return '';
 	}
 

@@ -13,7 +13,11 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Provider as Notices_Provider;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Events;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Redirector;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Requests;
+use Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta as Blocks_Meta;
 use WP_Post;
+use Tribe__Timezones as Timezones;
 
 /**
  * Class Single
@@ -44,14 +48,34 @@ class Single implements Update_Controller_Interface {
 	private $single_post_id;
 
 	/**
+	 * A reference to the current Requests handler.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @var Requests
+	 */
+	private $requests;
+	/**
+	 * A reference to the current broewser and request redirection handler.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @var Redirector
+	 */
+	private $redirector;
+
+	/**
 	 * Single constructor.
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Events $events A reference to the current Events repository handler.
+	 * @param Events   $events   A reference to the current Events repository handler.
+	 * @param Requests $requests A reference to the current Requests handler.
 	 */
-	public function __construct( Events $events ) {
+	public function __construct( Events $events, Requests $requests, Redirector $redirector ) {
 		$this->events = $events;
+		$this->requests = $requests;
+		$this->redirector = $redirector;
 	}
 
 	/**
@@ -139,10 +163,15 @@ class Single implements Update_Controller_Interface {
 		);
 
 		// 4. Before the Custom Tables are updated, clear the Recurrence rules for this Event.
-		add_action( 'tec_events_custom_tables_v1_update_post_before', [ $this, 'delete_recurrence_meta' ] );
+		add_action( 'tec_events_custom_tables_v1_update_post_before', [ $this, 'ensure_no_recurrence_meta' ] );
 
 		$this->ensure_request_meta( $this->request );
 		$this->save_rest_request_recurrence_meta( $this->single_post_id, $this->request );
+
+		if ( $this->requests->is_link_update_request( $this->request ) ) {
+			$this->update_event_from_occurrence( $this->single_post_id, $this->occurrence );
+			$this->redirector->redirect_to_edit_link( $this->single_post_id );
+		}
 
 		return $this->single_post_id;
 	}
@@ -155,13 +184,56 @@ class Single implements Update_Controller_Interface {
 	 * @param int $post_id The post ID of the event for which the pre-commit process
 	 *                     is running.
 	 */
-	public function delete_recurrence_meta( $post_id ) {
+	public function ensure_no_recurrence_meta( int $post_id ): void {
 		if ( $post_id !== $this->single_post_id ) {
 			return;
 		}
 
-		remove_action( current_action(), [ $this, 'delete_recurrence_meta' ] );
+		remove_action( current_action(), [ $this, 'ensure_no_recurrence_meta' ] );
 
-		delete_post_meta( $this->single_post_id, '_EventRecurrence' );
+		$this->delete_recurrence_meta( $post_id );
+	}
+
+	/**
+	 * Updates the Event date-related meta from the Occurrence.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param int        $post_id    The post ID of the Event to update.
+	 * @param Occurrence $occurrence A reference to the Occurrence to use as the source of the data.
+	 *
+	 * @return void The Event date-related meta is updated.
+	 */
+	private function update_event_from_occurrence( int $post_id, Occurrence $occurrence ): void {
+		$meta = [
+			'_EventStartDate'    => $occurrence->start_date,
+			'_EventEndDate'      => $occurrence->end_date,
+			'_EventDuration'     => $occurrence->duration,
+			'_EventStartDateUTC' => $occurrence->start_date_utc,
+			'_EventEndDateUTC'   => $occurrence->end_date_utc,
+		];
+
+		foreach ( $meta as $meta_key => $meta_value ) {
+			// The function will return `false` on failure and same value, not helpful to check.
+			update_post_meta( $post_id, $meta_key, $meta_value );
+		}
+
+		$this->delete_recurrence_meta( $post_id );
+	}
+
+	/**
+	 * Deletes the Recurrence meta for the given Event.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param int $post_id The post ID of the Event to delete the Recurrence meta for.
+	 *
+	 * @return void The Recurrence meta is deleted.
+	 */
+	private function delete_recurrence_meta( int $post_id ): void {
+		delete_post_meta( $post_id, '_EventRecurrence' );
+		delete_post_meta( $post_id, Blocks_Meta::$rules_key );
+		delete_post_meta( $post_id, Blocks_Meta::$exclusions_key );
+		delete_post_meta( $post_id, Blocks_Meta::$description_key );
 	}
 }

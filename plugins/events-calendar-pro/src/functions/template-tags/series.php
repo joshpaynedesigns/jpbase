@@ -1,6 +1,8 @@
 <?php
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
+use TEC\Events_Pro\Custom_Tables\V1\Repository\Series_Repository;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use Tribe__Repository__Interface as Repository;
 
 if ( ! function_exists( 'tribe_is_event_series' ) ) {
 	/**
@@ -12,13 +14,8 @@ if ( ! function_exists( 'tribe_is_event_series' ) ) {
 	 *
 	 * @return bool Whether the post is an Event Series or not.
 	 */
-	function tribe_is_event_series( $post_id ) {
+	function tribe_is_event_series( $post_id ): bool {
 		return Series::POSTTYPE === get_post_type( $post_id );
-		/*
-		 * @todo add some model checks here
-		return get_post_type( $post_id ) === Event_Series::POST_TYPE
-		       && TEC\Events\Custom_Tables\V1\Models\Event_Series::find_by_post_id($post_id) instanceof TEC\Events\Custom_Tables\V1\Models\Event_Series;
-		*/
 	}
 }
 
@@ -27,15 +24,13 @@ if ( ! function_exists( 'tec_event_series' ) ) {
 	 * Return the first series associated with an event, if the event is private make sure to return `null` if the user
 	 * is not logged in.
 	 *
-	 * TODO: A more flexible approach to get the nth() series of an event or N series of an event.
-	 *
 	 * @since 6.0.0
 	 *
 	 * @param int $event_post_id The ID of the post ID event we are looking for.
 	 *
 	 * @return WP_Post|null The post representing the series otherwise `null`
 	 */
-	function tec_event_series( $event_post_id ) {
+	function tec_event_series( int $event_post_id ): ?WP_Post {
 		$cache = tribe_cache();
 		$cache_key = Series_Relationship::get_cache_key( $event_post_id );
 
@@ -92,7 +87,7 @@ if ( ! function_exists( 'tec_should_show_series_title' ) ) {
 	 *
 	 * @return boolean
 	 */
-	function tec_should_show_series_title( $series = null, $event = null ) {
+	function tec_should_show_series_title( $series = null, $event = null ): bool {
 		$show_title = false;
 		if ( is_numeric( $series ) ) {
 			$series = get_post( $series );
@@ -127,7 +122,7 @@ if ( ! function_exists( 'tec_get_series_marker_label_classes' ) ) {
 	 *
 	 * @return array<string> $classes A list of classes for the marker label.
 	 */
-	function tec_get_series_marker_label_classes( $series = null, $event = null  ) {
+	function tec_get_series_marker_label_classes( $series = null, $event = null  ): array {
 		$classes = [ 'tec_series_marker__title' ];
 
 		/**
@@ -143,10 +138,34 @@ if ( ! function_exists( 'tec_get_series_marker_label_classes' ) ) {
 		 *
 		 * @6.0.0
 		 *
-		 * @param array<string> A list of classes to apply to the series title.
-		 * @param Series|int|null  $series The post object or ID of the series the event belongs to.
-		 * @param WP_Post|int|null $event  The post object or ID of the event we're displaying.
+		 * @param array<string>    $classes A list of classes to apply to the series title.
+		 * @param Series|int|null  $series  The post object or ID of the series the event belongs to.
+		 * @param WP_Post|int|null $event   The post object or ID of the event we're displaying.
 		 */
 		return apply_filters( 'tec_events_custom_tables_v1_series_marker_label_classes', $classes, $series, $event );
+	}
+}
+
+if ( ! function_exists( 'tec_series' ) ) {
+	/**
+	 * Builds and returns an instance of the Series repository.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @return Tribe__Repository__Interface The series repository instance reference.
+	 */
+	function tec_series(): Repository {
+		$repository_class = Series_Repository::class;
+
+		/**
+		 * Filters the class that should be used to build a new instance of the Series repository.
+		 *
+		 * @since 6.0.1
+		 *
+		 * @param string $repository_class The class that should be used to build a new instance of the Series repository.
+		 */
+		$repository_class = apply_filters( 'tec_events_pro_custom_series_repository_class', $repository_class );
+
+		return tribe( $repository_class );
 	}
 }

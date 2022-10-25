@@ -89,8 +89,8 @@ class Provisional_Post {
 	 *
 	 * @return string The filtered query.
 	 */
-	public function hydrate_provisional_post_query( string $query ): string {
-		if ( empty( $query ) ) {
+	public function hydrate_provisional_post_query( $query ): string {
+		if ( empty( $query ) || ! is_string( $query ) ) {
 			return $query;
 		}
 
@@ -145,14 +145,22 @@ class Provisional_Post {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int $occurrence_id The Occurrence ID to return the row for.
+	 * @param int  $occurrence_id The Occurrence ID to return the row for.
+	 * @param bool $refresh       Whether to refresh the cache or not.
 	 *
 	 * @return Model|null Either the Occurrence row or `null` if not found.
 	 */
-	private function get_occurrence_row( int $occurrence_id ): ?Model {
+	private function get_occurrence_row( int $occurrence_id, bool $refresh = false ): ?Occurrence {
 		$uid_column = Occurrences::uid_column();
+		$normalized_occurrence_id = $this->normalize_provisional_post_id( $occurrence_id );
 
-		return Occurrence::find( $this->normalize_provisional_post_id( $occurrence_id ), $uid_column );
+		$cache_key = 'occurrence_row_' . $normalized_occurrence_id;
+
+		if ( $refresh || $this->cache[ $cache_key ] === false ) {
+			$this->cache[ $cache_key ] = Occurrence::find( $normalized_occurrence_id, $uid_column );
+		}
+
+		return $this->cache[ $cache_key ] ?? null;
 	}
 
 	/**
@@ -290,5 +298,24 @@ class Provisional_Post {
 		$this->post_cache->hydrate_caches( [ $object_id ] );
 
 		return $meta_value;
+	}
+
+	/**
+	 * Returns the Event post ID for an Occurrence `occurrence_id` or `provisional_id`.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param int $occurrence_id The Occurrence `occurrence_id` or `provisional_id` to get the Event ID for.
+	 *
+	 * @return int The Event ID, or the input value if not found.
+	 */
+	public function get_occurrence_post_id( int $occurrence_id ): int {
+		$occurrence_row = $this->get_occurrence_row( $occurrence_id );
+
+		if ( $occurrence_row === null ) {
+			return $occurrence_id;
+		}
+
+		return $occurrence_row->post_id;
 	}
 }

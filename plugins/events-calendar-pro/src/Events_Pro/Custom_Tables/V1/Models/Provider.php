@@ -80,7 +80,7 @@ class Provider extends Service_Provider {
 	 *
 	 * @return array<string,array<string,mixed>> The filtered extensions map.
 	 */
-	public function extend_event_model( array $extensions = [] ) {
+	public function extend_event_model( array $extensions = [] ): array {
 		return $this->container->make( Event::class )->extend( $extensions );
 	}
 
@@ -94,7 +94,7 @@ class Provider extends Service_Provider {
 	 *
 	 * @return array<string,array<string,mixed>> The filtered extensions map.
 	 */
-	public function extend_occurrence_model( array $extensions = [] ) {
+	public function extend_occurrence_model( array $extensions = [] ): array {
 		return $this->container->make( Occurrence::class )->extend( $extensions );
 	}
 
@@ -108,7 +108,7 @@ class Provider extends Service_Provider {
 	 * @param mixed          $args,...  The set of arguments that should be used to generate
 	 *                                  the Occurrences.
 	 */
-	public function get_occurrences_generator( Generator $generator = null, ...$args ) {
+	public function get_occurrences_generator( Generator $generator = null, ...$args ): ?Generator {
 		if ( $generator !== null ) {
 			return $generator;
 		}
@@ -128,7 +128,7 @@ class Provider extends Service_Provider {
 	 *
 	 * @return int The normalized Occurrence post ID.
 	 */
-	public function normalize_occurrence_id( $id ) {
+	public function normalize_occurrence_id( int $id ): int {
 		return $this->container->make( Occurrence::class )->normalize_occurrence_post_id( $id );
 	}
 
@@ -143,7 +143,7 @@ class Provider extends Service_Provider {
 	 *
 	 * @return array<string,mixed> The filtered Event post data.
 	 */
-	public function add_event_post_data( array $data, $event_id ) {
+	public function add_event_post_data( array $data, int $event_id ): array {
 		return $this->container->make( Event::class )->add_event_post_data( $data, $event_id );
 	}
 }

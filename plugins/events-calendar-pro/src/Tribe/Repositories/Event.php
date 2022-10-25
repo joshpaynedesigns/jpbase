@@ -481,6 +481,11 @@ class Tribe__Events__Pro__Repositories__Event extends Tribe__Events__Repositorie
 
 		// Then, if a `recurrence` entry is present, save it to use it after the event has been created.
 		if ( isset( $filtered['meta_input']['recurrence'] ) ) {
+			// If the `recurrence` entry is a callback, resolve it now.
+			if ( is_callable( $filtered['meta_input']['recurrence'] ) ) {
+				$callback = $filtered['meta_input']['recurrence'];
+				$filtered['meta_input']['recurrence'] = $callback( $filtered );
+			}
 
 			/*
 			 * Independently of what method is handling the recurrence creation we store the whole
@@ -535,7 +540,7 @@ class Tribe__Events__Pro__Repositories__Event extends Tribe__Events__Repositorie
 				$recurrence_payload = Tribe__Utils__Array::add_unprefixed_keys_to( $this->create_recurrence_payload );
 			}
 
-			$callback           = $this->get_recurrence_creation_callback( $event_post->ID, $recurrence_payload, $this->postarr );
+			$callback           = $this->get_recurrence_creation_callback( $event_post->ID, $recurrence_payload, $this->updates );
 
 			/*
 			 * Since the burden of logging and handling falls on the callback we're not collecting this value.

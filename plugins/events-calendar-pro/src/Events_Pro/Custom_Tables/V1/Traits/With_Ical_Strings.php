@@ -876,4 +876,57 @@ trait With_Ical_Strings {
 
 		return $default;
 	}
+
+	/**
+	 * Returns whether a value is an iCalendar format string or not.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param mixed $value The value to check.
+	 *
+	 * @return bool Whether the value is an iCalendar format string or not.
+	 */
+	protected function is_icalendar_string( $value ): bool {
+		if ( ! is_string( $value ) ) {
+			return false;
+		}
+
+		foreach ( [ 'DTSTART', 'RRULE', 'RDATE' ] as $canary ) {
+			if ( strpos( $value, $canary ) !== false ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Updates the iCalendar format string to ensure the UNTIL attribute conforms to the requirement
+	 * of having a UTC timezone.
+	 *
+	 * If the UNTIL attribute of the string is already specified in UTC timezone, it is left unchanged.
+	 *
+	 * @since 6.0.1
+	 * @param string       $string   The iCalendar format string to update.
+	 * @param DateTimeZone $timezone The timezone to use for the UNTIL attribute.
+	 *
+	 * @return string The updated iCalendar format string.
+	 */
+	protected function normalize_until_date( string $string, DateTimeZone $timezone ): string {
+		$lines = explode( "\n", $string );
+
+		array_walk( $lines, function ( string &$line ) use ( $timezone ): void {
+			$until = $this->get_ical_string_attribute_value( $line, 'UNTIL' );
+
+			if ( $until === null || strpos( $until, 'Z' ) === strlen( $until ) - 1 ) {
+				return;
+			}
+
+			$utc = new DateTimezone( 'UTC' );
+			$normalized_until = Dates::immutable( $until, $timezone )->setTimezone( $utc )->format( 'Ymd\THis\Z' );
+			$line = $this->set_ical_string_attribute( $line, 'UNTIL', [ $normalized_until ] );
+		} );
+
+		return implode( "\n", $lines );
+	}
 }

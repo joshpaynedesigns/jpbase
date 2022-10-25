@@ -70,7 +70,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.0.0';
+		const VERSION = '6.0.2';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -623,7 +623,23 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 *
 		 * @return void
 		 */
-		public function add_settings_tabs() {
+		public function add_settings_tabs( $admin_page ) {
+			$tec_settings_page_id = tribe( 'tec.main' )->settings()::$settings_page_id;
+
+			if ( ! empty( $admin_page ) && $tec_settings_page_id !== $admin_page ) {
+				return;
+			}
+
+			add_filter(
+				'tec_events_settings_tabs_ids',
+				function( $tabs ) {
+					$tabs[] = 'defaults';
+					$tabs[] = 'additional-fields';
+
+					return $tabs;
+				}
+			);
+
 			require_once( $this->pluginPath . 'src/admin-views/tribe-options-defaults.php' );
 			new Tribe__Settings_Tab( 'defaults', __( 'Default Content', 'tribe-events-calendar-pro' ), $defaultsTab );
 			// The single-entry array at the end allows for the save settings button to be displayed.
@@ -1135,7 +1151,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public function addLinksToPluginActions( $actions ) {
 			if ( class_exists( 'Tribe__Events__Main' ) ) {
-				$actions['settings'] = '<a href="' . Tribe__Settings::instance()->get_url() . '">' . esc_html__( 'Settings', 'tribe-events-calendar-pro' ) . '</a>';
+				$actions['settings'] = '<a href="' . tribe( 'tec.main' )->settings()->get_url() . '">' . esc_html__( 'Settings', 'tribe-events-calendar-pro' ) . '</a>';
 			}
 
 			return $actions;
@@ -1682,7 +1698,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			// Assets loader
 			tribe_singleton( 'events-pro.assets', 'Tribe__Events__Pro__Assets', array( 'register' ) );
-
 			tribe_singleton( 'events-pro.admin.settings', 'Tribe__Events__Pro__Admin__Settings', array( 'hook' ) );
 
 			if ( ! tribe_events_views_v2_is_enabled() ) {
@@ -1690,17 +1705,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				tribe( 'events-pro.customizer.photo-view' );
 			}
 			tribe_singleton( 'events-pro.ical', 'Tribe__Events__Pro__iCal', [ 'hook' ] );
-
 			tribe_register_provider( 'Tribe__Events__Pro__Editor__Provider' );
-
-			tribe( 'events-pro.admin.settings' );
-			tribe( 'events-pro.assets' );
-			tribe( 'events-pro.ical' );
-
-			tribe_singleton( Tribe__Events__Pro__Geo_Loc::class, Tribe__Events__Pro__Geo_Loc::instance() );
-
-			tribe_register_provider( 'Tribe__Events__Pro__Service_Providers__ORM' );
 			tribe_register_provider( 'Tribe__Events__Pro__Service_Providers__RBE' );
+			tribe_singleton( Tribe__Events__Pro__Geo_Loc::class, Tribe__Events__Pro__Geo_Loc::instance() );
+			tribe_register_provider( 'Tribe__Events__Pro__Service_Providers__ORM' );
+
 			tribe_register_provider( Tribe\Events\Pro\Views\V2\Service_Provider::class );
 			tribe_register_provider( Tribe\Events\Pro\Models\Service_Provider::class );
 			tribe_register_provider( Tribe__Events__Pro__Service_Providers__Templates::class );
@@ -1717,6 +1726,10 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if ( class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' ) ) {
 				tribe_register_provider( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' );
 			}
+
+			tribe( 'events-pro.admin.settings' );
+			tribe( 'events-pro.ical' );
+			tribe( 'events-pro.assets' );
 		}
 
 		/**

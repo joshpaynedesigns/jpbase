@@ -10,7 +10,6 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
-use TEC\Events\Custom_Tables\V1\Updates\Requests;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers\Update_Controller_Interface as Update_Controller;
 use Tribe__Events__Main as TEC;
@@ -24,10 +23,10 @@ use WP_REST_Request;
  * @package TEC\Events_Pro\Custom_Tables\V1\Updates
  */
 class Updates {
-	const ALL = 'all';
-	const SINGLE = 'single';
-	const UPCOMING = 'upcoming';
-	const REQUEST_KEY = '_tec_update_type';
+	public const ALL = 'all';
+	public const SINGLE = 'single';
+	public const UPCOMING = 'upcoming';
+	public const REQUEST_KEY = '_tec_update_type';
 
 	/**
 	 * A reference to the current Provisional Post handler implementation.
@@ -139,7 +138,7 @@ class Updates {
 	 *
 	 * @return Update_Controllers\All A reference to the built and ready to use "All" update type controller.
 	 */
-	private function build_all_update_controller( WP_REST_Request $request, Occurrence $occurrence ) {
+	private function build_all_update_controller( WP_REST_Request $request, Occurrence $occurrence ): Update_Controllers\All {
 		$update_controller = tribe( Update_Controllers\All::class );
 		$update_controller->set_request( $request );
 		$update_controller->set_occurrence( $occurrence );
@@ -159,7 +158,7 @@ class Updates {
 	 *
 	 * @return Update_Controllers\Single A reference to the built and ready to use "Single" update type controller.
 	 */
-	private function build_single_update_controller( WP_REST_Request $request, Occurrence $occurrence ) {
+	private function build_single_update_controller( WP_REST_Request $request, Occurrence $occurrence ): Update_Controllers\Single {
 		$update_controller = tribe( Update_Controllers\Single::class );
 		$update_controller->set_request( $request );
 		$update_controller->set_occurrence( $occurrence );
@@ -179,7 +178,7 @@ class Updates {
 	 *
 	 * @return Update_Controllers\Upcoming A reference to the built and ready to use "Upcoming" update type controller.
 	 */
-	private function build_upcoming_update_controller( WP_REST_Request $request, Occurrence $occurrence ) {
+	private function build_upcoming_update_controller( WP_REST_Request $request, Occurrence $occurrence ): Update_Controllers\Upcoming {
 		$update_controller = tribe( Update_Controllers\Upcoming::class );
 		$update_controller->set_request( $request );
 		$update_controller->set_occurrence( $occurrence );

@@ -186,6 +186,10 @@ class Genesis_Settings_Sanitizer {
 		if ( is_array( $this->options[ $option ] ) ) {
 			// Array of sub-option values to loop through.
 			$old_value = get_option( $option );
+			if ( ! is_array( $old_value ) ) {
+				$old_value = [];
+			}
+
 			foreach ( $this->options[ $option ] as $suboption => $filter ) {
 				$old_value[ $suboption ] = isset( $old_value[ $suboption ] ) ? $old_value[ $suboption ] : '';
 				$new_value[ $suboption ] = isset( $new_value[ $suboption ] ) ? $new_value[ $suboption ] : '';

@@ -18,6 +18,31 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2022-09-22 5.3.1 =
+
+* Make sure the addon only runs when ARVE 9.7.14 or later is installed.
+
+= 2022-09-22 5.3.0 =
+
+* Fix: HTML5 video lightboxes closed unintentionally in chromium based browsers.
+* Improved: Changed lightbox script from Big-Picture to its successer Bigger-Picture.
+* New: Custom hover effect class for your own CSS styles.
+* Removed old lightox script Lity as an option.
+
+= 2022-09-05 5.2.3 =
+
+* Fix: Initial thumbnail dimentions.
+
+= 2022-09-05 5.2.2 =
+
+* Fix: Vimeo thumbnials blury, not all sizes loading.
+* New: "Darken" hover effect option.
+
+= 2022-09-05 5.2.2 =
+
+* Fix: Vimeo thumbnials blury, not all sizes loading.
+* New: "Darken" hover effect option.
+
 = 2021-12-08 5.2.0 =
 
 * New "Reset after played" option.

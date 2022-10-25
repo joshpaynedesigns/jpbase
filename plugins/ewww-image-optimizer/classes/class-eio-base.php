@@ -142,6 +142,14 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 		 * @return string The full path to a writable plugin resource folder.
 		 */
 		function set_content_dir( $sub_folder ) {
+			if (
+				defined( 'EWWWIO_CONTENT_DIR' ) &&
+				trailingslashit( WP_CONTENT_DIR ) . trailingslashit( 'ewww' ) !== EWWWIO_CONTENT_DIR
+			) {
+				$content_dir       = EWWWIO_CONTENT_DIR;
+				$this->content_url = str_replace( WP_CONTENT_DIR, WP_CONTENT_URL, $content_dir );
+				return $content_dir;
+			}
 			$content_dir = WP_CONTENT_DIR . $sub_folder;
 			if ( ! is_writable( WP_CONTENT_DIR ) || ! empty( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
 				$upload_dir = wp_get_upload_dir();
@@ -298,6 +306,23 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 					return true;
 				}
 				$this->debug_message( 'imagick found, but PNG or JPG not supported' );
+			}
+			return false;
+		}
+
+		/**
+		 * Checks if the S3 Uploads plugin is installed and active.
+		 *
+		 * @return bool True if it is fully active and rewriting/offloading media, false otherwise.
+		 */
+		function s3_uploads_enabled() {
+			// For version 3.x.
+			if ( class_exists( 'S3_Uploads\Plugin', false ) && function_exists( 'S3_Uploads\enabled' ) && \S3_Uploads\enabled() ) {
+				return true;
+			}
+			// Pre version 3.
+			if ( class_exists( 'S3_Uploads', false ) && function_exists( 's3_uploads_enabled' ) && \s3_uploads_enabled() ) {
+				return true;
 			}
 			return false;
 		}
@@ -515,6 +540,82 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 			return is_file( $file );
 		}
 
+		/**
+		 * Check if a file/directory is readable.
+		 *
+		 * @param string $file The path to check.
+		 * @return bool True if it is, false if it ain't.
+		 */
+		function is_readable( $file ) {
+			$this->get_filesystem();
+			return $this->filesystem->is_readable( $file );
+		}
+
+		/**
+		 * Check filesize, and prevent errors by ensuring file exists, and that the cache has been cleared.
+		 *
+		 * @param string $file The name of the file.
+		 * @return int The size of the file or zero.
+		 */
+		function filesize( $file ) {
+			$file = realpath( $file );
+			if ( $this->is_file( $file ) ) {
+				$this->get_filesystem();
+				// Flush the cache for filesize.
+				clearstatcache();
+				// Find out the size of the new PNG file.
+				return $this->filesystem->size( $file );
+			} else {
+				return 0;
+			}
+		}
+
+		/**
+		 * Check if file is in an approved location and remove it.
+		 *
+		 * @param string $file The path of the file to check.
+		 * @param string $dir The path of the folder constraint. Optional.
+		 * @return bool True if the file was removed, false otherwise.
+		 */
+		function delete_file( $file, $dir = '' ) {
+			$file = realpath( $file );
+			if ( ! empty( $dir ) ) {
+				return \wp_delete_file_from_directory( $file, $dir );
+			}
+
+			$wp_dir      = realpath( ABSPATH );
+			$upload_dir  = \wp_get_upload_dir();
+			$upload_dir  = realpath( $upload_dir['basedir'] );
+			$content_dir = realpath( WP_CONTENT_DIR );
+
+			if ( false !== strpos( $file, $upload_dir ) ) {
+				return \wp_delete_file_from_directory( $file, $upload_dir );
+			}
+			if ( false !== strpos( $file, $content_dir ) ) {
+				return \wp_delete_file_from_directory( $file, $content_dir );
+			}
+			if ( false !== strpos( $file, $wp_dir ) ) {
+				return \wp_delete_file_from_directory( $file, $wp_dir );
+			}
+			return false;
+		}
+
+		/**
+		 * Setup the filesystem class.
+		 */
+		function get_filesystem() {
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php' );
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php' );
+			if ( ! defined( 'FS_CHMOD_DIR' ) ) {
+				define( 'FS_CHMOD_DIR', ( fileperms( ABSPATH ) & 0777 | 0755 ) );
+			}
+			if ( ! defined( 'FS_CHMOD_FILE' ) ) {
+				define( 'FS_CHMOD_FILE', ( fileperms( ABSPATH . 'index.php' ) & 0777 | 0644 ) );
+			}
+			if ( ! isset( $this->filesystem ) || ! is_object( $this->filesystem ) ) {
+				$this->filesystem = new \WP_Filesystem_Direct( '' );
+			}
+		}
 
 		/**
 		 * Make sure an array/object can be parsed by a foreach().
@@ -577,6 +678,15 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 				$memory_limit = intval( $memory_limit ) * 1024 * 1024;
 			}
 			return $memory_limit;
+		}
+
+		/**
+		 * Clear output buffers without throwing a fit.
+		 */
+		function ob_clean() {
+			if ( ob_get_length() ) {
+				ob_end_clean();
+			}
 		}
 
 		/**
@@ -814,32 +924,21 @@ if ( ! class_exists( 'EIO_Base' ) ) {
 				}
 			}
 
-			if (
-				class_exists( 'S3_Uploads' ) &&
-				function_exists( 's3_uploads_enabled' ) && s3_uploads_enabled() &&
-				method_exists( 'S3_Uploads', 'get_instance' ) && method_exists( 'S3_Uploads', 'get_s3_url' )
-			) {
-				$s3_uploads_instance  = \S3_Uploads::get_instance();
-				$s3_uploads_url       = $s3_uploads_instance->get_s3_url();
-				$this->allowed_urls[] = $s3_uploads_url;
-				$this->debug_message( "found S3 URL from S3_Uploads: $s3_uploads_url" );
-				$s3_domain       = $this->parse_url( $s3_uploads_url, PHP_URL_HOST );
-				$s3_scheme       = $this->parse_url( $s3_uploads_url, PHP_URL_SCHEME );
-				$this->s3_active = $s3_domain;
-			}
-
-			if (
-				class_exists( 'S3_Uploads\Plugin' ) &&
-				function_exists( 's3_uploads_enabled' ) && s3_uploads_enabled() &&
-				method_exists( 'S3_Uploads\Plugin', 'get_instance' ) && method_exists( 'S3_Uploads', 'get_s3_url\Plugin' )
-			) {
-				$s3_uploads_instance  = \S3_Uploads\Plugin::get_instance();
-				$s3_uploads_url       = $s3_uploads_instance->get_s3_url();
-				$this->allowed_urls[] = $s3_uploads_url;
-				$this->debug_message( "found S3 URL from S3_Uploads: $s3_uploads_url" );
-				$s3_domain       = $this->parse_url( $s3_uploads_url, PHP_URL_HOST );
-				$s3_scheme       = $this->parse_url( $s3_uploads_url, PHP_URL_SCHEME );
-				$this->s3_active = $s3_domain;
+			if ( $this->s3_uploads_enabled() ) {
+				if ( method_exists( 'S3_Uploads\Plugin', 'get_instance' ) && method_exists( 'S3_Uploads\Plugin', 'get_s3_url' ) ) {
+					$s3_uploads_instance = \S3_Uploads\Plugin::get_instance();
+					$s3_uploads_url      = $s3_uploads_instance->get_s3_url();
+				} elseif ( method_exists( 'S3_Uploads', 'get_instance' ) && method_exists( 'S3_Uploads', 'get_s3_url' ) ) {
+					$s3_uploads_instance = \S3_Uploads::get_instance();
+					$s3_uploads_url      = $s3_uploads_instance->get_s3_url();
+				}
+				if ( ! empty( $s3_uploads_url ) ) {
+					$this->allowed_urls[] = $s3_uploads_url;
+					$this->debug_message( "found S3 URL from S3_Uploads: $s3_uploads_url" );
+					$s3_domain       = $this->parse_url( $s3_uploads_url, PHP_URL_HOST );
+					$s3_scheme       = $this->parse_url( $s3_uploads_url, PHP_URL_SCHEME );
+					$this->s3_active = $s3_domain;
+				}
 			}
 
 			if ( class_exists( 'wpCloud\StatelessMedia\EWWW' ) && function_exists( 'ud_get_stateless_media' ) ) {

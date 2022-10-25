@@ -16,6 +16,7 @@ use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\RRule\Occurrence as RRule_Ocurrence;
+use TEC\Events_Pro\Custom_Tables\V1\Updates\Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Events;
 use Tribe__Events__Pro__Editor__Recurrence__Blocks;
 use WP_Post;
@@ -144,101 +145,10 @@ class All implements Update_Controller_Interface {
 			}
 		}
 
-		/*
-		 * After the custom table updates, make sure the Request is redirected to either an existing
-		 * Occurrence, or the real Event post ID.
-		 */
-		add_filter( 'tec_events_custom_tables_v1_redirect_post_location', [
-			$this,
-			'redirect_to_existing_occurrence'
-		], 20, 2 );
-
-		// After updates are done, the current Occurrence might not exist, if so: redirect it.
-		add_action( 'tec_events_custom_tables_v1_update_post_after', [ $this, 'setup_occurrence_redirection' ] );
-
 		$this->save_rest_request_recurrence_meta( $target_id, $this->request );
+		// Set the context for an occurrence redirect.
+		tribe( Controller::class )->set_should_redirect_occurrence( true );
 
 		return $target_id;
-	}
-
-	/**
-	 * After the custom tables updates are committed, redirect the Request to
-	 * the original Occurrence, if it still exists, else to the real Event ID.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @param string $location The HTTP location WordPress, and other intervening
-	 *                         methods would redirect the browser to.
-	 * @param int    $post_id  The post ID the request should be redirected for.
-	 *
-	 * @return string The URL the browser should be redirected to for the post.
-	 */
-	public function redirect_to_existing_occurrence( $location, $post_id ) {
-		// Remove this Update Controller from the current action.
-		remove_action( current_action(), [ $this, 'redirect_to_existing_occurrence' ] );
-
-		if ( (int) $post_id !== $this->target_id ) {
-			// Only apply if the post ID and request are about the same Event.
-			return $location;
-		}
-
-		if (
-			! $this->provisional_post->is_provisional_post_id( $this->request_id )
-			&& get_post( $this->request_id ) instanceof WP_Post
-		) {
-			/*
-			 * The Request was for a real Event post ID: let it go to that.
-			 */
-			return get_edit_post_link( $this->request_id, 'internal' );
-		}
-
-		$occurrence_id = $this->provisional_post->normalize_provisional_post_id( $this->request_id );
-		$occurrence    = Occurrence::find( $occurrence_id, 'occurrence_id' );
-
-		if (
-			! $occurrence instanceof Occurrence && get_post( $this->target_id ) instanceof WP_Post
-		) {
-			$this->setup_occurrence_redirection();
-
-			/*
-			 * The Request was for an Occurrence, but updates have removed the Occurrence: redirect
-			 * to real Event post ID.
-			 */
-			return get_edit_post_link( $this->target_id, 'internal' );
-		}
-
-		if ( $occurrence instanceof Occurrence ) {
-			/*
-			 * Redirect the request to the requested Occurrence.
-			 */
-			return get_edit_post_link( $this->request_id, 'internal' );
-		}
-
-		// Ok, we tried and could not find a fitting Event or Occurrence.
-		return $location;
-	}
-
-	/**
-	 * Sets up the transient that will redirect requests for the Occurrence to the real
-	 * post ID for some time.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @return void The method does not return any value and will have the side-effect
-	 *              of setting up a transient to redirect the Occurrence.
-	 */
-	public function setup_occurrence_redirection() {
-		if ( ! $this->provisional_post->is_provisional_post_id( $this->request_id ) ) {
-			return;
-		}
-
-		$occurrence_id = tribe( ID_Generator::class )->unprovide_id( $this->request_id );
-
-		if ( 1 === Occurrence::where( 'occurrence_id', '=', $occurrence_id )->count() ) {
-			return;
-		}
-
-		// Following requests for the Occurrence should be redirected to the Event post ID.
-		$this->occurrence_redirector->set_redirected_id( $this->target_id, $this->request_id, $this->request_start_date );
 	}
 }

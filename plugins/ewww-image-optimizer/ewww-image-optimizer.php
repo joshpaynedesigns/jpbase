@@ -13,8 +13,8 @@ Plugin Name: EWWW Image Optimizer
 Plugin URI: https://wordpress.org/plugins/ewww-image-optimizer/
 Description: Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
 Author: Exactly WWW
-Version: 6.6.0
-Requires at least: 5.7
+Version: 6.9.1
+Requires at least: 5.8
 Requires PHP: 7.2
 Author URI: https://ewww.io/
 License: GPLv3
@@ -27,7 +27,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! defined( 'EWWW_IO_CLOUD_PLUGIN' ) ) {
 	define( 'EWWW_IO_CLOUD_PLUGIN', false );
 }
-
 
 // Check the PHP version.
 if ( ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < 70200 ) {
@@ -109,7 +108,7 @@ if ( ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < 70200 ) {
 	/**
 	 * The various class extensions for parallel and background optimization.
 	 */
-	require_once( EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'background.php' );
+	require_once( EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'classes/class-ewwwio-media-background-process.php' );
 	/**
 	 * EWWW_Image class for working with queued images and image records from the database.
 	 */

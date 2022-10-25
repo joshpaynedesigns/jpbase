@@ -576,13 +576,13 @@ class BSR_Admin {
 			return;
 		}
 
-		$db = new BSR_DB();
+		$db   = new BSR_DB();
+		$file = $db->get_file_path();
 
-		if ( '' !== get_option( 'bsr_enable_gzip' ) && file_exists( $db->file . '.gz' ) ) {
-			$file = $db->file . '.gz';
+		if ( '' !== get_option( 'bsr_enable_gzip' ) && file_exists( $file . '.gz' ) ) {
+			$file = $file . '.gz';
 			$name = 'bsr_db_backup.sql.gz';
 		} else {
-			$file = $db->file;
 			$name = 'bsr_db_backup.sql';
 		}
 
@@ -592,8 +592,8 @@ class BSR_Admin {
 		header( 'Content-Disposition: attachment; filename="' . $name . '"' );
 
 		readfile( $file );
+		self::delete_file();
 		die();
-
 	}
 
 	/**
@@ -687,6 +687,36 @@ class BSR_Admin {
 		}
 
 		return $dest;
+	}
+
+	/**
+	 * Deletes the current backup file(s) if they exist,
+	 * as well as the salt associated with them.
+	 *
+	 * @return bool
+	 */
+	public static function delete_file() {
+		$db = new BSR_DB();
+
+		// Only delete if we already know the full filename.
+		if ( ! $db->get_salt() ) {
+			return false;
+		}
+
+		$file   = $db->get_file_path();
+		$result = false;
+
+		if ( file_exists( $file ) ) {
+			$result = unlink( $file );
+		}
+
+		if ( file_exists( $file . '.gz' ) ) {
+			$result = unlink( $file . '.gz' );
+		}
+
+		$db->delete_salt();
+
+		return $result;
 	}
 
 }

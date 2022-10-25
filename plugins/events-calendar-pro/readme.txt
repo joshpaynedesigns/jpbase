@@ -3,9 +3,9 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Requires at least: 5.8.4
-Stable tag: 6.0.0
-Tested up to: 6.0.2
+Requires at least: 5.8.5
+Stable tag: 6.0.2
+Tested up to: 6.0.3
 Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -213,6 +213,44 @@ Previous versions of Events Calendar PRO are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.0.2] 2022-10-20 =
+
+* Fix - Series Post Type now is registered with `with_front => false` which prevents the URL weirdness for Series Archive page. [ECP-1340]
+* Fix - Correct a few misnamed custom prop references. [TEC-4445]
+* Fix - Ensure all the Virtual Event assets required by the Elementor Event widget load correctly. [ECP-1255]
+* Fix - Remove strict type hinting from Custom Tables v1 code that could cause fatals in some environments. [ECP-1343]
+* Fix - Avoid post ID related issues in Custom Tables v1 queries. [TEC-4770]
+* Fix - Solve issues with unregistred Series post type during migration. [ECP-1321]
+* Fix - Redirect was failing on edge case where RDATE would be split to new event. Centralized redirection. [ECP-1366]
+* Fix - Language fix. A typo in evaluating whether an occurrence update notice message was for a recurring event or not, would cause to evaluate incorrectly. [ECP-1366]
+* Fix - Editing an RDATE occurrence > Issue when saving for "This and following events". The events would be split but the RDATEs were not moved properly and the date would not adjust correctly. [ECP-1361]
+* Fix - Improve the logic of the Blocks Editor code to detect recurring events. [ECP-1374]
+* Fix - Ensure Week View checks positive for `tribe_is_by_date`. [TEC-4509]
+* Fix - Some "event updated" messages were displaying wrong verbs and a duplicate published notice was showing. [ECP-1383]
+* Fix - Correct some migration errors around ensuring we have an object before accessing its properties. [ECP-1361]
+* Tweak - Hook into the filter in TEC to allow Week view to be listed as a by-date-view. [TEC-4458]
+* Tweak - Improve some error messaging around migrations. [ECP-1336]
+* Language - 3 new strings added, 126 updated, 0 fuzzied, and 3 obsoleted.
+
+= [6.0.1] 2022-09-22 =
+
+* Feature - Add a link to convert an Event to single in the Events Manager and Series edit screens [ECP-1308]
+* Fix - Prevent fatal Fatal error `Call to undefined method DateTimeImmutable::format_i18n()` on Week view that occurred on certain versions of php 8.0 [ECP-1346]
+* Fix - Correct some translation domains pointing to the wrong plugin. [ECP-1229]
+* Fix - Correct a mismatch between the get_terms filter and our hooked function signature. [ECP-1327]
+* Fix - Normalize and reformat Event recurrence and date-related meta before migration to fix a number of migration warnings. [ECP-1304]
+* Fix - Fix regression that was making the Events Calendar PRO tabs show up on the Event Tickets settings. [ECP-1338]
+* Fix - Ensure we don't try to check nonexistent globals ($_POST, $_GET, etc). [ECP-1162]
+* Fix - Correct a block editor fatal. [ECP-1330]
+* Fix - Fix a fatal in the mini-calendar widget. [ECP-1317]
+* Fix - Ensure that taxonomies get carried over when splitting recurring events. [ECP-1303]
+* Fix - Ensure recurring events have a series generated for them when one is not specified. [ECP-1274]
+* Fix - Prevent duplicated JOINs on View Series filters. [ECP-1246]
+* Fix - Prevent editing the first occurrence of a recurring event from creating a new event. [ECP-1232]
+* Tweak - Add some explanatory text to the Single Update option. [ECP-1307]
+* Tweak - Prevent conflicts with the WooCommerce product page shortcode when in the editor. [ECP-1231]
+* Language - 6 new strings added, 130 updated, 1 fuzzied, and 2 obsoleted
 
 = [6.0.0] 2022-09-06 =
 

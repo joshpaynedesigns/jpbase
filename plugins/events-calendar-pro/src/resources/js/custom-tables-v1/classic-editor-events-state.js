@@ -322,7 +322,7 @@ tec.classicEditorEventsState = tec.classicEditorEventsState || {};
 	 * @return {void}
 	 */
 	obj.ready = function () {
-		$document.on( 'setup.dependency', obj.setupInitialState );
+		$document.on( 'TECClassicEditorEventsReady', obj.setupInitialState );
 	};
 
 	$( obj.ready );

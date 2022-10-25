@@ -58,14 +58,14 @@ class Transient_Occurrence_Redirector {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int|string $occurrence_id The Occurrence provisional ID to get the redirection
+	 * @param int|string $provisional_id The Occurrence provisional ID to get the redirection
 	 *                                  ID for.
 	 *
 	 * @return array{string,int|string}|null Either an array defining the redirect ID and start
 	 *                                       date of the redirected Occurrence, or `null`.
 	 */
-	public function get_redirect_data( $occurrence_id ) {
-		$value = get_transient( "_tec_events_occurrence_{$occurrence_id}_redirect" );
+	public function get_redirect_data( $provisional_id ) {
+		$value = get_transient( "_tec_events_occurrence_{$provisional_id}_redirect" );
 
 		if ( empty( $value ) ) {
 			return null;
@@ -142,24 +142,14 @@ class Transient_Occurrence_Redirector {
 
 		// By default, redirect to the real Event ID, the first Occurrence.
 		$redirect_id = $redirect_data['redirect_id'];
-		$post_id     = $redirect_data['redirect_id'];
-
-		$next = Occurrence::where( 'start_date', '>=', $redirect_data['start_date'] )
-		                  ->where( 'post_id', '=', $post_id )
-		                  ->order_by( 'start_date', 'ASC' )
-		                  ->first();
-
-		if ( $next instanceof Occurrence ) {
-			// If there is a "next" Occurrence, redirect there.
-			$redirect_id = $this->id_generator->provide_id( $next->occurrence_id );
-		}
-
-		$location = get_edit_post_link( $redirect_id, 'internal' );
+		$post_id     = Occurrence::normalize_id( $redirect_data['redirect_id'] );
+		$location    = get_edit_post_link( $redirect_id, 'internal' );
+		$occurrence  = Occurrence::find( $this->id_generator->unprovide_id( $redirect_id ) );
 
 		// Setup data for the redirect prompt.
 		$first_start_date = get_post_meta( $post_id, '_EventStartDate', true );
-		$redirect_date    = $next instanceof Occurrence ?
-			Dates::build_date_object( $next->start_date )
+		$redirect_date    = $occurrence instanceof Occurrence ?
+			Dates::build_date_object( $occurrence->start_date )
 			: Dates::build_date_object( $first_start_date );
 		$same_date        = false;
 

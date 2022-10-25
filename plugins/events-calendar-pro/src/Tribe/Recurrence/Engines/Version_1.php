@@ -18,7 +18,7 @@ class Tribe__Events__Pro__Recurrence__Engines__Version_1 implements Tribe__Event
 	 * {@inheritdoc}
 	 */
 	public function get_name() {
-		return __( 'Version 1', 'events-pro' );
+		return __( 'Version 1', 'tribe-events-calendar-pro' );
 	}
 
 	/**

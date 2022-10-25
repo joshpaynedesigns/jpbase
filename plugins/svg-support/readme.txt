@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: svg, vector, safesvg, safe svg, sanitization, sanitisation, sanitizer, sanitiser, sanitized, sanitised, sanitize, sanitise, css, style, mime, mime type, embed, img, render, inline, animation, animation, animate, js
 Requires at least: 4.8
 Tested up to: 6.0
-Requires PHP: 5.3
-Stable tag: 2.4.2
+Requires PHP: 7.2
+Stable tag: 2.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -160,6 +160,18 @@ You need to add the mime type for svg and svgz to: "MLA Settings > Media Library
 
 
 == Changelog ==
+
+= 2.5.1 =
+* Added missing quotes in uninstall.php.
+
+= 2.5 =
+* Cleaned up spelling mistakes and general formatting.
+* Addressed security concern.
+* Added more sanitization options - frontend and admin both supported.
+* Added support for SVG minification.
+* Added ability to choose jQuery or vanilla JS.
+* Added DB cleanup on uninstall.
+* Fixed dimensions fallback.
 
 = 2.4.2 =
 * Fixed srcset warning for some premium themes.
@@ -368,6 +380,13 @@ You need to add the mime type for svg and svgz to: "MLA Settings > Media Library
 
 
 == Upgrade Notice ==
+
+= 2.5.1 =
+2.5 Adds new features and addresses a number of recent issues raised. Please take a backup before updating!
+2.5.1 fixes the uninstall file.
+
+= 2.5 =
+Adds new features and addresses a number of recent issues raised. Please take a backup before updating!
 
 = 2.4.2 =
 2.4.2 fixes srcset issue firing PHP warnings for some themes and original image IDs missing on replacement to inline SVG.

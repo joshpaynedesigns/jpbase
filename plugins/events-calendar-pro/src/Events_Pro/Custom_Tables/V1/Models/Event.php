@@ -142,13 +142,28 @@ class Event {
 					$data ['rset'] = '';
 				}
 			} catch ( Exception $e ) {
-				do_action( 'tribe_log', 'error', __CLASS__, [
-					'message'    => 'Event RSET conversion failed.',
-					'post_id'    => $event_id,
-					'error'      => $e->getMessage(),
-					'recurrence' => $recurrence
-				] );
-				$data['rset'] = '';
+				/**
+				 * Filters whether the conversion of `_EventRecurrence` format meta to RSET string
+				 * should fail silently or not.
+				 *
+				 * @since 6.0.1
+				 *
+				 * @param bool $throw Whether the conversion should throw an exception or not.
+				 */
+				$throw = apply_filters( 'tec_events_pro_custom_tables_v1_throw_on_rset_conversion', true );
+
+				if ( $throw ) {
+					throw $e;
+				} else {
+					do_action( 'tribe_log', 'error', __CLASS__, [
+						'message'    => 'Event RSET conversion failed.',
+						'post_id'    => $event_id,
+						'error'      => $e->getMessage(),
+						'recurrence' => $recurrence
+					] );
+
+					$data['rset'] = '';
+				}
 			}
 		}
 

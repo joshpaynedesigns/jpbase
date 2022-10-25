@@ -3,9 +3,9 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 5.9.0
+Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 9.7.7
+Stable tag: 9.7.18
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -30,7 +30,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Gutenberg ####
 
 *  Works with Embed, YouTube, Vimeo, Shortcode ... blocks.
-*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offer with a nice UI with detailed settings descriptions.
+*  Provides it's own powerful ARVE Block with all the features the `[arve]` shortcode offers, with a nice UI and detailed settings descriptions.
 
 #### Both ####
 
@@ -40,10 +40,10 @@ It is very likely the one and only plugin you will ever need to handle video emb
 *   Supports [almost every video host](https://nextgenthemes.com/plugins/arve-pro/#support-table) that supports iframe embed codes.
 *   Embeds via pasting the URL in its own line just like WordPress!
 *   Optionally use very powerful Shortcodes instead.
-*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" align="left" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
+*   Clean shortcode syntax `[arve url="https://youtu.be/yUCFRL43Zm4" parameters="start=30" ... /]`, no unnecessary shortcode wrapping.
 *   One shortcode or Block for all video providers.
 *   Responsive embeds with CSS, much better than with JavaScript.
-*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
+*   Tries to be as unobtrusive as possible, sets 'hide brand' variables if supported, disables related videos from other channels at the end … to help keep people on your site rather then going to YouTube or keep watching videos.
 *   Limited Autoplay (for providers that support it, they may mute it. Mobile browsers prevent autoplay with audio so ARVE will automatically mute HTML5 videos set to autoplay)
 *   Custom URL parameters to use all options providers offer.
 *   Optional maximal width.
@@ -54,7 +54,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Mail.ru, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Ustream, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
+Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -150,13 +150,9 @@ When you use the AMP or 'AMP for WP' plugin you need this.
 
 Please report it on [nextgenthemes.com/support/](https://nextgenthemes.com/support/) **and please do not on the wordpess.org forums, thanks.**
 
-### Google structured data tool complains about data missing ###
+### I’m experiencing these errors on Google Search Console ###
 
-You have 3 options:
-
-1. Best option is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/). It will fill all the SEO data needed  without you having to do anything.
-1. Manually fill the data needed via shortcode or Block. Note that filling the title will fill `name` in the SEO data.
-1. You can completely disable the generation of SEO data on the ARVE settings page. This will make the error on SEO tools disappear but will not give you any SEO benefits.
+Best option to resolve these errors is to get [ARVE Pro](https://nextgenthemes.com/plugins/arve-pro/) as it fills these in for you hassle-free, only activate the add-on - done. For more options, please see the [detailed answer](https://nextgenthemes.com/plugins/arve/faq/).
 
 ### How to get the pro version working? ###
 
@@ -200,6 +196,42 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-10-14 9.7.17 ###
+
+* Fix: Give errors and prevent php 8.0 and 8.1 from having errors when the aspect ratio contains non integer numbers like `0.9:1` only integers are allowed like `9:10`.
+* Improved: Update EDD updater class.
+
+### 2022-09-01 9.7.16 ###
+
+* Fix: Divi endless reload issue is hopefully finally fixed. ARVE Pro users please note this is a workaround that causes previews inside the Divi builder not have the correct data. Most noticable thumbnails and titles. If you provide a fallback thumbnail in ARVE Pro settings it will show that while you using Divi. The plugin works correctly on the frontend. However the "Video (ARVE)" button currently does not work in Divi.
+
+### 2022-08-30 9.7.15 ###
+
+* Fix: Shortcode Creator dialog with Advanced Custom Fields plugin active.
+
+### 2022-08-22 9.7.14 ###
+
+* Improved: Simplyfied and reduced debug info.
+* Improved: Adjustments for updated ARVE Pro version.
+
+### 2022-08-11 9.7.11 ###
+
+* Fix: Block not registering.
+
+### 2022-08-09 9.7.10 ###
+
+##### Improvents for Gutenberg Block #####
+* Introduces clickable area above the Block in the Editor.
+* Fixed Thumbnail image overflowing.
+* Removed maximal width setting when not aligned. This concept does not fit Gutenberg. Width should be controlled by setting the block to wide or full alignment.
+* Introduces a recommended `block.json`.
+* Some other minor improvements.
+
+### 2022-08-04 9.7.8 ###
+
+* New: Add new 'Darken' hover effect option for Pro Addon.
+* Removed Ustream from providers (not functional bought up by IBM)
+
 ### 2022-04-16 9.7.7 ###
 
 * Improved browser support to display aspect ratio correctly on older browsers.
@@ -225,7 +257,7 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ### 2021-12-07 9.6.0 ###
 
-* Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* Deprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
 * New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
 * New: Support for tv.gab.com
 * Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.

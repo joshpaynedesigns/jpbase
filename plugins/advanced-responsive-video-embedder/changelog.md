@@ -4,6 +4,42 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2022-10-14 9.7.17 ###
+
+* Fix: Give errors and prevent php 8.0 and 8.1 from having errors when the aspect ratio contains non integer numbers like `0.9:1` only integers are allowed like `9:10`.
+* Improved: Update EDD updater class.
+
+### 2022-09-01 9.7.16 ###
+
+* Fix: Divi endless reload issue is hopefully finally fixed. ARVE Pro users please note this is a workaround that causes previews inside the Divi builder not have the correct data. Most noticable thumbnails and titles. If you provide a fallback thumbnail in ARVE Pro settings it will show that while you using Divi. The plugin works correctly on the frontend. However the "Video (ARVE)" button currently does not work in Divi.
+
+### 2022-08-30 9.7.15 ###
+
+* Fix: Shortcode Creator dialog with Advanced Custom Fields plugin active.
+
+### 2022-08-22 9.7.14 ###
+
+* Improved: Simplyfied and reduced debug info.
+* Improved: Adjustments for updated ARVE Pro version.
+
+### 2022-08-11 9.7.11 ###
+
+* Fix: Block not registering.
+
+### 2022-08-09 9.7.10 ###
+
+##### Improvents for Gutenberg Block #####
+* Introduces clickable area above the Block in the Editor.
+* Fixed Thumbnail image overflowing.
+* Removed maximal width setting when not aligned. This concept does not fit Gutenberg. Width should be controlled by setting the block to wide or full alignment.
+* Introduces a recommended `block.json`.
+* Some other minor improvements.
+
+### 2022-08-04 9.7.8 ###
+
+* New: Add new 'Darken' hover effect option for Pro Addon.
+* Removed Ustream from providers (not functional bought up by IBM)
+
 ### 2022-04-16 9.7.7 ###
 
 * Improved browser support to display aspect ratio correctly on older browsers.
@@ -29,7 +65,7 @@
 
 ### 2021-12-07 9.6.0 ###
 
-* Preprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
+* Deprecated: Shortcode UI dialog is no longer maintained but you can still use it by clicking on "Add Post Element" button when Shortcode UI is installed.
 * New: ARVE now has its own dependecy free Shortcode creator dialog in Classic Editor. It will pop up when you click the "Embed Video" button that previously opened up Shortcode UI dialog.
 * New: Support for tv.gab.com
 * Improved: Video files will be embedded with `preload="none"` to prevent desktop browsers from buffering videos without interaction.

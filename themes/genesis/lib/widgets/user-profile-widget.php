@@ -144,7 +144,17 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 	public function form( $instance ) {
 
 		// Merge with defaults.
-		$instance = wp_parse_args( (array) $instance, $this->defaults );
+		$instance            = wp_parse_args( (array) $instance, $this->defaults );
+		$dropdown_users_args = [
+			'name'     => $this->get_field_name( 'user' ),
+			'selected' => $instance['user'],
+		];
+
+		if ( version_compare( $GLOBALS['wp_version'], '5.9-alpha', '<' ) ) {
+			$dropdown_users_args['who'] = 'authors';
+		} else {
+			$dropdown_users_args['capability'] = 'edit_posts';
+		}
 
 		?>
 		<p>
@@ -154,15 +164,7 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 
 		<p>
 			<label for="<?php echo esc_attr( $this->get_field_name( 'user' ) ); ?>"><?php esc_html_e( 'Select a user. The email address for this account will be used to pull the Gravatar image.', 'genesis' ); ?></label><br />
-			<?php
-			wp_dropdown_users(
-				[
-					'who'      => 'authors',
-					'name'     => $this->get_field_name( 'user' ),
-					'selected' => $instance['user'],
-				]
-			);
-			?>
+			<?php wp_dropdown_users( $dropdown_users_args ); ?>
 		</p>
 
 		<p>

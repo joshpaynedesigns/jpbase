@@ -37,7 +37,7 @@ class Links {
 	 *
 	 * @return string The updated edit link, if required.
 	 */
-	public function update_event_edit_link( $link, $post_id ) {
+	public function update_event_edit_link( string $link, int $post_id ): string {
 		if ( get_post_type( $post_id ) !== TEC::POSTTYPE ) {
 			return $link;
 		}
@@ -87,7 +87,7 @@ class Links {
 	 *
 	 * @return Occurrence|null The found occurrence `null` otherwise.
 	 */
-	private function get_next_occurrence( Event $event ) {
+	private function get_next_occurrence( Event $event ): ?Occurrence {
 		try {
 			$current_date = Dates::immutable( 'now', new DateTimeZone( 'UTC' ) );
 			$upcoming = Occurrence::where( 'event_id', $event->event_id )
@@ -111,8 +111,11 @@ class Links {
 
 			return null;
 		} catch ( Exception $exception ) {
-			// TODO: Save exceptions in a centralized location.
-			error_log( $exception->getMessage() );
+			do_action( 'tribe_log', 'error', __CLASS__, [
+				'message'    => 'Error while getting next Occurrence.',
+				'error' => $e->getMessage(),
+				'post_id'    => $event->post_id,
+			] );
 
 			return null;
 		}
@@ -131,7 +134,7 @@ class Links {
 	 *
 	 * @return string The updated view link, if required.
 	 */
-	public function update_recurrence_view_link( $post_link, WP_Post $post, $leavename, $sample ) {
+	public function update_recurrence_view_link( string $post_link, WP_Post $post, bool $leavename, bool $sample ): string {
 		if ( ! is_admin() ) {
 			return $post_link;
 		}
@@ -185,8 +188,11 @@ class Links {
 			$start_date = Dates::immutable( $occurrence->start_date, new DateTimeZone( 'UTC' ) );
 			$date       = $start_date->format( 'Y-m-d' );
 		} catch ( Exception $exception ) {
-			// TODO: Save exceptions in a centralized location.
-			error_log( $exception->getMessage() );
+			do_action( 'tribe_log', 'error', __CLASS__, [
+				'message'    => 'Error while building Occurrence start date.',
+				'error' => $e->getMessage(),
+				'post_id'    => $event->post_id,
+			] );
 
 			return $post_link;
 		}
@@ -205,7 +211,6 @@ class Links {
 				$post_link = str_replace( "%$post->post_type%", $post->post_name, $permastruct );
 			}
 			$post_link = trailingslashit( $post_link ) . $date;
-			// TODO: Review sequence number if needs to be added from PRO.
 			$home_url  = home_url( '/' );
 			$post_link = str_replace( [ $home_url, site_url( '/' ) ], '', $post_link );
 			$post_link = home_url( user_trailingslashit( $post_link ) );
