@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'EWWW_IMAGE_OPTIMIZER_VERSION', 691 );
+define( 'EWWW_IMAGE_OPTIMIZER_VERSION', 692.0 );
 
 // Initialize a couple globals.
 $eio_debug  = '';
@@ -817,11 +817,6 @@ function ewww_image_optimizer_save_network_settings() {
  */
 function ewww_image_optimizer_init() {
 	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
-	/**
-	 * EIO_Backup class for managing image backups.
-	 */
-	require_once( EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'classes/class-eio-backup.php' );
-
 	// Check to see if this is the settings page and enable debugging temporarily if it is.
 	global $ewwwio_temp_debug;
 	$ewwwio_temp_debug = ! empty( $ewwwio_temp_debug ) ? $ewwwio_temp_debug : false;
@@ -2153,6 +2148,13 @@ function ewww_image_optimizer_notice_exactdn_domain_mismatch() {
 	if ( ! isset( $exactdn->upload_domain ) ) {
 		return;
 	}
+	$stored_local_domain = $exactdn->get_exactdn_option( 'local_domain' );
+	if ( empty( $stored_local_domain ) ) {
+		return;
+	}
+	if ( false === strpos( $stored_local_domain, '.' ) ) {
+		$stored_local_domain = base64_decode( $stored_local_domain );
+	}
 	?>
 	<div id="ewww-image-optimizer-notice-exactdn-domain-mismatch" class="notice notice-warning">
 		<p>
@@ -2160,7 +2162,7 @@ function ewww_image_optimizer_notice_exactdn_domain_mismatch() {
 			printf(
 				/* translators: 1: old domain name, 2: current domain name */
 				esc_html__( 'Easy IO detected that the Site URL has changed since the initial activation (previously %1$s, currently %2$s).', 'ewww-image-optimizer' ),
-				'<strong>' . esc_html( $exactdn->get_exactdn_option( 'local_domain' ) ) . '</strong>',
+				'<strong>' . esc_html( $stored_local_domain ) . '</strong>',
 				'<strong>' . esc_html( $exactdn->upload_domain ) . '</strong>'
 			);
 	?>
@@ -10526,18 +10528,17 @@ function ewww_image_optimizer_get_translated_media_results( $id ) {
 		if ( empty( $translations ) ) {
 			return array( $id, array() );
 		}
+		$translations = wp_list_pluck( $translations, 'element_id' );
+		$translations = array_filter( $translations );
 	}
-	apply_filters( 'ewwwio_translated_media_ids', $translations, $id );
+	$translations = apply_filters( 'ewwwio_translated_media_ids', $translations, $id );
 	if ( ewww_image_optimizer_iterable( $translations ) ) {
 		global $wpdb;
 		foreach ( $translations as $translation ) {
-			if ( empty( $translation->element_id ) ) {
-				continue;
-			}
-			ewwwio_debug_message( "checking {$translation->element_id} for results with WPML (or another translation plugin)" );
-			$optimized_images = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->ewwwio_images WHERE attachment_id = %d AND gallery = 'media' AND image_size <> 0 ORDER BY orig_size DESC", $translation->element_id ), ARRAY_A );
+			ewwwio_debug_message( "checking {$translation} for results with WPML (or another translation plugin)" );
+			$optimized_images = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->ewwwio_images WHERE attachment_id = %d AND gallery = 'media' AND image_size <> 0 ORDER BY orig_size DESC", $translation ), ARRAY_A );
 			if ( ! empty( $optimized_images ) ) {
-				return array( (int) $translation->element_id, $optimized_images );
+				return array( (int) $translation, $optimized_images );
 			}
 		}
 	}
@@ -14783,7 +14784,7 @@ function ewww_image_optimizer_resize_detection_script() {
 				margin: -3px;
 			}
 		</style>
-		<script><?php echo $resize_detection_script; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></script>
+		<script data-cfasync="false" data-no-optimize="1" data-no-defer="1" data-no-minify="1"><?php echo $resize_detection_script; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></script>
 		<?php
 	}
 }
