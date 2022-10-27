@@ -11,9 +11,9 @@ function is_event_calendar_page() {
 
             $is_event_calendar = true;
 
-        } elseif( tribe_is_month() && !is_tax() ) { // Month View Page
+        // } elseif( tribe_is_month() && !is_tax() ) { // Month View Page
 
-            $is_event_calendar = true;
+        //     $is_event_calendar = true;
 
         } elseif( tribe_is_month() && is_tax() ) { // Month View Category Page
 
