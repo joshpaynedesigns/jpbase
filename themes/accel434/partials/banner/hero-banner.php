@@ -75,7 +75,7 @@ function decide_banner_bg_img() {
     if ( is_home() || is_category() || is_date() || is_singular( 'post' ) ) {
         $default_bg_image_id = get_field( 'default_banner_image_blog', 'options' );
         $bg_image_url = wp_get_attachment_image_url( $default_bg_image_id['ID'], 'full' );
-    } elseif ( is_page() || is_search() ) {
+    } elseif ( is_page() ) {
         $default_bg_image_id = get_field( 'banner_image' )['ID'];
         $bg_image_url = wp_get_attachment_image_url( $default_bg_image_id, 'full' );
     } elseif ( is_post_type_archive( 'testimonial' ) || is_singular( 'testimonial' ) ) {
@@ -115,14 +115,6 @@ function decide_banner_height_class() {
 
     if ( is_home() || is_category() || is_date() || is_singular( 'post' ) ) {
         $default_banner_height = get_field( 'default_banner_height_blog', 'option' );
-    } elseif ( is_page() ) {
-        if($custom_height) {
-            $default_banner_height = $banner_height;
-        } else {
-            $default_banner_height = get_field( 'default_banner_height', 'option' );            
-        }
-    } elseif ( is_search() ) {
-        $default_banner_height = get_field( 'default_banner_height', 'option' );
     } elseif ( is_post_type_archive( 'testimonial' ) || is_singular( 'testimonial' ) ) {
         $default_banner_height = get_field( 'default_banner_height_testimonials', 'option' );
     } elseif ( is_post_type_archive( 'staff' ) || is_singular( 'staff' ) ) {
@@ -163,8 +155,6 @@ function decide_banner_title() {
         if ( !empty( $custom_title ) ) {
             $title = $custom_title;
         }
-    } elseif (is_page() ) {
-        $title = get_the_title();
     } elseif ( is_post_type_archive( 'testimonial' ) || is_singular( 'testimonial' ) ) {
         $title = get_field( 'archive_title_testimonials', 'option' );
         if ( empty( $title ) ) {
@@ -185,15 +175,15 @@ function decide_banner_title() {
         if ( empty( $title ) ) {
             $title = post_type_archive_title( '', false );
         }
-    } elseif ( is_search() ) {
-        $title = 'Search: ' . get_search_query();
-    } elseif ( is_404() ) {
-        $title = "This page returned a 404";
     } elseif ( is_event_calendar_page() ) {
         $title = get_field( 'archive_title_events', 'option' );
         if ( empty( $title ) ) {
             $title = post_type_archive_title( '', false );
         }
+    } elseif ( is_search() ) {
+        $title = 'Search: ' . get_search_query();
+    } elseif ( is_404() ) {
+        $title = "This page returned a 404";
     } else {
         $title = get_the_title();
     }
@@ -206,8 +196,6 @@ function decide_banner_subtitle() {
     $subtitle = '';
     if ( is_home() || is_category() || is_date() || is_singular( 'post' ) ) {
         $subtitle = get_field( 'archive_sub_title_blog', 'option' );
-    } elseif (is_page() || is_search() ) {
-        $subtitle = get_field('banner_sub_title');
     } elseif ( is_post_type_archive( 'testimonial' ) || is_singular( 'testimonial' ) ) {
         $subtitle = get_field( 'archive_sub_title_testimonials', 'option' );
     } elseif ( is_post_type_archive( 'staff' ) || is_singular( 'staff' ) ) {
