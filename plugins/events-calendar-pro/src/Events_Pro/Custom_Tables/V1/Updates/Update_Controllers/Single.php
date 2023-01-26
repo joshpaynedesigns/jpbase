@@ -90,6 +90,9 @@ class Single implements Update_Controller_Interface {
 
 		$this->save_request_id( $post_id );
 
+		// We are trashing an occurrence?
+		$is_delete = $this->request->get_param('action') === 'trash' ;
+
 		// 1. Duplicate the original Event.
 		$single_post = $this->events->duplicate(
 			$post,
@@ -147,8 +150,15 @@ class Single implements Update_Controller_Interface {
 				] );
 			}
 		} else {
-			// 3. Update the original Event Recurrence meta to add an exclusion on this event date.
-			$this->events->add_date_exclusion_to_event( $post_id, $occurrence_date );
+			$skip_exclusion = false;
+			if ( $this->occurrence->is_rdate && $is_delete ) {
+				// If we are deleting an RDATE, we will skip the exclusion (the RRULE occurrence is still valid).
+				$skip_exclusion = $this->events->remove_rdate_from_event( $post_id, $this->occurrence->start_date );
+			}
+			if ( ! $skip_exclusion ) {
+				// 3. Update the original Event Recurrence meta to add an exclusion on this event date.
+				$this->events->add_date_exclusion_to_event( $post_id, $occurrence_date );
+			}
 		}
 
 		/*

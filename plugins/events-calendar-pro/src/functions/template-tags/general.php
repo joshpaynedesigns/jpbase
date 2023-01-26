@@ -3,6 +3,12 @@
 use TEC\Events\Custom_Tables\V1\Models\Event;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use Tribe\Events\Pro\Views\V2\Views\Map_View;
+use Tribe\Events\Pro\Views\V2\Views\Organizer_View;
+use Tribe\Events\Pro\Views\V2\Views\Photo_View;
+use Tribe\Events\Pro\Views\V2\Views\Venue_View;
+use Tribe\Events\Pro\Views\V2\Views\Week_View;
+use \Tribe\Events\Views\V2\Manager;
 use Tribe__Events__Main as TEC;
 
 if ( ! function_exists( 'tribe_get_mapview_link' ) ) {
@@ -24,7 +30,7 @@ if ( ! function_exists( 'tribe_get_mapview_link' ) ) {
 
 		apply_filters_deprecated( 'tribe_get_map_view_permalink', [ null ], '6.0.0' );
 
-		$args = [ 'view' => 'map' ];
+		$args = [ 'view' => \Tribe\Events\Pro\Views\V2\Views\Map_View::get_view_slug() ];
 		if ( $term ) {
 			$args[ TEC::TAXONOMY ] = $term;
 		}
@@ -52,7 +58,7 @@ if ( ! function_exists( 'tribe_is_recurring_event' ) ) {
 		}
 
 		$post = get_post( $post_id );
-		if ( $post->post_type != TEC::POSTTYPE ) {
+		if ( empty( $post ) || $post->post_type != TEC::POSTTYPE ) {
 			return false;
 		}
 
@@ -87,7 +93,7 @@ if ( ! function_exists( 'tribe_is_recurring_event' ) ) {
 		 * Allows for filtering whether the specified event is recurring or not.
 		 *
 		 * @param boolean $recurring Whether the specified event is recurring or not.
-		 * @param int     $post_id   The post ID of the specificed event.
+		 * @param int     $post_id   The post ID of the specified event.
 		 */
 		return apply_filters( 'tribe_is_recurring_event', $recurring, $post_id );
 	}
@@ -128,7 +134,7 @@ if ( ! function_exists( 'tribe_get_recurrence_text' ) ) {
 		 * Allow for filtering the textual version of event recurrence.
 		 *
 		 * @param string $recurrence_text The textual version of the specified event's recurrence details.
-		 * @param int    $post_id         The post ID of the specificed event.
+		 * @param int    $post_id         The post ID of the specified event.
 		 */
 		return apply_filters( 'tribe_get_recurrence_text', Tribe__Events__Pro__Recurrence__Meta::recurrenceToTextByPost( $post_id ), $post_id );
 	}
@@ -142,13 +148,36 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 	 *
 	 * @since 3.0.0
 	 * @since 5.0.0 Introduced caching based on Post ID or Parent Post ID.
+	 * @deprecated 6.0.7 To correct misspelling.
 	 *
-	 * @param int      $post_id (optional) Which post we are looking for the All link.
-	 * @param booolean $echo    (optional) Should be echoed along side returning the value.
+	 * @param int     $post_id (optional) Which post we are looking for the All link.
+	 * @param boolean $echo    (optional) Should be echoed along side returning the value.
 	 *
 	 * @return string  Link reference to all events in a recurrent event.
 	 */
 	function tribe_all_occurences_link( $post_id = null, $echo = true ) {
+		_deprecated_function( __METHOD__, '6.0.7', 'tribe_all_occurrences_link' );
+
+		return tribe_all_occurrences_link( $post_id, $echo );
+	}
+}
+
+
+if ( ! function_exists( 'tribe_all_occurrences_link' ) ) {
+	/**
+	 * Recurring Event List Link
+	 *
+	 * Display link for all occurrences of an event (based on the currently queried event).
+	 *
+	 * @since 3.0.0
+	 * @since 5.0.0 Introduced caching based on Post ID or Parent Post ID.
+	 *
+	 * @param int     $post_id (optional) Which post we are looking for the All link.
+	 * @param boolean $echo    (optional) Should be echoed along side returning the value.
+	 *
+	 * @return string  Link reference to all events in a recurrent event.
+	 */
+	function tribe_all_occurrences_link( $post_id = null, $echo = true ) {
 		$cache_key_links      = __FUNCTION__ . ':links';
 		$cache_key_parent_ids = __FUNCTION__ . ':parent_ids';
 		$cache_links          = tribe_get_var( $cache_key_links, [] );
@@ -166,7 +195,28 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 
 		if ( ! isset( $cache_links[ $cache_id ] ) ) {
 			$tribe_ecp                = TEC::instance();
-			$cache_links[ $cache_id ] = apply_filters( 'tribe_all_occurences_link', $tribe_ecp->getLink( 'all', $post_id ) );
+			/**
+			 * Filters the "all occurrences" link.
+			 * @since 6.0.7
+			 * @deprecated 6.0.7 To correct misspelling.
+			 *
+			 * @param string $link The link HTML string.
+			 */
+			$cache_links[ $cache_id ] = apply_filters_deprecated(
+				'tribe_all_occurences_link',
+				[ $tribe_ecp->getLink( 'all', $post_id ) ],
+				'6.0.7',
+				'tribe_all_occurrences_link',
+				'Filter deprecated to correct misspelling.'
+			);
+
+			/**
+			 * Filters the "all occurrences" link.
+			 * @since 6.0.7
+			 *
+			 * @param string $link The link HTML string.
+			 */
+			$cache_links[ $cache_id ] = apply_filters( 'tribe_all_occurrences_link', $tribe_ecp->getLink( 'all', $post_id ) );
 			tribe_set_var( $cache_key_links, $cache_links );
 		}
 
@@ -303,8 +353,7 @@ if ( ! function_exists( 'tribe_get_first_week_day' ) ) {
 	function tribe_get_first_week_day( $date = null ) {
 
 		$wp_query = tribe_get_global_query_object();
-
-		$offset = 7 - get_option( 'start_of_week', 0 );
+		$offset   = 7 - (int) get_option( 'start_of_week', '0' );
 
 		$date = is_null( $date ) && ! is_null( $wp_query ) ? $wp_query->get( 'start_date' ) : $date;
 
@@ -345,21 +394,24 @@ if ( ! function_exists( 'tribe_is_week' ) ) {
 	 * Conditional function for if we are in the week view.
 	 *
 	 * @since 6.0.0 Uses `tribe( 'context' )` for determining it's value.
+	 * @since 6.0.7 Uses tec_is_view() for better view filtering.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_week(): bool {
-		$is_week = 'week' === tribe( 'context' )->get( 'view' );
+		$context  = tribe_context();
+		$is_week = tec_is_view( Week_View::get_view_slug() );
 
 		/**
 		 * Allows filtering of the tribe_is_week boolean value.
 		 *
 		 * @since 4.4.26 Added inline documentation for this filter.
 		 * @since 6.0.0  Remove the `$instance` param.
+		 * @since 6.0.7 add `$context` param.
 		 *
 		 * @param boolean $is_week Whether you're on the main Week View or not
 		 */
-		return (bool) apply_filters( 'tribe_is_week', $is_week );
+		return (bool) apply_filters( 'tribe_is_week', $is_week, $context );
 	}
 }
 
@@ -368,21 +420,24 @@ if ( ! function_exists( 'tribe_is_photo' ) ) {
 	 * Conditional function for if we are in the photo view.
 	 *
 	 * @since 6.0.0 Uses `tribe( 'context' )` for determining it's value.
+	 * @since 6.0.7 Uses tec_is_view() for better view filtering.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_photo(): bool {
-		$is_photo = 'photo' === tribe( 'context' )->get( 'view' );
+		$context  = tribe_context();
+		$is_photo = tec_is_view( Photo_View::get_view_slug() );
 
 		/**
 		 * Allows filtering of the tribe_is_photo boolean value.
 		 *
 		 * @since 4.4.26 Added inline documentation for this filter.
 		 * @since 6.0.0  Remove the `$instance` param.
+		 * @since 6.0.7 add `$context` param.
 		 *
 		 * @param boolean $is_photo Whether you're on the main Photo View or not.
 		 */
-		return (bool) apply_filters( 'tribe_is_photo', $is_photo );
+		return (bool) apply_filters( 'tribe_is_photo', $is_photo, $context );
 	}
 }
 
@@ -391,21 +446,70 @@ if ( ! function_exists( 'tribe_is_map' ) ) {
 	 * Conditional function for if we are in the map view.
 	 *
 	 * @since 6.0.0 Uses `tribe( 'context' )` for determining it's value.
+	 * @since 6.0.7 Uses tec_is_view() for better view filtering.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_map(): bool {
-		$is_map = 'photo' === tribe( 'context' )->get( 'view' );
+		$context  = tribe_context();
+		$is_map = tec_is_view( Map_View::get_view_slug() );
 
 		/**
 		 * Allows filtering of the tribe_is_map boolean value.
 		 *
 		 * @since 4.4.26 Added inline documentation for this filter.
-		 * @since 6.0.0 Remove the `$instance` param
+		 * @since 6.0.0 Remove the `$instance` param.
+		 * @since 6.0.7 add `$context` param.
 		 *
 		 * @param boolean $is_map Whether you're on the main Map View or not
 		 */
-		return (bool) apply_filters( 'tribe_is_map', $is_map );
+		return (bool) apply_filters( 'tribe_is_map', $is_map, $context );
+	}
+}
+
+if ( ! function_exists( 'tec_is_venue_view' ) ) {
+	/**
+	 * Conditional function for if we are on a venue view.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @return bool
+	 */
+	function tec_is_venue_view(): bool {
+		$context  = tribe_context();
+		$is_venue_view = tec_is_view( Venue_View::get_view_slug() );
+
+		/**
+		 * Allows filtering of the tec_is_venue_view boolean value.
+		 *
+		 * @since 6.0.7
+		 *
+		 * @param boolean $is_venue_view Whether you're on a venue view or not
+		 */
+		return (bool) apply_filters( 'tec_is_venue_view', $is_venue_view, $context );
+	}
+}
+
+if ( ! function_exists( 'tec_is_organizer_view' ) ) {
+	/**
+	 * Conditional function for if we are on an organizer view.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @return bool
+	 */
+	function tec_is_organizer_view(): bool {
+		$context  = tribe_context();
+		$is_organizer_view = tec_is_view( Organizer_View::get_view_slug() );
+
+		/**
+		 * Allows filtering of the tec_is_organizer_view boolean value.
+		 *
+		 * @since 6.0.7
+		 *
+		 * @param boolean $is_organizer_view Whether you're on an organizer view or not
+		 */
+		return (bool) apply_filters( 'tec_is_organizer_view', $is_organizer_view, $context );
 	}
 }
 
@@ -474,7 +578,7 @@ if ( ! function_exists( 'tribe_get_week_permalink' ) ) {
 	function tribe_get_week_permalink( $week = null, $term = null ) {
 		$week = is_null( $week ) ? false : date( 'Y-m-d', strtotime( $week ) );
 
-		$args = [ 'view' => 'week' ];
+		$args = [ 'view' => \Tribe\Events\Pro\Views\V2\Views\Week_View::get_view_slug() ];
 		if ( $week ) {
 			$args['date'] = $week;
 		}
@@ -498,7 +602,7 @@ if ( ! function_exists( 'tribe_get_photo_permalink' ) ) {
 	 * @return string $permalink
 	 */
 	function tribe_get_photo_permalink( $term = null ) {
-		$args = [ 'view' => 'photo' ];
+		$args = [ 'view' => \Tribe\Events\Pro\Views\V2\Views\Photo_View::get_view_slug() ];
 
 		if ( $term ) {
 			$args[ TEC::TAXONOMY ] = $term;
@@ -586,7 +690,7 @@ if ( ! function_exists( 'tribe_events_recurrence_tooltip' ) ) {
 			$tooltip .= '<span class="tribe-events-divider">|</span>';
 			$tooltip .= sprintf( esc_html__( 'Recurring %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_singular() );
 			$tooltip .= sprintf( ' <a href="%s">%s</a>',
-				esc_url( tribe_all_occurences_link( $post_id, false ) ),
+				esc_url( tribe_all_occurrences_link( $post_id, false ) ),
 				esc_html__( '(See all)', 'tribe-events-calendar-pro' )
 			);
 			$tooltip .= '<div id="tribe-events-tooltip-' . $post_id . '" class="tribe-events-tooltip recurring-info-tooltip">';
@@ -667,7 +771,7 @@ if ( ! function_exists( 'tribe_get_upcoming_recurring_event_id_from_url' ) ) {
 		$path = trim( $path['path'], '/' );
 		$path = explode( '/', $path );
 
-		// We expect $path to contain at least 3 elements (could be more, for subdir installations etc)
+		// We expect $path to contain at least 3 elements (could be more, for subdirectory installations etc)
 		if ( count( $path ) < 3 ) {
 			return null;
 		}
@@ -876,13 +980,11 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 	 *
 	 */
 	function tribe_get_mobile_default_view() {
-		$default = TEC::instance()->default_view();
-
 		// If there isn't a default mobile set, it will get the default from the normal settings
 		$default_view = tribe_get_option( 'mobile_default_view', 'default' );
 
 		if ( 'default' === $default_view ) {
-			$default_view = $default;
+			$default_view = tribe( Manager::class )->get_default_view_slug();;
 		}
 
 		/**

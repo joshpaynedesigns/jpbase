@@ -85,4 +85,3 @@ class MWP_WordPress_Provider_Theme implements MWP_WordPress_Provider_Interface
         return array_values($themes);
     }
 }
-

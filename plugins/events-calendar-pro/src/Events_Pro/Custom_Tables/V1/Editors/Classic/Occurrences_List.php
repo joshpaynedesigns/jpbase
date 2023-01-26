@@ -31,7 +31,7 @@ class Occurrences_List extends WP_List_Table {
 	/**
 	 * The number of Recurring Events currently related to the Series post the table is being displayed for.
 	 *
-	 * @since TBd
+	 * @since 6.0.2.1
 	 *
 	 * @var int
 	 */

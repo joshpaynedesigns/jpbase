@@ -76,4 +76,4 @@ class MWP_IncrementalBackup_FileReader
 
         return array($buffer, $contentLength);
     }
-} 
+}

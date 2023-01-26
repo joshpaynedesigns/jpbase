@@ -18,6 +18,18 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2023-01-25 5.3.4 =
+
+* Fix: Link-Lightbox mode not working.
+
+= 2023-01-21 5.3.3 =
+
+* Improved: Accessibility for the play button.
+
+= 2022-11-10 5.3.2 =
+
+* Fix: Not working when audio embeds were on the same page as ARVE embeds.
+
 = 2022-09-22 5.3.1 =
 
 * Make sure the addon only runs when ARVE 9.7.14 or later is installed.

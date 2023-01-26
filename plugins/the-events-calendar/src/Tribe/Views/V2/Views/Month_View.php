@@ -31,10 +31,20 @@ class Month_View extends By_Day_View {
 	 * Slug for this view.
 	 *
 	 * @since 4.9.3
+	 * @deprecated 6.0.7
 	 *
 	 * @var string
 	 */
 	protected $slug = 'month';
+
+	/**
+	 * Statically accessible slug for this view.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @var string
+	 */
+	protected static $view_slug = 'month';
 
 	/**
 	 * Cached dates for the prev/next links.
@@ -63,6 +73,24 @@ class Month_View extends By_Day_View {
 	 * @var array
 	 */
 	protected $grid_days = [];
+
+	/**
+	 * Default untranslated value for the label of this view.
+	 *
+	 * @since 6.0.4
+	 *
+	 * @var string
+	 */
+	protected static $label = 'Month';
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function get_view_label(): string {
+		static::$label = _x( 'Month', 'The text label for the Month View.', 'the-events-calendar' );
+
+		return static::filter_view_label( static::$label );
+	}
 
 	/**
 	 * Get the date of the event immediately previous to the current view date.
@@ -386,7 +414,7 @@ class Month_View extends By_Day_View {
 		// Let's prepare an array of days more digestible by the templates.
 		$days = [];
 
-		$default_day_url_args = array_merge( $this->get_url_args(), [ 'eventDisplay' => 'day' ] );
+		$default_day_url_args = array_merge( $this->get_url_args(), [ 'eventDisplay' => Day_View::get_view_slug() ] );
 
 		/**
 		 * Allows filtering the base URL arguments that will be added to each "View More" link in Month View.

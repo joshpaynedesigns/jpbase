@@ -20,7 +20,7 @@ use TEC\Events\Custom_Tables\V1\Tables\Occurrences as OccurrencesSchema;
  * @package TEC\Events_Pro\Custom_Tables\V1\Tables
  */
 class Occurrences extends Abstract_Custom_Field {
-	const SCHEMA_VERSION_OPTION = 'tec_ct1_events_field_schema_version';
+	const SCHEMA_VERSION_OPTION = 'tec_ct1_occurrences_field_schema_version';
 	const SCHEMA_VERSION = '1.0.1';
 
 	/**

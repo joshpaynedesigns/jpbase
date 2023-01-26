@@ -181,8 +181,11 @@ class Occurrences_Generator {
 		$limit = null;
 
 		if ( $rset->isInfinite() ) {
+			$time = Dates::immutable( $event->start_date, $event->timezone );
 			// Cannot work with infinite RSETs: constrain the generation to the months in advance limit from today.
 			$limit = Dates::build_date_object( 'today', $generation_start->getTimezone() )
+				// Set the time to the event start time.
+				->setTime( $time->format( 'H' ), $time->format( 'i' ), $time->format( 's' ) )
 				// The actual limit is years in advance to the original start date of the event...
 				->add( new DateInterval( "P{$months}M" ) )
 				// ...plus the duration of the event so the limit can be set a [start, limit] instead of [start, limit).

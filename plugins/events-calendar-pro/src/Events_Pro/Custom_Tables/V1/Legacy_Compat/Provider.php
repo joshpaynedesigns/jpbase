@@ -76,6 +76,8 @@ class Provider extends Service_Provider implements Provider_Contract {
 			add_filter( 'tribe_settings_tab_fields', [ $this, 'rename_recurring_settings_on_admin' ], 10, 2 );
 		}
 
+		// Do not redirect from post names to child posts.
+		remove_action( 'parse_query', [ $pro, 'set_post_id_for_recurring_event_query' ], 101 );
 	}
 
 	/**

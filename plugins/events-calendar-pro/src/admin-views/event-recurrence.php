@@ -32,7 +32,7 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 <tr>
 	<td>
 		<div id="tribe-row-delete-dialog">
-			<p class="question rule-question"><?php esc_html_e( 'Are you sure you want to delete these events?', 'tribe-events-calendar-pro' ) ?></p>
+			<p class="question rule-question"><?php esc_html_e( 'Are you sure you want to remove this recurrence?', 'tribe-events-calendar-pro' ) ?></p>
 			<p class="question exclusion-question"><?php esc_html_e( 'Are you sure you want to delete this exclusion?', 'tribe-events-calendar-pro' ) ?></p>
 		</div>
 	</td>

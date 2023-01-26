@@ -22,6 +22,7 @@ use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Duplicate as Duplicator;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\Event_Rule_Converter\From_Event_Rule_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
+use TEC\Events_Pro\Custom_Tables\V1\Migration\Patchers\Event_Recurrence_Meta_Patcher;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Occurrence as ECP_Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
@@ -40,6 +41,7 @@ use Tribe__Utils__Array as Arr;
 use WP_Post;
 use WP_REST_Request;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Redirector;
+use Tribe__View_Helpers as View_Helpers;
 
 /**
  * Class Events
@@ -223,6 +225,47 @@ class Events {
 	}
 
 	/**
+	 * Will remove an "RDATE" searched by the specified string from the _EventRecurrence meta.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @param numeric $post_id The event post ID.
+	 * @param string  $date    The date to remove RDATEs for.
+	 *
+	 * @return bool True when a match found and the meta is updated, false if no match found.
+	 */
+	public function remove_rdate_from_event( $post_id, string $date ): bool {
+		$recurrence = (array) get_post_meta( $post_id, '_EventRecurrence', true );
+		try {
+			$remove_date = ( new DateTime( $date ) )->format( Dates::DBDATEFORMAT );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		$match_date = static function ( string $date, array $rule ): bool {
+			return $date === ( $rule['custom']['date']['date'] ?? null );
+		};
+
+		// Is there an RDATE matching the provided date?
+		$rdate_match = Arr::usearch(
+			$remove_date,
+			array_filter( $recurrence['rules'] ?? [], [ $this, 'is_rdate' ] ),
+			$match_date
+		);
+
+		if ( $rdate_match !== false ) {
+			// Remove the RDATE and compact the recurrence rules.
+			unset( $recurrence['rules'][ $rdate_match ] );
+			$recurrence['rules'] = array_values( $recurrence['rules'] );
+			update_post_meta( $post_id, '_EventRecurrence', $recurrence );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Adds an EXDATE to an Event recurrence meta with care to do it only once.
 	 *
 	 * @since 6.0.0
@@ -257,11 +300,12 @@ class Events {
 		$rules = array_filter( ( $recurrence['rules'] ?? [] ), [ $this, 'is_rrule' ] );
 		$rule = reset( $rules );
 		// No need of an EXDATE if there is no RRULE to begin with.
-		$needs_exdate = $rule;
+		$needs_exdate = (bool)$rule;
 
 		if ( $rdate_match !== false ) {
 			// Remove the RDATE and compact the recurrence rules.
 			unset( $recurrence['rules'][ $rdate_match ] );
+
 			// Let's assume removing the RDATE is excluding the Occurrence.
 			$needs_exdate = false;
 		}
@@ -347,7 +391,7 @@ class Events {
 		}
 
 		try {
-			$recurrence_meta = ( new Recurrence_Meta_Builder( $post_id, $data ) )->build_meta();
+			$recurrence_meta = ( new Event_Recurrence_Meta_Patcher( $data['recurrence'], $post_id ) )->patch();
 		} catch ( Exception $e ) {
 			return false;
 		}
@@ -1298,7 +1342,7 @@ class Events {
 		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
 			// Classic Editor request: the format used in the data will change depending on the user's settings.
 			$date_format = Dates::datepicker_formats( Dates::get_datepicker_format_index() );
-			$time_format = get_option( 'time_format', 'g:i a' );
+			$time_format = View_Helpers::is_24hr_format() ? 'H:i' : tribe_get_time_format();
 			$datepicker_format = $date_format . ' ' . $time_format;
 			try {
 				$request_start = DateTime::createFromFormat( $datepicker_format, $start, $request_timezone );
@@ -1314,6 +1358,6 @@ class Events {
 			$request_end = Dates::build_date_object( $end, $request_timezone );
 		}
 
-		return array( $request_start, $request_end );
+		return [ $request_start, $request_end ];
 	}
 }

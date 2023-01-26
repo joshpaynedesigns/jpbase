@@ -385,7 +385,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 		 * @return bool $should_enqueue Should the frontend assets be enqueued.
 		 */
 		if ( defined( 'ELEMENTOR_PATH' ) && ! empty( ELEMENTOR_PATH ) && isset( $_GET[ 'elementor-preview' ] ) ) {
-			return $this->should_enqueue = true;
+			$should_enqueue = true;
 		}
 
 		/**

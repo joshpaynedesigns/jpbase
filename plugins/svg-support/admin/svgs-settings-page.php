@@ -33,7 +33,6 @@
 					<p><?php _e( 'SVG Support has grown to be installed on 800,000+ active websites. That\'s insane! It\'s developed and maintained by one person alone. If you find it useful, please consider donating to help keep it going. I truly appreciate any contribution.', 'svg-support' ); ?></p>
 					<p><strong>
 						<?php _e( 'BTC: 1qF8r2HkTLifND7WLGfWmvxfXc9ze55DZ', 'svg-support' ); ?><br/>
-						<?php _e( 'LTC: LUnQPJrSk6cVFmMqBMv5FAqweJbnzRUz4o', 'svg-support' ); ?><br/>
 						<?php _e( 'ETH: 0x599695Eb51aFe2e5a0DAD60aD9c89Bc8f10B54f4', 'svg-support' ); ?>
 					</strong></p>
 					<p><?php _e( 'You can also', 'svg-support' ); ?> <a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z9R7JERS82EQQ&source=url"><?php _e( 'Donate using PayPal', 'svg-support' ); ?></a></p>
@@ -65,14 +64,39 @@
 									<tr valign="top">
 										<!-- Swap with future feature: Multiselect Roles -->
 										<th scope="row">
-											<strong><?php _e( 'Restrict to Administrators?', 'svg-support' ); ?></strong>
+											<strong><?php _e( 'Restrict SVG Uploads to?', 'svg-support' ); ?></strong>
 										</th>
 										<td>
-											<label for="bodhi_svgs_settings[restrict]">
-											<?php printf(
-												'<input id="bodhi_svgs_settings[restrict]" name="bodhi_svgs_settings[restrict]" type="checkbox" %2$s />', 'bodhi_svgs_settings_restrict', checked( isset( $bodhi_svgs_options['restrict'] ), true, false ) ); ?>
-											<?php _e( 'Yes', 'svg-support' ); ?><br /><small class="description"><?php _e(' Restricts SVG upload privileges to Administrators.', 'svg-support' ); ?></small>
-											</label>
+
+	                                        <div class="upload_allowed_roles">
+	                                            
+	                                            <?php $allowed_roles_array = $bodhi_svgs_options['restrict']; ?>
+											    
+											    <select style="display:none"  name="bodhi_svgs_settings[restrict][]" multiple>
+											      
+										        <?php 
+                                                    global $wp_roles;
+                                                    $all_roles = $wp_roles->roles;
+                                                    
+                                                    foreach ($all_roles as $role => $details) {
+                                                        $user_role_slug = esc_attr($role);
+                                                        $user_role_name = translate_user_role($details['name']);
+                                                        
+                                                        $role_selected = "";
+                                                        
+                                                        if( in_array($user_role_slug, $allowed_roles_array) ) {
+                                                            $role_selected = "selected";
+                                                        }
+                                                    
+                                                    ?>
+                                                    
+                                                    <option  value="<?php echo $user_role_slug; ?>" <?php echo $role_selected; ?> ><?php echo $user_role_name; ?></option>
+                                                    
+                                                <?php } ?>
+                                                
+											    </select>
+											</div>
+
 										</td>
 									</tr>
 
@@ -90,16 +114,52 @@
 										</td>
 									</tr>
 
-									<tr valign="top">
+									<tr valign="top" id="sanitize_svg_option">
 										<!-- Allow sanitization of svg -->
 										<th scope="row">
 											<strong><?php _e( 'Sanitize SVG while uploading', 'svg-support' ); ?></strong>
 										</th>
 										<td>
-											<label for="bodhi_svgs_settings[sanitize_svg]">
+											<label style="margin-bottom: 10px;display:block"  for="bodhi_svgs_settings[sanitize_svg]">
 												<?php printf(
-													'<input id="bodhi_svgs_settings[sanitize_svg]" name="bodhi_svgs_settings[sanitize_svg]" type="checkbox" %2$s />', 'bodhi_svgs_settings_sanitize_svg', checked( isset( $bodhi_svgs_options['sanitize_svg'] ), true, false ) ); ?>
-												<?php _e( 'Yes', 'svg-support' ); ?><br /><small class="description"><?php _e('Enhance security of SVG uploads by sanitizing all svg images before being uploaded. This is helpful when non-admins are allowed to upload SVG images.<br><em>All external references are automatically removed during sanitization to prevent XSS and Injection attacks.</em>', 'svg-support' ); ?></small>
+													'<input id="bodhi_svgs_settings[sanitize_svg]" name="bodhi_svgs_settings[sanitize_svg]" type="checkbox" %2$s />', 'bodhi_svgs_settings_sanitize_svg', checked( $bodhi_svgs_options['sanitize_svg'], 'on', false ) ); ?>
+												<?php _e( 'Yes', 'svg-support' ); ?><br />
+											</label>
+
+											<label id="sanitize_svg_option_sction">
+													<div class="sanitize_on_upload_roles">
+		                                            	
+														<strong style="margin-bottom: 5px;display: block;"><?php _e( 'Do not sanitize for these roles', 'svg-support' ); ?></strong>
+
+			                                            <?php $sanitize_roles_array = $bodhi_svgs_options['sanitize_on_upload_roles']; ?>
+													    
+													    <select style="display:none"  name="bodhi_svgs_settings[sanitize_on_upload_roles][]" multiple>
+													      
+												        <?php 
+		                                                    global $wp_roles;
+		                                                    $all_roles = $wp_roles->roles;
+		                                                    
+		                                                    foreach ($all_roles as $role => $details) {
+		                                                        $user_role_slug = esc_attr($role);
+		                                                        $user_role_name = translate_user_role($details['name']);
+		                                                        
+		                                                        $role_selected = "";
+		                                                        
+		                                                        if( in_array($user_role_slug, $sanitize_roles_array) ) {
+		                                                            $role_selected = "selected";
+		                                                        }
+		                                                    
+		                                                    ?>
+		                                                    
+		                                                    <option  value="<?php echo $user_role_slug; ?>" <?php echo $role_selected; ?> ><?php echo $user_role_name; ?></option>
+		                                                    
+		                                                <?php } ?>
+		                                                
+													    </select>
+													</div>
+
+
+													<small class="description"><?php _e('Enhance security of SVG uploads by sanitizing all svg images before being uploaded. This is helpful when non-admins are allowed to upload SVG images.<br><em>All external references are automatically removed during sanitization to prevent XSS and Injection attacks.</em>', 'svg-support' ); ?></small>
 											</label>
 										</td>
 									</tr>

@@ -378,22 +378,11 @@
 	],
 	'rumble' => [
 		'name' => 'Rumble.com',
-		'oembed' => false,
-		'regex' => '#https://rumble\\.com/(embed/)?(?<id>[^-/]+)#i',
+		'oembed' => true,
 		'embed_url' => 'https://rumble.com/embed/%s/',
 		'default_params' => '',
 		'auto_thumbnail' => true,
 		'auto_title' => true,
-		'tests' => [
-			0 => [
-				'url' => 'https://rumble.com/vd6thp-gigantic-galapagos-tortoise-casually-strolls-through-a-restaurant.html',
-				'id' => 'vd6thp',
-			],
-			1 => [
-				'url' => 'https://rumble.com/ve2ez5-airplane-returns-to-denver-after-engine-malfunction.html?foo=bar',
-				'id' => 've2ez5',
-			],
-		],
 	],
 	'rutube' => [
 		'name' => 'RuTube.ru',
@@ -441,6 +430,12 @@
 				'id' => 'sam_harris_can_we_build_ai_without_losing_control_over_it',
 			],
 		],
+	],
+	'tiktok' => [
+		'name' => 'TikTok',
+		'oembed' => true,
+		'auto_thumbnail' => true,
+		'aspect_ratio' => false,
 	],
 	'twitch' => [
 		'name' => 'Twitch',
@@ -579,7 +574,7 @@
 		'regex' => '#https?://([a-z.]+)?\\.youku.com/(embed/|v_show/id_)(?<id>[a-z0-9]+)#i',
 		'embed_url' => 'https://player.youku.com/embed/%s',
 		'auto_thumbnail' => false,
-		'aspect_ratio' => '450:292.5',
+		'aspect_ratio' => '450:293',
 		'tests' => [
 			0 => [
 				'url' => 'https://v.youku.com/v_show/id_XMTczMDAxMjIyNA==.html?f=27806190',

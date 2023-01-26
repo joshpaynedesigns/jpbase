@@ -3,7 +3,7 @@
  * View: Series Relationship Icon Link
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-pro/v2/components/series-relationship-icon-link.php
+ * [your-theme]/tribe/events-pro/custom-tables-v1/components/series-relationship-icon-link.php
  *
  * See more documentation about our views templating system.
  *

@@ -631,7 +631,11 @@ SQL;
 
     public function cmp_posts_worker($a, $b)
     {
-        return ($a->post_date < $b->post_date);
+        if ($a->post_date === $b->post_date) {
+            return 0;
+        }
+
+        return ($a->post_date < $b->post_date) ? 1 : -1;
     }
 
     public function trim_content($content = '', $length = 200)

@@ -59,10 +59,16 @@ class From_Rset_Converter {
 		if ( ! is_array( $rset_data ) ) {
 			$use_default_duration = true;
 		}
+		// Setup our RSET DTSTART/DTEND definitions.
+		$rset_string = implode( "\n", (array) $rset_data );
+		$rset        = new RSet_Wrapper( $rset_string );
+		$dtstart     = $rset->get_dtstart();
+		$dtend       = $rset->get_dtend();
 
-		$tz = Timezones::build_timezone_object( get_post_meta( $post_id, '_EventTimezone', true ) );
-		$dtstart = Dates::immutable( get_post_meta( $post_id, '_EventStartDate', true ), $tz );
-		$dtend = Dates::immutable( get_post_meta( $post_id, '_EventEndDate', true ), $tz );
+		// Default to the RSET's DTSTART/DTEND before retrieving outside data.
+		$tz      = Timezones::build_timezone_object( get_post_meta( $post_id, '_EventTimezone', true ) );
+		$dtstart = $dtstart ?? Dates::immutable( get_post_meta( $post_id, '_EventStartDate', true ), $tz );
+		$dtend   = $dtend ?? Dates::immutable( get_post_meta( $post_id, '_EventEndDate', true ), $tz );
 
 		return $this->convert_to_event_recurrence_from_dates( $rset_data, $dtstart, $dtend, $use_default_duration );
 	}
@@ -566,13 +572,7 @@ class From_Rset_Converter {
 
 			foreach ( $rset_object->getDates() as $rdate ) {
 				// Occurrence instances will model RDATE with diff. start and end times from the default ones.
-				$rdate_start = $rdate instanceof Occurrence ? $rdate->start() : $rdate;
 				$rdate_duration = $rdate instanceof Occurrence ? $rdate->get_duration() : $event_duration;
-
-				if ( $rdate_start->format( 'U' ) === $event_start_timestamp && $rdate_duration = $event_duration ) {
-					// The RDATE was added to model the DTSTART: Legacy will already add that.
-					continue;
-				}
 
 				$converted['rules'][] = $this->convert_rdate_to_old( $rdate, $rdate_duration, $dtstart, $event_duration );
 			}

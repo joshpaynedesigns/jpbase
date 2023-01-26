@@ -274,7 +274,7 @@ class Duplicate {
 
 			$series = Series_Relationship::where( 'event_post_id', '=', $post->ID )
 										 ->get();
-			if ( $series ) {
+			if ( $series && $event instanceof Event ) {
 				$series_ids = array_map( static function ( Series_Relationship $series_relationship ) {
 					return $series_relationship->series_post_id;
 				}, $series );

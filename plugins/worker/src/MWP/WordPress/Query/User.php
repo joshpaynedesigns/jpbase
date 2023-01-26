@@ -38,4 +38,3 @@ class MWP_WordPress_Query_User extends MWP_WordPress_Query_Abstract
         return $users;
     }
 }
-

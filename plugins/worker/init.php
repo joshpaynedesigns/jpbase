@@ -3,7 +3,7 @@
 Plugin Name: ManageWP - Worker
 Plugin URI: https://managewp.com
 Description: We help you efficiently manage all your WordPress websites. <strong>Updates, backups, 1-click login, migrations, security</strong> and more, on one dashboard. This service comes in two versions: standalone <a href="https://managewp.com">ManageWP</a> service that focuses on website management, and <a href="https://godaddy.com/pro">GoDaddy Pro</a> that includes additional tools for hosting, client management, lead generation, and more.
-Version: 4.9.14
+Version: 4.9.16
 Author: GoDaddy
 Author URI: https://godaddy.com
 License: GPL2
@@ -26,6 +26,13 @@ if (!defined('ABSPATH') && (!defined('MWP_SKIP_BOOTSTRAP') || !MWP_SKIP_BOOTSTRA
 
 if (!defined('MAX_PRIORITY_HOOK')) {
     define('MAX_PRIORITY_HOOK', 2147483647);
+}
+
+if (version_compare(phpversion(), '8.0', '>=') && !function_exists('set_time_limit')){
+    function set_time_limit($seconds)
+    {
+        return false;
+    }
 }
 
 /**
@@ -56,7 +63,7 @@ if (!function_exists('mwp_fail_safe')):
         }
 
         $activePlugins = get_option('active_plugins');
-        $workerIndex   = array_search(plugin_basename(__FILE__), $activePlugins);
+        $workerIndex   = array_search(plugin_basename(__FILE__), is_array($activePlugins) ? $activePlugins : []);
         if ($workerIndex === false) {
             // Plugin is not yet enabled, possibly in activation context.
             return;
@@ -475,7 +482,7 @@ if (!class_exists('MwpRecoveryKit', false)):
             }
 
             $activePlugins = get_option('active_plugins');
-            $workerIndex   = array_search(plugin_basename(__FILE__), $activePlugins);
+            $workerIndex   = array_search(plugin_basename(__FILE__), is_array($activePlugins) ? $activePlugins : []);
             if ($workerIndex === false) {
                 // Plugin is not yet enabled, possibly in activation context.
                 return;
@@ -568,8 +575,8 @@ if (!function_exists('mwp_init')):
         // reason (eg. the site can't ping itself). Handle that case early.
         register_activation_hook(__FILE__, 'mwp_activation_hook');
 
-        $GLOBALS['MMB_WORKER_VERSION']  = '4.9.14';
-        $GLOBALS['MMB_WORKER_REVISION'] = '2022-06-09 00:00:00';
+        $GLOBALS['MMB_WORKER_VERSION']  = '4.9.16';
+        $GLOBALS['MMB_WORKER_REVISION'] = '2022-12-26 00:00:00';
 
         // Ensure PHP version compatibility.
         if (version_compare(PHP_VERSION, '5.2', '<')) {
@@ -741,7 +748,7 @@ if (!function_exists('mwp_init')):
         $kernel->handleRequest($request, $responder->getCallback(), true);
 
         $mwpMM = get_option('mwp_maintenace_mode');
-        if (!empty($mwpMM) && $mwpMM['active']) {
+        if (!empty($mwpMM) && isset($mwpMM['active']) && $mwpMM['active']) {
             add_action('admin_notices', 'site_in_mwp_maintenance_mode');
         }
     }

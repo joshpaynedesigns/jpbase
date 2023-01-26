@@ -4,6 +4,9 @@ namespace Tribe\Events\Pro\Admin\Manager;
 
 use Tribe\Events\Views\V2\Template;
 use Tribe\Events\Views\V2\View_Interface;
+use Tribe\Events\Views\V2\Views\Day_View;
+use Tribe\Events\Views\V2\Views\List_View;
+use Tribe\Events\Views\V2\Views\Month_View;
 use Tribe__Events__Main as TEC;
 use Tribe__Template;
 use Tribe__Context as Context;
@@ -50,7 +53,7 @@ class Shortcode {
 	public function get_shortcode_string() {
 		$args              = [
 			'id'                   => $this->get_shortcode_id(),
-			'view'                 => 'month',
+			'view'                 => Month_View::get_view_slug(),
 			'month_events_per_day' => '20',
 			'hide-export'          => 'yes',
 			'tribe-bar'            => 'yes',
@@ -310,9 +313,9 @@ class Shortcode {
 	 */
 	public function filter_modify_public_views( array $views = [] ) {
 		$allowed_views = [
-			'list',
-			'day',
-			'month',
+			Day_View::get_view_slug(),
+			List_View::get_view_slug(),
+			Month_View::get_view_slug(),
 		];
 		$new_views     = [];
 

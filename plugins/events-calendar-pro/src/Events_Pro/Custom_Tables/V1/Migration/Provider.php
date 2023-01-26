@@ -220,15 +220,19 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param bool $dry_run Whether the migration is in preview mode or not.
+	 * @param bool|null $dry_run Whether the migration is in preview mode or not.
+	 *
+	 * @return bool Whether the telemetry report dispatch was queued or not.
 	 */
-	public function queue_telemetry_report( bool $dry_run ): void {
+	public function queue_telemetry_report( ?bool $dry_run ): bool {
+		$dry_run = $dry_run ?? false;
+
 		if ( ! Telemetry::is_enabled( $dry_run ) ) {
-			return;
+			return false;
 		}
 
-		// The report operation migth require some time, let's do that in another process.
-		$this->container->make( Telemetry::class )->queue( $dry_run );
+		// The report operation might require some time, let's do that in another process.
+		return $this->container->make( Telemetry::class )->queue( $dry_run );
 	}
 
 	/**

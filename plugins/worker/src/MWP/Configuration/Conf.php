@@ -366,7 +366,7 @@ class MWP_Configuration_Conf
             box-shadow: 0 -2px 0 0 rgba(50, 53, 57, 0.25) inset;
             border-bottom-color: rgba(50, 53, 57, 0.25);
         }
-        
+
         .mwp-notice-button:hover {
             background-color: #609905;
         }
