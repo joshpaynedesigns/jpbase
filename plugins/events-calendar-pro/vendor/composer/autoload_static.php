@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit948bd937817b140cecd6033088837855
+class ComposerStaticInit9c49b0e01b9583b778e9b2e04e445e51
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -38,6 +38,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'RRule\\RRuleInterface' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RRuleInterface.php',
         'RRule\\RSet' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RSet.php',
         'RRule\\RfcParser' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RfcParser.php',
+        'TEC\\Events_Pro\\Base\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Base/Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Activation' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Activation.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Adapters\\Recurrence_Meta_Builder' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Adapters/Recurrence_Meta_Builder.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Links' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Links.php',
@@ -110,6 +111,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Provider.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\REST\\V1\\Notices' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/REST/V1/Notices.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\REST\\V1\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/REST/V1/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\Ex_Date' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/Ex_Date.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\Occurrence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/Occurrence.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\RSet_Builder' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/RSet_Builder.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\RRule\\RSet_Wrapper' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/RRule/RSet_Wrapper.php',
@@ -159,8 +161,15 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Views\\V2\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Views/V2/Provider.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Condense_Events_Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Condense_Events_Series.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Custom_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Custom_Query_Filters.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Not_In_Series_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Not_In_Series_Modifier.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Series_Relationship_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Series_Relationship_Modifier.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Occurrences_Series_Relationship_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Occurrences_Series_Relationship_Modifier.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\With_Series_Normalization' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/With_Series_Normalization.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Provider.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Replace_Results' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Replace_Results.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Repository\\Custom_Tables_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Repository/Custom_Tables_Query_Filters.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\WP_Query_Monitor_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/WP_Query_Monitor_Filters.php',
+        'TEC\\Events_Pro\\Legacy\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Legacy/Query_Filters.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Assets.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Events_Table' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Events_Table.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Hooks.php',
@@ -192,6 +201,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'Tribe\\Events\\Pro\\Models\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Models/Service_Provider.php',
         'Tribe\\Events\\Pro\\Rewrite\\Provider' => __DIR__ . '/../..' . '/src/Tribe/Rewrite/Provider.php',
         'Tribe\\Events\\Pro\\Rewrite\\Rewrite' => __DIR__ . '/../..' . '/src/Tribe/Rewrite/Rewrite.php',
+        'Tribe\\Events\\Pro\\Service_Providers\\Context' => __DIR__ . '/../..' . '/src/Tribe/Service_Providers/Context.php',
         'Tribe\\Events\\Pro\\Service_Providers\\Customizer' => __DIR__ . '/../..' . '/src/Tribe/Service_Providers/Customizer.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Assets.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Customizer' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Customizer.php',
@@ -226,6 +236,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'Tribe\\Events\\Pro\\Views\\V2\\View_Filters' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/View_Filters.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\All_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/All_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Map_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Map_View.php',
+        'Tribe\\Events\\Pro\\Views\\V2\\Views\\Organizer_View' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Organizer_View.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Partials\\Day_Event_Recurring_Icon' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Partials/Day_Event_Recurring_Icon.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Partials\\Hide_Recurring_Events_Toggle' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Partials/Hide_Recurring_Events_Toggle.php',
         'Tribe\\Events\\Pro\\Views\\V2\\Views\\Partials\\List_Event_Recurring_Icon' => __DIR__ . '/../..' . '/src/Tribe/Views/V2/Views/Partials/List_Event_Recurring_Icon.php',
@@ -259,9 +270,9 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit948bd937817b140cecd6033088837855::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit948bd937817b140cecd6033088837855::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit948bd937817b140cecd6033088837855::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9c49b0e01b9583b778e9b2e04e445e51::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9c49b0e01b9583b778e9b2e04e445e51::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9c49b0e01b9583b778e9b2e04e445e51::$classMap;
 
         }, null, ClassLoader::class);
     }

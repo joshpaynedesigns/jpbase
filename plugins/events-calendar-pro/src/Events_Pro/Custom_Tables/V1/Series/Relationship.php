@@ -134,8 +134,6 @@ class Relationship {
 	}
 
 	/**
-<<<<<<< HEAD
-=======
 	 * Attach an event into a series, if the series is not provided a new one is created out of the
 	 * post associated with the event.
 	 *
@@ -187,7 +185,6 @@ class Relationship {
 	}
 
 	/**
->>>>>>> b968ec70d1dd194e53b66faf5e2a8a2364022037
 	 * Remove the relationship between a series post and the events associated with that series.
 	 *
 	 * @since 6.0.0

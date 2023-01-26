@@ -47,4 +47,4 @@ class MWP_Action_IncrementalBackup_FetchFiles extends MWP_Action_IncrementalBack
 
         return $result;
     }
-} 
+}

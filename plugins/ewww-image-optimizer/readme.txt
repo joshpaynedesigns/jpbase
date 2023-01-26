@@ -5,7 +5,7 @@ Tags: optimize, image, convert, webp, resize, compress, lazy load, optimization,
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 6.9.2
+Stable tag: 6.9.3
 License: GPLv3
 
 Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
@@ -136,6 +136,17 @@ That's not a question, but since I made it up, I'll answer it. See this resource
 
 * Feature requests can be viewed and submitted on our [feedback portal](https://feedback.ewww.io/b/features)
 * If you would like to help translate this plugin in your language, [join the team](https://translate.wordpress.org/projects/wp-plugins/ewww-image-optimizer/)
+
+= 6.9.3 =
+* changed: improved Brizy Builder compatibility
+* changed: async optimization defers processing by WP Offload Media until after optimization is complete, fixes issues with WP Offload Media 3.1+
+* fixed: converting an image with the same base name as a previous upload (image.png vs. image.jpg) could cause naming conflict when using WP Offload Media with Remove Local Media option
+* fixed: Bulk Optimize encounters unrecoverable error when a GIF or PDF file takes too long to optimize
+* fixed: Easy IO fails to apply crop for custom size in some cases
+* fixed: Picture WebP rewriter uses mixed single/double quotes
+* fixed: PHP warnings when bulk optimizing images on cloud storage with no local copies
+* improved: ensure originals are removed from local storage after conversion when using WP Offload Media with Remove Local Media option
+* improved: ensure originals are queued for removal from remote storage after conversion and subsequent deletion when using WP Offload Media
 
 = 6.9.2 =
 * changed: improved Easy IO detection for site URL changes

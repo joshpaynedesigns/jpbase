@@ -2,6 +2,9 @@
 /**
  * View: Top Bar Hide Recurring Events Toggle
  *
+ * Override this template in your own theme by creating a file at:
+ * [your-theme]/tribe/\events-pro/custom-tables-v1/recurrence/hide-recurring.php
+ *
  * @link https://evnt.is/1aiy
  *
  * @version 6.0.0

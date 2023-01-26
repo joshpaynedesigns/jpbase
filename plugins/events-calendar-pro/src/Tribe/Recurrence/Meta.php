@@ -480,23 +480,32 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	/**
 	 * Given a date, add a date exclusion to the recurrence meta array
 	 *
-	 * @param array  $recurrence_meta Recurrence meta array that holds recurrence rules/exclusions
-	 * @param string $date            Date to add to the exclusions array
+	 * @param array|mixed $recurrence_meta Recurrence meta array that holds recurrence rules/exclusions.
+	 * @param string      $date            Date to add to the exclusions array in the `Y-m-d` format.
+	 *
+	 * @return array|mixed The modified recurrence meta array, or the input value if the input value was not an array
 	 */
 	public static function add_date_exclusion_to_recurrence( $recurrence_meta, $date ) {
-		if ( ! isset( $recurrence_meta['exclusions'] ) ) {
-			$recurrence_meta['exclusions'] = array();
+		if ( ! is_array( $recurrence_meta ) ) {
+			$recurrence_meta = [];
 		}
 
-		$recurrence_meta['exclusions'][] = array(
-			'type'   => 'Custom',
-			'custom' => array(
-				'type' => 'Date',
-				'date' => array(
-					'date' => $date,
-				),
-			),
-		);
+		if ( empty( $recurrence_meta['exclusions'] ) || ! is_array( $recurrence_meta['exclusions'] ) ) {
+			$recurrence_meta['exclusions'] = [];
+		}
+
+		// Only array entries are valid.
+		$recurrence_meta['exclusions'] = array_filter( $recurrence_meta['exclusions'], 'is_array' );
+
+		$recurrence_meta['exclusions'][] = [
+				'type'   => 'Custom',
+				'custom' => [
+						'type' => 'Date',
+						'date' => [
+								'date' => $date,
+						],
+				],
+		];
 
 		return $recurrence_meta;
 	}
@@ -1810,40 +1819,52 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	public static function inject_settings( $args, $id ) {
 
 		if ( $id == 'general' ) {
+			$args = Tribe__Main::array_insert_before_key(
+				'amalgamate-duplicates',
+				$args,
+				[
+					'recurrenceMaxMonthsAfter'         => [
 
-			// we want to inject the hiding subsequent occurrences into the general section directly after "Live update AJAX"
-			$args = Tribe__Main::array_insert_after_key( 'postsPerPage', $args, array(
-				'hideSubsequentRecurrencesDefault' => array(
-					'type'            => 'checkbox_bool',
-					'label'           => __( 'Recurring event instances', 'tribe-events-calendar-pro' ),
-					'tooltip'         => __( 'Show only the first instance of each recurring event (only affects list-style views).', 'tribe-events-calendar-pro' ),
-					'default'         => false,
-					'validation_type' => 'boolean',
-				),
-				'userToggleSubsequentRecurrences'  => array(
-					'type'            => 'checkbox_bool',
-					'label'           => __( 'Front-end recurring event instances toggle', 'tribe-events-calendar-pro' ),
-					'tooltip'         => __( 'Allow users to decide whether to show all instances of a recurring event on list-style views.', 'tribe-events-calendar-pro' ),
-					'default'         => false,
-					'validation_type' => 'boolean',
-				),
-				'recurrenceMaxMonthsBefore'        => array(
-					'type'            => 'text',
-					'size'            => 'small',
-					'label'           => __( 'Clean up recurring events after', 'tribe-events-calendar-pro' ),
-					'tooltip'         => __( 'Automatically remove recurring event instances older than this', 'tribe-events-calendar-pro' ),
-					'validation_type' => 'positive_int',
-					'default'         => 24,
-				),
-				'recurrenceMaxMonthsAfter'         => array(
-					'type'            => 'text',
-					'size'            => 'small',
-					'label'           => __( 'Create recurring events in advance for', 'tribe-events-calendar-pro' ),
-					'tooltip'         => __( 'Recurring events will be created this far in advance', 'tribe-events-calendar-pro' ),
-					'validation_type' => 'positive_int',
-					'default'         => 24,
-				),
-			) );
+						'type'            => 'text',
+						'size'            => 'small',
+						'label'           => __( 'Create recurring events in advance for', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Recurring events will be created this far in advance', 'tribe-events-calendar-pro' ),
+						'validation_type' => 'positive_int',
+						'default'         => 24,
+
+					],
+					'recurrenceMaxMonthsBefore'        => [
+						'type'            => 'text',
+						'size'            => 'small',
+						'label'           => __( 'Clean up recurring events after', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Automatically remove recurring event instances older than this', 'tribe-events-calendar-pro' ),
+						'validation_type' => 'positive_int',
+						'default'         => 24,
+					],
+				]
+			);
+
+			$args = Tribe__Main::array_insert_before_key(
+				'enable_month_view_cache',
+				$args,
+				[
+					'hideSubsequentRecurrencesDefault' => [
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Recurring event instances', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Show only the first instance of each recurring event (only affects list-style views).', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					],
+					'userToggleSubsequentRecurrences'  => [
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Front-end recurring event instances toggle', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Allow users to decide whether to show all instances of a recurring event on list-style views.', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					],
+				]
+			);
+
 			add_filter( 'tribe_field_div_end', array( __CLASS__, 'add_months_to_settings_field' ), 100, 2 );
 
 		}

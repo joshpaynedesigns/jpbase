@@ -2,7 +2,7 @@
 /*
 Plugin Name: The Events Calendar PRO
 Description: The Events Calendar PRO, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
-Version: 6.0.2
+Version: 6.0.7
 Author: The Events Calendar
 Author URI: https://evnt.is/20
 Text Domain: tribe-events-calendar-pro
@@ -225,7 +225,6 @@ function tribe_events_pro_activation() {
 
 	if (
 		class_exists( 'Tribe__Events__Main' )
-		&& class_exists( 'Tribe__Events__Pro__Main' )
 		&& class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Activation' )
 		&& ! ( defined( 'TEC_CUSTOM_TABLES_V1_DISABLED' ) && TEC_CUSTOM_TABLES_V1_DISABLED )
 	) {

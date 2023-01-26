@@ -11,6 +11,7 @@ namespace Tribe\Events\Pro\Views\V2\Widgets;
 
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe\Events\Views\V2\Widgets\Widget_Abstract;
+use Tribe\Events\Views\V2\Views\List_View;
 use Tribe__Main as Main;
 use Tribe__Utils__Array as Arr;
 use Tribe\Events\Pro\Views\V2\Widgets\Taxonomy_Filter;
@@ -228,11 +229,10 @@ class Widget_Advanced_List {
 		$taxonomy_filters = tribe( 'pro.views.v2.widgets.taxonomy' );
 
 		// Pagination to 1.
-		$alterations['page']  = 1;
-		$alterations['paged'] = 1;
-
-		$alterations['event_display']     = 'list';
-		$alterations['view']              = 'list';
+		$alterations['page']          = 1;
+		$alterations['paged']         = 1;
+		$alterations['event_display'] = List_View::get_view_slug();
+		$alterations['view']          = List_View::get_view_slug();
 
 		$alterations['widget_list_display'] = [
 			'cost'      => tribe_is_truthy( $arguments['cost'] ),

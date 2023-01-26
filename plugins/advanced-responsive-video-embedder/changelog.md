@@ -4,6 +4,26 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2023-01-25 9.9.6 ###
+* Fix: Rumble videos not work correctly on all cases correct oembed data.
+* Fix: Incompability with WP Courseware? Making sure the ARVE `<dialog>` is only created once per pageload.
+
+### 2023-01-11 9.9.4 ###
+* Fix: Invisble Shortcode creation dialog content.
+* Fix: Hide the dialog when the WP image upload dialog is opened.
+
+### 2023-01-10 9.9.3 ###
+* Fix: Issue when browser does not support `<dialog>`.
+
+### 2022-01-08 9.9.2 ###
+
+* Fix: Incompatibility with Accelerated Mobile Pages by removing the jquery-ui depedancy and using a native `<dialog>` for the shortcode creator modal. This may also fix layering (z-index) issues with other plugins.
+
+### 2022-10-28 9.8.0 ###
+
+* New: TikTok support.
+* Improved: Removed deprecated message because it broke the WP login when debug output was enabled.
+
 ### 2022-10-14 9.7.17 ###
 
 * Fix: Give errors and prevent php 8.0 and 8.1 from having errors when the aspect ratio contains non integer numbers like `0.9:1` only integers are allowed like `9:10`.

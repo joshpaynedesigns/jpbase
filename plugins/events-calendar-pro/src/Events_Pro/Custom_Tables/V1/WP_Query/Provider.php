@@ -12,10 +12,15 @@ namespace TEC\Events_Pro\Custom_Tables\V1\WP_Query;
 
 use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
-use TEC\Events\Custom_Tables\V1\Provider_Contract;
+use TEC\Events\Custom_Tables\V1\WP_Query\Custom_Tables_Query;
+use TEC\Events\Custom_Tables\V1\WP_Query\Modifiers\WP_Query_Modifier;
+use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\Query_Monitor;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator as Provisional_ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post_Cache;
+use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Repository\Custom_Tables_Query_Filters;
+use Tribe__Repository__Query_Filters;
+use WP_Post;
 use WP_Query;
 
 /**
@@ -26,6 +31,14 @@ use WP_Query;
  * @package TEC\Events_Pro\Custom_Tables\V1\WP_Query
  */
 class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\Provider_Contract {
+	/**
+	 * Whether the provider is currently in no-op mode or not.
+	 *
+	 * @since 6.0.4
+	 *
+	 * @var bool
+	 */
+	private $noop;
 
 	/**
 	 * Registers the implementations and filters required by the plugin
@@ -34,10 +47,11 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @since 6.0.0
 	 */
 	public function register() {
+		$this->container->singleton( self::class, self::class );
 		$this->container->singleton( Condense_Events_Series::class, Condense_Events_Series::class );
 		$this->container->singleton( Replace_Results::class, Replace_Results::class );
 		$this->container->singleton( Provisional_Post::class, function () {
-			remove_action( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+			remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 			$provisional_post = new Provisional_Post(
 				$this->container->make( Provisional_Post_Cache::class ),
 				$this,
@@ -45,7 +59,6 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			);
 			add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 			add_filter( 'get_post_metadata', [ $this, 'hydrate_tec_occurrence_meta' ], 10, 3 );
-			add_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ], 10, 2 );
 
 			return $provisional_post;
 		} );
@@ -55,8 +68,8 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			return new Custom_Query_Filters( $base, $this->container->make( Provisional_Post::class ) );
 		} );
 
-		if ( ! has_action( 'query', [ $this, 'hydrate_provisional_post' ] ) ) {
-			add_action( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+		if ( ! has_filter( 'query', [ $this, 'hydrate_provisional_post' ] ) ) {
+			add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 		}
 
 		if ( ! has_action(
@@ -73,10 +86,6 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			add_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ], 10, 2 );
 		}
 
-		if ( ! has_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ] ) ) {
-			add_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ], 10, 2 );
-		}
-
 		if ( ! has_filter( 'get_post_metadata', [ $this, 'hydrate_cache_on_occurrence' ] ) ) {
 			add_filter( 'get_post_metadata', [ $this, 'hydrate_cache_on_occurrence' ], 10, 4 );
 		}
@@ -86,7 +95,7 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		}
 
 		if ( ! has_filter( 'tec_events_custom_tables_v1_occurrence_select_fields', [ $this, 'filter_occurrence_fields' ] ) ) {
-			add_filter( 'tec_events_custom_tables_v1_occurrence_select_fields', [ $this, 'filter_occurrence_fields' ], 10, 0 );
+			add_filter( 'tec_events_custom_tables_v1_occurrence_select_fields', [ $this, 'filter_occurrence_fields' ], 10, 1 );
 		}
 
 		if ( ! has_action( 'tec_events_custom_tables_v1_custom_tables_query_pre_get_posts', [ $this, 'register_custom_tables_filters' ] ) ) {
@@ -104,7 +113,93 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			add_filter( 'tec_events_custom_tables_v1_custom_tables_query_where', [ $this, 'filter_where' ], 10, 2 );
 		}
 
+		if ( ! has_filter( 'tec_events_custom_tables_v1_custom_tables_query_hydrate_posts', [
+			$this,
+			'hydrate_query_posts'
+		] ) ) {
+			add_filter( 'tec_events_custom_tables_v1_custom_tables_query_hydrate_posts', [
+				$this,
+				'hydrate_query_posts'
+			], 10, 2 );
+		}
+
+		if ( ! has_filter( 'tec_events_custom_tables_v1_query_modifier_implementations', [
+			$this,
+			'filter_query_modifier_implementations'
+		] ) ) {
+			add_filter( 'tec_events_custom_tables_v1_query_modifier_implementations', [
+				$this,
+				'filter_query_modifier_implementations'
+			], 10, 2 );
+		}
+
+		if ( ! has_filter( 'tec_events_custom_tables_v1_query_modifier_applies_to_query', [
+			$this,
+			'filter_should_modify_query'
+		] ) ) {
+			add_filter( 'tec_events_custom_tables_v1_query_modifier_applies_to_query', [
+				$this,
+				'filter_should_modify_query'
+			], 10, 3 );
+		}
+
+		if ( ! has_filter( 'tec_events_pro_tribe_repository_event_series_filter_override', [
+			$this,
+			'tribe_event_series_filter_override'
+		] ) ) {
+			add_filter( 'tec_events_pro_tribe_repository_event_series_filter_override', [
+				$this,
+				'tribe_event_series_filter_override'
+			], 10, 3 );
+		}
+
 		$this->handle_collapse_recurring_event_instances();
+	}
+
+	/**
+	 * Will override the series repository query.
+	 *
+	 * @since 6.0.5
+	 *
+	 * @param bool                             $filter_override Flag whether to continue using filter parsing.
+	 * @param Tribe__Repository__Query_Filters $filter          This instance of the filter object.
+	 * @param bool|numeric|WP_Post             $in_series       The series param.
+	 *
+	 * @return bool
+	 */
+	public function tribe_event_series_filter_override( $filter_override, $filter, $in_series ) {
+		return tribe( Custom_Tables_Query_Filters::class )->apply_series_filters( $filter_override, $filter, $in_series );
+	}
+
+	/**
+	 * Filter query modifier implementations.
+	 *
+	 * @since 6.0.5
+	 *
+	 * @param array<WP_Query_Modifier> $implementations The query modifier implementations to be filtered.
+	 * @param Query_Monitor            $query_monitor   An instance of a Query Monitor class.
+	 *
+	 * @return array<WP_Query_Modifier> The filtered query modifier implementations.
+	 */
+	public function filter_query_modifier_implementations( array $implementations, $query_monitor ): array {
+		return $this->container->make( WP_Query_Monitor_Filters::class )
+		                       ->filter_query_modifier_implementations( $implementations, $query_monitor );
+	}
+
+	/**
+	 * Flag whether a particular query modifier should modify the query or not.
+	 *
+	 * @since 6.0.4
+	 *
+	 * @param bool              $should_filter Whether this modifier will apply changes to this query.
+	 * @param WP_Query          $wp_query      The query being modified.
+	 * @param WP_Query_Modifier $modifier      The modifier that will apply.
+	 *
+	 * @return bool
+	 */
+	public function filter_should_modify_query( bool $should_filter, $wp_query, WP_Query_Modifier $modifier ): bool {
+		return $this->container->make( WP_Query_Monitor_Filters::class )
+		                       ->filter_should_modify_query( $should_filter, $wp_query, $modifier );
 	}
 
 	/**
@@ -121,7 +216,6 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		remove_filter( 'tec_events_custom_tables_v1_custom_tables_query_vars', [ $this, 'filter_query_vars' ] );
 		remove_filter( 'tec_events_custom_tables_v1_custom_tables_query_where', [ $this, 'filter_where' ] );
 		remove_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ] );
-		remove_filter( 'update_post_metadata_cache', [ $this, 'hydrate_provisional_meta_cache' ] );
 		remove_filter( 'get_post_metadata', [ $this, 'hydrate_cache_on_occurrence' ] );
 		remove_filter( 'posts_results', [ $this, 'replace_posts_results' ] );
 		remove_filter( 'tec_events_custom_tables_v1_occurrence_select_fields', [ $this, 'filter_occurrence_fields' ] );
@@ -137,6 +231,22 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		remove_filter( 'tribe_repository_events_query_args', $condense_series_query_args );
 		$condense_series_pre_get_posts = $this->container->callback( Condense_Events_Series::class, 'pre_get_posts' );
 		remove_action( 'tec_events_custom_tables_v1_custom_tables_query_pre_get_posts', $condense_series_pre_get_posts );
+		remove_filter( 'tec_events_custom_tables_v1_custom_tables_query_hydrate_posts', [
+			$this,
+			'hydrate_query_posts'
+		] );
+		remove_filter( 'tec_events_custom_tables_v1_query_modifier_implementations', [
+			$this,
+			'filter_query_modifier_implementations'
+		] );
+		remove_filter( 'tec_events_custom_tables_v1_query_modifier_applies_to_query', [
+			$this,
+			'filter_should_modify_query'
+		] );
+		remove_filter( 'tec_events_pro_tribe_repository_event_series_filter_override', [
+			$this,
+			'tribe_event_series_filter_override'
+		] );
 	}
 
 	/**
@@ -150,7 +260,9 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return array<string,mixed> The filtered Custom Tables Query variables.
 	 */
 	public function filter_query_vars( array $query_vars ) {
-		return $this->container->make( Custom_Query_Filters::class )->filter_query_vars( $query_vars );
+		return $this->noop ?
+			$query_vars
+			: $this->container->make( Custom_Query_Filters::class )->filter_query_vars( $query_vars );
 	}
 
 	/**
@@ -165,7 +277,9 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return string The filtered `WHERE` statement.
 	 */
 	public function filter_where( $where, WP_Query $wp_query ) {
-		return $this->container->make( Custom_Query_Filters::class )->filter_where( $where, $wp_query );
+		return $this->noop ?
+			$where
+			: $this->container->make( Custom_Query_Filters::class )->filter_where( $where, $wp_query );
 	}
 
 	/**
@@ -179,7 +293,9 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return string The filtered query.
 	 */
 	public function hydrate_provisional_post( $query_sql ) {
-		return $this->container->make( Provisional_Post::class )->hydrate_provisional_post_query( $query_sql );
+		return $this->noop ?
+			$query_sql
+			: $this->container->make( Provisional_Post::class )->hydrate_provisional_post_query( $query_sql );
 	}
 
 	/**
@@ -192,12 +308,19 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @param array|object|null $results The query results.
 	 */
 	public function hydrate_provisional_post_caches( $results ) {
-		if ( ! ( $results && is_array( $results ) && array_filter( (array) $results, 'is_numeric' ) ) ) {
+		if (
+			$this->noop
+			|| ! (
+				$results
+				&& is_array( $results )
+				&& array_filter( (array) $results, 'is_numeric' )
+			)
+		) {
 			// Not a set of post IDs or an empty array: let's avoid building the Provisional Post instance.
-			return;
+			return $results;
 		}
 
-		$this->container->make( Provisional_Post::class )->hydrate_caches( $results );
+		return $this->container->make( Provisional_Post::class )->hydrate_caches( $results );
 	}
 
 	/**
@@ -211,7 +334,7 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return bool|null Whether caches were correctly updated or not.
 	 */
 	public function hydrate_provisional_meta_cache( $meta, $ids ) {
-		if ( $meta !== null ) {
+		if ( $this->noop || $meta !== null ) {
 			return $meta;
 		}
 
@@ -230,6 +353,10 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @param bool   $single       Whether to return only the first value of the specified `$meta_key`.
 	 */
 	public function hydrate_cache_on_occurrence( $value, $object_id, $meta_key, $single ) {
+		if ( $this->noop ) {
+			return $value;
+		}
+
 		$provisional_post = $this->container->make( Provisional_Post::class );
 		// The requested element is not an occurrence move on.
 		if ( ! $provisional_post->is_provisional_post_id( $object_id ) ) {
@@ -260,7 +387,7 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return mixed The original results, replaced if required.
 	 */
 	public function replace_posts_results( $posts, $wp_query = null ) {
-		if ( ! $wp_query instanceof WP_Query ) {
+		if ( $this->noop || ! $wp_query instanceof WP_Query ) {
 			return $posts;
 		}
 
@@ -273,14 +400,16 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param string $occurrence_id_field The input SQL required to select distinct Occurrences in the context
+	 * @param string $select_fields       The input SQL required to select distinct Occurrences in the context
 	 *                                    of a Custom Tables Query.
 	 *
 	 * @return string TheSQL required to select distinct Occurrences in the context of a Custom Tables Query,
 	 *                pointing to the Occurrences custom table.
 	 */
-	public function filter_occurrence_fields() {
-		return $this->container->make( Custom_Query_Filters::class )->get_occurrence_field();
+	public function filter_occurrence_fields( $select_fields ) {
+		return $this->noop ?
+			$select_fields
+			: $this->container->make( Custom_Query_Filters::class )->get_occurrence_field();
 	}
 
 	/**
@@ -292,6 +421,10 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @see `tec_events_custom_tables_v1_custom_tables_query_pre_get_posts`
 	 */
 	public function register_custom_tables_filters() {
+		if ( $this->noop ) {
+			return;
+		}
+
 		add_filter( 'posts_where', [ $this, 'normalize_occurrence_id' ], 10, 2 );
 	}
 
@@ -310,7 +443,7 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return string The updated where clause.
 	 */
 	public function normalize_occurrence_id( $where, $query = null ) {
-		if ( ! $query instanceof WP_Query ) {
+		if ( $this->noop || ! $query instanceof WP_Query ) {
 			return $where;
 		}
 
@@ -366,6 +499,10 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return mixed The original meta value as worked out by WordPress, unmodified by the call.
 	 */
 	public function hydrate_tec_occurrence_meta( $meta_value, $object_id, $meta_key ) {
+		if ( $this->noop ) {
+			return $meta_value;
+		}
+
 		$object_id = (int) $object_id;
 
 		if ( $meta_key !== '_tec_occurrence' ) {
@@ -375,5 +512,39 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 
 		return $this->container->make( Provisional_Post::class )
 			->hydrate_tec_occurrence_meta( $meta_value, $object_id, $meta_key );
+	}
+
+	/**
+	 * Hydrates the Custom Tables Query post results early.
+	 *
+	 * @since 6.0.3
+	 *
+	 * @param array               $query_posts The posts returned by the query.
+	 * @param Custom_Tables_Query $query       The Custom Tables Query instance.
+	 *
+	 * @return array The posts returned by the query, hydrated.
+	 */
+	public function hydrate_query_posts( array $query_posts, Custom_Tables_Query $query ): array {
+		return $this->noop ?
+			$query_posts
+			: $this->container->make( Replace_Results::class )->hydrate_query_posts( $query_posts, $query );
+	}
+
+	/**
+	 * Puts the Service Provider in a no-op mode, any method hooked
+	 * to actions will not run, any method hooked to filters will return
+	 * the filter input value.
+	 *
+	 * Calling `unregister` and `register` while an action or filter are being applied
+	 * will not remove them and will, instead, cause them to be added twice.
+	 *
+	 * @since 6.0.4
+	 *
+	 * @param bool $noop Whether the Service Provider should be in no-op mode or not.
+	 *
+	 * @return void The Service Provider is put in no-op mode.
+	 */
+	public function noop( bool $noop ): void {
+		$this->noop = $noop;
 	}
 }

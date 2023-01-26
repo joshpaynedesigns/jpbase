@@ -6,7 +6,7 @@
  * @package Tribe\Events\Service_Providers
  */
 
-namespace Tribe\Events\PRO\Service_Providers;
+namespace Tribe\Events\Pro\Service_Providers;
 
 use Tribe__Context;
 use Tribe__Utils__Array as Arr;

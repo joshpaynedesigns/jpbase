@@ -561,6 +561,8 @@ class MWP_WordPress_Context
      */
     public function getUsers($criteria)
     {
+        $this->requirePluggable();
+
         return get_users($criteria);
     }
 

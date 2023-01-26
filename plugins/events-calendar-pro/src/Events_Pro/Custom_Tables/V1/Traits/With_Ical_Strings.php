@@ -209,7 +209,7 @@ trait With_Ical_Strings {
 		$exrule_rset = $this->get_rset_for_ical_string_dtstart( $exrule_as_rrule, $old_dtstart );
 
 		/**
-		 * Prepare a Closure that will reutrn the EXDATEs that would apply to the RRULE when
+		 * Prepare a Closure that will return the EXDATEs that would apply to the RRULE when
 		 * applied to the new DTSTART.
 		 */
 		$get_intersecting_exdates = function () use ( $exrule_rset, $new_dtstart, $rrule_string, $exrule ) {

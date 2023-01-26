@@ -26,11 +26,16 @@ if ( ! function_exists( 'tec_event_series' ) ) {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int $event_post_id The ID of the post ID event we are looking for.
+	 * @param null|int $event_post_id The ID of the post ID event we are looking for.
 	 *
 	 * @return WP_Post|null The post representing the series otherwise `null`
 	 */
-	function tec_event_series( int $event_post_id ): ?WP_Post {
+	function tec_event_series( $event_post_id ): ?WP_Post {
+		// Simple prevention of mis-usage.
+		if ( null === $event_post_id ) {
+			return null;
+		}
+
 		$cache = tribe_cache();
 		$cache_key = Series_Relationship::get_cache_key( $event_post_id );
 

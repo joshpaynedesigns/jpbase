@@ -183,8 +183,10 @@ class Condense_Events_Series {
 	 */
 	private function get_column( array $filter = [] ) {
 		$field_map = [
-			'_EventStartDate' => 'start_date',
-			'_EventEndDate'   => 'end_date',
+			'_EventStartDate'    => 'start_date',
+			'_EventEndDate'      => 'end_date',
+			'_EventStartDateUTC' => 'start_date_utc',
+			'_EventEndDateUTC'   => 'end_date_utc',
 		];
 
 		if ( isset( $filter['key'], $field_map[ $filter['key'] ] ) ) {

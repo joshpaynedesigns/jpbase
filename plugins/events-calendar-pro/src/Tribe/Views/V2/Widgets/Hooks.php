@@ -184,9 +184,9 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @return array<string,string> $views The modified array of views in the shape `[ <slug> => <class> ]`.
 	 */
 	public function filter_add_widget_views( $views ) {
-		$views['widget-countdown']      = Countdown_View::class;
-		$views['widget-featured-venue'] = Venue_View::class;
-		$views['widget-week']           = Week_View::class;
+		$views[ Countdown_View::get_view_slug() ] = Countdown_View::class;
+		$views[ Venue_View::get_view_slug() ]     = Venue_View::class;
+		$views[ Week_View::get_view_slug() ]      = Week_View::class;
 
 		return $views;
 	}

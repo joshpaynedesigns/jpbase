@@ -186,10 +186,10 @@ class From_Event_Rule_Converter {
 			$rule['custom']['same-time'] = 'yes';
 		}
 		if ( $rule['custom']['same-time'] === 'no' ) {
-			$diff_start_time  = dates::immutable( $rule['custom']['start-time'] );
-			$diff_end_time    = dates::immutable( $rule['custom']['end-time'] );
-			$rule_dtstart     = dates::immutable( $rule['EventStartDate'] );
-			$rule_dtend       = dates::immutable( $rule['EventEndDate'] );
+			$diff_start_time  = Dates::immutable( $rule['custom']['start-time'] );
+			$diff_end_time    = Dates::immutable( $rule['custom']['end-time'] );
+			$rule_dtstart     = Dates::immutable( $rule['EventStartDate'] );
+			$rule_dtend       = Dates::immutable( $rule['EventEndDate'] );
 			$start_matches    = $diff_start_time->format( 'h:i:00' ) === $rule_dtstart->format( 'h:i:00' );
 			$end_matches      = $diff_end_time->format( 'h:i:00' ) === $rule_dtend->format( 'h:i:00' );
 			$rule_end_day     = isset( $rule['end-day'] ) && is_numeric( $rule['end-day'] ) ? (int) $rule['end-day'] : 0;

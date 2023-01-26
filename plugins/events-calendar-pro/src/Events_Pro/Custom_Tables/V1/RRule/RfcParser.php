@@ -180,14 +180,9 @@ class RfcParser extends Original_Rfc_Parser {
 				if ( $tz !== null ) {
 					throw new InvalidArgumentException( 'Invalid EXDATE property: TZID must not be applied when time is specified in UTC' );
 				}
-				$date = new DateTime( $value );
+				$date = new Ex_Date( $value );
 			} else {
-				$date = new DateTime( $value, $tz );
-			}
-
-			if ( $dtstart !== null && date_parse( $value )['hour'] === false ) {
-				// If the value does not define a time, then apply the DTSTART time.
-				$date->setTime( $dtstart->format( 'H' ), $date->format( 'i' ), $dtstart->format( 's' ) );
+				$date = new Ex_Date( $value, $tz );
 			}
 
 			$dates[] = $date;

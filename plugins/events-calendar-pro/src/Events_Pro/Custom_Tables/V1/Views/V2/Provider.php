@@ -153,8 +153,7 @@ class Provider extends Service_Provider {
 			return $file;
 		}
 
-		$root = implode( '/', tribe( Templates::class )->get_template_folder() );
-
+		$root = EVENTS_CALENDAR_PRO_DIR . '/src/views/custom-tables-v1';
 
 		// Note down the original file, should we need to render that.
 		$template->set( 'original_file', $file );

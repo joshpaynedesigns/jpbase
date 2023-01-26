@@ -39,6 +39,22 @@ function bodhi_svgs_admin_css() {
 }
 add_action( 'admin_enqueue_scripts', 'bodhi_svgs_admin_css' );
 
+
+function bodhi_svgs_admin_multiselect() {
+	
+	wp_enqueue_style( 'CSS-for-multiselect', BODHI_SVGS_PLUGIN_URL . 'css/jquery.dropdown-min.css' );
+
+	wp_enqueue_script('js-for-multiselect', BODHI_SVGS_PLUGIN_URL . 'js/min/jquery.dropdown-min.js', array( 'jquery' ));
+
+	wp_enqueue_script('cstm-js-for-multiselect', BODHI_SVGS_PLUGIN_URL . 'js/min/cstm.js.multiselect-min.js', array( 'jquery' ));
+
+	wp_add_inline_script( 'js-for-multiselect', 'jQuery(document).ready(function(){jQuery(".upload_allowed_roles").dropdown({multipleMode: "label",input: \'<input type="text" maxLength="20" placeholder="Search">\',searchNoData: \'<li style="color:#ddd">No Results</li>\'});});', "after" );
+	
+	wp_add_inline_script( 'js-for-multiselect', 'jQuery(document).ready(function(){jQuery(".sanitize_on_upload_roles").dropdown({multipleMode: "label",input: \'<input type="text" maxLength="20" placeholder="Search">\',searchNoData: \'<li style="color:#ddd">No Results</li>\'});});', "after" );
+}
+
+add_action( 'admin_enqueue_scripts', 'bodhi_svgs_admin_multiselect' );
+
 /*
 *	Enqueue Block editor JS
 */

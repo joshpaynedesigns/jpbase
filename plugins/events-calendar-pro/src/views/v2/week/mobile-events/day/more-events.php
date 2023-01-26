@@ -17,8 +17,22 @@
  * @see tribe_get_event() For the format of the event object.
  */
 
+use Tribe\Events\Views\V2\View_Interface;
+
 // Bail if there are no more events to show.
-if ( empty( $more_events ) || empty( $more_url ) || empty( $view->get_context()->get( 'is-widget', false ) ) ) {
+if ( empty( $more_events ) ) {
+	return;
+}
+
+if ( empty( $more_url ) ) {
+	return;
+}
+
+if ( ! $this->get( 'view' ) instanceof View_Interface ) {
+	return;
+}
+
+if ( ! $view->get_context()->get( 'is-widget', false ) ) {
 	return;
 }
 ?>

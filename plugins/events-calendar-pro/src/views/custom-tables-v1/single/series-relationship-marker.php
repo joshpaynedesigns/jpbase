@@ -3,7 +3,7 @@
  * Marker for an Event related to Series in Single View.
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-pro/single/series-relationship-marker.php
+ * [your-theme]/tribe/events-pro/custom-tables-v1/single/series-relationship-marker.php
  *
  * See more documentation about our views templating system.
  *
@@ -18,7 +18,7 @@
  * @var string  $series_title              The filtered title of the Series post related to this Event.
  * @var string  $series_link               The URL to the Series post related to this Event.
  * @var string  $fg_accent_color_class     The class indicating the element should use the Customizer
- *                                    controlled accent color.
+ *                                         controlled accent color.
  */
 
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;

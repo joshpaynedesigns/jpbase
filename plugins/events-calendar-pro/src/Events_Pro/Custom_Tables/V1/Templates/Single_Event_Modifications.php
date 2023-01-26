@@ -285,6 +285,10 @@ class Single_Event_Modifications {
 	 */
 	public function include_series_meta_details() {
 		$post = get_post();
+		if ( ! $post instanceof WP_Post ) {
+			return;
+		}
+
 		// The actual ID of the event is a fake one, make sure to use the real post ID.
 		if ( isset( $post->_tec_occurrence ) && $post->_tec_occurrence instanceof Occurrence ) {
 			$event_id = $post->_tec_occurrence->post_id;

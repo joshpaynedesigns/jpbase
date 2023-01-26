@@ -128,4 +128,4 @@ class MWP_IncrementalBackup_HashComputer
 
         return null;
     }
-} 
+}

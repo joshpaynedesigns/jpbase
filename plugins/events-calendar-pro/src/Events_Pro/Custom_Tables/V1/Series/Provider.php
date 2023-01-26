@@ -62,7 +62,7 @@ class Provider extends Service_Provider {
 			add_action( "save_post_{$series_post_type_name}", [ $this, 'save_series_relationship' ], 10, 2 );
 		}
 
-		if ( ! has_action( 'untrashed_post', [ $this, 'untrash_series_following_even' ] ) ) {
+		if ( ! has_action( 'untrashed_post', [ $this, 'untrash_series_following_event' ] ) ) {
 			add_action( 'untrashed_post', [ $this, 'untrash_series_following_event' ] );
 		}
 

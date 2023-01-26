@@ -15,7 +15,7 @@ use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
-use TEC\Events_Pro\Custom_Tables\V1\RRule\Occurrence as RRule_Ocurrence;
+use TEC\Events_Pro\Custom_Tables\V1\RRule\Occurrence as RRule_Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Events;
 use Tribe__Events__Pro__Editor__Recurrence__Blocks;
