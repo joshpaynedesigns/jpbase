@@ -30,6 +30,7 @@ if ( ! empty( $venue->geolocation->address ) ) {
 
 ?>
 <iframe
+	aria-label="<?php esc_attr_e( 'Venue location map', 'tribe-events-calendar-pro' ); ?>"
 	class="tribe-events-pro-venue__meta-data-google-maps-default"
 	src="<?php echo esc_url( $url ); ?>"
 >

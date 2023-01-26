@@ -21,7 +21,7 @@ use TEC\Events\Custom_Tables\V1\Tables\Events as EventsSchema;
  */
 class Events extends Abstract_Custom_Field {
 	const SCHEMA_VERSION_OPTION = 'tec_ct1_events_field_schema_version';
-	const SCHEMA_VERSION = '1.0.0';
+	const SCHEMA_VERSION = '1.0.1';
 
 	/**
 	 * @inheritDoc
@@ -46,7 +46,7 @@ class Events extends Abstract_Custom_Field {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		return "CREATE TABLE `{$table_name}` (
-			`rset` LONGTEXT COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+			`rset` LONGTEXT COLLATE utf8mb4_unicode_ci DEFAULT NULL
 			) {$charset_collate};";
 	}
 

@@ -41,7 +41,7 @@ class String_Dictionary {
 				'Get ready for the new recurring events!',
 				'tribe-events-calendar-pro'
 			),
-			'preview-prompt-upgrade-cta'                               => __( 'Upgrade your recurring events.', 'the-events-calendar' ),
+			'preview-prompt-upgrade-cta'                               => __( 'Upgrade your recurring events.', 'tribe-events-calendar-pro' ),
 			'preview-prompt-features'                                  => __(
 				'Faster event editing. Smarter save options. More flexibility. Events Calendar Pro 6.0  ' .
 				'is full of features to make managing recurring and connected events better than ever. ' .

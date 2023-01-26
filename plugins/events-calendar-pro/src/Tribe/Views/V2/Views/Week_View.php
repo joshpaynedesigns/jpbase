@@ -3,7 +3,7 @@
  * Renders the week view
  *
  * @since   4.7.5
- * @package Tribe\Events\PRO\Views\V2\Views
+ * @package Tribe\Events\Pro\Views\V2\Views
  */
 
 namespace Tribe\Events\Pro\Views\V2\Views;
@@ -11,6 +11,7 @@ namespace Tribe\Events\Pro\Views\V2\Views;
 use Tribe\Events\Views\V2\Messages;
 use Tribe\Events\Views\V2\Utils\Stack;
 use Tribe\Events\Views\V2\Views\By_Day_View;
+use Tribe\Events\Views\V2\Views\Day_View;
 use Tribe\Events\Views\V2\Views\Traits\With_Fast_Forward_Link;
 use Tribe\Utils\Date_I18n;
 use Tribe__Context as Context;
@@ -22,7 +23,7 @@ use Tribe__Events__Timezones as Timezones;
  *
  * @since   4.7.5
  *
- * @package Tribe\Events\PRO\Views\V2\Views
+ * @package Tribe\Events\Pro\Views\V2\Views
  */
 class Week_View extends By_Day_View {
 	use With_Fast_Forward_Link;
@@ -30,11 +31,20 @@ class Week_View extends By_Day_View {
 	/**
 	 * Slug for this view
 	 *
-	 * @since 4.7.5
+	 * @deprecated 6.0.7
 	 *
 	 * @var string
 	 */
 	protected $slug = 'week';
+
+	/**
+	 * Statically accessible slug for this view.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @var string
+	 */
+	protected static $view_slug = 'week';
 
 	/**
 	 * Cached dates for the prev/next links.
@@ -63,6 +73,43 @@ class Week_View extends By_Day_View {
 	 * @var bool
 	 */
 	protected $hide_weekends = false;
+
+	/**
+	 * Week_View constructor.
+	 *
+	 * @since 5.0.0
+	 *
+	 * {@inheritDoc}
+	 */
+	public function __construct( Messages $messages, Stack $stack ) {
+		parent::__construct( $messages, $stack );
+		/**
+		 *  Allows filtering of the week_view_hide_weekends option.
+		 *
+		 * @since 5.6.0
+		 *
+		 * @param boolean $hide_weekends whether to hide weekend on the view or not.
+		 */
+		$this->hide_weekends = apply_filters( 'tribe_week_view_hide_weekends', tribe_is_truthy( tribe_get_option( 'week_view_hide_weekends', false ) ) );
+	}
+
+	/**
+	 * Default untranslated value for the label of this view.
+	 *
+	 * @since 6.0.3
+	 *
+	 * @var string
+	 */
+	protected static $label = 'Week';
+
+	/**
+	 * @inheritDoc
+	 */
+	public static function get_view_label(): string {
+		static::$label = _x( 'Week', 'The text label for the Week View.', 'tribe-events-calendar-pro' );
+
+		return static::filter_view_label( static::$label );
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -222,7 +269,7 @@ class Week_View extends By_Day_View {
 				'event_times'    => $this->parse_event_times( $event_ids ),
 				'message_mobile' => $message_mobile,
 				'more_events'    => max( count( $event_ids ) - $this->get_events_per_day(), 0 ),
-				'day_url'        => tribe_events_get_url( [ 'eventDisplay' => 'day', 'eventDate' => $date_string ] ),
+				'day_url'        => tribe_events_get_url( [ 'eventDisplay' => Day_View::get_view_slug(), 'eventDate' => $date_string ] ),
 			];
 		}
 
@@ -325,30 +372,11 @@ class Week_View extends By_Day_View {
 				'daynum'       => $day_date->format( 'j' ),
 				'found_events' => count( $event_ids ),
 				'more_events'  => max( count( $event_ids ) - $this->get_events_per_day(), 0 ),
-				'day_url'      => tribe_events_get_url( [ 'eventDisplay' => 'day', 'eventDate' => $day_date->format( 'Y-m-d' ) ] ),
+				'day_url'      => tribe_events_get_url( [ 'eventDisplay' => Day_View::get_view_slug(), 'eventDate' => $day_date->format( 'Y-m-d' ) ] ),
 			];
 		}
 
 		return $grid_days;
-	}
-
-	/**
-	 * Week_View constructor.
-	 *
-	 * @since 5.0.0
-	 *
-	 * {@inheritDoc}
-	 */
-	public function __construct( Messages $messages, Stack $stack ) {
-		parent::__construct( $messages, $stack );
-		/**
-		 *  Allows filtering of the week_view_hide_weekends option.
-		 *
-		 * @since 5.6.0
-		 *
-		 * @param boolean $hide_weekends whether to hide weekend on the view or not.
-		 */
-		$this->hide_weekends = apply_filters( 'tribe_week_view_hide_weekends', tribe_is_truthy( tribe_get_option( 'week_view_hide_weekends', false ) ) );
 	}
 
 	/**
@@ -498,7 +526,7 @@ class Week_View extends By_Day_View {
 			}
 
 			$day_y_m_d = $day->format( 'Y-m-d' );
-			$day_url   = tribe_events_get_url( [ 'eventDisplay' => 'day', 'eventDate' => $day_y_m_d ] );
+			$day_url   = tribe_events_get_url( [ 'eventDisplay' => Day_View::get_view_slug(), 'eventDate' => $day_y_m_d ] );
 
 			$grid[ $day_y_m_d ] = [
 				'full_date'    => $day->format( tribe_get_option( 'date_with_year', Dates::DATEONLYFORMAT ) ),
@@ -1063,5 +1091,19 @@ class Week_View extends By_Day_View {
 		 * @param Week_View $this The current Week View instance.
 		 */
 		return apply_filters( 'tribe_events_views_v2_week_events_per_day', $events_per_day, $this );
+	}
+
+	/**
+	 * Adds Week View to the views that get cache.
+	 *
+	 * @since 6.0.7
+	 *
+	 * @param array               $views Should the current view have its HTML cached?
+	 * @param View_Interface|null $view  The object using the trait, or null in case of static usage.
+	 */
+	public function filter_tribe_events_views_v2_cached_views( $views, $view ) {
+		$views[ self::get_view_slug() ] = true;
+
+		return $views;
 	}
 }

@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.9.16
 Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 9.7.18
+Stable tag: 9.9.6
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -54,7 +54,7 @@ It is very likely the one and only plugin you will ever need to handle video emb
 #### Supported Providers ####
 
 [All providers with iframe embed codes](https://nextgenthemes.com/plugins/arve/documentation/#general-iframe-embedding)
-Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
+Alugha, Archive.org, Banned.video, Bitchute, Brightcove, Brighteon, cantcensortruth.com, Comedy Central, Dailymotion, Dailymotion Playlist, DTube, Facebook, Gab TV, Google Drive, mp4 or webm video files, ARVE general iframe embed, IGN, IMDB, Kickstarter, kla.tv, Livestream.com, Mail.ru, Metacafe, myspace, ooyala, v.qq.com, Rumble.com, RuTube.ru, Snotr, TED Talks, TikTok, Twitch, Viddler, Vimeo, VK, Wistia, XTube, Yahoo, Youku, YouTube, YouTube Playlist
 ### Reviews ###
 
 #### &#9733; &#9733; &#9733; &#9733; &#9733; Great plugin, great support ####
@@ -195,6 +195,26 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2023-01-25 9.9.6 ###
+* Fix: Rumble videos not work correctly on all cases correct oembed data.
+* Fix: Incompability with WP Courseware? Making sure the ARVE `<dialog>` is only created once per pageload.
+
+### 2023-01-11 9.9.4 ###
+* Fix: Invisble Shortcode creation dialog content.
+* Fix: Hide the dialog when the WP image upload dialog is opened.
+
+### 2023-01-10 9.9.3 ###
+* Fix: Issue when browser does not support `<dialog>`.
+
+### 2022-01-08 9.9.2 ###
+
+* Fix: Incompatibility with Accelerated Mobile Pages by removing the jquery-ui depedancy and using a native `<dialog>` for the shortcode creator modal. This may also fix layering (z-index) issues with other plugins.
+
+### 2022-10-28 9.8.0 ###
+
+* New: TikTok support.
+* Improved: Removed deprecated message because it broke the WP login when debug output was enabled.
 
 ### 2022-10-14 9.7.17 ###
 

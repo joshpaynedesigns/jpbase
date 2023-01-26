@@ -204,7 +204,7 @@ function tag_filter_button( array $tag, array $a ) {
 	$svg = \str_replace(
 		'<svg',
 		sprintf(
-			'<svg class="%s" focusable="false" role="img"',
+			'<svg class="%s" focusable="false" aria-hidden="true"',
 			esc_attr( 'arve-play-svg arve-play-svg--' . $a['play_icon_style'] )
 		),
 		$svg
@@ -214,24 +214,31 @@ function tag_filter_button( array $tag, array $a ) {
 		$svg = '<span class="arve-play-btn-inner">' . $svg . '</span>';
 	}
 
-	if ( 'lightbox' === $a['mode'] ) {
-		$tag['attr'] = bigger_picture_attr($a);
-	}
-
 	$tag['tag']                 = 'button';
 	$tag['inner_html']          = $svg;
-	$tag['role']                = 'presentation';
+	$tag['attr']['role']        = 'button';
 	$tag['attr']['type']        = 'button';
 	$tag['attr']['class']       = 'arve-play-btn arve-play-btn--' . $a['play_icon_style'];
 	$tag['attr']['data-target'] = '#' . $a['uid'];
-	$tag['attr']['aria-label']  = __( 'Play', 'arve-pro' );
+	$tag['attr']['aria-label']  = __( 'Play video', 'arve-pro' );
+
+	if ( 'lightbox' === $a['mode'] ) {
+		$tag['attr'] = bigger_picture_attr( $a, $tag['attr'] );
+	}
 
 	return $tag;
 }
 
-function bigger_picture_attr( array $a ) {
+function bigger_picture_attr( array $a, array $attr = array() ) {
 
 	$ratio = $a['aspect_ratio'] ? $a['aspect_ratio'] : '16:9';
+
+	$attr['data-target'] = '#' . $a['uid'];
+	$attr['data-width']  = ARVE\options()['lightbox_maxwidth'];
+	$attr['data-height'] = ARVE\height_from_width_and_ratio( $attr['data-width'], $ratio );
+	$attr['data-thumb']  = $a['img_src'];
+
+	$attr['aria-label'] = __( 'Open Lightbox with video', 'arve-pro' );
 
 	if ( 'html5' === $a['provider'] ) {
 		$attr['href']         = $a['video_sources'][0]['src'];
@@ -241,13 +248,6 @@ function bigger_picture_attr( array $a ) {
 		$attr['href']        = $a['url'];
 		$attr['data-iframe'] = ARVE\iframe_src_autoplay_args( true, $a );
 	}
-
-	$attr['data-target'] = '#' . $a['uid'];
-	$attr['data-width']  = ARVE\options()['lightbox_maxwidth'];
-	$attr['data-height'] = ARVE\height_from_width_and_ratio( $attr['data-width'], $ratio );
-	$attr['data-thumb']  = $a['img_src'];
-
-	$attr['aria-label'] = __( 'Play', 'arve-pro' );
 
 	return $attr;
 }

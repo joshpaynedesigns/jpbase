@@ -74,7 +74,6 @@ class Provisional_Post_Cache {
 	 */
 	public function __construct( Provisional_ID_Generator $generator ) {
 		$this->generator = $generator;
-		$this->base = $generator->current();
 	}
 
 	/**
@@ -85,6 +84,10 @@ class Provisional_Post_Cache {
 	 * @return int
 	 */
 	public function get_base(): int {
+		if ( empty( $this->base ) ) {
+			$this->base = $this->generator->current();
+		}
+
 		return $this->base;
 	}
 
@@ -161,7 +164,7 @@ class Provisional_Post_Cache {
 	 * @param  Occurrence  $occurrence
 	 */
 	private function set_occurrence_cache( Occurrence $occurrence ): void {
-		$provisional_id = $this->base + $occurrence->occurrence_id;
+		$provisional_id = $this->get_base() + $occurrence->occurrence_id;
 
 		if ( $this->already_cached( $provisional_id ) ) {
 			return;
@@ -181,14 +184,14 @@ class Provisional_Post_Cache {
 		}
 
 		// Make the `_tec_occurrence` reference available in meta too to have the WP_Post `isset` method pick it up.
-		$meta['_tec_occurrence'] = [ $occurrence ];
+		$meta['_tec_occurrence_id'] = [ $occurrence->occurrence_id ];
 
 		if ( $occurrence->has_recurrence ) {
 			$post->ID        = $provisional_id;
 		}
 
 		// Add a property with the occurrence.
-		$post->_tec_occurrence = $occurrence;
+		$post->_tec_occurrence_id = $occurrence->occurrence_id;
 
 		/**
 		 * Allows filtering the content of the hydrated post object cache for an Occurrence.
@@ -221,7 +224,12 @@ class Provisional_Post_Cache {
 		// Clone the post object to avoid change propagation and update the post ID before caching it.
 		$post_to_cache = clone $post;
 		$post_to_cache->ID = $provisional_id;
-		wp_cache_set( $provisional_id, $post_to_cache, 'posts' );
+
+		/*
+		 * Store the post as `stdClass` to avoid unserialize errors in pre-fetch scenarios, when the `WP_Post` class
+		 * is not yet defined.
+		 */
+		wp_cache_set( $provisional_id, (object) (array) $post_to_cache, 'posts' );
 		wp_cache_set( $provisional_id, $meta, 'post_meta' );
 		// Create an update a series of hash maps to keep track of which data was saved on the cache.
 		$caches = $this->get_array_from_cache( $occurrence->post_id );

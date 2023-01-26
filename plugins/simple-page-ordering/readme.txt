@@ -3,12 +3,12 @@ Contributors:      10up, jakemgold, welcher, helen, thinkoomph, jeffpaul
 Donate link:       http://10up.com/plugins/simple-page-ordering-wordpress/
 Tags:              order, re-order, ordering, pages, page, manage, menu_order, hierarchical, ajax, drag-and-drop, admin
 Requires at least: 3.8
-Tested up to:      6.0
-Stable tag:        2.4.1
+Tested up to:      6.1
+Stable tag:        2.4.4
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-Order your pages and other hierarchical post types with simple drag and drop right from the standard page list.
+Order your pages and other custom post types that support "page-attributes" with simple drag and drop right from the standard page list.
 
 == Description ==
 
@@ -42,13 +42,13 @@ Generic posts are not displayed by menu order - they're displayed by chronology.
 
 = Can I make my custom post type take advantage of this plug-in? =
 
-Yep. There are two ways to turn on support for Simple Page Ordering.
+Yep. When you register the post type, include the `page-attributes` feature in the support list. This will add a `Sort by Order` option to the filter links above the drop downs. Once you sort by order, you can drag and drop the content.
 
-Ideally, when you register the post type, set `hierarchical` to `true` - hierarchical post types natively order by menu order.
+`'supports' => array( 'title', 'editor', 'page-attributes' ),`
 
-Alternatively, when you define the features the post type supports, include `page-attributes`. This will add a `Sort by Order` option to the filter links above the drop downs. Once you sort by order, you can drag and drop the content.
+Alternatively, when you register the post type, set `hierarchical` to `true` - hierarchical post types natively order by menu order.
 
-Finally, you can take advantage of the `simple_page_ordering_is_sortable` filter, which passes the result of the default check and the post type name, to override default behavior.
+You can also take advantage of the `simple_page_ordering_is_sortable` filter, which passes the result of the default check and the post type name, to override default behavior.
 
 = I want my non-hierarchical post type to be sortable. Help! =
 
@@ -72,11 +72,11 @@ Where 5 is the number of items to batch on each request (the default is 50). Not
 
 This feature is already built into WordPress natively, but a bit tucked away. If you pull down the "Screen Options" tab up top (on the list of post objects) there's a field where you can specify the number of items to show per page. I decided it was not a very good practice to duplicate this.
 
-= How can I exclude certain custom post types? =
+= How can I modify sortable post types? =
 
-Custom post types can be excluded by using the `simple_page_ordering_is_sortable` filter.
+Post types can be included or excluded by using the `simple_page_ordering_is_sortable` filter.
 
-For example, with `excluded_post_type` as the custom post type ID, add the following snippet in the theme function file or custom plugin:
+For example, to exclude the `excluded_post_type` custom post type, add the following snippet in the theme function file or custom plugin:
 
 `
 add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type ) {
@@ -87,12 +87,45 @@ add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type 
 }, 10, 2 );
 `
 
+To include the `include_post_type` custom post type, add the following snippet in the theme function file or custom plugin:
+
+`
+add_filter( 'simple_page_ordering_is_sortable', function( $sortable, $post_type ) {
+	if ( 'include_post_type' === $post_type ) {
+		return true;
+	}
+	return $sortable;
+}, 10, 2 );
+`
+
+= Can I use REST to order posts? =
+
+Yes. The plugin registers the REST endpoint `simple-page-ordering/v1/page_ordering`.
+
 == Screenshots ==
 
 1. Dragging the page to its new position
 1. Processing indicator
 
 == Changelog ==
+
+= 2.4.4 - 2023-01-10 =
+* **Changed:** Update Support Level from `Active` to `Stable` (props [@jeffpaul](https://github.com/jeffpaul), [@dkotter](https://github.com/dkotter) via [#123](https://github.com/10up/simple-page-ordering/pull/123).
+* **Changed:** Bump WordPress "tested up to" version to 6.1 props [@jayedul](https://github.com/jayedul), [@dkotter](https://github.com/dkotter) via [#118](https://github.com/10up/simple-page-ordering/pull/118)).
+* **Changed:** Update the "Build release zip" workflow to use 10up's `build-zip` action (props [@iamdharmesh](https://github.com/iamdharmesh), [@faisal-alvi](https://github.com/faisal-alvi), [@dkotter](https://github.com/dkotter) via [#119](https://github.com/10up/simple-page-ordering/pull/119).
+* **Security:** Bump `loader-utils` from 2.0.3 to 2.0.4 (props [@dependabot](https://github.com/apps/dependabot) via [#115](https://github.com/10up/simple-page-ordering/pull/115).
+* **Security:** Bump `simple-git` from 3.12.0 to 3.15.1 (props [@dependabot](https://github.com/apps/dependabot) via [#121](https://github.com/10up/simple-page-ordering/pull/121).
+
+= 2.4.3 - 2022-11-08 =
+* **Changed:** Allow hierarchical post types that don't have `page-attributes` set to be sorted properly (props [@dkotter](https://github.com/dkotter), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#108](https://github.com/10up/simple-page-ordering/pull/108).
+* **Security:** Bump `got` from 10.7.0 to 11.8.5 (props [@dependabot](https://github.com/apps/dependabot) via [#106](https://github.com/10up/simple-page-ordering/pull/106).
+* **Security:** Bump `@wordpress/env` from 4.9.0 to 5.3.0 (props [@dependabot](https://github.com/apps/dependabot) via [#106](https://github.com/10up/simple-page-ordering/pull/106).
+* **Security:** Bump `scss-tokenizer` from 0.3.0 to 0.4.3 (props [@dependabot](https://github.com/apps/dependabot) via [#107](https://github.com/10up/simple-page-ordering/pull/107).
+* **Security:** Bump `node-sass` from 7.0.1 to 7.0.3 (props [@dependabot](https://github.com/apps/dependabot) via [#107](https://github.com/10up/simple-page-ordering/pull/107).
+
+= 2.4.2 - 2022-09-28 =
+* **Changed:** Replaced our Grunt build process with `10up-toolkit` (props [@cadic](https://github.com/cadic), [@peterwilsoncc](https://github.com/peterwilsoncc), [@dinhtungdu](https://github.com/dinhtungdu) via [#97](https://github.com/10up/simple-page-ordering/pull/97).
+* **Fixed:** Disable reordering for CPTs that don't support `page-attributes` (props [@dhanendran](https://github.com/dhanendran), [@dinhtungdu](https://github.com/dinhtungdu), [@peterwilsoncc](https://github.com/peterwilsoncc) via [#103](https://github.com/10up/simple-page-ordering/pull/103).
 
 = 2.4.1 - 2022-06-21 =
 * **Added:** Missing text domain to strings (props [@kebbet](https://github.com/kebbet), [@dkotter](https://github.com/dkotter), [@jeffpaul](https://github.com/jeffpaul) via [#92](https://github.com/10up/simple-page-ordering/pull/92).

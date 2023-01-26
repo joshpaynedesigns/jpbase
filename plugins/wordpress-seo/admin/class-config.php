@@ -63,7 +63,6 @@ class WPSEO_Admin_Pages {
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'global' );
 		wp_enqueue_style( 'wp-admin' );
-		$this->asset_manager->enqueue_style( 'select2' );
 		$this->asset_manager->enqueue_style( 'admin-css' );
 		$this->asset_manager->enqueue_style( 'monorepo' );
 
@@ -89,11 +88,12 @@ class WPSEO_Admin_Pages {
 		$dismissed_alerts       = $alert_dismissal_action->all_dismissed();
 
 		$script_data = [
-			'userLanguageCode'        => WPSEO_Language_Utils::get_language( \get_user_locale() ),
-			'dismissedAlerts'         => $dismissed_alerts,
-			'isRtl'                   => is_rtl(),
-			'isPremium'               => YoastSEO()->helpers->product->is_premium(),
-			'webinarIntroSettingsUrl' => WPSEO_Shortlinker::get( 'https://yoa.st/webinar-intro-settings' ),
+			'userLanguageCode'               => WPSEO_Language_Utils::get_language( \get_user_locale() ),
+			'dismissedAlerts'                => $dismissed_alerts,
+			'isRtl'                          => is_rtl(),
+			'isPremium'                      => YoastSEO()->helpers->product->is_premium(),
+			'webinarIntroSettingsUrl'        => WPSEO_Shortlinker::get( 'https://yoa.st/webinar-intro-settings' ),
+			'webinarIntroFirstTimeConfigUrl' => WPSEO_Shortlinker::get( 'https://yoa.st/webinar-intro-first-time-config' ),
 		];
 
 		$page = filter_input( INPUT_GET, 'page' );
@@ -160,7 +160,7 @@ class WPSEO_Admin_Pages {
 				'user_name'         => $user_name,
 			];
 
-			$script_data['search_appearance_link'] = admin_url( 'admin.php?page=wpseo_titles' );
+			$script_data['search_appearance_link'] = admin_url( 'admin.php?page=wpseo_page_settings#/site-representation' );
 
 			$script_data['force_organization'] = ( defined( 'WPSEO_LOCAL_FILE' ) );
 		}

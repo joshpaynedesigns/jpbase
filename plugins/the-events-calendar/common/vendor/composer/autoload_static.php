@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit056ca7b243d7bf42befa037b52fc996b
+class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -179,6 +179,8 @@ class ComposerStaticInit056ca7b243d7bf42befa037b52fc996b
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
         'TEC\\Common\\Editor\\Full_Site\\Template_Utils' => __DIR__ . '/../..' . '/src/Common/Editor/Full_Site/Template_Utils.php',
+        'TEC\\Common\\Storage\\Timed_Option' => __DIR__ . '/../..' . '/src/Common/Storage/Timed_Option.php',
+        'TEC\\Common\\Translations_Loader' => __DIR__ . '/../..' . '/src/Common/Translations_Loader.php',
         'Tribe\\Admin\\Conditional_Content\\Black_Friday' => __DIR__ . '/../..' . '/src/Tribe/Admin/Conditional_Content/Black_Friday.php',
         'Tribe\\Admin\\Conditional_Content\\Datetime_Conditional_Abstract' => __DIR__ . '/../..' . '/src/Tribe/Admin/Conditional_Content/Datetime_Conditional_Abstract.php',
         'Tribe\\Admin\\Conditional_Content\\End_Of_Year_Sale' => __DIR__ . '/../..' . '/src/Tribe/Admin/Conditional_Content/End_Of_Year_Sale.php',
@@ -273,10 +275,10 @@ class ComposerStaticInit056ca7b243d7bf42befa037b52fc996b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit056ca7b243d7bf42befa037b52fc996b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit056ca7b243d7bf42befa037b52fc996b::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit056ca7b243d7bf42befa037b52fc996b::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit056ca7b243d7bf42befa037b52fc996b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$classMap;
 
         }, null, ClassLoader::class);
     }

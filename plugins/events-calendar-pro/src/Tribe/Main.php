@@ -1,4 +1,15 @@
 <?php
+
+use TEC\Events_Pro\Base\Query_Filters as Base_Query_Filters;
+use TEC\Events_Pro\Legacy\Query_Filters as Legacy_Query_Filters;
+use Tribe\Events\Pro\Views\V2\Views\Map_View;
+use Tribe\Events\Pro\Views\V2\Views\Photo_View;
+use Tribe\Events\Pro\Views\V2\Views\Summary_View;
+use Tribe\Events\Pro\Views\V2\Views\Week_View;
+use Tribe\Events\Views\V2\Views\Day_View;
+use Tribe\Events\Views\V2\Views\List_View;
+use Tribe\Events\Views\V2\Views\Month_View;
+
 if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	class Tribe__Events__Pro__Main {
 
@@ -16,9 +27,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 *
 		 * @var string
 		 */
-		public $all_slug = 'all';
-
-		public $weekSlug = 'week';
+		public $all_slug  = 'all';
+		public $weekSlug  = 'week';
 		public $photoSlug = 'photo';
 
 		public $singular_event_label;
@@ -70,7 +80,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.0.2';
+		const VERSION = '6.0.7';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -79,7 +89,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @deprecated 4.6
 		 *
 		 */
-		const REQUIRED_TEC_VERSION = '6.0.0-dev';
+		const REQUIRED_TEC_VERSION = '6.0.5';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -103,10 +113,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			add_action( 'init', [ $this, 'init' ], 10 );
 			add_action( 'tribe_load_text_domains', [ $this, 'loadTextDomain' ] );
 
+			tribe_singleton( Base_Query_Filters::class, Base_Query_Filters::class );
+			tribe_singleton( Legacy_Query_Filters::class, Legacy_Query_Filters::class );
 			add_action( 'parse_query', [ $this, 'parse_query' ], 100 );
+			add_action( 'parse_query', [ $this, 'set_post_id_for_recurring_event_query' ], 101 );
 
 			add_action( 'tribe_settings_do_tabs', [ $this, 'add_settings_tabs' ] );
-			add_filter( 'tribe_settings_tab_fields', [ $this, 'filter_settings_tab_fields' ], 10, 2 );
+			add_filter( 'tec_events_display_settings_tab_fields', [ $this, 'filter_display_settings_tab_fields' ], 10 );
 
 			add_filter( 'tribe_events_template_paths', [ $this, 'template_paths' ] );
 
@@ -436,7 +449,18 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			// if enabled views have never been set then set those to all PRO views
 			if ( false === tribe_get_option( 'tribeEnableViews', false ) ) {
-				tribe_update_option( 'tribeEnableViews', array( 'list', 'month', 'day', 'photo', 'map', 'week' ) );
+				tribe_update_option(
+					'tribeEnableViews',
+					[
+						Day_View::get_view_slug(),
+						List_View::get_view_slug(),
+						Month_View::get_view_slug(),
+						Map_View::get_view_slug(),
+						Photo_View::get_view_slug(),
+						Summary_View::get_view_slug(),
+						Week_View::get_view_slug(),
+					]
+				);
 				// After setting the enabled view we Flush the rewrite rules
 				flush_rewrite_rules();
 			}
@@ -649,79 +673,126 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			) );
 		}
 
+		/**
+		 * Filter the display settings fields.
+		 *
+		 * @deprecated 6.0.4
+		 *
+		 * @param array $fields
+		 * @param string $tab
+		 */
 		public function filter_settings_tab_fields( $fields, $tab ) {
-			$this->singular_event_label = tribe_get_event_label_singular();
-			$this->plural_event_label = tribe_get_event_label_plural();
-			switch ( $tab ) {
-				case 'display':
-					$fields = Tribe__Main::array_insert_after_key(
-						'tribeDisableTribeBar',
-						$fields,
-						array(
-							'hideRelatedEvents' => array(
-								'type'            => 'checkbox_bool',
-								'label'           => __( 'Hide related events', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Remove related events from the single event view (with classic editor)', 'tribe-events-calendar-pro' ),
-								'default'         => false,
-								'validation_type' => 'boolean',
-							),
-						)
-					);
-					$fields = Tribe__Main::array_insert_after_key(
-						'monthAndYearFormat',
-						$fields,
-						array(
-							'weekDayFormat' => array(
-								'type'            => 'text',
-								'label'           => __( 'Week Day Format', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Enter the format to use for week days. Used when showing days of the week in Week view.', 'tribe-events-calendar-pro' ),
-								'default'         => 'D jS',
-								'size'            => 'medium',
-								'validation_type' => 'not_empty',
-							),
-						)
-					);
-					$fields = Tribe__Main::array_insert_after_key(
-						'hideRelatedEvents',
-						$fields,
-						array(
-							'week_view_hide_weekends' => array(
-								'type'            => 'checkbox_bool',
-								'label'           => __( 'Hide weekends on Week View', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Check this to only show weekdays on Week View. This also affects the Events by Week widget.', 'tribe-events-calendar-pro' ),
-								'default'         => false,
-								'validation_type' => 'boolean',
-							),
-						)
-					);
-					$fields = Tribe__Main::array_insert_before_key(
-						'tribeEventsBeforeHTML',
-						$fields,
-						array(
-							'tribeEventsShortcodeBeforeHTML' => array(
-								'type'            => 'checkbox_bool',
-								'label'           => __( 'Enable the Before HTML (below) on shortcodes.', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Check this to show the Before HTML from the text area below on events displayed via shortcode.', 'tribe-events-calendar-pro' ),
-								'default'         => false,
-								'validation_type' => 'boolean',
-							),
-						)
-					);
-					$fields = Tribe__Main::array_insert_before_key(
-						'tribeEventsAfterHTML',
-						$fields,
-						array(
-							'tribeEventsShortcodeAfterHTML' => array(
-								'type'            => 'checkbox_bool',
-								'label'           => __( 'Enable the After HTML (below) on shortcodes.', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Check this to show the After HTML from the text area below on events displayed via shortcode.', 'tribe-events-calendar-pro' ),
-								'default'         => false,
-								'validation_type' => 'boolean',
-							),
-						)
-					);
-					break;
-			}
+			_deprecated_function( __METHOD__, '6.0.4', 'filter_display_settings_tab_fields' );
+
+			return $this->filter_display_settings_tab_fields( $fields, $tab );
+		}
+
+		/**
+		 * Filter the display settings fields.
+		 *
+		 * @since 6.0.4
+		 *
+		 * @param array $fields
+		 * @param string $tab
+		 */
+		public function filter_display_settings_tab_fields( $fields ) {
+			$fields = Tribe__Main::array_insert_after_key(
+				'tribeDisableTribeBar',
+				$fields,
+				array(
+					'hideRelatedEvents' => array(
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Hide related events', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Remove related events from the single event view (with classic editor)', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					),
+				)
+			);
+			$fields = Tribe__Main::array_insert_after_key(
+				'hideRelatedEvents',
+				$fields,
+				array(
+					'week_view_hide_weekends' => array(
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Hide weekends on Week View', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Check this to only show weekdays on Week View. This also affects the Events by Week widget.', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					),
+				)
+			);
+			$fields = Tribe__Main::array_insert_before_key(
+				'tribeEventsBeforeHTML',
+				$fields,
+				array(
+					'tribeEventsShortcodeBeforeHTML' => array(
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Enable the Before HTML (below) on shortcodes.', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Check this to show the Before HTML from the text area below on events displayed via shortcode.', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					),
+				)
+			);
+			$fields = Tribe__Main::array_insert_before_key(
+				'tribeEventsAfterHTML',
+				$fields,
+				array(
+					'tribeEventsShortcodeAfterHTML' => array(
+						'type'            => 'checkbox_bool',
+						'label'           => __( 'Enable the After HTML (below) on shortcodes.', 'tribe-events-calendar-pro' ),
+						'tooltip'         => __( 'Check this to show the After HTML from the text area below on events displayed via shortcode.', 'tribe-events-calendar-pro' ),
+						'default'         => false,
+						'validation_type' => 'boolean',
+					),
+				)
+			);
+			$sample_date = strtotime( 'January 15 ' . date( 'Y' ) );
+
+			$fields = Tribe__Main::array_insert_after_key(
+				'monthAndYearFormat',
+				$fields,
+				array(
+					'weekDayFormat' => array(
+						'type'            => 'text',
+						'label'           => __( 'Week day format', 'tribe-events-calendar-pro' ),
+						'tooltip'         => sprintf(
+							esc_html__( 'Enter the format to use for week days. Used when showing days of the week in Week view. Example: %1$s', 'the-events-calendar' ),
+							date( get_option( 'weekDayFormat', 'D jS' ), $sample_date )
+						),
+						'default'         => 'D jS',
+						'size'            => 'medium',
+						'validation_type' => 'not_empty',
+					),
+				)
+			);
+
+			// We add weekDayFormat above, so there are four fields.
+			$fields['tribeEventsDateFormatExplanation']   = [
+				'type' => 'html',
+				'html' => '<p>'
+					. sprintf(
+						__( 'The first four fields accept the date format options available to the PHP %1$s function. <a href="%2$s" target="_blank">Learn how to make your own date format here</a>.', 'tribe-common' ),
+						'<code>date()</code>',
+						'https://wordpress.org/support/article/formatting-date-and-time/'
+					)
+					. '</p>',
+			];
+
+			return $fields;
+		}
+
+		/**
+		 * Filter the dates settings fields.
+		 *
+		 * @since 6.0.4
+		 *
+		 * @param array $fields
+		 * @param string $tab
+		 */
+		public function filter_dates_settings_tab_fields( $fields ) {
+
 
 			return $fields;
 		}
@@ -811,36 +882,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return WP_Query The modified query object.
 		 **/
 		public function parse_query( $query ) {
-			if ( is_admin() ) {
-				return $query;
-			}
-
-			// If this is set then the class will bail out of any filtering.
-			if ( $query->get( 'tribe_suppress_query_filters', false ) ) {
-				return $query;
-			}
-
-			$context = tribe_context();
-
-			// These are only required for Main Query stuff.
-			if ( ! $context->is( 'is_main_query' ) ) {
-				return $query;
-			}
-
-			if ( ! $context->is( 'tec_post_type' ) )  {
-				return $query;
-			}
-
-			$query->tribe_is_event_pro_query = true;
-
-			$query->tribe_is_week = 'week' === $context->get( 'event_display' );
-			$query->tribe_is_photo = 'photo' === $context->get( 'event_display' );
-			$query->tribe_is_map = 'map' === $context->get( 'event_display' );
-			$query->tribe_is_recurrence_list = (bool) $query->get( 'tribe_recurrence_list' );
-
-			$this->set_post_id_for_recurring_event_query( $query );
-
-			return $query;
+			return tribe( Base_Query_Filters::class )->parse_query( $query );
 		}
 
 		/**
@@ -856,113 +898,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			_deprecated_function( __METHOD__, '6.0.0', 'Any modifications to the query no longer happen outside the views.' );
 			return $query;
 		}
-
-/**
-		 * A recurring event will have the base post's slug in the
-		 * 'name' query var. We need to remove that and replace it
-		 * with the correct post's ID
-		 *
-		 * @param WP_Query $query
-		 *
-		 * @return void
-		 */
-		private function set_post_id_for_recurring_event_query( $query ) {
-			$date = $query->get( 'eventDate' );
-			$slug = isset( $query->query['name'] ) ? $query->query['name'] : '';
-
-			if ( empty( $date ) || empty( $slug ) ) {
-				return; // we shouldn't be here
-			}
-
-			/**
-			 * Filters the recurring event parent post ID.
-			 *
-			 * @param bool|int $parent_id The parent event post ID. Defaults to `false`.
-			 *                            If anything but `false` is returned from this filter
-			 *                            that value will be used as the recurring event parent
-			 *                            post ID.
-			 * @param WP_Query $query     The current query.
-			 */
-			$parent_id = apply_filters( 'tribe_events_pro_recurring_event_parent_id', false, $query );
-
-			$cache = new Tribe__Cache();
-			if ( false === $parent_id ) {
-				$post_id = $cache->get( 'single_event_' . $slug . '_' . $date, 'save_post' );
-			} else {
-				$post_id = $cache->get( 'single_event_' . $slug . '_' . $date . '_' . $parent_id, 'save_post' );
-			}
-
-			if ( ! empty( $post_id ) ) {
-				unset( $query->query_vars['name'] );
-				unset( $query->query_vars[ Tribe__Events__Main::POSTTYPE ] );
-				$query->set( 'p', $post_id );
-
-				return;
-			}
-
-			/** @var \wpdb $wpdb */
-			global $wpdb;
-
-			if ( false === $parent_id ) {
-				$parent_sql = "SELECT ID FROM {$wpdb->posts} WHERE post_name=%s AND post_type=%s";
-				$parent_sql = $wpdb->prepare( $parent_sql, $slug, Tribe__Events__Main::POSTTYPE );
-				$parent_id  = $wpdb->get_var( $parent_sql );
-			}
-
-			$parent_start = get_post_meta( $parent_id, '_EventStartDate', true );
-
-			if ( empty( $parent_start ) ) {
-				return; // how does this series not have a start date?
-			} else {
-				$parent_start_date = date( 'Y-m-d', strtotime( $parent_start ) );
-			}
-
-			$sequence_number = $query->get( 'eventSequence' );
-			if ( $parent_start_date === $date && empty( $sequence_number )  ) {
-				$post_id = $parent_id;
-			} else {
-				/* Look for child posts taking place on the requested date (but not
-				 * necessarily at the same time as the parent event); take sequence into
-				 * account to distinguish between recurring event instances happening on the same
-				 * day.
-				 */
-				$sequence_number     = $query->get( 'eventSequence' );
-				$should_use_sequence = ! empty( $sequence_number ) && is_numeric( $sequence_number ) && intval( $sequence_number ) > 1;
-				$sequence_number     = intval( $sequence_number );
-				if ( ! $should_use_sequence ) {
-				$child_sql = "
-					SELECT     ID
-					FROM       {$wpdb->posts} p
-					INNER JOIN {$wpdb->postmeta} m ON m.post_id=p.ID AND m.meta_key='_EventStartDate'
-					WHERE      p.post_parent=%d
-					  AND      p.post_type=%s
-					  AND      LEFT( m.meta_value, 10 ) = %s
-				";
-				$child_sql = $wpdb->prepare( $child_sql, $parent_id, Tribe__Events__Main::POSTTYPE, $date );
-				} else {
-					$child_sql = "
-					SELECT     ID
-					FROM       {$wpdb->posts} p
-					INNER JOIN {$wpdb->postmeta} m ON m.post_id=p.ID AND m.meta_key='_EventStartDate'
-					INNER JOIN {$wpdb->postmeta} seqm ON seqm.post_id=p.ID AND seqm.meta_key='_EventSequence'
-					WHERE      p.post_parent=%d
-					  AND      p.post_type=%s
-					  AND      LEFT( m.meta_value, 10 ) = %s
-					  AND      LEFT( seqm.meta_value, 10 ) = %s
-				";
-					$child_sql = $wpdb->prepare( $child_sql, $parent_id, Tribe__Events__Main::POSTTYPE, $date, $sequence_number );
-				}
-				$post_id = $wpdb->get_var( $child_sql );
-			}
-
-			if ( $post_id ) {
-				unset( $query->query_vars['name'] );
-				unset( $query->query_vars['tribe_events'] );
-				$query->set( 'p', $post_id );
-				$cache->set( 'single_event_' . $slug . '_' . $date, $post_id, Tribe__Cache::NO_EXPIRATION, 'save_post' );
-			}
-		}
-
 
 		/**
 		 * Get the path to the current events template.
@@ -1051,21 +986,21 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		}
 
 		/**
-		 * @deprecated 6.0.0 Dont enqueue assets from the Main class.
+		 * @deprecated 6.0.0 Don't enqueue assets from the Main class.
 		 */
 		public function admin_enqueue_styles() {
 			_deprecated_function( __METHOD__, '6.0.0', "tribe_asset_enqueue( 'tribe-select2-css' )" );
 		}
 
 		/**
-		 * @deprecated 6.0.0 Dont enqueue assets from the Main class.
+		 * @deprecated 6.0.0 Don't enqueue assets from the Main class.
 		 */
 		public function enqueue_styles() {
 			_deprecated_function( __METHOD__, '6.0.0', "Tribe__Events__Pro__Assets" );
 		}
 
 		/**
-		 * @deprecated 6.0.0 Dont enqueue assets from the Main class.
+		 * @deprecated 6.0.0 Don't enqueue assets from the Main class.
 		 */
 		public function enqueue_pro_scripts( $force = false, $footer = false ) {
 			_deprecated_function( __METHOD__, '6.0.0', "Tribe__Events__Pro__Assets" );
@@ -1103,7 +1038,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			} elseif (
 				is_object( $query )
 				&& ! empty( $query->query['eventDisplay'] )
-				&& in_array( $query->query['eventDisplay'], [ 'month', 'week' ] )
+				&& in_array(
+						$query->query['eventDisplay'],
+						[
+							Month_View::get_view_slug(),
+							Week_View::get_view_slug(),
+						]
+					)
 			) {
 				// let's not hide recurrence if we are on month or week view
 				$hide = false;
@@ -1758,6 +1699,20 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public function enqueue_dependencies() {
 			_deprecated_function( __METHOD__, '6.0.0', 'Tribe__Events__Pro__Assets::enqueue_dependencies' );
+		}
+
+		/**
+		 * Maps the request post name and ID to a recurring Event child post.
+		 *
+		 * @since 4.2
+		 * @since 6.0.2.1 Open the method to public, redirect to Legacy Query Filters.
+		 *
+		 * @param WP_Query $query The WP_Query object reference.
+		 *
+		 * @return void The query object is modified by reference.
+		 */
+		public function set_post_id_for_recurring_event_query( $query ): void {
+			tribe( Legacy_Query_Filters::class )->set_post_id_for_recurring_event_query( $query );
 		}
 	}
 }

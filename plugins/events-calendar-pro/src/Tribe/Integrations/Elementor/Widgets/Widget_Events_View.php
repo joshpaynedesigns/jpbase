@@ -18,6 +18,9 @@ use Elementor\Group_Control_Box_Shadow;
 use Tribe\Events\Pro\Integrations\Elementor\Traits;
 use Tribe\Events\Views\V2\Assets;
 use Tribe\Events\Views\V2\Manager;
+use Tribe\Events\Views\V2\Views\Day_View;
+use Tribe\Events\Views\V2\Views\List_View;
+use Tribe\Events\Views\V2\Views\Month_View;
 
 class Widget_Events_View extends Widget_Abstract {
 	use Traits\Categories;
@@ -752,7 +755,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'month',
+					'view' => Month_View::get_view_slug(),
 				],
 			]
 		);
@@ -920,7 +923,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'list',
+					'view' => List_View::get_view_slug(),
 				],
 			]
 		);
@@ -1404,7 +1407,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'summary',
+					'view' => \Tribe\Events\Pro\Views\V2\Views\Summary_View::get_view_slug(),
 				],
 			]
 		);
@@ -1622,7 +1625,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'day',
+					'view' => Day_View::get_view_slug(),
 				],
 			]
 		);
@@ -2087,7 +2090,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'photo',
+					'view' => \Tribe\Events\Pro\Views\V2\Views\Photo_View::get_view_slug(),
 				],
 			]
 		);
@@ -2472,7 +2475,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'map',
+					'view' => \Tribe\Events\Pro\Views\V2\Views\Map_View::get_view_slug(),
 				],
 			]
 		);
@@ -2868,7 +2871,7 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
 				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'view' => 'week',
+					'view' => \Tribe\Events\Pro\Views\V2\Views\Week_View::get_view_slug(),
 				],
 			]
 		);

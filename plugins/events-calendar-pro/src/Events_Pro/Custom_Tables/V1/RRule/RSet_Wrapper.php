@@ -9,6 +9,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\RRule;
 
+use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -126,8 +127,8 @@ class RSet_Wrapper extends RSet {
 	 */
 	public function __construct( $string = null, $default_dtstart = null, bool $excludable_dtstart = false ) {
 		$dtstart_normalized_string = $this->parse_dtstart( $string, $default_dtstart );
-		$dstart_object = Dates::immutable( $this->dtstart );
-		$this->excludable_dtstart = (bool) $excludable_dtstart;
+		$dstart_object             = Dates::immutable( $this->dtstart );
+		$this->excludable_dtstart  = $excludable_dtstart;
 
 		if ( false === $dstart_object ) {
 			throw new \InvalidArgumentException(
@@ -177,10 +178,11 @@ class RSet_Wrapper extends RSet {
 	 * Returns the RSET RFC-compliant representation.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.3 Now $dates_include_time affects EXDATEs, not just RDATEs.
 	 *
 	 * @param bool $include_dtstart    Whether to include the DTSTART
 	 *                              in the output string or not.
-	 * @param bool $dates_include_time Whether the output dates should be formatted
+	 * @param bool $dates_include_time Whether the output dates (EXDATE, RDATE) should be formatted
 	 *                                 to include date and time, or just date.
 	 *
 	 * @return string The RSET RFC-compliant representation.
@@ -201,7 +203,7 @@ class RSet_Wrapper extends RSet {
 		$pieces[] = $this->get_rrule_rfc_string();
 		$pieces[] = $this->get_rdate_rfc_string( $dates_include_time );
 		$pieces[] = $this->get_exrule_rfc_string();
-		$pieces[] = $this->get_exdate_rfc_string();
+		$pieces[] = $this->get_exdate_rfc_string( $dates_include_time );
 
 		return implode( "\n", array_filter( $pieces ) );
 	}
@@ -265,26 +267,49 @@ class RSet_Wrapper extends RSet {
 	}
 
 	/**
-	 * Builds and returens the RFC-compliant representation of the RSET
-	 * EXDATEs.
+	 * Builds and returns the RFC-compliant representation of the RSET EXDATEs.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.3 Added $dates_include_time optional param.
+	 *
+	 * @param bool $dates_include_time Flag whether to ignore time values in the output string.
 	 *
 	 * @return string The RFC-compliant representation of the RSET EXDATEs,
 	 *                or an empty string if none are defined.
 	 */
-	public function get_exdate_rfc_string() {
+	public function get_exdate_rfc_string( bool $dates_include_time = true ) {
 		$exdates = $this->getExDates();
 
 		if ( empty( $exdates ) ) {
 			return '';
 		}
 
-		// EXDATEs should only be defined as Ymd dates, not carrying time information to always apply.
-		return 'EXDATE:' . implode( ',', array_map( static function ( DateTimeInterface $exdate ) {
-					return $exdate->format( 'Ymd' );
-				}, $exdates )
-			);
+		return 'EXDATE:' . implode( ',', array_map(
+				static function ( $exdate ) use ( $dates_include_time ) {
+					return self::convert_exdate_to_rfc( $exdate, $dates_include_time );
+				}, $exdates ) );
+	}
+
+
+	/**
+	 * Will take a DateTimeInterface and retrieve the RFC string for an RSET.
+	 *
+	 * @since 6.0.3
+	 *
+	 * @param DateTimeInterface $exdate             The EXDATE to retrieve the RFC string for.
+	 * @param bool              $dates_include_time Flag whether to ignore time values in the output string.
+	 *                                              If the original Ex_Date object was not constructed with a time,
+	 *                                              this flag will be ignored.
+	 *
+	 * @return string The RFC string.
+	 */
+	public static function convert_exdate_to_rfc( DateTimeInterface $exdate, bool $dates_include_time ): string {
+		if ( $dates_include_time && $exdate instanceof Ex_Date ) {
+			// Will only include time if the EXDATEs were constructed with a time.
+			return $exdate->to_rfc_string();
+		}
+
+		return $dates_include_time ? $exdate->format( "Ymd\THis" ) : $exdate->format( 'Ymd' );
 	}
 
 	/**
@@ -315,14 +340,17 @@ class RSet_Wrapper extends RSet {
 	private function compare_exdate_occurrence( $exdate, $occurrence ) {
 		$occurrence = $occurrence instanceof Occurrence ? $occurrence->start() : $occurrence;
 
-		if ( $exdate < $occurrence ) {
+		if ( $exdate->format('Ymd') < $occurrence->format('Ymd') ) {
 			// The EXDATE is less than the Occurrence: drop it as it will not apply to any other Occurrence.
 			return - 1;
 		}
 
 		$f = 'Y-m-d H:i:s';
 
-		if ( $exdate == $occurrence ) {
+		$exdate_matches_occurrences = ( $exdate instanceof Ex_Date && $exdate->should_exclude_all_day() )
+			? $exdate->format( 'Ymd' ) === $occurrence->format( 'Ymd' )
+			: $exdate == $occurrence;
+		if ( $exdate_matches_occurrences ) {
 			if (
 				! $this->excludable_dtstart && ! $this->dtstart_spared
 				&& $occurrence->format( $f ) == $this->dtstart->format( $f )
@@ -621,9 +649,23 @@ class RSet_Wrapper extends RSet {
 	 */
 	public function addExDate( $date, bool $if_applicable = false ) {
 		try {
-			$parsed = RRule::parseDate( $date );
+			if ( is_integer( $date ) ) {
+				$parsed = \DateTime::createFromFormat( 'U', $date );
+				$parsed->setTimezone( new \DateTimeZone( 'UTC' ) ); // default is +00:00 (see issue #15)
+			} else if ( is_string( $date ) ) {
+				$parsed = new Ex_Date( $date );
+			} else if ( $date instanceof DateTimeInterface && ! $date instanceof Ex_Date ) {
+				$parsed = new Ex_Date( $date->format( 'Y-m-d H:i:s e' ) );
+			} else if ( $date instanceof DateTimeInterface ) {
+				$parsed = $date;
+			} else {
+				throw new \InvalidArgumentException(
+					"Failed to parse the date"
+				);
+			}
 
-			if ( $parsed < $this->dtstart_object || in_array( $parsed, $this->exdates, true ) ) {
+			$exlusion_ends = new DateTime( $parsed->exclusion_ends() );
+			if ( $exlusion_ends < $this->dtstart || in_array( $parsed, $this->exdates, true ) ) {
 				// Do not add an EXDATE before the DTSTART: it will never apply.
 				return $this;
 			}
@@ -810,17 +852,40 @@ class RSet_Wrapper extends RSet {
 	}
 
 	/**
+	 * Returns the RSET DTEND date object. Will try and infer from duration if a DTEND is not found.
+	 *
+	 * @since 6.0.3
+	 *
+	 * @return DateTimeImmutable The RSET DTEND date object.
+	 */
+	public function get_dtend(): DateTimeImmutable {
+		if ( $this->dtend ) {
+			return $this->dtend;
+		}
+
+		$dtend    = clone $this->dtstart_object;
+		$interval = new DateInterval( 'PT' . $this->get_duration( 0 ) . 'S' );
+
+		return $dtend->add( $interval );
+	}
+
+	/**
 	 * Returns whether the input EXDATE would exclude an Occurrence generated
 	 * from the RSET or not; if not, then the EXDATE is deemed not applicable.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.3 Changed parameter to require an Ex_Date class.
 	 *
-	 * @param DateTimeInterface $exdate The EXDATE object to check.
+	 * @param Ex_Date $exdate The EXDATE object to check.
 	 *
 	 * @return bool Whether the input EXDATE would exclude an Occurrence generated from the RSET or not.
 	 */
-	private function is_exdate_applicable( DateTimeInterface $exdate ): bool {
-		return count( $this->getOccurrencesBetween( $exdate, $exdate, 1 ) ) === 1;
+	private function is_exdate_applicable( Ex_Date $exdate ): bool {
+		return count( $this->getOccurrencesBetween(
+				$exdate->exclusion_begins(),
+				$exdate->exclusion_ends(),
+				1 )
+		       ) === 1;
 	}
 
 	/**

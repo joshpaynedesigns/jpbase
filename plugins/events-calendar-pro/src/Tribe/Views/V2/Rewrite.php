@@ -9,6 +9,9 @@
 
 namespace Tribe\Events\Pro\Views\V2;
 
+use Tribe\Events\Pro\Views\V2\Views\Organizer_View;
+use Tribe\Events\Pro\Views\V2\Views\Photo_View;
+use Tribe\Events\Pro\Views\V2\Views\Venue_View;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Organizer as Organizer;
 use Tribe__Events__Rewrite as TEC_Rewrite;
@@ -41,8 +44,22 @@ class Rewrite {
 	 * @return array         Bases after adding Venue and Organizer
 	 */
 	public function add_base_rewrites( $bases ) {
-		$bases['venue'] = [ 'venue', esc_html_x( 'venue', 'The archive for events, "/venue/" URL string component.', 'tribe-events-calendar-pro' ) ];
-		$bases['organizer'] = [ 'organizer', esc_html_x( 'organizer', 'The archive for events, "/organizer/" URL string component.', 'tribe-events-calendar-pro' ) ];
+		$localized_venue_slug = esc_html_x( 'venue', 'The archive for events, "/venue/" URL string component.', 'tribe-events-calendar-pro' );
+
+		if ( $localized_venue_slug === 'venue' ) {
+			// Try translating it using The Events Calendar's translation.
+			$localized_venue_slug = __( 'venue', 'the-events-calendar' );
+		}
+
+		$localized_organizer_slug = esc_html_x( 'organizer', 'The archive for events, "/organizer/" URL string component.', 'tribe-events-calendar-pro' );
+
+		if ( $localized_organizer_slug === 'organizer' ) {
+			// Try translating it using The Events Calendar's translation.
+			$localized_organizer_slug = __( 'organizer', 'the-events-calendar' );
+		}
+
+		$bases['venue'] = [ 'venue', $localized_venue_slug ];
+		$bases['organizer'] = [ 'organizer', $localized_organizer_slug ];
 
 		return $bases;
 	}
@@ -91,7 +108,7 @@ class Rewrite {
 				'(\d+)',
 			],
 			[
-				'eventDisplay' => 'venue',
+				'eventDisplay' => Venue_View::get_view_slug(),
 				Venue::POSTTYPE => '%1',
 				'paged'=> '%2',
 			]
@@ -102,7 +119,7 @@ class Rewrite {
 				'([^/]+)',
 			],
 			[
-				'eventDisplay' => 'venue',
+				'eventDisplay' => Venue_View::get_view_slug(),
 				Venue::POSTTYPE => '%1',
 			]
 		);
@@ -115,7 +132,7 @@ class Rewrite {
 				'(\d+)',
 			],
 			[
-				'eventDisplay' => 'organizer',
+				'eventDisplay' => Organizer_View::get_view_slug(),
 				Organizer::POSTTYPE => '%1',
 				'paged'=> '%2',
 			]
@@ -126,7 +143,7 @@ class Rewrite {
 				'([^/]+)',
 			],
 			[
-				'eventDisplay' => 'organizer',
+				'eventDisplay' => Organizer_View::get_view_slug(),
 				Organizer::POSTTYPE => '%1',
 			]
 		);
@@ -138,7 +155,7 @@ class Rewrite {
 				'(\d+)',
 			],
 			[
-				'eventDisplay' => 'photo',
+				'eventDisplay' => Photo_View::get_view_slug(),
 				'paged'        => '%1',
 			]
 		);
@@ -245,15 +262,19 @@ class Rewrite {
 	 *                              format used by WordPress to handle rewrite rules.
 	 */
 	public function filter_handled_rewrite_rules( array $handled_rules = [], array $all_rules = [] ) {
-		$venue_rules = array_filter( $all_rules, static function ( $rewrite ) {
-			return false !== strpos( $rewrite, Venue::POSTTYPE . '=$matches' );
-		} );
+		$linked_post_rules = [];
+		$venue_match       = Venue::POSTTYPE . '=';
+		$organizer_match   = Organizer::POSTTYPE . '=';
+		foreach ( $all_rules as $rewrite => $query ) {
+			if (
+				is_string( $query )
+				&& ( false !== strpos( $query, $venue_match ) || false !== strpos( $query, $organizer_match ) )
+			) {
+				$linked_post_rules[ $rewrite ] = $query;
+			}
+		}
 
-		$organizer_rules = array_filter( $all_rules, static function ( $rewrite ) {
-			return false !== strpos( $rewrite, Organizer::POSTTYPE . '=$matches' );
-		} );
-
-		return array_unique( array_merge( $handled_rules, $venue_rules, $organizer_rules ) );
+		return array_unique( array_merge( $handled_rules, $linked_post_rules ) );
 	}
 
 	/**

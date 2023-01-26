@@ -97,11 +97,11 @@ class Provider extends tad_DI52_ServiceProvider {
 
 		add_filter(
 			'tribe_events_single_meta_details_section_after_datetime',
-			[ tribe( Single_Event_Modifications::class ), 'include_series_meta_details' ]
+			$this->container->callback( Single_Event_Modifications::class, 'include_series_meta_details' )
 		);
 
 		add_filter( 'query_vars', $filters( 'filter_query_vars' ) );
-		add_filter( 'tribe_events_views_v2_view_repository_args', $filters( 'filter_repository_args' ), 10, 2 );
+		add_filter( 'tec_events_views_v2_view_global_repository_args', $filters( 'filter_repository_args' ), 10, 2 );
 		add_action( 'tribe_views_v2_after_setup_loop', $filters( 'replace_view_url_object' ) );
 		add_filter( 'tribe_events_views_v2_url_query_args', $filters( 'filter_query_args' ), 10, 2 );
 
@@ -109,14 +109,14 @@ class Provider extends tad_DI52_ServiceProvider {
 
 		add_filter(
 			'get_the_terms',
-			[ tribe( Single_Event_Modifications::class ), 'redirect_get_the_terms' ],
+			$this->container->callback( Single_Event_Modifications::class, 'redirect_get_the_terms' ),
 			10,
 			3
 		);
 
 		add_filter(
 			'get_terms',
-			[ tribe(Single_Event_Modifications::class), 'redirect_get_terms' ],
+			$this->container->callback( Single_Event_Modifications::class, 'redirect_get_terms' ),
 			10,
 			3
 		);

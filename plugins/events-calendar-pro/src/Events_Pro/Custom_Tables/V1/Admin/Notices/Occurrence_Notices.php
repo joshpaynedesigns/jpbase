@@ -220,7 +220,7 @@ class Occurrence_Notices {
 		$event_series_relationship = Series_Relationship::find( $event->event_id, 'event_id' );
 		if ( ! $event_series_relationship instanceof Series_Relationship ) {
 			return sprintf(
-				esc_html__( '%1$s %3$sView %2$s%3$s', 'the-events-calendar' ),
+				esc_html__( '%1$s %3$sView %2$s%3$s', 'tribe-events-calendar-pro' ),
 				$verb_message,
 				$event_label,
 				'<a href="' . esc_url( get_permalink( $event->post_id ) ) . '">',

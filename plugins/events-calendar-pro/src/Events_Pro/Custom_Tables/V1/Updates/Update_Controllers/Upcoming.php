@@ -161,6 +161,7 @@ class Upcoming implements Update_Controller_Interface {
 				->first();
 
 			if ( $next instanceof Occurrence ) {
+				// Move our start date to our recurring event's start date.
 				$this->redirect_rdate_update_to_occurrence( $occurrence, $next, $this->first_post_id );
 			}
 		}

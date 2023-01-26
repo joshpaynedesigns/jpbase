@@ -155,7 +155,7 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 		 *                                               that is being filtered.
 		 * @param int                        $post_id    The Event post ID.
 		 */
-		$data = apply_filters( 'tec_events_pro_blocks_recurrence_meta', $data, $key, $post_id );
+		$data = apply_filters( 'tec_events_pro_blocks_recurrence_meta', $data, $key, (int) $post_id );
 
 		$encoded = json_encode( $data, JSON_UNESCAPED_SLASHES );
 

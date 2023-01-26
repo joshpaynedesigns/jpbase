@@ -7,7 +7,7 @@
       "uuidString" : "FDF09C14-788E-4A4D-A218-DA6A56580A0D"
     }
   ],
-  "creatorBuild" : "34418",
+  "creatorBuild" : "34434",
   "files" : {
     "\/admin\/admin-init.php" : {
       "cB" : 0,
@@ -53,6 +53,18 @@
       "oA" : 2,
       "oAP" : "\/admin\/svgs-settings-page.php",
       "oF" : 0
+    },
+    "\/css\/jquery.dropdown-min.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/jquery.dropdown-min-min.css",
+      "oF" : 0,
+      "pg" : 0
     },
     "\/css\/svgs-admin-edit-post.css" : {
       "aP" : 1,
@@ -174,6 +186,17 @@
       "oAP" : "\/includes\/svg-tags.php",
       "oF" : 0
     },
+    "\/js\/cstm.js.multiselect.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/js\/min\/cstm.js.multiselect-min.js",
+      "oF" : 2,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/js\/gutenberg-filters.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -185,6 +208,28 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/js\/jquery.dropdown.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/js\/min\/jquery.dropdown-min.js",
+      "oF" : 2,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/js\/min\/cstm.js.multiselect-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/js\/min\/cstm.js.multiselect-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
     "\/js\/min\/gutenberg-filters-min.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -192,6 +237,17 @@
       "mi" : 1,
       "oA" : 0,
       "oAP" : "\/js\/min\/gutenberg-filters-min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/js\/min\/jquery.dropdown-min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/js\/min\/jquery.dropdown-min-min.js",
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
@@ -287,6 +343,21 @@
       "oA" : 2,
       "oAP" : "\/readme.txt",
       "oF" : 0
+    },
+    "\/scss\/jquery.dropdown.scss" : {
+      "aP" : 1,
+      "bl" : 1,
+      "co" : 0,
+      "dP" : 10,
+      "ec" : 1,
+      "ft" : 4,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/css\/jquery.dropdown-min.css",
+      "oF" : 2,
+      "oS" : 3,
+      "pg" : 0,
+      "sct" : 1
     },
     "\/scss\/svgs-admin-edit-post.scss" : {
       "aP" : 0,
@@ -979,7 +1050,7 @@
   },
   "projectAttributes" : {
     "creationDate" : 507572464,
-    "displayValue" : "trunk",
+    "displayValue" : "svg-support",
     "displayValueWasSetByUser" : 0,
     "iconImageName" : "\/svg-support.png",
     "iconImageWasSetByUser" : 1
@@ -1689,7 +1760,8 @@
         "active" : 1
       },
       "no-fallthrough" : {
-        "active" : 1
+        "active" : 1,
+        "optionString" : "{'allowEmptyCase': false}"
       },
       "no-floating-decimal" : {
         "active" : 0

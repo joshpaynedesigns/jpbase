@@ -684,12 +684,14 @@ class From_Event_Recurrence_Converter {
 			$exdates_set = [];
 			if ( count( $exdate_lines ) ) {
 				foreach ( $exdate_lines as $exdate_line ) {
+					// Added EXDATEs with RDATE counterparts, so we can parse and extract the EXDATEs.
+					// Without the counterparts they might be removed for not having any valid dates to exclude.
 					$exdate_rset = $this->get_rset_for_ical_string_dtstart(
-						str_replace( 'EXDATE', 'RDATE', $exdate_line ),
+						$exdate_line . "\n" . str_replace( 'EXDATE', 'RDATE', $exdate_line ),
 						$dtstart
 					);
 					// There will be a finite number of EXDATEs.
-					$exdates_set[] = $exdate_rset->getOccurrences();
+					$exdates_set[] = $exdate_rset->getExDates();
 				}
 				$exdates_set = array_merge( ...$exdates_set );
 			}
@@ -714,6 +716,7 @@ class From_Event_Recurrence_Converter {
 					$check_rset->addExDate( $exdate, true );
 				}
 
+				// Set by reference into the $rule_sets array.
 				$rule_set = $check_rset->get_rfc_string( true );
 			}
 		}
@@ -786,6 +789,7 @@ class From_Event_Recurrence_Converter {
 			$tuple['ical_string'] = $this->limit_never_ending_string( $tuple['ical_string'], $never_limit );
 		} );
 
+
 		$head_rset = new RSet_Wrapper( $head['ical_string'], $this->start_date );
 
 		/*
@@ -806,7 +810,7 @@ class From_Event_Recurrence_Converter {
 				$head_occurrence = reset( $head_occurrences );
 				// If we have a match, it should be the same date the tail rule produced.
 				if ( empty( $head_occurrence ) || $head_occurrence != $current ) {
-					$head_rset->addDate( $current );
+					$head_rset->addExDate( $current );
 				}
 
 				$rset->next();
@@ -817,6 +821,7 @@ class From_Event_Recurrence_Converter {
 		/*
 		 * The head RSET will now contain the minimum number of RDATEs required to model the converted
 		 * exclusion rules. Get the RFC iCalendar string and run replacements on it.
+		 * We also never want these type of EXRULE -> EXDATE conversions to store the time.
 		 */
 		$head_rfc_string = $head_rset->get_rfc_string( false, false );
 

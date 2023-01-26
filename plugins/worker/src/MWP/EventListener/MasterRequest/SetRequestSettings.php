@@ -61,7 +61,7 @@ class MWP_EventListener_MasterRequest_SetRequestSettings implements Symfony_Even
         $context = $this->context;
 
         $_SERVER['PHP_SELF']       = '/wp-admin/'.(!empty($data['wpPage']) ? $data['wpPage'] : 'index.php');
-        $_COOKIE['redirect_count'] = 10; // hack for the WordPress HTTPS plugin, so it doesn't redirect us
+        $_COOKIE['redirect_count'] = '10'; // hack for the WordPress HTTPS plugin, so it doesn't redirect us
 
         if (defined('FORCE_SSL_ADMIN') && FORCE_SSL_ADMIN) {
             $_SERVER['HTTPS']       = 'on';

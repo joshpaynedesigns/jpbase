@@ -1,5 +1,6 @@
 <?php
 
+use Tribe\Events\Pro\Views\V2\Views\All_View;
 
 class Tribe__Events__Pro__Integrations__WPML__Filters {
 
@@ -26,7 +27,7 @@ class Tribe__Events__Pro__Integrations__WPML__Filters {
 
 	public function filter_wpml_is_redirected_event( $redirect_target, $post_id, $query ) {
 		if ( $redirect_target ) {
-			if ( 'all' === $query->get( 'eventDisplay' ) || $query->get( 'eventDate' ) ) {
+			if ( All_View::get_view_slug() === $query->get( 'eventDisplay' ) || $query->get( 'eventDate' ) ) {
 				$redirect_target = false;
 			}
 		}
@@ -89,7 +90,7 @@ class Tribe__Events__Pro__Integrations__WPML__Filters {
 	}
 
 	private function is_all_event_query( WP_Query $query ) {
-		return $query->get( 'post_type' ) == 'tribe_events' && 'all' === $query->get( 'eventDisplay' );
+		return $query->get( 'post_type' ) == 'tribe_events' && All_View::get_view_slug() === $query->get( 'eventDisplay' );
 	}
 
 	public function filter_recurring_event_parent_id() {

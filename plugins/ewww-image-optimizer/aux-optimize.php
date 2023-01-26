@@ -1085,6 +1085,7 @@ function ewww_image_optimizer_count_unscanned_attachments( $gallery = 'media' ) 
  * @global object $wpdb
  */
 function ewww_image_optimizer_get_unscanned_attachments( $gallery, $limit = 1000 ) {
+	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
 	global $wpdb;
 	// Retrieve the attachment IDs that were pre-loaded in the database.
 	$selected_ids = $wpdb->get_col( $wpdb->prepare( "SELECT attachment_id FROM $wpdb->ewwwio_queue WHERE gallery = %s AND scanned = 0 LIMIT %d", $gallery, $limit ) );
@@ -1179,6 +1180,7 @@ function ewww_image_optimizer_webp_attachment_count() {
  * @global object $wpdb
  */
 function ewww_image_optimizer_get_queued_attachments( $gallery, $limit = 100 ) {
+	ewwwio_debug_message( '<b>' . __FUNCTION__ . '()</b>' );
 	global $wpdb;
 	// Retrieve the attachment IDs that were pre-loaded in the database.
 	$selected_ids = $wpdb->get_col( $wpdb->prepare( "SELECT attachment_id FROM $wpdb->ewwwio_queue WHERE gallery = %s AND scanned = 1 ORDER BY attachment_id DESC LIMIT %d", $gallery, $limit ) );
@@ -1211,13 +1213,29 @@ function ewww_image_optimizer_insert_unscanned( $ids, $gallery = 'media' ) {
 			'gallery'       => $gallery,
 		);
 		if ( count( $images ) > 999 ) {
-			ewww_image_optimizer_mass_insert( $wpdb->ewwwio_queue, $images, array( '%d', '%s' ) );
+			$result = ewww_image_optimizer_mass_insert( $wpdb->ewwwio_queue, $images, array( '%d', '%s' ) );
+			if ( $result ) {
+				ewwwio_debug_message( "inserted $result rows" );
+			} else {
+				ewwwio_debug_message( 'error follows:' );
+				ewwwio_debug_message( $wpdb->last_error );
+				global $ewwwdb;
+				ewwwio_debug_message( $ewwwdb->last_error );
+			}
 			$images = array();
 		}
 		$id = array_shift( $ids );
 	}
 	if ( $images ) {
-		ewww_image_optimizer_mass_insert( $wpdb->ewwwio_queue, $images, array( '%d', '%s' ) );
+		$result = ewww_image_optimizer_mass_insert( $wpdb->ewwwio_queue, $images, array( '%d', '%s' ) );
+		if ( $result ) {
+			ewwwio_debug_message( "inserted $result rows" );
+		} else {
+			ewwwio_debug_message( 'error follows:' );
+			ewwwio_debug_message( 'wpdb: ' . $wpdb->last_error );
+			global $ewwwdb;
+			ewwwio_debug_message( 'ewwwdb' . $ewwwdb->last_error );
+		}
 	}
 }
 
