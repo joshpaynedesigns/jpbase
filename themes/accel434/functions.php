@@ -425,12 +425,11 @@ function objectiv_hide_email($email) {
 
 }
 
-/** * Remove editor menu
- */
-function remove_editor_menu() {
-	remove_action('admin_menu', '_add_themes_utility_last', 101);
+/*** Remove theme & plugin editor menu */
+function disable_theme_plugin_editor_action() {
+  define('DISALLOW_FILE_EDIT', TRUE);
 }
-add_action('_admin_menu', 'remove_editor_menu', 1);
+add_action('init','disable_theme_plugin_editor_action');
 
 /**
  * Add Custom Post Type archive to WordPress search link query
