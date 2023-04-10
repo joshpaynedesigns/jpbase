@@ -47,7 +47,7 @@
   .left-arrow,
   .right-arrow {
     @include base_transition();
-    @include transform(translateY(-50%));
+    transform: translateY(-50%);
     display: block !important;
     opacity: 0.5;
     position: absolute;
@@ -74,7 +74,7 @@
   .left-arrow {
     left: -20px;
     svg {
-      @include transform(rotate(180deg));
+      transform: rotate(180deg);
     }
   }
 

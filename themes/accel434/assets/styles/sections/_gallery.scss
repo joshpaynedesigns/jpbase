@@ -8,7 +8,7 @@
   .section-title {
     &:after {
       left: 50%;
-      @include transform(translateX(-50%));
+      transform: translateX(-50%);
     }
   }
 

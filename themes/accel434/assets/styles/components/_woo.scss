@@ -294,12 +294,12 @@ input[type="button"].facetwp-slider-reset,
 
 .woocommerce ul.products li.product:hover a.button,
 .woocommerce ul.products li.product:hover a.added_to_cart {
-  @include transform(translateY(0));
+  transform: translateY(0);
   opacity: 1;
 }
 
 .woocommerce ul.products li.product:hover .product-grid-title-wrapper {
-  @include transform(translateY(0));
+  transform: translateY(0);
 }
 
 .featuredProdFlexSlider li.product:hover .product-image,
@@ -368,7 +368,7 @@ input[type="button"].facetwp-slider-reset,
   }
 
   &:after {
-    @include transform(translateY(-50%));
+    transform: translateY(-50%);
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 7px solid #111;
@@ -878,7 +878,7 @@ body.woocommerce-checkout .site-inner {
     position: absolute;
     left: 0;
     top: 50%;
-    @include transform(translateY(-50%));
+    transform: translateY(-50%);
   }
 }
 

@@ -4,7 +4,7 @@
   position: absolute;
   top: 50%;
   right: 0;
-  @include transform(translateY(-50%) rotate(0deg));
+  transform: translateY(-50%) rotate(0deg);
   transition: $base-duration $base-timing;
   cursor: pointer;
   z-index: 310;

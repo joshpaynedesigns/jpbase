@@ -100,7 +100,7 @@
           }
 
           .image-blurb-content {
-            @include transform(translateY(-50%));
+            transform: translateY(-50%);
             color: white;
             font-size: em(20px);
             padding-left: $base-spacing;
