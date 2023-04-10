@@ -7,8 +7,8 @@
   .ribbon-content {
     @media ($medium-screen-up) {
       display: flex;
-      @include align-items(center);
-      @include justify-content(space-between);
+      align-items: center;
+      justify-content: space-between;
     }
   }
 

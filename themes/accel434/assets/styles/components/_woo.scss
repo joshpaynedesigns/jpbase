@@ -240,8 +240,8 @@ input[type="button"].facetwp-slider-reset,
 .featuredProdFlexSlider li.product .price,
 .woocommerce ul.products li.product .price {
   display: flex;
-  @include align-items(center);
-  @include flex-direction(row);
+  align-items: center;
+  flex-direction: row;
   color: #222 !important;
   font-size: 16px !important;
   font-weight: bold !important;
@@ -476,9 +476,9 @@ input[type="button"].facetwp-slider-reset,
 
 .toolbar .wrap {
   display: flex;
-  @include align-items(center);
-  @include justify-content(space-between);
-  @include flex-direction(row);
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
   color: $toolbar-text-color;
   font-size: 14px;
   padding: 28px 0;
@@ -961,7 +961,7 @@ body.woocommerce-checkout .site-inner {
 }
 
 .product .wapl-flash .product-label {
-  @include align-items(center);
+  align-items: center;
   display: flex;
 }
 

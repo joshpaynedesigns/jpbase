@@ -70,10 +70,10 @@
   .event-date {
     width: 10px;
     -webkit-backface-visibility: hidden;
-    @include align-items(center);
+    align-items: center;
     display: flex;
-    @include flex-direction(column);
-    @include justify-content(center);
+    flex-direction: column;
+    justify-content: center;
     background-color: $primary-color;
     color: $white;
     font-weight: bold;
@@ -96,7 +96,7 @@
 
   .event-details-wrap {
     display: flex;
-    @include align-items(center);
+    align-items: center;
     font-size: em(16px);
     line-height: rem(20px);
     margin: 0 rem(14px);

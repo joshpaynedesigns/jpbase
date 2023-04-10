@@ -172,8 +172,8 @@ $icon-color: white;
     .searchPhoneWrap {
       padding: 8px 0 8px $base-spacing;
       display: flex;
-      @include align-items(center);
-      @include justify-content(flex-end);
+      align-items: center;
+      justify-content: flex-end;
       margin: 0 $base-spacing * 2 0 0;
 
       @media ($large-screen-up) {
