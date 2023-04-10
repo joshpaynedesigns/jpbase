@@ -1,122 +1,124 @@
 #flexible-section-repeater {
+  .fifty-fifty-section {
+  }
 
-    .fifty-fifty-section {
+  .informational-cta-section {
+    position: relative;
+    background: $light-gray;
 
+    *:last-child {
+      margin-bottom: 0px;
     }
 
-    .informational-cta-section {
+    &.wrap {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
+
+    .wrap {
+      position: static;
+    }
+
+    .item {
+      width: 100%;
+
+      @media ($large-screen-up) {
+        width: 50%;
+      }
+
+      &.content-section {
+        padding-top: 4em;
+        padding-bottom: 4em;
+
+        p {
+          font-size: em(16);
+        }
+
+        @media ($large-screen-up) {
+          @include span-columns(6);
+          padding: 6em 4em 6em 0;
+        }
+
+        &.right {
+          @media ($large-screen-up) {
+            @include shift(6);
+            padding-left: 4em;
+            padding-right: 0;
+          }
+        }
+      }
+
+      &.image {
+        background-color: black;
         position: relative;
-        background: $light-gray;
+        height: 400px;
 
-        *:last-child {
-            margin-bottom: 0px;
+        @media ($large-screen-up) {
+          $pos-percent: 50%;
+          display: block;
+          position: absolute;
+          width: 50%;
+          height: 100%;
+
+          &.left {
+            left: $pos-percent;
+          }
+          &.right {
+            right: $pos-percent;
+          }
         }
 
-        &.wrap {
-            margin-left: 0;
-            margin-right: 0;
+        .bg {
+          height: 100%;
+          width: 100.1%;
+          background-position: center;
+          background-repeat: no-repeat;
+
+          &.has-content-over {
+            opacity: 0.5;
+          }
+        }
+
+        .image-blurb-wrap {
+          display: block;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+
+          @media ($large-screen-up) {
+            max-width: 650px;
+          }
+
+          .image-blurb-inner-wrap {
+            display: block;
+            height: 100%;
+            position: relative;
             width: 100%;
-        }
+          }
 
-        .wrap {
-            position: static;
-        }
+          .image-blurb-content {
+            @include transform(translateY(-50%));
+            color: white;
+            font-size: em(20px);
+            padding-left: $base-spacing;
+            padding-right: $base-spacing;
+            position: absolute;
+            top: 50%;
 
-        .item {
-            width: 100%;
+            @media ($large-screen-up) {
+              padding-left: rem(63px);
 
-            @include media($large-screen-up) {
-                width: 50%;
+              .image.item.right & {
+                padding-right: rem(63px);
+                padding-left: $base-spacing;
+              }
             }
-
-            &.content-section {
-                padding-top: 4em;
-                padding-bottom: 4em;
-
-                p {
-                    font-size: em(16);
-                }
-
-                @include media($large-screen-up) {
-                    @include span-columns(6);
-                    padding: 6em 4em 6em 0;
-                }
-
-                &.right {
-                    @include media($large-screen-up) {
-                        @include shift(6);
-                        padding-left: 4em;
-                        padding-right: 0;
-                    }
-                }
-            }
-
-            &.image {
-                background-color: black;
-                position: relative;
-                height: 400px;
-
-                @include media($large-screen-up) {
-                    $pos-percent: 50%;
-                    display: block;
-                    position: absolute;
-                    width: 50%;
-                    height: 100%;
-
-                    &.left { left: $pos-percent; }
-                    &.right { right: $pos-percent; }
-                }
-
-                .bg {
-                    height: 100%;
-                    width: 100.1%;
-                    background-position: center;
-                    background-repeat: no-repeat;
-
-                    &.has-content-over {
-                        opacity: 0.5;
-                    }
-                }
-
-                .image-blurb-wrap {
-                    display: block;
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-
-                    @include media( $large-screen-up ) {
-                        max-width: 650px;
-                    }
-
-                    .image-blurb-inner-wrap {
-                        display: block;
-                        height: 100%;
-                        position: relative;
-                        width: 100%;
-                    }
-
-                    .image-blurb-content {
-                        @include transform( translateY( -50% ) );
-                        color: white;
-                        font-size: em(20px);
-                        padding-left: $base-spacing;
-                        padding-right: $base-spacing;
-                        position: absolute;
-                        top: 50%;
-
-                        @include media( $large-screen-up ) {
-                            padding-left: rem( 63px );
-
-                            .image.item.right & {
-                                padding-right: rem(63px);
-                                padding-left: $base-spacing;
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+      }
     }
+  }
 }

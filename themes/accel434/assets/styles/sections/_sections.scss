@@ -1,161 +1,154 @@
 #flexible-section-repeater {
+  .page-flexible-section {
+    &.has-top-padding {
+      margin-top: $mobile-section-margin;
+    }
 
-	.page-flexible-section {
+    &.has-bot-padding {
+      margin-bottom: $mobile-section-margin;
+    }
 
-		&.has-top-padding {
-			margin-top: $mobile-section-margin;
-		}
+    @media ($large-screen-up) {
+      &.has-top-padding {
+        margin-top: $desk-section-margin;
+      }
 
-		&.has-bot-padding {
-			margin-bottom: $mobile-section-margin;
-		}
+      &.has-bot-padding {
+        margin-bottom: $desk-section-margin;
+      }
+    }
 
-		@include media($large-screen-up) {
-			&.has-top-padding {
-				margin-top: $desk-section-margin;
-			}
+    &.color {
+      padding: $mobile-section-margin 0;
 
-			&.has-bot-padding {
-				margin-bottom: $desk-section-margin;
-			}
-		}
+      @media ($large-screen-up) {
+        padding: $desk-section-margin 0;
+      }
+    }
+  }
 
-		&.color {
-            padding: $mobile-section-margin 0;
-            
-            @include media($large-screen-up) {
-                padding: $desk-section-margin 0;
-            }
+  .color {
+    &.primary-color,
+    &.blue {
+      background-color: $blue;
+
+      .section-title {
+        color: $white;
+      }
+
+      ul {
+        li:before {
+          background-color: $white;
         }
-	}
+      }
 
-	.color {
-		&.primary-color,
-		&.blue {
-			background-color: $blue;
+      ol {
+        color: $white;
+      }
+    }
 
-			.section-title {
-				color: $white;
-			}
+    &.light-blue {
+      background-color: $light-blue;
 
-			ul {
+      .section-title {
+        color: $white;
+      }
 
-			    li:before {
-		            background-color: $white;
-		        }
-			}
+      ul {
+        li:before {
+          background-color: $white;
+        }
+      }
 
-			ol {
-				color: $white;
-			}
-		}
+      ol {
+        color: $white;
+      }
+    }
 
-		&.light-blue {
-			background-color: $light-blue;
+    &.light-gray {
+      background-color: $light-gray;
+    }
 
-			.section-title {
-				color: $white;
-			}
+    &.medium-gray {
+      background-color: $medium-gray;
 
-			ul {
+      .section-title {
+        color: $white;
+      }
 
-			    li:before {
-		            background-color: $white;
-		        }
-			}
+      ul {
+        li:before {
+          background-color: $white;
+        }
+      }
 
-			ol {
-				color: $white;
-			}
-		}
+      ol {
+        color: $white;
+      }
+    }
 
-		&.light-gray {
-			background-color: $light-gray;
-		}
+    &.dark-gray {
+      background-color: $dark-gray;
 
-		&.medium-gray {
-			background-color: $medium-gray;
+      .section-title {
+        color: $white;
+      }
 
-			.section-title {
-				color: $white;
-			}
+      ul {
+        li:before {
+          background-color: $white;
+        }
+      }
 
-			ul {
+      ol {
+        color: $white;
+      }
+    }
 
-			    li:before {
-		            background-color: $white;
-		        }
-			}
-
-			ol {
-				color: $white;
-			}
-		}
-
-		&.dark-gray {
-			background-color: $dark-gray;
-
-			.section-title {
-				color: $white;
-			}
-
-			ul {
-
-			    li:before {
-		            background-color: $white;
-		        }
-			}
-
-			ol {
-				color: $white;
-			}
-		}
-
-		&.white {
-			background-color: white;
-		}
-	}
-
+    &.white {
+      background-color: white;
+    }
+  }
 }
 
 .section-title {
-	margin: 0 0 $small-spacing;
-	line-height: 1;
-	transition: all $base-duration $base-timing;
+  margin: 0 0 $small-spacing;
+  line-height: 1;
+  transition: all $base-duration $base-timing;
 }
 
 .section-pre-title {
-	font-weight: bold;
-	text-transform: uppercase;
-	transition: all $base-duration $base-timing;
-	margin-bottom: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all $base-duration $base-timing;
+  margin-bottom: 0;
 }
 
 .section-sub-title {
-	// font-weight: bold;
-	// text-transform: uppercase;
-	transition: all $base-duration $base-timing;
+  // font-weight: bold;
+  // text-transform: uppercase;
+  transition: all $base-duration $base-timing;
 }
 
 .section-post-title {
-	margin-bottom: 1rem;
-	transition: all $base-duration $base-timing;
+  margin-bottom: 1rem;
+  transition: all $base-duration $base-timing;
 }
 
 .dark {
-	.section-pre-title,
-	.section-sub-title,
-	.section-title,
-	.section-post-title {
-		color: $dark-gray;
-	}
+  .section-pre-title,
+  .section-sub-title,
+  .section-title,
+  .section-post-title {
+    color: $dark-gray;
+  }
 }
 
 .light {
-	.section-pre-title,
-	.section-sub-title,
-	.section-title,
-	.section-post-title {
-		color: white;
-	}
+  .section-pre-title,
+  .section-sub-title,
+  .section-title,
+  .section-post-title {
+    color: white;
+  }
 }

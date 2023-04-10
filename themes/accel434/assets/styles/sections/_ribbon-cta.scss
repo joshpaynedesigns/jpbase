@@ -1,52 +1,52 @@
 .ribbon-cta-section {
+  display: block;
+  position: relative;
+  background: $primary-color;
+  padding: 0 !important;
+
+  .ribbon-content {
+    @media ($medium-screen-up) {
+      display: flex;
+      @include align-items(center);
+      @include justify-content(space-between);
+    }
+  }
+
+  .ribbon-text {
     display: block;
-    position: relative;
-    background: $primary-color;
-    padding: 0 !important;
-
-    .ribbon-content {
-        @include media( $medium-screen-up ) {
-            display: flex;
-            @include align-items(center);
-            @include justify-content(space-between);
-        }
+    padding-bottom: rem(30px);
+    padding-top: rem(30px);
+    text-align: center;
+    @media ($medium-screen-up) {
+      padding-right: $base-spacing;
+      text-align: left;
     }
+  }
 
-    .ribbon-text {
-        display: block;
-        padding-bottom: rem(30px);
-        padding-top: rem(30px);
-        text-align: center;
-        @include media( $medium-screen-up ) {
-            padding-right: $base-spacing;
-            text-align: left;
-        }
-    }
+  .top-text,
+  .bottom-text {
+    color: white;
+    line-height: 1;
+    margin-bottom: 0;
+  }
 
-    .top-text,
-    .bottom-text {
-        color: white;
-        line-height: 1;
-        margin-bottom: 0;
-    }
+  .top-text {
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
 
-    .top-text {
-        margin-bottom: 5px;
-        text-transform: uppercase;
-    }
+  .bottom-text {
+    font-family: $base-font-family;
+    font-weight: 300;
+  }
 
-    .bottom-text {
-        font-family: $base-font-family;
-        font-weight: 300;
+  .button-wrap {
+    margin-bottom: rem(40px);
+    display: block;
+    text-align: center;
+    @media ($medium-screen-up) {
+      margin-bottom: rem(0px);
+      text-align: left;
     }
-
-    .button-wrap {
-        margin-bottom: rem(40px);
-        display: block;
-        text-align: center;
-        @include media( $medium-screen-up ) {
-            margin-bottom: rem(0px);
-            text-align: left;
-        }
-    }
+  }
 }

@@ -1,64 +1,62 @@
 .boxes-section {
+  .section-header {
+    text-align: center;
+  }
 
-    .section-header {
-        text-align: center;
+  .boxes {
+    @media ($large-screen-up) {
+      display: flex;
     }
 
-    .boxes {
+    .box {
+      background-color: $blue;
+      transition: all $base-duration $base-timing;
+      padding: 2.5em;
+      display: block;
+      // border-radius: $base-border-radius;
+      // margin-bottom: 0.5em;
 
-        @include media( $large-screen-up ) {
-            display: flex;
+      @media ($large-screen-up) {
+        margin-bottom: 0;
+        @include span-columns(4);
+      }
+
+      &:nth-child(2) {
+        background-color: $light-blue;
+      }
+
+      &:nth-child(3) {
+        background-color: $dark-gray;
+      }
+
+      @media ($large-screen-up) {
+        &.linked:hover {
+          transform: scale(1.05);
         }
+      }
 
-        .box {
-            background-color: $blue;
-            transition: all $base-duration $base-timing;
-            padding: 2.5em;
-            display: block;
-            // border-radius: $base-border-radius;
-            // margin-bottom: 0.5em;
+      .box-icon {
+        height: 80px;
+        margin-bottom: 1em;
+      }
 
-            @include media( $large-screen-up ) {
-                margin-bottom: 0;
-                @include span-columns(4);
-            }
+      .box-title {
+        color: $white;
+        font-weight: bold;
+        // text-transform: uppercase;
+        margin-bottom: 0;
+        // font-size: em(22);
+      }
 
-            &:nth-child(2) {
-                background-color: $light-blue;
-            }
+      .box-text {
+        color: $white;
+        margin-top: 0.5em;
+        margin-bottom: 0;
+      }
 
-            &:nth-child(3) {
-                background-color: $dark-gray;
-            }
-
-            @include media( $large-screen-up ) {
-                &.linked:hover {
-                    transform: scale(1.05);
-                }
-            }
-
-            .box-icon {
-                height: 80px;
-                margin-bottom: 1em;
-            }
-
-            .box-title {
-                color: $white;
-                font-weight: bold;
-                // text-transform: uppercase;
-                margin-bottom: 0;
-                // font-size: em(22);
-            }
-
-            .box-text {
-                color: $white;
-                margin-top: 0.5em;
-                margin-bottom: 0;
-            }
-
-            .box-button {
-                margin-top: 1.5em;
-            }
-        }
+      .box-button {
+        margin-top: 1.5em;
+      }
     }
+  }
 }

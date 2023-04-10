@@ -1,99 +1,97 @@
 .projects-feed-section {
+  .section-title {
+    text-align: center;
+  }
 
-	.section-title {
-		text-align: center;
-	}
+  .projects-feed-outer {
+    position: relative;
+    // padding: 0 0.5em;
 
-	.projects-feed-outer {
-		position: relative;
-		// padding: 0 0.5em;
+    @media ($medium-screen-up) {
+      margin-left: -1em;
+      width: calc(100% + 2em);
+    }
 
-		@include media( $medium-screen-up ) {
-            margin-left: -1em;
-            width: calc(100% + 2em);
+    .project {
+      padding: 0 1em;
+      display: block;
+
+      &:focus {
+        outline: none;
+      }
+
+      .project-img {
+        height: 200px;
+        @include bg();
+        margin-bottom: 1em;
+        display: block;
+      }
+
+      .project-info {
+        .project-title {
+          // font-size: em(18);
+          // text-transform: uppercase;
+          font-weight: bold;
         }
 
-		.project {
-			padding: 0 1em;
-			display: block;
+        .project-cats {
+          margin-top: -5px;
+          margin-bottom: 0.7em;
+          color: $base-font-color;
+        }
 
-			&:focus {
-				outline: none;
-			}
+        .project-blurb {
+          font-size: em(14);
+          color: $base-font-color;
+        }
 
-			.project-img {
-				height: 200px;
-        		@include bg();
-	            margin-bottom: 1em;
-	            display: block;
-	        }
+        .project-link {
+          font-size: em(14);
+          text-transform: uppercase;
+        }
+      }
+    }
 
-	        .project-info {
+    .left-arrow,
+    .right-arrow {
+      @include base_transition();
+      @include transform(translateY(-90%));
+      display: block !important;
+      opacity: 0.5;
+      position: absolute;
+      top: 50%;
+      z-index: 100;
 
-	            .project-title {
-	            	// font-size: em(18);
-	                // text-transform: uppercase;
-	                font-weight: bold;
-	            }
+      &.slick-hidden {
+        display: none !important;
+      }
 
-	            .project-cats {
-	                margin-top: -5px;
-	                margin-bottom: 0.7em;
-	                color: $base-font-color;
-	            }
+      svg {
+        fill: $dark-gray;
+        height: 50px;
+        width: 50px;
+      }
 
-	            .project-blurb {
-	            	font-size: em(14);
-	            	color: $base-font-color;
-	            }
+      &:hover {
+        cursor: pointer;
+        opacity: 1;
+      }
+    }
 
-	            .project-link {
-	            	font-size: em(14);
-	            	text-transform: uppercase;
-	            }
-	        }
-		}
+    .left-arrow {
+      left: -25px;
+      svg {
+        @include transform(rotate(180deg));
+      }
+    }
 
-		.left-arrow,
-	    .right-arrow {
-	        @include base_transition();
-	        @include transform( translateY( -90% ) );
-	        display: block !important;
-	        opacity: 0.5;
-	        position: absolute;
-	        top: 50%;
-	        z-index: 100;
+    .right-arrow {
+      right: -25px;
+    }
+  }
 
-	        &.slick-hidden {
-	            display: none !important;
-	        }
-
-	        svg {
-	            fill: $dark-gray;
-	            height: 50px;
-	            width: 50px;
-	        }
-
-	        &:hover {
-	            cursor: pointer;
-	            opacity: 1;
-	        }
-	    }
-
-	    .left-arrow {
-	        left: -25px;
-	        svg {
-	            @include transform(rotate(180deg));
-	        }
-	    }
-
-	    .right-arrow {
-	        right: -25px;
-	    }
-	}
-
-	.projects-feed-bottom {
-		margin-top: 2em;
-		text-align: center;
-	}
+  .projects-feed-bottom {
+    margin-top: 2em;
+    text-align: center;
+  }
 }

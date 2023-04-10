@@ -3,16 +3,16 @@
 */
 
 .avatar {
-    float: left;
+  float: left;
 }
 
 .alignleft .avatar,
 .author-box .avatar {
-    margin-right: 24px;
+  margin-right: 24px;
 }
 
 .alignright .avatar {
-    margin-left: 24px;
+  margin-left: 24px;
 }
 
 /**
@@ -20,64 +20,64 @@
 */
 
 a.aligncenter img {
-    display: block;
-    margin: 0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 a.alignnone {
-    display: inline-block;
+  display: inline-block;
 }
 
 .alignleft {
-    float: left;
-    text-align: left;
+  float: left;
+  text-align: left;
 }
 
 .alignright {
-    float: right;
-    text-align: right;
+  float: right;
+  text-align: right;
 }
 
 a.alignleft,
 a.alignnone,
 a.alignright {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 img.centered,
 .aligncenter {
-    display: block;
-    margin: 0 auto $base-spacing;
+  display: block;
+  margin: 0 auto $base-spacing;
 }
 
 img.alignnone,
 .alignnone {
-    display: block;
-    margin-bottom: $base-spacing;
+  display: block;
+  margin-bottom: $base-spacing;
 }
 
 a.alignleft,
 img.alignleft,
 .wp-caption.alignleft {
-    margin: 0 $base-spacing $base-spacing 0;
+  margin: 0 $base-spacing $base-spacing 0;
 }
 
 a.alignright,
 img.alignright,
 .wp-caption.alignright {
-    margin: 0 0 $base-spacing $base-spacing;
+  margin: 0 0 $base-spacing $base-spacing;
 }
 
 .wp-caption-text {
-    font-size: em(12);
-    line-height: 1.2em;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 1.5em;
+  font-size: em(12);
+  line-height: 1.2em;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1.5em;
 }
 
 .entry-content p.wp-caption-text {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /**
@@ -89,49 +89,48 @@ iframe,
 img,
 object,
 .wp-caption {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 img {
-    height: auto;
+  height: auto;
 }
 
 .featured-content img,
 .gallery img {
-    width: auto;
+  width: auto;
 }
 
 /**
 * Entry Content
 */
 .entry-content code {
-    background-color: #333;
-    color: #ddd;
+  background-color: #333;
+  color: #ddd;
 }
-
 
 /**
 * Entry Meta
 */
 .entry-comments-link::before {
-    content: "\2014";
-    margin: 0 $base-spacing 0 $base-spacing/2;
+  content: "\2014";
+  margin: 0 $base-spacing 0 $base-spacing/2;
 }
 
 /**
 * Password Protected
 **/
 .post-password-form {
-    margin: 4em 0;
-    text-align: center;
+  margin: 4em 0;
+  text-align: center;
 
-    label {
-        text-align: left;
-    }
+  label {
+    text-align: left;
+  }
 
-    input[type="submit"] {
-        padding: 0.85em 3.5em;
-    }
+  input[type="submit"] {
+    padding: 0.85em 3.5em;
+  }
 }
 
 /**
@@ -142,94 +141,94 @@ img {
 *
 */
 .gallery {
-    overflow: hidden;
+  overflow: hidden;
 
-    br {
-        clear: none !important;
-    }
+  br {
+    clear: none !important;
+  }
 }
 
 .gallery-item {
-    float: left;
-    margin: 0 !important;
-    text-align: center;
-    width: 50% !important;
-    // @include omega(2n);
+  float: left;
+  margin: 0 !important;
+  text-align: center;
+  width: 50% !important;
+  // @include omega(2n);
 }
 
 .gallery-icon {
-    margin: 0;
+  margin: 0;
 }
 
 .gallery-columns-1 .gallery-item {
-    width: 100% !important;
+  width: 100% !important;
 }
 
-@include media( $medium-screen-up ) {
-    .gallery-columns-2 .gallery-item {
-        width: 50% !important;
-    }
+@media ($medium-screen-up) {
+  .gallery-columns-2 .gallery-item {
+    width: 50% !important;
+  }
 
-    .gallery-columns-3 .gallery-item {
-        width: 33% !important;
-        // @include omega-reset(2n);
-        // @include omega(3n);
-    }
+  .gallery-columns-3 .gallery-item {
+    width: 33% !important;
+    // @include omega-reset(2n);
+    // @include omega(3n);
+  }
 
-    .gallery-columns-4 .gallery-item {
-        width: 25% !important;
-        // @include omega-reset(2n);
-        // @include omega(4n);
-    }
+  .gallery-columns-4 .gallery-item {
+    width: 25% !important;
+    // @include omega-reset(2n);
+    // @include omega(4n);
+  }
 
-    .gallery-columns-5 .gallery-item {
-        width: 20% !important;
-        // @include omega-reset(2n);
-        // @include omega(5n);
-    }
+  .gallery-columns-5 .gallery-item {
+    width: 20% !important;
+    // @include omega-reset(2n);
+    // @include omega(5n);
+  }
 
-    .gallery-columns-6 .gallery-item {
-        width: 16.6666% !important;
-        // @include omega-reset(2n);
-        // @include omega(6n);
-    }
+  .gallery-columns-6 .gallery-item {
+    width: 16.6666% !important;
+    // @include omega-reset(2n);
+    // @include omega(6n);
+  }
 
-    .gallery-columns-7 .gallery-item {
-        width: 14.2857% !important;
-        // @include omega-reset(2n);
-        // @include omega(7n);
-    }
+  .gallery-columns-7 .gallery-item {
+    width: 14.2857% !important;
+    // @include omega-reset(2n);
+    // @include omega(7n);
+  }
 
-    .gallery-columns-8 .gallery-item {
-        width: 12.5% !important;
-        // @include omega-reset(2n);
-        // @include omega(8n);
-    }
+  .gallery-columns-8 .gallery-item {
+    width: 12.5% !important;
+    // @include omega-reset(2n);
+    // @include omega(8n);
+  }
 
-    .gallery-columns-9 .gallery-item {
-        width: 11.1111% !important;
-        // @include omega-reset(2n);
-        // @include omega(9n);
-    }
+  .gallery-columns-9 .gallery-item {
+    width: 11.1111% !important;
+    // @include omega-reset(2n);
+    // @include omega(9n);
+  }
 }
 
 .gallery img {
-    // border: 1px solid $dark-gray;
-    border: none !important;
-    height: auto;
-    padding: 4px;
-    transition: transform $base-duration $base-timing;
-    display: block;
+  // border: 1px solid $dark-gray;
+  border: none !important;
+  height: auto;
+  padding: 4px;
+  transition: transform $base-duration $base-timing;
+  display: block;
 }
 
 .gallery img:hover {
-    // border: 1px solid $medium-gray;
-    transform: scale(1.02);
+  // border: 1px solid $medium-gray;
+  transform: scale(1.02);
 }
 
-@supports(padding: max(0px)) {
-    .site-container {
-        padding-left: env(safe-area-inset-left);
-        padding-right: env(safe-area-inset-right);
-    }
+@supports (padding: max(0px)) {
+  .site-container {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 }

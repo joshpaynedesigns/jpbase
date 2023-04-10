@@ -1,129 +1,123 @@
 .events-feed {
-
-    .events-title-wrap {
-        
-        @include media( $large-screen-up ) {
-            @include span-columns(3);
-        }
-        
-        .events-title {
-            margin-bottom: 0.2em;
-        }
-
-        .events-all-link {
-        }
+  .events-title-wrap {
+    @media ($large-screen-up) {
+      @include span-columns(3);
     }
 
-    .events-list {
-
-        @include media( $large-screen-up ) {
-            @include span-columns(9);
-        }
+    .events-title {
+      margin-bottom: 0.2em;
     }
 
-    .event-item-wrap {
+    .events-all-link {
+    }
+  }
 
-        @include media( $large-screen-up ) {
-            @include span-columns(4);
-        }
+  .events-list {
+    @media ($large-screen-up) {
+      @include span-columns(9);
+    }
+  }
 
-        &.featured-event {
-
-            .event-item {
-                background-color: $medium-gray;
-
-                .event-title {
-                    color: #fff;
-                }
-
-                .event-link {
-                    color: #ccc;
-                }
-            }
-        }
+  .event-item-wrap {
+    @media ($large-screen-up) {
+      @include span-columns(4);
     }
 
-    .event-item {
-        -webkit-backface-visibility: hidden;
-        display: flex;
-        @include flex-direction(row);
-        @include align-items(top);
-        color: $dark-gray;
-        margin-top: rem(12px);
-        transition: color $base-duration $base-timing;
-
-        @include media( $large-screen-up ) {
-            // margin-top: 0;
-        }
-
-        &:hover {
-
-            .event-date {
-                // opacity: 1;
-                background-color: $action-color;
-            }
-
-            .event-title {
-                color: $primary-color;
-            }
-
-            .event-link {
-                color: #333;
-            }
-        }
-    }
-
-    .event-date {
-        width: 10px;
-        -webkit-backface-visibility: hidden;
-        @include align-items(center);
-        display: flex;
-        @include flex-direction(column);
-        @include justify-content(center);
-        background-color: $primary-color;
-        color: $white;
-        font-weight: bold;
-        line-height: 1;
-        max-height: rem(70px);
-        min-width: 64px;
-        padding: rem(20px) rem(5px);
-        text-transform: uppercase;
-        transition: background-color $base-duration $base-timing;
-        // opacity: 0.6;
-
-        .event-date-up {
-            font-size: em(14px);
-        }
-
-        .event-date-down {
-            font-size: em(20px);
-        }
-    }
-
-    .event-details-wrap {
-        display: flex;
-        @include align-items(center);
-        font-size: em(16px);
-        line-height: rem(20px);
-        margin: 0 rem(14px);
-
-        .event-details {
-            padding: 0.3em 0;
-        }
+    &.featured-event {
+      .event-item {
+        background-color: $medium-gray;
 
         .event-title {
-            font-weight: bold;
-            font-size: em(16);
-            color: #555;
+          color: #fff;
         }
 
         .event-link {
-            margin-top: em(10);
-            font-size: em(12);
-            line-height: 1em;
-            color: #888;
-            font-weight: 600;
-            display: block;
+          color: #ccc;
         }
+      }
     }
+  }
+
+  .event-item {
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    @include flex-direction(row);
+    @include align-items(top);
+    color: $dark-gray;
+    margin-top: rem(12px);
+    transition: color $base-duration $base-timing;
+
+    @media ($large-screen-up) {
+      // margin-top: 0;
+    }
+
+    &:hover {
+      .event-date {
+        // opacity: 1;
+        background-color: $action-color;
+      }
+
+      .event-title {
+        color: $primary-color;
+      }
+
+      .event-link {
+        color: #333;
+      }
+    }
+  }
+
+  .event-date {
+    width: 10px;
+    -webkit-backface-visibility: hidden;
+    @include align-items(center);
+    display: flex;
+    @include flex-direction(column);
+    @include justify-content(center);
+    background-color: $primary-color;
+    color: $white;
+    font-weight: bold;
+    line-height: 1;
+    max-height: rem(70px);
+    min-width: 64px;
+    padding: rem(20px) rem(5px);
+    text-transform: uppercase;
+    transition: background-color $base-duration $base-timing;
+    // opacity: 0.6;
+
+    .event-date-up {
+      font-size: em(14px);
+    }
+
+    .event-date-down {
+      font-size: em(20px);
+    }
+  }
+
+  .event-details-wrap {
+    display: flex;
+    @include align-items(center);
+    font-size: em(16px);
+    line-height: rem(20px);
+    margin: 0 rem(14px);
+
+    .event-details {
+      padding: 0.3em 0;
+    }
+
+    .event-title {
+      font-weight: bold;
+      font-size: em(16);
+      color: #555;
+    }
+
+    .event-link {
+      margin-top: em(10);
+      font-size: em(12);
+      line-height: 1em;
+      color: #888;
+      font-weight: 600;
+      display: block;
+    }
+  }
 }
