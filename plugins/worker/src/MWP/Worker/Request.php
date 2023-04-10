@@ -192,10 +192,14 @@ class MWP_Worker_Request
             throw new RuntimeException('Request is already initialized.');
         }
         $this->initialized = true;
+        $header = '';
+        if (null !== $this->getHeader($this->signatureHeaderName)) {
+            $header = base64_decode($this->getHeader($this->signatureHeaderName));
+        }
 
         $this->attributes['action']            = $this->getHeader($this->actionHeaderName);
         $this->attributes['id']                = $this->getHeader($this->messageIdHeaderName);
-        $this->attributes['signature']         = base64_decode($this->getHeader($this->signatureHeaderName));
+        $this->attributes['signature']         = $header;
         $this->attributes['key_name']          = $this->getHeader($this->keyNameHeaderName);
         $this->attributes['service_signature'] = $this->getHeader($this->serviceSignatureHeaderName);
         $this->attributes['no_host_signature'] = $this->getHeader($this->signatureNoHostHeaderName);

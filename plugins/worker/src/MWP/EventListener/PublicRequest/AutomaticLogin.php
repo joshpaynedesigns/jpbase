@@ -85,11 +85,8 @@ class MWP_EventListener_PublicRequest_AutomaticLogin implements Symfony_EventDis
         $username = empty($request->query['username']) ? null : $request->query['username'];
 
         if ($username === null) {
-            $users = $this->context->getUsers(array('role' => 'administrator', 'number' => 1, 'orderby' => 'ID'));
-            if (empty($users[0]->user_login)) {
-                throw new MWP_Worker_Exception(MWP_Worker_Exception::AUTO_LOGIN_USERNAME_REQUIRED, "We could not find an administrator user to use. Please contact support.");
-            }
-            $username = $users[0]->user_login;
+            $user = $this->context->getAdminUser(MWP_Worker_Exception::AUTO_LOGIN_USERNAME_REQUIRED);
+            $username = $user->user_login;
         }
 
         $where = isset($request->query['mwp_goto']) ? $request->query['mwp_goto'] : '';

@@ -2,7 +2,7 @@
 Contributors: managewp,freediver
 Tags: manage multiple sites, backup, security, migrate, performance, analytics, Manage WordPress, Managed WordPress, WordPress management, WordPress manager, WordPress management, site management, control multiple sites, WordPress management dashboard, administration, automate, automatic, comments, clone, dashboard, duplicate, google analytics, login, manage, managewp, multiple, multisite, remote, seo, spam
 Requires at least: 3.1
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/quick-guide-gplv3.html
@@ -55,6 +55,15 @@ Check out the [ManageWP promo video](https://vimeo.com/220647227).
 https://vimeo.com/220647227
 
 == Changelog ==
+= 4.9.17 =
+- Fix: PHP Notice - WP_User_Query::query()
+- Fix: Call to undefined function php_uname when php_uname is disabled
+- Fix: PHP Notice - ob_end_clean()
+- Fix: PHP Deprecated - preg_match()
+- Fix: PHP Deprecated - base64_decode()
+- Fix: PHP 5.x compatibility introduced in 4.9.16
+- WordPress 6.2 compatibility bump
+
 = 4.9.16 =
 - Fix: PHP 8.0+ compatibility update
 

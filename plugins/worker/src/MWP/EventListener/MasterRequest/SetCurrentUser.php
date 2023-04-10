@@ -54,11 +54,7 @@ class MWP_EventListener_MasterRequest_SetCurrentUser implements Symfony_EventDis
 
         if ($user === null) {
             // No user provided, find one instead.
-            $users = $this->context->getUsers(array('role' => 'administrator', 'number' => 1, 'orderby' => 'ID'));
-            if (count($users) === 0) {
-                throw new MWP_Worker_Exception(MWP_Worker_Exception::AUTHENTICATION_NO_ADMIN_USER, "We could not find an administrator user to use. Please contact support.");
-            }
-            $user = $users[0];
+            $user = $this->context->getAdminUser(MWP_Worker_Exception::AUTHENTICATION_NO_ADMIN_USER);
         }
 
         $this->context->setCurrentUser($user);

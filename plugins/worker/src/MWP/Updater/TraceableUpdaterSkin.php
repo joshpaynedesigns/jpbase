@@ -134,8 +134,8 @@ class MWP_Updater_TraceableUpdaterSkin
         $output = ob_get_contents();
         if (!empty($output)) {
             $this->feedback($output);
+            ob_end_clean();
         }
-        ob_end_clean();
     }
 
     public function bulk_header()
