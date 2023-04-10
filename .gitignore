@@ -1,10 +1,9 @@
 /upgrade/
-# /uploads/
+/uploads/
 /themes/accel434/node_modules
 /themes/accel434/.sass-cache
 /themes/accel434/npm-debug.log
 .DS_Store
 cache
-# uploads/
 /autoptimize_404_handler.php
 /mu-plugins/wp-migrate-db-pro-compatibility.php
