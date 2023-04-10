@@ -4,13 +4,21 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
+class ComposerStaticInit5352e5a62fb2350e7f5ca3c7aff4068a
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
         array (
             'Tribe\\' => 6,
             'TEC\\Common\\' => 11,
+        ),
+        'S' => 
+        array (
+            'StellarWP\\Installer\\Assets_JS\\' => 30,
+            'StellarWP\\Installer\\Admin_Views\\' => 32,
+            'StellarWP\\Installer\\' => 20,
+            'StellarWP\\DB\\' => 13,
+            'StellarWP\\ContainerContract\\' => 28,
         ),
         'P' => 
         array (
@@ -34,6 +42,26 @@ class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
         'TEC\\Common\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Common',
+        ),
+        'StellarWP\\Installer\\Assets_JS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stellarwp/installer/src/assets/js',
+        ),
+        'StellarWP\\Installer\\Admin_Views\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stellarwp/installer/src/admin-views',
+        ),
+        'StellarWP\\Installer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stellarwp/installer/src/Installer',
+        ),
+        'StellarWP\\DB\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stellarwp/db/src/DB',
+        ),
+        'StellarWP\\ContainerContract\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stellarwp/container-contract/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -67,6 +95,7 @@ class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
         'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
@@ -178,7 +207,10 @@ class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
         'Psr\\Log\\Test\\DummyTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/DummyTest.php',
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
+        'TEC\\Common\\Context\\Post_Request_Type' => __DIR__ . '/../..' . '/src/Common/Context/Post_Request_Type.php',
         'TEC\\Common\\Editor\\Full_Site\\Template_Utils' => __DIR__ . '/../..' . '/src/Common/Editor/Full_Site/Template_Utils.php',
+        'TEC\\Common\\Libraries\\Installer\\Provider' => __DIR__ . '/../..' . '/src/Common/Libraries/Installer/Provider.php',
+        'TEC\\Common\\Libraries\\Provider' => __DIR__ . '/../..' . '/src/Common/Libraries/Provider.php',
         'TEC\\Common\\Storage\\Timed_Option' => __DIR__ . '/../..' . '/src/Common/Storage/Timed_Option.php',
         'TEC\\Common\\Translations_Loader' => __DIR__ . '/../..' . '/src/Common/Translations_Loader.php',
         'Tribe\\Admin\\Conditional_Content\\Black_Friday' => __DIR__ . '/../..' . '/src/Tribe/Admin/Conditional_Content/Black_Friday.php',
@@ -195,6 +227,7 @@ class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
         'Tribe\\Admin\\Settings' => __DIR__ . '/../..' . '/src/Tribe/Admin/Settings.php',
         'Tribe\\Admin\\Troubleshooting' => __DIR__ . '/../..' . '/src/Tribe/Admin/Troubleshooting.php',
         'Tribe\\Admin\\Upsell_Notice\\Main' => __DIR__ . '/../..' . '/src/Tribe/Admin/Upsell_Notice/Main.php',
+        'Tribe\\Admin\\Wysiwyg' => __DIR__ . '/../..' . '/src/Tribe/Admin/Wysiwyg.php',
         'Tribe\\Customizer\\Control' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Control.php',
         'Tribe\\Customizer\\Controls\\Heading' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Controls/Heading.php',
         'Tribe\\Customizer\\Controls\\Number' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Controls/Number.php',
@@ -275,10 +308,10 @@ class ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInite4070f9aa08d7fd778bc69e3ab39c193::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5352e5a62fb2350e7f5ca3c7aff4068a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5352e5a62fb2350e7f5ca3c7aff4068a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5352e5a62fb2350e7f5ca3c7aff4068a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5352e5a62fb2350e7f5ca3c7aff4068a::$classMap;
 
         }, null, ClassLoader::class);
     }
