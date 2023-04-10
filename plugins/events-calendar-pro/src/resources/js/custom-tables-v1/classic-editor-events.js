@@ -304,6 +304,7 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 	 * tribe_events_pro_admin.recurrence.update_rule_recurrence_text.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.8 Now parsing start_time here instead of via the legacy text parser.
 	 *
 	 * @param {jQuery} $rule The recurrence or exclusion rule.
 	 *
@@ -345,7 +346,12 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 		const displayFormat = tribe_events_pro_admin.recurrence.convert_date_format_php_to_moment( tribe_dynamic_help_text.date_with_year );
 		const $recurrenceDescription = $rule.find( '.tribe-event-recurrence-description' );
 		const text = $recurrenceDescription.text();
-		const updatedText = text.replace( '[first_occurrence_date]', startMoment.format( displayFormat ) );
+		let updatedText = text.replace( '[first_occurrence_date]', startMoment.format( displayFormat ) );
+		/**
+		 * We need to apply our start time here, now that we support RDATE editing with new logic, the start_time
+		 * needs to pull this occurrences' time appropriately, legacy is not retrieving the correct time in edge cases.
+		 */
+		updatedText = updatedText.replace( '[first_occurrence_start_time]', startMoment.format( 'h:mma' ).toUpperCase() );
 		$recurrenceDescription.html( updatedText );
 	};
 

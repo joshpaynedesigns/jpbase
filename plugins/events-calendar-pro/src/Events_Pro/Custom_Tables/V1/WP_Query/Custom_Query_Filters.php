@@ -10,11 +10,18 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\WP_Query;
 
+use DateTime;
+use TEC\Events\Custom_Tables\V1\Models\Builder;
+use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events\Custom_Tables\V1\WP_Query\Custom_Tables_Query;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
+use Tribe__Cache;
+use Tribe__Cache_Listener;
+use Tribe__Date_Utils;
+use Tribe__Events__Main;
 use WP_Query;
-use Tribe__Utils__Array as Arr;
 
 /**
  * Class Custom_Query_Filters
@@ -212,5 +219,117 @@ class Custom_Query_Filters {
 		}
 
 		return implode( " {$implode_operator} ", $id_statements );
+	}
+
+	/**
+	 * Modifies the WP_Query for the sequence ID, i.e. occurrence lookup.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_Query $wp_query The WP_Query instance to be modified.
+	 * @param numeric  $event_id The ID to set for this lookup.
+	 */
+	protected function wp_query_for_sequence_id( WP_Query $wp_query, $event_id ) {
+		unset( $wp_query->query_vars['name'], $wp_query->query_vars[ Tribe__Events__Main::POSTTYPE ] );
+		$wp_query->set( 'p', $event_id );
+	}
+
+	/**
+	 * Fetch an Occurrence Builder with the start_date boundaries already applied.
+	 * This will add a filter for the beginning to end of day for the date supplied.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param DateTime $date The start_date to filter occurrences by.
+	 *
+	 * @return Builder The Occurrence's Builder with start_date where clauses applied.
+	 */
+	public static function occurrence_where_same_day( DateTime $date ): Builder {
+		return Occurrence::where( 'start_date', '>=', $date->format( 'Y-m-d 00:00:00' ) )
+			->where( 'start_date', '<=', $date->format( 'Y-m-d 23:59:59' ) );
+	}
+
+	/**
+	 * Inspecting this WP_Query instance to see if intended for an `eventSequence` rewrite route. Will
+	 * modify the WP_Query instance with appropriate params.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_Query $wp_query The query to determine if candidate for `eventSequence` rewrite lookups.
+	 */
+	public function parse_for_sequence_id_lookup( $wp_query ): void {
+		global $wpdb;
+		// Correct query param?
+		if ( ! $wp_query instanceof WP_Query ) {
+			return;
+		}
+
+		// Is this an eventSequence lookup?
+		$date             = $wp_query->get( 'eventDate' );
+		$slug             = $wp_query->query['name'] ?? '';
+		$sequence_number  = $wp_query->get( 'eventSequence' );
+		$post_already_set = ! empty( $wp_query->get( 'post__in' ) ) || ( is_numeric( $wp_query->get( 'p' ) ) && $wp_query->get( 'p' ) > 0 );
+
+		if ( ! is_numeric( $sequence_number )
+		     || $post_already_set
+		     || ! $wp_query->is_main_query()
+		     || empty( $date )
+		     || empty( $slug )
+		     || (array) $wp_query->get( 'post_type' ) !== [ Tribe__Events__Main::POSTTYPE ] ) {
+			return; // We shouldn't be here.
+		}
+
+		$cache_key = 'single_event_' . $slug . '_' . $date . '_' . $sequence_number;
+		$cache     = tribe_cache();
+
+		// Check cache?
+		$event_id = $cache->get( $cache_key, Tribe__Cache_Listener::TRIGGER_SAVE_POST );
+
+		// If cached, we are done validating this "sequence", so set the ID.
+		if ( is_numeric( $event_id ) ) {
+			$this->wp_query_for_sequence_id( $wp_query, $event_id );
+
+			return;
+		}
+
+		// Get our post ID
+		$post_query = "SELECT ID FROM {$wpdb->posts} WHERE post_name=%s AND post_type=%s LIMIT 1";
+		$post_query = $wpdb->prepare( $post_query, $slug, Tribe__Events__Main::POSTTYPE );
+		$post_id    = $wpdb->get_var( $post_query );
+
+		if ( empty( $post_id ) ) {
+			// Something went wrong, bail.
+			do_action( 'tribe_log', 'error', 'Could not locate this post by the slug provided.', [ 'method' => __METHOD__ ] );
+
+			return;
+		}
+
+		// Convert to a date object we can use.
+		$event_date = Tribe__Date_Utils::build_date_object( $date );
+		if ( ! $event_date instanceof DateTime ) {
+			do_action( 'tribe_log', 'error', "Could not parse this '$date' date provided.", [ 'method' => __METHOD__ ] );
+
+			return;
+		}
+
+		$occurrence = static::occurrence_where_same_day( $event_date )
+			->where( 'post_id', $post_id )
+			->order_by( 'start_date', 'ASC' )
+			->offset( $sequence_number - 1 )
+			->first();
+
+		// Ensure this is an occurrence.
+		if ( ! $occurrence instanceof Occurrence ) {
+			// Not an occurrence - what is this? Skip.
+			do_action( 'tribe_log', 'error', "Could not locate this occurrence by the eventSequence provided.", [ 'method' => __METHOD__ ] );
+
+			return;
+		}
+
+		// Yep, this is an occurrence we should route this query to.
+		$event_id = $occurrence->provisional_id;
+
+		$this->wp_query_for_sequence_id( $wp_query, $event_id );
+		$cache->set( $cache_key, $event_id, Tribe__Cache::NO_EXPIRATION, Tribe__Cache_Listener::TRIGGER_SAVE_POST );
 	}
 }

@@ -82,7 +82,10 @@ class Events extends TEC_Events {
 
 		try {
 			if ( ! empty( $series ) ) {
-				$series = $this->process_series_data( (array) $series, $match_by_name );
+				// If the Series will be created now, then assign them the Event post status.
+				$series = $this->process_series_data( (array) $series, $match_by_name, [
+					'post_status' => get_post_status( $event->post_id )
+				] );
 
 				// Associate new Event to the existing Series.
 				tribe( Relationship::class )->with_event( $event, $series );
@@ -148,7 +151,7 @@ class Events extends TEC_Events {
 			$dtstart = Dates::immutable( get_post_meta( $event_id, '_EventStartDate', true ), $timezone );
 			$dtend = Dates::immutable( get_post_meta( $event_id, '_EventEndDate', true ), $timezone );
 			$recurrence = Recurrence::from_icalendar_string( $recurrence, $dtstart, $dtend )
-				->to_event_recurrence_format()['recurrence'];
+				->to_event_recurrence();
 		}
 
 		// The Recurrence data might not have been saved yet: let's do  it now.
@@ -209,14 +212,15 @@ class Events extends TEC_Events {
 	 * Process the set of specified Series to insert those that will need insertion.
 	 *
 	 * @since 6.0.1
-	 *
-	 * @param array<int|string> $series_data   The set of Series to process, either Series post IDs
-	 *                                         or Series post titles, or a mix of both.
-	 * @param bool              $match_by_name Whether to try and match Series posts by name or not.
+	 * @since 6.0.11 Added $create_overrides param.
+	 * @param array<int|string>   $series_data      The set of Series to process, either Series post IDs
+	 *                                              or Series post titles, or a mix of both.
+	 * @param bool                $match_by_name    Whether to try and match Series posts by name or not.
+	 * @param array<string,mixed> $create_overrides An associative array of arguments to override the default ones.
 	 *
 	 * @return array<int> The post IDs of the inserted or updated Series.
 	 */
-	protected function process_series_data( array $series_data, bool $match_by_name = true ): array {
+	protected function process_series_data( array $series_data, bool $match_by_name = true, array $create_overrides = [] ): array {
 		$vinsert = array_map( static function ( $series ) use ( $match_by_name ) {
 			if ( is_numeric( $series ) ) {
 				return [ 'id' => $series ];
@@ -226,9 +230,13 @@ class Events extends TEC_Events {
 				get_page_by_title( $series, OBJECT, Series_Post_Type::POSTTYPE )
 				: null;
 
-			return $match instanceof WP_Post ? [ 'id' => $match->ID ] : [ 'title' => $series ];
+			if ( $match instanceof WP_Post ) {
+				return [ 'id' => $match->ID ];
+			}
+
+			return [ 'title' => $series ];
 		}, $series_data );
 
-		return Series::vinsert_many( $vinsert );
+		return Series::vinsert_many( $vinsert, $create_overrides );
 	}
 }

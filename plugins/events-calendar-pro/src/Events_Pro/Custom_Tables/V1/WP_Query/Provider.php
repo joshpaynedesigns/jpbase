@@ -153,7 +153,28 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			], 10, 3 );
 		}
 
+		if ( ! has_filter( 'parse_query', [
+			$this,
+			'parse_for_sequence_id_lookup'
+		] ) ) {
+			add_filter( 'parse_query', [
+				$this,
+				'parse_for_sequence_id_lookup'
+			], 10 );
+		}
+
 		$this->handle_collapse_recurring_event_instances();
+	}
+
+	/**
+	 * Inspects and potentially modifies a WP_Query object for `eventSequence` queries.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_Query $wp_query The WP_Query instance to potentially modify for `eventSequence` lookups.
+	 */
+	public function parse_for_sequence_id_lookup( $wp_query ): void {
+		$this->container->make( Custom_Query_Filters::class )->parse_for_sequence_id_lookup( $wp_query );
 	}
 
 	/**
@@ -246,6 +267,10 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		remove_filter( 'tec_events_pro_tribe_repository_event_series_filter_override', [
 			$this,
 			'tribe_event_series_filter_override'
+		] );
+		remove_filter( 'parse_query', [
+			$this,
+			'parse_for_sequence_id_lookup'
 		] );
 	}
 

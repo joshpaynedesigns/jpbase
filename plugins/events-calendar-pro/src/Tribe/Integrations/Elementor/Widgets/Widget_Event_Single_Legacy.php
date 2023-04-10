@@ -54,9 +54,6 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$event_query_settings = $this->get_event_query_settings( $settings );
 		$event_query_settings = $this->set_id_from_repository_if_unset( $event_query_settings );
 
-		// display the recurring events info tooltip
-		Tribe__Events__Pro__Main::instance()->enable_recurring_info_tooltip();
-
 		/** @var Template_Bootstrap $bootstrap */
 		$bootstrap = tribe( Template_Bootstrap::class );
 
@@ -2028,6 +2025,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			[
 				'label' => esc_html__( 'Navigation', 'tribe-events-calendar-pro' ),
 				'tab' => Controls_Manager::TAB_STYLE,
+				'condition' => [
+					'navigation' => 'yes'
+				],
 			]
 		);
 

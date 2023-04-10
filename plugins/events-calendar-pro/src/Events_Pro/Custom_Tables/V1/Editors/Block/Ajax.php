@@ -11,11 +11,15 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Editors\Block;
 
 
+use TEC\Events\Custom_Tables\V1\Models\Occurrence;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Redirector;
 use WP_Post;
 use WP_Post_Type;
+use Tribe__Events__Main as TEC;
 
 /**
  * Class Ajax
@@ -151,7 +155,10 @@ class Ajax {
 			], 400 );
 		}
 
-		$occurrence_redirect_data = $this->occurrence_redirecor->get_occurrence_redirect_response( $event_id );
+		// Converts the value to int on success.
+		$event_post_id = filter_var( $_REQUEST['event_post_id'], FILTER_VALIDATE_INT ) ?: null;
+
+		$occurrence_redirect_data = $this->occurrence_redirecor->get_occurrence_redirect_response( $event_id, $event_post_id );
 		wp_send_json_success( $occurrence_redirect_data );
 	}
 
@@ -165,7 +172,7 @@ class Ajax {
 	 *              on the page.
 	 */
 	public function localize() {
-		wp_localize_script( 'wp-blocks', 'tecCustomTablesV1BlocksEditor', [
+		$data = [
 			'ajaxurl'           => admin_url( 'admin-ajax.php' ),
 			'seriesAction'      => self::SERIES_ACTION,
 			'seriesNonce'       => wp_create_nonce( self::SERIES_ACTION ),
@@ -173,6 +180,23 @@ class Ajax {
 			'redirectAction'    => self::REDIRECT_ACTION,
 			'redirectNonce'     => wp_create_nonce( self::REDIRECT_ACTION ),
 			'redirectNonceName' => self::REDIRECT_NONCE_NAME,
-		] );
+			'eventPostId'      => null,
+		];
+
+		// Localize the current Event post ID: changes will require a refresh of the page.
+		$post = get_post();
+		if (
+			$post instanceof WP_Post
+			&& $post->post_type === TEC::POSTTYPE
+			&& tribe( Provisional_Post::class )->is_provisional_post_id( $post->ID )
+		) {
+			$occurrence_id = tribe( ID_Generator::class )->unprovide_id( $post->ID );
+			$occurrence    = Occurrence::find( $occurrence_id );
+			if ( $occurrence instanceof Occurrence ) {
+				$data['eventPostId'] = $occurrence->post_id;
+			}
+		}
+
+		wp_localize_script( 'wp-blocks', 'tecCustomTablesV1BlocksEditor', $data );
 	}
 }

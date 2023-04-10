@@ -74,7 +74,7 @@ class String_Dictionary {
 				tribe_get_event_label_plural_lowercase()
 			),
 			'unsupported-weekly-interval-gt-1'                         => sprintf(
-				__( 'Migration of Weekly recurrence or exclusion rules with an interval greater than 1 is not yet supported. Remove the %1s or wait to migrate until a path is available.', 'tribe-events-calendar-pro' ),
+				__( 'Migration of Weekly recurrence or exclusion rules with an interval greater than 1 is not yet supported. Remove the %1$s or wait to migrate until a path is available.', 'tribe-events-calendar-pro' ),
 				tribe_get_event_label_plural_lowercase()
 			),
 			'migration-complete-paragraph' => __( 'Your site is now using the upgraded recurring events system. See the report below to learn how your events may have been adjusted during the migration process. Go ahead and %1$scheck out your events%2$s or %3$sview your calendar.%2$s',  'tribe-events-calendar-pro' ),

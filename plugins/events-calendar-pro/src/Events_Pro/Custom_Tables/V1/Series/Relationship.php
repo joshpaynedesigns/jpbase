@@ -10,9 +10,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Series;
 
 
 use TEC\Events\Custom_Tables\V1\Models\Event;
-use TEC\Events_Pro\Custom_Tables\V1\Models\Series as Series_Model;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
-use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
 use WP_Post;
 
 /**
@@ -72,6 +70,13 @@ class Relationship {
 				'event_post_id'  => $event->post_id,
 				'series_post_id' => $series_post_id,
 			] );
+
+			do_action('tribe_log', 'debug', 'Series Relationship inserted.', [
+				'method' => 'with_event',
+				'event_id' => $event->event_id,
+				'event_post_id' => $event->post_id,
+				'series_post_id' => $series_post_id,
+			]);
 		}
 
 		// Delete all the items that are no longer associated with this event.
@@ -131,57 +136,6 @@ class Relationship {
 		}
 
 		Series_Relationship::insert( $relationships );
-	}
-
-	/**
-	 * Attach an event into a series, if the series is not provided a new one is created out of the
-	 * post associated with the event.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @param Event        $event  The event to attach into the series
-	 * @param WP_Post|null $series The series to associated with the event, otherwise create a new one.
-	 *
-	 * @return array|int|\WP_Error|WP_Post|null
-	 */
-	public function attach_event( Event $event, WP_Post $series = null ) {
-		// If the series was not provided create a new one.
-		if ( $series === null ) {
-			$post           = get_post( $event->post_id );
-			$series_post_id = wp_insert_post( [
-				'post_title'  => $post->post_title,
-				'post_author' => $post->post_author,
-				'post_status' => $post->post_status,
-				'post_type'   => Series::POSTTYPE,
-			] );
-
-			if ( is_wp_error( $series_post_id ) ) {
-				return $series_post_id;
-			}
-
-			$series = get_post( $series_post_id );
-
-			if ( ! $series instanceof WP_Post ) {
-				return $series_post_id;
-			}
-		}
-
-		$query = Series_Relationship::where( 'series_post_id', $series->ID )
-		                            ->where( 'event_id', $event->event_id )
-		                            ->where( 'event_post_id', $event->post_id );
-
-		// This relationship already exists nothing to do here.
-		if ( $query->exists() ) {
-			return $series;
-		}
-
-		Series_Relationship::insert( [
-			'series_post_id' => $series->ID,
-			'event_id'       => $event->event_id,
-			'event_post_id'  => $event->post_id,
-		] );
-
-		return $series;
 	}
 
 	/**

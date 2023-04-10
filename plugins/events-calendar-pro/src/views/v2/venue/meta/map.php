@@ -21,15 +21,19 @@ $url = '';
 if ( ! empty( $venue->geolocation->address ) ) {
 	$url = add_query_arg(
 		[
-			'key' => $map_provider->api_key,
-			'q'   => urlencode( $venue->geolocation->address ),
+			'key'  => $map_provider->api_key,
+			'q'    => urlencode( $venue->geolocation->address ),
+			'zoom' => (int) tribe_get_option( 'embedGoogleMapsZoom', 15 ),
 		],
 		$map_provider->iframe_url
 	);
 }
 
+$venue = tribe_get_venue();
+
 ?>
 <iframe
+	title="<?php echo sprintf( __( "Google maps iframe displaying the address to %s", 'tribe-events-calendar-pro' ), $venue ); ?>"
 	aria-label="<?php esc_attr_e( 'Venue location map', 'tribe-events-calendar-pro' ); ?>"
 	class="tribe-events-pro-venue__meta-data-google-maps-default"
 	src="<?php echo esc_url( $url ); ?>"

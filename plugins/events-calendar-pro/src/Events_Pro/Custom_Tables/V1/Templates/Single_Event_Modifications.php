@@ -352,8 +352,8 @@ class Single_Event_Modifications {
 	}
 
 	/**
-	 * When a call to `get_terms` is made, make sure to redirect all the IDs from a provisional post instead are
-	 * redirected to the real post ID in order to make sure the right terms are retrieved.
+	 * When a call to `get_terms` is made, make sure to redirect the terms request from the provisional ID to the
+	 * original post ID.
 	 *
 	 * @since 6.0.0
 	 *

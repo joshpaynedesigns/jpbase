@@ -32,6 +32,7 @@ if ( isset( $event->venues ) && $event->venues->count() ) {
 }
 ?>
 <iframe
+	title="<?php esc_attr_e( 'Google maps iframe displaying the venue location map', 'tribe-events-calendar-pro' ); ?>"
 	class="tribe-events-pro-map__google-maps-default"
 	data-js="tribe-events-pro-map-google-maps-default"
 	src="<?php echo esc_url( $url ); ?>"

@@ -13,8 +13,8 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
-use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use WP_Error;
+use WP_HTTP_Response;
 use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
@@ -116,6 +116,34 @@ class Provider extends Service_Provider implements Provider_Contract {
 		 * request to them. On an All update, redirect the request to the real post.
 		 */
 		add_action( 'tec_events_custom_tables_v1_redirect_rest_event_post', [ $this, 'redirect_rest_request' ] );
+
+		// Retain our ID for responses.
+		if ( ! has_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ] ) ) {
+			add_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ], 10, 3 );
+		}
+	}
+
+	/**
+	 * Ensures our redirected ID does not show up in the REST response.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+	 *                                                                   Usually a WP_REST_Response or WP_Error.
+	 * @param array                                            $handler  Route handler used for the request.
+	 * @param WP_REST_Request                                  $request  Request used to generate the response.
+	 *
+	 * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed The modified WP_REST_Response or what was passed in.
+	 */
+	public function retain_original_id_in_response( $response, $handler, $request ) {
+		if ( ! $response instanceof WP_REST_Response || empty( $response->data ) ) {
+			return $response;
+		}
+		if ( ! $request instanceof WP_REST_Request ) {
+			return $response;
+		}
+
+		return $this->container->make( Controller::class )->retain_original_id_in_response( $response, $handler, $request );
 	}
 
 	/**
@@ -237,6 +265,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 		remove_filter( 'tec_events_custom_tables_v1_updated_post', [ $this, 'commit_post_updates_after' ] );
 		remove_filter( 'tec_events_custom_tables_v1_should_update_custom_tables', [ $this, 'should_update_custom_tables' ] );
 		remove_action( 'update_post_meta', [ $this, 'sync_blocks_recurrence_meta' ] );
+		remove_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ] );
 	}
 
 	/**

@@ -13,6 +13,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Updates\Requests;
 use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Provider as Notices_Provider;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Recurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Events;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Occurrence_Redirector;
@@ -245,23 +246,26 @@ class Upcoming implements Update_Controller_Interface {
 			return false;
 		}
 
-		$recurrence_meta = get_post_meta( $this->first_post_id, '_EventRecurrence', true );
+		// Need to use _EventRecurrence here (state is dirty, not propagated everywhere else).
+		$current_recurrence  = Recurrence::from_recurrence( (array) get_post_meta( $this->first_post_id, '_EventRecurrence', true ) );
+		$original_recurrence = Recurrence::from_recurrence( (array) $this->original_recurrence_meta );
 
-		$recurrence_changed = ! $this->events->compare_recurrence_meta( $recurrence_meta, $this->original_recurrence_meta );
-		$limits_changed = ! $this->events->compare_count_limits( (array) $recurrence_meta, (array) $this->original_recurrence_meta );
+		$limits_changed = ! $this->events->compare_interval_and_limit( $current_recurrence->to_event_recurrence(), $original_recurrence->to_event_recurrence() );
 
-		if ( $recurrence_changed && $limits_changed ) {
-			// The split Recurring Event meta was changed: respect that.
-			return $recurrence_meta;
+		if ( $limits_changed ) {
+			// The split Recurring Event meta limit/interval was changed: respect that.
+			return $current_recurrence->to_event_recurrence();
 		}
 
-		// Make sure the split Event will not run for more events than it did before.
-		if ( ! $this->events->set_count_limit_on_event( $this->first_post_id, $this->original_right_side_count ) ) {
-			do_action( 'tribe_log', 'error', 'Failed to set COUNT limit on split Event.', [
-				'source'  => __CLASS__,
-				'slug'    => 'set-count-limit-fail-on-upcoming-update',
-				'post_id' => $post_id,
-			] );
+		// If a count recurrence, make sure the right side count adjusts accordingly.
+		if ( $original_recurrence->has_count_limit() ) {
+			if ( ! $this->events->set_count_limit_on_event( $this->first_post_id, $this->original_right_side_count ) ) {
+				do_action( 'tribe_log', 'error', 'Failed to set COUNT limit on split Event.', [
+					'source'  => __CLASS__,
+					'slug'    => 'set-count-limit-fail-on-upcoming-update',
+					'post_id' => $post_id,
+				] );
+			}
 		}
 
 		/*
