@@ -7,11 +7,10 @@
 	Template: genesis
 */
 @import "assets/components/normalize.css/normalize.css";
-@import "bourbon";
-@import "base/base";
-@import "neat";
-@import "scaffold";
+
 @import "mixins";
+@import "base/base";
+@import "scaffold";
 @import "defaults";
 
 /**
@@ -67,11 +66,11 @@
 /**
 * Utilities
 */
- @import "utilities/borders";
- @import "utilities/colors";
- @import "utilities/font-size";
- @import "utilities/grids";
- @import "utilities/margin";
- @import "utilities/padding";
- @import "utilities/text";
- @import "utilities/widths";
+@import "utilities/borders";
+@import "utilities/colors";
+@import "utilities/font-size";
+@import "utilities/grids";
+@import "utilities/margin";
+@import "utilities/padding";
+@import "utilities/text";
+@import "utilities/widths";
