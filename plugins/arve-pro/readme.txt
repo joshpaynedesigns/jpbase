@@ -18,6 +18,11 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2023-04-04 5.3.5 =
+
+* Fix: JS errors in some circumstaces like ARVE mixing with other players.
+* Fix: Some styles not correctly applying in the Block editor.
+
 = 2023-01-25 5.3.4 =
 
 * Fix: Link-Lightbox mode not working.
