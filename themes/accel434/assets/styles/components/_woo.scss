@@ -1008,8 +1008,8 @@ li.wc_payment_method {
 
   ul.products {
     display: flex;
-    @include align-items(space-between);
-    @include flex-wrap(wrap);
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 }
 
@@ -1284,7 +1284,7 @@ li.wc_payment_method {
       }
 
       input[type="submit"] {
-        margin-top: $small-spacing/2;
+        margin-top: calc($small-spacing/2);
       }
     }
   }
@@ -1560,8 +1560,8 @@ li.wc_payment_method {
       color: $base-font-color !important;
       // font-size: em(16px) !important;
       // position: absolute;
-      // right: $small-spacing/2;
-      // top: $small-spacing/2;
+      // right: calc($small-spacing/2);
+      // top: calc($small-spacing/2);
     }
   }
 }
@@ -1616,7 +1616,7 @@ li.wc_payment_method {
       .product_title {
         border-top: none;
         line-height: 1;
-        margin-bottom: $small-spacing/2;
+        margin-bottom: calc($small-spacing/2);
       }
 
       .woocommerce-product-rating {
@@ -1654,7 +1654,7 @@ li.wc_payment_method {
 
       .addon-name {
         font-size: em(18px) !important;
-        margin-bottom: $small-spacing/2 !important;
+        margin-bottom: calc($small-spacing/2) !important;
         font-weight: 400 !important;
       }
 

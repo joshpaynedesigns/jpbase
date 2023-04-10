@@ -23,7 +23,7 @@
   border-radius: 2px;
   left: 0;
   transform: rotate(0deg);
-  transition: $base-duration/2 $base-timing;
+  transition: calc($base-duration/2) $base-timing;
 }
 
 .mobile-menu-icon span:nth-child(1) {

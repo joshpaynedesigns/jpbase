@@ -16,7 +16,7 @@ $desk-section-margin: em(100px);
 // Other Sizes
 $base-border-radius: 3px;
 $base-spacing: $base-line-height * 1em;
-$small-spacing: $base-spacing / 3;
+$small-spacing: calc($base-spacing / 3);
 $base-z-index: 0;
 
 // Colors

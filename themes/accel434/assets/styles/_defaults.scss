@@ -114,7 +114,7 @@ img {
 */
 .entry-comments-link::before {
   content: "\2014";
-  margin: 0 $base-spacing 0 $base-spacing/2;
+  margin: 0 $base-spacing 0 calc($base-spacing/2);
 }
 
 /**

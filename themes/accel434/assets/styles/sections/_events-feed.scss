@@ -41,8 +41,8 @@
   .event-item {
     -webkit-backface-visibility: hidden;
     display: flex;
-    @include flex-direction(row);
-    @include align-items(top);
+    flex-direction: row;
+    align-items: flex-start;
     color: $dark-gray;
     margin-top: rem(12px);
     transition: color $base-duration $base-timing;
