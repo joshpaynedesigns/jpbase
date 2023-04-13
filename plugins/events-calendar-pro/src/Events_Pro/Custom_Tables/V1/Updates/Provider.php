@@ -467,6 +467,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * Filters the unique post slug generated, or set, for an Event Occurrence.
 	 *
 	 * @since 6.0.0
+	 * @since TBD Removed strict typing from this public hook callback.
 	 *
 	 * @param string $slug          The post slug.
 	 * @param int    $post_ID       Post ID.
@@ -477,9 +478,14 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @return string The filtered unique post slug.
 	 */
-	public function unique_post_slug_for_occurrence( string $slug, int $post_ID, string $post_status, string $post_type, int $post_parent, string $original_slug ): string {
+	public function unique_post_slug_for_occurrence( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug ): string {
+		// Some basic sanity check and type check validation.
+		if ( ! is_string( $post_type ) || ! is_string( $original_slug ) || ! is_numeric( $post_ID ) ) {
+			return $slug;
+		}
+
 		return $this->container->make( Post_Ops::class )
-		                       ->get_occurrence_post_slug( $slug, $post_ID, $post_type, $original_slug );
+		                       ->get_occurrence_post_slug( $slug, (int) $post_ID, $post_type, $original_slug );
 	}
 
 	/**

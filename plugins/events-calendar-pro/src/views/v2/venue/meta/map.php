@@ -29,6 +29,23 @@ if ( ! empty( $venue->geolocation->address ) ) {
 	);
 }
 
+// Display the map based on the latitude and longitude if the values
+// are available and the `Use latitude + longitude` setting is enabled.
+if (
+	get_post_meta( $venue->ID, '_VenueOverwriteCoords', true )
+	&& ! empty( $venue->geolocation->latitude )
+	&& ! empty( $venue->geolocation->longitude )
+) {
+	$url = add_query_arg(
+		[
+			'key'  => $map_provider->api_key,
+			'q'    => urlencode( $venue->geolocation->latitude . ',' . $venue->geolocation->longitude ),
+			'zoom' => (int) tribe_get_option( 'embedGoogleMapsZoom', 15 ),
+		],
+		$map_provider->iframe_url
+	);
+}
+
 $venue = tribe_get_venue();
 
 ?>

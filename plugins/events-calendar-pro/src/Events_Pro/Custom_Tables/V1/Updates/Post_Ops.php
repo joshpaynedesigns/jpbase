@@ -53,7 +53,7 @@ class Post_Ops {
 	 *
 	 * @return string The filtered unique post slug.
 	 */
-	public function get_occurrence_post_slug( $desired_slug, $post_id, $post_type, $original_slug ) {
+	public function get_occurrence_post_slug( $desired_slug, int $post_id, string $post_type, string $original_slug ): string {
 		if ( TEC::POSTTYPE !== $post_type ) {
 			return $desired_slug;
 		}

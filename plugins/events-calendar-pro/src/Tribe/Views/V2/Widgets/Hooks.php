@@ -75,6 +75,13 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		);
 
 		add_action(
+			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event:event_meta',
+			[ $this, 'widget_events_list_event_meta_website' ],
+			20,
+			3
+		);
+
+		add_action(
 			'tribe_template_entry_point:events/v2/widgets/widget-events-list/event/date:after_event_datetime',
 			[ $this, 'widget_events_list_event_recurring_icon' ],
 			10,
@@ -361,6 +368,19 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function widget_events_list_event_meta_organizers( $file, $name, $template ) {
 		$this->container->make( Widget_Advanced_List::class )->render_event_organizers( $template );
+	}
+
+	/**
+	 * Action to inject the website meta into the events list widget event.
+	 *
+	 * @since TBD
+	 *
+	 * @param string           $file     Complete path to include the PHP File.
+	 * @param array<string>    $name     Template name.
+	 * @param \Tribe__Template $template Current instance of the Tribe__Template.
+	 */
+	public function widget_events_list_event_meta_website( $file, $name, $template ) {
+		$this->container->make( Widget_Advanced_List::class )->render_event_website( $template );
 	}
 
 	/**

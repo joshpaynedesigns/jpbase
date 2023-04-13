@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.8.6
-Stable tag: 6.0.10
-Tested up to: 6.1.1
+Stable tag: 6.0.11
+Tested up to: 6.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -214,7 +214,15 @@ Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
 
-= [6.0.10] 2023-3-20 =
+= [6.0.11] 2023-04-10 =
+
+* Enhancement - Add the option to display the Event Website on the Events List widget, [tribe_events_list] shortcode and Events List Elementor widget. [ECP-751]
+* Fix - Display the map on the single venue page based on the latitude and longitude values if said values are provided. [ECP-1470]
+* Fix - Fix type fatal error when using `wp_unique_post_slug` with unexpected data types. [ECP-1485]
+* Tweak - Changed views: `v2/venue/meta/map`, `v2/widgets/widget-events-list/event/website`
+* Language - 1 new strings added, 53 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.0.10] 2023-03-20 =
 
 * Feature - Add Additional Fields with a filter to the Event Automator event details. [EVA-61]
 * Feature - Add Recurrence with a filter to the Event Automator event details. [EVA-33]
