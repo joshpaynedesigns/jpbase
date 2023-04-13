@@ -14,6 +14,6 @@ return (object) array(
 
 		require($item);
 	},
-	'has_padding'   => false
+	'has_padding'   => true
 	)
 );

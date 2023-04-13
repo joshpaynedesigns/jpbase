@@ -6,6 +6,7 @@
             "key": "field_5cfaa0fe9d5cf",
             "label": "Section Title",
             "name": "section_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_593edeff42c86",
             "label": "Tiles",
             "name": "page_tiles",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -39,11 +41,13 @@
             "max": 4,
             "layout": "block",
             "button_label": "Add Tile",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_593edeff45589",
                     "label": "Background Type",
                     "name": "background_options",
+                    "aria-label": "",
                     "type": "button_group",
                     "instructions": "",
                     "required": 0,
@@ -60,12 +64,14 @@
                     "allow_null": 0,
                     "default_value": "solid",
                     "layout": "horizontal",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "parent_repeater": "field_593edeff42c86"
                 },
                 {
                     "key": "field_593edeff4559b",
                     "label": "Background Image",
                     "name": "background_image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -92,13 +98,15 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_593edeff42c86"
                 },
                 {
                     "key": "field_593edeff455aa",
                     "label": "Background Color",
                     "name": "background_color",
-                    "type": "button_group",
+                    "aria-label": "",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": [
@@ -115,21 +123,28 @@
                         "class": "",
                         "id": ""
                     },
+                    "relevanssi_exclude": 0,
                     "choices": {
+                        "none": "None",
                         "primary": "Primary",
                         "white": "White",
                         "light-gray": "Light Gray",
                         "dark-gray": "Dark Gray"
                     },
-                    "allow_null": 0,
                     "default_value": "primary",
-                    "layout": "horizontal",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_593edeff42c86"
                 },
                 {
                     "key": "field_593edeff455ba",
                     "label": "Content",
                     "name": "content",
+                    "aria-label": "",
                     "type": "wysiwyg",
                     "instructions": "",
                     "required": 1,
@@ -143,7 +158,8 @@
                     "toolbar": "full",
                     "media_upload": 0,
                     "default_value": "",
-                    "delay": 0
+                    "delay": 0,
+                    "parent_repeater": "field_593edeff42c86"
                 }
             ]
         }
@@ -165,7 +181,8 @@
     "hide_on_screen": [
         "the_content"
     ],
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1560974939
+    "show_in_rest": 0,
+    "modified": 1677621774
 }

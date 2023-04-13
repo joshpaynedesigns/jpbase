@@ -17,15 +17,6 @@ return (object) array(
 
 			require($item);
 		},
-		'padding_filter' => function($has_padding, $section, $field) {
-	        if ($section === 'icon_blurb_section') {
-                $bg_color = $field['background_color'];
-
-                return $bg_color != 'white' ? false : $has_padding;
-            }
-
-	        return $has_padding;
-        },
         'has_padding'   => true,
 	)
 );
