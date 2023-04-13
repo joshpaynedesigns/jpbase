@@ -1,9 +1,9 @@
 body {
+  background-color: $green-50;
   color: $base-font-color;
   font-family: $base-font-family;
   font-size: 90%;
   line-height: $base-line-height;
-  // -webkit-font-smoothing: subpixel-antialiased;
 
   *::selection {
     background-color: $action-color;
@@ -21,26 +21,24 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $heading-font-family;
   color: $heading-font-color;
+  font-family: $heading-font-family;
   font-size: $base-font-size;
-  font-weight: 500;
+  font-weight: 600;
   line-height: $heading-line-height;
   margin: 0 0 $small-spacing;
 }
 
 h1,
 #heading-one {
-  font-size: em(52);
-  font-weight: bold;
-  font-family: $heading-font-family;
   display: block;
+  font-family: $heading-font-family;
+  font-size: em(52);
 }
 
 h2,
 #post-title {
   font-size: em(40);
-  font-weight: bold;
 }
 
 h3 {
@@ -64,14 +62,14 @@ p {
 }
 
 a {
-  color: $action-color;
+  color: $blue-900;
   text-decoration: none;
   transition: all $base-duration $base-timing;
 
   &:active,
   &:focus,
   &:hover {
-    color: shade($action-color, 25%);
+    color: $blue-200;
   }
 }
 
@@ -90,26 +88,30 @@ picture {
 }
 
 blockquote {
-  border-left: $base-border;
-  border-color: $primary-color;
-  border-width: 7px;
+  border-left: 8px solid $blue-200;
+  color: $green-900;
   margin: 4% 5% 4% 0;
-  padding: 0 0 0 rem(20px);
+  padding: 0 0 0 rem(32);
+  position: relative;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
 }
 
 code {
-  background: $light-gray;
+  background: $gray-200;
   border: $base-border;
   color: $base-font-color;
   padding: 2px 4px;
 }
 
 .wp-caption .wp-caption-text {
-  margin: 10px 0;
   font-size: em(12);
-  text-transform: uppercase;
   letter-spacing: 1px;
   line-height: 1.2;
+  margin: 10px 0;
+  text-transform: uppercase;
 }
 
 .base-font {
@@ -144,17 +146,19 @@ code {
   font-weight: 300;
 }
 
-.normal-weight {
+.normal-weight,
+.font-normal {
   font-weight: 400;
 }
 
-.bold-weight {
+.bold-weight,
+.font-bold {
   font-weight: 700;
 }
 
 .no-bottom-margin {
-  margin-bottom: -0.5em;
   display: block;
+  margin-bottom: -0.5em;
 }
 
 .aligncenter {
@@ -172,26 +176,47 @@ code {
 }
 
 // Font Colors
-.blue-font {
-  color: $blue;
-}
-.light-blue-font {
-  color: $light-blue;
-}
-.white-font {
+.text-white {
   color: $white;
 }
-.dark-gray-font {
-  color: $dark-gray;
+
+.text-black {
+  color: $black;
 }
-.medium-gray-font {
-  color: $medium-gray;
+
+.text-blue {
+  color: $blue-900;
 }
-.light-gray-font {
-  color: $light-gray;
+
+.text-green {
+  color: $green-900;
+}
+
+.text-dark-gray {
+  color: $gray-900;
+}
+
+.text-medium-gray {
+  color: $gray-600;
+}
+
+.text-light-gray {
+  color: $gray-200;
 }
 
 // WYSIWYG background color
 #tinymce {
-  background: #e5e5e5;
+  background-color: $green-50;
+}
+
+.has-accent {
+  background: unset; // just here to show up in formats
+}
+
+.white-accent {
+  background: unset; // just here to show up in formats
+}
+
+.green-accent {
+  background: unset; // just here to show up in formats
 }

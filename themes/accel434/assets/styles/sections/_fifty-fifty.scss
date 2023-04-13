@@ -1,16 +1,6 @@
 #flexible-section-repeater {
   .fifty-fifty-section {
-    &:last-child {
-      margin-bottom: $mobile-section-margin;
-
-      @media ($large-screen-up) {
-        margin-bottom: $desk-section-margin;
-      }
-    }
-  }
-
-  .informational-cta-section {
-    background: $light-gray;
+    background: $green-100;
     position: relative;
 
     > .wrap {
@@ -147,7 +137,7 @@
         }
 
         .video-bg-overlay {
-          background: $blue;
+          background: $black;
           inset: 0;
           opacity: 0.7;
           position: absolute;

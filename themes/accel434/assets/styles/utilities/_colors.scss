@@ -1,24 +1,93 @@
 // Background Color
 .bg-action {
-    background-color: $action-color;
+  background-color: $action-color;
 }
 
 .bg-dark-gray {
-    background-color: $dark-gray;
+  background-color: $gray-900;
 }
 
 .bg-light-gray {
-    background-color: $light-gray;
+  background-color: $gray-200;
+}
+
+.bg-light-blue {
+  background-color: $blue-200;
 }
 
 .bg-medium-gray {
-    background-color: $medium-gray;
+  background-color: $gray-600;
 }
 
 .bg-primary {
-    background-color: $primary-color;
+  background-color: $primary-color;
 }
 
 .bg-white {
-    background-color: white;
+  background-color: white;
+}
+
+.bg-extra-light-gray {
+  background-color: $gray-100;
+}
+
+.bg-blue {
+  background-color: $blue-900;
+}
+
+.bg-green {
+  background-color: $green-900;
+}
+
+.bg-light-green {
+  background-color: $green-100;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}
+
+// Outline Colors
+.boxes-border-action::before {
+  outline-color: $action-color;
+}
+
+.boxes-border-dark-gray::before {
+  outline-color: $gray-900;
+}
+
+.boxes-border-light-gray::before {
+  outline-color: $gray-200;
+}
+
+.boxes-border-light-blue::before {
+  outline-color: $blue-200;
+}
+
+.boxes-border-medium-gray::before {
+  outline-color: $gray-600;
+}
+
+.boxes-border-primary::before {
+  outline-color: $primary-color;
+}
+
+.boxes-border-white::before {
+  outline-color: white;
+}
+
+.boxes-border-extra-light-gray::before {
+  outline-color: $gray-100;
+}
+
+.boxes-border-blue::before {
+  outline-color: $blue-900;
+}
+
+.boxes-border-green::before {
+  outline-color: $green-900;
+}
+
+.boxes-border-light-green::before {
+  outline-color: $green-100;
 }

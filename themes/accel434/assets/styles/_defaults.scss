@@ -213,7 +213,7 @@ img {
 }
 
 .gallery img {
-  // border: 1px solid $dark-gray;
+  // border: 1px solid $gray-900;
   border: none !important;
   height: auto;
   padding: 4px;
@@ -222,7 +222,7 @@ img {
 }
 
 .gallery img:hover {
-  // border: 1px solid $medium-gray;
+  // border: 1px solid $gray-600;
   transform: scale(1.02);
 }
 

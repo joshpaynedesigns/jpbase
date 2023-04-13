@@ -1,123 +1,90 @@
-.events-feed {
+.events-feed-section {
+  > .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: rem(32);
+
+    @media ($xl-screen-up) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
   .events-title-wrap {
-    @media ($large-screen-up) {
-      @include span-columns(3);
-    }
+    text-align: center;
 
-    .events-title {
-      margin-bottom: 0.2em;
-    }
-
-    .events-all-link {
+    @media ($xl-screen-up) {
+      text-align: left;
     }
   }
 
-  .events-list {
-    @media ($large-screen-up) {
-      @include span-columns(9);
-    }
-  }
-
-  .event-item-wrap {
-    @media ($large-screen-up) {
-      @include span-columns(4);
-    }
-
-    &.featured-event {
-      .event-item {
-        background-color: $medium-gray;
-
-        .event-title {
-          color: #fff;
-        }
-
-        .event-link {
-          color: #ccc;
-        }
-      }
+  .events-slider-outer {
+    @media ($xl-screen-up) {
+      max-width: rem(750);
     }
   }
 
   .event-item {
-    -webkit-backface-visibility: hidden;
+    align-items: center;
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    color: $dark-gray;
-    margin-top: rem(12px);
-    transition: color $base-duration $base-timing;
+    // flex-wrap: wrap;
+    gap: rem(16);
+    justify-content: center;
+    padding: rem(12);
 
-    @media ($large-screen-up) {
-      // margin-top: 0;
+    @media ($medium-screen-up) {
+      gap: rem(22);
+    }
+
+    .event-date {
+      align-items: center;
+      background-color: $gray-600;
+      border-radius: rem(8);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: rem(2);
+      height: rem(75);
+      justify-content: center;
+      line-height: 1;
+      transition: background-color $base-timing $base-duration;
+      width: rem(75);
+    }
+
+    .event-date-up {
+      font-size: rem(14);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .event-date-down {
+      font-size: rem(24);
+    }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+      line-height: 1;
+    }
+
+    .event-title {
+      color: $blue-900;
+      font-size: rem(18);
+      font-weight: bold;
+    }
+
+    .event-link {
+      color: $blue-900;
+      font-size: rem(12);
+      font-weight: bold;
     }
 
     &:hover {
       .event-date {
-        // opacity: 1;
-        background-color: $action-color;
+        background-color: $blue-900;
       }
-
-      .event-title {
-        color: $primary-color;
-      }
-
-      .event-link {
-        color: #333;
-      }
-    }
-  }
-
-  .event-date {
-    width: 10px;
-    -webkit-backface-visibility: hidden;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: $primary-color;
-    color: $white;
-    font-weight: bold;
-    line-height: 1;
-    max-height: rem(70px);
-    min-width: 64px;
-    padding: rem(20px) rem(5px);
-    text-transform: uppercase;
-    transition: background-color $base-duration $base-timing;
-    // opacity: 0.6;
-
-    .event-date-up {
-      font-size: em(14px);
-    }
-
-    .event-date-down {
-      font-size: em(20px);
-    }
-  }
-
-  .event-details-wrap {
-    display: flex;
-    align-items: center;
-    font-size: em(16px);
-    line-height: rem(20px);
-    margin: 0 rem(14px);
-
-    .event-details {
-      padding: 0.3em 0;
-    }
-
-    .event-title {
-      font-weight: bold;
-      font-size: em(16);
-      color: #555;
-    }
-
-    .event-link {
-      margin-top: em(10);
-      font-size: em(12);
-      line-height: 1em;
-      color: #888;
-      font-weight: 600;
-      display: block;
     }
   }
 }

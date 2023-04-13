@@ -1,5 +1,5 @@
 #flexible-section-repeater {
-  .page-flexible-section {
+  .pfsection {
     &.has-top-padding {
       margin-top: $mobile-section-margin;
     }
@@ -28,81 +28,51 @@
   }
 
   .color {
+    // Text Colors on Dark BGs
     &.primary-color,
-    &.blue {
-      background-color: $blue;
-
-      .section-title {
+    &.blue,
+    &.green,
+    &.medium-gray,
+    &.dark-gray {
+      .section-title,
+      .section-subtitle {
         color: $white;
       }
 
+      ol,
       ul {
+        color: $white;
+
         li:before {
           background-color: $white;
         }
       }
+    }
 
-      ol {
-        color: $white;
-      }
+    // Background colors
+    &.primary-color,
+    &.blue {
+      background-color: $blue-900;
     }
 
     &.light-blue {
-      background-color: $light-blue;
-
-      .section-title {
-        color: $white;
-      }
-
-      ul {
-        li:before {
-          background-color: $white;
-        }
-      }
-
-      ol {
-        color: $white;
-      }
+      background-color: $blue-200;
     }
 
     &.light-gray {
-      background-color: $light-gray;
+      background-color: $gray-200;
     }
 
     &.medium-gray {
-      background-color: $medium-gray;
-
-      .section-title {
-        color: $white;
-      }
-
-      ul {
-        li:before {
-          background-color: $white;
-        }
-      }
-
-      ol {
-        color: $white;
-      }
+      background-color: $gray-600;
     }
 
     &.dark-gray {
-      background-color: $dark-gray;
+      background-color: $gray-900;
+    }
 
-      .section-title {
-        color: $white;
-      }
-
-      ul {
-        li:before {
-          background-color: $white;
-        }
-      }
-
-      ol {
-        color: $white;
-      }
+    &.green {
+      background-color: $green-900;
     }
 
     &.white {
@@ -140,7 +110,7 @@
   .section-sub-title,
   .section-title,
   .section-post-title {
-    color: $dark-gray;
+    color: $gray-900;
   }
 }
 

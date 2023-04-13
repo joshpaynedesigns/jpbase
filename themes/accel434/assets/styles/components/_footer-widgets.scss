@@ -1,55 +1,36 @@
 .footer-widgets {
-  background-color: $secondary-background-color;
-  clear: both;
+  background-color: $green-100;
+  color: $gray-900;
+  padding: rem(48) 0;
   position: relative;
-  padding: $base-spacing * 2 0;
-  color: #777;
 
   @media ($large-screen-up) {
-    padding: em(82px) 0;
+    padding: rem(96) 0 rem(64);
   }
 
-  .widget-area {
-    width: 100%;
-    margin-bottom: $base-spacing;
-    text-align: center;
+  > .wrap {
+    display: grid;
+    gap: rem(32);
+    grid-template-columns: 1fr;
 
     @media ($medium-screen-up) {
-      @include span-columns(6);
-      @include omega-reset(4n);
-      @include omega(2n);
+      grid-template-columns: 1fr 1fr;
     }
 
     @media ($large-screen-up) {
-      @include span-columns(3);
-      @include omega-reset(2n);
-      @include omega(4n);
-      margin-bottom: 0;
-    }
-
-    .widget {
-      text-align: left;
-      clear: both;
-      min-width: 51%;
-      word-wrap: break-word;
-
-      @media ($large-screen-up) {
-        display: inline-block;
-      }
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 
   .widget-title.widgettitle {
-    font-size: em(28px);
-    color: #333;
-    font-weight: bold;
-    text-transform: uppercase;
+    color: $gray-900;
+    font-size: rem(24);
   }
 
   .widget_ns_footer_contact {
     .footer-logo {
-      max-width: 300px;
       margin-bottom: 0.5em;
+      max-width: 300px;
     }
 
     .get-directions {
@@ -79,16 +60,25 @@
   }
 
   .menu-item {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.25em;
 
     a {
-      color: $medium-gray;
+      color: $gray-600;
+      font-size: rem(14);
       position: relative;
       transition: color $base-duration $base-timing;
 
       &:hover {
-        color: $action-color;
+        color: $blue-900;
       }
+    }
+  }
+
+  .email-phone a {
+    color: $blue-900;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
@@ -101,24 +91,35 @@
 
 .social-links {
   clear: both;
-  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(4);
   margin-top: 1em;
+  position: relative;
 
   li {
     display: inline;
   }
 
+  a {
+    color: $gray-600;
+    display: inline-block;
+    height: 22px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-decoration: none !important;
+    width: 22px;
+  }
+
   svg {
-    background: #bbb;
-    fill: #fff;
-    height: 30px;
-    margin-right: 5px;
-    padding: 5px;
+    background: transparent;
+    fill: $gray-600;
+    height: 22px;
     transition: all $base-duration $base-timing;
-    width: 30px;
+    width: auto;
 
     &:hover {
-      background: $action-color;
+      fill: $blue-900;
     }
   }
 }

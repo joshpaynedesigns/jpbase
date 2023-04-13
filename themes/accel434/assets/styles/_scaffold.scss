@@ -11,16 +11,9 @@
     @media ($large-screen-up) {
       @include outer-container(1200px);
     }
-  }
-}
 
-.fixed-header {
-  .page-banner-slider,
-  &.no-banner .site-inner {
-    padding-top: 57px;
-
-    @media ($large-screen-up) {
-      padding-top: 69px;
+    .archIntroText {
+      margin-bottom: 3.5em;
     }
   }
 }
@@ -61,7 +54,7 @@
 
 @media ($large-screen-up) {
   .content-sidebar-wrap {
-    @include outer-container(1200px);
+    // @include outer-container(1200px);
     // display: flex;
 
     .content {

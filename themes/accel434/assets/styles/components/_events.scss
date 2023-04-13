@@ -9,7 +9,7 @@
     background-color: $primary-color;
     border-radius: 0;
     border: 2px solid transparent;
-    color: #fff;
+    color: white;
     cursor: pointer;
     display: inline-block;
     font-family: $base-font-family;
@@ -39,7 +39,7 @@
   .tribe-events-calendar-month__day-cell--selected,
   .tribe-events .tribe-events-calendar-month__day-cell--selected:focus,
   .tribe-events .tribe-events-calendar-month__day-cell--selected:hover {
-    background-color: $primary-color;
+    // background-color: $primary-color;
   }
 
   .tribe-events-calendar-month__day--current {
@@ -119,12 +119,12 @@
         margin-top: 1em;
 
         &:visited {
-          color: #fff;
-          background-color: $medium-gray;
+          color: white;
+          background-color: $gray-600;
 
           &:hover {
-            color: $medium-gray;
-            border-color: $medium-gray;
+            color: $gray-600;
+            border-color: $gray-600;
           }
         }
       }
@@ -242,7 +242,7 @@ Events Single
     }
   }
 
-  #flexible-section-repeater .page-flexible-section:first-child {
+  #flexible-section-repeater .pfsection:first-child {
     margin-top: 0 !important;
   }
 }

@@ -3,50 +3,39 @@ $icon-color: white;
 .alert-bar {
   background: $primary-color;
   color: white;
-  text-align: center;
   padding: 1em 0;
+  text-align: center;
 
   .alert-text p {
-    line-height: 1.5em;
-    font-size: em(18);
-    margin-bottom: 0;
     display: inline-block;
+    font-size: em(18);
+    line-height: 1.5em;
+    margin-bottom: 0;
   }
 
   .alert-button a {
-    margin: 0.5em 0 0.5em 1em;
     font-size: em(12);
+    margin: 0.5em 0 0.5em 1em;
     padding: 0.5em 1em 0.4em 1em;
   }
 }
 
 .site-header {
-  background-color: #fff;
+  background-color: white;
+  border-bottom: 1px solid #eee;
   position: relative;
-  top: 0;
   right: 0;
+  top: 0;
+  transition: all $medium-duration $base-timing;
   width: 100%;
   z-index: 900;
-  border-bottom: 1px solid #eee;
-  transition: all $medium-duration $base-timing;
-
-  .fixed-header & {
-    position: absolute;
-    transition: right $medium-duration $base-timing,
-      background-color $base-duration $base-timing;
-
-    &.scrolled {
-      position: fixed;
-    }
-  }
-
-  .fixed-header .move-left &.scrolled {
-    right: 300px;
-  }
+  opacity: 1;
 
   > .wrap {
-    display: flex;
     align-items: center;
+    display: flex;
+    gap: rem(16);
+    justify-content: space-between;
     position: relative;
   }
 
@@ -60,7 +49,7 @@ $icon-color: white;
       margin-bottom: 0;
 
       a {
-        color: $dark-gray;
+        color: $gray-900;
       }
 
       a:focus,
@@ -80,8 +69,8 @@ $icon-color: white;
       .site-description,
       .site-title {
         display: block;
-        text-indent: -9999px;
         font-size: 1em;
+        text-indent: -9999px;
       }
 
       .site-title > a {
@@ -91,119 +80,99 @@ $icon-color: white;
         background-repeat: no-repeat;
         background-size: contain;
         display: block;
-        height: 28px;
-        width: 198px;
-        transition: opacity $base-duration $base-timing;
         float: left;
+        height: 40px;
+        transition: opacity $base-duration $base-timing;
+        width: 135px;
 
         @media ($large-screen-up) {
-          height: 36px;
-          width: 258px;
+          height: 48px;
+          width: 160px;
+        }
+
+        @media ($xl-screen-up) {
+          height: 65px;
+          width: 220px;
         }
 
         &:before {
-          content: "";
           background-image: url("assets/images/logo.png");
-        }
-      }
-    }
-  }
-
-  /* Header Right */
-  .widget-area {
-    width: 100%;
-    // display: none;
-
-    @media ($large-screen-up) {
-      padding-left: $base-spacing;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .genesis-nav-menu {
-      display: none;
-      @media ($large-screen-up) {
-        display: block;
-        // padding-right: 65px;
-      }
-    }
-
-    .widget {
-      margin: 0;
-
-      li li {
-        margin-left: 0;
-      }
-    }
-
-    .widget_text {
-      p {
-        margin: 0;
-
-        a {
-          font-size: em(16);
-          line-height: 1em;
-          text-transform: uppercase;
-          background: $action-color;
-          padding: 0.8em 1em;
-          margin-left: 1.5em;
-          color: $white;
-          display: inline-block;
-          font-weight: bold;
-
-          &:hover {
-            background: shade($action-color, 20%);
-          }
+          content: "";
         }
       }
     }
   }
 
   .top-icon-section {
-    position: absolute;
-    right: 0;
-    top: 15px;
+    margin-left: auto;
 
     @media ($large-screen-up) {
-      top: auto;
+      margin-left: 0;
     }
 
-    .searchPhoneWrap {
-      padding: 8px 0 8px $base-spacing;
+    .searchWrap {
+      align-items: center;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      margin: 0 $base-spacing * 2 0 0;
 
       @media ($large-screen-up) {
-        border-left: $base-border;
-        border-color: #999;
-        margin: 0;
+        margin-left: rem(12);
+        margin-top: rem(3);
       }
     }
 
     .phoneIcon,
     .searchIcon {
       background-position: center;
-      background-size: contain;
       background-repeat: no-repeat;
-      transition: all $base-duration $base-timing;
-      opacity: 0.6;
+      background-size: contain;
       height: 18px;
+      opacity: 0.6;
+      transition: all $base-duration $base-timing;
       width: 18px;
 
       svg {
         fill: transparent;
-        stroke: $dark-gray;
-        width: 18px;
         height: 18px;
+        stroke: $gray-900;
+        width: 18px;
       }
 
       &:hover {
-        opacity: 1;
         cursor: pointer;
+        opacity: 1;
+
+        svg {
+          stroke: $blue-900;
+        }
       }
     }
+  }
+}
+
+// Mobile Menu Stuff
+body.fixed-header .site-header {
+  transition: right $medium-duration $base-timing,
+    background-color $base-duration $base-timing;
+}
+
+.move-left .site-header {
+  right: 300px;
+}
+
+body.fixed-header .site-container {
+  position: relative;
+}
+
+body.fixed-header .site-header {
+  top: 0;
+  position: sticky;
+}
+
+.admin-bar.fixed-header .site-header {
+  top: 46px;
+
+  @media (min-width: 783px) {
+    top: 32px;
   }
 }

@@ -2,53 +2,26 @@
 .one24grid {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 
   @media ($medium-screen-up) {
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 
   > div,
   > a {
-    margin-top: 2.5em;
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-
     width: 100%;
+    flex: 1;
 
     @media ($medium-screen-up) {
-      width: 49%;
-      margin-left: 2%;
-
-      &:nth-child(2) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1),
-      &:nth-child(1) {
-        margin-left: 0;
-      }
+      flex-basis: 45%;
     }
 
     @media ($large-screen-up) {
-      width: 24%;
-
-      &:nth-child(3),
-      &:nth-child(4) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1),
-      &:nth-child(3n + 1) {
-        margin-left: 2%;
-      }
-
-      &:nth-child(3n + 1) {
-        margin-left: 0;
-      }
+      flex-basis: 20%;
+      max-width: 23%;
     }
   }
 }
@@ -56,51 +29,25 @@
 .one23grid {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 
   @media ($medium-screen-up) {
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 
   > div,
   > a {
-    margin-top: 2.5em;
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-
     width: 100%;
+    flex: 1;
 
     @media ($medium-screen-up) {
-      width: 49%;
-      margin-left: 2%;
-
-      &:nth-child(2) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1),
-      &:nth-child(1) {
-        margin-left: 0;
-      }
+      flex-basis: 45%;
     }
 
     @media ($large-screen-up) {
-      width: 32%;
-
-      &:nth-child(3) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1) {
-        margin-left: 2%;
-      }
-
-      &:nth-child(3n + 1) {
-        margin-left: 0;
-      }
+      flex-basis: 30%;
     }
   }
 }
@@ -108,38 +55,21 @@
 .one3grid {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 
   @media ($large-screen-up) {
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
 
   > div,
   > a {
-    margin-top: 2.5em;
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-
+    flex: 1;
     width: 100%;
 
     @media ($large-screen-up) {
-      width: 32%;
-
-      &:nth-child(3) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1),
-      &:nth-child(2n) {
-        margin-left: 2%;
-      }
-
-      &:nth-child(3n + 1) {
-        margin-left: 0;
-      }
+      flex-basis: 30%;
     }
   }
 }
@@ -147,35 +77,22 @@
 .one2grid {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 
   @media ($medium-screen-up) {
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 4rem;
   }
 
   > div,
   > a {
-    margin-top: 2.5em;
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-
     width: 100%;
+    flex: 1;
 
     @media ($medium-screen-up) {
-      width: 49%;
-      margin-left: 2%;
-
-      &:nth-child(2) {
-        margin-top: 0;
-      }
-
-      &:nth-child(2n + 1),
-      &:nth-child(1) {
-        margin-left: 0;
-      }
+      flex-basis: 45%;
     }
   }
 }
@@ -183,28 +100,21 @@
 .one2gridlarge {
   display: flex;
   flex-direction: column;
+  gap: 2rem;
+
   @media ($large-screen-up) {
-    flex-wrap: wrap;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
   }
+
   > div,
   > a {
-    margin-top: 2.5em;
-    &:nth-child(1) {
-      margin-top: 0;
-    }
     width: 100%;
+    flex: 1;
+
     @media ($large-screen-up) {
-      width: 49%;
-      margin-left: 2%;
-      &:nth-child(2) {
-        margin-top: 0;
-      }
-      &:nth-child(2n + 1),
-      &:nth-child(1) {
-        margin-left: 0;
-      }
+      flex-basis: 45%;
     }
   }
 }

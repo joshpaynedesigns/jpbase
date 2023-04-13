@@ -1,28 +1,107 @@
-.cta-section.page-flexible-section {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
+.cta-section.pfsection {
+  position: relative;
 
-    .section-title {
-        margin-top: 0;
+  .cta-slide {
+    @include bg();
+    position: relative;
+    background-color: $black;
+
+    .wrap {
+      width: 80%;
     }
-}
 
-.cta-content {
-    text-align: center;
-    padding: $base-spacing*4 0;
-    position: relative;
-    z-index: 100;
-    color: white;
-}
+    .cta-content {
+      padding: 10em 0;
+      position: relative;
+      z-index: 100;
+      color: white;
+      text-align: center;
 
-.cta-overlay {
-    background-color: $dark-gray;
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &.content-left {
+      .cta-content {
+        float: left;
+
+        @media ($medium-screen-up) {
+          width: 50%;
+          text-align: left;
+        }
+      }
+    }
+
+    &.content-right {
+      .cta-content {
+        float: right;
+
+        @media ($large-screen-up) {
+          width: 50%;
+          text-align: right;
+        }
+      }
+    }
+
+    .cta-content-wrap {
+      background: $blue-900;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2em;
+
+      @media ($large-screen-up) {
+        background: none;
+        padding: 0;
+      }
+    }
+
+    .cta-overlay {
+      background-color: $black;
+      opacity: 0.6;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  .left-arrow,
+  .right-arrow {
+    @include base_transition();
+    transform: translateY(-50%);
+    transition: all $base-timing $base-duration;
+    display: block !important;
     opacity: 0.5;
-    height: 100%;
-    left: 0;
     position: absolute;
-    top: 0;
-    width: 100%;
+    top: 50%;
+    z-index: 100;
+    // margin-top: 2em;
+
+    &.slick-hidden {
+      display: none !important;
+    }
+
+    svg {
+      fill: $white;
+      height: 40px;
+      width: 40px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+
+  .left-arrow {
+    left: 1vw;
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .right-arrow {
+    right: 1vw;
+  }
 }

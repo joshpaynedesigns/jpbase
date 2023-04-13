@@ -1,0 +1,23 @@
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-4 {
+  gap: rem(16);
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}

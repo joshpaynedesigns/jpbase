@@ -1,16 +1,21 @@
-.w100 {
-    width: 100%;
+.w100,
+.w-full {
+  width: 100%;
 }
 
 // Max Widths
 .max-width-1200 {
-    max-width: 1200px;
+  max-width: 1200px;
 }
 
 .max-width-960 {
-    max-width: 960px;
+  max-width: 960px;
 }
 
 .max-width-760 {
-    max-width: 760px;
+  max-width: 760px;
+}
+
+.h-1 {
+  height: 1px;
 }

@@ -1,13 +1,11 @@
 .tiles {
-  .section-header {
-    text-align: center;
-  }
-
   .tile-blocks {
-    overflow: auto;
-
     @media ($large-screen-up) {
       display: flex;
+
+      &.tiles-2 .tile-block {
+        width: 50%;
+      }
 
       &.tiles-3 .tile-block {
         width: 33.33%;
@@ -23,10 +21,7 @@
       position: relative;
 
       @media ($large-screen-up) {
-        // min-height: 300px;
-        padding: 3.5em 1.5em;
-        float: left;
-        width: 50%;
+        padding: rem(75) rem(48);
       }
 
       @media screen and (min-width: 1200px) {
@@ -36,59 +31,35 @@
       .tile-block-excerpt {
         position: relative;
         z-index: 100;
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          margin-bottom: em(15);
-          font-weight: 700;
-          font-family: $heading-font-family;
-        }
-
-        *:last-child {
-          margin-bottom: 0;
-        }
       }
 
       &.has-image {
+        background-color: black;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        @include bg_overlay($dark-gray, 0.5);
-
-        .tile-block-excerpt {
-          color: white;
-        }
+        @include bg_overlay($gray-900, 0.5);
       }
 
-      &.solid {
-        &.primary {
-          background-color: $primary-color;
+      &.primary {
+        background-color: $primary-color;
+      }
 
-          .tile-block-excerpt {
-            color: white;
-          }
-        }
+      &.white {
+        background-color: white;
+      }
 
-        &.white {
-          background-color: white;
-          border: 1px solid #bbb;
-        }
+      &.white,
+      &.none {
+        border: 1px solid $gray-200;
+      }
 
-        &.light-gray {
-          background-color: $light-gray;
-        }
+      &.light-gray {
+        background-color: $gray-200;
+      }
 
-        &.dark-gray {
-          background-color: $dark-gray;
-
-          .tile-block-excerpt {
-            color: white;
-          }
-        }
+      &.dark-gray {
+        background-color: $gray-900;
       }
     }
   }
