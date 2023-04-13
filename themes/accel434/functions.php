@@ -2,57 +2,49 @@
 
 /**
  * Functions
- *
  */
 
- define('ACCEL_VERSION', '0.0.6');
+define('ACCEL_VERSION', '0.0.5');
 
 // Helper functions
 require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';
 
 // Load in the header file
-include_once(get_stylesheet_directory() . '/inc/_layout/header.php');
+require_once get_stylesheet_directory() . '/inc/_layout/header.php';
 
 // Load in the footer file
-include_once(get_stylesheet_directory() . '/inc/_layout/footer.php');
+require_once get_stylesheet_directory() . '/inc/_layout/footer.php';
 
 // Load in scripts (enqueue all the things)
-include_once(get_stylesheet_directory() . '/inc/scripts.php');
-
+require_once get_stylesheet_directory() . '/inc/scripts.php';
 
 // Load in the custom post types
-include_once(get_stylesheet_directory() . '/inc/_post-types/00-load-cpts.php');
+require_once get_stylesheet_directory() . '/inc/_post-types/00-load-cpts.php';
 
 // Load in the custom widgets
-include_once(get_stylesheet_directory() . '/inc/_widgets/00-load-widgets.php');
+require_once get_stylesheet_directory() . '/inc/_widgets/00-load-widgets.php';
 
 // Run the banner logic
-include_once(get_stylesheet_directory() . '/inc/_layout/banner.php');
-
-// Run the Woo functions
-if (class_exists('WooCommerce')) {
-    include_once(get_stylesheet_directory() . '/inc/_woo/woo-functions.php');
-}
+require_once get_stylesheet_directory() . '/inc/_layout/banner.php';
 
 /**
  * Theme Setup
- *
  * This setup function attaches all of the site-wide functions
  * to the correct hooks and filters. All the functions themselves
  * are defined below this setup function.
- *
  */
 
  // Crop Images
-if (false === get_option("medium_crop")) {
-    add_option("medium_crop", "1");
+if (false === get_option('medium_crop')) {
+    add_option('medium_crop', '1');
 } else {
-    update_option("medium_crop", "1");
+    update_option('medium_crop', '1');
 }
 
 // Image Resize
 update_option('medium_size_w', 400);
 update_option('medium_size_h', 400);
+add_image_size('med_landscape', 800, 600, true);
 
 add_action('genesis_setup', 'child_theme_setup', 15);
 function child_theme_setup()
@@ -66,7 +58,7 @@ function child_theme_setup()
     // For the Block Editor.
     add_theme_support('editor-styles');
 
-    //Remove Gutenberg Block Library CSS from loading on the frontend
+    // Remove Gutenberg Block Library CSS from loading on the frontend
     function smartwp_remove_wp_block_library_css()
     {
         wp_dequeue_style('wp-block-library');
@@ -82,19 +74,28 @@ function child_theme_setup()
     // add_action( 'genesis_title', '_wp_render_title_tag', 1 );
 
     // Structural Wraps
-    add_theme_support('genesis-structural-wraps', array( 'header', 'nav', 'subnav', 'inner', 'footer-widgets', 'footer' ));
+    add_theme_support('genesis-structural-wraps', array( 'header', 'inner', 'footer-widgets', 'footer' ));
 
     // Menus
-    add_theme_support('genesis-menus', array( 'primary' => 'Primary Navigation Menu', 'mobile-menu' => 'Mobile Navigation Menu' ));
+    add_theme_support(
+        'genesis-menus',
+        array(
+            'primary'     => 'Primary Navigation Menu',
+            'mobile-menu' => 'Mobile Navigation Menu',
+            'secondary-nav' => 'Secondary Navigation Menu',
+        )
+    );
 
-    //* Reposition the primary navigation menu
+    // * Reposition the primary navigation menu
     remove_action('genesis_after_header', 'genesis_do_nav');
-    // add_action( 'genesis_header_right', 'genesis_do_nav' );
+    // add_action('genesis_header', 'genesis_do_nav');
 
-    //CPT Archive Nav Fix
+    // add_action('genesis_header', 'ns_search_toggle');
+
+    // CPT Archive Nav Fix
     function fix_nav_menu($query)
     {
-        if (!is_admin()) {
+        if (! is_admin()) {
             if ($query->get('post_type') === 'nav_menu_item') {
                 // $query->set( 'tax_query', '' );
                 $query->set('meta_key', '');
@@ -104,12 +105,13 @@ function child_theme_setup()
     }
     add_action('pre_get_posts', 'fix_nav_menu');
 
-    //* Add HTML5 markup structure
+    // * Add HTML5 markup structure
     add_theme_support('html5', array( 'search-form', 'comment-form', 'comment-list' ));
 
     // Sidebars
     unregister_sidebar('sidebar-alt');
-    // genesis_register_sidebar( array( 'name' => 'Shop Sidebar', 'id' => 'shop-sidebar' ) );
+    unregister_sidebar('header-right');
+    unregister_sidebar('sidebar');
 
     add_theme_support('genesis-footer-widgets', 4);
 
@@ -123,7 +125,7 @@ function child_theme_setup()
     add_action('admin_init', 'ns_remove_user_settings');
 
     // Editor Styles
-    //add_editor_style( 'editor-style.css' );
+    // add_editor_style( 'editor-style.css' );
 
     // Reposition Genesis Metaboxes
     remove_action('admin_menu', 'genesis_add_inpost_seo_box');
@@ -149,6 +151,14 @@ function child_theme_setup()
     remove_action('genesis_footer', 'genesis_do_footer');
     add_action('genesis_footer', 'ns_footer');
 
+    // Register Widgets
+    add_action(
+        'widgets_init',
+        function () {
+            register_widget('ns_Contact_Widget');
+        }
+    );
+
     // Remove Blog & Archive Template From Genesis
     add_filter('theme_page_templates', 'bourncreative_remove_page_templates');
     function bourncreative_remove_page_templates($templates)
@@ -158,7 +168,7 @@ function child_theme_setup()
         return $templates;
     }
 
-    //Add class to Body when there is no banner
+    // Add class to Body when there is no banner
     add_filter('genesis_attr_body', 'mktg434_add_css_attr_body');
     function mktg434_add_css_attr_body($attributes)
     {
@@ -169,12 +179,12 @@ function child_theme_setup()
         if ($hide_banner_options == 'hide_banner_image') {
             $attributes['class'] .= ' no-banner-image';
         }
-        //Add class to Body when it's fixed
+        // Add class to Body when it's fixed
         $turn_on_fixed_header = ns_get_field('turn_on_fixed_header', 'options');
         if ($turn_on_fixed_header) {
             $attributes['class'] .= ' fixed-header';
         }
-        //Add class to Body when it's Alert Bar
+        // Add class to Body when it's Alert Bar
         $show_alert_bar = ns_get_field('show_alert_bar', 'options');
         if ($show_alert_bar) {
             $attributes['class'] .= ' show-alert-bar';
@@ -194,7 +204,7 @@ function child_theme_setup()
 
 /**
  * Get taxonomies terms links.
-**/
+ **/
 function custom_taxonomies_terms_links()
 {
     global $post, $post_id;
@@ -207,7 +217,7 @@ function custom_taxonomies_terms_links()
     foreach ($taxonomies as $taxonomy) {
         // get the terms related to post
         $terms = get_the_terms($post->ID, $taxonomy);
-        if (!empty($terms)) {
+        if (! empty($terms)) {
             $out = array();
             foreach ($terms as $term) {
                 $out[] = '<a href="' . get_term_link($term->slug, $taxonomy) . '">' . $term->name . '</a>';
@@ -220,26 +230,29 @@ function custom_taxonomies_terms_links()
 
 /**
  * Get taxonomies terms.
-**/
-function custom_taxonomies_terms()
+ **/
+function custom_taxonomies_terms($post_id, $taxonomy, $separator = " ", $links = false)
 {
-    global $post, $post_id;
-    // get post by post id
-    $post = &get_post($post->ID);
-    // get post type by post
-    $post_type = $post->post_type;
-    // get post type taxonomies
-    $taxonomies = get_object_taxonomies($post_type);
-    foreach ($taxonomies as $taxonomy) {
-        // get the terms related to post
-        $terms = get_the_terms($post->ID, $taxonomy);
-        if (!empty($terms)) {
-            $out = array();
-            foreach ($terms as $term) {
-                $out[] = '<span>' . $term->name . '</span>';
+    $return = "";
+    $terms = get_the_terms($post_id, $taxonomy);
+    if (! empty($terms)) {
+        $out = array();
+        foreach ($terms as $term) {
+            $link = get_term_link($term);
+
+            $term_string = "<span>";
+            if ($links) {
+                $term_string .= "<a href='$link'>";
             }
-            $return = join(' ', $out);
+            $term_string .= $term->name;
+            if ($links) {
+                $term_string .= "</a>";
+            }
+            $term_string .= "<span>";
+
+            $out[] = $term_string;
         }
+        $return = join($separator, $out);
     }
     return $return;
 }
@@ -248,6 +261,7 @@ function custom_taxonomies_terms()
 
 /**
  * Customize Contact Methods
+ *
  * @since 1.0.0
  *
  * @author Bill Erickson
@@ -267,7 +281,6 @@ function ns_contactmethods($contactmethods)
 
 /**
  * Remove Use Theme Settings
- *
  */
 function ns_remove_user_settings()
 {
@@ -357,19 +370,20 @@ function ns_remove_genesis_widgets()
  */
 function ns_remove_genesis_metaboxes($_genesis_theme_settings_pagehook)
 {
-    //remove_meta_box( 'genesis-theme-settings-feeds',      $_genesis_theme_settings_pagehook, 'main' );
-    //remove_meta_box( 'genesis-theme-settings-header',     $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-feeds',      $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-header',     $_genesis_theme_settings_pagehook, 'main' );
     remove_meta_box('genesis-theme-settings-nav', $_genesis_theme_settings_pagehook, 'main');
     // remove_meta_box( 'genesis-theme-settings-layout',    $_genesis_theme_settings_pagehook, 'main' );
-    //remove_meta_box( 'genesis-theme-settings-breadcrumb', $_genesis_theme_settings_pagehook, 'main' );
-    //remove_meta_box( 'genesis-theme-settings-comments',   $_genesis_theme_settings_pagehook, 'main' );
-    //remove_meta_box( 'genesis-theme-settings-posts',      $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-breadcrumb', $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-comments',   $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-posts',      $_genesis_theme_settings_pagehook, 'main' );
     remove_meta_box('genesis-theme-settings-blogpage', $_genesis_theme_settings_pagehook, 'main');
-    //remove_meta_box( 'genesis-theme-settings-scripts',    $_genesis_theme_settings_pagehook, 'main' );
+    // remove_meta_box( 'genesis-theme-settings-scripts',    $_genesis_theme_settings_pagehook, 'main' );
 }
 
 /**
  * Don't Update Theme
+ *
  * @since 1.0.0
  *
  * If there is a theme in the repo with the same name,
@@ -378,7 +392,7 @@ function ns_remove_genesis_metaboxes($_genesis_theme_settings_pagehook)
  * @author Mark Jaquith
  * @link http://markjaquith.wordpress.com/2009/12/14/excluding-your-plugin-or-theme-from-update-checks/
  *
- * @param array $r, request arguments
+ * @param array  $r, request arguments
  * @param string $url, request url
  * @return array request arguments
  */
@@ -397,23 +411,30 @@ function ns_dont_update_theme($r, $url)
 
 // ** Frontend Functions ** //
 
-//* Display a custom favicon
+// * Display a custom favicon
 add_filter('genesis_pre_load_favicon', 'ns_favicon_filter');
 function ns_favicon_filter($favicon_url)
 {
     return '';
 }
 
+/**
+ * Add Theme options
+ *
+ * @author Wesley Cole
+ * @link http://objectiv.co/
+ */
+
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(
         array(
-            'page_title'    => 'Theme Settings',
-            'menu_title'    => 'Theme Settings',
-            'menu_slug'     => 'theme-general-settings',
-            'icon_url'      => 'dashicons-art',
-            'capability'    => 'edit_posts',
-            'position'      => 59.5,
-            'redirect'      => false
+            'page_title' => 'Theme Settings',
+            'menu_title' => 'Theme Settings',
+            'menu_slug'  => 'theme-general-settings',
+            'icon_url'   => 'dashicons-art',
+            'capability' => 'edit_posts',
+            'position'   => 59.5,
+            'redirect'   => false,
         )
     );
 }
@@ -423,27 +444,28 @@ function ns_hide_email($email)
 {
 
     $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
-    $key = str_shuffle($character_set);
-    $cipher_text = '';
-    $id = 'e' . rand(1, 999999999);
+    $key           = str_shuffle($character_set);
+    $cipher_text   = '';
+    $id            = 'e' . rand(1, 999999999);
     for ($i = 0; $i < strlen($email); $i += 1) {
-        $cipher_text .= $key[strpos($character_set, $email[$i])];
+        $cipher_text .= $key[ strpos($character_set, $email[ $i ]) ];
     }
-    $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
+    $script  = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
     $script .= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
     $script .= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
-    $script = "eval(\"" . str_replace(array("\\",'"'), array("\\\\",'\"'), $script) . "\")";
-    $script = '<script type="text/javascript">/*<![CDATA[*/' . $script . '/*]]>*/</script>';
+    $script  = 'eval("' . str_replace(array( '\\', '"' ), array( '\\\\', '\"' ), $script) . '")';
+    $script  = '<script type="text/javascript">/*<![CDATA[*/' . $script . '/*]]>*/</script>';
 
     return '<span id="' . $id . '">[javascript protected email address]</span>' . $script;
 }
 
-/*** Remove theme & plugin editor menu */
-function disable_theme_plugin_editor_action()
+/** * Remove editor menu
+ */
+function remove_editor_menu()
 {
-    define('DISALLOW_FILE_EDIT', true);
+    remove_action('admin_menu', '_add_themes_utility_last', 101);
 }
-add_action('init', 'disable_theme_plugin_editor_action');
+add_action('_admin_menu', 'remove_editor_menu', 1);
 
 /**
  * Add Custom Post Type archive to WordPress search link query
@@ -459,21 +481,24 @@ function cab_add_custom_post_type_archive_link($results, $query)
     $match = '/' . str_remove_accents($query['s']) . '/i';
     foreach ($query['post_type'] as $post_type) :
         $pt_archive_link = get_post_type_archive_link($post_type);
-        $pt_obj = get_post_type_object($post_type);
+        $pt_obj          = get_post_type_object($post_type);
         if ($pt_archive_link !== false && $pt_obj->has_archive !== false) : // Add only post type with 'has_archive'
             if (preg_match($match, str_remove_accents($pt_obj->labels->name)) > 0) :
-                array_unshift($results, array(
-                    'ID' => $pt_obj->has_archive,
-                    'title' => trim(esc_html(strip_tags($pt_obj->labels->name))) ,
-                    'permalink' => $pt_archive_link,
-                    'info' => 'Archive',
-                ));
+                array_unshift(
+                    $results,
+                    array(
+                        'ID'        => $pt_obj->has_archive,
+                        'title'     => trim(esc_html(strip_tags($pt_obj->labels->name))),
+                        'permalink' => $pt_archive_link,
+                        'info'      => 'Archive',
+                    )
+                );
             endif;
-        endif; //end post type archive links in link_query
+        endif; // end post type archive links in link_query
     endforeach;
     return $results;
 }
-//* Remove accents
+// * Remove accents
 function str_remove_accents($str, $charset = 'utf-8')
 {
     $str = htmlentities($str, ENT_NOQUOTES, $charset);
@@ -493,12 +518,15 @@ add_filter('wp_link_query', 'cab_wp_link_query_term_linking', 99, 2);
  */
 function cab_wp_link_query_term_linking($results, $query)
 {
-    //* Query taxonomy terms.
-    $taxonomies = get_taxonomies(array(
-        'show_in_nav_menus' => true
-    ), 'names');
+    // * Query taxonomy terms.
+    $taxonomies = get_taxonomies(
+        array(
+            'show_in_nav_menus' => true,
+        ),
+        'names'
+    );
 
-    //* Add to the array any taxonomies you do not want
+    // * Add to the array any taxonomies you do not want
     $exclude = array(
         'media_category',
         'tag',
@@ -506,22 +534,22 @@ function cab_wp_link_query_term_linking($results, $query)
 
     $taxonomies = array_diff($taxonomies, $exclude);
 
-    //* Get the terms of the taxonomies
+    // * Get the terms of the taxonomies
     // $terms = get_terms( $taxonomies, array(
-    //     'name__like' => $query['s'],
-    //     'number'     => 20,
-    //     'hide_empty' => true,
+    // 'name__like' => $query['s'],
+    // 'number'     => 20,
+    // 'hide_empty' => true,
     // ));
-    //* Terms
+    // * Terms
     // if ( ! empty( $terms ) && ! is_wp_error( $terms ) ):
-    //     foreach( $terms as $term ):
-    //         $results[] = array(
-    //             'ID'        => 'term-' . $term->term_id,
-    //             'title'     => html_entity_decode($term->name, ENT_QUOTES, get_bloginfo('charset')) ,
-    //             'permalink' => get_term_link(intval($term->term_id) , $term->taxonomy) ,
-    //             'info'      => get_taxonomy($term->taxonomy)->labels->singular_name,
-    //         );
-    //     endforeach;
+    // foreach( $terms as $term ):
+    // $results[] = array(
+    // 'ID'        => 'term-' . $term->term_id,
+    // 'title'     => html_entity_decode($term->name, ENT_QUOTES, get_bloginfo('charset')) ,
+    // 'permalink' => get_term_link(intval($term->term_id) , $term->taxonomy) ,
+    // 'info'      => get_taxonomy($term->taxonomy)->labels->singular_name,
+    // );
+    // endforeach;
     // endif;
 
     return $results;
@@ -534,8 +562,13 @@ function ns_hide_editor()
 {
 
     // Get the Post ID.
-    $post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
-    if (!isset($post_id)) {
+    $post_id = ns_key_value($_GET, 'post');
+    $post_param = ns_key_value($_POST, 'post_ID');
+    if (! $post_id) {
+        $post_id = $post_param;
+    }
+
+    if (! isset($post_id)) {
         return;
     }
 
@@ -547,18 +580,6 @@ function ns_hide_editor()
     }
 }
 add_action('admin_init', 'ns_hide_editor');
-
-add_action('genesis_before_header', 'ns_ie_alert');
-function ns_ie_alert()
-{
-    ?>
-    <!--[if IE]>
-     <div class="alert alert-warning">
-       <?php _e('You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/?locale=en">upgrade your browser</a> to improve your experience.', 'sage'); ?>
-     </div>
-   <![endif]-->
-    <?php
-}
 
 /*
  * Modify TinyMCE editor to remove H1 & Pre.
@@ -578,7 +599,7 @@ add_filter('the_generator', '__return_empty_string');
 function ns_get_short_description($post_id = null, $length = null)
 {
 
-    $excerpt = get_the_excerpt($post_id);
+    $excerpt   = get_the_excerpt($post_id);
     $post_type = get_post_type($post_id);
 
     $excerpt_length = 55;
@@ -592,14 +613,14 @@ function ns_get_short_description($post_id = null, $length = null)
         }
 
         if ($post_type === 'service' || $post_type === 'industry') {
-            $content = strip_shortcodes(get_field('content', $post_id));
+            $content = strip_shortcodes(ns_get_field('content', $post_id));
         }
 
         if (empty($content)) {
             $content = get_post_meta($post_id, 'page_flexible_sections_0_content', true);
         }
         if (empty($content)) {
-            $post = get_post($post_id);
+            $post    = get_post($post_id);
             $content = strip_shortcodes($post->post_content);
         }
         $excerpt = $content;
@@ -613,7 +634,7 @@ function ns_get_short_description($post_id = null, $length = null)
 // Pretty Dump of Variables
 function ovdump($data)
 {
-    print("<pre>" . print_r($data, true) . "</pre>");
+    print( '<pre>' . print_r($data, true) . '</pre>' );
 }
 
 // Add the skip to content nav
@@ -623,4 +644,26 @@ function ns_skip_to_content_button()
     ?>
      <a href="#afterBanner" class="skipLink">Skip to content</a>
         <?php
+}
+
+add_filter('facetwp_is_main_query', function ($is_main_query, $query) {
+    if ($query->is_archive() && $query->is_main_query()) {
+        $is_main_query = false;
+    }
+    return $is_main_query;
+}, 10, 2);
+
+// Ignore tribe_events from FacetWP
+add_filter('facetwp_is_main_query', function ($is_main_query, $query) {
+    if ('tribe_events' == $query->get('post_type')) {
+        $is_main_query = false;
+    }
+    return $is_main_query;
+}, 10, 2);
+
+//* Customize header search form label
+add_filter('genesis_search_form_label', 'ec_search_form_label');
+function ec_search_form_label($text)
+{
+    return esc_attr('Site Search');
 }
