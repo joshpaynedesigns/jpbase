@@ -6,15 +6,13 @@ declare global {
 	}
 }
 
-const qsa = document.querySelectorAll.bind(
-	document
-) as typeof document.querySelectorAll;
+const d = document;
+const qsa = d.querySelectorAll.bind( d ) as typeof d.querySelectorAll;
 const jq = window.jQuery;
 
 globalID();
-removeUnwantedStuff();
 
-document.addEventListener( 'DOMContentLoaded', (): void => {
+domReady( () => {
 	removeUnwantedStuff();
 } );
 
@@ -53,10 +51,7 @@ function removeUnwantedStuff(): void {
 
 	qsa( '.wp-block-embed' ).forEach( ( el ) => {
 		if ( el.querySelector( '.arve' ) ) {
-			el.classList.remove(
-				'wp-embed-aspect-16-9',
-				'wp-has-aspect-ratio'
-			);
+			el.classList.remove( 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' );
 
 			const wrapper = el.querySelector( '.wp-block-embed__wrapper' );
 
@@ -67,16 +62,16 @@ function removeUnwantedStuff(): void {
 	} );
 }
 
-function globalID(): void {
+export function globalID(): void {
 	// Usually the id should be already there added with php using the language_attributes filter
-	if ( 'html' === document.documentElement.id ) {
+	if ( 'html' === d.documentElement.id ) {
 		return;
 	}
 
-	if ( ! document.documentElement.id ) {
-		document.documentElement.id = 'html';
-	} else if ( ! document.body.id ) {
-		document.body.id = 'html';
+	if ( ! d.documentElement.id ) {
+		d.documentElement.id = 'html';
+	} else if ( ! d.body.id ) {
+		d.body.id = 'html';
 	}
 }
 
@@ -92,4 +87,20 @@ function unwrap( el: Element ): void {
 	}
 	// remove the empty element
 	parent.removeChild( el );
+}
+
+export function domReady( callback ): void {
+	if ( typeof d === 'undefined' ) {
+		return;
+	}
+
+	if (
+		d.readyState === 'complete' || // DOMContentLoaded + Images/Styles/etc loaded, so we call directly.
+		d.readyState === 'interactive' // DOMContentLoaded fires at this point, so we call directly.
+	) {
+		return void callback();
+	}
+
+	// DOMContentLoaded has not fired yet, delay callback until then.
+	d.addEventListener( 'DOMContentLoaded', callback );
 }

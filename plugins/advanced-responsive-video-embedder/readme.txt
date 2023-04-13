@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.9.16
 Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 9.9.9
+Stable tag: 9.10.3
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -190,11 +190,24 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 2. Main Options
 2. URL Parameter Options
 3. Pro Options
-
 ## Changelog ##
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2023-04-12 9.10.3 ###
+* Fix: Yoast SEO compatibility and other possible issues.
+
+### 2023-04-11 9.10.2 ###
+* Fix: Fatal error with WordPress 5.8.6
+
+### 2023-04-11 9.10.1 ###
+* New: Warning massage that ARVE will require PHP 7.2 soon.
+* New: Support for extra classes (Advanced section) on the ARVE block.
+* New: You can align left/right the ARVE block now.
+* Fix: Styles were not applied inside new Gutenberg versions.
+* Improved: Videos are no longer playble in the Block editor, instead the block is selected when clicking on them.
+* Improved: Some minor code changes.
 
 ### 2023-02-05 9.9.7 ###
 * Fix: WP Courseware Course Builder meta box was always collapsed. (Could not get the ARVE button to work for the Course Description)
