@@ -5,8 +5,8 @@ remove_action('genesis_entry_footer', 'genesis_post_meta');
 remove_action('genesis_entry_footer', 'genesis_post_meta');
 remove_action('genesis_before_loop', 'genesis_do_date_archive_title');
 
-add_action( 'genesis_loop', 'objectiv_intro_text' );
-function objectiv_intro_text() {
+add_action( 'genesis_loop', 'ns_intro_text' );
+function ns_intro_text() {
     $arch_cont = ns_get_field( 'archive_intro_text_locations', 'option' );
     ?>
     <?php if ( ! empty( $arch_cont ) ) : ?>
@@ -18,12 +18,12 @@ function objectiv_intro_text() {
 }
 
 // Upper Half or so of the location page
-function objectiv_locations_upper_archive()
+function ns_locations_upper_archive()
 {
     ?>
 
 	<section class="location-arch-upper">
-        <?php echo do_shortcode('[objectiv_google_maps]'); ?>
+        <?php echo do_shortcode('[ns_google_maps]'); ?>
 	</section>
 
 	<?php
@@ -31,7 +31,7 @@ function objectiv_locations_upper_archive()
 }
 
 // Lower Half or so of the location page
-function objectiv_locations_lower_archive()
+function ns_locations_lower_archive()
 {
     $args = array(
 	  'numberposts' => -1,
@@ -92,8 +92,8 @@ remove_action('genesis_loop', 'genesis_do_loop');
 add_action('genesis_loop', 'cgd_locations_archive_custom_loop');
 function cgd_locations_archive_custom_loop()
 {
-    objectiv_locations_upper_archive();
-    objectiv_locations_lower_archive();
+    ns_locations_upper_archive();
+    ns_locations_lower_archive();
 }
 
 genesis();

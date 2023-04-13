@@ -15,7 +15,7 @@
 			<?php else: ?>
 				<span class="button-wrap centered">
 			<?php endif; ?>
-				<?php echo objectiv_link_button( $btn_details, 'white-button' ); ?>
+				<?php echo ns_link_button( $btn_details, 'white-button' ); ?>
 			</span>
 		</div>
 	</div>

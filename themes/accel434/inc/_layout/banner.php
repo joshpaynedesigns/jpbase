@@ -1,7 +1,7 @@
 <?php
-add_action( 'genesis_after_header', 'objectiv_page_banner', 10 );
+add_action( 'genesis_after_header', 'ns_page_banner', 10 );
 
-function objectiv_page_banner() {
+function ns_page_banner() {
 	$hide_banner_options = ns_get_field('hide_banner_options');
 
 	if ( is_front_page() ) {

@@ -63,7 +63,7 @@ if ( ! function_exists('mktg434_location_cpt') ) {
 }
 
 // Rename the title text on creating a new post
-function objectiv_change_title_for_locations($title)
+function ns_change_title_for_locations($title)
 {
     $screen = get_current_screen();
 
@@ -73,6 +73,6 @@ function objectiv_change_title_for_locations($title)
 
     return $title;
 }
-add_filter('enter_title_here', 'objectiv_change_title_for_locations');
+add_filter('enter_title_here', 'ns_change_title_for_locations');
 
 add_post_type_support( 'location', 'genesis-scripts' );

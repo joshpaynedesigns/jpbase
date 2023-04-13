@@ -1,6 +1,6 @@
 <?php
 
-function objectiv_link_button( $btn_details = null, $class = null ) {
+function ns_link_button( $btn_details = null, $class = null ) {
 
     if ( ! empty( $btn_details ) ) {
         $title = $btn_details['title'];
@@ -25,7 +25,7 @@ function objectiv_link_button( $btn_details = null, $class = null ) {
     }
 }
 
-function objectiv_link_link( $link_details = null, $class = null ) {
+function ns_link_link( $link_details = null, $class = null ) {
 
     if ( ! empty( $link_details ) ) {
         $title = $link_details['title'];

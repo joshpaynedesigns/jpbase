@@ -119,26 +119,26 @@ function child_theme_setup()
     genesis_unregister_layout('sidebar-content-sidebar');
 
     // Remove Unused User Settings
-    add_filter('user_contactmethods', 'objectiv_contactmethods');
-    add_action('admin_init', 'objectiv_remove_user_settings');
+    add_filter('user_contactmethods', 'ns_contactmethods');
+    add_action('admin_init', 'ns_remove_user_settings');
 
     // Editor Styles
     //add_editor_style( 'editor-style.css' );
 
     // Reposition Genesis Metaboxes
     remove_action('admin_menu', 'genesis_add_inpost_seo_box');
-    // add_action( 'admin_menu', 'objectiv_add_inpost_seo_box' );
+    // add_action( 'admin_menu', 'ns_add_inpost_seo_box' );
     remove_action('admin_menu', 'genesis_add_inpost_layout_box');
-    // add_action( 'admin_menu', 'objectiv_add_inpost_layout_box' );
+    // add_action( 'admin_menu', 'ns_add_inpost_layout_box' );
 
     // Remove Genesis Widgets
-    add_action('widgets_init', 'objectiv_remove_genesis_widgets', 20);
+    add_action('widgets_init', 'ns_remove_genesis_widgets', 20);
 
     // Remove Genesis Theme Settings Metaboxes
-    add_action('genesis_theme_settings_metaboxes', 'objectiv_remove_genesis_metaboxes');
+    add_action('genesis_theme_settings_metaboxes', 'ns_remove_genesis_metaboxes');
 
     // Don't update theme
-    add_filter('http_request_args', 'objectiv_dont_update_theme', 5, 2);
+    add_filter('http_request_args', 'ns_dont_update_theme', 5, 2);
 
     // ** Frontend **
 
@@ -147,7 +147,7 @@ function child_theme_setup()
 
     // Footer
     remove_action('genesis_footer', 'genesis_do_footer');
-    add_action('genesis_footer', 'objectiv_footer');
+    add_action('genesis_footer', 'ns_footer');
 
     // Remove Blog & Archive Template From Genesis
     add_filter('theme_page_templates', 'bourncreative_remove_page_templates');
@@ -256,7 +256,7 @@ function custom_taxonomies_terms()
  * @param array $contactmethods
  * @return array
  */
-function objectiv_contactmethods($contactmethods)
+function ns_contactmethods($contactmethods)
 {
     unset($contactmethods['aim']);
     unset($contactmethods['yim']);
@@ -269,7 +269,7 @@ function objectiv_contactmethods($contactmethods)
  * Remove Use Theme Settings
  *
  */
-function objectiv_remove_user_settings()
+function ns_remove_user_settings()
 {
     remove_action('show_user_profile', 'genesis_user_options_fields');
     remove_action('edit_user_profile', 'genesis_user_options_fields');
@@ -293,7 +293,7 @@ function objectiv_remove_user_settings()
  *
  * @see genesis_inpost_seo_box() Generates the content in the meta box
  */
-function objectiv_add_inpost_seo_box()
+function ns_add_inpost_seo_box()
 {
 
     if (genesis_detect_seo_plugins()) {
@@ -321,7 +321,7 @@ function objectiv_add_inpost_seo_box()
  *
  * @return null Returns null if Genesis layouts are not supported
  */
-function objectiv_add_inpost_layout_box()
+function ns_add_inpost_layout_box()
 {
 
     if (! current_theme_supports('genesis-inpost-layouts')) {
@@ -340,7 +340,7 @@ function objectiv_add_inpost_layout_box()
  *
  * @since 1.0.0
  */
-function objectiv_remove_genesis_widgets()
+function ns_remove_genesis_widgets()
 {
     unregister_widget('Genesis_eNews_Updates');
     unregister_widget('Genesis_Featured_Page');
@@ -355,7 +355,7 @@ function objectiv_remove_genesis_widgets()
  * @since 1.0.0
  * @param string $_genesis_theme_settings_pagehook
  */
-function objectiv_remove_genesis_metaboxes($_genesis_theme_settings_pagehook)
+function ns_remove_genesis_metaboxes($_genesis_theme_settings_pagehook)
 {
     //remove_meta_box( 'genesis-theme-settings-feeds',      $_genesis_theme_settings_pagehook, 'main' );
     //remove_meta_box( 'genesis-theme-settings-header',     $_genesis_theme_settings_pagehook, 'main' );
@@ -383,7 +383,7 @@ function objectiv_remove_genesis_metaboxes($_genesis_theme_settings_pagehook)
  * @return array request arguments
  */
 
-function objectiv_dont_update_theme($r, $url)
+function ns_dont_update_theme($r, $url)
 {
     if (0 !== strpos($url, 'http://api.wordpress.org/themes/update-check')) {
         return $r; // Not a theme update request. Bail immediately.
@@ -398,18 +398,11 @@ function objectiv_dont_update_theme($r, $url)
 // ** Frontend Functions ** //
 
 //* Display a custom favicon
-add_filter('genesis_pre_load_favicon', 'objectiv_favicon_filter');
-function objectiv_favicon_filter($favicon_url)
+add_filter('genesis_pre_load_favicon', 'ns_favicon_filter');
+function ns_favicon_filter($favicon_url)
 {
     return '';
 }
-
-/**
- * Add Theme options
- *
- * @author Wesley Cole
- * @link http://objectiv.co/
- */
 
 if (function_exists('acf_add_options_page')) {
     acf_add_options_page(
@@ -426,7 +419,7 @@ if (function_exists('acf_add_options_page')) {
 }
 
 // Email obfuscation
-function objectiv_hide_email($email)
+function ns_hide_email($email)
 {
 
     $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
@@ -537,7 +530,7 @@ function cab_wp_link_query_term_linking($results, $query)
 /**
  * Hide editor for content builder pages.
  */
-function objectiv_hide_editor()
+function ns_hide_editor()
 {
 
     // Get the Post ID.
@@ -553,10 +546,10 @@ function objectiv_hide_editor()
         remove_post_type_support('page', 'editor');
     }
 }
-add_action('admin_init', 'objectiv_hide_editor');
+add_action('admin_init', 'ns_hide_editor');
 
-add_action('genesis_before_header', 'objectiv_ie_alert');
-function objectiv_ie_alert()
+add_action('genesis_before_header', 'ns_ie_alert');
+function ns_ie_alert()
 {
     ?>
     <!--[if IE]>
@@ -582,7 +575,7 @@ add_filter('the_generator', '__return_empty_string');
 
 
 // Get Short Description
-function objectiv_get_short_description($post_id = null, $length = null)
+function ns_get_short_description($post_id = null, $length = null)
 {
 
     $excerpt = get_the_excerpt($post_id);
@@ -624,8 +617,8 @@ function ovdump($data)
 }
 
 // Add the skip to content nav
-add_action('genesis_before', 'objectiv_skip_to_content_button');
-function objectiv_skip_to_content_button()
+add_action('genesis_before', 'ns_skip_to_content_button');
+function ns_skip_to_content_button()
 {
     ?>
      <a href="#afterBanner" class="skipLink">Skip to content</a>

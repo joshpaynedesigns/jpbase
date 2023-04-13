@@ -9,8 +9,8 @@ remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 )
 remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
 
-add_action( 'genesis_before_entry', 'objectiv_staff_header_content', 1 );
-function objectiv_staff_header_content() {
+add_action( 'genesis_before_entry', 'ns_staff_header_content', 1 );
+function ns_staff_header_content() {
     $s_id = get_the_ID();
     $thumb = get_the_post_thumbnail(
         $s_id,
@@ -43,7 +43,7 @@ function objectiv_staff_header_content() {
                 <?php endif; ?>
                 <div class="singleStaffContact">
                     <?php if ( ! empty( $staff_email ) ) : ?>
-                        <div class="staffEmail"><?php echo objectiv_hide_email( $staff_email ); ?></div>
+                        <div class="staffEmail"><?php echo ns_hide_email( $staff_email ); ?></div>
                     <?php endif; ?>
                     <?php if ( ! empty( $staff_office ) ) : ?>
                         <div class="staffPhone"><span class="uppercase">Office:</span> <a href="tel:<?php echo $office_phone_numbers ?>"><?php echo $staff_office ?></a></div>

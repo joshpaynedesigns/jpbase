@@ -1,13 +1,7 @@
 <?php
 
-/**
- * Add Mobile Menu Trigger
- *
- * @author Wesley Cole
- * @link http://objectiv.co/
- */
-add_action( 'genesis_header', 'objectiv_mobile_trigger' );
-function objectiv_mobile_trigger() {
+add_action( 'genesis_header', 'ns_mobile_trigger' );
+function ns_mobile_trigger() {
 
 	if ( has_nav_menu( 'mobile-menu' ) || has_nav_menu( 'primary' ) ) { ?>
 		<div class="mobile-show mobile-menu-icon">
@@ -20,14 +14,8 @@ function objectiv_mobile_trigger() {
 	}
 }
 
-/**
- * Add Mobile Menu
- *
- * @author Wesley Cole
- * @link http://objectiv.co/
- */
-add_action( 'genesis_before_header', 'objectiv_mobile_menu' );
-function objectiv_mobile_menu() {
+add_action( 'genesis_before_header', 'ns_mobile_menu' );
+function ns_mobile_menu() {
 
 	if ( has_nav_menu( 'mobile-menu' ) ) { ?>
 		<div id="mobile-menu" class="mobile-menu">
@@ -45,25 +33,17 @@ function objectiv_mobile_menu() {
 
 
 // Add an "Author" meta tag with  the blog name as the value.
-function objectiv_add_author_to_head() {
+function ns_add_author_to_head() {
 	?>
 	<meta name="author" content="<?php bloginfo( 'name' ); ?>">
 	<?php
 }
-add_action( 'wp_head', 'objectiv_add_author_to_head' );
-
-// Wrapper to allow for safe "getting of file contents" replaces "file_get_contents"
-function objective_url_get_contents( $url ) {
-	$args = array(
-		'sslverify' => false,
-	);
-	return wp_remote_retrieve_body( wp_remote_get( $url, $args ) );
-}
+add_action( 'wp_head', 'ns_add_author_to_head' );
 
 
 // Add a search icon to the  header right
-// add_action( 'genesis_header_right', 'objectiv_header_icons' );
-function objectiv_header_icons() {
+// add_action( 'genesis_header_right', 'ns_header_icons' );
+function ns_header_icons() {
 	$phone = ns_get_field('phone_number', 'option');
 	$phone_numbers = preg_replace( '/[^0-9]/', '', $phone );
 	?>
@@ -90,8 +70,8 @@ function objectiv_header_icons() {
 }
 
 // Add a search box to the header
-// add_action( 'genesis_header', 'objectiv_header_search_box' );
-function objectiv_header_search_box() { ?>
+// add_action( 'genesis_header', 'ns_header_search_box' );
+function ns_header_search_box() { ?>
 	<div class="header-search-box">
 		<div class="inner-wrap">
 			<?php get_search_form(); ?>

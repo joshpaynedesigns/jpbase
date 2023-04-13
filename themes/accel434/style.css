@@ -2060,17 +2060,17 @@ body.locked {
   font-weight: bold;
   text-transform: uppercase;
 }
-.footer-widgets .widget_objectiv_footer_contact .footer-logo {
+.footer-widgets .widget_ns_footer_contact .footer-logo {
   max-width: 300px;
   margin-bottom: 0.5em;
 }
-.footer-widgets .widget_objectiv_footer_contact .get-directions {
+.footer-widgets .widget_ns_footer_contact .get-directions {
   margin-top: -0.5em;
 }
-.footer-widgets .widget_objectiv_footer_contact .email {
+.footer-widgets .widget_ns_footer_contact .email {
   word-break: break-word;
 }
-.footer-widgets .widget_objectiv_footer_contact p {
+.footer-widgets .widget_ns_footer_contact p {
   margin-bottom: 0.5em;
 }
 .footer-widgets ul.menu {

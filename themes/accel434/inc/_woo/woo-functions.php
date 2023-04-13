@@ -3,22 +3,22 @@
 // All functions having to do with WooCommerce
 
 //declare WC support
-function objectiv_child_wc_support() {
+function ns_child_wc_support() {
   add_theme_support( 'woocommerce' );
 }
-add_action( 'after_setup_theme', 'objectiv_child_wc_support' );
+add_action( 'after_setup_theme', 'ns_child_wc_support' );
 
 //Full Width Pages on WooCommerce
-function objectiv_shopping_cpt_layout() {
+function ns_shopping_cpt_layout() {
     if ( class_exists( 'WooCommerce' ) ) {
         if( is_page ( array( 'cart', 'checkout' )) || is_shop() || 'product' == get_post_type() ) {
             remove_action( 'genesis_sidebar', 'genesis_do_sidebar' );
-            remove_action( 'genesis_sidebar', 'objectiv_do_podcast_sidebar' );
+            remove_action( 'genesis_sidebar', 'ns_do_podcast_sidebar' );
             return 'full-width-content';
         }
     }
 }
-add_filter( 'genesis_site_layout', 'objectiv_shopping_cpt_layout' );
+add_filter( 'genesis_site_layout', 'ns_shopping_cpt_layout' );
 
 // Function to check if a page is a woo page
 function mktg434_is_woo() {
@@ -56,16 +56,16 @@ function woo_custom_breakpoint($px) {
  * @since       1.0
  * @return      void
 */
-function objectiv_woo_hide_page_title() {
+function ns_woo_hide_page_title() {
     return false;
 }
-add_filter( 'woocommerce_show_page_title' , 'objectiv_woo_hide_page_title' );
+add_filter( 'woocommerce_show_page_title' , 'ns_woo_hide_page_title' );
 
 // Remove Breadcrumbs
-function objectiv_remove_wc_breadcrumbs() {
+function ns_remove_wc_breadcrumbs() {
     remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );
 }
-add_action( 'init', 'objectiv_remove_wc_breadcrumbs' );
+add_action( 'init', 'ns_remove_wc_breadcrumbs' );
 
 // remove rating from archive
 remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );

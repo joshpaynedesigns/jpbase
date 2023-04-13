@@ -11,8 +11,8 @@ function sp_post_info_filter($post_info) {
 	return $post_info;
 }
 
-add_action( 'genesis_loop', 'objectiv_intro_text' );
-function objectiv_intro_text() {
+add_action( 'genesis_loop', 'ns_intro_text' );
+function ns_intro_text() {
 	$arch_cont = ns_get_field( 'archive_intro_text_testimonials', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
@@ -25,8 +25,8 @@ function objectiv_intro_text() {
 
 // Remove the loop and replace it with our own.
 remove_action( 'genesis_loop', 'genesis_do_loop' );
-add_action( 'genesis_loop', 'objectiv_testimonial_archive_custom_loop' );
-function objectiv_testimonial_archive_custom_loop( ) {
+add_action( 'genesis_loop', 'ns_testimonial_archive_custom_loop' );
+function ns_testimonial_archive_custom_loop( ) {
 
 	// get the pest types
 	$args = array(
@@ -59,8 +59,8 @@ function objectiv_testimonial_archive_custom_loop( ) {
 }
 
 //* Customize the post info function
-add_filter( 'genesis_post_info', 'objectiv_post_info_filter' );
-function objectiv_post_info_filter($post_info) {
+add_filter( 'genesis_post_info', 'ns_post_info_filter' );
+function ns_post_info_filter($post_info) {
 	$post_info = '';
 	return $post_info;
 }

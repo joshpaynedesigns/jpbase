@@ -23,7 +23,7 @@
                                 <h6 class="story-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h6>
                                 <?php /* <p class="story-cats"><?php echo custom_taxonomies_terms(); ?></p> */ ?>
                                 <div class="story-blurb-content">
-                                    <?php echo objectiv_get_short_description( get_the_ID(), 22 ); ?>
+                                    <?php echo ns_get_short_description( get_the_ID(), 22 ); ?>
                                 </div>
                                 <a class="read-more" href="<?php the_permalink(); ?>">Read More</a>
                             </div>

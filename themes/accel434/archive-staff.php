@@ -3,13 +3,13 @@
 add_filter ( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
 remove_action( 'genesis_loop', 'genesis_do_loop' );
 
-// add_action( 'genesis_loop', 'objectiv_success_tax_filter' );
-function objectiv_success_tax_filter() {
-	objectiv_tax_filter( 'staff', 'staff-cat', true );
+// add_action( 'genesis_loop', 'ns_success_tax_filter' );
+function ns_success_tax_filter() {
+	ns_tax_filter( 'staff', 'staff-cat', true );
 }
 
-add_action( 'genesis_loop', 'objectiv_intro_text' );
-function objectiv_intro_text() {
+add_action( 'genesis_loop', 'ns_intro_text' );
+function ns_intro_text() {
 	$arch_cont = ns_get_field( 'archive_intro_text_staff', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
@@ -20,8 +20,8 @@ function objectiv_intro_text() {
 	<?php
 }
 
-add_action( 'genesis_loop', 'objectiv_staff_archive' );
-function objectiv_staff_archive() {
+add_action( 'genesis_loop', 'ns_staff_archive' );
+function ns_staff_archive() {
 
 	$terms = get_terms( array(
 		'taxonomy' => 'staff-cat',
