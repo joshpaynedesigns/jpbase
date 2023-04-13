@@ -76,3 +76,12 @@ function mktg434_change_testimonial_title( $title ){
 }
 
 add_filter( 'enter_title_here', 'mktg434_change_testimonial_title' );
+
+// Redirect single testimonials to the testimonials archive
+function ns_redirect_single_testimonials() {
+	if ( is_singular( 'testimonial' ) ) {
+		wp_redirect( home_url( '/testimonials/' ) );
+		die;
+	}
+}
+add_action( 'template_redirect', 'ns_redirect_single_testimonials' );
