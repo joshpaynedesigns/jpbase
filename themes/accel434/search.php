@@ -12,8 +12,8 @@ function sp_post_info_filter($post_info) {
 }
 
 remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
-add_action( 'genesis_entry_content', 'cgd_custom_excerpt' );
-function cgd_custom_excerpt() {
+add_action( 'genesis_entry_content', 'ns_custom_excerpt' );
+function ns_custom_excerpt() {
 	$the_ID = get_the_ID();
 	$permalink = get_permalink( $the_ID );
 	$regular_excerpt = get_the_excerpt( $the_ID );
