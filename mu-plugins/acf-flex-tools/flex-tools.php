@@ -7,10 +7,10 @@
  * Check out the FlexibleContentSectionFactory classes create method of an implementation example
  */
 
-require_once( 'classes/flexiblecontentsectionfactory.php' );
-require_once( 'classes/flexiblecontentsectionitem.php' );
-require_once( 'classes/flexiblecontentsectionitemoptions.php' );
-require_once( 'classes/flexiblecontentsectionutility.php' );
+require_once 'classes/flexiblecontentsectionfactory.php';
+require_once 'classes/flexiblecontentsectionitem.php';
+require_once 'classes/flexiblecontentsectionitemoptions.php';
+require_once 'classes/flexiblecontentsectionutility.php';
 
 class FlexibleContentSection {
 
@@ -24,8 +24,8 @@ class FlexibleContentSection {
 	 *
 	 * @param string $acf_name
 	 */
-	public function __construct($acf_name) {
-		$this->setAcfName($acf_name);
+	public function __construct( $acf_name ) {
+		$this->setAcfName( $acf_name );
 	}
 
 	/**
@@ -34,19 +34,19 @@ class FlexibleContentSection {
 	public function run() {
 		$queried_object = get_queried_object();
 		// If ACF Pro is installed, run the setup
-		if(function_exists('the_flexible_field')) {
+		if ( function_exists( 'the_flexible_field' ) ) {
 			$count = 0;
 
 			// Call each sections display function based on the current layout in the loop - Found in functions.php
-			while ( the_flexible_field( $this->acf_name, $queried_object ) ):
+			while ( the_flexible_field( $this->acf_name, $queried_object ) ) :
 
 				$next_count = $count + 1;
-				$padding = $this->getPaddingClasses($next_count);
-				$instance = FlexibleContentSectionItem::getInstance(get_row_layout());
+				$padding    = $this->getPaddingClasses( $next_count );
+				$instance   = FlexibleContentSectionItem::getInstance( get_row_layout() );
 
 				// Call the corresponding function
 				$func = $instance->getOptions()->getFunc();
-				$func($padding);
+				$func( $padding );
 
 				$count++;
 
@@ -59,38 +59,37 @@ class FlexibleContentSection {
 	 *
 	 * @return string Returns a concatenated string of the needed padding classes
 	 */
-	public function getPaddingClasses($next_count) {
+	public function getPaddingClasses( $next_count ) {
 		// Set both top and bottom padding to false by default
-		$top_padding = false;
-		$bot_padding = false;
+		$top_padding      = false;
+		$bot_padding      = false;
 		$next_has_padding = false;
-		$flex_field = null;
-		$class_str = '';
+		$flex_field       = null;
+		$class_str        = '';
 
-		if(function_exists('the_flexible_field')) {
+		if ( function_exists( 'the_flexible_field' ) ) {
 			$flex_field = get_field( $this->acf_name );
 		}
 
-		$cur_field = $flex_field[$next_count-1];
-		$fcs_cur_item = FlexibleContentSectionItem::getInstance( get_row_layout() );
-		$padding_filter = $fcs_cur_item->getOptions()->getPaddingFilter();
-        $cur_has_padding = $fcs_cur_item->getOptions()->getHasPadding();
+		$cur_field       = $flex_field[ $next_count - 1 ];
+		$fcs_cur_item    = FlexibleContentSectionItem::getInstance( get_row_layout() );
+		$padding_filter  = $fcs_cur_item->getOptions()->getPaddingFilter();
+		$cur_has_padding = $fcs_cur_item->getOptions()->getHasPadding();
 
-		if (!is_null($padding_filter)) {
-            $cur_has_padding = $padding_filter( $fcs_cur_item->getOptions()->getHasPadding(), $cur_field['acf_fc_layout'], $cur_field );
-        }
+		if ( ! is_null( $padding_filter ) ) {
+			$cur_has_padding = $padding_filter( $fcs_cur_item->getOptions()->getHasPadding(), $cur_field['acf_fc_layout'], $cur_field );
+		}
 
 		// $flex_field[$count+1]['acf_fc_layout'] gets the next acf name
 		if ( isset( $flex_field[ $next_count ]['acf_fc_layout'] ) ) {
-			$next_name = $flex_field[ $next_count ]['acf_fc_layout'];
-			$title = $flex_field[ $next_count ]['section_title'];
-			$fcs_next_item = FlexibleContentSectionItem::getInstance( $next_name );
+			$next_name           = $flex_field[ $next_count ]['acf_fc_layout'];
+			$fcs_next_item       = FlexibleContentSectionItem::getInstance( $next_name );
 			$next_padding_filter = $fcs_next_item->getOptions()->getPaddingFilter();
-            $next_has_padding = $fcs_next_item->getOptions()->getHasPadding();
+			$next_has_padding    = $fcs_next_item->getOptions()->getHasPadding();
 
-            if (!is_null($next_padding_filter)) {
-                $next_has_padding = $next_padding_filter( $fcs_next_item->getOptions()->getHasPadding(), $next_name, $flex_field[ $next_count ] );
-            }
+			if ( ! is_null( $next_padding_filter ) ) {
+				$next_has_padding = $next_padding_filter( $fcs_next_item->getOptions()->getHasPadding(), $next_name, $flex_field[ $next_count ] );
+			}
 		}
 
 		// If the current item has padding
@@ -108,11 +107,11 @@ class FlexibleContentSection {
 		// Padding array containing our values for if we need top and bottom padding
 		$padding = array(
 			'top' => $top_padding,
-			'bot' => $bot_padding
+			'bot' => $bot_padding,
 		);
 
 		$class_str = ( ( $padding['top'] ) ? 'has-top-padding' : '' ) . ( ( $padding['top'] || $padding['bot'] ) ? ' ' : '' ) .
-		             ( ( $padding['bot'] ) ? 'has-bot-padding' : '' );
+					 ( ( $padding['bot'] ) ? 'has-bot-padding' : '' );
 
 		return $class_str;
 	}

@@ -13,14 +13,14 @@
 					);
 					$name = $s->post_title;
 					$has_content = $s->post_content;
-					$position = get_field( 'position_title', $s_id );
+					$position = ns_get_field( 'position_title', $s_id );
 					$s_link = get_the_permalink( $s_id );
 					?>
 					<div class="staffArchBlock">
 						<?php if ( !empty($has_content) ) : ?>
 							<a href="<?php echo $s_link ?>" class="linked"><?php echo $thumb; ?></a>
 						<?php else : ?>
-							<a ><?php echo $thumb; ?></a>	
+							<a ><?php echo $thumb; ?></a>
 						<?php endif; ?>
 						<?php if ( ! empty( $has_content ) ) : ?>
 							<h4 class="staffArchBlockName"><a href="<?php echo $s_link ?>"><?php echo $name ?></h4></a>

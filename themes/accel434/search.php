@@ -25,7 +25,7 @@ function cgd_custom_excerpt() {
 	} elseif ( ! empty( $acf_excerpt )) {
 		$excerpt = $acf_excerpt;
 	} elseif ( $post_type === 'location' ) {
-		$excerpt = get_field( 'loc_description', $the_ID );
+		$excerpt = ns_get_field( 'loc_description', $the_ID );
 	} else {
 		$excerpt = "Sorry, there is no excerpt avaliable for this page/post. Please click the button below to read more.";
 	}

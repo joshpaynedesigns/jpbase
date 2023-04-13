@@ -10,8 +10,8 @@
 					<?php
 						$project_id = $project->ID;
 						$project_title = $project->post_title;
-						$project_sub_title = get_field( 'project_sub_title', $project_id );
-						$project_blurb = get_field( 'project_blurb', $project_id );
+						$project_sub_title = ns_get_field( 'project_sub_title', $project_id );
+						$project_blurb = ns_get_field( 'project_blurb', $project_id );
 						$project_url = get_the_permalink( $project_id );
 						$thumb = get_the_post_thumbnail_url(
 					        $project_id,

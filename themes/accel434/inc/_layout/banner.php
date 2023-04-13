@@ -2,7 +2,7 @@
 add_action( 'genesis_after_header', 'objectiv_page_banner', 10 );
 
 function objectiv_page_banner() {
-	$hide_banner_options = get_field('hide_banner_options');
+	$hide_banner_options = ns_get_field('hide_banner_options');
 
 	if ( is_front_page() ) {
 		echo get_template_part( 'partials/banner/home', 'banner' );

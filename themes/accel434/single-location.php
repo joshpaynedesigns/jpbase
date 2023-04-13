@@ -13,15 +13,15 @@ remove_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_close', 15 )
 
 add_action( 'genesis_before_entry', 'location_single', 1 );
 function location_single() {
-    $ad1 = get_field('loc_address_line_1');
-    $ad2 = get_field('loc_address_line_2');
-    $phone = get_field('loc_phone_number');
-    $fax = get_field('loc_fax_number');
-    $med_fax = get_field('medical_records_fax');
-    $hours = get_field('location_hours');
-    $img = get_field('location_image');
-    $notes = get_field('notes');
-    $content = get_field('location_content');
+    $ad1 = ns_get_field('loc_address_line_1');
+    $ad2 = ns_get_field('loc_address_line_2');
+    $phone = ns_get_field('loc_phone_number');
+    $fax = ns_get_field('loc_fax_number');
+    $med_fax = ns_get_field('medical_records_fax');
+    $hours = ns_get_field('location_hours');
+    $img = ns_get_field('location_image');
+    $notes = ns_get_field('notes');
+    $content = ns_get_field('location_content');
     ?>
 
     <section class="location-single">

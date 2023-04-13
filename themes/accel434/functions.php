@@ -7,17 +7,18 @@
 
  define('ACCEL_VERSION', '0.0.6');
 
+// Helper functions
+require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';
+
 // Load in the header file
 include_once(get_stylesheet_directory() . '/inc/_layout/header.php');
 
 // Load in the footer file
 include_once(get_stylesheet_directory() . '/inc/_layout/footer.php');
 
-// Helper functions
-require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';
-
 // Load in scripts (enqueue all the things)
 include_once(get_stylesheet_directory() . '/inc/scripts.php');
+
 
 // Load in the custom post types
 include_once(get_stylesheet_directory() . '/inc/_post-types/00-load-cpts.php');
@@ -148,11 +149,6 @@ function child_theme_setup()
     remove_action('genesis_footer', 'genesis_do_footer');
     add_action('genesis_footer', 'objectiv_footer');
 
-    // Register Widgets
-    add_action('widgets_init', function () {
-        register_widget('objectiv_Contact_Widget');
-    });
-
     // Remove Blog & Archive Template From Genesis
     add_filter('theme_page_templates', 'bourncreative_remove_page_templates');
     function bourncreative_remove_page_templates($templates)
@@ -166,7 +162,7 @@ function child_theme_setup()
     add_filter('genesis_attr_body', 'mktg434_add_css_attr_body');
     function mktg434_add_css_attr_body($attributes)
     {
-        $hide_banner_options = get_field('hide_banner_options');
+        $hide_banner_options = ns_get_field('hide_banner_options');
         if ($hide_banner_options == 'hide_banner') {
             $attributes['class'] .= ' no-banner';
         }
@@ -174,12 +170,12 @@ function child_theme_setup()
             $attributes['class'] .= ' no-banner-image';
         }
         //Add class to Body when it's fixed
-        $turn_on_fixed_header = get_field('turn_on_fixed_header', 'options');
+        $turn_on_fixed_header = ns_get_field('turn_on_fixed_header', 'options');
         if ($turn_on_fixed_header) {
             $attributes['class'] .= ' fixed-header';
         }
         //Add class to Body when it's Alert Bar
-        $show_alert_bar = get_field('show_alert_bar', 'options');
+        $show_alert_bar = ns_get_field('show_alert_bar', 'options');
         if ($show_alert_bar) {
             $attributes['class'] .= ' show-alert-bar';
         }

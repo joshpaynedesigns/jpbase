@@ -13,7 +13,7 @@ function sp_post_info_filter($post_info) {
 
 add_action( 'genesis_loop', 'custom_archive_intro_text' );
 function custom_archive_intro_text() {
-	$arch_cont = get_field( 'archive_intro_text_projects', 'option' );
+	$arch_cont = ns_get_field( 'archive_intro_text_projects', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
 		<section class="archIntroText lastMNone">
@@ -43,7 +43,7 @@ function projects_archive_custom_loop( ) {
 		<div class="projects-grid">
 			<?php foreach ( $projects as $post ) {
 				setup_postdata( $post );
-				$project_blurb = get_field( 'project_blurb' );
+				$project_blurb = ns_get_field( 'project_blurb' );
 				$thumb = get_the_post_thumbnail(
 			        $post_id,
 			        'medium',

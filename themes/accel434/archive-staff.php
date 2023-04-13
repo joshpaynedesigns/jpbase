@@ -10,7 +10,7 @@ function objectiv_success_tax_filter() {
 
 add_action( 'genesis_loop', 'objectiv_intro_text' );
 function objectiv_intro_text() {
-	$arch_cont = get_field( 'archive_intro_text_staff', 'option' );
+	$arch_cont = ns_get_field( 'archive_intro_text_staff', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
 		<section class="archIntroText lastMNone">
@@ -33,7 +33,7 @@ function objectiv_staff_archive() {
 		foreach ( $terms as $t ) {
 			$id = $t->term_id;
 			$name = $t->name;
-			$color = get_field( 'category_color', $t );
+			$color = ns_get_field( 'category_color', $t );
 			$term_link = get_term_link( $id );
 
 			$args = array(
@@ -73,7 +73,7 @@ function objectiv_staff_archive() {
 								['class' => 'staffArchImg' ]
 							);
 							$name = $s['post_title'];
-							$position = get_field( 'position_title', $s_id );
+							$position = ns_get_field( 'position_title', $s_id );
 							$has_content = $s['post_content'];
 							$s_link = get_the_permalink( $s_id );
 							?>

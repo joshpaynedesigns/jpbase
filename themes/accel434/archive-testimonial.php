@@ -13,7 +13,7 @@ function sp_post_info_filter($post_info) {
 
 add_action( 'genesis_loop', 'objectiv_intro_text' );
 function objectiv_intro_text() {
-	$arch_cont = get_field( 'archive_intro_text_testimonials', 'option' );
+	$arch_cont = ns_get_field( 'archive_intro_text_testimonials', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
 		<section class="archIntroText lastMNone">
@@ -40,7 +40,7 @@ function objectiv_testimonial_archive_custom_loop( ) {
 
 	if ( ! empty( $testimonials ) ) {
 		foreach ( $testimonials as $t ) {
-			$test_company = get_field( 'testimonial_company', $t->ID );
+			$test_company = ns_get_field( 'testimonial_company', $t->ID );
 			?>
 			<div class="testimonial-block">
 				<div class="entry-content">

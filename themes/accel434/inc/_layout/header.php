@@ -64,7 +64,7 @@ function objective_url_get_contents( $url ) {
 // Add a search icon to the  header right
 // add_action( 'genesis_header_right', 'objectiv_header_icons' );
 function objectiv_header_icons() {
-	$phone = get_field('phone_number', 'option');
+	$phone = ns_get_field('phone_number', 'option');
 	$phone_numbers = preg_replace( '/[^0-9]/', '', $phone );
 	?>
 		<div class="top-icon-section">
@@ -105,12 +105,12 @@ function objectiv_header_search_box() { ?>
 
 // Add Alert Bar to header
 add_action( 'genesis_before_header', 'alert_bar' );
-function alert_bar() { 
-	$show_alert_bar = get_field('show_alert_bar', 'option');
-	$alert_bar_color = get_field('alert_bar_color', 'option');
-	$alert_bar_text = get_field('alert_bar_text', 'option');
-	$alert_bar_text_color = get_field('alert_bar_text_color', 'option');
-	$alert_bar_button = get_field('alert_bar_button', 'option');
+function alert_bar() {
+	$show_alert_bar = ns_get_field('show_alert_bar', 'option');
+	$alert_bar_color = ns_get_field('alert_bar_color', 'option');
+	$alert_bar_text = ns_get_field('alert_bar_text', 'option');
+	$alert_bar_text_color = ns_get_field('alert_bar_text_color', 'option');
+	$alert_bar_button = ns_get_field('alert_bar_button', 'option');
 	?>
 	<?php if ( $show_alert_bar ): ?>
 		<div class="alert-bar" style="background-color: <?php echo $alert_bar_color ?>;">

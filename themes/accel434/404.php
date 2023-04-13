@@ -20,7 +20,7 @@ add_filter('genesis_search_text', 'objectiv_search_placeholder_404', 10, 1);
 // Add the 404 page markup
 add_action('genesis_loop', 'objectiv_404');
 function objectiv_404() {
-	$body_text = get_field( '404_body_text', 'option' );
+	$body_text = ns_get_field( '404_body_text', 'option' );
 
 	if ( empty( $body_text ) ) {
 		// $url = htmlspecialchars($_SERVER['HTTP_REFERER']);

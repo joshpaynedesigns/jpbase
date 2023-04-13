@@ -6,10 +6,10 @@
                 <div class="blog-feed-slides">
                 	<?php while ( $loop->have_posts() ): $loop->the_post(); ?>
                 		<div class="story">
-                            <?php 
+                            <?php
                             $thumbnail = get_the_post_thumbnail_url( $post->ID, 'medium' );
                             if ( empty( $thumbnail ) ) {
-                                $default_img = get_field( 'default_banner_image_blog', 'option' );
+                                $default_img = ns_get_field( 'default_banner_image_blog', 'option' );
                                 $thumbnail = $default_img['url'];
                             } ?>
                             <?php if ( ! empty( $thumbnail ) ) : ?>

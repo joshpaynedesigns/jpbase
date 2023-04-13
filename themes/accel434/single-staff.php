@@ -17,10 +17,10 @@ function objectiv_staff_header_content() {
         'medium',
         ['class' => 'singleStaffImage' ]
     );
-    $position = get_field( 'position_title', $s_id );
-    $staff_email = get_field( 'email_address', $s_id );
-    $staff_office = get_field( 'office_phone', $s_id );
-    $staff_cell = get_field( 'cell_phone', $s_id );
+    $position = ns_get_field( 'position_title', $s_id );
+    $staff_email = ns_get_field( 'email_address', $s_id );
+    $staff_office = ns_get_field( 'office_phone', $s_id );
+    $staff_cell = ns_get_field( 'cell_phone', $s_id );
     $office_phone_numbers = preg_replace( '/[^0-9]/', '', $staff_office );
     $cell_phone_numbers = preg_replace( '/[^0-9]/', '', $staff_cell );
 

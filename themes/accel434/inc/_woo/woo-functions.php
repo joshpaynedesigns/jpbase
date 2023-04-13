@@ -39,7 +39,7 @@ function dequeue_woocommerce_cart_fragments() {
     if (is_front_page() || is_single() ) wp_dequeue_script('wc-cart-fragments');
 }
 
-// Change Woocommerce css breaktpoint from max width: 768px to 800px  
+// Change Woocommerce css breaktpoint from max width: 768px to 800px
 add_filter('woocommerce_style_smallscreen_breakpoint','woo_custom_breakpoint');
 
 function woo_custom_breakpoint($px) {
@@ -240,7 +240,7 @@ function cgd_shipping_notice() {
 // add_action( 'woocommerce_after_single_product_summary', 'cgd_product_flexible_sections', 5 );
 function cgd_product_flexible_sections() {
     $id = get_the_ID();
-    $ac_items = get_field( 'sp_accordion_itmes', $id );
+    $ac_items = ns_get_field( 'sp_accordion_itmes', $id );
     ?>
 
     <?php if ( ! empty( $ac_items ) ): ?>

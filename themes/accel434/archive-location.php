@@ -7,7 +7,7 @@ remove_action('genesis_before_loop', 'genesis_do_date_archive_title');
 
 add_action( 'genesis_loop', 'objectiv_intro_text' );
 function objectiv_intro_text() {
-    $arch_cont = get_field( 'archive_intro_text_locations', 'option' );
+    $arch_cont = ns_get_field( 'archive_intro_text_locations', 'option' );
     ?>
     <?php if ( ! empty( $arch_cont ) ) : ?>
         <section class="archIntroText lastMNone">
@@ -54,11 +54,11 @@ function objectiv_locations_lower_archive()
 						$id = $l->ID;
 						$title = $l->post_title;
 						$link = get_the_permalink( $id );
-                        $phone = get_field( 'loc_phone_number', $id );
-                        $fax = get_field( 'loc_fax_number', $id );
-                        $image = get_field( 'location_image', $id );
-                        $ad1 = get_field('loc_address_line_1', $id);
-                        $ad2 = get_field('loc_address_line_2', $id);
+                        $phone = ns_get_field( 'loc_phone_number', $id );
+                        $fax = ns_get_field( 'loc_fax_number', $id );
+                        $image = ns_get_field( 'location_image', $id );
+                        $ad1 = ns_get_field('loc_address_line_1', $id);
+                        $ad2 = ns_get_field('loc_address_line_2', $id);
 					?>
                     <div class="locationBlock">
                         <a href="<?php echo $link ?>" class="locationImage" style="background-image: url('<?php echo $image['url']; ?>')"></a>

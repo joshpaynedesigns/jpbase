@@ -23,7 +23,7 @@ function cgd_featured_post_image() { ?>
     $thumbnail = get_the_post_thumbnail_url( $post->ID, 'medium' );
     $title = get_the_title( $post->ID );
 	if ( empty( $thumbnail ) ) {
-		$default_img = get_field( 'default_banner_image_blog', 'option' )['sizes']['medium'];
+		$default_img = ns_get_field( 'default_banner_image_blog', 'option' )['sizes']['medium'];
 		$thumbnail = $default_img;
 	}
 	?>
