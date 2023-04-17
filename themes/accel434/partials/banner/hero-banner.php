@@ -73,54 +73,32 @@ if ($hide_banner_options == 'hide_banner_image') {
 // Decide the banner image
 function decide_banner_bg_img()
 {
-    // $thumbnail_id = get_post_thumbnail_id();
-    // $thumbnail_url = wp_get_attachment_image_url( $thumbnail_id, 'full' );
-
     $bg_image_url = '';
+    $default_bg_image = false;
     // If we are on an archive or post type lets use that defualt image
     if (is_home() || is_category() || is_tag() || is_date() || is_singular('post')) {
         $default_bg_image = ns_get_field('default_banner_image_blog', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_page()) {
         $default_bg_image = ns_get_field('banner_image');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_post_type_archive('testimonial')) {
         $default_bg_image = ns_get_field('default_banner_image_testimonials', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_singular('service')) {
         $default_bg_image = ns_get_field('default_banner_image_services', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
         $default_bg_image = ns_get_field('default_banner_image_staff', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_bg_image = ns_get_field('default_banner_image_locations', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     } elseif (is_event_calendar_page()) {
         $default_bg_image = ns_get_field('default_banner_image_events', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
     }
 
     // If default img not empty use it, if its empty use the base default
-    if (empty($bg_image_url)) {
+    if (! $default_bg_image && empty($bg_image_url)) {
         $default_bg_image = ns_get_field('default_banner_image', 'options');
-        if ($default_bg_image) {
-            $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
-        }
+    }
+
+    if ($default_bg_image) {
+        $bg_image_url = wp_get_attachment_image_url($default_bg_image['ID'], 'full');
     }
 
     return $bg_image_url;

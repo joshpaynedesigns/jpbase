@@ -3,11 +3,14 @@
 
   .blog-feed-slider {
     position: relative;
-    // padding: 0 0.5em;
 
     @media ($medium-screen-up) {
-      margin-left: -1.5em;
+      margin-left: -$base-spacing;
       width: calc(100% + 3em);
     }
+  }
+
+  .story {
+    padding: 0 $base-spacing;
   }
 }

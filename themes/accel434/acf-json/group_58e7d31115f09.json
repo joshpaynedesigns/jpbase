@@ -111,24 +111,6 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_58e7d31120f73",
-                    "label": "General",
-                    "name": "",
-                    "aria-label": "",
-                    "type": "tab",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placement": "top",
-                    "endpoint": 0,
-                    "parent_repeater": "field_58e7d3111d06f"
-                },
-                {
                     "key": "field_58e7d31120f81",
                     "label": "Type",
                     "name": "banner_slide_type",
@@ -272,8 +254,8 @@
                 },
                 {
                     "key": "field_5c646ae1be960",
-                    "label": "Blue Button",
-                    "name": "blue_button",
+                    "label": "First Button",
+                    "name": "first_button",
                     "aria-label": "",
                     "type": "link",
                     "instructions": "",
@@ -284,14 +266,13 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "return_format": "array",
                     "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_63addb1c9df3e",
-                    "label": "Green Button",
-                    "name": "green_button",
+                    "label": "Second Button",
+                    "name": "second_button",
                     "aria-label": "",
                     "type": "link",
                     "instructions": "",
@@ -302,7 +283,6 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "return_format": "array",
                     "parent_repeater": "field_58e7d3111d06f"
                 },
@@ -435,13 +415,6 @@
                 "operator": "==",
                 "value": "front_page"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "post"
-            }
         ]
     ],
     "menu_order": 18,
@@ -453,5 +426,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1678314949
+    "modified": 1681754658
 }

@@ -13,7 +13,7 @@ $loop = new WP_Query($args);
 <?php if ($loop->have_posts()) : ?>
     <section class="pfsection testimonials-section <?php echo $padding_classes; ?>">
         <div class="wrap">
-            <div class="testimonial-section-inner special-offset-border">
+            <div class="testimonial-section-inner">
                 <?php ns_section_header($section_title, 'text-center basemb'); ?>
                 <div class="testimonials-slider-wrap ns-slider-arrows-wrap arrows-white">
                     <div class="testimonials-slider">

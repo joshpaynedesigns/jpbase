@@ -39,7 +39,7 @@
                     $is_link_block = true;
                 }
 
-                $block_classes = "box boxes-border bg-$background_color boxes-border-$background_color box-type-$box_type";
+                $block_classes = "box bg-$background_color box-type-$box_type";
 
                 ?>
                 <?php if (! empty($box_url) && $is_link_block) : ?>
@@ -50,7 +50,7 @@
 
                     <div class="box-info relative">
 
-                        <?php if (! empty($icon) ) : ?>
+                        <?php if (! empty($icon)) : ?>
                             <div class="icon-wrap basemb"><?php echo wp_get_attachment_image($icon['id'], 'large', false, array( 'class' => '' )); ?></div>
                         <?php endif; ?>
 
@@ -63,7 +63,7 @@
                         <?php if (! empty($button) && $is_normal_block) : ?>
                             <div class="button-wrap basemt">
                                 <?php echo ns_link_button($button, $button_color . '-button') ?>
-                                <?php if( ! empty( $cta_text ) ) : ?>
+                                <?php if (! empty($cta_text)) : ?>
                                     <div class="text-<?php echo $text_color ?>"><?php echo $cta_text ?></div>
                                 <?php endif; ?>
                             </div>

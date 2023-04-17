@@ -70,10 +70,10 @@ img.alignright,
 
 .wp-caption-text {
   font-size: em(12);
-  line-height: 1.2em;
-  text-align: center;
   font-weight: bold;
+  line-height: 1.2em;
   margin-bottom: 1.5em;
+  text-align: center;
 }
 
 .entry-content p.wp-caption-text {
@@ -141,7 +141,9 @@ img {
 *
 */
 .gallery {
-  overflow: hidden;
+  display: grid;
+  gap: $small-spacing;
+  grid-template-columns: repeat(2, 1fr);
 
   br {
     clear: none !important;
@@ -149,11 +151,29 @@ img {
 }
 
 .gallery-item {
-  float: left;
   margin: 0 !important;
-  text-align: center;
-  width: 50% !important;
-  // @include omega(2n);
+  transition: transform $base-duration $base-timing;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  a {
+    display: block;
+  }
+
+  img {
+    aspect-ratio: 1/1;
+    border: none !important;
+    border-radius: $base-border-radius;
+    display: block;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+#gallery-1 .gallery-item {
+  width: 100% !important;
 }
 
 .gallery-icon {
@@ -165,65 +185,37 @@ img {
 }
 
 @media ($medium-screen-up) {
-  .gallery-columns-2 .gallery-item {
-    width: 50% !important;
+  .gallery-columns-2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .gallery-columns-3 .gallery-item {
-    width: 33% !important;
-    // @include omega-reset(2n);
-    // @include omega(3n);
+  .gallery-columns-3 {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .gallery-columns-4 .gallery-item {
-    width: 25% !important;
-    // @include omega-reset(2n);
-    // @include omega(4n);
+  .gallery-columns-4 {
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  .gallery-columns-5 .gallery-item {
-    width: 20% !important;
-    // @include omega-reset(2n);
-    // @include omega(5n);
+  .gallery-columns-5 {
+    grid-template-columns: repeat(5, 1fr);
   }
 
-  .gallery-columns-6 .gallery-item {
-    width: 16.6666% !important;
-    // @include omega-reset(2n);
-    // @include omega(6n);
+  .gallery-columns-6 {
+    grid-template-columns: repeat(6, 1fr);
   }
 
-  .gallery-columns-7 .gallery-item {
-    width: 14.2857% !important;
-    // @include omega-reset(2n);
-    // @include omega(7n);
+  .gallery-columns-7 {
+    grid-template-columns: repeat(7, 1fr);
   }
 
-  .gallery-columns-8 .gallery-item {
-    width: 12.5% !important;
-    // @include omega-reset(2n);
-    // @include omega(8n);
+  .gallery-columns-8 {
+    grid-template-columns: repeat(8, 1fr);
   }
 
-  .gallery-columns-9 .gallery-item {
-    width: 11.1111% !important;
-    // @include omega-reset(2n);
-    // @include omega(9n);
+  .gallery-columns-9 {
+    grid-template-columns: repeat(9, 1fr);
   }
-}
-
-.gallery img {
-  // border: 1px solid $gray-900;
-  border: none !important;
-  height: auto;
-  padding: 4px;
-  transition: transform $base-duration $base-timing;
-  display: block;
-}
-
-.gallery img:hover {
-  // border: 1px solid $gray-600;
-  transform: scale(1.02);
 }
 
 @supports (padding: max(0px)) {

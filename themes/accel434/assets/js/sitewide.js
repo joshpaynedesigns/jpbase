@@ -101,13 +101,6 @@ jQuery(document).ready(function () {
     }
   });
 
-  let contentImages = jQuery(".content-section-wrap img");
-  if (contentImages.length > 0) {
-    contentImages.each(function (index, element) {
-      jQuery(element).wrap("<div class='boxes-border'></div>");
-    });
-  }
-
   // Setting up Modaal Gallery for our photo grid section
   jQuery(".section.gallery").modaal({
     type: "image",

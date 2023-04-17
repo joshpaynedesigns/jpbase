@@ -41,13 +41,13 @@ function ns_locations_archive_location($id = null)
         <div class="story">
             <?php if (! empty($thumbnail)) : ?>
                 <a href="<?php echo $permalink ?>">
-                    <div class="story-img special-offset-border" style="background-image: url(' <?php echo $thumbnail; ?> ')"></div>
+                    <div class="story-img" style="background-image: url(' <?php echo $thumbnail; ?> ')"></div>
                 </a>
             <?php endif; ?>
 
-            <div class="story-blurb mx-4">
-                <h6 class="story-title mt-8"><a href="<?php echo $permalink ?>"><?php echo $title ?></a></h6>
-                <?php if( ! empty( $address ) ) : ?>
+            <div class="story-blurb">
+                <h6 class="story-title mt-4"><a href="<?php echo $permalink ?>"><?php echo $title ?></a></h6>
+                <?php if (! empty($address)) : ?>
                     <div class="smallmb"><?php echo $address ?></div>
                 <?php endif; ?>
                 <div class="story-blurb-content">
