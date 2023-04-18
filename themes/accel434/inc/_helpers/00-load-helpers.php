@@ -1,6 +1,8 @@
 <?php
 
 require_once get_stylesheet_directory() . '/inc/_helpers/acf.php';
+
+require_once get_stylesheet_directory() . '/inc/_helpers/flexible-sections.php';
 include_once(get_stylesheet_directory() . '/inc/_helpers/accordion-row.php');
 require_once get_stylesheet_directory() . '/inc/_helpers/blog.php';
 include_once(get_stylesheet_directory() . '/inc/_helpers/icons.php');
