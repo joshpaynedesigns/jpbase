@@ -608,7 +608,7 @@ function ns_get_short_description($post_id = null, $length = null)
     }
 
     if (empty($excerpt)) {
-        if (function_exists('tribe_events_get_event')) {
+        if (function_exists('tribe_events_get_event') && $post_type === 'tribe_events') {
             $content = strip_shortcodes(tribe_events_get_event($post_id)->post_content);
         }
 

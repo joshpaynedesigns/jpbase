@@ -12,7 +12,6 @@ function ns_flexible_sections()
             while (have_rows('page_flexible_sections')) {
                 the_row();
                 $section = get_row_layout();
-                print( '<pre>' . print_r($section, true) . '</pre>' );
                 get_template_part('partials/sections/' . $section);
             }
         }

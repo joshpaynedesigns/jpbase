@@ -54,25 +54,14 @@
     }
   }
 
-  .offset-border {
-    border-radius: rem(15) rem(90) rem(15) rem(30);
-    content: "";
-    inset: 0;
-    outline: solid 2px $green-200;
-    position: absolute;
-    transform: translateX(15px) translateY(15px);
-  }
-
   .video-thumbnail {
     background-size: cover;
-    border-radius: rem(15) rem(90) rem(15) rem(30);
     inset: 0;
     position: absolute;
   }
 
   .video-bg-overlay {
     background: $black;
-    border-radius: rem(15) rem(90) rem(15) rem(30);
     inset: 0;
     opacity: 0.7;
     overflow: hidden;

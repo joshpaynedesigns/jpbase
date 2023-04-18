@@ -19,7 +19,6 @@ $video_url = get_sub_field('video_url');
                     <?php endif; ?>
                 </div>
                 <div class="video-side">
-                    <div class="offset-border"></div>
                     <?php if (! empty($video_thumbnail)) : ?>
                         <div class="video-thumbnail" style="background-image:url('<?php echo $video_thumbnail['url'] ?>')">
                         </div>

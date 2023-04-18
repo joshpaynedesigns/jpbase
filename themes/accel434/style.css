@@ -4170,23 +4170,13 @@ Events Single
 .video-section .video-side:hover .play-button:after {
   border-width: 17px 0 17px 25px;
 }
-.video-section .offset-border {
-  border-radius: 0.9375rem 5.625rem 0.9375rem 1.875rem;
-  content: "";
-  inset: 0;
-  outline: solid 2px #5c978e;
-  position: absolute;
-  transform: translateX(15px) translateY(15px);
-}
 .video-section .video-thumbnail {
   background-size: cover;
-  border-radius: 0.9375rem 5.625rem 0.9375rem 1.875rem;
   inset: 0;
   position: absolute;
 }
 .video-section .video-bg-overlay {
   background: #111111;
-  border-radius: 0.9375rem 5.625rem 0.9375rem 1.875rem;
   inset: 0;
   opacity: 0.7;
   overflow: hidden;
