@@ -1,0 +1,177 @@
+.filter-ribbon {
+  background: $blue-900;
+  border-radius: rem(12);
+  padding: rem(24);
+
+  @media ($large-screen-up) {
+    padding: rem(32);
+  }
+
+  .upper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+      gap: rem(24);
+    }
+  }
+
+  .facetwp-facet {
+    margin-bottom: 0;
+    max-width: 350px;
+    width: 100%;
+
+    .facetwp-input-wrap {
+      width: 100%;
+    }
+
+    *:focus {
+      outline: none;
+    }
+
+    .fs-wrap {
+      width: 100%;
+    }
+
+    input {
+      overflow: hidden;
+      padding: rem(8) rem(12);
+    }
+
+    input,
+    button,
+    .fs-label-wrap {
+      align-items: center;
+      display: flex;
+      min-height: rem(44);
+    }
+
+    .fs-search input {
+      min-height: unset;
+      color: $gray-900;
+    }
+
+    input,
+    .fs-label-wrap {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: rem(4);
+      box-shadow: none;
+      color: $white;
+      //   font-weight: bold;
+      margin-bottom: 0;
+      min-width: auto !important;
+      width: 100%;
+
+      &::placeholder {
+        color: white;
+      }
+
+      .fs-arrow {
+        border-top-color: $white;
+      }
+    }
+
+    &.facetwp-type-search {
+      .facetwp-icon {
+        display: none;
+      }
+
+      input::placeholder {
+        color: $white;
+      }
+    }
+
+    &.facetwp-facet-reset {
+      display: none;
+
+      @media ($medium-screen-up) {
+        display: block;
+        width: 100%;
+      }
+
+      button {
+        background-color: white;
+        border: none;
+        border-radius: rem(4);
+        font-size: rem(14);
+        justify-content: center;
+        text-transform: uppercase;
+        transition: opacity $base-timing $base-duration;
+        width: 100%;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    &.facetwp-type-proximity {
+      display: flex;
+
+      input {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+
+      select {
+        margin-bottom: 0 !important;
+        border-top-right-radius: rem(4);
+        border-bottom-right-radius: rem(4);
+        border: none;
+        cursor: pointer;
+        padding-left: rem(4);
+      }
+    }
+  }
+
+  .facetwp-icon.locate-me {
+    opacity: 1;
+    transition: opacity $base-timing $base-duration;
+
+    &::before {
+      background-image: url("assets/images/locate.png") !important;
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .facetwp-selections {
+    color: white;
+    text-align: center;
+
+    > ul,
+    li {
+      margin: 0;
+    }
+
+    > ul {
+      padding-top: rem(12);
+
+      @media ($large-screen-up) {
+        padding-top: rem(24);
+      }
+    }
+
+    li {
+      padding-left: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .facetwp-selection-label {
+      font-weight: bold;
+    }
+
+    .facetwp-selection-value {
+      background-image: url("assets/images/icon-close-white.png");
+    }
+  }
+}

@@ -3,104 +3,160 @@
     "title": "Flex - CTA Section",
     "fields": [
         {
-            "key": "field_593ee00c51d86",
-            "label": "Background Type",
-            "name": "background_type",
-            "type": "button_group",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33.33",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "color": "Solid Color",
-                "image": "Image"
-            },
-            "allow_null": 0,
-            "default_value": "image",
-            "layout": "horizontal",
-            "return_format": "value"
-        },
-        {
-            "key": "field_593ee00c51d8f",
-            "label": "Background Image",
-            "name": "background_image",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_593ee00c51d86",
-                        "operator": "==",
-                        "value": "image"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "33.33",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "thumbnail",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_593ee00c51d99",
-            "label": "Image Overlay",
-            "name": "image_overlay",
-            "type": "true_false",
-            "instructions": "",
+            "key": "field_617ae3353834d",
+            "label": "CTA Slider",
+            "name": "cta_slider",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "If more than 1 slide is added then the CTA section becomes a slider.",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_593ee00c51d86",
-                        "operator": "==",
-                        "value": "image"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "33.33",
-                "class": "",
-                "id": ""
-            },
-            "message": "Disable image overlay.",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_593ee00c51da2",
-            "label": "Content",
-            "name": "content",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
+            "collapsed": "",
+            "min": 1,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add CTA Slide",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_593ee00c51d86",
+                    "label": "Background Type",
+                    "name": "background_type",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33.33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "color": "Solid Color",
+                        "image": "Image"
+                    },
+                    "allow_null": 0,
+                    "default_value": "image",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "parent_repeater": "field_617ae3353834d"
+                },
+                {
+                    "key": "field_593ee00c51d8f",
+                    "label": "Background Image",
+                    "name": "background_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_593ee00c51d86",
+                                "operator": "==",
+                                "value": "image"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "33.33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "parent_repeater": "field_617ae3353834d"
+                },
+                {
+                    "key": "field_593ee00c51d99",
+                    "label": "Image Overlay",
+                    "name": "image_overlay",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_593ee00c51d86",
+                                "operator": "==",
+                                "value": "image"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "33.33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "Disable image overlay.",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_617ae3353834d"
+                },
+                {
+                    "key": "field_593ee00c51da2",
+                    "label": "Content",
+                    "name": "content",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0,
+                    "parent_repeater": "field_617ae3353834d"
+                },
+                {
+                    "key": "field_618ae0f2cc42e",
+                    "label": "Content Alignment",
+                    "name": "content_alignment",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "left": "Left",
+                        "center": "Center",
+                        "right": "Right"
+                    },
+                    "allow_null": 0,
+                    "default_value": "center",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "parent_repeater": "field_617ae3353834d"
+                }
+            ]
         }
     ],
     "location": [
@@ -112,7 +168,7 @@
             }
         ]
     ],
-    "menu_order": 11,
+    "menu_order": 17,
     "position": "normal",
     "style": "default",
     "label_placement": "top",
@@ -120,7 +176,8 @@
     "hide_on_screen": [
         "the_content"
     ],
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1588357941
+    "show_in_rest": false,
+    "modified": 1677715189
 }

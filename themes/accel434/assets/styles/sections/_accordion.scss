@@ -1,73 +1,79 @@
+.accordion-row {
+  border-radius: rem(16);
+}
+
 .accordion-row-header {
-	align-items: center;
-	cursor: pointer;
-	display: flex;
-	justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 
-	&:hover,
-	&.active-ar {
-		.ac-row-title {
-			color: $action-color;
-		}
+  &:hover,
+  &.active-ar {
+    .ac-row-title {
+      color: $action-color;
+    }
 
-		.ac-row-toggle {
-			&:before,
-			&:after {
-				background: $action-color;
-			}
-		}
-	}
+    .ac-row-toggle {
+      &:before,
+      &:after {
+        background: $action-color;
+      }
+    }
+  }
 }
 
 .ac-row-title {
-	transition: all $base-duration $base-timing;
-	max-width: 84%;
+  font-size: rem(16);
+  max-width: 84%;
+  transition: all $base-duration $base-timing;
 }
 
 .ac-row-toggle {
-	position: relative;
+  position: relative;
 
-	&:before,
-	&:after {
-		background: $base-font-color;
-		content: "";
-		display: block;
-		height: 4px;
-		position: absolute;
-		top: -2px;
-		transition: all $base-duration $base-timing;
-		width: 14px;
-	}
+  &:before,
+  &:after {
+    background: $base-font-color;
+    content: "";
+    display: block;
+    height: 3px;
+    position: absolute;
+    top: -2px;
+    transition: all $base-duration $base-timing;
+    width: 14px;
+  }
 
-	&:before {
-		right: 15px;
-		transform: rotate(45deg);
-	}
+  &:before {
+    right: 15px;
+    transform: rotate(45deg);
+  }
 
-	&:after {
-		right: 7px;
-		transform: rotate(-45deg);
-	}
+  &:after {
+    right: 7px;
+    transform: rotate(-45deg);
+  }
 
-	.active-ar & {
-		&:before {
-			transform: rotate(-45deg);
-		}
+  .active-ar & {
+    &:before {
+      transform: rotate(-45deg);
+    }
 
-		&:after {
-			transform: rotate(45deg);
-		}
-	}
-
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
 }
 
 .accordion-row-content {
-	display: none;
-	overflow: hidden;
+  display: none;
+  overflow: hidden;
 }
 
-.accordions-columns-wrap {
-	.accordions-wrap-right {
-		margin-top: $small-spacing;
-	}
+.accordions-columns-wrap.one2gridlarge {
+  gap: $small-spacing;
+
+  @media ($large-screen-up) {
+    gap: 2rem;
+  }
 }

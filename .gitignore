@@ -5,3 +5,5 @@
 /themes/accel434/npm-debug.log
 .DS_Store
 cache
+/autoptimize_404_handler.php
+/mu-plugins/wp-migrate-db-pro-compatibility.php

@@ -1,13 +1,18 @@
 .post-type-archive-testimonial {
-    .testimonial-block {
-        background-color: $light-gray;
-        display: inline-block;
-        margin-bottom: $base-spacing;
-        padding: 2rem;
-        width: 100%;
+  .testimonial {
+    background-color: $green-900;
+    // margin: 0 auto;
+    // max-width: rem(960);
+    padding: rem(64);
+  }
 
-        &:last-of-type {
-            margin-bottom: 0px;
-        }
+  .testimonial-archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: rem(32);
+
+    @media ($large-screen-up) {
+      gap: rem(48);
     }
+  }
 }

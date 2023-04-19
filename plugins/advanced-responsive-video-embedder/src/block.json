@@ -13,13 +13,17 @@
         "vimeo",
         "odysee"
     ],
-    "version": "9.9.6",
+    "version": "9.10.3",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
             "wide",
-            "full"
-        ]
+            "full",
+            "left",
+            "right"
+        ],
+        "className": true,
+        "customClassName": true
     },
     "styles": [],
     "example": {
@@ -29,7 +33,7 @@
         }
     },
     "editorScript": "arve-block",
-    "editorStyle": "arve",
+    "editorStyle": "arve-block",
     "attributes": {
         "url": {
             "type": "string"

@@ -4,100 +4,104 @@ input[type="reset"],
 input[type="submit"],
 .primary-button a,
 .blue-button a,
+.blue-button button,
 .light-blue-button a,
 .medium-gray-button a,
 .dark-gray-button a,
-.white-button a {
-    -webkit-font-smoothing: antialiased;
-    appearance: none;
-    background-color: $action-color;
-    // border-radius: $base-border-radius;
-    border: 2px solid transparent;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-family: $base-font-family;
-    font-size: em(18);
-    font-weight: bold;
-    line-height: 1;
-    padding: em(16px) em(60px);
-    text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all $base-duration $base-timing;
-    user-select: none;
-    vertical-align: middle;
+.white-button a,
+.green-button a {
+  appearance: none;
+  background-color: $action-color;
+  border: 2px solid transparent;
+  border-radius: 48px;
+  color: white !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $base-font-family;
+  font-size: rem(16);
+  font-weight: 500;
+  line-height: 1;
+  padding: rem(16px) rem(44px);
+  text-align: center;
+  text-decoration: none;
+  //   text-transform: uppercase;
+  transition: all $base-duration $base-timing;
+  user-select: none;
+  vertical-align: middle;
 
-    &:hover,
-    &:focus {
-        background-color: transparent;
-        color: $action-color;
-        border-color: $action-color;
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: $action-color;
+    color: $action-color !important;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: transparent;
     }
-
-    &:disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-
-        &:hover {
-            background-color: transparent;
-        }
-    }
-
+  }
 }
 
 .small-button {
-    display: inline-block;
+  display: inline-block;
 
-    a {
-        font-size: em(14px);
-        padding: 1em 3em;
-    }
+  a {
+    font-size: rem(12px);
+    padding: rem(13) rem(24);
+  }
 }
 
-@mixin button-set-up( $color: $action-color ) {
-    background-color: $color;
+@mixin button-set-up($color: $action-color) {
+  background-color: $color;
 
-    &:hover,
-    &:focus {
-        color: $color;
-        border-color: $color;
-        outline: none;
-    }
-
+  &:hover,
+  &:focus {
+    border-color: $color;
+    color: $color !important;
+    outline: none;
+  }
 }
 
 .primary-button a,
 .blue-button a,
-.blue-button input[type=submit] {
-    @include button-set-up( $blue );
-}
-
-.light-blue-button a,
-.light-blue-button input[type=submit] {
-    @include button-set-up( $light-blue );
+.blue-button input[type="submit"],
+.blue-button button {
+  @include button-set-up($blue-900);
 }
 
 .medium-gray-button a,
-.medium-gray-button input[type=submit] {
-    @include button-set-up( $medium-gray );
+.medium-gray-button input[type="submit"] {
+  @include button-set-up($gray-600);
 }
 
 .dark-gray-button a,
-.dark-gray-button input[type=submit] {
-    @include button-set-up( $dark-gray );
+.dark-gray-button input[type="submit"] {
+  @include button-set-up($gray-900);
+}
+
+.green-button a,
+.green-button input[type="submit"] {
+  @include button-set-up($green-900);
 }
 
 .white-button a,
-.white-button input[type=submit] {
-    @include button-set-up( white );
-    color: $dark-gray;
+.white-button input[type="submit"] {
+  @include button-set-up(white);
+  color: $gray-900 !important;
+
+  &:hover {
+    background-color: transparent;
+  }
 }
 
 .blue-button,
-.light-blue-button,
 .medium-gray-button,
 .dark-gray-button,
+.green-button,
 .white-button {
-    display: inline-block;
+  display: inline-block;
 }

@@ -1,68 +1,67 @@
 <?php
 
-add_filter ( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
-remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
-remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
-remove_action( 'genesis_before_loop', 'genesis_do_date_archive_title' );
+add_filter('genesis_pre_get_option_site_layout', '__genesis_return_full_width_content');
+remove_action('genesis_entry_footer', 'genesis_post_meta');
+remove_action('genesis_entry_footer', 'genesis_post_meta');
+remove_action('genesis_before_loop', 'genesis_do_date_archive_title');
 
-add_filter( 'genesis_post_info', 'sp_post_info_filter' );
-function sp_post_info_filter($post_info) {
-	$post_info = '[post_date]';
-	return $post_info;
+add_action('genesis_loop', 'ns_intro_text');
+function ns_intro_text()
+{
+    $arch_cont = ns_get_field('archive_intro_text_testimonials', 'option');
+    ?>
+    <?php if ($arch_cont) : ?>
+        <section class="archIntroText lastMNone">
+            <?php echo $arch_cont; ?>
+        </section>
+    <?php endif; ?>
+    <?php
 }
 
-add_action( 'genesis_loop', 'objectiv_intro_text' );
-function objectiv_intro_text() {
-	$arch_cont = get_field( 'archive_intro_text_testimonials', 'option' );
-	?>
-	<?php if ( ! empty( $arch_cont ) ) : ?>
-		<section class="archIntroText lastMNone">
-			<?php echo $arch_cont ?>
-		</section>
-	<?php endif; ?>
-	<?php
+// Lower Half or so of the testimonial page
+function ns_testimonials_lower_archive()
+{
+     $args = array(
+         'posts_per_page' => -1,
+         'post_type'   => 'testimonial',
+         'post_status' => 'publish',
+         'order'       => 'ASC',
+         'orderby'     => 'title',
+     );
+
+     $testimonials_query = new WP_Query($args);
+        ?>
+
+        <section class="testimonial-arch-lower mt-8">
+            <?php if ($testimonials_query->have_posts()) : ?>
+                <div class="testimonial-archive-list">
+                    <?php while ($testimonials_query->have_posts()) : ?>
+                        <?php $testimonials_query->the_post(); ?>
+                        <div class="testimonial text-center text-white">
+                            <?php echo wp_trim_words(get_the_content(), 64, '...'); ?>
+                            <div class="testimonial-title smallmt font-bold f18">
+                                <span class=""><?php the_title(); ?></span>
+                                <?php if (! empty(get_field('testimonial_company'))) : ?>
+                                    <span class=""> | <?php the_field('testimonial_company'); ?></span>
+                                <?php endif; ?>
+                                </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            <?php else : ?>
+                Sorry, no matching testimonials.
+            <?php endif; ?>
+        </section>
+
+    <?php
 }
 
 // Remove the loop and replace it with our own.
-remove_action( 'genesis_loop', 'genesis_do_loop' );
-add_action( 'genesis_loop', 'objectiv_testimonial_archive_custom_loop' );
-function objectiv_testimonial_archive_custom_loop( ) {
-
-	// get the pest types
-	$args = array(
-	    'post_type'  => 'testimonial',
-		'numberposts' => -1,
-		'post_status' => 'publish',
-		'orderby' => 'menu_order',
-    	'order'   => 'ASC',
-	);
-	$testimonials = get_posts( $args );
-
-	if ( ! empty( $testimonials ) ) {
-		foreach ( $testimonials as $t ) {
-			$test_company = get_field( 'testimonial_company', $t->ID );
-			?>
-			<div class="testimonial-block">
-				<div class="entry-content">
-					<?php echo $t->post_content ?>
-				</div>
-				<h5 class="entry-title">
-					- <?php echo $t->post_title ?>
-					<?php if ( ! empty( $test_company ) ) : ?>
-						/ <?php echo $test_company ?>
-					<?php endif; ?>
-				</h5>
-			</div>
-			<?php
-		}
-	}
-}
-
-//* Customize the post info function
-add_filter( 'genesis_post_info', 'objectiv_post_info_filter' );
-function objectiv_post_info_filter($post_info) {
-	$post_info = '';
-	return $post_info;
+remove_action('genesis_loop', 'genesis_do_loop');
+add_action('genesis_loop', 'ns_testimonials_archive_custom_loop');
+function ns_testimonials_archive_custom_loop()
+{
+    ns_testimonials_lower_archive();
 }
 
 genesis();

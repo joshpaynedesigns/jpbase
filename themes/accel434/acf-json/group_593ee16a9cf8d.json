@@ -3,31 +3,10 @@
     "title": "Flex - Icon Blurb Section",
     "fields": [
         {
-            "key": "field_593ee16aa2174",
-            "label": "Background Color",
-            "name": "background_color",
-            "type": "button_group",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "white": "White",
-                "light-gray": "Light Gray"
-            },
-            "allow_null": 0,
-            "default_value": "white",
-            "layout": "horizontal",
-            "return_format": "value"
-        },
-        {
             "key": "field_593ee16aa217d",
             "label": "Section Title",
             "name": "section_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -47,6 +26,7 @@
             "key": "field_593ee16aa2186",
             "label": "Sub Title",
             "name": "sub_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -66,6 +46,7 @@
             "key": "field_59c956f9d1631",
             "label": "Section Button",
             "name": "section_button",
+            "aria-label": "",
             "type": "link",
             "instructions": "",
             "required": 0,
@@ -81,6 +62,7 @@
             "key": "field_593ee16aa21ab",
             "label": "Icon Blurbs",
             "name": "icon_blurbs",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 1,
@@ -95,11 +77,13 @@
             "layout": "block",
             "button_label": "Add Icon Blurb",
             "collapsed": "",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_593ee16aaba28",
                     "label": "Icon",
                     "name": "icon",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "Displays above the blurb.",
                     "required": 0,
@@ -118,12 +102,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": "svg,png"
+                    "mime_types": "svg,png",
+                    "parent_repeater": "field_593ee16aa21ab"
                 },
                 {
                     "key": "field_593ee16aaba1c",
                     "label": "Icon Blurb URL",
                     "name": "icon_blurb_url",
+                    "aria-label": "",
                     "type": "link",
                     "instructions": "The url you want people to be redirected to when they click the icon\/blurb. (Optional)",
                     "required": 0,
@@ -133,12 +119,14 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array"
+                    "return_format": "array",
+                    "parent_repeater": "field_593ee16aa21ab"
                 },
                 {
                     "key": "field_593ee16aaba32",
                     "label": "Blurb Title",
                     "name": "blurb_title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -152,12 +140,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_593ee16aa21ab"
                 },
                 {
                     "key": "field_593ee16aaba3b",
                     "label": "Blurb",
                     "name": "blurb",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -171,7 +161,90 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_593ee16aa21ab"
+                },
+                {
+                    "key": "field_63ffb9e377445",
+                    "label": "Show Accordion",
+                    "name": "show_accordion",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_593ee16aa21ab"
+                },
+                {
+                    "key": "field_63ffb9c46becf",
+                    "label": "Accordion Title",
+                    "name": "accordion_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_63ffb9e377445",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_593ee16aa21ab"
+                },
+                {
+                    "key": "field_63ffb99a6bece",
+                    "label": "Accordion Content",
+                    "name": "accordion_content",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_63ffb9e377445",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "parent_repeater": "field_593ee16aa21ab"
                 }
             ]
         }
@@ -195,5 +268,6 @@
     ],
     "active": false,
     "description": "",
-    "modified": 1610380060
+    "show_in_rest": 0,
+    "modified": 1677703704
 }

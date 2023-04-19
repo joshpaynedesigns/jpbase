@@ -39,6 +39,11 @@ class MWP_EventListener_PublicRequest_SetHitCounter implements Symfony_EventDisp
     private $userAgentList = array();
 
     /**
+     * @var MWP_Worker_RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @param MWP_WordPress_Context    $context
      * @param MWP_Extension_HitCounter $hitCounter
      * @param MWP_Worker_RequestStack  $requestStack
@@ -109,15 +114,19 @@ class MWP_EventListener_PublicRequest_SetHitCounter implements Symfony_EventDisp
         $userAgent = $request->getHeader('USER_AGENT');
         $ip        = $request->getHeader('REMOTE_ADDR');
 
-        foreach ($this->blacklistedIps as $ipRegex) {
-            if (preg_match($ipRegex, $ip)) {
-                return true;
+        if (null !== $ip) {
+            foreach ($this->blacklistedIps as $ipRegex) {
+                if (preg_match($ipRegex, $ip)) {
+                    return true;
+                }
             }
         }
 
-        foreach ($this->userAgentList as $uaRegex) {
-            if (preg_match($uaRegex, $userAgent)) {
-                return !$this->userAgentMatchingMethod;
+        if (null !== $userAgent) {
+            foreach ($this->userAgentList as $uaRegex) {
+                if (preg_match($uaRegex, $userAgent)) {
+                    return !$this->userAgentMatchingMethod;
+                }
             }
         }
 

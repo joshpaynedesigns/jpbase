@@ -6,6 +6,7 @@
             "key": "field_58e7d3111d02f",
             "label": "Overall Design",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -22,6 +23,7 @@
             "key": "field_58e7d3111d03f",
             "label": "Use Custom Height",
             "name": "banner_custom_height",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "Use a custom height for this banner? Otherwise we'll use the default setting in the theme settings.",
             "required": 0,
@@ -41,6 +43,7 @@
             "key": "field_58e7d3111d04f",
             "label": "Height",
             "name": "banner_height",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "Select the homepage banner's custom height.",
             "required": 0,
@@ -73,6 +76,7 @@
             "key": "field_58e7d3111d05f",
             "label": "Content",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -89,6 +93,7 @@
             "key": "field_58e7d3111d06f",
             "label": "Banner Panels",
             "name": "banner_panels",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -103,27 +108,13 @@
             "layout": "block",
             "button_label": "Add Banner Panel",
             "collapsed": "",
+            "rows_per_page": 20,
             "sub_fields": [
-                {
-                    "key": "field_58e7d31120f73",
-                    "label": "General",
-                    "name": "",
-                    "type": "tab",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placement": "top",
-                    "endpoint": 0
-                },
                 {
                     "key": "field_58e7d31120f81",
                     "label": "Type",
                     "name": "banner_slide_type",
+                    "aria-label": "",
                     "type": "button_group",
                     "instructions": "",
                     "required": 0,
@@ -140,12 +131,41 @@
                     "allow_null": 0,
                     "default_value": "simple",
                     "layout": "horizontal",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "parent_repeater": "field_58e7d3111d06f"
+                },
+                {
+                    "key": "field_6402600fabb62",
+                    "label": "Image",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "relevanssi_exclude": 0,
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "thumbnail",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120f8d",
                     "label": "Text Color",
                     "name": "text_color",
+                    "aria-label": "",
                     "type": "button_group",
                     "instructions": "Select the color of the text for the homepage banner.",
                     "required": 0,
@@ -162,12 +182,14 @@
                     "allow_null": 0,
                     "default_value": "light-text",
                     "layout": "horizontal",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120f95",
                     "label": "Overlay",
                     "name": "overlay",
+                    "aria-label": "",
                     "type": "button_group",
                     "instructions": "Select the overlay that will show behind the text but in front of the image.",
                     "required": 0,
@@ -185,67 +207,92 @@
                     "allow_null": 0,
                     "default_value": "dark-overlay",
                     "layout": "horizontal",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120fa5",
                     "label": "Title",
                     "name": "banner_title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120fb1",
                     "label": "Sub Title",
                     "name": "banner_sub_title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_5c646ae1be960",
-                    "label": "Banner Button",
-                    "name": "banner_button",
+                    "label": "First Button",
+                    "name": "first_button",
+                    "aria-label": "",
                     "type": "link",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array"
+                    "return_format": "array",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
-                    "key": "field_58e7d31120fc2",
-                    "label": "Use Default BG Image",
-                    "name": "use_default_bg_image",
-                    "type": "true_false",
-                    "instructions": "The default BG image is set up in the <a target=\"_blank\" href=\"\/wp-admin\/admin.php?page=theme-general-settings\">Theme settings<\/a>.",
+                    "key": "field_63addb1c9df3e",
+                    "label": "Second Button",
+                    "name": "second_button",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "parent_repeater": "field_58e7d3111d06f"
+                },
+                {
+                    "key": "field_58e7d31120fce",
+                    "label": "Background Image",
+                    "name": "banner_background_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -253,35 +300,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "message": "",
-                    "default_value": 1,
-                    "ui": 1,
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
-                    "key": "field_58e7d31120fce",
-                    "label": "Background Image",
-                    "name": "banner_background_image",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_58e7d31120fc2",
-                                "operator": "!=",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "100",
-                        "class": "",
-                        "id": ""
-                    },
+                    "relevanssi_exclude": 0,
                     "return_format": "array",
-                    "preview_size": "thumbnail",
                     "library": "all",
                     "min_width": "",
                     "min_height": "",
@@ -289,12 +309,15 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "preview_size": "thumbnail",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120fea",
                     "label": "WebM Video File",
                     "name": "webm_video_file",
+                    "aria-label": "",
                     "type": "file",
                     "instructions": "",
                     "required": 0,
@@ -316,12 +339,14 @@
                     "library": "all",
                     "min_size": "",
                     "max_size": "",
-                    "mime_types": "webm"
+                    "mime_types": "webm",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d31120ffa",
                     "label": "Ogg Video File",
                     "name": "ogg_video_file",
+                    "aria-label": "",
                     "type": "file",
                     "instructions": "",
                     "required": 0,
@@ -343,12 +368,14 @@
                     "library": "all",
                     "min_size": "",
                     "max_size": "",
-                    "mime_types": "ogv"
+                    "mime_types": "ogv",
+                    "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
                     "key": "field_58e7d3112100a",
                     "label": "MP4 Video File",
                     "name": "mp4_video_file",
+                    "aria-label": "",
                     "type": "file",
                     "instructions": "",
                     "required": 0,
@@ -370,7 +397,8 @@
                     "library": "all",
                     "min_size": "",
                     "max_size": "",
-                    "mime_types": "mp4,mov"
+                    "mime_types": "mp4,mov",
+                    "parent_repeater": "field_58e7d3111d06f"
                 }
             ]
         }
@@ -395,7 +423,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1564433937
+    "show_in_rest": 0,
+    "modified": 1681754658
 }

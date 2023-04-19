@@ -38,130 +38,130 @@ class Recurrence_Strings {
 			$strings,
 			[
 				// daily, ending on a specific date
-				'daily-on'                                 => __( 'An event every [interval] day(s) that begins at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'daily-on'                                 => __( 'An event every [interval] day(s) that begins at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'daily-allday-on'                          => __( 'An all day event every [interval] day(s), starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'daily-allday-on-at'                       => __( 'An all day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'daily-allday-on-at'                       => __( 'An all day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'daily-multi-on'                           => __( 'A multi-day event every [interval] day(s), starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'daily-multi-on-at'                        => __( 'A multi-day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'daily-multi-on-at'                        => __( 'A multi-day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// daily, after a specific number of events
-				'daily-after'                              => __( 'An event every [interval] day(s) that begins at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'daily-after'                              => __( 'An event every [interval] day(s) that begins at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'daily-allday-after'                       => __( 'An all day event every [interval] day(s), starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'daily-allday-after-at'                    => __( 'An all day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'daily-allday-after-at'                    => __( 'An all day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'daily-multi-after'                        => __( 'A multi-day event every [interval] day(s), starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'daily-multi-after-at'                     => __( 'A multi-day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'daily-multi-after-at'                     => __( 'A multi-day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// daily, never ending
-				'daily-never'                              => __( 'An event every [interval] day(s) that begins at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'daily-never'                              => __( 'An event every [interval] day(s) that begins at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'daily-allday-never'                       => __( 'An all day event every [interval] day(s), starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'daily-allday-never-at'                    => __( 'An all day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'daily-allday-never-at'                    => __( 'An all day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'daily-multi-never'                        => __( 'A multi-day event every [interval] day(s), starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'daily-multi-never-at'                     => __( 'A multi-day event every [interval] day(s) at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'daily-multi-never-at'                     => __( 'A multi-day event every [interval] day(s) at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 
 				// weekly, ending on a specific date
-				'weekly-on'                                => __( 'An event every [interval] week(s) that begins at [start_time] on [days_of_week], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'weekly-on'                                => __( 'An event every [interval] week(s) that begins at [first_occurrence_start_time] on [days_of_week], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'weekly-allday-on'                         => __( 'An all day event every [interval] week(s) on [days_of_week], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'weekly-allday-on-at'                      => __( 'An all day event every [interval] week(s) on [days_of_week] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'weekly-allday-on-at'                      => __( 'An all day event every [interval] week(s) on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'weekly-multi-on'                          => __( 'A multi-day event every [interval] week(s) starting on [days_of_week], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'weekly-multi-on-at'                       => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'weekly-multi-on-at'                       => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// weekly, after a specific number of events
-				'weekly-after'                             => __( 'An event every [interval] week(s) that begins at [start_time] on [days_of_week], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'weekly-after'                             => __( 'An event every [interval] week(s) that begins at [first_occurrence_start_time] on [days_of_week], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'weekly-allday-after'                      => __( 'An all day event every [interval] week(s) on [days_of_week], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'weekly-allday-after-at'                   => __( 'An all day event every [interval] week(s) on [days_of_week] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'weekly-allday-after-at'                   => __( 'An all day event every [interval] week(s) on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'weekly-multi-after'                       => __( 'A multi-day event every [interval] week(s) starting on [days_of_week], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'weekly-multi-after-at'                    => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'weekly-multi-after-at'                    => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// weekly, never ending
-				'weekly-never'                             => __( 'An event every [interval] week(s) that begins at [start_time] on [days_of_week], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'weekly-never'                             => __( 'An event every [interval] week(s) that begins at [first_occurrence_start_time] on [days_of_week], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'weekly-allday-never'                      => __( 'An all day event every [interval] week(s) on [days_of_week], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'weekly-allday-never-at'                   => __( 'An all day event every [interval] week(s) on [days_of_week] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'weekly-allday-never-at'                   => __( 'An all day event every [interval] week(s) on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'weekly-multi-never'                       => __( 'A multi-day event every [interval] week(s) starting on [days_of_week], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'weekly-multi-never-at'                    => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'weekly-multi-never-at'                    => __( 'A multi-day event every [interval] week(s) starting on [days_of_week] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a relative day, ending on a specific date
-				'monthly-on'                               => __( 'An event every [interval] month(s) that begins at [start_time] on [month_day_description], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-on'                               => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on [month_day_description], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'monthly-allday-on'                        => __( 'An all day event every [interval] month(s) on [month_day_description], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'monthly-allday-on-at'                     => __( 'An all day event every [interval] month(s) on [month_day_description] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-allday-on-at'                     => __( 'An all day event every [interval] month(s) on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'monthly-multi-on'                         => __( 'A multi-day event every [interval] month(s) starting on [month_day_description], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'monthly-multi-on-at'                      => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-multi-on-at'                      => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a numeric day, ending on a specific date
-				'monthly-numeric-on'                       => __( 'An event every [interval] month(s) that begins at [start_time] on day [month_number] of the month, starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-numeric-on'                       => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on day [month_number] of the month, starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'monthly-allday-numeric-on'                => __( 'An all day event every [interval] month(s) on day [month_number] of the month, starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'monthly-allday-numeric-on-at'             => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-allday-numeric-on-at'             => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'monthly-multi-numeric-on'                 => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month, starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'monthly-multi-numeric-on-at'              => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'monthly-multi-numeric-on-at'              => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a relative day, after a specific number of events
-				'monthly-after'                            => __( 'An event every [interval] month(s) that begins at [start_time] on [month_day_description], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-after'                            => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on [month_day_description], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'monthly-allday-after'                     => __( 'An all day event every [interval] month(s) on [month_day_description], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'monthly-allday-after-at'                  => __( 'An all day event every [interval] month(s) on [month_day_description] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-allday-after-at'                  => __( 'An all day event every [interval] month(s) on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'monthly-multi-after'                      => __( 'A multi-day event every [interval] month(s) starting on [month_day_description], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'monthly-multi-after-at'                   => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-multi-after-at'                   => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a numeric day, after a specific number of events
-				'monthly-numeric-after'                    => __( 'An event every [interval] month(s) that begins at [start_time] on day [month_number] of the month, starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-numeric-after'                    => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on day [month_number] of the month, starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'monthly-allday-numeric-after'             => __( 'An all day event every [interval] month(s) on day [month_number] of the month, starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'monthly-allday-numeric-after-at'          => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-allday-numeric-after-at'          => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'monthly-multi-numeric-after'              => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month, starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'monthly-multi-numeric-after-at'           => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'monthly-multi-numeric-after-at'           => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a relative day, never ending
-				'monthly-never'                            => __( 'An event every [interval] month(s) that begins at [start_time] on [month_day_description], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-never'                            => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on [month_day_description], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'monthly-allday-never'                     => __( 'An all day event every [interval] month(s) on [month_day_description], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'monthly-allday-never-at'                  => __( 'An all day event every [interval] month(s) on [month_day_description] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-allday-never-at'                  => __( 'An all day event every [interval] month(s) on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'monthly-multi-never'                      => __( 'A multi-day event every [interval] month(s) starting on [month_day_description], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'monthly-multi-never-at'                   => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-multi-never-at'                   => __( 'A multi-day event every [interval] month(s) starting on [month_day_description] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 
 				// monthly, with a numeric day, never ending
-				'monthly-numeric-never'                    => __( 'An event every [interval] month(s) that begins at [start_time] on day [month_number] of the month, starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-numeric-never'                    => __( 'An event every [interval] month(s) that begins at [first_occurrence_start_time] on day [month_number] of the month, starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'monthly-allday-numeric-never'             => __( 'An all day event every [interval] month(s) on day [month_number] of the month, starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'monthly-allday-numeric-never-at'          => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-allday-numeric-never-at'          => __( 'An all day event every [interval] month(s) on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'monthly-multi-numeric-never'              => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month, starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'monthly-multi-numeric-never-at'           => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'monthly-multi-numeric-never-at'           => __( 'A multi-day event every [interval] month(s) starting on day [month_number] of the month at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a relative day, ending on a specific date
-				'yearly-on'                                => __( 'An event every [interval] year(s) that begins at [start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-on'                                => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'yearly-allday-on-at'                      => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'yearly-allday-on'                         => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-allday-on'                         => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'yearly-multi-on'                          => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'yearly-multi-on-at'                       => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-multi-on-at'                       => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a numeric day, ending on a specific date
-				'yearly-numeric-on'                        => __( 'An event every [interval] year(s) that begins at [start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-numeric-on'                        => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'yearly-allday-numeric-on'                 => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'yearly-allday-numeric-on-at'              => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-allday-numeric-on-at'              => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 				'yearly-multi-numeric-on'                  => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
-				'yearly-multi-numeric-on-at'               => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
+				'yearly-multi-numeric-on-at'               => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating until [series_end_date]', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a relative day, after a specific number of events
-				'yearly-after'                             => __( 'An event every [interval] year(s) that begins at [start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-after'                             => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'yearly-allday-after'                      => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'yearly-allday-after-at'                   => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-allday-after-at'                   => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'yearly-multi-after'                       => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'yearly-multi-after-at'                    => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-multi-after-at'                    => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a numeric day, after a specific number of events
-				'yearly-numeric-after'                     => __( 'An event every [interval] year(s) that begins at [start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-numeric-after'                     => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'yearly-allday-numeric-after'              => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'yearly-allday-numeric-after-at'           => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-allday-numeric-after-at'           => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 				'yearly-multi-numeric-after'               => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
-				'yearly-multi-numeric-after-at'            => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
+				'yearly-multi-numeric-after-at'            => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and happening [count] times', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a relative day, never ending
-				'yearly-never'                             => __( 'An event every [interval] year(s) that begins at [start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-never'                             => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'yearly-allday-never'                      => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'yearly-allday-never-at'                   => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-allday-never-at'                   => __( 'An all day event every [interval] year(s) on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'yearly-multi-never'                       => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'yearly-multi-never-at'                    => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-multi-never-at'                    => __( 'A multi-day event every [interval] year(s) starting on [month_day_description] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 
 				// yearly, with a numeric day, never ending
-				'yearly-numeric-never'                     => __( 'An event every [interval] year(s) that begins at [start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-numeric-never'                     => __( 'An event every [interval] year(s) that begins at [first_occurrence_start_time] on day [month_number] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'yearly-allday-numeric-never'              => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'yearly-allday-numeric-never-at'           => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-allday-numeric-never-at'           => __( 'An all day event every [interval] year(s) on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 				'yearly-multi-numeric-never'               => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
-				'yearly-multi-numeric-never-at'            => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
+				'yearly-multi-numeric-never-at'            => __( 'A multi-day event every [interval] year(s) starting on day [month_number] of [month_names] at [first_occurrence_start_time], starting [first_occurrence_date] and repeating indefinitely', 'tribe-events-calendar-pro' ),
 			]
 		);
 	}

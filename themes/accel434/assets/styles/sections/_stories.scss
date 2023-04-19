@@ -1,0 +1,51 @@
+.stories-slide-inner {
+  align-items: center;
+  border: 1px solid $green-300;
+  border-radius: rem(15);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+
+  @media ($large-screen-up) {
+    flex-direction: row;
+    // margin: 0 rem(40);
+  }
+
+  > div {
+    flex: 1;
+  }
+
+  .image-wrap {
+    width: 100%;
+
+    img {
+      object-fit: cover;
+      height: rem(250);
+      width: 100%;
+
+      @media ($large-screen-up) {
+        height: 100%;
+      }
+    }
+
+    @media ($large-screen-up) {
+      align-self: stretch;
+    }
+  }
+
+  .content-wrap-inner {
+    padding: rem(32);
+
+    @media ($large-screen-up) {
+      padding: rem(64) rem(40);
+    }
+
+    .story-text {
+
+      p:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

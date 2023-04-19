@@ -1,0 +1,41 @@
+.juicerFeedSection {
+  // background: $gray-200;
+
+  .sectionHeader {
+    margin-bottom: 2em;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  li:before {
+    display: none;
+  }
+
+  .juicer-feed.slider {
+    .referral {
+      margin-bottom: 10px;
+
+      a {
+        color: black !important;
+      }
+    }
+
+    .slick-prev {
+      left: 1px;
+
+      &:before {
+        display: block;
+      }
+    }
+
+    .slick-next {
+      right: 1px;
+
+      &:before {
+        display: block;
+      }
+    }
+  }
+}

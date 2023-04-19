@@ -6,7 +6,8 @@
             "key": "field_5ac68fb3d495f",
             "label": "Background Color",
             "name": "background_color",
-            "type": "button_group",
+            "aria-label": "",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,18 +16,25 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
+                "none": "None",
                 "white": "White",
                 "light-gray": "Light Gray",
                 "medium-gray": "Medium Gray",
                 "dark-gray": "Dark Gray",
                 "blue": "Blue",
-                "light-blue": "Light Blue"
+                "light-blue": "Light Blue",
+                "green": "Green",
+                "light-green": "Light Green"
             },
+            "default_value": "none",
+            "return_format": "value",
+            "multiple": 0,
             "allow_null": 0,
-            "default_value": "white",
-            "layout": "horizontal",
-            "return_format": "value"
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -34,7 +42,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "page"
             }
         ]
     ],
@@ -44,7 +52,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1588357363
+    "show_in_rest": 0,
+    "modified": 1677788781
 }

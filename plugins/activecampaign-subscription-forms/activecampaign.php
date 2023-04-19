@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.10
+Version: 8.1.11
 Author URI: http://www.activecampaign.com
 */
 
@@ -61,6 +61,7 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.8: Updated listing
 ## version 8.1.9: Updated authentication for internal API requests
 ## version 8.1.10: Verify 6.0 Compatibility. Updated listing
+## version 8.1.11: Removing obsolete Javascript
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -842,19 +843,6 @@ function activecampaign_add_buttons($plugin_array)
     //we need to load the JS for this button as well
     //and we should load it on any page that has the button loaded, since some plugins allow editing pages from anywhere
     wp_enqueue_script("editor_pages", plugins_url("editor_pages.js", __FILE__), array(), false, true);
-
-    if (!in_array($GLOBALS["pagenow"], array('post.php', 'page.php', 'post-new.php', 'post-edit.php'))) {
-        //Some plugins will inject the form HTML dynamically into the page, including the script tags
-        //unfortunately, browsers will not execute the scripts in order if that happens
-        //so we need to make sure these calendar files are loaded, or errors will happen
-        //if, for example, the Live Composer plugin detects errors, it will not finish saving changes
-        $instance = get_option("settings_activecampaign");
-        if (isset($instance["api_url"]) && $instance["api_url"] && isset($instance["api_key"]) && $instance["api_key"]) {
-            wp_enqueue_script("form_calendar", $instance["api_url"] . '/ac_global/jscalendar/calendar.js?_=1456685745739', array(), false, true);
-            wp_enqueue_script("form_calendar_en", $instance["api_url"] . '/ac_global/jscalendar/lang/calendar-en.js?_=1456685745739', array(), false, true);
-            wp_enqueue_script("form_calendar_setup", $instance["api_url"] . '/ac_global/jscalendar/calendar-setup.js?_=1456685745739', array(), false, true);
-        }
-    }
 
     // any data we need to access in JavaScript.
     $data = array(

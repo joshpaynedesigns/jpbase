@@ -24,6 +24,14 @@
             border-bottom: $base-border;
         }
 
+        label {
+            // display: none;
+            text-indent: -9999px;
+            display: inline-block;
+            height: 0;
+            color: #000;
+        }
+
         input {
             border: none;
             box-shadow: none;

@@ -61,7 +61,7 @@ class Replace_Results {
 	 * @return mixed
 	 */
 	public function replace( $posts, WP_Query $wp_query = null ) {
-		// This should affect only to posts.
+		// This should only apply to posts.
 		if ( ! $this->is_query_for_post_type( $wp_query, TEC::POSTTYPE ) ) {
 			return $posts;
 		}
@@ -75,6 +75,12 @@ class Replace_Results {
 		$occurrences = [];
 		foreach ( $posts as $index => $post ) {
 			$post_id = $post instanceof WP_Post ? $post->ID : (int) $post;
+
+			if ( empty( $post_id ) ) {
+				// Maybe we got a `SELECT wp_tec_occurrences.occurrence_id ...` result.
+				$post_id = ( (object) $post )->occurrence_id ?? 0;
+			}
+
 			if ( $this->provisional_post->is_provisional_post_id( $post_id ) ) {
 				$occurrences[ $post_id ] = $index;
 			}

@@ -1,0 +1,21 @@
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.lotdn {
+  &:last-of-type {
+    display: none;
+  }
+}

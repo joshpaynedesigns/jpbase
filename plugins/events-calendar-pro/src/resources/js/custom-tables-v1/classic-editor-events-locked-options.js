@@ -140,7 +140,7 @@ tec.classicEditorEvents.lockedOptions = tec.classicEditorEvents.lockedOptions ||
 		const overlay = row.querySelector( obj.selectors.weekDaysOverlay );
 
 		// Don't need this logic for RDATE occurrences. Keep the default settings.
-		if( tecEventDetails?.isRdate ){
+		if ( tecEventDetails?.isRdate ) {
 			return;
 		}
 

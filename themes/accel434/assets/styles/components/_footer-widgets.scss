@@ -1,126 +1,125 @@
 .footer-widgets {
-    background-color: $secondary-background-color;
-    clear: both;
-    position: relative;
-    padding: $base-spacing*2 0;
-    color: #777;
+  background-color: $green-100;
+  color: $gray-900;
+  padding: rem(48) 0;
+  position: relative;
 
-    @include media( $large-screen-up ) {
-        padding: em(82px) 0;
+  @media ($large-screen-up) {
+    padding: rem(96) 0 rem(64);
+  }
+
+  > .wrap {
+    display: grid;
+    gap: rem(32);
+    grid-template-columns: 1fr;
+
+    @media ($medium-screen-up) {
+      grid-template-columns: 1fr 1fr;
     }
 
-    .widget-area  {
-        width: 100%;
-        margin-bottom: $base-spacing;
-        text-align: center;
+    @media ($large-screen-up) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
 
-        @include media( $medium-screen-up ) {
-            @include span-columns(6);
-            @include omega-reset(4n);
-            @include omega(2n);
-        }
+  .widget-title.widgettitle {
+    color: $gray-900;
+    font-size: rem(24);
+  }
 
-        @include media( $large-screen-up ) {
-            @include span-columns(3);
-            @include omega-reset(2n);
-            @include omega(4n);
-            margin-bottom: 0;
-        }
-
-        .widget {
-            text-align: left;
-            clear: both;
-            min-width: 51%;
-            word-wrap: break-word;
-
-            @include media( $large-screen-up ) {
-                display: inline-block;
-            }
-        }
+  .widget_ns_footer_contact {
+    .footer-logo {
+      margin-bottom: 0.5em;
+      max-width: 300px;
     }
 
-    .widget-title.widgettitle {
-        font-size: em(28px);
-        color: #333;
-        font-weight: bold;
-        text-transform: uppercase;
+    .get-directions {
+      margin-top: -0.5em;
     }
 
-    .widget_objectiv_footer_contact {
-
-        .footer-logo {
-            max-width: 300px;
-            margin-bottom: 0.5em;
-        }
-
-        .get-directions {
-            margin-top: -0.5em;
-        }
-
-        .email {
-            word-break: break-word;
-        }
-
-        p {
-            margin-bottom: 0.5em;
-        }
+    .email {
+      word-break: break-word;
     }
 
-    ul.menu {
-        margin-bottom: $small-spacing;
-        padding: 0;
-
-        ul.sub-menu {
-            display: none;
-        }
+    p {
+      margin-bottom: 0.5em;
     }
+  }
 
-    li {
-        list-style-type: none;
+  ul.menu {
+    margin-bottom: $small-spacing;
+    padding: 0;
+
+    ul.sub-menu {
+      display: none;
     }
+  }
 
-    .menu-item {
-        margin-bottom: 0.5em;
+  li {
+    list-style-type: none;
+  }
 
-        a {
-            color: $medium-gray;
-            position: relative;
-            transition: color $base-duration $base-timing;
+  .menu-item {
+    margin-bottom: 0.25em;
 
-            &:hover {
-                color: $action-color;
-            }
-        }
+    a {
+      color: $gray-600;
+      font-size: rem(14);
+      position: relative;
+      transition: color $base-duration $base-timing;
+
+      &:hover {
+        color: $blue-900;
+      }
     }
+  }
 
-    .widget_media_image {
-        img {
-            display: block;
-        }
+  .email-phone a {
+    color: $blue-900;
+
+    &:hover {
+      text-decoration: underline;
     }
+  }
 
+  .widget_media_image {
+    img {
+      display: block;
+    }
+  }
 }
 
 .social-links {
-    clear: both;
-    position: relative;
-    margin-top: 1em;
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(4);
+  margin-top: 1em;
+  position: relative;
 
-    li {
-        display: inline;
+  li {
+    display: inline;
+  }
+
+  a {
+    color: $gray-600;
+    display: inline-block;
+    height: 22px;
+    margin-right: 10px;
+    overflow: hidden;
+    text-decoration: none !important;
+    width: 22px;
+  }
+
+  svg {
+    background: transparent;
+    fill: $gray-600;
+    height: 22px;
+    transition: all $base-duration $base-timing;
+    width: auto;
+
+    &:hover {
+      fill: $blue-900;
     }
-
-    svg {
-        background: #bbb;
-        fill: #fff;
-        height: 30px;
-        margin-right: 5px;
-        padding: 5px;
-        transition: all $base-duration $base-timing;
-        width: 30px;
-
-        &:hover {
-            background: $action-color;
-        }
-    }
+  }
 }

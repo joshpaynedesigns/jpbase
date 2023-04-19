@@ -123,7 +123,11 @@ class Single implements Update_Controller_Interface {
 		$is_last  = Occurrence::is_last( $occurrence_id );
 
 		if ( $is_first ) {
-			// 3. Update the original Event to start on the second Occurrence.
+			// 3. Decrement count limit now that we are subtracting one event.
+			$this->events->decrement_event_count_limit_by( $post_id, 1 );
+
+
+			// Then Update the original Event to start on the second Occurrence.
 			$second = Occurrence::where( 'post_id', $post_id )
 			                    ->order_by( 'start_date', 'ASC' )
 			                    ->offset( 1 )

@@ -1,50 +1,60 @@
 .pagination {
-    display: block;
-    margin-bottom: $base-spacing;
-    text-align: center;
-    clear: both;
+  clear: both;
+  display: block;
+  margin-bottom: $base-spacing;
+  margin-top: rem(32);
+  text-align: center;
 
-    li,
-    .pagination-next,
-    .pagination-previous {
-        background: #fff;
-        border: $base-border;
-        border-radius: $base-border-radius;
-        display: inline-block;
-        transition: all $base-duration $base-timing;
+  @media ($large-screen-up) {
+    margin-top: rem(48);
+  }
 
-        a {
-            display: inline-block;
-            color: $base-font-color;
-            padding: $small-spacing $base-spacing;
-        }
+  li,
+  .pagination-next,
+  .pagination-previous {
+    background: white;
+    border: $base-border;
+    border-radius: $base-border-radius;
+    display: inline-block;
+    padding: 0 !important;
+    transition: all $base-duration $base-timing;
 
-        &.active,
-        &:hover,
-        &:focus {
-            background: $action-color;
-            a {
-                color: white;
-            }
-        }
-
-        &:hover,
-        &:focus {
-            border: $base-border;
-            border-color: $action-color;
-            a {
-                color: white;
-            }
-        }
-
-        &.pagination-omission {
-             border: 0px;
-
-             &.active,
-             &:hover,
-             &:focus {
-                 background: transparent;
-             }
-         }
+    &::before {
+      display: none;
     }
+
+    a {
+      color: $base-font-color;
+      display: inline-block;
+      padding: $small-spacing $base-spacing;
+    }
+
+    &.active,
+    &:hover,
+    &:focus {
+      background: $action-color;
+      a {
+        color: white;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      border: $base-border;
+      border-color: $action-color;
+      a {
+        color: white;
+      }
+    }
+
+    &.pagination-omission {
+      border: 0px;
+
+      &.active,
+      &:hover,
+      &:focus {
+        background: transparent;
+      }
+    }
+  }
 }

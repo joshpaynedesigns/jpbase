@@ -1,10 +1,11 @@
 <?php
 /**
- * Build '_EventRecurrence` format data in a fluent manner.
+ * API to load, inspect and mutate recurrence/RSET data for Events Pro in a fluent manner. Intended to be used
+ * for all formats we may need to interact with. Can handle `_EventRecurrence` as well as RSET data.
  *
  * @since   6.0.1
  *
- * @package TEC\Events_Pro\Custom_Tables\V1
+ * @package TEC\Events_Pro\Custom_Tables\V1\Events
  */
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Events;
@@ -14,18 +15,29 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use RuntimeException;
+use TEC\Events\Custom_Tables\V1\Models\Event;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\From_Rset_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
+use TEC\Events_Pro\Custom_Tables\V1\RRule\RSet_Wrapper;
 use Tribe__Date_Utils as Dates;
 use Tribe__Timezones as Timezones;
 use Tribe__Events__Pro__Editor__Recurrence__Blocks as Converter;
+use WP_Post;
 
 /**
  * Class Recurrence
  *
+ * @since   6.0.8 Extended API to fetch from various formats/sources, and integrating with the Recurrence_Rule objects.
+ *        Many quality of life improvements.
  * @since   6.0.1
  *
- * @package TEC\Events_Pro\Custom_Tables\V1
+ * @method bool has_until_limit Checks if any rules have an UNTIL limit defined.
+ * @method bool has_count_limit Checks if any rules have a COUNT limit defined.
+ * @method bool has_infinite Checks if any rules have no limit defined.
+ *
+ * @package TEC\Events_Pro\Custom_Tables\V1\Events
  */
 class Recurrence {
 	/**
@@ -91,11 +103,8 @@ class Recurrence {
 	 * @var array<string,array|DateTimeInterface|DateTimezone|string>
 	 */
 	private $build_rules = [
-		'EventStartDate' => null,
-		'EventEndDate'   => null,
-		'EventTimezone'  => null,
-		'rules'          => [],
-		'exclusions'     => [],
+		'rules'      => [],
+		'exclusions' => [],
 	];
 
 	/**
@@ -144,6 +153,24 @@ class Recurrence {
 	private $delayed = [];
 
 	/**
+	 * Mapping to pass down some method calls to child objects for easier introspection of a
+	 * recurrences' rules/dates defined.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @var array<string,array> This takes the format  [type_of_passthrough => [func_name => [get_items, item_call]]].
+	 *                          An 'any_match' type_of_passthrough will search for items that evaluate to true.
+	 */
+	protected $function_passthrough = [
+		'any_match' => [
+			'has_count_limit' => [ 'get_rrules', 'has_count_limit' ],
+			'has_until_limit' => [ 'get_rrules', 'has_until_limit' ],
+			'has_infinite'    => [ 'get_rrules', 'is_infinite' ]
+		]
+	];
+
+
+	/**
 	 * Builds an instance of the class from an iCalendar format RSET string and dates.
 	 *
 	 * @since 6.0.1
@@ -152,11 +179,12 @@ class Recurrence {
 	 * @param DateTimeImmutable $dtstart The Event start date.
 	 * @param DateTimeImmutable $dtend   The Event end date.
 	 *
-	 * @return Recurrence A new instance of the class.
+	 * @return Recurrence|null A new instance of the class.
 	 *
 	 * @throws \ReflectionException If there's an issue while introspecting the RSET for state.
+	 *
 	 */
-	public static function from_icalendar_string( string $string, DateTimeImmutable $dtstart, DateTimeImmutable $dtend ): Recurrence {
+	public static function from_icalendar_string( string $string, DateTimeImmutable $dtstart, DateTimeImmutable $dtend ): ?Recurrence {
 		$instance = new self();
 		$instance->with_start_date( $dtstart )->with_end_date( $dtend );
 		$event_recurrence = ( new From_Rset_Converter() )->convert_to_event_recurrence_from_dates( $string, $dtstart, $dtend, true );
@@ -172,6 +200,143 @@ class Recurrence {
 		return $instance;
 	}
 
+
+	/**
+	 * Builds an instance of the class from an existing Event post.
+	 *
+	 * @since 6.0.1
+	 * @since 6.0.8 More flexible params to accommodate WP_Post, Event, Provisional or Post IDs
+	 *
+	 * @param numeric|Event|WP_Post $id_or_event The ID of the Event post to build the instance from.
+	 *
+	 * @return Recurrence|null The instance of the class built from the Event post.
+	 */
+	public static function from_event( $id_or_event ): ?Recurrence {
+		$event   = null;
+		$post_id = null;
+
+		// If WP_Post, get our ID (provisional or post ID).
+		if ( $id_or_event instanceof WP_Post ) {
+			$id_or_event = $id_or_event->ID;
+		}
+
+		// We should have an ID now, try and find this Event.
+		if ( is_numeric( $id_or_event ) ) {
+			$provisional_post = tribe( Provisional_Post::class );
+			$post_id          = $id_or_event;
+
+			// If provisional ID, get our post ID.
+			if ( $provisional_post->is_provisional_post_id( $post_id ) ) {
+				$post_id = $provisional_post->get_occurrence_post_id( $post_id );
+			}
+
+			// Now that we normalized the post ID, get the Event.
+			$event = Event::find( $post_id, 'post_id' );
+		}
+
+		// If we found the Event, just use the RSET defined on it.
+		if ( $event instanceof Event ) {
+			return self::from_rset( $event->rset );
+		}
+
+		// No CT1 data, if we have post ID try to find post meta?
+		$recurrence = $post_id ? get_post_meta( $post_id, '_EventRecurrence', true ) : null;
+		if ( ! empty( $recurrence ) ) {
+			return self::from_recurrence( $recurrence );
+		}
+
+		return null;
+	}
+
+
+	/**
+	 * Factory to build a Recurrence off of an event or recurrence data.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param numeric|Event|WP_Post|array|string $event_or_recurrence The event or data to instantiate the instance off
+	 *                                                                of.
+	 *
+	 * @return Recurrence|null If we are able to locate or build an Recurrence, null if failure.
+	 */
+	public static function from( $event_or_recurrence ): ?Recurrence {
+		// What type of data did we pass?
+		if (
+			is_numeric( $event_or_recurrence )
+			|| $event_or_recurrence instanceof WP_Post
+			|| $event_or_recurrence instanceof Event
+		) {
+			return self::from_event( $event_or_recurrence );
+		} else if ( is_array( $event_or_recurrence ) ) {
+			return self::from_recurrence( $event_or_recurrence );
+		} elseif (
+			$event_or_recurrence instanceof RSet_Wrapper
+			|| (
+				! empty( $event_or_recurrence )
+				&& is_string( $event_or_recurrence )
+			)
+		) {
+			return self::from_rset( $event_or_recurrence );
+		}
+
+		return null;
+	}
+
+	/**
+	 * Source of truth for our rule compiling.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param array $recurrence The legacy _EventRecurrence metadata.
+	 *
+	 * @return Recurrence|null If we are able to locate or build an Recurrence, null if failure.
+	 */
+	public static function from_recurrence( array $recurrence ): ?Recurrence {
+		if ( empty( $recurrence ) || ! isset( $recurrence['rules'], $recurrence['exclusions'] ) ) {
+			return null;
+		}
+		$instance = new self();
+
+		return $instance->set_recurrence( $recurrence );
+	}
+
+	/**
+	 * Build instance off the RSET data.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param RSet_Wrapper|string $rset The RSET string or an RSet_Wrapper.
+	 *
+	 * @return Recurrence|null If we are able to locate or build an Recurrence, null if failure.
+	 */
+	public static function from_rset( $rset ): ?Recurrence {
+		if ( empty( $rset ) ) {
+
+			return null;
+		}
+
+		try {
+			$converter    = new From_Rset_Converter();
+			$rset_wrapper = $rset;
+			if ( is_string( $rset ) ) {
+				$rset_wrapper = new RSet_Wrapper( $rset );
+			}
+			$dtstart = $rset_wrapper->get_dtstart();
+			$dtend   = $rset_wrapper->get_dtend();
+
+			return self::from_recurrence( $converter->convert_to_event_recurrence_from_dates( $rset, $dtstart, $dtend ) );
+		} catch ( \Exception $e ) {
+			do_action( 'tribe_log',
+				'error',
+				'Exception while parsing RSET.', [
+					'source'    => __METHOD__ . ':' . __LINE__,
+					'exception' => $e->getMessage()
+				] );
+
+			return null;
+		}
+	}
+
 	/**
 	 * Sets the Event start date (DTSTART) of the rules and exclusions to build.
 	 *
@@ -183,7 +348,6 @@ class Recurrence {
 	 */
 	public function with_start_date( $date ): Recurrence {
 		$this->set_date_property( $date, 'dtstart' );
-		$this->build_rules['EventStartDate'] = $this->dtstart->format( Dates::DBDATETIMEFORMAT );
 
 		return $this;
 	}
@@ -199,7 +363,6 @@ class Recurrence {
 	 */
 	public function with_end_date( $date ): Recurrence {
 		$this->set_date_property( $date, 'dtend' );
-		$this->build_rules['EventEndDate'] = $this->dtend->format(Dates::DBDATETIMEFORMAT);
 
 		return $this;
 	}
@@ -214,10 +377,10 @@ class Recurrence {
 	 * @return $this For chaining.
 	 */
 	public function with_timezone( $timezone ): Recurrence {
-		$timezone_object = Timezones::build_timezone_object( $timezone );
-		$this->timezone = $timezone_object;
+		$timezone_object                    = Timezones::build_timezone_object( $timezone );
+		$this->timezone                     = $timezone_object;
 		$this->build_rules['EventTimezone'] = $timezone_object->getName();
-		$this->locked_timezone = true;
+		$this->locked_timezone              = true;
 
 		foreach ( [ 'dtstart', 'dtend' ] as $date_prop ) {
 			if ( $this->{$date_prop} instanceof DateTimeImmutable ) {
@@ -245,7 +408,12 @@ class Recurrence {
 	 *
 	 * @return $this For chaining.
 	 */
-	public function with_weekly_recurrence( int $interval = 1, array $days = null, bool $same_time = true, array $diff_time_data = null ): Recurrence {
+	public function with_weekly_recurrence(
+		int $interval = 1,
+		array $days = null,
+		bool $same_time = true,
+		array $diff_time_data = null
+	): Recurrence {
 		if ( $this->delay( __FUNCTION__, func_get_args() ) ) {
 			return $this;
 		}
@@ -286,7 +454,7 @@ class Recurrence {
 		$this->last_rule = &$rule;
 		/** @noinspection UnsupportedStringOffsetOperationsInspection */
 		$this->build_rules[ $this->rules_or_exclusion ][] = &$rule;
-		$this->with_end( 'after', 10 );
+		$this->with_end_never();
 
 		return $this;
 	}
@@ -317,14 +485,18 @@ class Recurrence {
 				break;
 			case 'after':
 				unset( $this->last_rule['end'] );
-				$this->last_rule['end-type'] = 'After';
+				$this->last_rule['end-type']  = 'After';
 				$this->last_rule['end-count'] = (int) $args[0];
 				break;
 			case 'on':
 				unset( $this->last_rule['end-count'] );
 				$this->last_rule['end-type'] = 'On';
-				$this->last_rule['end'] = ! empty( $args[0] ) ? Dates::immutable( $args[0], $this->timezone )
-					->format( Dates::DBDATEFORMAT ) : '';
+				$this->last_rule['end']      = '';
+				if ( ! empty( $args[0] ) ) {
+					$this->last_rule['end'] = Dates::immutable( $args[0], $this->timezone )
+					                               ->format( Dates::DBDATEFORMAT );
+				}
+
 				break;
 		}
 
@@ -367,49 +539,6 @@ class Recurrence {
 	 */
 	public function with_end_on( $date ): Recurrence {
 		return $this->with_end( 'on', $date );
-	}
-
-	/**
-	 * Outputs the recurrence rules and exclusions in the format used by the `_EventRecurrence` meta field.
-	 *
-	 * @since 6.0.1
-	 *
-	 * @return array<string,array> The recurrence rules and exclusions in the format used by the `_EventRecurrence`
-	 *                             meta field.
-	 */
-	public function to_event_recurrence_format(): array {
-		$this->apply_delayed_methods();
-
-		if ( ! ( $this->dtstart instanceof DateTimeImmutable && $this->dtend instanceof DateTimeImmutable ) ) {
-			throw new \BadMethodCallException( 'Cannot output recurrence rules without a valid start and end date' );
-		}
-
-		$data = [
-			'EventStartDate' => $this->dtstart->format( Dates::DBDATETIMEFORMAT ),
-			'EventEndDate'   => $this->dtend->format( Dates::DBDATETIMEFORMAT ),
-			'EventDuration'  => $this->dtend->getTimestamp() - $this->dtstart->getTimestamp(),
-			'EventTimezone'  => $this->dtstart->getTimezone()->getName(),
-			'recurrence'     =>
-				[
-					'rules'       => [],
-					'exclusions'  => [],
-					'description' => null,
-				],
-		];
-
-		foreach ( $this->build_rules['rules'] as $rule ) {
-			$rule['EventStartDate'] = $data['EventStartDate'];
-			$rule['EventEndDate'] = $data['EventEndDate'];
-			$data['recurrence']['rules'][] = $rule;
-		}
-
-		foreach ( $this->build_rules['exclusions'] as $exclusion ) {
-			$exclusion['EventStartDate'] = $data['EventStartDate'];
-			$exclusion['EventEndDate'] = $data['EventEndDate'];
-			$data['recurrence']['exclusions'][] = $exclusion;
-		}
-
-		return $data;
 	}
 
 	/**
@@ -461,7 +590,7 @@ class Recurrence {
 		$this->last_rule = &$rule;
 		/** @noinspection UnsupportedStringOffsetOperationsInspection */
 		$this->build_rules[ $this->rules_or_exclusion ][] = &$rule;
-		$this->with_end( 'after', 10 );
+		$this->with_end_never();
 
 		return $this;
 	}
@@ -544,7 +673,7 @@ class Recurrence {
 		$this->last_rule = &$rule;
 		/** @noinspection UnsupportedStringOffsetOperationsInspection */
 		$this->build_rules[ $this->rules_or_exclusion ][] = &$rule;
-		$this->with_end( 'after', 10 );
+		$this->with_end_never();
 
 		return $this;
 	}
@@ -610,7 +739,7 @@ class Recurrence {
 		if ( ! empty( $month ) ) {
 			$year['month'] = is_array( $month ) ? $month : [ $month ];
 		} else {
-			$year['month'] = [ Dates::immutable( $this->build_rules['EventStartDate'] )->format( 'n' ) ];
+			$year['month'] = [ $this->dtstart->format( 'n' ) ];
 		}
 
 		if ( $same_time ) {
@@ -644,7 +773,7 @@ class Recurrence {
 		$this->last_rule = &$rule;
 		/** @noinspection UnsupportedStringOffsetOperationsInspection */
 		$this->build_rules[ $this->rules_or_exclusion ][] = &$rule;
-		$this->with_end( 'after', 10 );
+		$this->with_end_never();
 
 		return $this;
 	}
@@ -707,8 +836,8 @@ class Recurrence {
 
 		if ( $this->normalize_rules && $this->rules_or_exclusion === 'rules' ) {
 			$rule['EventStartDate'] = $this->dtstart->format( Dates::DBDATETIMEFORMAT );
-			$rule['EventEndDate'] = $this->dtend->format( Dates::DBDATETIMEFORMAT );
-			$rule = Date_Rule::from_event_recurrence_format( $rule )->to_event_recurrence_format();
+			$rule['EventEndDate']   = $this->dtend->format( Dates::DBDATETIMEFORMAT );
+			$rule                   = Date_Rule::from_event_recurrence_format( $rule )->to_event_recurrence_format();
 		}
 
 		$this->last_rule = &$rule;
@@ -851,6 +980,7 @@ class Recurrence {
 	 * Specifies the start date on an Event recurrence defining it all-day.
 	 *
 	 * @since 6.0.1
+	 *
 	 * @param string|int|DateTimeInterface $dtstart The start date of the Event.
 	 * @param int                          $end_day The number of days between the start date and the end date.
 	 *
@@ -859,10 +989,10 @@ class Recurrence {
 	 * @throws \Exception If there's an issue building the date interval.
 	 */
 	public function with_all_day_duration( $dtstart, int $end_day = 0 ): Recurrence {
-		$start_date = Dates::immutable( $dtstart );
-		$end_date = $start_date->add( new DateInterval( 'P' . $end_day . 'D' ) );
+		$start_date        = Dates::immutable( $dtstart );
+		$end_date          = $start_date->add( new DateInterval( 'P' . $end_day . 'D' ) );
 		$start_date_string = tribe_beginning_of_day( $start_date->format( 'Y-m-d' ) );
-		$end_date_string = tribe_end_of_day( $end_date->format( 'Y-m-d' ) );
+		$end_date_string   = tribe_end_of_day( $end_date->format( 'Y-m-d' ) );
 
 		return $this->with_start_date( $start_date_string )->with_end_date( $end_date_string );
 	}
@@ -879,7 +1009,7 @@ class Recurrence {
 	private function parse_diff_time_data( array $diff_time_data ): array {
 		[ $start_time, $end_time, $end_day ] = $diff_time_data;
 		$start_time = Dates::immutable( $start_time )->format( 'H:i:s' );
-		$end_time = Dates::immutable( $end_time )->format( 'H:i:s' );
+		$end_time   = Dates::immutable( $end_time )->format( 'H:i:s' );
 
 		return array( $start_time, $end_time, $end_day );
 	}
@@ -888,6 +1018,7 @@ class Recurrence {
 	 * Converts a day from the string format to its corresponding number.
 	 *
 	 * @since 6.0.1
+	 *
 	 * @param string|int $day The day of the week to convert.
 	 *
 	 * @return int The day of the week in numeric format, `1` is Monday.
@@ -911,9 +1042,289 @@ class Recurrence {
 	 * @param bool $normalize Whether the rules should be normalized during output or not.
 	 *
 	 * @return $this For chaining.
+	 *
 	 */
 	public function normalize_rules( bool $normalize ): Recurrence {
 		$this->normalize_rules = $normalize;
+
+		return $this;
+	}
+
+
+	/**
+	 * Outputs the recurrence rules and exclusions in the format used by the `_EventRecurrence` meta field.
+	 *
+	 * @since 6.0.1
+	 * @since 6.0.8 Changed the function name and returned array shape.
+	 *
+	 * @return array<string,array> The recurrence rules and exclusions in the format used by the `_EventRecurrence`
+	 *                             meta field.
+	 *
+	 */
+	public function to_event_recurrence(): array {
+		$this->apply_delayed_methods();
+
+		$data = [
+			'recurrence' => [
+				'rules'       => [],
+				'exclusions'  => [],
+				'description' => null,
+			],
+		];
+
+		$start = $this->dtstart->format( Dates::DBDATETIMEFORMAT );
+		$end   = $this->dtend->format( Dates::DBDATETIMEFORMAT );
+		foreach ( $this->build_rules['rules'] as $rule ) {
+			$rule['EventStartDate']        = $start;
+			$rule['EventEndDate']          = $end;
+			$data['recurrence']['rules'][] = $rule;
+		}
+
+		foreach ( $this->build_rules['exclusions'] as $exclusion ) {
+			$exclusion['EventStartDate']        = $start;
+			$exclusion['EventEndDate']          = $end;
+			$data['recurrence']['exclusions'][] = $exclusion;
+		}
+
+		return $data['recurrence'];
+	}
+
+	/**
+	 * Returns a callback that will build the recurrence rules when provided an Event post array
+	 * data.
+	 *
+	 * This method should be used to build the recurrence rules in the context of an ORM create or
+	 * update call where the Event start and end dates and times will not be available until creation.
+	 *
+	 * @since 6.0.1
+	 * @since 6.0.8 Renamed function for clarity of use.
+	 *
+	 * @return Closure The callback that will output the recurrence rules in the format used by the
+	 *                 `_EventRecurrence` meta field when provided an Event post array data.
+	 *
+	 */
+	public function to_repository_recurrence_callback(): Closure {
+		$callback = function ( array $postarr = null ) use ( &$callback ) {
+			if ( ! isset(
+				$postarr['meta_input']['_EventStartDate'],
+				$postarr['meta_input']['_EventEndDate'],
+				$postarr['meta_input']['_EventTimezone']
+			) ) {
+				// We're still missing the information to resolve, return this callback.
+				return $callback;
+			}
+
+			$start_date = $postarr['meta_input']['_EventStartDate'];
+			$end_date   = $postarr['meta_input']['_EventEndDate'];
+			$timezone   = $postarr['meta_input']['_EventTimezone'];
+
+			$this->with_start_date( $start_date )
+			     ->with_end_date( $end_date )
+			     ->with_timezone( $timezone );
+
+			return $this->to_event_recurrence();
+		};
+
+		return $callback;
+	}
+
+
+	/**
+	 * Returns the recurrence rules in the format used by the Blocks Editor.
+	 *
+	 * @since 6.0.2
+	 * @since 6.0.8 Renamed and broke out to separate functions for rules and exclusions.
+	 *
+	 * @return array<array<string,mixed>> The recurrence rules in the format used by the Blocks Editor.
+	 */
+	public function to_blocks_rules(): array {
+		$event_recurrence_format = $this->to_event_recurrence();
+
+		$convert_to_blocks_format = static function ( array $rule ): array {
+			$converter = new Converter( $rule );
+			$converter->parse();
+
+			return $converter->get_parsed();
+		};
+
+		return array_map( $convert_to_blocks_format, $event_recurrence_format['rules'] );
+	}
+
+	/**
+	 * Returns the recurrence exceptions in the format used by the Blocks Editor.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return array<array<string,mixed>> The exclusions in the format used by the Blocks Editor.
+	 */
+	public function to_blocks_exclusions(): array {
+		$event_recurrence_format = $this->to_event_recurrence();
+
+		$convert_to_blocks_format = static function ( array $rule ): array {
+			$converter = new Converter( $rule );
+			$converter->parse();
+
+			return $converter->get_parsed();
+		};
+
+		return array_map( $convert_to_blocks_format, $event_recurrence_format['exclusions'] );
+	}
+
+	/**
+	 * Whether the application of a method should be delayed or not depending on the required
+	 * DTSTART and DTEND information being available or not.
+	 *
+	 * @since 6.0.1
+	 *
+	 * @param string $method The name of the method.
+	 * @param array  $args   The arguments of the method.
+	 *
+	 * @return bool Whether the application of the method should be delayed or not.
+	 *
+	 */
+	private function delay( string $method, array $args ): bool {
+		if ( $this->dtstart instanceof DateTimeImmutable && $this->dtend instanceof DateTimeImmutable ) {
+			return false;
+		}
+
+		$this->delayed[] = function () use ( $args, $method ): void {
+			$this->{$method}( ...$args );
+		};
+
+		return true;
+	}
+
+	/**
+	 * Applies the delayed methods, if any.
+	 *
+	 * @since 6.0.1
+	 * @return void The delayed methods are applied.
+	 *
+	 */
+	private function apply_delayed_methods(): void {
+		foreach ( $this->delayed as $delayed_method ) {
+			$delayed_method();
+		}
+	}
+
+	/**
+	 * If defined a date object for the start time.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return DateTimeImmutable|null
+	 */
+	public function get_dtstart(): ?DateTimeImmutable {
+		return $this->dtstart ?? null;
+	}
+
+	/**
+	 * If defined a date object for the end time.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return DateTimeImmutable|null
+	 */
+	public function get_dtend(): ?DateTimeImmutable {
+		return $this->dtend ?? null;
+	}
+
+	/**
+	 * If we have a timezone defined, the timezone object.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return DateTimeZone|null
+	 */
+	public function get_timezone(): ?DateTimeZone {
+		return $this->get_dtstart() ? $this->get_dtstart()->getTimezone() : null;
+	}
+
+	/**
+	 * Get the duration between the start / end time, in seconds.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return int|null The seconds if found.
+	 */
+	public function get_duration(): ?int {
+		if ( ! $this->get_dtstart() || ! $this->get_dtend() ) {
+			return null;
+		}
+
+		return $this->get_dtend()->getTimestamp() - $this->get_dtstart()->getTimestamp();
+	}
+
+	/**
+	 * Filters and returns a list of single date rule objects.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return Recurrence_Rule[] List of single date rule objects.
+	 */
+	public function get_rdates(): array {
+		$dates = array_filter(
+			$this->build_rules['rules'],
+			function ( $rule ) {
+				return isset( $rule['custom']['date']['date'] );
+			}
+		);
+
+		return array_map(
+			function ( $date ) {
+				return Recurrence_Rule::from_recurrence_rule( $date );
+			},
+			$dates
+		);
+	}
+
+	/**
+	 * Filters and returns a list of rule objects.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return Recurrence_Rule[] List of rule objects.
+	 */
+	public function get_rrules(): array {
+		$rules = array_filter(
+			$this->build_rules['rules'],
+			function ( $rule ) {
+				return ! isset( $rule['custom']['date']['date'] );
+			}
+		);
+
+		return array_map(
+			function ( $rule ) {
+				return Recurrence_Rule::from_recurrence_rule( $rule );
+			},
+			$rules
+		);
+	}
+
+	/**
+	 * Directly set the underlying recurrence data for this instance.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param array $recurrence The _EventRecurrence metadata to override/set for this instance.
+	 *
+	 * @return $this For chaining.
+	 */
+	public function set_recurrence( array $recurrence ): Recurrence {
+		$this->build_rules = array_merge( [ 'rules' => [], 'exclusions' => [], 'description' => null ], $recurrence );
+		$search_for_dates  = array_merge( $recurrence['rules'] ?? [], $recurrence['exclusions'] ?? [] );
+		foreach ( $search_for_dates as $rule ) {
+			if ( isset( $rule['EventStartDate'] ) ) {
+				$this->with_start_date( $rule['EventStartDate'] );
+				break;
+			}
+		}
+		foreach ( $search_for_dates as $rule ) {
+			if ( isset( $rule['EventEndDate'] ) ) {
+				$this->with_end_date( $rule['EventEndDate'] );
+				break;
+			}
+		}
 
 		return $this;
 	}
@@ -932,7 +1343,7 @@ class Recurrence {
 		if ( $date instanceof DateTimeImmutable ) {
 			$this->{$property} = $date;
 		} else {
-			$input = $date instanceof DateTimeInterface ? $date->getTimestamp() : $date;
+			$input             = $date instanceof DateTimeInterface ? $date->getTimestamp() : $date;
 			$this->{$property} = Dates::immutable( $input );
 		}
 
@@ -941,7 +1352,7 @@ class Recurrence {
 		}
 
 		if ( $this->timezone !== null ) {
-			$other_property = $property === 'dtstart' ? 'dtend' : 'dtstart';
+			$other_property    = $property === 'dtstart' ? 'dtend' : 'dtstart';
 			$this->{$property} = $this->{$property}->setTimezone( $this->timezone );
 			if ( $this->{$other_property} instanceof DateTimeImmutable ) {
 				$this->{$other_property} = $this->{$other_property}->setTimezone( $this->timezone );
@@ -950,131 +1361,92 @@ class Recurrence {
 	}
 
 	/**
-	 * Returns a callback that will build the recurrence rules when provided an Event post array
-	 * data.
+	 * Will set a rule on a specific key.
 	 *
-	 * This method should be used to build the recurrence rules in the context of an ORM create or
-	 * update call where the Event start and end dates and times will not be available until creation.
+	 * @since 6.0.8
 	 *
-	 * @since 6.0.1
+	 * @param int             $key  Rule index.
+	 * @param Recurrence_Rule $rule The rule to override with.
 	 *
-	 * @return Closure The callback that will output the recurrence rules in the format used by the
-	 *                 `_EventRecurrence` meta field when provided an Event post array data.
+	 * @return $this For chaining.
 	 */
-	public function to_postarr_callback(): Closure {
-		$callback = function ( array $postarr = null ) use ( &$callback ) {
-			if ( ! isset(
-				$postarr['meta_input']['_EventStartDate'],
-				$postarr['meta_input']['_EventEndDate'],
-				$postarr['meta_input']['_EventTimezone']
-			) ) {
-				// We're still missing the information to resolve, return this callback.
-				return $callback;
-			}
+	public function set_rule( int $key, $rule ): Recurrence {
+		$this->build_rules['rules'][ $key ] = $rule->to_event_recurrence_rule();
 
-			$start_date = $postarr['meta_input']['_EventStartDate'];
-			$end_date = $postarr['meta_input']['_EventEndDate'];
-			$timezone = $postarr['meta_input']['_EventTimezone'];
-
-			$this->with_start_date( $start_date )
-				->with_end_date( $end_date )
-				->with_timezone( $timezone );
-
-			return $this->to_event_recurrence_format()['recurrence'];
-		};
-
-		return $callback;
+		return $this;
 	}
 
 	/**
-	 * Whether the application of a method should be delayed or not depending on the required
-	 * DTSTART and DTEND information being available or not.
+	 * Merge a list of Recurrence_Rule objects to the existing set.
+	 * Overrides by key, similar to array_merge.
 	 *
-	 * @since 6.0.1
+	 * @since 6.0.8
 	 *
-	 * @param string $method The name of the method.
-	 * @param array  $args   The arguments of the method.
+	 * @param array<Recurrence_Rule> $rules List of rule objects.
 	 *
-	 * @return bool Whether the application of the method should be delayed or not.
+	 * @return $this For chaining.
 	 */
-	private function delay( string $method, array $args ): bool {
-		if ( $this->dtstart instanceof DateTimeImmutable && $this->dtend instanceof DateTimeImmutable ) {
+	public function merge_rules( array $rules ): Recurrence {
+		foreach ( $rules as $key => $rule ) {
+			$this->set_rule( $key, $rule );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Checks if this recurrence has repeating rules.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return bool Whether we have RRULEs.
+	 */
+	public function has_rrules(): bool {
+		return ! empty( $this->get_rrules() );
+	}
+
+	/**
+	 * Checks if this recurrence has single dates.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @return bool Whether we have RDATEs.
+	 */
+	public function has_rdates(): bool {
+		return ! empty( $this->get_rdates() );
+	}
+
+	/**
+	 * Magic method for TEC magic. Largely useful for passing/introspection of the rule objects.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param string $func       The function being called.
+	 * @param array  $parameters Function parameters.
+	 *
+	 * @return bool In some cases will inspect rules based on `function_passthrough` mappings.
+	 * @throws RuntimeException If an invalid function is run.
+	 *
+	 */
+	public function __call( string $func, array $parameters ) {
+		$has_any_match_definition = false;
+		// 'has' and other evaluator functions that pass through to our rules/dates.
+		if ( isset( $this->function_passthrough['any_match'][ $func ] ) ) {
+			$has_any_match_definition = true;
+			[ $get_list, $item_method ] = $this->function_passthrough['any_match'][ $func ];
+			foreach ( $this->$get_list() as $rule ) {
+				if ( $rule->$item_method( ...$parameters ) ) {
+					return true;
+				}
+			}
+		}
+
+		// If we were doing an "any" bool match above. If none passed, return false.
+		if ( $has_any_match_definition ) {
+			// Found none, so evaluate to false.
 			return false;
 		}
 
-		$this->delayed[] = function () use ( $args, $method ): void {
-			$this->{$method}( ...$args );
-		};
-
-		return true;
-	}
-
-	/**
-	 * Applies the delayed methods, if any.
-	 *
-	 * @since 6.0.1
-	 *
-	 * @return void The delayed methods are applied.
-	 */
-	private function apply_delayed_methods(): void {
-		foreach ( $this->delayed as $delayed_method ) {
-			$delayed_method();
-		}
-	}
-
-
-	/**
-	 * Builds an instance of the class from an existing Event post.
-	 *
-	 * @since 6.0.1
-	 *
-	 * @param int $post_id The ID of the Event post to build the instance from.
-	 *
-	 * @return self The instance of the class built from the Event post.
-	 */
-	public static function from_event( int $post_id ): self {
-		$instance = new self();
-		$start_date = get_post_meta( $post_id, '_EventStartDate', true );
-		$end_date = get_post_meta( $post_id, '_EventEndDate', true );
-		$timezone = get_post_meta( $post_id, '_EventTimezone', true );
-
-		if ( empty( $start_date ) || empty( $end_date ) || empty( $timezone ) ) {
-			throw new \RuntimeException( 'Missing event data.' );
-		}
-
-		$instance->with_start_date( $start_date );
-		$instance->with_end_date( $end_date );
-		$instance->with_timezone( $timezone );
-
-		$recurrence = get_post_meta( $post_id, '_EventRecurrence', true );
-		if ( ! empty( $recurrence ) ) {
-			$instance->build_rules = array_merge( $instance->build_rules, $recurrence );
-		}
-
-		return $instance;
-	}
-
-	/**
-	 * Returns the recurrence or exclusions rules in the format used by the Blocks Editor.
-	 *
-	 * @since 6.0.2
-	 *
-	 * @param string $key The key of the rule to return, either `rules` or `exclusions`.
-	 *
-	 * @return array<array<string,mixed>> The recurrence or exclusions rules in the format used by the Blocks Editor.
-	 */
-	public function to_blocks_format( string $key = 'rules' ): array {
-		$event_recurrence_format = $this->to_event_recurrence_format()['recurrence'];
-
-		$convert_to_blocks_format = static function ( array $rule ): array {
-			$converter = new Converter( $rule );
-			$converter->parse();
-
-			return $converter->get_parsed();
-		};
-
-		return $key === 'rules' ?
-			array_map( $convert_to_blocks_format, $event_recurrence_format['rules'] )
-			: array_map( $convert_to_blocks_format, $event_recurrence_format['exclusions'] );
+		throw new RuntimeException( "No '$func' method defined in " . __CLASS__ );
 	}
 }

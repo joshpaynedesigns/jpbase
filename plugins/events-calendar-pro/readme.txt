@@ -1,12 +1,12 @@
-=== The Events Calendar PRO ===
+=== The Events Calendar Pro ===
 
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.8.6
-Stable tag: 6.0.7
-Tested up to: 6.1.1
-Requires PHP: 7.3
+Stable tag: 6.0.11
+Tested up to: 6.2
+Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,15 +14,15 @@ A premium add-on to The Events Calendar plugin (required), enabling recurrence, 
 
 == Description ==
 
-<a href="https://evnt.is/3r">Events Calendar PRO</a> is a awesomely dynamic add-on for The Events Calendar that adds more features and functionality to an already robust plugin.
+<a href="https://evnt.is/3r">Events Calendar Pro</a> is a awesomely dynamic add-on for The Events Calendar that adds more features and functionality to an already robust plugin.
 
-The Events Calendar allows you to create and manage events with ease from right within your WordPress dash; no shortcode is needed (nor is one available).  With Events Calendar PRO, you can go even further with recurring events, more calendar views (including Day and Week), Location Search, more widget options, and much more.
+The Events Calendar allows you to create and manage events with ease from right within your WordPress dash; no shortcode is needed (nor is one available).  With Events Calendar Pro, you can go even further with recurring events, more calendar views (including Day and Week), Location Search, more widget options, and much more.
 
-Plus, Events Calendar PRO users get access to our premium support forums. Need help or have a question? Post there and we'll get back to you within 24 hours (during the week). We're proud of our great support team and want to help you crush it with Events Calendar PRO.
+Plus, Events Calendar Pro users get access to our premium support forums. Need help or have a question? Post there and we'll get back to you within 24 hours (during the week). We're proud of our great support team and want to help you crush it with Events Calendar Pro.
 
 = Features =
 
-The following lists the PRO-only features. For a list of The Events Calendar features, check out that plugin's readme.txt or check out <a href="https://evnt.is/3s">the Product page</a>.
+The following lists the Pro-only features. For a list of The Events Calendar features, check out that plugin's readme.txt or check out <a href="https://evnt.is/3s">the Product page</a>.
 
 Just getting started? You'll want to watch and read through the <a href="https://evnt.is/3t">New User Primer</a>.
 
@@ -39,7 +39,7 @@ Just getting started? You'll want to watch and read through the <a href="https:/
 
 == Installation ==
 
-Remember, to use Events Calendar PRO you need to also be running The Events Calendar. You'll need to follow these steps for both plugins, starting with The Events Calendar.
+Remember, to use Events Calendar Pro you need to also be running The Events Calendar. You'll need to follow these steps for both plugins, starting with The Events Calendar.
 
 1. From the dashboard of your site, navigate to Plugins --> Add New.
 2. Select the Upload option and hit "Choose File."
@@ -59,7 +59,7 @@ That's it! Just configure your settings as you see fit, and you're on your way t
 
 = Where to Begin =
 
-If this is your first time using The Events Calendar and Events Calendar PRO, you're in for a treat! Here are some basics we've found helpful for users jumping into it for the first time:
+If this is your first time using The Events Calendar and Events Calendar Pro, you're in for a treat! Here are some basics we've found helpful for users jumping into it for the first time:
 
 * Our <a href="https://evnt.is/3t">New User Primer</a> was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time.
 * <a href="https://evnt.is/3v">Installation/Setup FAQs</a> from our Support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer.
@@ -71,13 +71,13 @@ Otherwise, if you're feeling adventurous, you can get started by heading to the 
 
 == Frequently Asked Questions ==
 
-= Is there a shortcode available for Events Calendar PRO? +
+= Is there a shortcode available for Events Calendar Pro? +
 
 No, this plugin does not use a shortcode nor is one available at the time being.
 
 = Are there any troubleshooting steps you'd suggest I try that might resolve my issue before I post a new thread? =
 
-First, make sure that you're running the latest version of The Events Calendar (4.0 as of this release). If you're running Events Calendar PRO it needs to match the version number of The Events Calendar. And if you've got any other add-ons, make sure those are current / running the latest code as well.
+First, make sure that you're running the latest version of The Events Calendar (4.0 as of this release). If you're running Events Calendar Pro it needs to match the version number of The Events Calendar. And if you've got any other add-ons, make sure those are current / running the latest code as well.
 
 The most common issues we see are either plugin or theme conflicts. You
 can test if a plugin or theme is conflicting by manually deactivating other plugins until just The Events Calendar 4.0 is running on your site. If the issue persists from there, revert to the default Twenty Twelve theme. If the issue is resolved after deactivating a specific plugin or your theme, you'll know that is the source of the conflict.
@@ -86,13 +86,13 @@ Note that we aren't going to say "tough luck" if you identify a plugin/theme con
 
 = I'm still stuck. Where do I go to file a bug or ask a question? =
 
-If you're already a PRO user, you're entitled access to our more actively-monitored <a href="https://evnt.is/3x">PRO forums</a> at the theeventscalendar.com website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. No post should go more than 24-hours during that time without a response.
+If you're already a Pro user, you're entitled access to our more actively-monitored <a href="https://evnt.is/3x">Pro forums</a> at the theeventscalendar.com website. We can provide a deeper level of support here and hit these forums on a daily basis during the work week. No post should go more than 24-hours during that time without a response.
 
-= What add-ons are available for The Events Calendar and Events Calendar PRO, and where can I read more about them? =
+= What add-ons are available for The Events Calendar and Events Calendar Pro, and where can I read more about them? =
 
-Currently, the following add-ons are available for The Events Calendar/Events Calendar PRO:
+Currently, the following add-ons are available for The Events Calendar/Events Calendar Pro:
 
-* <a href="https://evnt.is/18wi">Events Calendar PRO</a>, for adding premium calendar features like recurring events, advanced views, cool widgets, shortcodes, additional fields, and more!
+* <a href="https://evnt.is/18wi">Events Calendar Pro</a>, for adding premium calendar features like recurring events, advanced views, cool widgets, shortcodes, additional fields, and more!
 * <a href="https://evnt.is/18wj">Event Tickets</a> (free), which allows you to collect RSVPs to events. It can run alongside The Events Calendar or as a standalone plugin that adds RSVP functionality to WordPress posts and pages.
 * <a href="https://evnt.is/18wk">Event Tickets Plus</a>, which allows you to sell tickets for your events using your favorite e-commerce platform.
 * <a href="https://evnt.is/2g">Community Events</a>, for allowing frontend event submission from your readers.
@@ -209,10 +209,78 @@ Our Premium Plugins:
 = [6.0] =
 
 Please see the changelog for the complete list of changes in this release.
-Previous versions of Events Calendar PRO are not cross-compatible with 6.X add-ons.
+Previous versions of Events Calendar Pro are not cross-compatible with 6.X add-ons.
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.0.11] 2023-04-10 =
+
+* Enhancement - Add the option to display the Event Website on the Events List widget, [tribe_events_list] shortcode and Events List Elementor widget. [ECP-751]
+* Fix - Display the map on the single venue page based on the latitude and longitude values if said values are provided. [ECP-1470]
+* Fix - Fix type fatal error when using `wp_unique_post_slug` with unexpected data types. [ECP-1485]
+* Tweak - Changed views: `v2/venue/meta/map`, `v2/widgets/widget-events-list/event/website`
+* Language - 1 new strings added, 53 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.0.10] 2023-03-20 =
+
+* Feature - Add Additional Fields with a filter to the Event Automator event details. [EVA-61]
+* Feature - Add Recurrence with a filter to the Event Automator event details. [EVA-33]
+* Fix - Advanced Post Manager integration issues. [TEC-4541, TEC-4542, TEC-4594]
+* Fix - Compatibility with ACF Post Object field. [TEC-4621]
+* Fix - During an update that splits a recurring event, in cases where there is a "Never Ends" limit it will now carry over to the right side of the split instead of setting an explicit "After X" limit. [ECP-1285]
+* Fix - Ensure full support for the translation of Series in WPML context. [ECP-1429]
+* Fix - Ensure post list displays correctly after quick edit of Events. [ECP-1261]
+* Fix - Fixes an issue after certain types of event updates, gutenberg would display "Changes you made may not be saved" alert. This was do to the post state being considered dirty when ID's changed in the response. [ECP-1452]
+* Fix - In the admin sometimes link strings will be null in the `get_edit_post_link` hook callback. This will fix a fatal that was happening when string type was expected. [BTRIA-1689]
+* Fix - Language switcher link for Recurring Event Occurrences when using WPML. [ECP-1471]
+* Fix - Reload the Blocks Editor when breaking out an Event to avoid incoherent state. [ECP-1386]
+* Fix - This fixes scenarios where the redirect URL would point to the recurring event (not an RDATE) instead of remaining on an existing original occurrence. [ECP-1424]
+* Fix - Update auto-generated Series status when the Event status is updated with quick edit. [ECP-1224]
+* Fix - When a recurring event has multiple occurrences on the same day, the permalinks were identical. This adds permalinks in these edge cases that are unique to the occurrence. [ECP-1380]
+* Tweak - Add empty alt tag to featured images across all views when a user doesn't explicitly define one to improve SEO. [ECP-1454]
+* Tweak - Ensure the individual Series' titles on the Events list table link to their respective Admin pages.  [ECP-1216]
+* Tweak - Added filters: `tec_pro_automator_map_event_recurrence_details`, `tec_pro_automator_map_event_additional_fields_details`, `tec_pro_eva_zapier_integration_recurring_fields_enabled`, `tec_pro_eva_zapier_integration_additional_fields_enabled`, `wpml_post_language_details`, `wpml_element_type`, `wpml_element_trid`, `wpml_get_element_translations`, `wpml_object_id`, `tec_events_pro_recurring_event_permalink_sequence_number`
+* Tweak - Added actions: `wpml_set_element_language_details`
+* Tweak - Changed views: `v2/photo/event/featured-image`, `v2/week/grid-body/events-day/event/tooltip/featured-image`, `v2/week/mobile-events/day/event/featured-image`
+* Language - 0 new strings added, 70 updated, 3 fuzzied, and 0 obsoleted
+
+= [6.0.9.2] 2023-03-06 =
+
+* Fix - Restructure how Recurring blocks are bundled with WebPack to resolve inconsistencies with loading that caused the Series creation to not work. [ECP-1472]
+
+= [6.0.9.1] 2023-02-28 =
+
+* Fix - Prevent blocks editor loading order of Assets from breaking Recurring events and Related blocks. [ECP-1467]
+
+= [6.0.9] 2023-02-22 =
+
+* Version - Events Calendar PRO 6.0.9 is only compatible with The Events Calendar 6.0.10 and higher.
+* Tweak - PHP version compatibility bumped to PHP 7.4
+* Tweak - Version Composer updated to 2
+* Tweak - Version Node updated to 18.13.0
+* Tweak - Version NPM update to 8.19.3
+* Tweak - Reduce JavaScript bundle sizes for Blocks editor
+* Deprecation - `TEC\Events_Pro\Custom_Tables\V1\Editors\Block\Provider::enqueue_block_editor_duplicate_assets()`.
+
+= [6.0.8] 2023-02-09 =
+
+* Fix - Weekly recurrence message fatal on PHP 8.0+ resolved, also resolves translations that were not applying. [ECP-1451]
+* Fix - On classic editor, when editing a single occurrence that has a recurring rule, the start time for the single occurrence is displayed in the description of the recurring rule. [ECP-1295]
+* Fix - Fix issue where splitting the first occurrence in a recurring event that has a limit by a count, will generate an additional occurrence at the end of the range. [ECP-1344]
+* Fix - Ensure the zoom level set under `Events → Settings → Display → Google Maps default zoom level` is applied to the venue meta page. [TEC-4634]
+* Fix - Change the type of the date-related custom tables date fields to VARCHAR to avoid warnings on stricter SQL modes. [TEC-4536]
+* Fix - Ensure the code will work correctly when the Events' category taxonomy is unregistered. [TEC-4664]
+* Fix - Ensure the `Navigation Style` setting in the `Elementor Event Widget` doesn't appear to be blank when the corresponding `Navigation Option` is disabled in the `Content tab`. [ECP-1204]
+* Tweak - Update the Event Series tooltip label on hover. [ECP-1428]
+* Tweak - Ensure all Google Map iframes have a title attribute to improve accessibility. [TEC-4243]
+* Tweak - Replace the `elementor/widgets/widgets_registered` hook with `elementor/widgets/register` since it was deprecated since Elementor version 3.5.0. [ECP-1449]
+* Tweak - Replace the `Elementor\Widgets_Manager::register_widget_type` method with `Elementor\Widgets_Manager::register` since it was deprecated since Elementor version 3.5.0. [ECP-1449]
+* Tweak - Display the `Recurring Event` label in the classic editor when an event has a ticket. [ECP-1234]
+* Tweak - Fix the template path in the src/views/v2/photo/event/date-tag.php docblock [ECP-1448]
+* Tweak - Added actions: `tribe_log`
+* Tweak - Changed views: `v2/map/map/google-maps/default`, `v2/photo/event/date-tag`, `v2/venue/meta/map`
+* Language - 3 new strings added, 79 updated, 55 fuzzied, and 0 obsoleted
 
 = [6.0.7] 2023-01-26 =
 

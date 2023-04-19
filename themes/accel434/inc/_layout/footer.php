@@ -4,7 +4,7 @@
  * Footer
  *
  */
-function objectiv_footer() { ?>
+function ns_footer() { ?>
 	<div class="footer-creds">
 		<div class="footer-left">
 			<div>Copyright &copy; <?php echo date('Y') ?> <?php bloginfo('name'); ?>, All rights reserved.</div>

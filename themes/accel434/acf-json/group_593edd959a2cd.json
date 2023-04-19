@@ -6,6 +6,7 @@
             "key": "field_593eddaebb4ac",
             "label": "Content",
             "name": "fifty_content",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_593eddcdbb4ad",
             "label": "Content Position",
             "name": "fifty_position",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "The side the content shows up on. The image will show up adjacent to whatever position is picked.",
             "required": 0,
@@ -47,6 +49,7 @@
             "key": "field_593eddfdbb4ae",
             "label": "Image",
             "name": "fifty_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "The image that shows up adjacent to the content.",
             "required": 1,
@@ -71,6 +74,7 @@
             "key": "field_5aac1661299a5",
             "label": "Show Content Over Image",
             "name": "show_content_over_image",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -90,6 +94,7 @@
             "key": "field_5aac167a299a6",
             "label": "Over Image Content",
             "name": "over_image_content",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -112,6 +117,31 @@
             "maxlength": "",
             "rows": 3,
             "new_lines": ""
+        },
+        {
+            "key": "field_63ade42733258",
+            "label": "Video URL",
+            "name": "video_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5aac1661299a5",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
         }
     ],
     "location": [
@@ -129,7 +159,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1588357627
+    "show_in_rest": 0,
+    "modified": 1681920489
 }

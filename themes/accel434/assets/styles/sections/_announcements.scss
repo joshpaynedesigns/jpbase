@@ -1,0 +1,85 @@
+.announcements-section {
+  padding-bottom: $mobile-section-margin;
+  padding-top: $mobile-section-margin;
+
+  @media ($xl-screen-up) {
+    padding: 0;
+  }
+
+  .bg-stripe {
+    background-color: white;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    @media ($xl-screen-up) {
+      bottom: rem(32);
+      top: rem(32);
+    }
+  }
+
+  > .wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: rem(32);
+
+    @media ($xl-screen-up) {
+      flex-direction: row;
+      gap: rem(64);
+      justify-content: space-between;
+    }
+  }
+
+  .first {
+    text-align: center;
+
+    @media ($xl-screen-up) {
+      max-width: rem(650);
+      text-align: left;
+    }
+  }
+
+  .second {
+    background-color: $blue-900;
+    border-radius: rem(12);
+    box-sizing: border-box;
+    color: white;
+    padding: rem(48);
+    width: 100%;
+
+    @media ($xl-screen-up) {
+      box-sizing: unset;
+      max-width: rem(550);
+      padding: rem(80);
+    }
+
+    h2 {
+      color: white;
+    }
+
+    h4 {
+      color: $blue-200;
+      font-size: rem(18);
+      margin-top: rem(32);
+    }
+  }
+
+  .arrows-wrap {
+    svg {
+      fill: white;
+    }
+
+    @media ($xl-screen-up) {
+      .left-arrow {
+        left: rem(-24);
+      }
+
+      .right-arrow {
+        right: rem(-24);
+      }
+    }
+  }
+}

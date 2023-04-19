@@ -1,24 +1,48 @@
 // Background Color
 .bg-action {
-    background-color: $action-color;
+  background-color: $action-color;
 }
 
 .bg-dark-gray {
-    background-color: $dark-gray;
+  background-color: $gray-900;
 }
 
 .bg-light-gray {
-    background-color: $light-gray;
+  background-color: $gray-200;
+}
+
+.bg-light-blue {
+  background-color: $blue-200;
 }
 
 .bg-medium-gray {
-    background-color: $medium-gray;
+  background-color: $gray-600;
 }
 
 .bg-primary {
-    background-color: $primary-color;
+  background-color: $primary-color;
 }
 
 .bg-white {
-    background-color: white;
+  background-color: white;
+}
+
+.bg-extra-light-gray {
+  background-color: $gray-100;
+}
+
+.bg-blue {
+  background-color: $blue-900;
+}
+
+.bg-green {
+  background-color: $green-900;
+}
+
+.bg-light-green {
+  background-color: $green-100;
+}
+
+.grayscale {
+  filter: grayscale(100%);
 }
