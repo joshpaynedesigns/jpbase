@@ -5058,43 +5058,4 @@ div.fake-arrow-link:hover:after {
 .opacity-30 {
   opacity: 0.3;
 }
-
-h1:after,
-h2:after,
-.has-accent:after {
-  background: url("assets/images/accent.svg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-  content: "";
-  display: block;
-  height: 0.625rem;
-  margin-top: 1rem;
-  width: 3rem;
-}
-h1.centered-accent:after, h1[style="text-align: center;"]:after,
-h2.centered-accent:after,
-h2[style="text-align: center;"]:after,
-.has-accent.centered-accent:after,
-.has-accent[style="text-align: center;"]:after {
-  margin-left: auto;
-  margin-right: auto;
-}
-h1.white-accent:after,
-h2.white-accent:after,
-.has-accent.white-accent:after {
-  background: url("assets/images/accent-white.svg") !important;
-}
-h1.green-accent:after,
-h2.green-accent:after,
-.has-accent.green-accent:after {
-  background: url("assets/images/accent-green.svg") !important;
-}
-
-.banner_slide:not(.has-image) .banner_title::after,
-.section-header.text-center h2::after,
-.content-center .cta-content h2::after {
-  margin-left: auto;
-  margin-right: auto;
-}
 /*# sourceMappingURL=assets/maps/style.css.map */

@@ -18,3 +18,10 @@ function ns_flexible_sections()
     }
     echo '</section>';
 }
+
+function ns_decide_section_classes()
+{
+    // Decide bg color classes
+    // If there is a bg color set we'll use padding
+    // If there isn't a bg color set we'll use margin
+}
