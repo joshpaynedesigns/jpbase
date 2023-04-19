@@ -168,49 +168,17 @@ class Provider extends \tad_DI52_ServiceProvider {
 		}
 
 		$this->container->make( Meta::class )->register();
-
-		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_duplicate_assets' ] );
 	}
 
 	/**
 	 * Enqueues the assets required for duplicating events.
 	 *
+	 * @deprecated Prevent incorrect usage of `tribe_asset()`
+	 *
 	 * @since 6.0.0
 	 */
 	public function enqueue_block_editor_duplicate_assets() {
-		$post = get_post();
-		if ( ! $post instanceof WP_Post ) {
-			return;
-		}
-		// Only show on single event post type.
-		if ( TEC::POSTTYPE !== $post->post_type ) {
-			return;
-		}
-
-		$post_id = $post->ID;
-		$plugin  = Plugin::instance();
-
-		tribe_asset(
-			$plugin,
-			'tec-events-pro-block-editor-plugins-js',
-			'custom-tables-v1/app/plugins.js',
-			[
-				'wp-edit-post',
-				'tec-events-pro-block-editor-data-js',
-			],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => false,
-				'localize'     => [
-					'name' => 'tec_events_pro_duplicate',
-					'data' => [
-						'duplicate_link' => tribe( Url::class )->to_duplicate_event( $post_id )
-					],
-				],
-				'priority'     => 200,
-				'conditionals' => tribe_callback( 'events.editor', 'is_events_post_type' ),
-			]
-		);
+		_deprecated_function( __METHOD__, '6.0.9', 'No replacement.' );
 	}
 
 	/**

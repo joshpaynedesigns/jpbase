@@ -58,6 +58,7 @@ class Full_Activation_Provider extends Service_Provider {
 			$this->container->singleton( self::class, self::class );
 			$this->container->singleton( 'tec.pro.custom-tables.v1.provider', self::class );
 			$this->container->singleton( Occurrence_Notices::class );
+			$this->container->register( Links\Provider::class );
 			$this->container->register( Models\Provider::class );
 			$this->container->register( Admin\Lists\Provider::class );
 			$this->container->register( Series\Provider::class );
@@ -72,6 +73,7 @@ class Full_Activation_Provider extends Service_Provider {
 			$this->container->register( REST\V1\Provider::class );
 			$this->container->register( Admin\Notices\Provider::class );
 			$this->container->register( Events_Manager\Provider::class );
+			$this->container->register( Links\Provider::class );
 			$this->container->singleton( Gettext::class, Gettext::class );
 
 			/*

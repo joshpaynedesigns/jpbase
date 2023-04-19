@@ -116,25 +116,28 @@ class Transient_Occurrence_Redirector {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int $object_id The ID of the post to provide the Occurrence redirect data for.
+	 * @param int      $object_id     The ID of the post to provide the Occurrence redirect data for.
+	 * @param int|null $event_post_id The ID of the Event post the Occurrence belonged to when the state
+	 *                                was hydrated in the Blocks Editor.
 	 *
 	 * @return object<string,string>|null The filtered Occurrence redirect data in object format, or `null`
 	 *                                    if no redirection is required.
 	 */
-	public function get_occurrence_redirect_response( $object_id ) {
+	public function get_occurrence_redirect_response( $object_id, $event_post_id = null ) {
 		if ( ! $this->provisional_post->is_provisional_post_id( $object_id ) ) {
 			// Not a provisional ID: redirect should not happen.
 			return null;
 		}
 
 		$redirect_data = $this->get_redirect_data( $object_id );
+		$occurrence_id = $this->id_generator->unprovide_id( $object_id );
 
 		if ( empty( $redirect_data ) || empty( $redirect_data['redirect_id'] ) ) {
-			return null;
+			return $this->redirect_broken_out_occurrence( $occurrence_id, $object_id, $event_post_id );
 		}
+
 		$this->remove_redirect_transient( $object_id );
 
-		$occurrence_id = $this->id_generator->unprovide_id( $object_id );
 		if ( ! $redirect_data['force_redirect'] && Occurrence::where( 'occurrence_id', '=', $occurrence_id )->count() === 1 ) {
 			//  The Occurrence has been restored before the transient expired, do not redirect.
 			return null;
@@ -193,5 +196,43 @@ class Transient_Occurrence_Redirector {
 			'message'            => $message,
 			'confirmButtonLabel' => $confirm_button_label,
 		];
+	}
+
+	/**
+	 * Redirect to a broken out Occurrence if the Event post ID changed.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param int      $occurrence_id The ID of the Occurrence to redirect to.
+	 * @param int      $object_id     The ID of the provisional Occurrence post to redirect to.
+	 * @param int|null $event_post_id The ID of the Event post the Occurrence belonged do, from the Blocks Editor state.
+	 *
+	 * @return object|null The redirect data in object format, or `null` if no redirection is required.
+	 */
+	private function redirect_broken_out_occurrence( int $occurrence_id, int $object_id, ?int $event_post_id ): ?object {
+		if ( ! $event_post_id ) {
+			// No previous Event post, do not redirect.
+			return null;
+		}
+
+		$occurrence = Occurrence::find( $occurrence_id );
+
+		if (
+			$occurrence instanceof Occurrence
+			&& ! $occurrence->has_recurrence
+			&& $occurrence->post_id !== $event_post_id
+		) {
+			/*
+			 * The Event post ID changed and the Occurrence is no longer part of a recurrence:
+			 * redirect to the broken out Occurrence to force a page refresh and avoid Block Editor
+			 * running on bad state.
+			 */
+			return (object) [
+				'location'      => get_edit_post_link( $object_id, 'raw' ),
+				'forceRedirect' => true,
+			];
+		}
+
+		return null;
 	}
 }

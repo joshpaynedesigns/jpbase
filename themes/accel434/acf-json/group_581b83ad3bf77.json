@@ -3,71 +3,50 @@
     "title": "Location Details",
     "fields": [
         {
-            "key": "field_5a909699f89b1",
-            "label": "Location Image",
-            "name": "location_image",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
             "key": "field_5b573d69e6ef3",
             "label": "Address Line 1",
             "name": "loc_address_line_1",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_5b573d82e6ef4",
             "label": "Address Line 2",
             "name": "loc_address_line_2",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_58a1ea8da27e2",
             "label": "Phone Number",
             "name": "loc_phone_number",
+            "aria-label": "",
             "type": "text",
             "instructions": "Enter a phone number with area code. Example (123)-123-1234",
             "required": 0,
@@ -87,6 +66,7 @@
             "key": "field_5b562a68fbb95",
             "label": "Fax Number",
             "name": "loc_fax_number",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -106,6 +86,7 @@
             "key": "field_5b5635328460b",
             "label": "Location Hours",
             "name": "location_hours",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -122,10 +103,30 @@
             "maxlength": ""
         },
         {
-            "key": "field_5abaab40d5312",
-            "label": "Location Content",
-            "name": "location_content",
-            "type": "wysiwyg",
+            "key": "field_63adfc6042971",
+            "label": "Map Spot",
+            "name": "map_spot",
+            "aria-label": "",
+            "type": "google_map",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "center_lat": "",
+            "center_lng": "",
+            "zoom": "",
+            "height": ""
+        },
+        {
+            "key": "field_640656d5c125d",
+            "label": "Services",
+            "name": "services",
+            "aria-label": "",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -134,11 +135,18 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
+            "relevanssi_exclude": 0,
+            "post_type": [
+                "service"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "object",
+            "min": "",
+            "max": "",
+            "elements": ""
         }
     ],
     "location": [
@@ -151,12 +159,13 @@
         ]
     ],
     "menu_order": 3,
-    "position": "normal",
+    "position": "acf_after_title",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1539893545
+    "show_in_rest": 0,
+    "modified": 1678315285
 }

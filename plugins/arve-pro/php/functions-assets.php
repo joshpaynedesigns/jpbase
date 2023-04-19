@@ -1,21 +1,22 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use \Nextgenthemes\ARVE;
 use \Nextgenthemes\ARVE\Common;
 
 function register_assets() {
 
-	Common\asset(
+	Common\register_asset(
 		[
 			'handle' => 'arve-pro',
 			'src'    => plugins_url( 'build/main.js', PLUGIN_FILE ),
 			'path'   => PLUGIN_DIR . '/build/main.js',
 			'deps'   => [],
+			'defer'  => true,
+			'footer' => false,
 		]
 	);
 
-	Common\asset(
+	Common\register_asset(
 		[
 			'handle' => 'arve-pro',
 			'src'    => plugins_url( 'build/main.css', PLUGIN_FILE ),

@@ -3,14 +3,14 @@
 add_filter ( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
 remove_action( 'genesis_loop', 'genesis_do_loop' );
 
-// add_action( 'genesis_loop', 'objectiv_success_tax_filter' );
-function objectiv_success_tax_filter() {
-	objectiv_tax_filter( 'staff', 'staff-cat', true );
+// add_action( 'genesis_loop', 'ns_success_tax_filter' );
+function ns_success_tax_filter() {
+	ns_tax_filter( 'staff', 'staff-cat', true );
 }
 
-add_action( 'genesis_loop', 'objectiv_intro_text' );
-function objectiv_intro_text() {
-	$arch_cont = get_field( 'archive_intro_text_staff', 'option' );
+add_action( 'genesis_loop', 'ns_intro_text' );
+function ns_intro_text() {
+	$arch_cont = ns_get_field( 'archive_intro_text_staff', 'option' );
 	?>
 	<?php if ( ! empty( $arch_cont ) ) : ?>
 		<section class="archIntroText lastMNone">
@@ -20,8 +20,8 @@ function objectiv_intro_text() {
 	<?php
 }
 
-add_action( 'genesis_loop', 'objectiv_staff_archive' );
-function objectiv_staff_archive() {
+add_action( 'genesis_loop', 'ns_staff_archive' );
+function ns_staff_archive() {
 
 	$terms = get_terms( array(
 		'taxonomy' => 'staff-cat',
@@ -33,15 +33,11 @@ function objectiv_staff_archive() {
 		foreach ( $terms as $t ) {
 			$id = $t->term_id;
 			$name = $t->name;
-			$color = get_field( 'category_color', $t );
-			$term_link = get_term_link( $id );
 
 			$args = array(
 				'numberposts' => -1,
-				'offset' => 0,
 				'post_type' => 'staff',
 				'post_status' => 'publish',
-				'suppress_filters' => true,
 				'orderby' => 'menu_order',
 				'order'   => 'ASC',
 				'tax_query' => array(
@@ -53,7 +49,7 @@ function objectiv_staff_archive() {
 				)
 			);
 
-			$staffs = wp_get_recent_posts( $args );
+			$staffs = get_posts( $args );
 
 			?>
 			<?php if ( ! empty( $staffs ) ) : ?>
@@ -63,35 +59,9 @@ function objectiv_staff_archive() {
 							<h2 class="staffTermTitle"><?php echo $name ?></h2>
 						</header>
 					<?php endif; ?>
-					<div class="staffTermStaffGrid">
+					<div class="staffTermStaffGrid one24grid">
 						<?php foreach ( $staffs as $s ) : ?>
-							<?php
-							$s_id = $s['ID'];
-							$thumb = get_the_post_thumbnail(
-								$s_id,
-								'medium',
-								['class' => 'staffArchImg' ]
-							);
-							$name = $s['post_title'];
-							$position = get_field( 'position_title', $s_id );
-							$has_content = $s['post_content'];
-							$s_link = get_the_permalink( $s_id );
-							?>
-							<div class="staffArchBlock">
-								<?php if ( !empty($has_content) ) : ?>
-									<a href="<?php echo $s_link ?>"><?php echo $thumb; ?></a>
-								<?php else : ?>
-									<?php echo $thumb; ?>
-								<?php endif; ?>
-								<?php if ( ! empty( $has_content ) ) : ?>
-									<h4 class="staffArchBlockName"><a href="<?php echo $s_link ?>"><?php echo $name ?></h4></a>
-								<?php else: ?>
-									<h4 class="staffArchBlockName"><?php echo $name ?></h4>
-								<?php endif; ?>
-								<?php if ( ! empty( $position ) ) : ?>
-									<p class="staffArchBlockPosition"><?php echo $position ?></p>
-								<?php endif; ?>
-							</div>
+							<?php ns_staff_block( $s ) ?>
 						<?php endforeach; ?>
 					</div>
 				</div>

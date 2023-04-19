@@ -6,6 +6,7 @@
             "key": "field_593ee2fb44fd7",
             "label": "Line One Text",
             "name": "line_one_text",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_593ee2fb44fe8",
             "label": "Line Two Text",
             "name": "line_two_text",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,7 @@
             "key": "field_59c94afcc58ab",
             "label": "Link Details",
             "name": "link_details",
+            "aria-label": "",
             "type": "link",
             "instructions": "",
             "required": 0,
@@ -59,6 +62,7 @@
             "key": "field_5d0a9bb521b77",
             "label": "Bar Color",
             "name": "bar_color",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "",
             "required": 0,
@@ -69,15 +73,15 @@
                 "id": ""
             },
             "choices": {
-                "blue": "Blue",
-                "light-blue": "Light Blue",
-                "medium-gray": "Medium Gray",
-                "dark-gray": "Dark Gray"
+                "bg-blue": "Blue",
+                "bg-dark-gray": "Dark Gray",
+                "bg-green": "Green",
+                "grad": "Gradiant"
             },
-            "allow_null": 0,
             "default_value": "blue",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         }
     ],
     "location": [
@@ -97,7 +101,8 @@
     "hide_on_screen": [
         "the_content"
     ],
-    "active": 0,
+    "active": false,
     "description": "",
-    "modified": 1588362377
+    "show_in_rest": 0,
+    "modified": 1681921567
 }

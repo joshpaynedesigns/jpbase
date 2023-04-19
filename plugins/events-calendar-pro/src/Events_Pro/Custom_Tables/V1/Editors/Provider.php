@@ -10,6 +10,7 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Editors;
 
 use TEC\Events\Custom_Tables\V1\Updates\Requests;
+use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Url;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Classic\UI_Lock;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Occurrence;
 use Tribe__Events__Main as TEC;
@@ -90,7 +91,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 	 * @return void
 	 */
 	public function register_assets() {
-		$plugin = Plugin::instance();
+		$plugin  = Plugin::instance();
 		$context = $this->container->make( Context::class );
 
 		/**
@@ -221,23 +222,23 @@ class Provider extends \tad_DI52_ServiceProvider {
 				'localize'     => [
 					'name' => 'tecEventsSeriesBlockEditor',
 					'data' => static function () {
-						$singular_label = tribe_get_event_label_singular();
+						$singular_label       = tribe_get_event_label_singular();
 						$singular_label_lower = tribe_get_event_label_singular_lowercase();
-						$plural_label = tribe_get_event_label_plural();
-						$plural_label_lower = tribe_get_event_label_plural_lowercase();
+						$plural_label         = tribe_get_event_label_plural();
+						$plural_label_lower   = tribe_get_event_label_plural_lowercase();
 
 						return [
-							'editModalTitle' => sprintf( esc_attr__( 'Edit Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
-							'trashRecurringEvent' => sprintf( esc_attr__( 'Trash Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
-							'okButton' => esc_attr__( 'Ok', 'tribe-events-calendar-pro' ),
-							'allEvents' => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
-							'upcomingSetting' => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
-							'thisEvent' => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
-							'thisEventHelpText' => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
-							'allDay' => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
+							'editModalTitle'                      => sprintf( esc_attr__( 'Edit Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
+							'trashRecurringEvent'                 => sprintf( esc_attr__( 'Trash Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
+							'okButton'                            => esc_attr__( 'Ok', 'tribe-events-calendar-pro' ),
+							'allEvents'                           => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
+							'upcomingSetting'                     => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
+							'thisEvent'                           => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'thisEventHelpText'                   => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'allDay'                              => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
 							'effectThisAndFollowingEventsWarning' => sprintf( esc_attr__( 'These changes will affect this %1$s and all following %2$s', 'tribe-events-calendar-pro' ), $singular_label_lower, $plural_label_lower ),
 						];
-					}
+					},
 				],
 				'priority'     => 200,
 				'conditionals' => [
@@ -261,11 +262,11 @@ class Provider extends \tad_DI52_ServiceProvider {
 			[
 				'in_footer'    => true,
 				'priority'     => 200,
-				'conditionals' => array(
+				'conditionals' => [
 					'operator' => 'OR',
 					$context->is_classic_event_post_screen(),
 					$context->is_blocks_event_post_screen(),
-				),
+				],
 				'groups'       => [
 					static::$classic_event_full_group_key,
 					static::$block_event_group_key,
@@ -327,23 +328,23 @@ class Provider extends \tad_DI52_ServiceProvider {
 				'localize'     => [
 					'name' => 'tecEventsSeriesClassicEditor',
 					'data' => static function () {
-						$singular_label = tribe_get_event_label_singular();
+						$singular_label       = tribe_get_event_label_singular();
 						$singular_label_lower = tribe_get_event_label_singular_lowercase();
-						$plural_label = tribe_get_event_label_plural();
-						$plural_label_lower = tribe_get_event_label_plural_lowercase();
+						$plural_label         = tribe_get_event_label_plural();
+						$plural_label_lower   = tribe_get_event_label_plural_lowercase();
 
 						return [
-							'editModalTitle' => sprintf( esc_attr__( 'Edit Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
-							'trashRecurringEvent' => sprintf( esc_attr__( 'Trash Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
-							'okButton' => esc_attr__( 'Ok', 'tribe-events-calendar-pro' ),
-							'allEvents' => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
-							'upcomingSetting' => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
-							'thisEvent' => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
-							'thisEventHelpText' => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
-							'allDay' => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
+							'editModalTitle'                      => sprintf( esc_attr__( 'Edit Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
+							'trashRecurringEvent'                 => sprintf( esc_attr__( 'Trash Recurring %1$s', 'tribe-events-calendar-pro' ), $singular_label ),
+							'okButton'                            => esc_attr__( 'Ok', 'tribe-events-calendar-pro' ),
+							'allEvents'                           => sprintf( esc_attr__( 'All %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
+							'upcomingSetting'                     => sprintf( esc_attr__( 'This and following %1$s', 'tribe-events-calendar-pro' ), $plural_label_lower ),
+							'thisEvent'                           => sprintf( esc_attr__( 'This %1$s', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'thisEventHelpText'                   => sprintf( esc_attr__( 'Convert this occurrence to a single %1$s.', 'tribe-events-calendar-pro' ), $singular_label_lower ),
+							'allDay'                              => esc_attr__( 'all day', 'tribe-events-calendar-pro' ),
 							'effectThisAndFollowingEventsWarning' => sprintf( esc_attr__( 'These changes will affect this %1$s and all following %2$s', 'tribe-events-calendar-pro' ), $singular_label_lower, $plural_label_lower ),
 						];
-					}
+					},
 				],
 				'priority'     => 200,
 				'conditionals' => $context->is_classic_event_post_screen(),
@@ -530,17 +531,17 @@ class Provider extends \tad_DI52_ServiceProvider {
 			]
 		);
 
-		/**
-		 * Block Event assets.
-		 */
 		tribe_asset(
 			$plugin,
-			'tec-events-pro-block-editor-data-js',
-			'custom-tables-v1/app/data.js',
-			[ 'tribe-pro-gutenberg-data', TEC::POSTTYPE . '-premium-admin' ],
+			'tec-events-pro-blocks-editor-ct1-bundle',
+			'custom-tables-v1/app/ct1.js',
+			[
+				'jquery',
+				'tribe-pro-gutenberg-main',
+			],
 			'enqueue_block_editor_assets',
 			[
-				'in_footer'    => true,
+				'defer'        => true,
 				'localize'     => [
 					[
 						'name' => 'tecEventDetails',
@@ -550,91 +551,27 @@ class Provider extends \tad_DI52_ServiceProvider {
 						'name' => 'tribe_events_pro_recurrence_strings',
 						'data' => [ $this, 'get_recurrence_strings' ],
 					],
+					[
+						'name' => 'tec_events_pro_duplicate',
+						'data' => static function () {
+							$post = get_post();
+							if ( ! $post instanceof \WP_Post ) {
+								return [];
+							}
+							// Only show on single event post type.
+							if ( TEC::POSTTYPE !== $post->post_type ) {
+								return [];
+							}
+
+							$post_id = $post->ID;
+
+							return [
+								'duplicate_link' => tribe( Url::class )->to_duplicate_event( $post_id ),
+							];
+						},
+					],
 				],
-				'priority'     => 200,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-events-pro-block-editor-blocks-js',
-			'custom-tables-v1/app/blocks.js',
-			[ 'tec-events-pro-block-editor-data-js' ],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => true,
-				'localize'     => [],
-				'priority'     => 201,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-events-pro-block-editor-elements-js',
-			'custom-tables-v1/app/elements.js',
-			[ 'tribe-pro-gutenberg-elements' ],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => true,
-				'priority'     => 202,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-events-pro-block-editor-dialog-js',
-			'custom-tables-v1/app/dialog.js',
-			[
-				'tec-events-pro-editor-dialog-js',
-				'tec-events-pro-block-editor-data-js',
-			],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => true,
-				'localize'     => [],
-				'priority'     => 202,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-block-editor-series-metabox-js',
-			'custom-tables-v1/app/series-metabox.js',
-			[
-				'jquery',
-				'tec-events-pro-block-editor-data-js',
-			],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => true,
-				'localize'     => [],
-				'priority'     => 203,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-block-editor-occurrence-redirect-js',
-			'custom-tables-v1/app/occurrence-redirect.js',
-			[
-				'jquery',
-				'tec-events-pro-block-editor-data-js',
-			],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => true,
-				'localize'     => [],
-				'priority'     => 203,
+				'priority'     => 205,
 				'conditionals' => $context->is_blocks_event_post_screen(),
 				'groups'       => [ static::$block_event_group_key ],
 			]
@@ -644,7 +581,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 			$plugin,
 			'tec-events-pro-block-editor-blocks-css',
 			'custom-tables-v1/app/blocks.css',
-			[ 'tribe-pro-gutenberg-blocks-styles' ],
+			[ 'tribe-pro-gutenberg-main-styles' ],
 			'enqueue_block_editor_assets',
 			[
 				'in_footer'    => false,
@@ -657,7 +594,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 			$plugin,
 			'tec-events-pro-block-editor-elements-css',
 			'custom-tables-v1/app/elements.css',
-			[ 'tribe-pro-gutenberg-element' ],
+			[ 'tribe-pro-gutenberg-main-styles' ],
 			'enqueue_block_editor_assets',
 			[
 				'in_footer'    => false,
@@ -668,8 +605,8 @@ class Provider extends \tad_DI52_ServiceProvider {
 
 		// Build a UI Lock on the current Request context and conditionally lock the UI.
 		$this->container->singleton( UI_Lock::class, function () {
-			$template = $this->container->make( Tribe__Events__Pro__Editor__Template__Admin::class );
-			$request = $this->container->make( Requests::class )->from_http_request();
+			$template   = $this->container->make( Tribe__Events__Pro__Editor__Template__Admin::class );
+			$request    = $this->container->make( Requests::class )->from_http_request();
 			$occurrence = $this->container->make( Occurrence::class );
 
 			return new UI_Lock( $request->get_param( 'id' ), $template, $occurrence );

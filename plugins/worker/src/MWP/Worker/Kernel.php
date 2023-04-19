@@ -29,6 +29,11 @@ class MWP_Worker_Kernel
      */
     private $requestStack;
 
+    /**
+     * @var MWP_Worker_ResponseCallback
+     */
+    private $responseCallback;
+
     public function __construct(MWP_ServiceContainer_Interface $container)
     {
         $this->container    = $container;

@@ -1,79 +1,81 @@
-#flexible-section-repeater {
-    .content-section {
+#flexible-section-repeater .content-section {
+  .content-section-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-        .content-section-wrap {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        p:last-child {
-            margin-bottom: 0;
-        }
+    @media ($large-screen-up) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
 
-        .content-section-content {
-            width: 100%;
-        }
-
-        .l-content,
-        .r-content,
-        .third-content {
-            @include span-columns(12);
-            @include omega();
-        }
-
-        .l-content,
-        &.thirty-three .r-content {
-            margin-bottom: $base-spacing;
-            @include media($large-screen-up) {
-                margin-bottom: 0;
-            }
-        }
-
-        @include media($large-screen-up) {
-
-            &.fifty-fifty {
-                .l-content {
-                    @include span-columns(6);
-                }
-                .r-content {
-                    @include span-columns(6);
-                    @include omega();
-                }
-            }
-
-            &.thirty-seventy {
-                .l-content {
-                    @include span-columns(4);
-                }
-                .r-content {
-                    @include span-columns(8);
-                    @include omega();
-                }
-            }
-
-            &.seventy-thirty {
-                .l-content {
-                    @include span-columns(8);
-                }
-                .r-content {
-                    @include span-columns(4);
-                    @include omega();
-                }
-            }
-
-            &.thirty-three {
-                .l-content,
-                .r-content {
-                    @include span-columns(4);
-                }
-
-                .third-content {
-                    @include span-columns(4);
-                    @include omega();
-                }
-
-            }
-        }
+      &.fifty-fifty,
+      &.thirty-seventy {
+        gap: 4rem;
+      }
     }
+
+    &.va-center {
+      @media ($large-screen-up) {
+        align-items: center;
+      }
+    }
+
+    &.full-width {
+      > div {
+        width: 100%;
+      }
+    }
+
+    &.fifty-fifty {
+      > div {
+        @media ($large-screen-up) {
+          width: calc(50% - 2.1rem);
+        }
+      }
+    }
+
+    &.thirty-three {
+      > div {
+        @media ($large-screen-up) {
+          width: calc(33.33% - 1.34rem);
+        }
+      }
+    }
+
+    &.twenty-five {
+      > div {
+        @media ($large-screen-up) {
+          width: calc(25% - 1.51rem);
+        }
+      }
+    }
+
+    &.thirty-seventy {
+      > div:first-of-type {
+        @media ($large-screen-up) {
+          width: calc(30% - 2.1rem);
+        }
+      }
+      > div:last-of-type {
+        @media ($large-screen-up) {
+          width: calc(70% - 2.1rem);
+        }
+      }
+    }
+
+    &.seventy-thirty {
+      > div:first-of-type {
+        @media ($large-screen-up) {
+          width: calc(70% - 2.1rem);
+        }
+      }
+      > div:last-of-type {
+        @media ($large-screen-up) {
+          width: calc(30% - 2.1rem);
+        }
+      }
+    }
+  }
 }

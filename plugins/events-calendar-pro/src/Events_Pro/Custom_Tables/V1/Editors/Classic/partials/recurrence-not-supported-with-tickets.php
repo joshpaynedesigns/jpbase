@@ -4,7 +4,19 @@
  */
 ?>
 <tr class="recurrence-row tribe-recurrence-not-supported tec-events-pro-recurrence-not-supported">
-	<td></td>
+	<td>
+		<label>
+			<?php
+			echo esc_html(
+				sprintf(
+					/* Translators: %1$s - single event term. */
+					__( 'Recurring %1$s.', 'tribe-events-calendar-pro' ),
+					tribe_get_event_label_singular()
+				)
+			);
+			?>
+		</label>
+	</td>
 	<td>
 	<p class="tec-events-pro-recurrence-not-supported__text">
 		<?php

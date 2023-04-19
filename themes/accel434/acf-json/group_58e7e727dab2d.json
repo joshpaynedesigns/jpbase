@@ -6,6 +6,7 @@
             "key": "field_58e7e727de98d",
             "label": "Overall Design",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -22,6 +23,7 @@
             "key": "field_5bd738f753649",
             "label": "Hide Banner Options",
             "name": "hide_banner_options",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "Select if the banner will show, be removed completely or hide just the banner image.",
             "required": 1,
@@ -45,6 +47,7 @@
             "key": "field_58e7e727de99a",
             "label": "Use Custom Height",
             "name": "banner_custom_height",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "Use a custom height for this banner? Otherwise we'll use the default setting in the theme settings.",
             "required": 0,
@@ -72,6 +75,7 @@
             "key": "field_58e7e727de9a3",
             "label": "Height",
             "name": "banner_height",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "Select the banner's custom height.",
             "required": 0,
@@ -109,6 +113,7 @@
             "key": "field_58e7e727de9ad",
             "label": "Content",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -125,6 +130,7 @@
             "key": "field_58e7e727e2823",
             "label": "Text Color",
             "name": "text_color",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "Select the color of the text for this banner.",
             "required": 0,
@@ -147,6 +153,7 @@
             "key": "field_58e7e727e282c",
             "label": "Overlay",
             "name": "overlay",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "Select the overlay that will show behind the text but in front of the image.",
             "required": 0,
@@ -170,6 +177,7 @@
             "key": "field_58e7e727e2835",
             "label": "Title",
             "name": "banner_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -189,6 +197,7 @@
             "key": "field_58e7e727e283f",
             "label": "Sub Title",
             "name": "banner_sub_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -205,9 +214,26 @@
             "append": ""
         },
         {
+            "key": "field_63a1c7ae3a07e",
+            "label": "Button",
+            "name": "banner_button",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
             "key": "field_5acb73a2681f0",
             "label": "Banner Image",
             "name": "banner_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -251,7 +277,8 @@
     "hide_on_screen": [
         "featured_image"
     ],
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1570645459
+    "show_in_rest": 0,
+    "modified": 1671547615
 }

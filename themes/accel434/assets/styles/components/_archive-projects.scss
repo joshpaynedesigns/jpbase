@@ -1,47 +1,46 @@
 .post-type-archive-projects {
-    .project {
-        background-color: $light-gray;
-        display: inline-block;
-        margin-bottom: $base-spacing;
-        padding: 2rem;
-        width: 100%;
+  .project {
+    background-color: $gray-200;
+    display: inline-block;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: $base-spacing;
 
-        &:last-of-type {
-            margin-bottom: 0px;
-        }
-
-        .project-img {
-            margin-bottom: 1em;
-
-            @include media( $large-screen-up ) {
-                @include span-columns(3);
-                margin-bottom: 0;
-            }
-        }
-
-        .project-info {
-
-            @include media( $large-screen-up ) {
-                @include span-columns(9);
-            }
-
-            .project-title {
-                text-transform: uppercase;
-            }
-
-            .project-cats {
-                color: #777;
-                
-                span {
-                    border-right: 1px solid #999;
-                    padding-right: 0.3em;
-
-                    &:last-child {
-                        border: none;
-                        padding-right: 0;
-                    }
-                }
-            }
-        }
+    @media ($large-screen-up) {
+      flex-direction: row;
+      align-items: center;
+      gap: $base-spacing * 2;
     }
+
+    .project-img {
+      @media ($large-screen-up) {
+        @include span-columns(3);
+      }
+    }
+
+    .project-info {
+      @media ($large-screen-up) {
+        @include span-columns(9);
+      }
+
+      .project-title {
+        text-transform: uppercase;
+      }
+
+      .project-cats {
+        color: #777;
+
+        span {
+          border-right: 1px solid #999;
+          padding-right: 0.3em;
+
+          &:last-child {
+            border: none;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,87 +1,101 @@
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var gulp = require('gulp');
-var rename = require('gulp-rename');
-var cheerio = require('gulp-cheerio');
-var notify = require('gulp-notify');
+var gulp = require("gulp");
+var rename = require("gulp-rename");
+var cheerio = require("gulp-cheerio");
 
 // Sass Plugins
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-
-// SVG Plugins
-var svgmin = require('gulp-svgmin');
-var svgstore = require('gulp-svgstore');
+const sass = require("gulp-sass")(require("sass"));
+var sourcemaps = require("gulp-sourcemaps");
 
 // Minifiy JS
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var concat = require("gulp-concat");
+var rename = require("gulp-rename");
 
-var processors = [
-    autoprefixer
-]
+// SVG Plugins
+var svgmin = require("gulp-svgmin");
+var svgstore = require("gulp-svgstore");
 
-gulp.task('sass', function () {
+let postcss = require("gulp-postcss");
+let autoprefixer = require("autoprefixer");
+let postcss_scss = require("postcss-scss");
 
+let processors = [autoprefixer];
 
-    gulp.src('assets/styles/*.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-        includePaths: require('node-neat').includePaths
-    }).on('error', sass.logError))
-    .pipe(postcss( processors ))
-    .pipe(sourcemaps.write('./assets/maps'))
-    .pipe(gulp.dest('./'))
-    .pipe(notify({message: 'Regular styles finished.'}));
-});
-
-gulp.task('editor-sass', function () {
-    gulp.src('assets/styles/editor-style.scss')
-    .pipe(sourcemaps.init())
-    .pipe(sass({
-        includePaths: require('node-neat').includePaths
-    }).on('error', sass.logError))
-    .pipe(postcss( processors ))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./'))
-    .pipe(notify({message: 'Editor styles finished.'}));
-});
-
-gulp.task('svgstore', function() {
+gulp.task(
+  "sass",
+  gulp.series(function () {
     return gulp
-        .src('assets/icons/src/*.svg')
-        .pipe(rename({prefix: 'ico-'}))
-        .pipe(svgmin())
+      .src("assets/styles/*.scss")
+      .pipe(sourcemaps.init())
+      .pipe(sass())
+      .pipe(postcss(processors, { syntax: postcss_scss }))
+      .pipe(sourcemaps.write("./assets/maps"))
+      .pipe(gulp.dest("./"));
+  })
+);
+
+gulp.task(
+  "editor-sass",
+  gulp.series(function () {
+    return gulp
+      .src("assets/styles/editor-style.scss")
+      .pipe(sourcemaps.init())
+      .pipe(sass())
+      .pipe(postcss(processors, { syntax: postcss_scss }))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest("./"));
+  })
+);
+
+gulp.task(
+  "svgstore",
+  gulp.series(function () {
+    return (
+      gulp
+        .src("assets/icons/src/*.svg")
+        .pipe(rename({ prefix: "ico-" }))
+        //   .pipe(svgmin())
         .pipe(svgstore())
-        .pipe(cheerio({
-            run: function($) {
-                $("[fill]").removeAttr("fill");
+        .pipe(
+          cheerio({
+            run: function ($) {
+              $("[fill]").removeAttr("fill");
             },
-            parserOptions: { xmlMode: true }
-        }))
+            parserOptions: { xmlMode: true },
+          })
+        )
         .pipe(gulp.dest("assets/icons/dist/"))
-        .pipe(notify({message: 'SVG proccess finished.'}));
-});
+    );
+  })
+);
 
 //script paths
-var jsFiles = 'assets/js/*.js',
-    jsDest = 'assets/js/build/';
+var jsFiles = "assets/js/*.js",
+  jsDest = "assets/js/build/";
 
-gulp.task('scripts', function() {
-    return gulp.src(jsFiles)
-        .pipe(concat('site-wide.js'))
-        .pipe(gulp.dest(jsDest))
-        .pipe(rename('site-wide.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest(jsDest))
-        .pipe(notify({message: 'Scripts finished.'}));
-});
+gulp.task(
+  "scripts",
+  gulp.series(function () {
+    return gulp
+      .src(jsFiles)
+      .pipe(concat("site-wide.js"))
+      .pipe(gulp.dest(jsDest))
+      .pipe(rename("site-wide.min.js"))
+      .pipe(gulp.dest(jsDest));
+  })
+);
 
-gulp.task('watch', function () {
-    gulp.watch('./assets/styles/**/*.scss', ['sass']);
-    gulp.watch('assets/styles/editor-style.scss', ['editor-sass']);
-    gulp.watch('./assets/icons/src/*.svg', ['svgstore']);
-    gulp.watch('./assets/js/*.js', ['scripts']);
-});
+gulp.task(
+  "watch",
+  gulp.series(function () {
+    gulp.watch("./assets/styles/**/*.scss", gulp.series("sass"));
+    gulp.watch("assets/styles/editor-style.scss", gulp.series("editor-sass"));
+    gulp.watch("./assets/js/*.js", gulp.series("scripts"));
+  })
+);
 
-gulp.task('default', ['sass', 'editor-sass', 'svgstore', 'scripts', 'watch']);
+gulp.task(
+  "default",
+  gulp.series("sass", "editor-sass", "scripts", "svgstore", "watch")
+);
+
+gulp.task("build", gulp.series("sass", "editor-sass", "scripts", "svgstore"));

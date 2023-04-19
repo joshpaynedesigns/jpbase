@@ -10,8 +10,6 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Series;
 
 
-use TEC\Events\Custom_Tables\V1\Models\Model;
-use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Tables\Events;
 use TEC\Events\Custom_Tables\V1\Tables\Events as Events_Schema;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
@@ -218,7 +216,7 @@ class Admin_List {
 		// Add our join + order by.
 		$series_table       = Series_Relationships::table_name();
 		$events_table       = Events_Schema::table_name();
-		$clauses['join']    = "
+		$clauses['join']   .= "
 						LEFT JOIN
 					        $series_table ON {$wpdb->posts}.ID = $series_table.series_post_id
 					    LEFT JOIN

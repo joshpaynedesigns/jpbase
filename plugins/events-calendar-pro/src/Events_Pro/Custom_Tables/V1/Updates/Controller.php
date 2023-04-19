@@ -159,6 +159,34 @@ class Controller {
 	}
 
 	/**
+	 * Ensures our redirected ID does not show up in the REST response.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_REST_Response $response Result to send to the client.
+	 *                                   Usually a WP_REST_Response or WP_Error.
+	 * @param array            $handler  Route handler used for the request.
+	 * @param WP_REST_Request  $request  Request used to generate the response.
+	 *
+	 * @return WP_REST_Response The modified WP_REST_Response.
+	 */
+	public function retain_original_id_in_response( WP_REST_Response $response, $handler, WP_REST_Request $request ): WP_REST_Response {
+		$redirected = $request->get_param( '_tec_initial_meta' );
+		if ( ! isset( $redirected['id'], $response->data['id'] ) ) {
+			return $response;
+		}
+
+		/**
+		 * Grab our original ID, and set it for the response.
+		 * Block Editor will get confused if it gets a response with a different ID.
+		 * It will think the save did not finish and remain in a 'dirty' state.
+		 */
+		$response->data['id'] = (int) $redirected['id'];
+
+		return $response;
+	}
+
+	/**
 	 * Set the original request, used for various evaluations, such as when and if an occurrence should be redirected.
 	 *
 	 * @since 6.0.2
@@ -569,6 +597,23 @@ class Controller {
 						null,
 						false
 					);
+			}
+		} else if ( $updated && static::$should_redirect_occurrence ) {
+			/**
+			 * We updated something, but if it still exists stay on it.
+			 * When we change the global request variables, it will by default redirect (in classic editor) to that routed
+			 * occurrence. This avoids that default behavior and stays on the current occurrence.
+			 */
+			$transient_redirect = tribe( Transient_Occurrence_Redirector::class );
+			$from_id            = static::get_id( $original_request );
+			$redirect           = $transient_redirect->get_redirect_data( $from_id );
+			// If no explicitly defined redirect and this Occurrence still exists.
+			if ( ! $redirect && Occurrence::find( tribe( ID_Generator::class )->unprovide_id( $from_id ) ) ) {
+				// Store the old ID (our request may have been routed to a different occurrence, this ensures we retain it for this scenario).
+				$transient_redirect->set_redirected_id(
+					$from_id,
+					$from_id
+				);
 			}
 		}
 

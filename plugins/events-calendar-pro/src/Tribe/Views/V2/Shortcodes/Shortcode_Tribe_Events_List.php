@@ -22,7 +22,7 @@
  *
  * List of optional information attributes:
  *
- *     street, city, cost, country, organizer, phone, region, venue, zip
+ *     street, city, cost, country, organizer, phone, region, venue, zip, website
  *
  */
 namespace Tribe\Events\Pro\Views\V2\Shortcodes;
@@ -72,6 +72,7 @@ class Shortcode_Tribe_Events_List extends Shortcode_Abstract {
 		'phone'              => false,
 		'cost'               => false,
 		'organizer'          => false,
+		'website'            => false,
 	];
 
 	/**
@@ -141,6 +142,7 @@ class Shortcode_Tribe_Events_List extends Shortcode_Abstract {
 			'phone'                => $arguments['phone'],
 			'cost'                 => $arguments['cost'],
 			'organizer'            => $arguments['organizer'],
+			'website'              => $arguments['website'],
 
 			// Taxonomy
 			'filters'              => [

@@ -66,6 +66,19 @@ function action_admin_init_setup_messages() {
 			)
 		);
 	}
+
+	if ( PHP_VERSION_ID < 70200 ) {
+		$msg = esc_html__(
+			'Your php version is very outdated, the next version of ARVE will probably require php 7.2+, possibly 7.4+ please update (ask your host to update).',
+			'advanced-responsive-video-embedder'
+		);
+
+		Notices::instance()->register_notice(
+			'arve-php-outdated-warn',
+			'notice-error',
+			$msg
+		);
+	}
 }
 
 function ad_html() {
@@ -265,12 +278,13 @@ function admin_enqueue_scripts() {
 
 	enqueue_asset(
 		array(
-			'handle'            => 'arve-admin',
-			'src'               => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
-			'path'              => ARVE\PLUGIN_DIR . '/build/admin.js',
-			'deps'              => array(),
-			'inline_script'     => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
-			'inline_script_pos' => 'before',
+			'handle'               => 'arve-admin',
+			'src'                  => plugins_url( 'build/admin.js', ARVE\PLUGIN_FILE ),
+			'path'                 => ARVE\PLUGIN_DIR . '/build/admin.js',
+			'deps'                 => array(),
+			'async'                => true,
+			'in_footer'            => true,
+			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
 		)
 	);
 

@@ -384,6 +384,15 @@ class Duplicate {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$post_terms = wp_get_object_terms( $event->ID, $taxonomy, [ 'fields' => 'slugs' ] );
+
+			if ( ! is_array( $post_terms ) ) {
+				continue;
+			}
+
+			$post_terms = array_values( array_filter( $post_terms, static function ( $term ) {
+				return is_string( $term ) && $term !== '';
+			} ) );
+
 			wp_set_object_terms( $duplicated->ID, $post_terms, $taxonomy, false );
 		}
 	}

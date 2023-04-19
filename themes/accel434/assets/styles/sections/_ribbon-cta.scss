@@ -1,52 +1,45 @@
 .ribbon-cta-section {
+  .ribbon-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+    padding: rem(58);
+    text-align: center;
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-left: rem(80);
+      padding-right: rem(80);
+      text-align: left;
+    }
+
+    &.grad {
+      background: $blue-green-grad;
+    }
+  }
+
+  .ribbon-text {
     display: block;
-    position: relative;
-    background: $primary-color;
-    padding: 0 !important;
+  }
 
-    .ribbon-content {
-        @include media( $medium-screen-up ) {
-            display: flex;
-            @include align-items(center);
-            @include justify-content(space-between);
-        }
-    }
+  .top-text,
+  .bottom-text {
+    color: white;
+    line-height: 1;
+    margin-bottom: 0;
+  }
 
-    .ribbon-text {
-        display: block;
-        padding-bottom: rem(30px);
-        padding-top: rem(30px);
-        text-align: center;
-        @include media( $medium-screen-up ) {
-            padding-right: $base-spacing;
-            text-align: left;
-        }
+  .top-text {
+    @media ($large-screen-up) {
+      font-size: rem(36);
     }
+  }
 
-    .top-text,
-    .bottom-text {
-        color: white;
-        line-height: 1;
-        margin-bottom: 0;
-    }
-
-    .top-text {
-        margin-bottom: 5px;
-        text-transform: uppercase;
-    }
-
-    .bottom-text {
-        font-family: $base-font-family;
-        font-weight: 300;
-    }
-
-    .button-wrap {
-        margin-bottom: rem(40px);
-        display: block;
-        text-align: center;
-        @include media( $medium-screen-up ) {
-            margin-bottom: rem(0px);
-            text-align: left;
-        }
-    }
+  .bottom-text {
+    font-size: rem(24);
+    margin-top: rem(12);
+    font-weight: 300;
+  }
 }

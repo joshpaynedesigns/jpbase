@@ -481,6 +481,7 @@ class Tribe__Events__Pro__Repositories__Event extends Tribe__Events__Repositorie
 
 		foreach ( $taxonomies as $taxonomy ) {
 			$term_ids = wp_get_object_terms( $post_id, $taxonomy, array( 'fields' => 'ids' ) );
+			$term_ids = array_values( array_filter( $term_ids, 'is_numeric' ) );
 
 			if ( $term_ids && ! is_wp_error( $term_ids ) ) {
 				$args['tax_query'][ 'by-' . $taxonomy ] = array(

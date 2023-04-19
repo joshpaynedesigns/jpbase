@@ -1,0 +1,23 @@
+.logos-section {
+  .logos-slider {
+    position: relative;
+
+    .logo-link {
+      padding: 0 rem(24);
+
+      .logo {
+        padding: 0;
+      }
+    }
+
+    .logo {
+      opacity: 0.6;
+      padding: 0 rem(24);
+      @include base_transition();
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

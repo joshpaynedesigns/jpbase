@@ -9,6 +9,7 @@ use Tribe\Events\Pro\Views\V2\Views\Week_View;
 use Tribe\Events\Views\V2\Views\Day_View;
 use Tribe\Events\Views\V2\Views\List_View;
 use Tribe\Events\Views\V2\Views\Month_View;
+use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Zapier_Provider;
 
 if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	class Tribe__Events__Pro__Main {
@@ -80,7 +81,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.0.7';
+		const VERSION = '6.0.11';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -1667,7 +1668,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if ( class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' ) ) {
 				tribe_register_provider( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' );
 			}
-
+			if ( class_exists( Zapier_Provider::class ) ) {
+				tribe_register_provider( Zapier_Provider::class );
+			}
 			tribe( 'events-pro.admin.settings' );
 			tribe( 'events-pro.ical' );
 			tribe( 'events-pro.assets' );

@@ -30,8 +30,8 @@ class Custom_Tables_Query_Filters {
 	 * @since 6.0.5
 	 *
 	 * @param bool                             $filter_override Flag whether to continue using filter parsing.
-	 * @param Tribe__Repository__Query_Filters $filter      This instance of the filter object.
-	 * @param bool|numeric|WP_Post             $in_series         The series param.
+	 * @param Tribe__Repository__Query_Filters $filter          This instance of the filter object.
+	 * @param bool|numeric|WP_Post             $in_series       The series param.
 	 *
 	 * @return bool True, we always take over the filter.
 	 */
@@ -72,6 +72,7 @@ class Custom_Tables_Query_Filters {
 		global $wpdb;
 		$is_id_search         = ! is_bool( $in_series );
 		$series_relationships = Series_Relationships::table_name( true );
+
 		if ( $is_id_search ) {
 			// Convert to arrays to support an array of IDs as well as single IDs.
 			$ids = $in_series instanceof WP_Post ? [ $in_series->ID ] : (array) $in_series;
@@ -79,20 +80,20 @@ class Custom_Tables_Query_Filters {
 			$ids = array_map( 'absint', $ids );
 
 			// Let's filter by the id. We should have joined on the Series Relationship table.
-			return (string) $wpdb->prepare(
-				"{$series_relationships}.series_post_id IN(" . implode( ',', $ids ) . ")"
-			);
-		} else if ( $in_series ) {
+			return "{$series_relationships}.series_post_id IN(" . implode( ',', $ids ) . ")";
+		}
+
+		if ( $in_series ) {
 			// Grab any in series.
 			return (string) $wpdb->prepare(
 				"{$series_relationships}.series_post_id IS NOT NULL"
 			);
-		} else {
-			// Grab none in series.
-			return (string) $wpdb->prepare(
-				"{$series_relationships}.series_post_id IS NULL"
-			);
 		}
+
+		// Grab none in series.
+		return (string) $wpdb->prepare(
+			"{$series_relationships}.series_post_id IS NULL"
+		);
 	}
 
 }

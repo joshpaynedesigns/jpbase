@@ -1,0 +1,28 @@
+.attachments-section {
+  .attachment_icon {
+    align-items: center;
+    background-color: $blue-200;
+    border-radius: rem(8);
+    display: flex;
+    height: rem(48);
+    justify-content: center;
+    width: rem(48);
+
+    svg {
+      max-width: rem(24);
+    }
+  }
+
+  .attachment_title {
+    color: $gray-600;
+    transition: all $base-timing $base-duration;
+  }
+
+  a.attachment {
+    &:hover {
+      .attachment_title {
+        color: $blue-200;
+      }
+    }
+  }
+}

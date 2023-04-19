@@ -37,6 +37,7 @@ Ready to get started with the ActiveCampaign plug-in for WordPress? [Here's how]
 
 
 <strong>DESCRIPTION OF ACTIVECAMPAIGN</strong>
+
 ActiveCampaign's category-defining Customer Experience Automation Platform (CXA) helps over [150,000 businesses](https://www.activecampaign.com/tomorrows-business/?utm_source=unpaid_syndication_website&utm_medium=referral&utm_campaign=wordpress_listing_may_2022) in 170 countries meaningfully engage with their customers. The platform gives businesses of all sizes access to 800+ pre-built automations that combine transactional email and email marketing, marketing automation and CRM for powerful segmentation and personalization across social, email, messaging, chat and text. Over 70% of ActiveCampaign's customers use its 870+ integrations including WordPress, Microsoft, Shopify, Square, Facebook, and Salesforce.
 
 ActiveCampaign scores higher in customer satisfaction than any other solution in Marketing Automation, CRM, and E-Commerce Personalization on [G2.com](https://g2.com/) and is the Top Rated Marketing Automation Software on TrustRadius. Pricing starts at just $9/month.
@@ -53,9 +54,6 @@ ActiveCampaign scores higher in customer satisfaction than any other solution in
 7. Viewing the output of the [activecampaign] shortcode
 8. Adding an AC Forms block into the Gutenberg Block Editor
 
-== Description of ActiveCampaign ==
-
-ActiveCampaign's category-defining Customer Experience Automation Platform (CXA) helps over 150,000 businesses in 170 countries meaningfully engage with their customers. The platform gives businesses of all sizes access to 600+ pre-built automations that combine email marketing, marketing automation and CRM for powerful segmentation and personalization across social, email, messaging, chat and text. Over 70% of ActiveCampaign's customers use its 870+ integrations including Microsoft, Shopify, Square, Facebook, and Salesforce. ActiveCampaign scores higher in customer satisfaction than any other solution in Marketing Automation, CRM, and E-Commerce Personalization on [G2.com](https://g2.com) and is the Top Rated Marketing Automation Software on TrustRadius. Pricing starts at just $9/month. Start a free trial at [ActiveCampaign.com](https://activecampaign.com).
 
 == Installation ==
 
@@ -103,10 +101,20 @@ All live chat messages will display in the Conversations inbox in your ActiveCam
 
 Please make sure that your login information is correct, and that you have at least one Integration form already created in the ActiveCampaign system.
 
+= Can ActiveCampaign send transactional emails for my WordPress site? =
+
+With [ActiveCampaign Postmark](https://postmarkapp.com/?utm_source=activecampaign&utm_medium=referral&utm_campaign=activecampaign_wordpress) — that’s ActiveCampaign’s transactional email provider — you can make sure your transactional emails (including password reset emails, form notifications, or account setup emails) are getting delivered, every time. With WordPress’ default mailer, crucial transactional emails often end up in the spam folder or aren’t delivered at all. With Postmark, deliverability issues are a thing of the past. [Learn more about Postmark for WordPress →](https://wordpress.org/plugins/postmark-approved-wordpress-plugin)
+
+
+
+== Changelog ==
+
+= 8.1.11 =
+* Removing obsolete Javascript
+
 = 8.1.10 =
 * Verifying 6.0 compatibility, updated listing
 
-== Changelog ==
 = 8.1.9 =
 * Updated authentication for internal API requests
 

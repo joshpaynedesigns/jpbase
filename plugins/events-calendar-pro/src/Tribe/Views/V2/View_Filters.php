@@ -268,6 +268,7 @@ class View_Filters {
 	 *
 	 */
 	public function on_template_redirect() {
+		// This method will not set the `tribe_redirect` query arg in the URL, Event Tickets will use it.
 		if (
 			! wp_is_mobile()
 			|| tribe_is_truthy( tribe_get_request_var( 'tribe_redirected' ) )
@@ -277,6 +278,7 @@ class View_Filters {
 			|| 'embed' === tribe_context()->get( 'view' )
 			|| is_front_page()
 		) {
+			// The view does not require mobile redirection.
 			return;
 		}
 
@@ -310,21 +312,17 @@ class View_Filters {
 		// Add the base WordPress Url Query arguments.
 		$url = add_query_arg( $wp->query_vars, $url );
 
+		/*
+		 * Logic following this code in the request lifecycle will know we're redirecting.
+		 */
+		add_filter( 'tec_events_views_v2_redirected', '__return_true' );
+
 		// Add our mobile default to the arguments.
-		$url = add_query_arg(
-			[
-				'eventDisplay'     => $default_mobile_view,
-				'tribe_redirected' => true,
-			],
-			$url
-		);
+		$url = add_query_arg( [ 'eventDisplay' => $default_mobile_view, ], $url );
 
 		$location = TEC_Rewrite::instance()->get_canonical_url( $url );
 
-		wp_redirect(
-			$location,
-			302
-		);
+		wp_redirect( $location, 302 );
 
 		tribe_exit();
 	}

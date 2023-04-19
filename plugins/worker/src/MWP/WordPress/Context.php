@@ -535,35 +535,30 @@ class MWP_WordPress_Context
     }
 
     /**
-     * @param $criteria
+     * @param int $code
      *
-     * @return WP_User[]|stdClass[]
+     * @return WP_User
      *
-     * @link http://codex.wordpress.org/Function_Reference/get_users
-     *
-     * Defaults:
-     *  'blog_id'      => $GLOBALS['blog_id']
-     *  'role'         => ''
-     *  'meta_key'     => ''
-     *  'meta_value'   => ''
-     *  'meta_compare' => ''
-     *  'meta_query'   => array()
-     *  'include'      => array()
-     *  'exclude'      => array()
-     *  'orderby'      => 'login'
-     *  'order'        => 'ASC'
-     *  'offset'       => ''
-     *  'search'       => ''
-     *  'number'       => ''
-     *  'count_total'  => false
-     *  'fields'       => 'all'
-     *  'who'          => ''
+     * @throws MWP_Worker_Exception
      */
-    public function getUsers($criteria)
+    public function getAdminUser($code)
     {
+        /** @var wpdb $wpdb */
+        global $wpdb;
+
         $this->requirePluggable();
 
-        return get_users($criteria);
+        $query   = "SELECT * FROM {$wpdb->users} WHERE ID IN (SELECT user_id FROM {$wpdb->usermeta} WHERE meta_key = '{$wpdb->prefix}capabilities' AND meta_value LIKE '%administrator%') ORDER BY ID LIMIT 1";
+        $result = $wpdb->get_row($query);
+
+        if (null === $result) {
+            throw new MWP_Worker_Exception($code, "We could not find an administrator user to use. Please contact support.");
+        }
+	    /** @handled class */
+        $user = new WP_User();
+        $user->init($result);
+
+        return $user;
     }
 
     public function isPluginEnabled($pluginBasename)

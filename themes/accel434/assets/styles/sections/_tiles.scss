@@ -1,97 +1,66 @@
 .tiles {
-	
-	.section-header {
-		text-align: center;
-	}
+  .tile-blocks {
+    @media ($large-screen-up) {
+      display: flex;
 
-	.tile-blocks {
-		overflow: auto;
+      &.tiles-2 .tile-block {
+        width: 50%;
+      }
 
-		@include media($large-screen-up) {
-			display: flex;
-			
-			&.tiles-3 .tile-block {
-				width: 33.33%;
-			}
+      &.tiles-3 .tile-block {
+        width: 33.33%;
+      }
 
-			&.tiles-4 .tile-block {
-				width: 25%;
-			}
-		}
+      &.tiles-4 .tile-block {
+        width: 25%;
+      }
+    }
 
-		.tile-block {
-			padding: $base-spacing*3 $base-spacing*2;
-			position: relative;
+    .tile-block {
+      padding: $base-spacing * 3 $base-spacing * 2;
+      position: relative;
 
-			@include media($large-screen-up) {
-				// min-height: 300px;
-				padding: 3.5em 1.5em;
-				float: left;
-				width: 50%;
-			}
+      @media ($large-screen-up) {
+        padding: rem(75) rem(48);
+      }
 
-			@media screen and (min-width: 1200px) {
-				padding: $base-spacing*3 $base-spacing*2;
-			}
+      @media screen and (min-width: 1200px) {
+        padding: $base-spacing * 3 $base-spacing * 2;
+      }
 
-			.tile-block-excerpt {
-				position: relative;
-				z-index: 100;
+      .tile-block-excerpt {
+        position: relative;
+        z-index: 100;
+      }
 
-				h1,
-				h2,
-				h3,
-				h4,
-				h5,
-				h6 {
-					margin-bottom: em(15);
-					font-weight: 700;
-					font-family: $heading-font-family;
-				}
+      &.has-image {
+        background-color: black;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        @include bg_overlay($gray-900, 0.5);
+      }
 
-				*:last-child {
+      &.primary {
+        background-color: $primary-color;
+      }
 
-					margin-bottom: 0;
-				}
-			}
+      &.white {
+        background-color: white;
+      }
 
-			&.has-image {
-				background-position: center;
-				background-repeat: no-repeat;
-				background-size: cover;
-				@include bg_overlay( $dark-gray, 0.5 );
+      &.white,
+      &.none {
+        border: 1px solid $gray-200;
+      }
 
-				.tile-block-excerpt {
-					color: white;
-				}
-			}
+      &.light-gray {
+        background-color: $gray-200;
+      }
 
-			&.solid {
-				&.primary {
-					background-color: $primary-color;
-
-					.tile-block-excerpt {
-						color: white;
-					}
-				}
-
-				&.white {
-					background-color: white;
-					border: 1px solid #bbb;
-				}
-
-				&.light-gray {
-					background-color: $light-gray;
-				}
-
-				&.dark-gray {
-					background-color: $dark-gray;
-
-					.tile-block-excerpt {
-						color: white;
-					}
-				}
-			}
-		}
-	}
+      &.dark-gray {
+        background-color: $gray-900;
+      }
+    }
+  }
 }

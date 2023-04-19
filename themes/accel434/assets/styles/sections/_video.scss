@@ -1,0 +1,115 @@
+.video-section {
+  background: $green-900;
+  padding: $mobile-section-margin 0;
+
+  @media ($large-screen-up) {
+    padding: $desk-section-margin 0;
+  }
+
+  .video-section-content-wrap {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: rem(32);
+    position: relative;
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+      gap: rem(64);
+
+      &.video-left {
+        flex-direction: row-reverse;
+      }
+    }
+
+    .content-side,
+    .video-side {
+      max-width: rem(900);
+      width: 100%;
+    }
+  }
+
+  .section-title,
+  .section-blurb {
+    color: white;
+  }
+
+  .video-side {
+    height: 400px;
+    position: relative;
+
+    @media ($large-screen-up) {
+      align-self: stretch;
+    }
+
+    &:hover {
+      .play-button {
+        height: 110px;
+        width: 110px;
+
+        &:after {
+          border-width: 17px 0 17px 25px;
+        }
+      }
+    }
+  }
+
+  .video-thumbnail {
+    background-size: cover;
+    inset: 0;
+    position: absolute;
+  }
+
+  .video-bg-overlay {
+    background: $black;
+    inset: 0;
+    opacity: 0.7;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .arve {
+    inset: 0;
+    margin-bottom: 0 !important;
+    position: absolute;
+    z-index: 200;
+
+    .arve-embed {
+      height: 100%;
+      opacity: 0;
+    }
+
+    .arve-inner {
+      height: 100%;
+    }
+  }
+
+  .play-button {
+    border: 2px solid $white;
+    border-radius: 50%;
+    height: 80px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all $base-duration $base-timing;
+    width: 80px;
+    z-index: 200;
+
+    &:after {
+      border-color: transparent transparent transparent white;
+      border-style: solid;
+      border-width: 12px 0 12px 20px;
+      content: "";
+      display: block;
+      height: 0;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-40%, -50%);
+      transition: all $base-duration $base-timing;
+      width: 0;
+      z-index: 200;
+    }
+  }
+}

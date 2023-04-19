@@ -1,117 +1,16 @@
 .page-section-stories {
-    overflow: hidden;
+  overflow: hidden;
 
-    .section-header {
-        text-align: center;
+  .blog-feed-slider {
+    position: relative;
+
+    @media ($medium-screen-up) {
+      margin-left: -$base-spacing;
+      width: calc(100% + 3em);
     }
+  }
 
-    .blog-feed-slider {
-        position: relative;
-        // padding: 0 0.5em;
-        
-        @include media( $medium-screen-up ) {
-            margin-left: -1.5em;
-            width: calc(100% + 3em);
-        }
-    }
-
-    .story {
-        // background-color: $primary-color;
-        // border-radius: $base-border-radius;
-        display: block;
-        // margin-bottom: $base-spacing * 2;
-        padding: 0 1.5em;
-    }
-
-    .story-img {
-        height: 250px;
-        margin-bottom: 20px;
-        @include bg();
-    }
-
-    .story-date {
-        font-size: em(15);
-    }
-
-    .story-title {
-        // text-transform: uppercase;
-        margin-bottom: 0.5em;
-        font-weight: bold;
-
-        a {
-            color: $dark-gray;
-
-            &:hover {
-                color: $action-color;
-            }
-        }
-    }
-
-    .story-cats {
-        margin-bottom: 1em;
-        // font-weight: bold;
-
-        span {
-            border-right: 1px solid #555;
-            padding-right: 0.3em;
-
-            &:last-child {
-                border: none;
-                padding-right: 0;
-            }
-        }
-    }
-
-    .story-blurb-content {
-        font-size: em(14);
-        margin-bottom: 0.75em;
-        color: #555;
-    }
-
-    .read-more {
-        text-transform: uppercase;
-        font-size: em(14);
-    }
-
-    .left-arrow,
-    .right-arrow {
-        @include base_transition();
-        @include transform( translateY( -90% ) );
-        display: block !important;
-        opacity: 0.5;
-        position: absolute;
-        top: 50%;
-        z-index: 100;
-
-        &.slick-hidden {
-            display: none !important;
-        }
-
-        svg {
-            fill: $dark-gray;
-            height: 50px;
-            width: 50px;
-        }
-
-        &:hover {
-            cursor: pointer;
-            opacity: 1;
-        }
-    }
-
-    .left-arrow {
-        left: -20px;
-        svg {
-            @include transform(rotate(180deg));
-        }
-    }
-
-    .right-arrow {
-        right: -20px;
-    }
-
-    .blog-feed-bottom {
-        margin-top: 2em;
-        text-align: center;
-    }
+  .story {
+    padding: 0 $base-spacing;
+  }
 }

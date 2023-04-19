@@ -459,16 +459,33 @@ function tribe_is_past_event( $event = null ) {
 }
 
 /**
- * Event Category ID's
+ * Returns an array terms `term_id` from the taxonomy `tribe_cat` for a given event.
  *
- * Display the event category ID as a class for events wrapper
+ * @since 3.0.0
+ * @since 6.0.11 Type hinting the return to array.
  *
  * @uses     wp_get_object_terms()
- * @category Events
+ *
+ * @param int|string|WP_Post $post_id
+ *
+ * @return array<int>
  */
-function tribe_get_event_cat_ids( $post_id = 0 ) {
+function tribe_get_event_cat_ids( $post_id = 0 ): array {
 	$post_id = Tribe__Events__Main::postIdHelper( $post_id );
-	$terms   = array_filter( (array) get_the_terms( $post_id, Tribe__Events__Main::TAXONOMY ) );
+	$terms   = get_the_terms( $post_id, Tribe__Events__Main::TAXONOMY );
+
+	if ( $terms instanceof WP_Error ) {
+		return [];
+	}
+
+	// Makes sure we are not throwing fatals on PHP 8.0.
+	if ( empty( $terms ) ) {
+		return [];
+	}
+
+	$terms = array_values( array_filter( $terms, static function ( $term ) {
+		return $term instanceof WP_Term;
+	} ) );
 
 	return wp_list_pluck( $terms, 'term_id' );
 }
@@ -483,13 +500,27 @@ function tribe_get_event_cat_ids( $post_id = 0 ) {
  */
 function tribe_get_event_cat_slugs( $post_id = 0 ) {
 	$post_id = Tribe__Events__Main::postIdHelper( $post_id );
-	$terms   = (array) get_the_terms( $post_id, Tribe__Events__Main::TAXONOMY );
-	$terms   = array_filter(
+	$terms   = get_the_terms( $post_id, Tribe__Events__Main::TAXONOMY );
+
+	/**
+	 * Returns an empty array on events that aren't assigned
+	 * to any category or when $terms generates an error.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @return array
+	 */
+	if (  empty ( $terms ) || $terms instanceof WP_Error ) {
+		return [];
+	}
+
+	$terms = array_values( array_filter(
 		$terms,
 		static function ( $term ) {
 			return $term instanceof WP_Term;
 		}
-	);
+	) );
+
 	$slugs   = wp_list_pluck( $terms, 'slug' );
 
 	return apply_filters( 'tribe_get_event_cat_slugs', $slugs, $post_id );
@@ -682,9 +713,13 @@ if ( ! function_exists( 'tribe_meta_event_archive_tags' ) ) {
 
 		$terms = get_the_terms( get_the_ID(), 'post_tag' );
 
-		if ( is_wp_error( $terms ) ) {
+		if ( empty( $terms ) || is_wp_error( $terms ) ) {
 			return;
 		}
+
+		$terms = array_values( array_filter( $terms, static function ( $term ) {
+			return $term instanceof WP_Term;
+		} ) );
 
 		if ( empty( $terms ) ) {
 			return;

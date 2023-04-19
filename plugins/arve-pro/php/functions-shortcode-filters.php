@@ -70,7 +70,6 @@ function shortcode_atts_extra_data( array $a ) {
  * 3. Get remote without oembed
  * 4. Post Image Fallback
  * 5. Fallback from options page
- *
  */
 function arg_filter_thumbnail( $thumbnail, array $a ) {
 
@@ -106,22 +105,6 @@ function get_thumb_from_api( $thumbnail, array $a ) {
 				[],
 				'thumb'
 			);
-			break;
-		case 'liveleak':
-			$html = Common\remote_get_body_cached( "http://www.liveleak.com/view?{$a['id']}" );
-
-			if ( is_wp_error( $html ) ) {
-				$a['errors']->add( 'thumb-api-call', $html->get_error_message() );
-			} else {
-				preg_match( '#<meta property="og:image" content="([^"]+)#i', $html, $matches );
-
-				if ( ! empty( $matches[1] ) &&
-					str_starts_with( $matches[1], 'http' ) &&
-					! str_ends_with( $matches[1], 'logo.gif' )
-				) {
-					$thumbnail = $matches[1];
-				}
-			}
 			break;
 	}
 

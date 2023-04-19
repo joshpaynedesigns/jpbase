@@ -2,29 +2,20 @@
 --------------------------------------------- */
 
 .wrap {
-  @include outer-container( 1200px );
+  @include outer-container(1200px);
   width: 90%;
 }
 
 .site-inner {
-
-    .wrap {
-        @include media( $large-screen-up ) {
-            @include outer-container( 1200px );
-        }
+  .wrap {
+    @media ($large-screen-up) {
+      @include outer-container(1200px);
     }
-}
 
-.fixed-header {
-
-    .page-banner-slider,
-    &.no-banner .site-inner {
-        padding-top: 57px;
-
-        @include media($large-screen-up) {
-            padding-top: 69px;
-        }
+    .archIntroText {
+      margin-bottom: 3.5em;
     }
+  }
 }
 
 .single-post .post,
@@ -35,19 +26,19 @@
 .archive .site-inner,
 .search .site-inner,
 .page-template-default .site-inner {
-    margin-top: $mobile-section-margin;
-    margin-bottom: $mobile-section-margin;
-    @include media( $large-screen-up ) {
-        margin-top: $desk-section-margin;
-        margin-bottom: $desk-section-margin;
-    }
+  margin-top: $mobile-section-margin;
+  margin-bottom: $mobile-section-margin;
+  @media ($large-screen-up) {
+    margin-top: $desk-section-margin;
+    margin-bottom: $desk-section-margin;
+  }
 }
 
 .single-tribe_events .site-inner {
-    margin-top: $mobile-section-margin;
-    @include media( $large-screen-up ) {
-        margin-top: $desk-section-margin;
-    }
+  margin-top: $mobile-section-margin;
+  @media ($large-screen-up) {
+    margin-top: $desk-section-margin;
+  }
 }
 
 /* ## Column Widths and Positions
@@ -57,44 +48,44 @@
 .content,
 .sidebar-primary,
 .full-width .content {
-    @include span-columns(12);
-    @include omega();
+  @include span-columns(12);
+  @include omega();
 }
 
-@include media( $large-screen-up ) {
-    .content-sidebar-wrap {
-        @include outer-container( 1200px );
-        // display: flex;
+@media ($large-screen-up) {
+  .content-sidebar-wrap {
+    // @include outer-container(1200px);
+    // display: flex;
 
-        .content {
-            @include span-columns(8);
+    .content {
+      @include span-columns(8);
 
-            .full-width-content & {
-                width: 100%;
-            }
-        }
-
-        .sidebar-primary {
-            @include span-columns(4);
-        }
-
-        .content-sidebar & {
-            .sidebar-primary {
-                margin-right: 0;
-                margin-left: auto;
-            }
-        }
-
-        .sidebar-content & {
-            .content {
-                order: 2;
-                margin-right: 0;
-                margin-left: auto;
-            }
-
-            .sidebar-primary {
-                order: 1;
-            }
-        }
+      .full-width-content & {
+        width: 100%;
+      }
     }
+
+    .sidebar-primary {
+      @include span-columns(4);
+    }
+
+    .content-sidebar & {
+      .sidebar-primary {
+        margin-right: 0;
+        margin-left: auto;
+      }
+    }
+
+    .sidebar-content & {
+      .content {
+        order: 2;
+        margin-right: 0;
+        margin-left: auto;
+      }
+
+      .sidebar-primary {
+        order: 1;
+      }
+    }
+  }
 }

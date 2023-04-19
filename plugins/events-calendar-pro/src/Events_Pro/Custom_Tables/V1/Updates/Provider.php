@@ -13,8 +13,8 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
-use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use WP_Error;
+use WP_HTTP_Response;
 use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
@@ -116,6 +116,34 @@ class Provider extends Service_Provider implements Provider_Contract {
 		 * request to them. On an All update, redirect the request to the real post.
 		 */
 		add_action( 'tec_events_custom_tables_v1_redirect_rest_event_post', [ $this, 'redirect_rest_request' ] );
+
+		// Retain our ID for responses.
+		if ( ! has_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ] ) ) {
+			add_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ], 10, 3 );
+		}
+	}
+
+	/**
+	 * Ensures our redirected ID does not show up in the REST response.
+	 *
+	 * @since 6.0.11
+	 *
+	 * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+	 *                                                                   Usually a WP_REST_Response or WP_Error.
+	 * @param array                                            $handler  Route handler used for the request.
+	 * @param WP_REST_Request                                  $request  Request used to generate the response.
+	 *
+	 * @return WP_REST_Response|WP_HTTP_Response|WP_Error|mixed The modified WP_REST_Response or what was passed in.
+	 */
+	public function retain_original_id_in_response( $response, $handler, $request ) {
+		if ( ! $response instanceof WP_REST_Response || empty( $response->data ) ) {
+			return $response;
+		}
+		if ( ! $request instanceof WP_REST_Request ) {
+			return $response;
+		}
+
+		return $this->container->make( Controller::class )->retain_original_id_in_response( $response, $handler, $request );
 	}
 
 	/**
@@ -237,6 +265,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 		remove_filter( 'tec_events_custom_tables_v1_updated_post', [ $this, 'commit_post_updates_after' ] );
 		remove_filter( 'tec_events_custom_tables_v1_should_update_custom_tables', [ $this, 'should_update_custom_tables' ] );
 		remove_action( 'update_post_meta', [ $this, 'sync_blocks_recurrence_meta' ] );
+		remove_filter( 'rest_request_after_callbacks', [ $this, 'retain_original_id_in_response' ] );
 	}
 
 	/**
@@ -438,6 +467,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * Filters the unique post slug generated, or set, for an Event Occurrence.
 	 *
 	 * @since 6.0.0
+	 * @since TBD Removed strict typing from this public hook callback.
 	 *
 	 * @param string $slug          The post slug.
 	 * @param int    $post_ID       Post ID.
@@ -448,9 +478,14 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @return string The filtered unique post slug.
 	 */
-	public function unique_post_slug_for_occurrence( string $slug, int $post_ID, string $post_status, string $post_type, int $post_parent, string $original_slug ): string {
+	public function unique_post_slug_for_occurrence( $slug, $post_ID, $post_status, $post_type, $post_parent, $original_slug ): string {
+		// Some basic sanity check and type check validation.
+		if ( ! is_string( $post_type ) || ! is_string( $original_slug ) || ! is_numeric( $post_ID ) ) {
+			return $slug;
+		}
+
 		return $this->container->make( Post_Ops::class )
-		                       ->get_occurrence_post_slug( $slug, $post_ID, $post_type, $original_slug );
+		                       ->get_occurrence_post_slug( $slug, (int) $post_ID, $post_type, $original_slug );
 	}
 
 	/**

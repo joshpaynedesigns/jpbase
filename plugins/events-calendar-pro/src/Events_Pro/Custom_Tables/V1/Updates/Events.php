@@ -21,6 +21,7 @@ use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Duplicate as Duplicator;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\Event_Rule_Converter\From_Event_Rule_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Recurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Rules\Date_Rule;
 use TEC\Events_Pro\Custom_Tables\V1\Migration\Patchers\Event_Recurrence_Meta_Patcher;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Occurrence as ECP_Occurrence;
@@ -178,6 +179,43 @@ class Events {
 		}
 		unset( $exclusion );
 		update_post_meta( $post_id, '_EventRecurrence', $recurrence );
+	}
+
+	/**
+	 * If a count limit exists, modify the recurrence meta to decrement its count limit.
+	 * Will not force a count limit or modify other types of event limit criteria.
+	 *
+	 * @since 6.0.8
+	 *
+	 * @param int $post_id      The post ID of the Event to update.
+	 * @param int $decrement_by The amount to decrement on this event.
+	 *
+	 * @return array<string,mixed>|false The updated `_EventRecurrence` format contents,
+	 *                                   or `false` if the update failed.
+	 */
+	public function decrement_event_count_limit_by( int $post_id, int $decrement_by ) {
+		$post_id = Occurrence::normalize_id( $post_id );
+
+		$recurrence = Recurrence::from_event( $post_id );
+
+		if ( $recurrence === null || ! $recurrence->has_count_limit() ) {
+			return false;
+		}
+
+		// Decrement the RRULE (should only be one)
+		foreach ( $recurrence->get_rrules() as $key => $rule ) {
+			$recurrence->set_rule(
+				$key,
+				$rule->set_count_limit( $rule->get_count_limit() - $decrement_by )
+			);
+		}
+
+		$mutated_recurrence = $recurrence->to_event_recurrence();
+
+		// We do not watch this update as `false` might also mean the value is the same.
+		update_post_meta( $post_id, '_EventRecurrence', $mutated_recurrence );
+
+		return $mutated_recurrence;
 	}
 
 	/**
@@ -1298,7 +1336,7 @@ class Events {
 	 *
 	 * @return bool Whether the two `_EventRecurrence` format meta values have the same limits or not.
 	 */
-	public function compare_count_limits( array $current, array $previous ): bool {
+	public function compare_interval_and_limit( array $current, array $previous ): bool {
 		// Produces strings like `Daily-1-10` or `Weekly-2-3`.
 		$get_rule_limit = static function ( array $rule ): string {
 			$count = isset( $rule['end-type'], $rule['end-count'] ) && $rule['end-type'] === 'After' ?
