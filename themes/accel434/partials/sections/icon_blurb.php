@@ -1,18 +1,19 @@
 <?php
-$bg_color = get_sub_field('background_color');
 $section_title = get_sub_field('section_title');
 $section_sub_title = get_sub_field('sub_title');
 $icon_blurbs = get_sub_field('icon_blurbs');
 $open_in_new_tab = get_sub_field('link_behavior');
 $button_details = get_sub_field('section_button');
+
+$section_classes = ns_decide_section_classes();
 ?>
 
-<section class="pfsection icon-blurb-section <?php echo $padding_classes; ?>">
+<section class="icon-blurb-section <?php echo $section_classes; ?>">
     <div class="wrap">
         <div class="icon-blurb-content">
 
             <div class="upper-content basemb2 fcmt0 lcmb0">
-                <?php ns_section_header($section_title, 'text-center', 'green-accent'); ?>
+                <?php ns_section_header($section_title, 'text-center'); ?>
 
                 <?php if (! empty($section_sub_title)) : ?>
                     <div class="section-sub-title text-center basemt"><?php echo $section_sub_title ?></div>

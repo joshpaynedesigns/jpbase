@@ -12,7 +12,7 @@ if ($show_content_over_image && ! empty($over_image_content)) {
 }
 ?>
 
-<section class="pfsection fifty-fifty-section <?php echo $padding_classes; ?>">
+<section class="fifty-fifty-section">
 
     <div class="image item <?php echo $content_pos; ?>">
         <?php

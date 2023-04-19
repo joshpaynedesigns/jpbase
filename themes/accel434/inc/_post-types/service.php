@@ -1,8 +1,8 @@
 <?php
 
-if (! function_exists('mktg434_service_cpt')) {
+if (! function_exists('ns_service_cpt')) {
     // Register Custom Post Type
-    function mktg434_service_cpt()
+    function ns_service_cpt()
     {
         $labels = array(
             'name'                  => _x('Services', 'Post Type General Name', 'text_domain'),
@@ -58,7 +58,7 @@ if (! function_exists('mktg434_service_cpt')) {
         register_post_type('service', $args);
     }
 
-    add_action('init', 'mktg434_service_cpt', 0);
+    add_action('init', 'ns_service_cpt', 0);
 }
 
 // Rename the title text on creating a new post

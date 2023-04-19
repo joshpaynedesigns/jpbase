@@ -7,12 +7,12 @@ $video_thumbnail = get_sub_field('video_thumbnail');
 $video_url = get_sub_field('video_url');
 ?>
 <?php if (! empty($video_url)) : ?>
-    <section class="pfsection video-section <?php echo $padding_classes; ?>">
+    <section class="video-section">
         <div class="wrap">
             <div class="video-section-content-wrap video-<?php echo $video_side ?>">
                 <div class="content-side">
                     <?php if (! empty($section_title)) : ?>
-                        <h2 class="section-title white-accent"><?php echo $section_title; ?></h2>
+                        <h2 class="section-title"><?php echo $section_title; ?></h2>
                     <?php endif; ?>
                     <?php if (! empty($section_blurb)) : ?>
                         <div class="section-blurb f18 fcmt0 lcmb0"><?php echo $section_blurb; ?></div>

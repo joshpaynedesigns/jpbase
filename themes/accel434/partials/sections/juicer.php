@@ -2,15 +2,17 @@
 $title_bar = get_sub_field('juicer_title_bar');
 $juicer_feed_id = get_sub_field('juicer_feed_id');
 $juicer_per = get_sub_field('juicer_per');
+
+$section_classes = ns_decide_section_classes();
 ?>
 
 <?php if (! empty($juicer_feed_id)) : ?>
-    <section class="juicerFeedSection pfsection <?php echo $padding_classes; ?>">
+    <section class="juicerFeedSection <?php echo $section_classes; ?>">
         <div class="wrap">
             <?php if (! empty($title_bar)) : ?>
-                <header class="sectionHeader">
-                        <?php echo $title_bar; ?>
-                </header>
+                <div class="fcmt0 lcmb0">
+                    <?php echo $title_bar; ?>
+                </div>
             <?php endif; ?>
             <div class="juicerFeedWrap">
                 <?php if (! empty($juicer_per) && ! empty($juicer_feed_id)) : ?>

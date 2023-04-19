@@ -1,25 +1,14 @@
 <?php
-$bg_color = get_sub_field('background_color');
+
 $section_title = get_sub_field('section_title');
 $boxes = get_sub_field('boxes');
+
+$section_classes = ns_decide_section_classes();
 ?>
 
-<section class="boxes-section pfsection <?php echo $padding_classes; ?> background-<?php echo $bg_color ?>">
-    <?php if ('wave' === $bg_color) : ?>
-        <div class="wave-bg-wrap">
-            <svg viewBox="0 0 1416 368" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1416 368V75.724S1049-86.5429 680 63.9939C311 214.531 0 177.385 0 177.385V368h1416Z" fill="url(#a)"/>
-                <defs>
-                    <linearGradient id="a" x1="708" y1="368" x2="708" y2="2.41068" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#1D6665"/>
-                    <stop offset="1" stop-color="#01569F"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-        </div>
-    <?php endif; ?>
+<section class="boxes-section <?php echo $section_classes; ?>" >
     <div class="wrap">
-        <?php ns_section_header($section_title, 'basemb text-center', 'green-accent'); ?>
+        <?php ns_section_header($section_title, 'basemb text-center'); ?>
 
         <div class="boxes">
             <?php

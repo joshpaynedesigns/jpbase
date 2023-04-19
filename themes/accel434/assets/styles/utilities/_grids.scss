@@ -1,4 +1,10 @@
 // Grids
+.onegrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .one24grid {
   display: flex;
   flex-direction: column;

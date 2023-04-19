@@ -72,11 +72,10 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
-                "blue": "Blue",
-                "dark-gray": "Dark Gray",
-                "green": "Green",
+                "bg-blue": "Blue",
+                "bg-dark-gray": "Dark Gray",
+                "bg-green": "Green",
                 "grad": "Gradiant"
             },
             "default_value": "blue",
@@ -105,5 +104,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1677705297
+    "modified": 1681921567
 }

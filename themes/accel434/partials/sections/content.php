@@ -26,10 +26,10 @@ if ($type === 'full-width') {
     $content_blocks = 4;
 }
 
-// Todo - handle padding and bg color
+$section_classes = ns_decide_section_classes($bg_color);
 ?>
 
-<section class="pfsection content-section">
+<section class="content-section <?php echo $section_classes ?>">
     <div class="wrap">
         <?php ns_section_header($title);  ?>
 

@@ -2,9 +2,11 @@
 $section_title = get_sub_field('section_title');
 $page_tiles = get_sub_field('page_tiles');
 $tiles_count = count($page_tiles);
+
+$section_classes = ns_decide_section_classes();
 ?>
 
-<section class="pfsection tiles <?php echo $padding_classes; ?>">
+<section class="tiles <?php echo $section_classes; ?>">
     <?php ns_section_header($section_title, 'basemb text-center'); ?>
     <?php if (have_rows('page_tiles')) : ?>
         <div class="tile-blocks tiles-<?php echo $tiles_count; ?>">

@@ -22,7 +22,7 @@ if (! empty($announcements) && is_array($announcements)) {
 ?>
 
 <?php if (! empty($announcements)) : ?>
-    <section class="pfsection announcements-section relative <?php echo $padding_classes; ?>">
+    <section class="announcements-section relative">
         <div class="bg-stripe"></div>
         <div class="wrap relative">
             <div class="first">

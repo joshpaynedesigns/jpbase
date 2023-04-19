@@ -12,10 +12,12 @@ $args = array(
 );
 
 $loop = new WP_Query($args);
+
+$section_classes = ns_decide_section_classes();
 ?>
 
 <?php if ($loop->have_posts()) : ?>
-    <section class="pfsection testimonials-section <?php echo $padding_classes; ?>">
+    <section class="testimonials-section <?php echo $section_classes ?>">
         <div class="wrap">
             <div class="testimonial-section-inner">
                 <?php ns_section_header($section_title, 'text-center basemb'); ?>

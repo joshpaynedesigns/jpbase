@@ -52,7 +52,7 @@
             "prefix_name": 0
         },
         {
-            "key": "field_5a37d583237d7",
+            "key": "field_64400e634481b",
             "label": "Section Title",
             "name": "section_title",
             "aria-label": "",
@@ -66,10 +66,10 @@
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_64060fbc5842d",
@@ -222,5 +222,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1678118869
+    "modified": 1681919603
 }

@@ -22,17 +22,20 @@ if (!empty($event_category)) {
     ));
     $e_arch_link = '/events/';
 }
+
+$section_classes = ns_decide_section_classes('white');
+
 ?>
 
 <?php if (! empty($events)) : ?>
-    <section class="events-feed-section pfsection <?php echo $padding_classes; ?> color light-blue" >
+    <section class="events-feed-section <?php echo $section_classes; ?>" >
         <div class="wrap">
             <div class="events-title-wrap">
                 <?php if (! empty($events_title)) : ?>
                     <h2 class="mb0"><?php echo $events_title; ?></h2>
                 <?php endif; ?>
                 <?php if (! empty($e_arch_link)) : ?>
-                    <span class="white-button small-button smallmt">
+                    <span class="blue-button small-button smallmt">
                         <a href="<?php echo $e_arch_link; ?>" class="">View All Events</a>
                     </span>
                 <?php endif; ?>

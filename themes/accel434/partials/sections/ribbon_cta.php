@@ -5,7 +5,7 @@ $btn_details = get_sub_field('link_details');
 $bar_color = get_sub_field('bar_color');
 ?>
 
-<section class="pfsection ribbon-cta-section">
+<section class="ribbon-cta-section">
     <div class="wrap">
         <div class="ribbon-content color <?php echo $bar_color ?>">
             <?php if (! empty($first_text || $second_text)) : ?>

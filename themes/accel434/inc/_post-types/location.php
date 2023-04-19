@@ -1,8 +1,8 @@
 <?php
 
-if (! function_exists('mktg434_location_cpt')) {
+if (! function_exists('ns_location_cpt')) {
     // Register Custom Post Type
-    function mktg434_location_cpt()
+    function ns_location_cpt()
     {
         $labels = array(
             'name'                  => _x('Locations', 'Post Type General Name', 'text_domain'),
@@ -58,7 +58,7 @@ if (! function_exists('mktg434_location_cpt')) {
         register_post_type('location', $args);
     }
 
-    add_action('init', 'mktg434_location_cpt', 0);
+    add_action('init', 'ns_location_cpt', 0);
 }
 
 // Rename the title text on creating a new post

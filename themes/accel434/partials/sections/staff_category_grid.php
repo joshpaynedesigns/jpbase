@@ -19,10 +19,12 @@ $args = array(
     ),
 );
 $staff_members = get_posts($args);
+
+$section_classes = ns_decide_section_classes();
 ?>
 
 <?php if (! empty($staff_members)) : ?>
-    <section class="pfsection staff-cat-grid <?php echo $padding_classes; ?>">
+    <section class="pfsection staff-cat-grid <?php echo $section_classes; ?>">
         <div class="wrap">
             <?php ns_section_header($section_title, 'basemb2 text-center'); ?>
             <div class="staffTermStaffGrid one24grid">

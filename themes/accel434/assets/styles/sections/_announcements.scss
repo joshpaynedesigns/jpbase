@@ -1,12 +1,13 @@
 .announcements-section {
-  padding-top: $mobile-section-margin;
   padding-bottom: $mobile-section-margin;
+  padding-top: $mobile-section-margin;
 
   @media ($xl-screen-up) {
     padding: 0;
   }
+
   .bg-stripe {
-    background-color: $gray-200;
+    background-color: white;
     bottom: 0;
     left: 0;
     position: absolute;
@@ -44,15 +45,15 @@
   .second {
     background-color: $blue-900;
     border-radius: rem(12);
+    box-sizing: border-box;
     color: white;
     padding: rem(48);
     width: 100%;
-    box-sizing: border-box;
 
     @media ($xl-screen-up) {
+      box-sizing: unset;
       max-width: rem(550);
       padding: rem(80);
-      box-sizing: unset;
     }
 
     h2 {

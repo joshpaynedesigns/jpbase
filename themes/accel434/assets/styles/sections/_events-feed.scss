@@ -5,8 +5,8 @@
     gap: rem(32);
 
     @media ($xl-screen-up) {
-      flex-direction: row;
       align-items: center;
+      flex-direction: row;
       justify-content: space-between;
     }
   }
@@ -28,7 +28,6 @@
   .event-item {
     align-items: center;
     display: flex;
-    // flex-wrap: wrap;
     gap: rem(16);
     justify-content: center;
     padding: rem(12);
@@ -70,9 +69,10 @@
     }
 
     .event-title {
-      color: $blue-900;
+      color: $gray-900;
       font-size: rem(18);
       font-weight: bold;
+      transition: all $base-timing $base-duration;
     }
 
     .event-link {
@@ -84,6 +84,10 @@
     &:hover {
       .event-date {
         background-color: $blue-900;
+      }
+
+      .event-title {
+        color: $blue-900;
       }
     }
   }

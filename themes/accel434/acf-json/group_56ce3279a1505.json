@@ -433,38 +433,6 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_643f0859e01b6": {
-                    "key": "layout_643f0859e01b6",
-                    "name": "programs",
-                    "label": "Programs Section",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_643f0859e01b7",
-                            "label": "Programs Details",
-                            "name": "programs_details",
-                            "aria-label": "",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "clone": [
-                                "group_63a9e3b88fcc5"
-                            ],
-                            "display": "seamless",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
                 "layout_5bc9eae1ab255": {
                     "key": "layout_5bc9eae1ab255",
                     "name": "projects",
@@ -702,5 +670,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681852625
+    "modified": 1681922436
 }

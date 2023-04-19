@@ -2,7 +2,7 @@
 $cta_slider = get_sub_field('cta_slider');
 ?>
 
-<section class="pfsection cta-section <?php echo $padding_classes; ?>">
+<section class="cta-section">
     <div class="cta-slider-wrap">
         <div class="cta-slider">
             <?php foreach ($cta_slider as $cta_slide) :

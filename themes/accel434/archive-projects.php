@@ -43,7 +43,7 @@ function projects_archive_custom_loop()
     $projects = get_posts($args);
 
     if (! empty($projects)) { ?>
-        <div class="projects-grid one2grid">
+        <div class="onegrid">
             <?php foreach ($projects as $post) {
                 setup_postdata($post);
                 $project_blurb = ns_get_field('project_blurb');

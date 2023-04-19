@@ -29,15 +29,17 @@ if (!empty($category_filter)) {
 }
 
 $projects = get_posts($args);
+
+$section_classes = ns_decide_section_classes();
 ?>
 
-<section class="projects-feed-section page-flexible-section <?php echo $padding_classes; ?>">
+<section class="projects-feed-section <?php echo $section_classes; ?>">
     <div class="wrap">
         <?php if (! empty($section_title)) : ?>
             <h2 class="section-title"><?php echo $section_title ?></h2>
         <?php endif; ?>
 
-        <div class="projects-feed-outer">
+        <div class="projects-feed-outer ns-slider-arrows-wrap">
             <div class="projects-feed">
                 <?php foreach ($projects as $project) : ?>
                     <?php
@@ -71,12 +73,7 @@ $projects = get_posts($args);
                     </a>
                 <?php endforeach; ?>
             </div>
-            <div class="left-arrow">
-                <?php echo get_svg_icon('arrow-white', '', 22, 22); ?>
-            </div>
-            <div class="right-arrow">
-                <?php echo get_svg_icon('arrow-white', '', 22, 22); ?>
-            </div>
+            <?php ns_slider_arrows(32, 32); ?>
         </div>
 
         <div class="projects-feed-bottom">

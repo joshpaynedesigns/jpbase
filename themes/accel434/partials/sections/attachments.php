@@ -9,12 +9,14 @@ if (! empty($attachments)) {
     $at_1 = $attachments[0];
     $at_2 = $attachments[1];
 }
+
+$section_classes = ns_decide_section_classes();
 ?>
 
 <?php if ($attachments) : ?>
-    <section class="pfsection attachments-section <?php echo $padding_classes; ?>">
+    <section class="attachments-section <?php echo $section_classes; ?>">
         <div class="wrap">
-            <?php ns_section_header($section_title, 'basemb', 'green-accent'); ?>
+            <?php ns_section_header($section_title, 'basemb'); ?>
 
             <div class="attachments one2grid">
                 <?php if ($at_1) : ?>

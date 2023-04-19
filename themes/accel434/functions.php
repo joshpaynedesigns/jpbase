@@ -4,7 +4,7 @@
  * Functions
  */
 
-define('ACCEL_VERSION', '0.0.5');
+define('ACCEL_VERSION', '0.0.6');
 
 // Helper functions
 require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';
@@ -169,8 +169,8 @@ function child_theme_setup()
     }
 
     // Add class to Body when there is no banner
-    add_filter('genesis_attr_body', 'mktg434_add_css_attr_body');
-    function mktg434_add_css_attr_body($attributes)
+    add_filter('genesis_attr_body', 'ns_add_css_attr_body');
+    function ns_add_css_attr_body($attributes)
     {
         $hide_banner_options = ns_get_field('hide_banner_options');
         if ($hide_banner_options == 'hide_banner') {

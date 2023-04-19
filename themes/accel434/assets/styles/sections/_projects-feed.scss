@@ -5,7 +5,6 @@
 
   .projects-feed-outer {
     position: relative;
-    // padding: 0 0.5em;
 
     @media ($medium-screen-up) {
       margin-left: -1em;
@@ -50,43 +49,6 @@
           text-transform: uppercase;
         }
       }
-    }
-
-    .left-arrow,
-    .right-arrow {
-      @include base_transition();
-      transform: translateY(-90%);
-      display: block !important;
-      opacity: 0.5;
-      position: absolute;
-      top: 50%;
-      z-index: 100;
-
-      &.slick-hidden {
-        display: none !important;
-      }
-
-      svg {
-        fill: $dark-gray;
-        height: 50px;
-        width: 50px;
-      }
-
-      &:hover {
-        cursor: pointer;
-        opacity: 1;
-      }
-    }
-
-    .left-arrow {
-      left: -25px;
-      svg {
-        transform: rotate(180deg);
-      }
-    }
-
-    .right-arrow {
-      right: -25px;
     }
   }
 

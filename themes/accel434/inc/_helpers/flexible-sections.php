@@ -19,9 +19,19 @@ function ns_flexible_sections()
     echo '</section>';
 }
 
-function ns_decide_section_classes()
+function ns_decide_section_classes($bg_color = null)
 {
-    // Decide bg color classes
-    // If there is a bg color set we'll use padding
-    // If there isn't a bg color set we'll use margin
+    $classes = "";
+
+    if (empty($bg_color) || $bg_color === 'none') {
+        $classes .= "sectionmt sectionmb";
+    } else {
+        $classes .= "sectionpt sectionpb";
+    }
+
+    if (! empty($bg_color) && $bg_color !== 'none') {
+        $classes .= " bg-" . $bg_color;
+    }
+
+    return $classes;
 }

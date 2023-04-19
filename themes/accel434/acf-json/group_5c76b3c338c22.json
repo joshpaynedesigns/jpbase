@@ -3,30 +3,6 @@
     "title": "Flex - Boxes Section",
     "fields": [
         {
-            "key": "field_5c76b3c33f5e1",
-            "label": "Background Color",
-            "name": "background_color",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "choices": {
-                "none": "None",
-                "wave": "Wave"
-            },
-            "default_value": "none",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        },
-        {
             "key": "field_5c76b3c33f60c",
             "label": "Section Title",
             "name": "section_title",
@@ -384,5 +360,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1678378505
+    "modified": 1681919008
 }

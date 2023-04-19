@@ -217,24 +217,6 @@ jQuery(document).ready(function () {
     });
   }
 
-  let programsSlider = jQuery(".programs-wrap.is-slider");
-  if (programsSlider.length > 0) {
-    programsSlider.each(function () {
-      let sliderWrap = jQuery(this);
-      let theSlider = sliderWrap.children(".slides-wrap");
-
-      theSlider.slick({
-        arrows: true,
-        autoplay: false,
-        nextArrow: sliderWrap.find(".right-arrow"),
-        prevArrow: sliderWrap.find(".left-arrow"),
-        slidesToShow: 3,
-        centerMode: true,
-        variableWidth: true,
-      });
-    });
-  }
-
   let announcementsSliders = jQuery(".announcements-slider");
   if (announcementsSliders.length > 0) {
     announcementsSliders.each(function () {
@@ -313,6 +295,36 @@ jQuery(document).ready(function () {
     blogSlider.each(function () {
       let sliderWrap = jQuery(this);
       let theSlider = sliderWrap.children(".blog-feed-slides");
+
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 3,
+        responsive: [
+          {
+            breakpoint: 960,
+            settings: {
+              slidesToShow: 2,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+            },
+          },
+        ],
+      });
+    });
+  }
+
+  let projectsSlider = jQuery(".projects-feed-outer");
+  if (projectsSlider.length > 0) {
+    projectsSlider.each(function () {
+      let sliderWrap = jQuery(this);
+      let theSlider = sliderWrap.children(".projects-feed");
 
       theSlider.slick({
         arrows: true,

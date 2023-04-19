@@ -1,9 +1,11 @@
 <?php
     $section_title = get_sub_field('section_title');
     $logos = get_sub_field('logos');
+
+    $section_classes = ns_decide_section_classes();
 ?>
 
-<section class="logos-section pfsection <?php echo $padding_classes; ?>">
+<section class="logos-section <?php echo $section_classes; ?>">
     <div class="wrap">
         <?php ns_section_header($section_title, 'basemb2 text-center'); ?>
 
