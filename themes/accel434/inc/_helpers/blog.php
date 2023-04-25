@@ -9,7 +9,7 @@ function ns_blog_block($id)
     $thumbnail = get_the_post_thumbnail_url($id, 'medium');
     if (empty($thumbnail)) {
         $default_img = ns_get_field('default_banner_image_blog', 'option');
-        $thumbnail   = $default_img['url'];
+        $thumbnail   = ns_key_value($default_img, 'url');
     }
 
     $permalink = get_the_permalink($id);
