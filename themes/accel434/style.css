@@ -4850,7 +4850,6 @@ Events Single
 .one2grid > div,
 .one2grid > a {
   flex: 1;
-  max-width: 25rem;
   width: 100%;
 }
 @media (min-width: 640px) {
@@ -4875,7 +4874,6 @@ Events Single
 .one2gridlarge > div,
 .one2gridlarge > a {
   flex: 1;
-  max-width: 25rem;
   width: 100%;
 }
 @media (min-width: 900px) {
