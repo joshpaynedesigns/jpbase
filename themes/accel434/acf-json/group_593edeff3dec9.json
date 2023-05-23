@@ -123,11 +123,9 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "choices": {
                         "none": "None",
                         "primary": "Primary",
-                        "white": "White",
                         "light-gray": "Light Gray",
                         "dark-gray": "Dark Gray"
                     },
@@ -184,5 +182,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1677621774
+    "modified": 1684864662
 }
