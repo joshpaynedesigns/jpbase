@@ -19,6 +19,7 @@ use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Event_Recurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Controllers\Update_Controller_Interface as Update_Controller;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Transient_Occurrence_Redirector as Occurrence_Redirector;
+use Tribe__Date_Utils;
 use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
@@ -565,7 +566,7 @@ class Controller {
 			$request_start_date = null;
 			$meta               = $original_request->get_param( 'meta' );
 			if ( $original_request->get_param( 'EventStartDate' ) ) {
-				$request_start_date = $original_request->get_param( 'EventStartDate' ) . ' ' . $original_request->get_param( 'EventStartTime' );
+				$request_start_date = $original_request->get_param( 'EventStartDate' );
 			} else if ( isset( $meta['_EventStartDate'] ) ) {
 				$request_start_date = $meta['_EventStartDate'];
 			}
@@ -573,12 +574,18 @@ class Controller {
 			// Did we move this occurrence? Find it again.
 			$occurrence = null;
 			if ( $request_start_date ) {
+				// Normalize from datepicker to database format.
+				$request_start_date = Tribe__Date_Utils::maybe_format_from_datepicker( $request_start_date );
+				if ( $original_request->get_param( 'EventStartTime' ) ) {
+					$request_start_date = $request_start_date . ' ' . $original_request->get_param( 'EventStartTime' );
+				}
 				$request_start_date = new DateTime( $request_start_date );
-				$occurrence         = Occurrence::where(
+
+				$occurrence = Occurrence::where(
 					'start_date', '=', $request_start_date->format( 'Y-m-d H:i:s' ) )
-				                                ->where( 'post_id', $post_id )
-				                                ->order_by( 'start_date', 'ASC' )
-				                                ->first();
+				                        ->where( 'post_id', $post_id )
+				                        ->order_by( 'start_date', 'ASC' )
+				                        ->first();
 			}
 
 			// If we didn't find the adjusted occurrence let's grab the first one for this recurring event.

@@ -32,6 +32,7 @@ class Maps {
 	public function setup_map_provider( $template_vars ) {
 		$default_api_key = GMaps::$default_api_key;
 		$api_key         = (string) tribe_get_option( GMaps::$api_key_option_name, false );
+		$api_callback    = 'Function.prototype';
 
 		if ( empty( $api_key ) ) {
 			// If an API key has not been set yet, set it now.
@@ -47,6 +48,7 @@ class Maps {
 			'iframe_url'     => 'https://www.google.com/maps/embed/v1/place',
 			'map_pin_url'    => trailingslashit( \Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/map-pin.svg',
 			'zoom'           => (int) tribe_get_option( 'embedGoogleMapsZoom', 10 ),
+			'callback'       => $api_callback,
 		];
 
 		$template_vars['map_provider'] = $map_provider;

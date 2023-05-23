@@ -14,7 +14,7 @@ use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
-use TEC\Events_Pro\Custom_Tables\V1\Tables\Series_Relationships;
+use Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta as Blocks_Meta;
 use Tribe\Events\Virtual\Event_Meta as Virtual_Meta;
 use Tribe\Events\Virtual\Meetings\YouTube\Event_Meta as YouTube_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Meta;
@@ -345,6 +345,9 @@ class Duplicate {
 						'_EventCurrencyCode'          => get_post_meta( $event->ID, '_EventCurrencyCode', true ),
 						'_EventDateTimeSeparator'     => get_post_meta( $event->ID, '_EventDateTimeSeparator', true ),
 						'_EventTimeRangeSeparator'    => get_post_meta( $event->ID, '_EventTimeRangeSeparator', true ),
+						Blocks_Meta::$rules_key       => get_post_meta( $event->ID, Blocks_Meta::$rules_key, true ),
+						Blocks_Meta::$exclusions_key  => get_post_meta( $event->ID, Blocks_Meta::$exclusions_key, true ),
+						Blocks_Meta::$description_key => get_post_meta( $event->ID, Blocks_Meta::$description_key, true ),
 				],
 		];
 

@@ -1,7 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-add_action( 'plugins_loaded', __NAMESPACE__ . '\init' );
+add_action( 'plugins_loaded', __NAMESPACE__ . '\init', 15 );
 
 function init() {
 
@@ -51,7 +51,7 @@ function init() {
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
 function activation_hook() {
-	if ( function_exists( '\Nextgenthemes\ARVE\Common\activate_defined_key' ) ) {
-		\Nextgenthemes\ARVE\Common\activate_defined_key( __FILE__ );
+	if ( function_exists( '\Nextgenthemes\WP\activate_defined_key' ) ) {
+		\Nextgenthemes\WP\activate_defined_key( __FILE__ );
 	}
 }

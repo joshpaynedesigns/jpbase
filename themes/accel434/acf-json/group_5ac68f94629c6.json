@@ -16,10 +16,8 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "none": "None",
-                "white": "White",
                 "light-gray": "Light Gray",
                 "medium-gray": "Medium Gray",
                 "dark-gray": "Dark Gray",
@@ -55,5 +53,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1677788781
+    "modified": 1684864619
 }

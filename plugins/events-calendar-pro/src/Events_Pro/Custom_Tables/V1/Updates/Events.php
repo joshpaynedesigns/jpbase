@@ -18,6 +18,7 @@ use Exception;
 use TEC\Events\Custom_Tables\V1\Models\Event;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
+use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Provider as Notices_Provider;
 use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Duplicate as Duplicator;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Converter\Event_Rule_Converter\From_Event_Rule_Converter;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
@@ -36,7 +37,6 @@ use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta as Blocks_Meta;
 use Tribe__Events__Pro__Editor__Recurrence__Classic as Classic_Recurrence_Meta_Converter;
 use Tribe__Events__Pro__Recurrence__Meta_Builder as Meta_Builder;
-use Tribe__Events__Pro__Recurrence__Meta_Builder as Recurrence_Meta_Builder;
 use Tribe__Timezones as Timezones;
 use Tribe__Utils__Array as Arr;
 use WP_Post;
@@ -109,10 +109,10 @@ class Events {
 		Provisional_Post $provisional_post,
 		Redirector $redirector
 	) {
-		$this->duplicator = $duplicator;
-		$this->relationships = $relationships;
+		$this->duplicator       = $duplicator;
+		$this->relationships    = $relationships;
 		$this->provisional_post = $provisional_post;
-		$this->redirector = $redirector;
+		$this->redirector       = $redirector;
 	}
 
 	/**
@@ -144,13 +144,14 @@ class Events {
 		 */
 
 		return Occurrence::where( 'post_id', $post_id )
-			->where_raw( '`sequence` IS NULL OR `sequence` < %d', $current_sequence )
-			->delete();
+		                 ->where_raw( '`sequence` IS NULL OR `sequence` < %d', $current_sequence )
+		                 ->delete();
 	}
 
 	/**
 	 * Moves an Event start date to the one of an Occurrence.
 	 *
+	 * @since 6.0.12 The event dates will now go into the CT1 tables.
 	 * @since 6.0.0
 	 *
 	 * @param int        $post_id    The post ID of the Event to move the dates of.
@@ -162,11 +163,11 @@ class Events {
 		update_post_meta( $post_id, '_EventEndDate', $occurrence->end_date );
 		update_post_meta( $post_id, '_EventEndDateUTC', $occurrence->end_date_utc );
 
-		$recurrence = (array) get_post_meta( $post_id, '_EventRecurrence', true );
+		$recurrence = get_post_meta( $post_id, '_EventRecurrence', true );
 		if ( isset( $recurrence['rules'] ) ) {
 			foreach ( $recurrence['rules'] as &$rule ) {
 				$rule['EventStartDate'] = $occurrence->start_date;
-				$rule['EventEndDate'] = $occurrence->end_date;
+				$rule['EventEndDate']   = $occurrence->end_date;
 			}
 		}
 		unset( $rule );
@@ -174,11 +175,17 @@ class Events {
 		if ( isset( $recurrence['exclusions'] ) ) {
 			foreach ( $recurrence['exclusions'] as &$exclusion ) {
 				$exclusion['EventStartDate'] = $occurrence->start_date;
-				$exclusion['EventEndDate'] = $occurrence->end_date;
+				$exclusion['EventEndDate']   = $occurrence->end_date;
 			}
 		}
 		unset( $exclusion );
-		update_post_meta( $post_id, '_EventRecurrence', $recurrence );
+		if ( ! empty( $recurrence ) ) {
+			update_post_meta( $post_id, '_EventRecurrence', $recurrence );
+		}
+
+		// Update the CT1 data, so we don't have an incongruent event state.
+		$event_data = Event::data_from_post( $post_id );
+		Event::upsert( [ 'post_id' ], $event_data );
 	}
 
 	/**
@@ -251,7 +258,7 @@ class Events {
 			}
 
 			$rule['end-type'] = 'On';
-			$rule['end'] = $until_date;
+			$rule['end']      = $until_date;
 			unset( $rule['end-count'] );
 		}
 		unset( $rule );
@@ -316,7 +323,7 @@ class Events {
 	public function add_date_exclusion_to_event( int $post_id, string $date ): array {
 		$recurrence = (array) get_post_meta( $post_id, '_EventRecurrence', true );
 		$start_date = get_post_meta( $post_id, '_EventStartDate', true );
-		$end_date = get_post_meta( $post_id, '_EventEndDate', true );
+		$end_date   = get_post_meta( $post_id, '_EventEndDate', true );
 
 		try {
 			$exclusion_date = ( new DateTime( $date ) )->format( Dates::DBDATEFORMAT );
@@ -336,9 +343,9 @@ class Events {
 		);
 
 		$rules = array_filter( ( $recurrence['rules'] ?? [] ), [ $this, 'is_rrule' ] );
-		$rule = reset( $rules );
+		$rule  = reset( $rules );
 		// No need of an EXDATE if there is no RRULE to begin with.
-		$needs_exdate = (bool)$rule;
+		$needs_exdate = (bool) $rule;
 
 		if ( $rdate_match !== false ) {
 			// Remove the RDATE and compact the recurrence rules.
@@ -350,8 +357,8 @@ class Events {
 
 		if ( $rule ) {
 			// There is an RRULE: we might need to add the EXDATE if the RRULE is occurs on that date.
-			$rset_string = From_Event_Rule_Converter::convert( $start_date, $end_date, $rule );
-			$rset = new RSet_Wrapper( $rset_string );
+			$rset_string  = From_Event_Rule_Converter::convert( $start_date, $end_date, $rule );
+			$rset         = new RSet_Wrapper( $rset_string );
 			$needs_exdate = (bool) $rset->get_occurrences_on_date( $exclusion_date, 1 );
 		}
 
@@ -362,20 +369,20 @@ class Events {
 				$match_date
 			);
 
-			$exrules = array_filter( ( $recurrence['exclusions'] ?? [] ), [ $this, 'is_rrule' ] );
-			$exrule = reset( $exrules );
+			$exrules         = array_filter( ( $recurrence['exclusions'] ?? [] ), [ $this, 'is_rrule' ] );
+			$exrule          = reset( $exrules );
 			$matching_exrule = false;
 
 			if ( $exrule ) {
 				// Is there an EXRULE that would exclude overlap the EXDATE?
-				$exrule_string = From_Event_Rule_Converter::convert( $start_date, $end_date, $exrule );
-				$exrule_rset = new RSet_Wrapper( $exrule_string );
+				$exrule_string   = From_Event_Rule_Converter::convert( $start_date, $end_date, $exrule );
+				$exrule_rset     = new RSet_Wrapper( $exrule_string );
 				$matching_exrule = (bool) $exrule_rset->get_occurrences_on_date( $exclusion_date, 1 );
 			}
 
 			if ( $exdate_match === false && ! $matching_exrule ) {
 				// Add the EXDATE to the exclusions.
-				$exclusion = [
+				$exclusion                      = [
 					'type'           => 'Custom',
 					'custom'         =>
 						[
@@ -394,7 +401,10 @@ class Events {
 			}
 		}
 
-		$recurrence['rules'] = array_values( $recurrence['rules'] );
+		if ( isset( $recurrence['rules'] ) ) {
+			$recurrence['rules'] = array_values( $recurrence['rules'] );
+		}
+
 		update_post_meta( $post_id, '_EventRecurrence', $recurrence );
 
 		return $recurrence;
@@ -455,7 +465,7 @@ class Events {
 	 * @return bool Whether the Series to Event relationship information was available
 	 *              in the request and could be saved correctly, `false` otherwise.
 	 */
-	public function update_relationships( int $post_id, WP_REST_Request $request): bool {
+	public function update_relationships( int $post_id, WP_REST_Request $request ): bool {
 		$post = get_post( $post_id );
 
 		if ( ! $post instanceof WP_Post || TEC::POSTTYPE !== $post->post_type ) {
@@ -519,6 +529,160 @@ class Events {
 	}
 
 	/**
+	 * This will inspect a recurring event and pull out the specified occurrence, creating a new post for the occurrence
+	 * and adjusting the original recurring event accordingly. This logic was moved from the Single update controller.
+	 *
+	 * @since 6.0.12
+	 *
+	 * @param Occurrence $occurrence The occurrence to separate into its own single event.
+	 *
+	 * @return false|int The new post ID created for the specified occurrence, or false on failure.
+	 */
+	public function detach_occurrence_from_event( Occurrence $occurrence ) {
+		$post = get_post( $occurrence->post_id );
+
+		// Duplicate the original Event as a single event.
+		$ditch_unnecessary_values = static function ( $duplicate_args, $event ) {
+			unset( $duplicate_args['meta_input']['_EventRecurrence'],
+				$duplicate_args['meta_input'][ Blocks_Meta::$rules_key ],
+				$duplicate_args['meta_input'][ Blocks_Meta::$exclusions_key ],
+				$duplicate_args['meta_input'][ Blocks_Meta::$description_key ]
+			);
+
+			return $duplicate_args;
+		};
+		add_filter( 'tec_events_pro_custom_tables_v1_duplicate_arguments', $ditch_unnecessary_values, 10, 2 );
+		$single_post = $this->duplicate(
+			$post,
+			// Keep the same post status as the original Event.
+			[ 'post_status' => get_post_field( 'post_status', $post ) ]
+		);
+		remove_filter( 'tec_events_pro_custom_tables_v1_duplicate_arguments', $ditch_unnecessary_values );
+
+		if ( ! $single_post instanceof WP_Post ) {
+			do_action( 'tribe_log', 'error', 'Failed to create Event on Single update.', [
+				'source'        => __CLASS__,
+				'slug'          => 'duplicate-fail-on-single-trash',
+				'occurrence_id' => $occurrence->occurrence_id,
+			] );
+
+			return false;
+		}
+
+		// Remove notices from watching the other events being updated
+		tribe( Notices_Provider::class )->unregister();
+		$post_id = $occurrence->post_id;
+
+		$occurrence_id   = $occurrence->occurrence_id;
+		$occurrence_date = $occurrence->start_date;
+
+		$is_first = Occurrence::is_first( $occurrence_id );
+		$is_last  = Occurrence::is_last( $occurrence_id );
+
+		if ( $is_first ) {
+			// Decrement count limit now that we are subtracting one event.
+			$this->decrement_event_count_limit_by( $post_id, 1 );
+
+			// Then Update the original Event to start on the second Occurrence.
+			$second = Occurrence::where( 'post_id', $post_id )
+			                    ->order_by( 'start_date', 'ASC' )
+			                    ->offset( 1 )
+			                    ->first();
+			if ( $second instanceof Occurrence ) {
+				$this->move_event_date( $post_id, $second );
+			}
+		} elseif ( $is_last ) {
+			// Update the original Event Recurrence meta to end before the Occurrence date.
+			$previous_occurrence = Occurrence::where( 'post_id', '=', $post_id )
+			                                 ->order_by( 'start_date', 'DESC' )
+			                                 ->where( 'start_date', '<', $occurrence->start_date )
+			                                 ->first();
+
+			if (
+				$previous_occurrence instanceof Occurrence
+				&& ! $this->set_until_limit_on_event( $post_id, $previous_occurrence->start_date )
+			) {
+				do_action( 'tribe_log', 'error', 'Failed to set UNTIL limit on original Event.', [
+					'source'  => __CLASS__,
+					'slug'    => 'set-until-limit-fail-on-single-update',
+					'post_id' => $post_id,
+				] );
+			}
+		}
+
+		$is_rdate = $occurrence->is_rdate;
+		if ( $is_rdate ) {
+			// Let's verify we removed the RDATE from the meta correctly.
+			$is_rdate = $this->remove_rdate_from_event( $post_id, $occurrence->start_date );
+		}
+
+		/**
+		 * Don't need exclusion if an RDATE - we are simply removing it from the rule data.
+		 * Don't need exclusion if first occurrence, we adjust the start date of the event.
+		 * Don't need exclusion if the last occurrence, we adjust when this event ends.
+		 */
+		if ( ! $is_rdate && ! $is_first && ! $is_last ) {
+			// Update the original Event Recurrence meta to add an exclusion on this event date.
+			$this->add_date_exclusion_to_event( $post_id, $occurrence_date );
+		}
+
+		/*
+		 * Assign the Occurrence to the single Event to give it a chance to
+		 * recycle it.
+		 */
+		$this->transfer_occurrences_from_to(
+			$post_id,
+			$single_post->ID,
+			'start_date = %s',
+			$occurrence->start_date
+		);
+
+		// Fresh occurrence after database mutations above.
+		$occurrence = Occurrence::find_by_post_id( $single_post->ID );
+		if ( ! $occurrence instanceof Occurrence ) {
+			do_action( 'tribe_log', 'error', 'Failed to locate our occurrence after moving to single post.', [
+				'source'  => __METHOD__,
+				'slug'    => 'failed-on-detach-occurrence',
+				'post_id' => $single_post->ID,
+			] );
+			return false;
+		}
+
+		Occurrence::upsert( [ 'occurrence_id' ], [
+			'occurrence_id'  => $occurrence->occurrence_id,
+			'has_recurrence' => false
+		] );
+
+		// If not a first occurrence or is an RDATE, should align the dates.
+		if ( ! $is_first || $occurrence->is_rdate ) {
+			$this->move_event_date( $single_post->ID, $occurrence );
+		}
+
+		// The cache should be cleared after our above modifications.
+		$this->provisional_post->clear_occurrence_cache( $occurrence_id );
+
+		return $single_post->ID;
+	}
+
+	/**
+	 * Deletes the Recurrence meta for the given Event.
+	 *
+	 * @since 6.0.1
+	 * @since 6.0.12 Moved from Single controller. Will clear RSET from Event as well, now.
+	 *
+	 * @param int $post_id The post ID of the Event to delete the Recurrence meta for.
+	 *
+	 * @return void The Recurrence meta is deleted.
+	 */
+	public function delete_recurrence_meta( int $post_id ): void {
+		delete_post_meta( $post_id, '_EventRecurrence' );
+		delete_post_meta( $post_id, Blocks_Meta::$rules_key );
+		delete_post_meta( $post_id, Blocks_Meta::$exclusions_key );
+		delete_post_meta( $post_id, Blocks_Meta::$description_key );
+		Event::upsert( [ 'post_id' ], [ 'post_id' => $post_id, 'rset' => '' ] );
+	}
+
+	/**
 	 * Deletes any Pro associated data to this Event.
 	 *
 	 * @since TDB
@@ -550,8 +714,8 @@ class Events {
 
 		// Other Events on this Series?
 		$other_related_events = Series_Relationship::where( 'event_post_id', '!=', $post_id )
-			->where( 'series_post_id', $series_post_id )
-			->count();
+		                                           ->where( 'series_post_id', $series_post_id )
+		                                           ->count();
 
 		// Delete the Relationship from the Series Relationship table.
 		$affected += $relationship->delete();
@@ -600,6 +764,7 @@ class Events {
 	 * of a WHERE condition.
 	 *
 	 * @since 6.0.0
+	 * @since 6.0.12 Will now move `event_id` to the occurrence.
 	 *
 	 * @param int    $from_id                The post ID the Occurrences will be transferred from.
 	 * @param int    $to_id                  The post ID the matching Occurrences should be transferred to.
@@ -612,12 +777,24 @@ class Events {
 	public function transfer_occurrences_from_to( int $from_id, int $to_id, string $where = '1 = 1', ...$where_values ): void {
 		global $wpdb;
 		$occurrences = Occurrences::table_name( true );
-		$sequence = ECP_Occurrence::get_sequence( $to_id );
+		$sequence    = ECP_Occurrence::get_sequence( $to_id );
+		$to_event    = Event::find( $to_id, 'post_id' );
+		if ( ! $to_event instanceof Event ) {
+			do_action( 'tribe_log', 'error', 'Failed to locate Event to transfer occurrence to.', [
+				'source' => __METHOD__,
+				'slug'   => 'fail-on-transfer-occurrences',
+				'to_id'  => $to_id,
+			] );
+
+			return;
+		}
+		$to_event_id = $to_event->event_id;
 		$wpdb->query(
 			$wpdb->prepare(
-				"UPDATE $occurrences SET post_id = %d, sequence = %d WHERE post_id = %d AND {$where}",
+				"UPDATE $occurrences SET post_id = %d, sequence = %d, event_id = %d WHERE post_id = %d AND {$where}",
 				$to_id,
 				$sequence,
+				$to_event_id,
 				$from_id,
 				...$where_values
 			)
@@ -652,18 +829,18 @@ class Events {
 			return false;
 		}
 
-		$request_rdates = array_filter( $request_recurrence_meta['rules'], [ $this, 'is_rdate' ] );
+		$request_rdates   = array_filter( $request_recurrence_meta['rules'], [ $this, 'is_rdate' ] );
 		$request_timezone = $this->get_request_timezone( $request, $previous_timezone );
-		$request_rdates = array_map( function ( array $rdate ) use ( $request, $request_timezone ) {
+		$request_rdates   = array_map( function ( array $rdate ) use ( $request, $request_timezone ) {
 			if ( ! isset( $rdate['EventStartDate'] ) && $request->get_param( 'EventStartDate' ) ) {
 				$rdate['EventStartDate'] = Dates::immutable( $request->get_param( 'EventStartDate' ) . ' '
 				                                             . $request->get_param( 'EventStartTime' ) )
-					->format( Dates::DBDATETIMEFORMAT );
+				                                ->format( Dates::DBDATETIMEFORMAT );
 			}
 			if ( ! isset( $rdate['EventEndDate'] ) && $request->get_param( 'EventEndDate' ) ) {
 				$rdate['EventEndDate'] = Dates::immutable( $request->get_param( 'EventEndDate' ) . ' '
 				                                           . $request->get_param( 'EventEndTime' ) )
-					->format( Dates::DBDATETIMEFORMAT );
+				                              ->format( Dates::DBDATETIMEFORMAT );
 			}
 
 			return $this->normalize_rule( $rdate, $request_timezone );
@@ -671,15 +848,15 @@ class Events {
 
 		// Read and normalize the previous state of the RDATEs.
 		$previous_recurrence_meta = get_post_meta( $left_id, '_EventRecurrence', true );
-		$previous_rdates = isset( $previous_recurrence_meta['rules'] ) ?
+		$previous_rdates          = isset( $previous_recurrence_meta['rules'] ) ?
 			array_filter( $previous_recurrence_meta['rules'], [ $this, 'is_rdate' ] )
 			: [];
-		$previous_rdates = array_map( function ( array $rdate ) use ( $previous_timezone ) {
+		$previous_rdates          = array_map( function ( array $rdate ) use ( $previous_timezone ) {
 			return $this->normalize_rule( $rdate, $previous_timezone );
 		}, $previous_rdates );
 
 		// Shape the RDATEs to a uniform, comparable format.
-		$shape = static function ( array $rdate ) {
+		$shape                  = static function ( array $rdate ) {
 			return Arr::shape_filter( $rdate, [
 				'custom' => [
 					'date' => [ 'date' ],
@@ -691,7 +868,7 @@ class Events {
 			] );
 		};
 		$shaped_previous_rdates = array_map( $shape, $previous_rdates );
-		$rdates_to_evaluate = array_filter( $request_rdates, static function ( array $rdate ) use ( $shaped_previous_rdates, $shape ) {
+		$rdates_to_evaluate     = array_filter( $request_rdates, static function ( array $rdate ) use ( $shaped_previous_rdates, $shape ) {
 			return in_array( $shape( $rdate ), $shaped_previous_rdates, true );
 		} );
 
@@ -699,14 +876,14 @@ class Events {
 
 		// Fetch the left side start and end date: we'll need them to localize the RDATEs later.
 		$left_start_date = get_post_meta( $left_id, '_EventStartDate', true );
-		$left_end_date = get_post_meta( $left_id, '_EventEndDate', true );
+		$left_end_date   = get_post_meta( $left_id, '_EventEndDate', true );
 
 		// Any request RDATE that is not unchanged, is changed.
 		$changed_request_rdates = array_diff_key( $request_rdates, $rdates_to_evaluate );
 
 		// Changed RDATEs will always go on the right side.
 		$right_side_rdates = $changed_request_rdates;
-		$left_side_rdates = [];
+		$left_side_rdates  = [];
 
 		// If we have deleted some RDATEs, add to be evaluated.
 		if ( count( $request_rdates ) !== count( $previous_rdates ) ) {
@@ -719,8 +896,8 @@ class Events {
 					if ( $rdate_immutable->getTimestamp() < $split_date_immutable->getTimestamp() ) {
 						// It's after the split date: move to the right side.
 						$rdate['EventStartDate'] = $left_start_date;
-						$rdate['EventEndDate'] = $left_end_date;
-						$left_side_rdates[] = $rdate;
+						$rdate['EventEndDate']   = $left_end_date;
+						$left_side_rdates[]      = $rdate;
 					}
 				}
 			}
@@ -740,8 +917,8 @@ class Events {
 				 * The RDATE comes from the right side request, the start and end will be off: correct this.
 				 */
 				$rdate['EventStartDate'] = $left_start_date;
-				$rdate['EventEndDate'] = $left_end_date;
-				$left_side_rdates[] = $rdate;
+				$rdate['EventEndDate']   = $left_end_date;
+				$left_side_rdates[]      = $rdate;
 			}
 		}
 
@@ -812,8 +989,8 @@ class Events {
 		if ( false === $post_id_occurrences ) {
 			/** @var \Generator<array<int|string>> $occurrences */
 			$occurrences = Occurrence::where( 'post_id', '=', $post_id )
-				->output( ARRAY_A )
-				->all();
+			                         ->output( ARRAY_A )
+			                         ->all();
 
 			// Extract the values from the Occurrences generator: the batched query logic will be applied.
 			$post_id_occurrences = iterator_to_array( $occurrences );
@@ -869,6 +1046,7 @@ class Events {
 	 *                                                               current one will be read from the database.
 	 * @param DateTimeImmutable|null          $dtstart               The Event DTSTART.
 	 * @param DateTimeImmutable|null          $dtend                 The Event DTEND.
+	 *
 	 * @return array<string,mixed>|false Either the converted set of Recurrence rules and exclusions,
 	 *                                                               if found and matched for the specified Event in the
 	 *                                                               Request, `false` otherwise.
@@ -905,7 +1083,7 @@ class Events {
 				: $exclusions_meta_value;
 
 			// Normalize the same-time related fields to the request DTSTART and DTEND.
-			$rules = array_map( function ( array $rule ) use ( $dtstart, $dtend ) {
+			$rules      = array_map( function ( array $rule ) use ( $dtstart, $dtend ) {
 				return $this->normalize_blocks_format_rule_same_time( $rule, $dtstart, $dtend );
 			}, $rules );
 			$exclusions = array_map( function ( array $rule ) use ( $dtstart, $dtend ) {
@@ -977,32 +1155,32 @@ class Events {
 		if ( isset( $request['EventStartDate'], $request['EventStartTime'], $request['EventEndDate'], $request['EventEndTime'], $request['EventTimezone'] ) ) {
 			// Classic Editor request.
 			$request_start_meta = sprintf( '%s %s', $request['EventStartDate'], $request['EventStartTime'] );
-			$request_end_meta = sprintf( '%s %s', $request['EventEndDate'], $request['EventEndTime'] );
-			$request_timezone = Timezones::build_timezone_object( $request['EventTimezone'] );
+			$request_end_meta   = sprintf( '%s %s', $request['EventEndDate'], $request['EventEndTime'] );
+			$request_timezone   = Timezones::build_timezone_object( $request['EventTimezone'] );
 		} elseif ( isset( $request['meta']['_EventStartDate'], $request['meta']['_EventEndDate'] ) ) {
 			// Blocks Editor request
 			$request_start_meta = $request['meta']['_EventStartDate'];
-			$request_end_meta = $request['meta']['_EventEndDate'];
-			$request_timezone = Timezones::build_timezone_object( $request['meta']['_EventTimezone'] );
+			$request_end_meta   = $request['meta']['_EventEndDate'];
+			$request_timezone   = Timezones::build_timezone_object( $request['meta']['_EventTimezone'] );
 		} else {
 			// No elements to proceed.
 			return [];
 		}
 
 		$request_id = (int) $request->get_param( 'id' );
-		$post_id = Occurrence::normalize_id( $request_id );
+		$post_id    = Occurrence::normalize_id( $request_id );
 
-		$start_meta = get_post_meta( $post_id, '_EventStartDate', true );
-		$end_meta = get_post_meta( $post_id, '_EventEndDate', true );
+		$start_meta    = get_post_meta( $post_id, '_EventStartDate', true );
+		$end_meta      = get_post_meta( $post_id, '_EventEndDate', true );
 		$timezone_meta = get_post_meta( $post_id, '_EventTimezone', true );
-		$timezone = Timezones::build_timezone_object( $timezone_meta );
+		$timezone      = Timezones::build_timezone_object( $timezone_meta );
 
 		/*
 		 * Occurrences are generated from the combination of the Event start date and the
 		 * Recurrence Rules and Exclusions. As such the "truth" is in the event dates.
 		 */
 		$event_start = Dates::build_date_object( $start_meta, $timezone );
-		$event_end = Dates::build_date_object( $end_meta, $timezone );
+		$event_end   = Dates::build_date_object( $end_meta, $timezone );
 
 		[
 			$request_start,
@@ -1010,10 +1188,10 @@ class Events {
 		] = $this->build_request_dates( $request_start_meta, $request_end_meta, $request_timezone );
 
 		$occurrence_start = Dates::build_date_object( $occurrence->start_date, $timezone );
-		$occurrence_end = Dates::build_date_object( $occurrence->end_date, $timezone );
+		$occurrence_end   = Dates::build_date_object( $occurrence->end_date, $timezone );
 
 		$start_date_diff = $occurrence_start->diff( $request_start );
-		$end_date_diff = $occurrence_end->diff( $request_end );
+		$end_date_diff   = $occurrence_end->diff( $request_end );
 
 		/**
 		 * The `DateInterval::$inverted` property will be 1 if the time period is negative,
@@ -1084,14 +1262,14 @@ class Events {
 		}
 
 		return Occurrence::where( 'occurrence_id', '=', $occurrence_id )
-			->update( [
-				'post_id'        => $post_id,
-				'start_date'     => $event_data['start_date'],
-				'end_date'       => $event_data['end_date'],
-				'start_date_utc' => $event_data['start_date_utc'],
-				'end_date_utc'   => $event_data['end_date_utc'],
-				'duration'       => $event_data['duration']
-			] );
+		                 ->update( [
+			                 'post_id'        => $post_id,
+			                 'start_date'     => $event_data['start_date'],
+			                 'end_date'       => $event_data['end_date'],
+			                 'start_date_utc' => $event_data['start_date_utc'],
+			                 'end_date_utc'   => $event_data['end_date_utc'],
+			                 'duration'       => $event_data['duration']
+		                 ] );
 	}
 
 	/**
@@ -1121,7 +1299,7 @@ class Events {
 				continue;
 			}
 
-			$rule['end-type'] = 'After';
+			$rule['end-type']  = 'After';
 			$rule['end-count'] = (int) $count;
 			unset( $rule['end'] );
 		}
@@ -1146,7 +1324,7 @@ class Events {
 	public function get_rdate_date_time( array $rule ): string {
 		if ( isset( $rule['custom']['same-time'] ) && $rule['custom']['same-time'] === 'yes' ) {
 			$event_start_time = DateTimeImmutable::createFromFormat( Dates::DBDATETIMEFORMAT, $rule['EventStartDate'] )
-				->format( 'H:i:s' );
+			                                     ->format( 'H:i:s' );
 
 			return $rule['custom']['date']['date'] . ' ' . $event_start_time;
 		}
@@ -1199,8 +1377,9 @@ class Events {
 	 * `_EventRecurrence` meta value.
 	 *
 	 * @since 6.0.0
+	 *
 	 * @param int                  $post_id The Event post ID to fetch the recurrence meta for.
-	 * @param WP_REST_Request|null $request A reference to the request objec to fetch the recurrence
+	 * @param WP_REST_Request|null $request A reference to the request object to fetch the recurrence
 	 *                                      meta from.
 	 *
 	 * @return bool|array<string,mixed> Either the event recurrence meta read from the request, or
@@ -1208,7 +1387,7 @@ class Events {
 	 *                                  request.
 	 */
 	public function get_event_recurrence_format_meta( int $post_id, WP_REST_Request $request = null ) {
-		$request_meta = $this->get_request_meta( $request );
+		$request_meta    = $this->get_request_meta( $request );
 		$recurrence_meta = $request !== null ? $request->get_param( 'recurrence' ) : null;
 
 		if ( ! empty( $recurrence_meta ) ) {
@@ -1224,7 +1403,7 @@ class Events {
 			return false;
 		}
 
-		$rules_key = Blocks_Meta::$rules_key;
+		$rules_key      = Blocks_Meta::$rules_key;
 		$exclusions_key = Blocks_Meta::$exclusions_key;
 
 		if ( ! isset( $request_meta[ $rules_key ], $request_meta[ $exclusions_key ] ) ) {
@@ -1232,9 +1411,9 @@ class Events {
 			return true;
 		}
 
-		$dtstart = Dates::immutable( $request_meta['_EventStartDate'], $request_meta['_EventTimezone'] );
-		$dtend = Dates::immutable( $request_meta['_EventEndDate'], $request_meta['_EventTimezone'] );
-		$rules = $request_meta[ $rules_key ] ?? [];
+		$dtstart    = Dates::immutable( $request_meta['_EventStartDate'], $request_meta['_EventTimezone'] );
+		$dtend      = Dates::immutable( $request_meta['_EventEndDate'], $request_meta['_EventTimezone'] );
+		$rules      = $request_meta[ $rules_key ] ?? [];
 		$exclusions = $request_meta[ $exclusions_key ] ?? [];
 
 		$recurrence_meta = $this->convert_request_recurrence_meta( $post_id, $rules, $exclusions, $dtstart, $dtend );
@@ -1347,14 +1526,14 @@ class Events {
 				return $count;
 			}
 
-			$type = $rule['custom']['type'] ?? $rule['type'] ?? 'Custom';
+			$type     = $rule['custom']['type'] ?? $rule['type'] ?? 'Custom';
 			$interval = (int) ( $rule['custom']['interval'] ?? 1 );
 
 			return sprintf( '%s-%d-%d', $type, $interval, $count );
 		};
 
-		$current_limits = array_map( $get_rule_limit, $current['rules'] ?? [] )
-		                  + array_map( $get_rule_limit, $current['exclusions'] ?? [] );
+		$current_limits  = array_map( $get_rule_limit, $current['rules'] ?? [] )
+		                   + array_map( $get_rule_limit, $current['exclusions'] ?? [] );
 		$previous_limits = array_map( $get_rule_limit, $previous['rules'] ?? [] )
 		                   + array_map( $get_rule_limit, $previous['exclusions'] ?? [] );
 
@@ -1375,16 +1554,16 @@ class Events {
 	 */
 	private function build_request_dates( string $start, string $end, DateTimeZone $request_timezone ): array {
 		$request_start = null;
-		$request_end = null;
+		$request_end   = null;
 
 		if ( ! defined( 'REST_REQUEST' ) || ! REST_REQUEST ) {
 			// Classic Editor request: the format used in the data will change depending on the user's settings.
-			$date_format = Dates::datepicker_formats( Dates::get_datepicker_format_index() );
-			$time_format = View_Helpers::is_24hr_format() ? 'H:i' : tribe_get_time_format();
+			$date_format       = Dates::datepicker_formats( Dates::get_datepicker_format_index() );
+			$time_format       = View_Helpers::is_24hr_format() ? 'H:i' : tribe_get_time_format();
 			$datepicker_format = $date_format . ' ' . $time_format;
 			try {
 				$request_start = DateTime::createFromFormat( $datepicker_format, $start, $request_timezone );
-				$request_end = DateTime::createFromFormat( $datepicker_format, $end, $request_timezone );
+				$request_end   = DateTime::createFromFormat( $datepicker_format, $end, $request_timezone );
 			} catch ( Exception $e ) {
 				// Nothing to do, let the following code try again.
 			}
@@ -1393,7 +1572,7 @@ class Events {
 		if ( ! ( $request_start && $request_end ) ) {
 			// Blocks Editor request or failed processing: the format used in the data will always be the same.
 			$request_start = Dates::build_date_object( $start, $request_timezone );
-			$request_end = Dates::build_date_object( $end, $request_timezone );
+			$request_end   = Dates::build_date_object( $end, $request_timezone );
 		}
 
 		return [ $request_start, $request_end ];

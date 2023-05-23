@@ -2,10 +2,10 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Simple Page Ordering 2.5.0\n"
+"Project-Id-Version: Simple Page Ordering 2.5.1\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/simple-page-ordering\n"
-"POT-Creation-Date: 2023-04-18 08:52:20+00:00\n"
+"POT-Creation-Date: 2023-05-16 14:55:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,7 +36,7 @@ msgid ""
 "it to its new position."
 msgstr ""
 
-#: simple-page-ordering.php:273 simple-page-ordering.php:547
+#: simple-page-ordering.php:273 simple-page-ordering.php:587
 msgid "Missing mandatory parameters."
 msgstr ""
 
@@ -45,23 +45,27 @@ msgid "Sort by Order"
 msgstr ""
 
 #: simple-page-ordering.php:502
-msgid "Post ID."
+msgid "ID of item we want to sort"
 msgstr ""
 
-#: simple-page-ordering.php:507
-msgid "Previous post ID"
+#: simple-page-ordering.php:508
+msgid "ID of item we want to be previous to after sorting"
 msgstr ""
 
-#: simple-page-ordering.php:512
-msgid "Next post ID"
+#: simple-page-ordering.php:513
+msgid "ID of item we want to be next to after sorting"
 msgstr ""
 
-#: simple-page-ordering.php:518
-msgid "Start index"
+#: simple-page-ordering.php:519
+msgid "Index we start with when sorting"
 msgstr ""
 
-#: simple-page-ordering.php:524
-msgid "Array of excluded post IDs"
+#: simple-page-ordering.php:525
+msgid "Array of IDs we want to exclude"
+msgstr ""
+
+#: simple-page-ordering.php:567
+msgid "This post type is not sortable."
 msgstr ""
 
 #. Plugin URI of the plugin/theme

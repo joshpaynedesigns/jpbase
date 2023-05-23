@@ -102,7 +102,7 @@ class Widget_Advanced_List {
 	/**
 	 * Renders the event website in the event.
 	 *
-	 * @since TBD
+	 * @since 6.0.12
 	 *
 	 * @param \Tribe__Template $template Current instance of the `Tribe__Template` that's being rendered.
 	 */

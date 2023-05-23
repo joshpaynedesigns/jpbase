@@ -2,15 +2,15 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar Pro 6.0.11\n"
+"Project-Id-Version: The Events Calendar Pro 6.0.12\n"
 "Report-Msgid-Bugs-To: https://evnt.is/191x\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-04-05T10:25:47-07:00\n"
-"PO-Revision-Date: 2023-04-05 17:25\n"
+"POT-Creation-Date: 2023-05-01T14:26:34+00:00\n"
+"PO-Revision-Date: 2023-05-01 14:26\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: tribe-events-calendar-pro\n"
 
@@ -25,7 +25,7 @@ msgstr ""
 #. Author of the plugin
 #: events-calendar-pro.php:176
 #: events-calendar-pro.php:177
-#: src/Tribe/Integrations/Elementor/Service_Provider.php:124
+#: src/Tribe/Integrations/Elementor/Service_Provider.php:129
 msgid "The Events Calendar"
 msgstr ""
 
@@ -59,6 +59,9 @@ msgstr ""
 #: src/Tribe/Editor.php:250
 #: src/Tribe/Main.php:671
 #: src/modules/blocks/additional-fields/elements/settings/template.js:31
+#: src/resources/js/app/data.js:7963
+#: src/resources/js/app/elements.js:16519
+#: src/resources/js/app/main.js:2327
 msgid "Additional Fields"
 msgstr ""
 
@@ -183,12 +186,16 @@ msgstr ""
 #: src/admin-views/event-recurrence.php:97
 #: src/admin-views/event-recurrence.php:443
 #: src/modules/elements/series-ends/template.js:69
+#: src/resources/js/app/elements.js:14170
+#: src/resources/js/app/main.js:5240
 msgid "event"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:98
 #: src/admin-views/event-recurrence.php:444
 #: src/modules/elements/series-ends/template.js:68
+#: src/resources/js/app/elements.js:14170
+#: src/resources/js/app/main.js:5240
 msgid "events"
 msgstr ""
 
@@ -201,30 +208,49 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/months.php:65
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:131
 #: src/modules/custom-tables-v1/data/shared/constants.js:8
+#: src/resources/js/custom-tables-v1/app/blocks.js:1313
+#: src/resources/js/custom-tables-v1/app/ct1.js:591
+#: src/resources/js/custom-tables-v1/app/data.js:1212
+#: src/resources/js/custom-tables-v1/app/dialog.js:1365
+#: src/resources/js/custom-tables-v1/app/elements.js:333
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1365
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1675
 msgid "day"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:102
 #: src/admin-views/event-recurrence.php:448
 #: src/modules/data/blocks/exception/options.js:12
+#: src/resources/js/app/data.js:6301
+#: src/resources/js/app/elements.js:11328
+#: src/resources/js/app/main.js:2067
 msgid "Daily"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:104
 #: src/admin-views/event-recurrence.php:450
 #: src/modules/data/blocks/exception/options.js:13
+#: src/resources/js/app/data.js:6304
+#: src/resources/js/app/elements.js:11331
+#: src/resources/js/app/main.js:2070
 msgid "Weekly"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:106
 #: src/admin-views/event-recurrence.php:452
 #: src/modules/data/blocks/exception/options.js:14
+#: src/resources/js/app/data.js:6307
+#: src/resources/js/app/elements.js:11334
+#: src/resources/js/app/main.js:2073
 msgid "Monthly"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:108
 #: src/admin-views/event-recurrence.php:454
 #: src/modules/data/blocks/exception/options.js:15
+#: src/resources/js/app/data.js:6310
+#: src/resources/js/app/elements.js:11337
+#: src/resources/js/app/main.js:2076
 msgid "Yearly"
 msgstr ""
 
@@ -242,6 +268,13 @@ msgstr ""
 #: src/modules/data/blocks/recurring/constants.js:39
 #: src/modules/elements/on-date-picker/template.js:31
 #: src/modules/elements/on-day-of-week/template.js:41
+#: src/resources/js/app/data.js:599
+#: src/resources/js/app/elements.js:599
+#: src/resources/js/app/elements.js:14665
+#: src/resources/js/app/elements.js:16299
+#: src/resources/js/app/main.js:1020
+#: src/resources/js/app/main.js:5687
+#: src/resources/js/app/main.js:7150
 msgid "On"
 msgstr ""
 
@@ -259,12 +292,37 @@ msgstr ""
 #: src/modules/elements/recurring-field/singular.js:24
 #: src/modules/elements/recurring-field/weekly.js:25
 #: src/modules/elements/recurring-field/yearly.js:26
+#: src/resources/js/app/elements.js:13162
+#: src/resources/js/app/elements.js:13214
+#: src/resources/js/app/elements.js:13275
+#: src/resources/js/app/elements.js:13336
+#: src/resources/js/app/elements.js:13497
+#: src/resources/js/app/elements.js:13562
+#: src/resources/js/app/elements.js:13612
+#: src/resources/js/app/elements.js:13682
+#: src/resources/js/app/elements.js:13752
+#: src/resources/js/app/main.js:4181
+#: src/resources/js/app/main.js:4225
+#: src/resources/js/app/main.js:4277
+#: src/resources/js/app/main.js:4329
+#: src/resources/js/app/main.js:4560
+#: src/resources/js/app/main.js:4617
+#: src/resources/js/app/main.js:4660
+#: src/resources/js/app/main.js:4719
+#: src/resources/js/app/main.js:4778
 msgid "Every"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:167
 #: src/admin-views/event-recurrence.php:517
 #: src/modules/custom-tables-v1/data/shared/constants.js:13
+#: src/resources/js/custom-tables-v1/app/blocks.js:1317
+#: src/resources/js/custom-tables-v1/app/ct1.js:595
+#: src/resources/js/custom-tables-v1/app/data.js:1216
+#: src/resources/js/custom-tables-v1/app/dialog.js:1369
+#: src/resources/js/custom-tables-v1/app/elements.js:337
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1369
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1679
 msgid "days"
 msgstr ""
 
@@ -273,24 +331,52 @@ msgstr ""
 #: src/Tribe/Main.php:1636
 #: src/Tribe/Rewrite/Provider.php:159
 #: src/modules/custom-tables-v1/data/shared/constants.js:9
+#: src/resources/js/custom-tables-v1/app/blocks.js:1314
+#: src/resources/js/custom-tables-v1/app/ct1.js:592
+#: src/resources/js/custom-tables-v1/app/data.js:1213
+#: src/resources/js/custom-tables-v1/app/dialog.js:1366
+#: src/resources/js/custom-tables-v1/app/elements.js:334
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1366
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1676
 msgid "week"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:178
 #: src/admin-views/event-recurrence.php:527
 #: src/modules/custom-tables-v1/data/shared/constants.js:14
+#: src/resources/js/custom-tables-v1/app/blocks.js:1318
+#: src/resources/js/custom-tables-v1/app/ct1.js:596
+#: src/resources/js/custom-tables-v1/app/data.js:1217
+#: src/resources/js/custom-tables-v1/app/dialog.js:1370
+#: src/resources/js/custom-tables-v1/app/elements.js:338
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1370
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1680
 msgid "weeks"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:185
 #: src/admin-views/event-recurrence.php:533
 #: src/modules/custom-tables-v1/data/shared/constants.js:10
+#: src/resources/js/custom-tables-v1/app/blocks.js:1315
+#: src/resources/js/custom-tables-v1/app/ct1.js:593
+#: src/resources/js/custom-tables-v1/app/data.js:1214
+#: src/resources/js/custom-tables-v1/app/dialog.js:1367
+#: src/resources/js/custom-tables-v1/app/elements.js:335
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1367
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1677
 msgid "month"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:189
 #: src/admin-views/event-recurrence.php:537
 #: src/modules/custom-tables-v1/data/shared/constants.js:15
+#: src/resources/js/custom-tables-v1/app/blocks.js:1319
+#: src/resources/js/custom-tables-v1/app/ct1.js:597
+#: src/resources/js/custom-tables-v1/app/data.js:1218
+#: src/resources/js/custom-tables-v1/app/dialog.js:1371
+#: src/resources/js/custom-tables-v1/app/elements.js:339
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1371
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1681
 msgid "months"
 msgstr ""
 
@@ -310,6 +396,8 @@ msgstr ""
 #: src/admin-views/event-recurrence.php:280
 #: src/admin-views/event-recurrence.php:597
 #: src/modules/elements/single-to-date-time-picker/template.js:48
+#: src/resources/js/app/elements.js:15242
+#: src/resources/js/app/main.js:6207
 msgid "on"
 msgstr ""
 
@@ -444,6 +532,8 @@ msgstr ""
 
 #: src/admin-views/manager/create-new-event.php:46
 #: src/modules/elements/month-picker/element.js:71
+#: src/resources/js/app/elements.js:15750
+#: src/resources/js/app/main.js:6666
 msgid "Add"
 msgstr ""
 
@@ -565,6 +655,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:123
 #: src/Tribe/Recurrence/Meta.php:1744
 #: src/modules/data/blocks/recurring/constants.js:69
+#: src/resources/js/app/data.js:622
+#: src/resources/js/app/elements.js:622
+#: src/resources/js/app/main.js:1047
 msgid "Monday"
 msgstr ""
 
@@ -575,6 +668,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:124
 #: src/Tribe/Recurrence/Meta.php:1745
 #: src/modules/data/blocks/recurring/constants.js:70
+#: src/resources/js/app/data.js:623
+#: src/resources/js/app/elements.js:623
+#: src/resources/js/app/main.js:1048
 msgid "Tuesday"
 msgstr ""
 
@@ -585,6 +681,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:125
 #: src/Tribe/Recurrence/Meta.php:1746
 #: src/modules/data/blocks/recurring/constants.js:71
+#: src/resources/js/app/data.js:624
+#: src/resources/js/app/elements.js:624
+#: src/resources/js/app/main.js:1049
 msgid "Wednesday"
 msgstr ""
 
@@ -595,6 +694,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:126
 #: src/Tribe/Recurrence/Meta.php:1747
 #: src/modules/data/blocks/recurring/constants.js:72
+#: src/resources/js/app/data.js:625
+#: src/resources/js/app/elements.js:625
+#: src/resources/js/app/main.js:1050
 msgid "Thursday"
 msgstr ""
 
@@ -605,6 +707,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:127
 #: src/Tribe/Recurrence/Meta.php:1748
 #: src/modules/data/blocks/recurring/constants.js:73
+#: src/resources/js/app/data.js:626
+#: src/resources/js/app/elements.js:626
+#: src/resources/js/app/main.js:1051
 msgid "Friday"
 msgstr ""
 
@@ -615,6 +720,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:128
 #: src/Tribe/Recurrence/Meta.php:1749
 #: src/modules/data/blocks/recurring/constants.js:74
+#: src/resources/js/app/data.js:627
+#: src/resources/js/app/elements.js:627
+#: src/resources/js/app/main.js:1052
 msgid "Saturday"
 msgstr ""
 
@@ -625,6 +733,9 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/years.php:129
 #: src/Tribe/Recurrence/Meta.php:1750
 #: src/modules/data/blocks/recurring/constants.js:68
+#: src/resources/js/app/data.js:621
+#: src/resources/js/app/elements.js:621
+#: src/resources/js/app/main.js:1046
 msgid "Sunday"
 msgstr ""
 
@@ -1074,12 +1185,12 @@ msgctxt "Admin referer error message."
 msgid "The event is not valid."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Duplicate/Duplicate.php:629
+#: src/Events_Pro/Custom_Tables/V1/Duplicate/Duplicate.php:632
 msgctxt "An error raised in the context of duplicating an event."
 msgid "The post ID is missing from the request."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Duplicate/Duplicate.php:634
+#: src/Events_Pro/Custom_Tables/V1/Duplicate/Duplicate.php:637
 msgctxt "An error raised in the context of duplicating an event."
 msgid "A valid event could not be found."
 msgstr ""
@@ -1154,6 +1265,10 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/year-same-day-select-before-label.php:6
 #: src/modules/custom-tables-v1/elements/on-day-of-month-picker/element.js:27
 #: src/modules/elements/on-day-of-month-picker/template.js:29
+#: src/resources/js/app/elements.js:14903
+#: src/resources/js/app/main.js:5902
+#: src/resources/js/custom-tables-v1/app/ct1.js:3951
+#: src/resources/js/custom-tables-v1/app/elements.js:843
 msgid "On the"
 msgstr ""
 
@@ -1216,6 +1331,7 @@ msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:35
 #: src/modules/custom-tables-v1/blocks/recurrence/hooks.js:34
+#: src/resources/js/custom-tables-v1/app/blocks.js:215
 msgid "Read about our plans for future features."
 msgstr ""
 
@@ -1284,6 +1400,8 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Editors/Event.php:127
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:234
 #: src/modules/elements/series-ends/template.js:124
+#: src/resources/js/app/elements.js:14214
+#: src/resources/js/app/main.js:5281
 msgid "Ends"
 msgstr ""
 
@@ -2259,6 +2377,8 @@ msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Gettext.php:102
 #: src/modules/elements/exception-add-field/element.js:16
+#: src/resources/js/app/elements.js:19278
+#: src/resources/js/app/main.js:3701
 msgid "Add Exception"
 msgstr ""
 
@@ -2615,15 +2735,15 @@ msgstr ""
 msgid "The current default phone is: %s"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:148
+#: src/functions/template-tags/widgets.php:149
 msgid "%s for week of %s"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:165
+#: src/functions/template-tags/widgets.php:167
 msgid "<span>&laquo;</span> <span class=\"tribe-nav-label\">Previous</span>"
 msgstr ""
 
-#: src/functions/template-tags/widgets.php:185
+#: src/functions/template-tags/widgets.php:187
 msgid "<span class=\"tribe-nav-label\">Next</span> <span>&raquo;</span>"
 msgstr ""
 
@@ -2860,12 +2980,19 @@ msgstr ""
 #: src/Tribe/Custom_Meta.php:150
 #: src/modules/custom-tables-v1/elements/hooks/month-tag/index.js:43
 #: src/modules/elements/month-picker/month-tag/element.js:32
+#: src/resources/js/app/elements.js:15678
+#: src/resources/js/app/main.js:6600
+#: src/resources/js/custom-tables-v1/app/ct1.js:4230
+#: src/resources/js/custom-tables-v1/app/elements.js:1122
 msgid "Remove"
 msgstr ""
 
 #: src/Tribe/Editor/Blocks/Additional_Field.php:164
 #: src/Tribe/Recurrence/Meta.php:1799
 #: src/modules/blocks/additional-fields/utils.js:100
+#: src/resources/js/app/data.js:8992
+#: src/resources/js/app/elements.js:17548
+#: src/resources/js/app/main.js:3293
 msgid " and "
 msgstr ""
 
@@ -2875,6 +3002,9 @@ msgstr ""
 #: src/modules/blocks/related-events/index.js:22
 #: src/modules/blocks/related-events/index.js:38
 #: src/modules/blocks/related-events/template.js:28
+#: src/resources/js/app/main.js:7935
+#: src/resources/js/app/main.js:8176
+#: src/resources/js/app/main.js:8187
 msgid "Related Events"
 msgstr ""
 
@@ -3075,6 +3205,9 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:126
 #: src/Tribe/Integrations/Elementor/Controls/Groups/Event_Query.php:240
 #: src/modules/data/blocks/recurring/constants.js:40
+#: src/resources/js/app/data.js:600
+#: src/resources/js/app/elements.js:600
+#: src/resources/js/app/main.js:1021
 msgid "After"
 msgstr ""
 
@@ -3883,6 +4016,9 @@ msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:425
 #: src/modules/data/blocks/recurring/constants.js:19
+#: src/resources/js/app/data.js:585
+#: src/resources/js/app/elements.js:585
+#: src/resources/js/app/main.js:1004
 msgid "Month"
 msgstr ""
 
@@ -3995,6 +4131,7 @@ msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:756
 #: src/modules/blocks/recurrence-description/template.js:14
+#: src/resources/js/app/main.js:7781
 msgid "Recurring Event"
 msgstr ""
 
@@ -4268,6 +4405,8 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:165
 #: src/modules/data/status/sagas.js:29
+#: src/resources/js/app/data.js:17603
+#: src/resources/js/app/main.js:8280
 msgid "You are currently editing all events in a recurring series."
 msgstr ""
 
@@ -4474,62 +4613,101 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1779
 #: src/modules/data/blocks/recurring/constants.js:169
+#: src/resources/js/app/data.js:701
+#: src/resources/js/app/elements.js:701
+#: src/resources/js/app/main.js:1130
 msgid "January"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1780
 #: src/modules/data/blocks/recurring/constants.js:170
+#: src/resources/js/app/data.js:702
+#: src/resources/js/app/elements.js:702
+#: src/resources/js/app/main.js:1131
 msgid "February"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1781
 #: src/modules/data/blocks/recurring/constants.js:171
+#: src/resources/js/app/data.js:703
+#: src/resources/js/app/elements.js:703
+#: src/resources/js/app/main.js:1132
 msgid "March"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1782
 #: src/modules/data/blocks/recurring/constants.js:172
+#: src/resources/js/app/data.js:704
+#: src/resources/js/app/elements.js:704
+#: src/resources/js/app/main.js:1133
 msgid "April"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1783
 #: src/modules/data/blocks/recurring/constants.js:173
 #: src/modules/data/blocks/recurring/constants.js:186
+#: src/resources/js/app/data.js:705
+#: src/resources/js/app/data.js:717
+#: src/resources/js/app/elements.js:705
+#: src/resources/js/app/elements.js:717
+#: src/resources/js/app/main.js:1134
+#: src/resources/js/app/main.js:1146
 msgid "May"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1784
 #: src/modules/data/blocks/recurring/constants.js:174
+#: src/resources/js/app/data.js:706
+#: src/resources/js/app/elements.js:706
+#: src/resources/js/app/main.js:1135
 msgid "June"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1785
 #: src/modules/data/blocks/recurring/constants.js:175
+#: src/resources/js/app/data.js:707
+#: src/resources/js/app/elements.js:707
+#: src/resources/js/app/main.js:1136
 msgid "July"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1786
 #: src/modules/data/blocks/recurring/constants.js:176
+#: src/resources/js/app/data.js:708
+#: src/resources/js/app/elements.js:708
+#: src/resources/js/app/main.js:1137
 msgid "August"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1787
 #: src/modules/data/blocks/recurring/constants.js:177
+#: src/resources/js/app/data.js:709
+#: src/resources/js/app/elements.js:709
+#: src/resources/js/app/main.js:1138
 msgid "September"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1788
 #: src/modules/data/blocks/recurring/constants.js:178
+#: src/resources/js/app/data.js:710
+#: src/resources/js/app/elements.js:710
+#: src/resources/js/app/main.js:1139
 msgid "October"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1789
 #: src/modules/data/blocks/recurring/constants.js:179
+#: src/resources/js/app/data.js:711
+#: src/resources/js/app/elements.js:711
+#: src/resources/js/app/main.js:1140
 msgid "November"
 msgstr ""
 
 #: src/Tribe/Recurrence/Meta.php:1790
 #: src/modules/data/blocks/recurring/constants.js:180
+#: src/resources/js/app/data.js:712
+#: src/resources/js/app/elements.js:712
+#: src/resources/js/app/main.js:1141
 msgid "December"
 msgstr ""
 
@@ -5588,7 +5766,7 @@ msgstr ""
 
 #: src/views/v2/map.php:49
 #: src/views/v2/photo.php:49
-#: src/views/v2/summary.php:49
+#: src/views/v2/summary.php:48
 #: src/views/v2/week.php:54
 msgid "Loading..."
 msgstr ""
@@ -5778,6 +5956,23 @@ msgstr ""
 msgid "%1$s now"
 msgstr ""
 
+#: src/views/v2/summary/date-group/event/date/all-day.php:22
+msgctxt "Label for an all-day event."
+msgid "All day"
+msgstr ""
+
+#. Translators: %1$s: The event time.
+#: src/views/v2/summary/date-group/event/date/multiday-end.php:25
+msgctxt "\"until\" as in \"from DATE until DATE\""
+msgid "Until %1$s"
+msgstr ""
+
+#. Translators: %1$s: The event time.
+#: src/views/v2/summary/date-group/event/date/multiday-start.php:25
+msgctxt "\"onwards\" as in \"from TIME onwards\""
+msgid "%1$s onwards"
+msgstr ""
+
 #: src/views/v2/venue/meta/map.php:53
 msgid "Google maps iframe displaying the address to %s"
 msgstr ""
@@ -5908,98 +6103,196 @@ msgid "Recurring"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/checkbox/settings/template.js:28
+#: src/resources/js/app/data.js:8681
+#: src/resources/js/app/elements.js:17237
+#: src/resources/js/app/main.js:2998
 msgid "Custom Dividers"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/checkbox/settings/template.js:30
+#: src/resources/js/app/data.js:8683
+#: src/resources/js/app/elements.js:17239
+#: src/resources/js/app/main.js:3000
 msgid "List divider"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/checkbox/settings/template.js:36
+#: src/resources/js/app/data.js:8688
+#: src/resources/js/app/elements.js:17244
+#: src/resources/js/app/main.js:3005
 msgid "List ender"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/elements/field-container/element.js:37
+#: src/resources/js/app/data.js:8154
+#: src/resources/js/app/elements.js:16710
+#: src/resources/js/app/main.js:2504
 msgid "Add %1$s"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/elements/settings/template.js:23
+#: src/resources/js/app/data.js:7958
+#: src/resources/js/app/elements.js:16514
+#: src/resources/js/app/main.js:2322
 msgid "%1$s Settings"
 msgstr ""
 
 #: src/modules/blocks/additional-fields/elements/settings/template.js:26
+#: src/resources/js/app/data.js:7959
+#: src/resources/js/app/elements.js:16515
+#: src/resources/js/app/main.js:2323
 msgid "Adjust this block’s options under Events → Settings → "
 msgstr ""
 
 #: src/modules/blocks/additional-fields/utils.js:70
+#: src/resources/js/app/data.js:8967
+#: src/resources/js/app/elements.js:17523
+#: src/resources/js/app/main.js:3269
 msgid "Additional Field"
 msgstr ""
 
 #: src/modules/blocks/recurrence-description/template.js:80
+#: src/resources/js/app/main.js:7820
 msgid "see all"
 msgstr ""
 
 #: src/modules/blocks/recurrence-exception/template.js:33
+#: src/resources/js/app/main.js:7493
 msgid "Exceptions"
 msgstr ""
 
 #: src/modules/blocks/related-events/index.js:23
+#: src/resources/js/app/main.js:8177
 msgid "Show other events with the same event categories and/or tags."
 msgstr ""
 
 #: src/modules/blocks/related-events/template.js:91
+#: src/resources/js/app/main.js:7992
 msgid "This block displays related events based on the tags and categories you select. Please add tags and categories to display related events, and be sure you have more events for these tags and categories."
 msgstr ""
 
 #: src/modules/blocks/related-events/template.js:146
+#: src/resources/js/app/main.js:8054
 msgid "Related Events Settings"
 msgstr ""
 
 #: src/modules/blocks/related-events/template.js:148
+#: src/resources/js/app/main.js:8056
 msgid "Display Images"
 msgstr ""
 
 #: src/modules/custom-tables-v1/blocks/recurrence/hooks.js:26
+#: src/resources/js/custom-tables-v1/app/blocks.js:210
 msgid "Recurrence patterns are not yet supported for events with tickets or RSVPs."
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:11
+#: src/resources/js/custom-tables-v1/app/blocks.js:1316
+#: src/resources/js/custom-tables-v1/app/ct1.js:594
+#: src/resources/js/custom-tables-v1/app/data.js:1215
+#: src/resources/js/custom-tables-v1/app/dialog.js:1368
+#: src/resources/js/custom-tables-v1/app/elements.js:336
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1368
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1678
 msgid "year"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:16
+#: src/resources/js/custom-tables-v1/app/blocks.js:1320
+#: src/resources/js/custom-tables-v1/app/ct1.js:598
+#: src/resources/js/custom-tables-v1/app/data.js:1219
+#: src/resources/js/custom-tables-v1/app/dialog.js:1372
+#: src/resources/js/custom-tables-v1/app/elements.js:340
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1372
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1682
 msgid "years"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:18
+#: src/resources/js/custom-tables-v1/app/blocks.js:1321
+#: src/resources/js/custom-tables-v1/app/ct1.js:599
+#: src/resources/js/custom-tables-v1/app/data.js:1220
+#: src/resources/js/custom-tables-v1/app/dialog.js:1373
+#: src/resources/js/custom-tables-v1/app/elements.js:341
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1373
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1683
 msgid "once"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:19
+#: src/resources/js/custom-tables-v1/app/blocks.js:1322
+#: src/resources/js/custom-tables-v1/app/ct1.js:600
+#: src/resources/js/custom-tables-v1/app/data.js:1221
+#: src/resources/js/custom-tables-v1/app/dialog.js:1374
+#: src/resources/js/custom-tables-v1/app/elements.js:342
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1374
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1684
 msgid "daily"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:20
+#: src/resources/js/custom-tables-v1/app/blocks.js:1323
+#: src/resources/js/custom-tables-v1/app/ct1.js:601
+#: src/resources/js/custom-tables-v1/app/data.js:1222
+#: src/resources/js/custom-tables-v1/app/dialog.js:1375
+#: src/resources/js/custom-tables-v1/app/elements.js:343
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1375
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1685
 msgid "weekly"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:21
+#: src/resources/js/custom-tables-v1/app/blocks.js:1324
+#: src/resources/js/custom-tables-v1/app/ct1.js:602
+#: src/resources/js/custom-tables-v1/app/data.js:1223
+#: src/resources/js/custom-tables-v1/app/dialog.js:1376
+#: src/resources/js/custom-tables-v1/app/elements.js:344
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1376
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1686
 msgid "monthly"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:22
+#: src/resources/js/custom-tables-v1/app/blocks.js:1325
+#: src/resources/js/custom-tables-v1/app/ct1.js:603
+#: src/resources/js/custom-tables-v1/app/data.js:1224
+#: src/resources/js/custom-tables-v1/app/dialog.js:1377
+#: src/resources/js/custom-tables-v1/app/elements.js:345
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1377
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1687
 msgid "yearly"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:24
+#: src/resources/js/custom-tables-v1/app/blocks.js:1326
+#: src/resources/js/custom-tables-v1/app/ct1.js:604
+#: src/resources/js/custom-tables-v1/app/data.js:1225
+#: src/resources/js/custom-tables-v1/app/dialog.js:1378
+#: src/resources/js/custom-tables-v1/app/elements.js:346
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1378
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1688
 msgid "weekly (custom)"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:25
+#: src/resources/js/custom-tables-v1/app/blocks.js:1327
+#: src/resources/js/custom-tables-v1/app/ct1.js:605
+#: src/resources/js/custom-tables-v1/app/data.js:1226
+#: src/resources/js/custom-tables-v1/app/dialog.js:1379
+#: src/resources/js/custom-tables-v1/app/elements.js:347
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1379
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1689
 msgid "monthly (custom)"
 msgstr ""
 
 #: src/modules/custom-tables-v1/data/shared/constants.js:26
+#: src/resources/js/custom-tables-v1/app/blocks.js:1328
+#: src/resources/js/custom-tables-v1/app/ct1.js:606
+#: src/resources/js/custom-tables-v1/app/data.js:1227
+#: src/resources/js/custom-tables-v1/app/dialog.js:1380
+#: src/resources/js/custom-tables-v1/app/elements.js:348
+#: src/resources/js/custom-tables-v1/app/occurrence-redirect.js:1380
+#: src/resources/js/custom-tables-v1/app/series-metabox.js:1690
 msgid "yearly (custom)"
 msgstr ""
 
@@ -6008,6 +6301,7 @@ msgstr ""
 #: src/modules/custom-tables-v1/elements/hooks/exception-field/singular.js:8
 #: src/modules/custom-tables-v1/elements/hooks/exception-field/weekly.js:18
 #: src/modules/custom-tables-v1/elements/hooks/exception-field/yearly.js:18
+#: src/resources/js/custom-tables-v1/app/elements.js:534
 msgid "Not"
 msgstr ""
 
@@ -6034,197 +6328,334 @@ msgid "starting %s"
 msgstr ""
 
 #: src/modules/custom-tables-v1/plugins/duplicate/template.js:22
+#: src/resources/js/custom-tables-v1/app/plugins.js:128
 msgid "Duplicate"
 msgstr ""
 
 #: src/modules/data/blocks/exception/options.js:16
+#: src/resources/js/app/data.js:6313
+#: src/resources/js/app/elements.js:11340
+#: src/resources/js/app/main.js:2079
 msgid "Single Exception"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:17
 #: src/modules/data/blocks/recurring/constants.js:54
+#: src/resources/js/app/data.js:583
+#: src/resources/js/app/data.js:610
+#: src/resources/js/app/elements.js:583
+#: src/resources/js/app/elements.js:610
+#: src/resources/js/app/main.js:1002
+#: src/resources/js/app/main.js:1033
 msgid "Day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:18
+#: src/resources/js/app/data.js:584
+#: src/resources/js/app/elements.js:584
+#: src/resources/js/app/main.js:1003
 msgid "Week"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:20
+#: src/resources/js/app/data.js:586
+#: src/resources/js/app/elements.js:586
+#: src/resources/js/app/main.js:1005
 msgid "Year"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:22
+#: src/resources/js/app/data.js:587
+#: src/resources/js/app/elements.js:587
+#: src/resources/js/app/main.js:1006
 msgid "Days"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:23
+#: src/resources/js/app/data.js:588
+#: src/resources/js/app/elements.js:588
+#: src/resources/js/app/main.js:1007
 msgid "Weeks"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:24
+#: src/resources/js/app/data.js:589
+#: src/resources/js/app/elements.js:589
+#: src/resources/js/app/main.js:1008
 msgid "Months"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:25
+#: src/resources/js/app/data.js:590
+#: src/resources/js/app/elements.js:590
+#: src/resources/js/app/main.js:1009
 msgid "Years"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:27
+#: src/resources/js/app/data.js:591
+#: src/resources/js/app/elements.js:591
+#: src/resources/js/app/main.js:1010
 msgid "Single Recurrence"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:41
+#: src/resources/js/app/data.js:601
+#: src/resources/js/app/elements.js:601
+#: src/resources/js/app/main.js:1022
 msgid "Never"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:76
+#: src/resources/js/app/data.js:628
+#: src/resources/js/app/elements.js:628
+#: src/resources/js/app/main.js:1053
 msgctxt "The first-letter abbreviation for Sunday"
 msgid "S"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:77
+#: src/resources/js/app/data.js:629
+#: src/resources/js/app/elements.js:629
+#: src/resources/js/app/main.js:1054
 msgctxt "The first-letter abbreviation for Monday"
 msgid "M"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:78
+#: src/resources/js/app/data.js:630
+#: src/resources/js/app/elements.js:630
+#: src/resources/js/app/main.js:1055
 msgctxt "The first-letter abbreviation for Tuesday"
 msgid "T"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:79
+#: src/resources/js/app/data.js:631
+#: src/resources/js/app/elements.js:631
+#: src/resources/js/app/main.js:1056
 msgctxt "The first-letter abbreviation for Wednesday"
 msgid "W"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:80
+#: src/resources/js/app/data.js:632
+#: src/resources/js/app/elements.js:632
+#: src/resources/js/app/main.js:1057
 msgctxt "The first-letter abbreviation for Thursday"
 msgid "T"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:81
+#: src/resources/js/app/data.js:633
+#: src/resources/js/app/elements.js:633
+#: src/resources/js/app/main.js:1058
 msgctxt "The first-letter abbreviation for Friday"
 msgid "F"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:82
+#: src/resources/js/app/data.js:634
+#: src/resources/js/app/elements.js:634
+#: src/resources/js/app/main.js:1059
 msgctxt "The first-letter abbreviation for Saturday"
 msgid "S"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:136
+#: src/resources/js/app/data.js:672
+#: src/resources/js/app/elements.js:672
+#: src/resources/js/app/main.js:1099
 msgid "First"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:137
+#: src/resources/js/app/data.js:673
+#: src/resources/js/app/elements.js:673
+#: src/resources/js/app/main.js:1100
 msgid "Second"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:138
+#: src/resources/js/app/data.js:674
+#: src/resources/js/app/elements.js:674
+#: src/resources/js/app/main.js:1101
 msgid "Third"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:139
+#: src/resources/js/app/data.js:675
+#: src/resources/js/app/elements.js:675
+#: src/resources/js/app/main.js:1102
 msgid "Fourth"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:140
+#: src/resources/js/app/data.js:676
+#: src/resources/js/app/elements.js:676
+#: src/resources/js/app/main.js:1103
 msgid "Fifth"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:141
+#: src/resources/js/app/data.js:677
+#: src/resources/js/app/elements.js:677
+#: src/resources/js/app/main.js:1104
 msgid "Last"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:182
+#: src/resources/js/app/data.js:713
+#: src/resources/js/app/elements.js:713
+#: src/resources/js/app/main.js:1142
 msgid "Jan"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:183
+#: src/resources/js/app/data.js:714
+#: src/resources/js/app/elements.js:714
+#: src/resources/js/app/main.js:1143
 msgid "Feb"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:184
+#: src/resources/js/app/data.js:715
+#: src/resources/js/app/elements.js:715
+#: src/resources/js/app/main.js:1144
 msgid "Mar"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:185
+#: src/resources/js/app/data.js:716
+#: src/resources/js/app/elements.js:716
+#: src/resources/js/app/main.js:1145
 msgid "Apr"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:187
+#: src/resources/js/app/data.js:718
+#: src/resources/js/app/elements.js:718
+#: src/resources/js/app/main.js:1147
 msgid "Jun"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:188
+#: src/resources/js/app/data.js:719
+#: src/resources/js/app/elements.js:719
+#: src/resources/js/app/main.js:1148
 msgid "Jul"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:189
+#: src/resources/js/app/data.js:720
+#: src/resources/js/app/elements.js:720
+#: src/resources/js/app/main.js:1149
 msgid "Aug"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:190
+#: src/resources/js/app/data.js:721
+#: src/resources/js/app/elements.js:721
+#: src/resources/js/app/main.js:1150
 msgid "Sep"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:191
+#: src/resources/js/app/data.js:722
+#: src/resources/js/app/elements.js:722
+#: src/resources/js/app/main.js:1151
 msgid "Oct"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:192
+#: src/resources/js/app/data.js:723
+#: src/resources/js/app/elements.js:723
+#: src/resources/js/app/main.js:1152
 msgid "Nov"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:193
+#: src/resources/js/app/data.js:724
+#: src/resources/js/app/elements.js:724
+#: src/resources/js/app/main.js:1153
 msgid "Dec"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:224
+#: src/resources/js/app/data.js:750
+#: src/resources/js/app/elements.js:750
+#: src/resources/js/app/main.js:1181
 msgid "Next day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:225
+#: src/resources/js/app/data.js:751
+#: src/resources/js/app/elements.js:751
+#: src/resources/js/app/main.js:1182
 msgid "2nd day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:226
+#: src/resources/js/app/data.js:752
+#: src/resources/js/app/elements.js:752
+#: src/resources/js/app/main.js:1183
 msgid "3rd day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:227
+#: src/resources/js/app/data.js:753
+#: src/resources/js/app/elements.js:753
+#: src/resources/js/app/main.js:1184
 msgid "4th day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:228
+#: src/resources/js/app/data.js:754
+#: src/resources/js/app/elements.js:754
+#: src/resources/js/app/main.js:1185
 msgid "5th day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:229
+#: src/resources/js/app/data.js:755
+#: src/resources/js/app/elements.js:755
+#: src/resources/js/app/main.js:1186
 msgid "6th day"
 msgstr ""
 
 #: src/modules/data/blocks/recurring/constants.js:230
+#: src/resources/js/app/data.js:756
+#: src/resources/js/app/elements.js:756
+#: src/resources/js/app/main.js:1187
 msgid "7th day"
 msgstr ""
 
 #: src/modules/data/status/sagas.js:30
 #: src/modules/data/status/sagas.js:96
+#: src/resources/js/app/data.js:17604
+#: src/resources/js/app/data.js:17669
+#: src/resources/js/app/main.js:8281
+#: src/resources/js/app/main.js:8343
 msgid "%d instance"
 msgid_plural "%d instances"
 msgstr[0] ""
 msgstr[1] ""
 
 #: src/modules/data/status/sagas.js:31
+#: src/resources/js/app/data.js:17605
+#: src/resources/js/app/main.js:8282
 msgid "of this event have been created through %s."
 msgstr ""
 
 #: src/modules/data/status/sagas.js:106
+#: src/resources/js/app/data.js:17677
+#: src/resources/js/app/main.js:8352
 msgid "Recurring event instances are still being created…"
 msgstr ""
 
 #: src/modules/elements/day-of-month-picker/element.js:54
+#: src/resources/js/app/elements.js:14859
+#: src/resources/js/app/main.js:5860
 msgid "of the month"
 msgstr ""
 
@@ -6232,35 +6663,59 @@ msgstr ""
 #: src/modules/elements/exception-field/monthly.js:49
 #: src/modules/elements/exception-field/weekly.js:49
 #: src/modules/elements/exception-field/yearly.js:58
+#: src/resources/js/app/elements.js:13168
+#: src/resources/js/app/elements.js:13230
+#: src/resources/js/app/elements.js:13291
+#: src/resources/js/app/elements.js:13359
+#: src/resources/js/app/main.js:4185
+#: src/resources/js/app/main.js:4238
+#: src/resources/js/app/main.js:4290
+#: src/resources/js/app/main.js:4348
 msgid "Exception ends"
 msgstr ""
 
 #: src/modules/elements/exception-field/singular.js:23
+#: src/resources/js/app/elements.js:13117
+#: src/resources/js/app/main.js:4142
 msgid "A"
 msgstr ""
 
 #: src/modules/elements/from-time-range-picker/template.js:68
+#: src/resources/js/app/elements.js:15470
+#: src/resources/js/app/main.js:6413
 msgid "From"
 msgstr ""
 
 #: src/modules/elements/from-time-range-picker/template.js:73
+#: src/resources/js/app/elements.js:15471
+#: src/resources/js/app/main.js:6414
 msgid "to"
 msgstr ""
 
 #: src/modules/elements/in-month/template.js:27
+#: src/resources/js/app/elements.js:15829
+#: src/resources/js/app/main.js:6738
 msgid "In"
 msgstr ""
 
 #: src/modules/elements/multi-day-checkbox/element.js:37
+#: src/resources/js/app/elements.js:14071
+#: src/resources/js/app/main.js:5155
 msgid "Multi-day"
 msgstr ""
 
 #: src/modules/elements/recurring-to-date-time-picker/template.js:33
 #: src/modules/elements/single-to-date-time-picker/template.js:37
+#: src/resources/js/app/elements.js:15055
+#: src/resources/js/app/elements.js:15233
+#: src/resources/js/app/main.js:6039
+#: src/resources/js/app/main.js:6198
 msgid "To"
 msgstr ""
 
 #: src/modules/elements/recurring-to-date-time-picker/template.js:45
+#: src/resources/js/app/elements.js:15065
+#: src/resources/js/app/main.js:6049
 msgid "on the"
 msgstr ""
 
@@ -6281,9 +6736,11 @@ msgid "Displays a list of upcoming events at a specific venue."
 msgstr ""
 
 #: src/modules/widgets/mini-calendar/index.js:20
+#: src/resources/js/app/widgets.js:501
 msgid "Mini Calendar"
 msgstr ""
 
 #: src/modules/widgets/mini-calendar/index.js:21
+#: src/resources/js/app/widgets.js:502
 msgid "Displays this month’s events."
 msgstr ""

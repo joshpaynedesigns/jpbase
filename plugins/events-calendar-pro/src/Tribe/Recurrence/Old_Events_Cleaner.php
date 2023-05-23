@@ -1,6 +1,8 @@
 <?php
 
-
+/**
+ * @deprecated 6.0.12 With CT1 active, this is being deactivated and handled in \TEC\Events_Pro\Custom_Tables\V1\Events\Event_Cleaner\Provider
+ */
 class Tribe__Events__Pro__Recurrence__Old_Events_Cleaner {
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-function ns_blog_block($id)
+function ns_blog_block($id, $display_date = true, $image_class = null)
 {
     if (empty($id)) {
         return;
@@ -14,20 +14,27 @@ function ns_blog_block($id)
 
     $permalink = get_the_permalink($id);
     $title    = get_the_title($id);
+    $date = get_the_date('F j, Y', $id);
+    $short_description = ns_get_short_description($id, 20);
 
     ?>
         <div class="story">
             <?php if (! empty($thumbnail)) : ?>
                 <a href="<?php echo $permalink ?>">
-                    <div class="story-img" style="background-image: url(' <?php echo $thumbnail; ?> ')"></div>
+                    <div class="story-img <?php echo $image_class ?>" style="background-image: url(' <?php echo $thumbnail; ?> ')"></div>
                 </a>
             <?php endif; ?>
 
             <div class="story-blurb">
+                <?php if ($display_date) : ?>
+                    <div class="story-date"><?php echo $date ?></div>
+                <?php endif; ?>
                 <h6 class="story-title mt-4"><a href="<?php echo $permalink ?>"><?php echo $title ?></a></h6>
-                <div class="story-blurb-content">
-                    <?php echo ns_get_short_description($id, 14); ?>
-                </div>
+                <?php if (! empty($short_description)) : ?>
+                    <div class="story-blurb-content">
+                        <?php echo $short_description ?>
+                    </div>
+                <?php endif; ?>
                 <a class="read-more arrow-link" href="<?php echo $permalink ?>">Read More</a>
             </div>
         </div>

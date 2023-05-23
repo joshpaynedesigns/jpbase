@@ -52,7 +52,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33.33",
                 "class": "",
                 "id": ""
             },
@@ -68,7 +68,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33.33",
                 "class": "",
                 "id": ""
             },
@@ -82,6 +82,26 @@
             "return_format": "value",
             "allow_null": 0,
             "layout": "horizontal"
+        },
+        {
+            "key": "field_646d08caf2a51",
+            "label": "Contained Bar",
+            "name": "contained_bar",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
         }
     ],
     "location": [
@@ -104,5 +124,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681921567
+    "modified": 1684867360
 }
