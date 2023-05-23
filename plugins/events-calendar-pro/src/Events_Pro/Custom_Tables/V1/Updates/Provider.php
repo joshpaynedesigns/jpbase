@@ -467,7 +467,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * Filters the unique post slug generated, or set, for an Event Occurrence.
 	 *
 	 * @since 6.0.0
-	 * @since TBD Removed strict typing from this public hook callback.
+	 * @since 6.0.12 Removed strict typing from this public hook callback.
 	 *
 	 * @param string $slug          The post slug.
 	 * @param int    $post_ID       Post ID.
@@ -537,7 +537,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * REST API delete requests will not specify an `id` parameter until later in the request
 	 * handling process; working out the `id` from the request should be left to WordPress and
 	 * filtering functions. This method is a workaround to ensure that the correct update method
-	 * is called as soon as the `id` parmater of the request is known.
+	 * is called as soon as the `id` parameter of the request is known.
 	 *
 	 * @since 6.0.0
 	 *

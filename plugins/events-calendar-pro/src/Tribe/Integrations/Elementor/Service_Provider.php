@@ -107,6 +107,11 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * @since 5.4.0
 	 */
 	public function action_register_widgets_manager_registration() {
+		// Check whether the Elementor\Widget_Base class exists before registering the widgets.
+		if ( ! class_exists( 'Elementor\Widget_Base' ) ) {
+			return;
+		}
+
 		return $this->container->make( Widgets_Manager::class )->register();
 	}
 

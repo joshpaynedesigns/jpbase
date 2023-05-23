@@ -301,7 +301,8 @@ class View_Filters {
 		$default_view        = $manager->get_default_view_option( 'desktop' );
 		$default_mobile_view = tribe_get_option( 'mobile_default_view', 'default' );
 
-		if ( $default_view === $default_mobile_view ) {
+		// Only redirect if the mobile view doesn't resolve to the same place or default view (also the same place) already.
+		if ( $default_view === $default_mobile_view || $default_mobile_view === 'default' ) {
 			return;
 		}
 

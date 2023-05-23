@@ -61,6 +61,7 @@ class Full_Activation_Provider extends Service_Provider {
 			$this->container->register( Links\Provider::class );
 			$this->container->register( Models\Provider::class );
 			$this->container->register( Admin\Lists\Provider::class );
+			$this->container->register( Admin\Settings_Controller::class );
 			$this->container->register( Series\Provider::class );
 			$this->container->register( Templates\Provider::class );
 			$this->container->register( Updates\Provider::class );
@@ -74,6 +75,7 @@ class Full_Activation_Provider extends Service_Provider {
 			$this->container->register( Admin\Notices\Provider::class );
 			$this->container->register( Events_Manager\Provider::class );
 			$this->container->register( Links\Provider::class );
+			$this->container->register( Events\Event_Cleaner\Provider::class );
 			$this->container->singleton( Gettext::class, Gettext::class );
 
 			/*

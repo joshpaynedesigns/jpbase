@@ -14,16 +14,11 @@
  * @var \Tribe\Utils\Date_I18n_Immutable $group_date       The date for the date group.
  * @var array                            $events           The array of events for the date group.
  * @var WP_Post                          $event            The event post object with properties added by the `tribe_get_event` function.
- * @var array                            $month_transition An array of dates that should trigger a month separator
  *
  * @see tribe_get_event() For the format of the event object.
  */
 
-if ( ! in_array( $event->ID, $month_transition ) ) {
-	return;
-}
-
-if ( ! $event->summary_view->is_first_event_in_view && $event->multiday && ! $event->summary_view->is_multiday_and_start_of_month ) {
+if ( ! $event->summary_view->should_show_month_separator ) {
 	return;
 }
 ?>
