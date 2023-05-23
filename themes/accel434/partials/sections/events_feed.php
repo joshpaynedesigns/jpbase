@@ -1,10 +1,11 @@
 <?php
 $events_title = get_sub_field('events_title');
 $event_category = get_sub_field('event_category');
+$posts_per_feed = get_sub_field('posts_per_feed');
 
 if (!empty($event_category)) {
     $events = tribe_get_events(array(
-        'posts_per_page' => 3,
+        'posts_per_page' => $posts_per_feed,
         'start_date' => date('Y-m-d H:i:s'),
             'tax_query'=> array(
                 array(
@@ -17,7 +18,7 @@ if (!empty($event_category)) {
     $e_arch_link = get_term_link($event_category);
 } else {
     $events = tribe_get_events(array(
-        'posts_per_page' => 3,
+        'posts_per_page' => $posts_per_feed,
         'start_date' => date('Y-m-d H:i:s'),
     ));
     $e_arch_link = '/events/';
