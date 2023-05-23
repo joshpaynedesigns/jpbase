@@ -5,7 +5,7 @@ Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embe
 Requires at least: 4.9.16
 Tested up to: 6.0.2
 Requires PHP: 5.6
-Stable tag: 9.10.3
+Stable tag: 9.10.9
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -194,6 +194,9 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2023-05-17 9.10.9 ###
+* Fix: Styles not loading correctly in latest Gutenberg versions.
 
 ### 2023-04-12 9.10.3 ###
 * Fix: Yoast SEO compatibility and other possible issues.
