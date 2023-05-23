@@ -3,3 +3,24 @@
   line-height: 1;
   transition: all $base-duration $base-timing;
 }
+
+.bg-blue,
+.bg-light-blue,
+.bg-dark-gray,
+.bg-medium-gray {
+  .section-title {
+    color: white;
+  }
+
+  ul li {
+    color: white !important;
+
+    &::before {
+      background-color: white !important;
+    }
+  }
+
+  ol li {
+    color: white !important;
+  }
+}

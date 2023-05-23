@@ -3887,6 +3887,31 @@ Events Single
   transition: all 300ms ease-in-out;
 }
 
+.bg-blue .section-title,
+.bg-light-blue .section-title,
+.bg-dark-gray .section-title,
+.bg-medium-gray .section-title {
+  color: white;
+}
+.bg-blue ul li,
+.bg-light-blue ul li,
+.bg-dark-gray ul li,
+.bg-medium-gray ul li {
+  color: white !important;
+}
+.bg-blue ul li::before,
+.bg-light-blue ul li::before,
+.bg-dark-gray ul li::before,
+.bg-medium-gray ul li::before {
+  background-color: white !important;
+}
+.bg-blue ol li,
+.bg-light-blue ol li,
+.bg-dark-gray ol li,
+.bg-medium-gray ol li {
+  color: white !important;
+}
+
 @media (min-width: 900px) {
   .tiles .tile-blocks {
     display: flex;
