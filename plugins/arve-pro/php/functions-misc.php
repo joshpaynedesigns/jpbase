@@ -1,8 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use \Nextgenthemes\ARVE\Common;
-use function Nextgenthemes\ARVE\options;
+use function \Nextgenthemes\ARVE\Common\remote_get_json;
 
 function json_api_call( $api_url, $atts ) {
 
@@ -22,7 +21,7 @@ function json_api_call( $api_url, $atts ) {
 		$wp_remote_get_args['headers'] = [ 'Client-ID' => 'in8d3vsv6bmbmsdrfoch204ict7kos7' ];
 	}
 
-	$response = Common\remote_get_json( $api_url, $wp_remote_get_args );
+	$response = remote_get_json( $api_url, $wp_remote_get_args );
 }
 
 function is_mobile() {

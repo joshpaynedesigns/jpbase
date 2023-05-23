@@ -1,7 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use \Nextgenthemes\ARVE;
+use function \Nextgenthemes\ARVE\build_tag;
+use function \Nextgenthemes\ARVE\Common\remote_get_body_cached;
 
 function latest_youtube_video_from_channel( $a ) {
 
@@ -15,7 +16,7 @@ function latest_youtube_video_from_channel( $a ) {
 		return $a;
 	}
 
-	$response = ARVE\Common\remote_get_body_cached( 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $matches['channel'] );
+	$response = remote_get_body_cached( 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $matches['channel'] );
 
 	if ( is_wp_error( $response ) ) {
 		$a['errors']->add(
@@ -52,7 +53,7 @@ function append_lightbox_link( $html, array $a ) {
 		return $html;
 	}
 
-	$html .= ARVE\build_tag(
+	$html .= build_tag(
 		[
 			'name'       => 'lightbox-link',
 			'tag'        => 'a',
