@@ -109,6 +109,9 @@ With [ActiveCampaign Postmark](https://postmarkapp.com/?utm_source=activecampaig
 
 == Changelog ==
 
+= 8.1.12 =
+* Security fix to address XSS vulnerability
+
 = 8.1.11 =
 * Removing obsolete Javascript
 
