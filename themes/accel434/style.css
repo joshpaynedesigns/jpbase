@@ -4735,8 +4735,9 @@ Events Single
 }
 .one24grid > div,
 .one24grid > a {
-  width: 100%;
   flex: 1;
+  max-width: 25rem;
+  width: 100%;
 }
 @media (min-width: 640px) {
   .one24grid > div,
@@ -4766,8 +4767,9 @@ Events Single
 }
 .one23grid > div,
 .one23grid > a {
-  width: 100%;
   flex: 1;
+  max-width: 25rem;
+  width: 100%;
 }
 @media (min-width: 640px) {
   .one23grid > div,
@@ -4797,6 +4799,7 @@ Events Single
 .one3grid > div,
 .one3grid > a {
   flex: 1;
+  max-width: 25rem;
   width: 100%;
 }
 @media (min-width: 900px) {
@@ -4815,14 +4818,15 @@ Events Single
   .one2grid {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 4rem;
+    justify-content: center;
   }
 }
 .one2grid > div,
 .one2grid > a {
-  width: 100%;
   flex: 1;
+  max-width: 25rem;
+  width: 100%;
 }
 @media (min-width: 640px) {
   .one2grid > div,
@@ -4845,8 +4849,9 @@ Events Single
 }
 .one2gridlarge > div,
 .one2gridlarge > a {
-  width: 100%;
   flex: 1;
+  max-width: 25rem;
+  width: 100%;
 }
 @media (min-width: 900px) {
   .one2gridlarge > div,
