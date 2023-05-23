@@ -30,7 +30,7 @@ function ns_decide_section_classes($bg_color = null)
     }
 
     if (! empty($bg_color) && $bg_color !== 'none') {
-        $classes .= " bg-" . $bg_color;
+        $classes .= "has-bg-color bg-" . $bg_color;
     }
 
     return $classes;
