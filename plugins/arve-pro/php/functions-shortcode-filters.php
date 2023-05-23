@@ -1,8 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use function \Nextgenthemes\ARVE\Common\remote_get_json;
+use function \Nextgenthemes\ARVE\options;
 
 function arg_filter_autoplay( $autoplay, array $a ) {
 
@@ -73,7 +73,7 @@ function shortcode_atts_extra_data( array $a ) {
  */
 function arg_filter_thumbnail( $thumbnail, array $a ) {
 
-	$options  = ARVE\options();
+	$options  = options();
 	$thumb_id = get_post_thumbnail_id();
 
 	if ( 'featured' === $thumbnail && $thumb_id ) {
@@ -113,7 +113,7 @@ function get_thumb_from_api( $thumbnail, array $a ) {
 
 function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
 
-	$thumb = Common\remote_get_json( $url, $remote_get_args, $json_name );
+	$thumb = remote_get_json( $url, $remote_get_args, $json_name );
 
 	if ( is_wp_error( $thumb ) ) {
 		$a['errors']->add( 'thumb-api-call', $thumb->get_error_message() );

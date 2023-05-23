@@ -67,7 +67,11 @@
 
   .left-arrow {
     left: 0;
-    transform: translateX(-100%);
+    transform: translateX(-50%);
+
+    @media ($medium-screen-up) {
+      transform: translateX(-100%);
+    }
 
     svg {
       transform: rotate(180deg);
@@ -76,7 +80,11 @@
 
   .right-arrow {
     right: 0;
-    transform: translateX(100%);
+    transform: translateX(50%);
+
+    @media ($medium-screen-up) {
+      transform: translateX(100%);
+    }
   }
 
   &.banner-slider-outer {

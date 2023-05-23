@@ -141,6 +141,18 @@ class Provisional_Post {
 	}
 
 	/**
+	 * This clears the occurrence cache stored for this occurrence ID.
+	 *
+	 * @since 6.0.12
+	 *
+	 * @param numeric $occurrence_id The occurrence ID to clear occurrence cache for.
+	 */
+	public function clear_occurrence_cache( $occurrence_id ) {
+		$cache_key = 'occurrence_row_' . $occurrence_id;
+		unset( $this->cache[ $cache_key ] );
+	}
+
+	/**
 	 * Returns the full row for an Occurrence, read from the database.
 	 *
 	 * @since 6.0.0

@@ -981,7 +981,7 @@ class Widget_Event_List extends Widget_Abstract {
 	/**
 	 * Assembles the Website settings in the styling panel.
 	 *
-	 * @since TBD
+	 * @since 6.0.12
 	 */
 	protected function do_website_section() {
 		$this->start_controls_section(

@@ -134,6 +134,7 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 
 	return apply_filters( 'tribe_events_get_list_widget_view_all_link', $link_to_all );
 }
+
 /**
  * This Week - Title
  *
@@ -152,6 +153,7 @@ function tribe_events_get_this_week_title( $start_date ) {
 
 	return $this_week_title;
 }
+
 /**
  * This Week Widget - Build the previous week link.
  *

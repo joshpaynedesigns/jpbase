@@ -22,7 +22,7 @@
 	<?php echo esc_html(
 		sprintf(
 			/* Translators: %1$s: The event time. */
-			_x( 'Until %1$s', '"until" as in "from DATE until DATE"', 'tribe-ext-summary-view' ),
+			_x( 'Until %1$s', '"until" as in "from DATE until DATE"', 'tribe-events-calendar-pro' ),
 			$event->summary_view->end_time
 		)
 	);

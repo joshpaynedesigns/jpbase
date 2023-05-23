@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.8.6
-Stable tag: 6.0.11
-Tested up to: 6.2
+Stable tag: 6.0.12.1
+Tested up to: 6.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -214,6 +214,27 @@ Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
 
+= [6.0.12.1] 2023-05-18 =
+
+* Fix - Fix the state bug causing a large number of XHR requests that were being made in the block editor. [TEC-4805]
+* Language - 0 new strings added, 10 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.0.12] 2023-05-08 =
+
+* Fix - Added a check to determine whether the `Elementor\Widget_Base` class exists before registering the Elementor widgets to prevent fatal errors. [ECP-1498]
+* Fix - Added missing support for `Move to trash events older than` feature in 6.0 data structure. Will now trash individual occurrences of recurring events based on setting. [ECP-1475]
+* Fix - Fix `Fatal error: Uncaught Exception: DateTime::__construct(): Failed to parse time string` when editing a recurring event using a `Compact date format` setting that is not compatible with the `DateTime` constructor. [ECP-1502]
+* Fix - Fix an issue where the month names in the datepicker for week view shortcodes and widgets was not being translated. [ECP-1458]
+* Fix - Fix errors (`Notice: Trying to get property 'start_date' of non-object...`) when restoring trashed occurrence of a recurring event. [ECP-1480]
+* Fix - Fix for when auto-transitioning a Series to match the Event post status when it shouldn't. Notably when trashing an Event in a Series that still had other published Events in it. [ECP-1499]
+* Fix - Fixed situation where multiday events that spanned to a new month would not always trigger the logic to show the month separator. [ECP-1348]
+* Fix - Our redirect logic for tax archive page was incorrect and in certain scenarios would redirect in an infinite loop. [ECP-1482]
+* Fix - Pass a NOOP callback function to Google Maps scripts to prevent JS warnings. [TEC-4762]
+* Fix - Update incorrect text domains to ensure all strings are translatable. [ECP-1420]
+* Tweak - Remove the "Create recurring events in advance for" setting in CT1 context, default value to 60 months. The value remains filterable using the `tribe_get_option_recurrenceMaxMonthsAfter` filter. [ECP-1465]
+* Tweak - Changed views: `v2/summary`, `v2/summary/date-group/event/date/all-day`, `v2/summary/date-group/event/date/multiday-end`, `v2/summary/date-group/event/date/multiday-start`, `v2/summary/month-separator`, `v2/venue/meta/map`, `v2/widgets/widget-events-list/event/website`
+* Language - 0 new strings added, 10 updated, 0 fuzzied, and 0 obsoleted
+
 = [6.0.11] 2023-04-10 =
 
 * Enhancement - Add the option to display the Event Website on the Events List widget, [tribe_events_list] shortcode and Events List Elementor widget. [ECP-751]
@@ -348,7 +369,7 @@ Remember to always make a backup of your database and files before updating!
 * Fix - Prevent `E_ERROR` when using third-party plugins with blocks editor around `tec_event_series()` method [ECP-1409]
 * Fix - Avoid type errors in the `tec_events_pro_blocks_recurrence_meta` filter. [TEC-4559]
 * Fix - Ensure tribe() singletons are bound before attempting to use them. [ECP-1396]
-* Fix - Avoid duplicated queries by including a memoization for Occurrence data. [TBD]
+* Fix - Avoid duplicated queries by including a memoization for Occurrence data. [6.0.12]
 * Fix - Prevent errors when adding exclusion dates to recurring events using the Custom Tables implementation. [ECP-1401]
 * Fix - Mitigated PHP errors related Occurrence and Provisional Post objects. [ECP-1402]
 * Language - 6 new strings added, 113 updated, 0 fuzzied, and 0 obsoleted.

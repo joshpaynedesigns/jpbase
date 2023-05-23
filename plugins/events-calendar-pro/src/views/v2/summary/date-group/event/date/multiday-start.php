@@ -22,7 +22,7 @@
 	<?php echo esc_html(
 		sprintf(
 			/* Translators: %1$s: The event time. */
-			_x( '%1$s onwards', '"onwards" as in "from TIME onwards"', 'tribe-ext-summary-view' ),
+			_x( '%1$s onwards', '"onwards" as in "from TIME onwards"', 'tribe-events-calendar-pro' ),
 			$event->summary_view->start_time
 		)
 	);

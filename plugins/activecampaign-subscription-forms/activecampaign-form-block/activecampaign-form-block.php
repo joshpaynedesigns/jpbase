@@ -117,9 +117,9 @@ function activecampaign_form_block_render($attributes, $content){
 	elseif(isset($attributes['useCss']) && $attributes['useCss'] === '1'){
 		$css = ' css=1';
 	}
-
+	$escapedClassNames = esc_attr($attributes['className']);
 	if(!empty($attributes['formId'])){
-		return "<div class=\"{$attributes['className']}\">[activecampaign form=".$attributes['formId'].$css."]</div>";
+		return "<div class=\"{$escapedClassNames}\">[activecampaign form=".$attributes['formId'].$css."]</div>";
 	}
-	return "<div class=\"{$attributes['className']}\">[activecampaign]</div>";
+	return "<div class=\"{$escapedClassNames}\">[activecampaign]</div>";
 }

@@ -13,7 +13,6 @@
  *
  * @var array    $events               The array containing the events.
  * @var array    $events_by_date       An array containing the events indexed by date.
- * @var array    $month_transition     An array of dates that should trigger a month separator
  * @var string   $rest_url             The REST URL.
  * @var string   $rest_method          The HTTP method, either `POST` or `GET`, the View will use to make requests.
  * @var string   $rest_nonce           The REST nonce.
@@ -77,7 +76,7 @@ if ( empty( $disable_event_search ) ) {
 					$this->setup_postdata( $event );
 					$group_date = Dates::build_date_object( $group_date );
 				?>
-				<?php $this->template( 'summary/month-separator', [ 'events' => $events, 'event' => $event, 'group_date' => $group_date, 'month_transition' => $month_transition ] ); ?>
+				<?php $this->template( 'summary/month-separator', [ 'events' => $events, 'event' => $event, 'group_date' => $group_date ] ); ?>
 				<?php $this->template( 'summary/date-separator', [ 'events' => $events, 'event' => $event, 'group_date' => $group_date ] ); ?>
 				<?php $this->template( 'summary/date-group', [ 'events_for_date' => $events_data, 'group_date' => $group_date ] ); ?>
 			<?php endforeach; ?>

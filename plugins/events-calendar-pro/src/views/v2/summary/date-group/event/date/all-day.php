@@ -19,5 +19,5 @@
 
 ?>
 <span class="tribe-event-date-start">
-	<?php echo esc_html_x( 'All day', 'Label for an all-day event.', 'tribe-ext-summary-view' ); ?>
+	<?php echo esc_html_x( 'All day', 'Label for an all-day event.', 'tribe-events-calendar-pro' ); ?>
 </span>

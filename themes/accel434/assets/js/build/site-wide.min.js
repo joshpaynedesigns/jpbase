@@ -124,9 +124,10 @@ jQuery(document).ready(function () {
   });
 
   // Check to see if menu goes outside of container
-  jQuery(".genesis-nav-menu .menu-item").on(
-    "mouseenter mouseleave",
+  jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on(
+    "mouseover",
     function (e) {
+      console.log("hover");
       if (jQuery(this).find(".sub-menu").length) {
         var elm = jQuery(this).children(".sub-menu");
         var off = elm.offset();
@@ -134,14 +135,10 @@ jQuery(document).ready(function () {
         var w = elm.width();
         var docH = jQuery("body").height();
         var docW = jQuery("body").width();
-
         var isEntirelyVisible = l + w <= docW;
 
         if (!isEntirelyVisible) {
-          console.log("inside menu edge");
           jQuery(this).children(".sub-menu").addClass("edge");
-        } else {
-          jQuery(this).children(".sub-menu").removeClass("edge");
         }
       }
     }

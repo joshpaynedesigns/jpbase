@@ -373,7 +373,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	/**
 	 * Action to inject the website meta into the events list widget event.
 	 *
-	 * @since TBD
+	 * @since 6.0.12
 	 *
 	 * @param string           $file     Complete path to include the PHP File.
 	 * @param array<string>    $name     Template name.

@@ -822,7 +822,7 @@ tribe.events.views.mapProviderGoogleMaps = {};
 
 			// If the maps script is not loaded, fetch map script and init on success
 			if ( ! obj.state.mapsScriptLoaded ) {
-				var url = data.map_provider.javascript_url + '?key=' + data.map_provider.api_key;
+				var url = data.map_provider.javascript_url + '?key=' + data.map_provider.api_key + '&callback=' + encodeURIComponent( data.map_provider.callback );
 
 				$.ajax( {
 					url: url,

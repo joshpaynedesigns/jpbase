@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec
+class ComposerStaticInit613d31510abf78ba482ab2a10932507e
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -96,17 +96,11 @@ class ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
-        'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
-        'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
-        'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
-        'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
-        'Firebase\\JWT\\Key' => __DIR__ . '/..' . '/firebase/php-jwt/src/Key.php',
-        'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
         'TEC\\Common\\Context\\Post_Request_Type' => __DIR__ . '/../..' . '/src/Common/Context/Post_Request_Type.php',
         'TEC\\Common\\Editor\\Full_Site\\Template_Utils' => __DIR__ . '/../..' . '/src/Common/Editor/Full_Site/Template_Utils.php',
         'TEC\\Common\\Libraries\\Installer\\Provider' => __DIR__ . '/../..' . '/src/Common/Libraries/Installer/Provider.php',
         'TEC\\Common\\Libraries\\Provider' => __DIR__ . '/../..' . '/src/Common/Libraries/Provider.php',
+        'TEC\\Common\\Provider\\Controller' => __DIR__ . '/../..' . '/src/Common/Provider/Controller.php',
         'TEC\\Common\\Storage\\Timed_Option' => __DIR__ . '/../..' . '/src/Common/Storage/Timed_Option.php',
         'TEC\\Common\\Translations_Loader' => __DIR__ . '/../..' . '/src/Common/Translations_Loader.php',
         'Tribe\\Admin\\Conditional_Content\\Black_Friday' => __DIR__ . '/../..' . '/src/Tribe/Admin/Conditional_Content/Black_Friday.php',
@@ -204,10 +198,10 @@ class ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitbeb5a86669a1943c16b7303e8cfb66ec::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit613d31510abf78ba482ab2a10932507e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit613d31510abf78ba482ab2a10932507e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit613d31510abf78ba482ab2a10932507e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit613d31510abf78ba482ab2a10932507e::$classMap;
 
         }, null, ClassLoader::class);
     }

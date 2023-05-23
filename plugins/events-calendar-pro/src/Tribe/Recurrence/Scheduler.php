@@ -71,6 +71,9 @@ class Tribe__Events__Pro__Recurrence__Scheduler {
 		wp_clear_scheduled_hook( self::CRON_HOOK );
 	}
 
+	/**
+	 * @deprecated 6.0.12 With CT1 active, this is being deactivated and handled in \TEC\Events_Pro\Custom_Tables\V1\Events\Event_Cleaner\Provider
+	 */
 	public function clean_up_old_recurring_events() {
 		/** @var wpdb $wpdb */
 		global $wpdb;
