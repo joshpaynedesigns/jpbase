@@ -608,6 +608,26 @@
             "maxlength": ""
         },
         {
+            "key": "field_646d0c25c1d96",
+            "label": "Archive Intro Text",
+            "name": "archive_intro_text_blog",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "This optional content will show up under the banner of the archive page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
             "key": "field_5abd4c20f68ce",
             "label": "Staff Archive",
             "name": "",
@@ -910,60 +930,6 @@
             "preview_size": "thumbnail"
         },
         {
-            "key": "field_640240dc0ba5c",
-            "label": "Default Banner Image",
-            "name": "default_banner_image_testimonials",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "return_format": "array",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "thumbnail"
-        },
-        {
-            "key": "field_640240db0ba5b",
-            "label": "Default Banner Height",
-            "name": "default_banner_height_testimonials",
-            "aria-label": "",
-            "type": "radio",
-            "instructions": "Select the banner height for singles and the archives.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "choices": {
-                "small": "Small",
-                "medium": "Medium",
-                "large": "Large",
-                "full-screen": "Full Screen"
-            },
-            "default_value": "medium",
-            "return_format": "value",
-            "allow_null": 0,
-            "other_choice": 0,
-            "layout": "horizontal",
-            "save_other_choice": 0
-        },
-        {
             "key": "field_640240db0ba5b",
             "label": "Default Banner Height",
             "name": "default_banner_height_testimonials",
@@ -1013,27 +979,6 @@
             "append": ""
         },
         {
-            "key": "field_640240da0ba5a",
-            "label": "Archive Title",
-            "name": "archive_title_testimonials",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_640240da0ba59",
             "label": "Archive Sub Title",
             "name": "archive_sub_title_testimonials",
@@ -1053,48 +998,6 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
-        },
-        {
-            "key": "field_640240da0ba59",
-            "label": "Archive Sub Title",
-            "name": "archive_sub_title_testimonials",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_640240d90ba58",
-            "label": "Archive Intro Text",
-            "name": "archive_intro_text_testimonials",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "This optional content will show up under the banner of the archive page.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
         },
         {
             "key": "field_640240d90ba58",
@@ -1190,6 +1093,66 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_646d0cadf289e",
+            "label": "Archive Title",
+            "name": "archive_title_services",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_646d0c9df289d",
+            "label": "Archive Sub Title",
+            "name": "archive_sub_title_services",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_646d0cbbf289f",
+            "label": "Archive Intro Text",
+            "name": "archive_intro_text_services",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "This optional content will show up under the banner of the archive page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
             "key": "field_643d9946a7506",
             "label": "Events",
             "name": "",
@@ -1257,6 +1220,66 @@
             "other_choice": 0,
             "layout": "horizontal",
             "save_other_choice": 0
+        },
+        {
+            "key": "field_646d0d05ba870",
+            "label": "Archive Title",
+            "name": "archive_title_events",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_646d0d10ba871",
+            "label": "Archive Sub Title",
+            "name": "archive_sub_title_events",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_646d0d1bba872",
+            "label": "Archive Intro Text",
+            "name": "archive_intro_text_events",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "This optional content will show up under the banner of the archive page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -1277,5 +1300,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681758745
+    "modified": 1684868435
 }

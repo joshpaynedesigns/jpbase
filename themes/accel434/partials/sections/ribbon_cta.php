@@ -3,9 +3,16 @@ $first_text = get_sub_field('line_one_text');
 $second_text = get_sub_field('line_two_text');
 $btn_details = get_sub_field('link_details');
 $bar_color = get_sub_field('bar_color');
+$contained_bar = get_sub_field('contained_bar');
+
+$outer_classes = "";
+if (!$contained_bar) {
+    $outer_classes = $bar_color;
+}
+
 ?>
 
-<section class="ribbon-cta-section">
+<section class="ribbon-cta-section <?php echo $outer_classes ?>">
     <div class="wrap">
         <div class="ribbon-content color <?php echo $bar_color ?>">
             <?php if (! empty($first_text || $second_text)) : ?>

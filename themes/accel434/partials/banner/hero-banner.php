@@ -82,13 +82,15 @@ function decide_banner_bg_img()
         $default_bg_image = ns_get_field('banner_image');
     } elseif (is_post_type_archive('testimonial')) {
         $default_bg_image = ns_get_field('default_banner_image_testimonials', 'options');
-    } elseif (is_singular('service')) {
+    } elseif (is_singular('service') || is_post_type_archive('service')) {
         $default_bg_image = ns_get_field('default_banner_image_services', 'options');
-    } elseif (is_post_type_archive('staff') || is_singular('staff')) {
-        $default_bg_image = ns_get_field('default_banner_image_staff', 'options');
+    } elseif (is_singular('product') || is_post_type_archive('product')) {
+        $default_bg_image = ns_get_field('default_banner_image_products', 'options');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_bg_image = ns_get_field('default_banner_image_locations', 'options');
-    } elseif (is_event_calendar_page()) {
+    } elseif (is_post_type_archive('staff') || is_singular('staff')) {
+        $default_bg_image = ns_get_field('default_banner_image_staff', 'options');
+    } elseif (is_event_calendar_page() || is_singular('tribe_event_series')) {
         $default_bg_image = ns_get_field('default_banner_image_events', 'options');
     }
 
@@ -116,11 +118,13 @@ function decide_banner_height_class()
         $default_banner_height = ns_get_field('default_banner_height_testimonials', 'option');
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
         $default_banner_height = ns_get_field('default_banner_height_staff', 'option');
+    } elseif (is_post_type_archive('product') || is_singular('product')) {
+        $default_banner_height = ns_get_field('default_banner_height_products', 'option');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_banner_height = ns_get_field('default_banner_height_locations', 'option');
-    } elseif (is_event_calendar_page()) {
+    } elseif (is_event_calendar_page() || is_singular('tribe_event_series')) {
         $default_banner_height = ns_get_field('default_banner_height_events', 'option');
-    } elseif (is_singular('service')) {
+    } elseif (is_singular('service') || is_post_type_archive('service')) {
         $default_banner_height = ns_get_field('default_banner_height_services', 'option');
     }
 
@@ -145,7 +149,7 @@ function decide_banner_height_class()
 function decide_banner_title()
 {
     $title = '';
-    if (is_home() || is_category() || is_tag() || is_date() || is_singular('post')) {
+    if (is_home() || is_tag() || is_date()) {
         $page_for_posts = get_option('page_for_posts');
         $custom_title   = ns_get_field('archive_title_blog', 'option');
         $title          = get_the_title($page_for_posts);
@@ -153,6 +157,14 @@ function decide_banner_title()
         if (! empty($custom_title)) {
             $title = $custom_title;
         }
+    } elseif (is_category()) {
+        $queried_object = get_queried_object();
+        // $title = 'Resource ' . $queried_object->name;
+        $title = $queried_object->name;
+    } elseif (is_tax('resource_topic')) {
+        $queried_object = get_queried_object();
+        // $title = $queried_object->name . ' Library';
+        $title = 'Topic: ' . $queried_object->name;
     } elseif (is_post_type_archive('testimonial')) {
         $title = ns_get_field('archive_title_testimonials', 'option');
         if (empty($title)) {
@@ -163,13 +175,21 @@ function decide_banner_title()
         if (empty($title)) {
             $title = post_type_archive_title('', false);
         }
-    } elseif (is_post_type_archive('location') || is_singular('location')) {
-        $title = ns_get_field('archive_title_locations', 'option');
+    } elseif (is_post_type_archive('service')) {
+        $title = ns_get_field('archive_title_services', 'option');
         if (empty($title)) {
             $title = post_type_archive_title('', false);
         }
-    } elseif (is_event_calendar_page()) {
+    } elseif (is_post_type_archive('product')) {
+        $title = ns_get_field('archive_title_products', 'option');
+        if (empty($title)) {
+            $title = post_type_archive_title('', false);
+        }
+    } elseif (is_post_type_archive('location') || is_singular('location')) {
+        $title = ns_get_field('archive_title_locations', 'option');
+    } elseif (is_event_calendar_page() || is_singular('tribe_event_series')) {
         $title = ns_get_field('archive_title_events', 'option');
+
         if (empty($title)) {
             $title = post_type_archive_title('', false);
         }
@@ -188,16 +208,22 @@ function decide_banner_title()
 function decide_banner_subtitle()
 {
     $subtitle = '';
-    if (is_home() || is_date() || is_singular('post')) {
+    if (is_home() || is_date() || is_category() || is_tag() || is_singular('post')) {
         $subtitle = ns_get_field('archive_sub_title_blog', 'option');
     } elseif (is_post_type_archive('testimonial')) {
         $subtitle = ns_get_field('archive_sub_title_testimonials', 'option');
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
         $subtitle = ns_get_field('archive_sub_title_staff', 'option');
+    } elseif (is_post_type_archive('service')) {
+        $subtitle = ns_get_field('archive_sub_title_services', 'option');
+    } elseif (is_post_type_archive('product')) {
+        $subtitle = ns_get_field('archive_sub_title_products', 'option');
     } elseif (is_post_type_archive('location')) {
         $subtitle = ns_get_field('archive_sub_title_locations', 'option');
     } elseif (is_event_calendar_page()) {
         $subtitle = ns_get_field('archive_sub_title_events', 'option');
+    } elseif (is_singular('tribe_event_series')) {
+        $subtitle = get_the_title();
     } elseif (is_category() || is_tag()) {
         $subtitle = get_the_archive_title();
     }

@@ -4015,6 +4015,11 @@ Events Single
 .ribbon-cta-section .ribbon-text {
   display: block;
 }
+@media (min-width: 900px) {
+  .ribbon-cta-section .ribbon-text {
+    max-width: 70%;
+  }
+}
 .ribbon-cta-section .top-text,
 .ribbon-cta-section .bottom-text {
   color: white;

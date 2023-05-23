@@ -22,6 +22,10 @@
 
   .ribbon-text {
     display: block;
+
+    @media ($large-screen-up) {
+      max-width: 70%;
+    }
   }
 
   .top-text,
