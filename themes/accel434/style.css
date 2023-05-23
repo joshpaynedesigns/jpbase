@@ -2711,14 +2711,24 @@ a.skipLink:hover {
 }
 .ns-slider-arrows-wrap .left-arrow {
   left: 0;
-  transform: translateX(-100%);
+  transform: translateX(-50%);
+}
+@media (min-width: 640px) {
+  .ns-slider-arrows-wrap .left-arrow {
+    transform: translateX(-100%);
+  }
 }
 .ns-slider-arrows-wrap .left-arrow svg {
   transform: rotate(180deg);
 }
 .ns-slider-arrows-wrap .right-arrow {
   right: 0;
-  transform: translateX(100%);
+  transform: translateX(50%);
+}
+@media (min-width: 640px) {
+  .ns-slider-arrows-wrap .right-arrow {
+    transform: translateX(100%);
+  }
 }
 .ns-slider-arrows-wrap.banner-slider-outer .left-arrow {
   left: 0;
