@@ -72,11 +72,12 @@
                 "class": "",
                 "id": ""
             },
-            "min": 3,
-            "max": 0,
             "layout": "block",
-            "button_label": "Add Icon Blurb",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
             "collapsed": "",
+            "button_label": "Add Icon Blurb",
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -269,5 +270,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1677703704
+    "modified": 1685047711
 }
