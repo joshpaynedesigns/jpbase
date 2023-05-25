@@ -98,7 +98,7 @@
                 "id": ""
             },
             "message": "",
-            "default_value": 1,
+            "default_value": 0,
             "ui_on_text": "",
             "ui_off_text": "",
             "ui": 1
@@ -124,5 +124,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1684867360
+    "modified": 1685046995
 }

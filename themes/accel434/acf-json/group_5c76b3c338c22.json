@@ -36,10 +36,9 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "layout": "block",
             "pagination": 0,
-            "min": 0,
+            "min": 1,
             "max": 0,
             "collapsed": "",
             "button_label": "Add Box",
@@ -360,5 +359,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681919008
+    "modified": 1685045568
 }
