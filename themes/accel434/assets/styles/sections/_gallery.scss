@@ -1,7 +1,6 @@
 .gallery-section {
   .gallery-img-wrap {
     @include bg();
-    border-radius: rem(8);
     display: block;
     overflow: hidden;
     position: relative;

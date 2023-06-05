@@ -1,6 +1,5 @@
 .filter-ribbon {
   background: $blue-900;
-  border-radius: rem(12);
   padding: rem(24);
 
   @media ($large-screen-up) {
@@ -58,7 +57,6 @@
     .fs-label-wrap {
       background-color: rgba(255, 255, 255, 0.2);
       border: none;
-      border-radius: rem(4);
       box-shadow: none;
       color: $white;
       //   font-weight: bold;
@@ -96,7 +94,6 @@
       button {
         background-color: white;
         border: none;
-        border-radius: rem(4);
         font-size: rem(14);
         justify-content: center;
         text-transform: uppercase;
