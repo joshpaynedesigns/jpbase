@@ -1009,8 +1009,8 @@ input[type=submit]:disabled:hover,
 .archive .site-inner,
 .search .site-inner,
 .page-template-default .site-inner {
-  margin-top: 4em;
   margin-bottom: 4em;
+  margin-top: 4em;
 }
 @media (min-width: 900px) {
   .single-post .post,
@@ -1021,8 +1021,8 @@ input[type=submit]:disabled:hover,
   .archive .site-inner,
   .search .site-inner,
   .page-template-default .site-inner {
-    margin-top: 6.25em;
     margin-bottom: 6.25em;
+    margin-top: 6.25em;
   }
 }
 
@@ -1047,6 +1047,11 @@ input[type=submit]:disabled:hover,
 }
 
 @media (min-width: 900px) {
+  .content-sidebar-wrap {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+  }
   .content-sidebar-wrap .content {
     width: 66.6666666667%;
   }
@@ -1055,18 +1060,6 @@ input[type=submit]:disabled:hover,
   }
   .content-sidebar-wrap .sidebar-primary {
     width: 33.3333333333%;
-  }
-  .content-sidebar .content-sidebar-wrap .sidebar-primary {
-    margin-right: 0;
-    margin-left: auto;
-  }
-  .sidebar-content .content-sidebar-wrap .content {
-    order: 2;
-    margin-right: 0;
-    margin-left: auto;
-  }
-  .sidebar-content .content-sidebar-wrap .sidebar-primary {
-    order: 1;
   }
 }
 /**
@@ -1882,14 +1875,14 @@ body.fixed-header .site-header {
   }
 }
 .banner_slide.light-text {
-  background-color: black;
+  background-color: #111;
 }
 .banner_slide.light-text .banner_subtitle,
 .banner_slide.light-text .banner_title {
   color: white;
 }
 .banner_slide.dark-text {
-  background-color: #eee;
+  background-color: white;
 }
 .banner_slide.dark-text .banner_subtitle,
 .banner_slide.dark-text .banner_title {

@@ -26,11 +26,11 @@
 .archive .site-inner,
 .search .site-inner,
 .page-template-default .site-inner {
-  margin-top: $mobile-section-margin;
   margin-bottom: $mobile-section-margin;
+  margin-top: $mobile-section-margin;
   @media ($large-screen-up) {
-    margin-top: $desk-section-margin;
     margin-bottom: $desk-section-margin;
+    margin-top: $desk-section-margin;
   }
 }
 
@@ -54,8 +54,9 @@
 
 @media ($large-screen-up) {
   .content-sidebar-wrap {
-    // @include outer-container(1200px);
-    // display: flex;
+    display: flex;
+    gap: rem(32);
+    justify-content: space-between;
 
     .content {
       @include span-columns(8);
@@ -67,25 +68,6 @@
 
     .sidebar-primary {
       @include span-columns(4);
-    }
-
-    .content-sidebar & {
-      .sidebar-primary {
-        margin-right: 0;
-        margin-left: auto;
-      }
-    }
-
-    .sidebar-content & {
-      .content {
-        order: 2;
-        margin-right: 0;
-        margin-left: auto;
-      }
-
-      .sidebar-primary {
-        order: 1;
-      }
     }
   }
 }

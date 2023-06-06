@@ -108,7 +108,6 @@ function child_theme_setup()
     // Sidebars
     unregister_sidebar('sidebar-alt');
     unregister_sidebar('header-right');
-    unregister_sidebar('sidebar');
 
     add_theme_support('genesis-footer-widgets', 4);
 

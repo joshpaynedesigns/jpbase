@@ -125,7 +125,7 @@ $large-b-height: 725px;
   }
 
   &.light-text {
-    background-color: black;
+    background-color: $dark-gray;
 
     .banner_subtitle,
     .banner_title {
@@ -134,7 +134,7 @@ $large-b-height: 725px;
   }
 
   &.dark-text {
-    background-color: $light-gray;
+    background-color: white;
 
     .banner_subtitle,
     .banner_title {
