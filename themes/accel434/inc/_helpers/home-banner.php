@@ -30,19 +30,19 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
             <div class="banner-slider actual-slider <?php echo $height_class; ?>">
                 <?php
                 foreach ($banner_panels as $bp) {
-                    $type                 = $bp['banner_slide_type'];
-                    $txt_color            = $bp['text_color'];
-                    $overlay              = $bp['overlay'];
-                    $title                = $bp['banner_title'];
-                    $subtitle             = $bp['banner_sub_title'];
-                    $first_button         = $bp['first_button'];
+                    $type                 = ns_key_value($bp, 'banner_slide_type');
+                    $txt_color            = ns_key_value($bp, 'text_color');
+                    $overlay              = ns_key_value($bp, 'overlay');
+                    $title                = ns_key_value($bp, 'banner_title');
+                    $subtitle             = ns_key_value($bp, 'banner_sub_title');
+                    $first_button         = ns_key_value($bp, 'first_button');
                     $second_button        = ns_key_value($bp, 'second_button');
-                    $use_default_bg_image = false;
-                    $bg_image          = $bp['banner_background_image'];
-                    $webm_vid             = $bp['webm_video_file'];
-                    $mp4_vid              = $bp['mp4_video_file'];
-                    $og_vid               = $bp['ogg_video_file'];
+                    $bg_image             = ns_key_value($bp, 'banner_background_image');
+                    $webm_vid             = ns_key_value($bp, 'webm_video_file');
+                    $mp4_vid              = ns_key_value($bp, 'mp4_video_file');
+                    $og_vid               = ns_key_value($bp, 'ogg_video_file');
                     $image                = ns_key_value($bp, 'image');
+                    $use_default_bg_image = false;
 
                     ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image);
                 }

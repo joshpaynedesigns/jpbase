@@ -135,6 +135,30 @@
                     "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
+                    "key": "field_58e7d31120f8d",
+                    "label": "Text Color",
+                    "name": "text_color",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "Select the color of the text for the homepage banner.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "light-text": "Light",
+                        "dark-text": "Dark"
+                    },
+                    "allow_null": 0,
+                    "default_value": "light-text",
+                    "layout": "horizontal",
+                    "return_format": "value",
+                    "parent_repeater": "field_58e7d3111d06f"
+                },
+                {
                     "key": "field_6402600fabb62",
                     "label": "Image",
                     "name": "image",
@@ -159,30 +183,6 @@
                     "max_size": "",
                     "mime_types": "",
                     "preview_size": "thumbnail",
-                    "parent_repeater": "field_58e7d3111d06f"
-                },
-                {
-                    "key": "field_58e7d31120f8d",
-                    "label": "Text Color",
-                    "name": "text_color",
-                    "aria-label": "",
-                    "type": "button_group",
-                    "instructions": "Select the color of the text for the homepage banner.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "light-text": "Light",
-                        "dark-text": "Dark"
-                    },
-                    "allow_null": 0,
-                    "default_value": "light-text",
-                    "layout": "horizontal",
-                    "return_format": "value",
                     "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
@@ -426,5 +426,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681754658
+    "modified": 1686070245
 }
