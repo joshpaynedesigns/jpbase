@@ -1,5 +1,4 @@
 body {
-  background-color: $green-50;
   color: $base-font-color;
   font-family: $base-font-family;
   font-size: 90%;
@@ -206,5 +205,5 @@ code {
 
 // WYSIWYG background color
 #tinymce {
-  background-color: $green-50;
+  // Set editor bg color here
 }

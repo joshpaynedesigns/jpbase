@@ -20,7 +20,7 @@ label {
 input,
 select {
   display: block;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
 }
 
@@ -30,7 +30,7 @@ select[multiple] {
   border: 1px solid #cccccc;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
   margin-bottom: 0.5em;
   padding: 0.5em;
@@ -205,9 +205,8 @@ th {
 }
 
 body {
-  background-color: #f1faf9;
   color: #555555;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 90%;
   line-height: 1.5;
 }
@@ -232,7 +231,7 @@ h4,
 h5,
 h6 {
   color: #111111;
-  font-family: "Prompt";
+  font-family: "Lato";
   font-size: 1em;
   font-weight: 600;
   line-height: 1.2;
@@ -242,7 +241,7 @@ h6 {
 h1,
 #heading-one {
   display: block;
-  font-family: "Prompt";
+  font-family: "Lato";
   font-size: 3.25em;
 }
 
@@ -321,11 +320,11 @@ code {
 }
 
 .base-font {
-  font-family: "Montserrat";
+  font-family: "Lato";
 }
 
 .heading-font {
-  font-family: "Prompt";
+  font-family: "Lato";
 }
 
 .uppercase {
@@ -409,10 +408,6 @@ code {
   color: #eeeeee;
 }
 
-#tinymce {
-  background-color: #f1faf9;
-}
-
 ._form button,
 input[type=button],
 input[type=reset],
@@ -433,7 +428,7 @@ input[type=submit],
   color: white !important;
   cursor: pointer;
   display: inline-block;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;

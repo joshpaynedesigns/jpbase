@@ -409,7 +409,7 @@ label {
 input,
 select {
   display: block;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
 }
 
@@ -419,7 +419,7 @@ select[multiple] {
   border: 1px solid #cccccc;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
   margin-bottom: 0.5em;
   padding: 0.5em;
@@ -594,9 +594,8 @@ th {
 }
 
 body {
-  background-color: #f1faf9;
   color: #555555;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 90%;
   line-height: 1.5;
 }
@@ -621,7 +620,7 @@ h4,
 h5,
 h6 {
   color: #111111;
-  font-family: "Prompt";
+  font-family: "Lato";
   font-size: 1em;
   font-weight: 600;
   line-height: 1.2;
@@ -631,7 +630,7 @@ h6 {
 h1,
 #heading-one {
   display: block;
-  font-family: "Prompt";
+  font-family: "Lato";
   font-size: 3.25em;
 }
 
@@ -710,11 +709,11 @@ code {
 }
 
 .base-font {
-  font-family: "Montserrat";
+  font-family: "Lato";
 }
 
 .heading-font {
-  font-family: "Prompt";
+  font-family: "Lato";
 }
 
 .uppercase {
@@ -798,10 +797,6 @@ code {
   color: #eeeeee;
 }
 
-#tinymce {
-  background-color: #f1faf9;
-}
-
 ._form button,
 input[type=button],
 input[type=reset],
@@ -822,7 +817,7 @@ input[type=submit],
   color: white !important;
   cursor: pointer;
   display: inline-block;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
@@ -1341,7 +1336,7 @@ body.locked {
   padding-bottom: 0;
 }
 .mobile-menu .menu > li > a {
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-weight: 600;
   color: white;
   display: block;
@@ -1390,7 +1385,7 @@ body.locked {
 }
 .mobile-menu .menu > li.menu-item-has-children .sub-menu a {
   color: #eeeeee;
-  font-family: "Prompt";
+  font-family: "Lato";
 }
 .mobile-menu .icon-close-container {
   position: absolute;
@@ -1530,7 +1525,7 @@ body.locked {
   color: #01569f;
 }
 .site-header .title-area .site-description {
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
   font-weight: 500;
   margin-bottom: 0;
@@ -1654,7 +1649,7 @@ body.fixed-header .site-header {
 
 .header-nav-wrap .menu {
   clear: both;
-  font-family: "Montserrat";
+  font-family: "Lato";
   font-size: 1em;
   line-height: 1;
   margin: 0;
@@ -1747,7 +1742,7 @@ body.fixed-header .site-header {
   background: #01569f;
   color: white;
   display: inline-block;
-  font-family: "Prompt";
+  font-family: "Lato";
   font-size: 0.875em;
   -webkit-font-smoothing: antialiased;
   font-weight: 400;
@@ -2820,7 +2815,7 @@ a.skipLink:hover {
   color: white;
   cursor: pointer;
   display: inline-block;
-  font-family: "Montserrat";
+  font-family: "Lato";
   line-height: 1;
   transition: background-color 300ms ease-in-out;
   -webkit-user-select: none;
