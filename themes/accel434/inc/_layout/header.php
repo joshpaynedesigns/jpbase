@@ -7,7 +7,6 @@
  * @link http://objectiv.co/
  */
 
-add_action('genesis_header', 'ns_mobile_trigger', 12);
 function ns_mobile_trigger()
 {
 
@@ -26,23 +25,29 @@ add_action('genesis_header', 'ns_regular_menus_output', 12);
 function ns_regular_menus_output()
 {
     ?>
-        <?php if (has_nav_menu('primary') || has_nav_menu('secondary-nav')) : ?>
-            <div class="header-nav-wrap">
-                <?php if (has_nav_menu('secondary-nav')) : ?>
-                    <div class="secondary-nav-wrap">
-                        <?php wp_nav_menu(array( 'menu' => 'secondary-nav' )); ?>
-                        <?php if (shortcode_exists('gtranslate')) : ?>
-                            <div class=""><?php echo do_shortcode('[gtranslate]'); ?></div>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-                <?php if (has_nav_menu('primary')) : ?>
-                    <div class="primary-nav-wrap">
-                        <?php wp_nav_menu(array( 'menu' => 'primary' )); ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        <?php endif; ?>
+        <div class="header-right">
+            <?php if (has_nav_menu('primary') || has_nav_menu('secondary-nav')) : ?>
+                <div class="header-nav-wrap">
+                    <?php if (has_nav_menu('secondary-nav')) : ?>
+                        <div class="secondary-nav-wrap">
+                            <?php wp_nav_menu(array( 'menu' => 'secondary-nav' )); ?>
+                            <?php if (shortcode_exists('gtranslate')) : ?>
+                                <div class=""><?php echo do_shortcode('[gtranslate]'); ?></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (has_nav_menu('primary')) : ?>
+                        <div class="primary-nav-wrap">
+                            <?php wp_nav_menu(array( 'menu' => 'primary' )); ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php ns_search_toggle() ?>
+
+            <?php ns_mobile_trigger() ?>
+        </div>
     <?php
 }
 
@@ -56,15 +61,15 @@ add_action('genesis_before_header', 'ns_mobile_menu');
 function ns_mobile_menu()
 {
 
-    if (has_nav_menu('mobile-menu') || has_nav_menu('primary') ) {
+    if (has_nav_menu('mobile-menu') || has_nav_menu('primary')) {
         ?>
         <div id="mobile-menu" class="mobile-menu">
             <?php if (shortcode_exists('gtranslate')) : ?>
                 <div class="basemb"><?php echo do_shortcode('[gtranslate]'); ?></div>
             <?php endif; ?>
-            <?php if( has_nav_menu('mobile-menu') ) : ?>
+            <?php if (has_nav_menu('mobile-menu')) : ?>
                 <?php wp_nav_menu(array( 'theme_location' => 'mobile-menu' )); ?>
-            <?php elseif(has_nav_menu('primary')) : ?>
+            <?php elseif (has_nav_menu('primary')) : ?>
                 <?php wp_nav_menu(array( 'theme_location' => 'primary' )); ?>
             <?php endif; ?>
             <?php if (has_nav_menu('secondary-nav')) : ?>

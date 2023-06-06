@@ -88,9 +88,6 @@ function child_theme_setup()
 
     // * Reposition the primary navigation menu
     remove_action('genesis_after_header', 'genesis_do_nav');
-    // add_action('genesis_header', 'genesis_do_nav');
-
-    // add_action('genesis_header', 'ns_search_toggle');
 
     // CPT Archive Nav Fix
     function fix_nav_menu($query)

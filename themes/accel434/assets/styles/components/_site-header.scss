@@ -81,18 +81,13 @@ $icon-color: white;
         background-size: contain;
         display: block;
         float: left;
-        height: 40px;
+        height: rem(28);
         transition: opacity $base-duration $base-timing;
-        width: 135px;
+        width: rem(198);
 
         @media ($large-screen-up) {
-          height: 48px;
-          width: 160px;
-        }
-
-        @media ($xl-screen-up) {
-          height: 65px;
-          width: 220px;
+          height: rem(36);
+          width: rem(258);
         }
 
         &:before {
@@ -175,4 +170,10 @@ body.fixed-header .site-header {
   @media (min-width: 783px) {
     top: 32px;
   }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: rem(24);
 }

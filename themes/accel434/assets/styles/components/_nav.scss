@@ -152,7 +152,7 @@ $sub-nav-link-color-hover: $base-font-color;
 .secondary-nav-wrap {
   align-items: center;
   display: flex;
-  gap: 1.6em;
+  gap: rem(24);
 
   .menu {
     font-size: rem(12);
