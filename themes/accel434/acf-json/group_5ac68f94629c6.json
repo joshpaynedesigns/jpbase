@@ -22,9 +22,7 @@
                 "medium-gray": "Medium Gray",
                 "dark-gray": "Dark Gray",
                 "blue": "Blue",
-                "light-blue": "Light Blue",
-                "green": "Green",
-                "light-green": "Light Green"
+                "light-blue": "Light Blue"
             },
             "default_value": "none",
             "return_format": "value",
@@ -53,5 +51,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1684864619
+    "modified": 1686064163
 }

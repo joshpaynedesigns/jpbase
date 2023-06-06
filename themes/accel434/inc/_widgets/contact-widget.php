@@ -36,7 +36,6 @@ class ns_Contact_Widget extends WP_Widget
         $fax_numbers       = preg_replace('/[^0-9]/', '', $fax);
         $hide_social_icons = ns_get_field('hide_social_icons', 'widget_' . $widget_id);
         $blurb             = ns_get_field('blurb', 'widget_' . $widget_id);
-        $green_button            = ns_get_field('green_button', 'widget_' . $widget_id);
         $button            = ns_get_field('button', 'widget_' . $widget_id);
         $or_link            = ns_get_field('or_link', 'widget_' . $widget_id);
 
@@ -45,10 +44,6 @@ class ns_Contact_Widget extends WP_Widget
 
         <?php if (! empty($title)) : ?>
             <h4 class="widget-title widgettitle"><?php echo $title; ?></h4>
-        <?php endif; ?>
-
-        <?php if (! empty($green_button)) : ?>
-            <div class="smallmb"><?php echo ns_link_button($green_button, 'green-button small-button') ?></div>
         <?php endif; ?>
 
         <?php if ($blurb) : ?>

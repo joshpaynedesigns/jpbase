@@ -48,7 +48,7 @@ $section_classes = ns_decide_section_classes();
                             <?php endif; ?>
 
                             <?php if (! empty($blurb_link)) : ?>
-                                <div class="blurb-link-wrap"><?php echo ns_link_button($blurb_link, 'green-button small-button') ?></div>
+                                <div class="blurb-link-wrap"><?php echo ns_link_button($blurb_link, 'blue-button small-button') ?></div>
                             <?php endif; ?>
 
                             <?php if ($show_accordion && ! empty($accordion_title) && ! empty($accordion_content)) : ?>

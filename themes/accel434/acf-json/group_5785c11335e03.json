@@ -23,23 +23,6 @@
             "append": ""
         },
         {
-            "key": "field_6405fb247e6c7",
-            "label": "Green Button",
-            "name": "green_button",
-            "aria-label": "",
-            "type": "link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "return_format": "array"
-        },
-        {
             "key": "field_5786a6ca94438",
             "label": "Address - Line 1",
             "name": "address_line_1",
@@ -263,5 +246,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1678113639
+    "modified": 1686063647
 }

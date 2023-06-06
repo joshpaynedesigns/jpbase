@@ -7,7 +7,7 @@
 .staffArchBlock {
   .image-wrap {
     overflow: hidden;
-    background-color: $blue-200;
+    background-color: $light-blue;
     max-width: rem(400);
     margin-left: auto;
     margin-right: auto;
@@ -25,7 +25,7 @@
   }
 
   .position {
-    color: $gray-600;
+    color: $medium-gray;
   }
 }
 
@@ -36,7 +36,7 @@
     }
 
     .name {
-      color: $blue-200;
+      color: $light-blue;
     }
   }
 }

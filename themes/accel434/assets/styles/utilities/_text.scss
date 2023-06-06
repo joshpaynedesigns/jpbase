@@ -1,3 +1,5 @@
+@include text_colors();
+
 // Line Heights
 .lh1 {
   line-height: 1;
@@ -15,49 +17,6 @@
 
 .tar {
   text-align: right;
-}
-
-// Text Color
-.text-action {
-  color: $action-color;
-}
-
-.text-green {
-  color: $green-900;
-}
-
-.text-blue,
-.text-blue-900 {
-  color: $blue-900;
-}
-
-.text-dark-gray {
-  color: $gray-900;
-}
-
-.text-medium-gray {
-  color: $gray-600;
-}
-
-.text-light-gray {
-  color: $gray-200;
-}
-
-.text-primary {
-  color: $primary-color;
-}
-
-.text-white {
-  color: white;
-
-  a {
-    color: white;
-    text-decoration: underline;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
 }
 
 .text-is-light {
@@ -88,16 +47,16 @@
   h4,
   h5,
   h6 {
-    color: $gray-900;
+    color: $dark-gray;
   }
 
   p {
-    color: $gray-600;
+    color: $medium-gray;
   }
 
   a {
     text-transform: uppercase;
-    color: $blue-900;
+    color: $blue;
 
     &:hover {
       text-decoration: underline;
@@ -115,7 +74,7 @@ div.fake-arrow-link {
   align-items: center;
   gap: rem(6);
   cursor: pointer;
-  color: $blue-900;
+  color: $blue;
   transition: all $base-timing $base-duration;
 
   &:after {
@@ -130,7 +89,7 @@ div.fake-arrow-link {
 
   &:hover {
     gap: rem(10);
-    color: $blue-200;
+    color: $light-blue;
 
     &:after {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%2348a0c8' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75' /%3E%3C/svg%3E%0A");

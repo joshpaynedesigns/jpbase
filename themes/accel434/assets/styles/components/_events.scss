@@ -6,7 +6,7 @@
   .tribe-common-c-btn {
     -webkit-font-smoothing: antialiased;
     appearance: none;
-    background-color: $primary-color;
+    background-color: $blue;
     border-radius: 0;
     border: 2px solid transparent;
     color: white;
@@ -21,14 +21,14 @@
     &:hover,
     &:focus {
       background-color: transparent;
-      color: $primary-color;
-      border-color: $primary-color;
+      color: $blue;
+      border-color: $blue;
     }
   }
 
   .tribe-events-calendar-month__calendar-event--featured {
     &:before {
-      background-color: $action-color;
+      background-color: $blue;
     }
 
     .tribe-events-calendar-month__calendar-event-datetime-featured-icon {
@@ -39,13 +39,13 @@
   .tribe-events-calendar-month__day-cell--selected,
   .tribe-events .tribe-events-calendar-month__day-cell--selected:focus,
   .tribe-events .tribe-events-calendar-month__day-cell--selected:hover {
-    // background-color: $primary-color;
+    // background-color: $blue;
   }
 
   .tribe-events-calendar-month__day--current {
     .tribe-events-calendar-month__day-date,
     .tribe-events-calendar-month__day-date-link {
-      color: $action-color;
+      color: $blue;
     }
   }
 
@@ -74,7 +74,7 @@
     }
 
     .tribe-events-c-breadcrumbs__list-item-text {
-      color: $black;
+      color: $dark-gray;
     }
   }
 
@@ -96,7 +96,7 @@
       }
 
       .tribe-events-calendar-list__event-date-tag-datetime:after {
-        background-color: $action-color;
+        background-color: $blue;
       }
 
       .tribe-events-calendar-list__event-datetime-featured-icon {
@@ -104,7 +104,7 @@
       }
 
       .tribe-events-calendar-list__event-datetime-featured-text {
-        color: $action-color;
+        color: $blue;
       }
 
       .tribe-events-calendar-list__event-title {
@@ -120,11 +120,11 @@
 
         &:visited {
           color: white;
-          background-color: $gray-600;
+          background-color: $medium-gray;
 
           &:hover {
-            color: $gray-600;
-            border-color: $gray-600;
+            color: $medium-gray;
+            border-color: $medium-gray;
           }
         }
       }

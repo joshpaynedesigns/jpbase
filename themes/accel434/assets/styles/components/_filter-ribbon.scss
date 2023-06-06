@@ -1,5 +1,5 @@
 .filter-ribbon {
-  background: $blue-900;
+  background: $blue;
   padding: rem(24);
 
   @media ($large-screen-up) {
@@ -50,7 +50,7 @@
 
     .fs-search input {
       min-height: unset;
-      color: $gray-900;
+      color: $dark-gray;
     }
 
     input,
@@ -58,8 +58,7 @@
       background-color: rgba(255, 255, 255, 0.2);
       border: none;
       box-shadow: none;
-      color: $white;
-      //   font-weight: bold;
+      color: white;
       margin-bottom: 0;
       min-width: auto !important;
       width: 100%;
@@ -69,7 +68,7 @@
       }
 
       .fs-arrow {
-        border-top-color: $white;
+        border-top-color: white;
       }
     }
 
@@ -79,7 +78,7 @@
       }
 
       input::placeholder {
-        color: $white;
+        color: white;
       }
     }
 

@@ -155,11 +155,9 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "choices": {
                         "blue": "Blue",
                         "white": "White",
-                        "green": "Green",
                         "dark-gray": "Dark Gray"
                     },
                     "default_value": "blue",
@@ -207,11 +205,9 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "choices": {
                         "blue": "Blue",
                         "white": "White",
-                        "green": "Green",
                         "dark-gray": "Dark Gray"
                     },
                     "default_value": "dark-gray",
@@ -271,13 +267,11 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "choices": {
                         "blue": "Blue",
                         "white": "White",
                         "medium-gray": "Medium Gray",
-                        "dark-gray": "Dark Gray",
-                        "green": "Green"
+                        "dark-gray": "Dark Gray"
                     },
                     "default_value": "blue",
                     "return_format": "value",
@@ -359,5 +353,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1685045568
+    "modified": 1686064080
 }

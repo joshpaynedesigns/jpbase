@@ -1,7 +1,7 @@
 .attachments-section {
   .attachment_icon {
     align-items: center;
-    background-color: $blue-200;
+    background-color: $light-blue;
     display: flex;
     height: rem(48);
     justify-content: center;
@@ -13,14 +13,14 @@
   }
 
   .attachment_title {
-    color: $gray-600;
+    color: $medium-gray;
     transition: all $base-timing $base-duration;
   }
 
   a.attachment {
     &:hover {
       .attachment_title {
-        color: $blue-200;
+        color: $light-blue;
       }
     }
   }

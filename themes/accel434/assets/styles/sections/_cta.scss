@@ -4,7 +4,7 @@
   .cta-slide {
     @include bg();
     position: relative;
-    background-color: $black;
+    background-color: $dark-gray;
 
     .wrap {
       width: 80%;
@@ -45,7 +45,7 @@
     }
 
     .cta-content-wrap {
-      background: $blue-900;
+      background: $blue;
       background: rgba(0, 0, 0, 0.6);
       padding: 2em;
 
@@ -56,7 +56,7 @@
     }
 
     .cta-overlay {
-      background-color: $black;
+      background-color: $dark-gray;
       opacity: 0.6;
       height: 100%;
       left: 0;
@@ -83,7 +83,7 @@
     }
 
     svg {
-      fill: $white;
+      fill: white;
       height: 40px;
       width: 40px;
     }

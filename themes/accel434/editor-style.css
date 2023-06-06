@@ -27,7 +27,7 @@ select {
 input,
 select[multiple] {
   background-color: white;
-  border: 1px solid #cccccc;
+  border: 1px solid #eee;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
   font-family: "Lato";
@@ -39,7 +39,7 @@ select[multiple] {
 }
 input:hover,
 select[multiple]:hover {
-  border-color: shade(#cccccc, 20%);
+  border-color: shade(#eee, 20%);
 }
 input:focus,
 select[multiple]:focus {
@@ -54,7 +54,7 @@ select[multiple]:disabled {
 }
 input:disabled:hover,
 select[multiple]:disabled:hover {
-  border: 1px solid #cccccc;
+  border: 1px solid #eee;
 }
 
 textarea {
@@ -128,7 +128,7 @@ select {
 }
 #tinymce ul li:before,
 .site-inner ul li:before {
-  background-color: #555555;
+  background-color: #555;
   border-radius: 50%;
   content: "";
   height: 8px;
@@ -187,14 +187,14 @@ table {
 }
 
 th {
-  border-bottom: 1px solid shade(#cccccc, 25%);
+  border-bottom: 1px solid shade(#eee, 25%);
   font-weight: 600;
   padding: 0.5em 0;
   text-align: left;
 }
 
 td {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #eee;
   padding: 0.5em 0;
 }
 
@@ -205,10 +205,11 @@ th {
 }
 
 body {
-  color: #555555;
+  color: #555;
   font-family: "Lato";
   font-size: 90%;
   line-height: 1.5;
+  background-color: white;
 }
 body *::-moz-selection {
   background-color: #01569f;
@@ -230,7 +231,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #111111;
+  color: #111;
   font-family: "Lato";
   font-size: 1em;
   font-weight: 600;
@@ -280,7 +281,7 @@ a:active, a:focus, a:hover {
 }
 
 hr {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #eee;
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -295,7 +296,7 @@ picture {
 
 blockquote {
   border-left: 8px solid #48a0c8;
-  color: #1d6665;
+  color: #01569f;
   margin: 4% 5% 4% 0;
   padding: 0 0 0 2rem;
   position: relative;
@@ -305,9 +306,9 @@ blockquote > *:last-child {
 }
 
 code {
-  background: #eeeeee;
-  border: 1px solid #cccccc;
-  color: #555555;
+  background: #eee;
+  border: 1px solid #eee;
+  color: #555;
   padding: 2px 4px;
 }
 
@@ -380,46 +381,51 @@ code {
   margin: 0 0 1.5em 1.5em;
 }
 
-.text-white {
-  color: white;
-}
-
-.text-black {
-  color: #111111;
-}
-
 .text-blue {
   color: #01569f;
 }
 
-.text-green {
-  color: #1d6665;
+.text-light-blue {
+  color: #48a0c8;
 }
 
 .text-dark-gray {
-  color: #111111;
+  color: #111;
 }
 
 .text-medium-gray {
-  color: #555555;
+  color: #555;
 }
 
 .text-light-gray {
-  color: #eeeeee;
+  color: #eee;
+}
+
+.text-white {
+  color: white;
+}
+.text-white a {
+  color: white;
+  text-decoration: underline;
+}
+.text-white a:hover {
+  text-decoration: none;
+}
+
+#tinymce {
+  background-color: white;
 }
 
 ._form button,
 input[type=button],
 input[type=reset],
 input[type=submit],
-.primary-button a,
 .blue-button a,
 .blue-button button,
 .light-blue-button a,
 .medium-gray-button a,
 .dark-gray-button a,
-.white-button a,
-.green-button a {
+.white-button a {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -448,8 +454,6 @@ input[type=reset]:hover,
 input[type=reset]:focus,
 input[type=submit]:hover,
 input[type=submit]:focus,
-.primary-button a:hover,
-.primary-button a:focus,
 .blue-button a:hover,
 .blue-button a:focus,
 .blue-button button:hover,
@@ -461,9 +465,7 @@ input[type=submit]:focus,
 .dark-gray-button a:hover,
 .dark-gray-button a:focus,
 .white-button a:hover,
-.white-button a:focus,
-.green-button a:hover,
-.green-button a:focus {
+.white-button a:focus {
   background-color: transparent;
   border-color: #01569f;
   color: #01569f !important;
@@ -472,14 +474,12 @@ input[type=submit]:focus,
 input[type=button]:disabled,
 input[type=reset]:disabled,
 input[type=submit]:disabled,
-.primary-button a:disabled,
 .blue-button a:disabled,
 .blue-button button:disabled,
 .light-blue-button a:disabled,
 .medium-gray-button a:disabled,
 .dark-gray-button a:disabled,
-.white-button a:disabled,
-.green-button a:disabled {
+.white-button a:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -487,14 +487,12 @@ input[type=submit]:disabled,
 input[type=button]:disabled:hover,
 input[type=reset]:disabled:hover,
 input[type=submit]:disabled:hover,
-.primary-button a:disabled:hover,
 .blue-button a:disabled:hover,
 .blue-button button:disabled:hover,
 .light-blue-button a:disabled:hover,
 .medium-gray-button a:disabled:hover,
 .dark-gray-button a:disabled:hover,
-.white-button a:disabled:hover,
-.green-button a:disabled:hover {
+.white-button a:disabled:hover {
   background-color: transparent;
 }
 
@@ -506,15 +504,12 @@ input[type=submit]:disabled:hover,
   padding: 0.8125rem 1.5rem;
 }
 
-.primary-button a,
 .blue-button a,
 .blue-button input[type=submit],
 .blue-button button {
   background-color: #01569f;
 }
-.primary-button a:hover, .primary-button a:focus,
-.blue-button a:hover,
-.blue-button a:focus,
+.blue-button a:hover, .blue-button a:focus,
 .blue-button input[type=submit]:hover,
 .blue-button input[type=submit]:focus,
 .blue-button button:hover,
@@ -524,63 +519,75 @@ input[type=submit]:disabled:hover,
   outline: none;
 }
 
+.light-blue-button a,
+.light-blue-button input[type=submit],
+.light-blue-button button {
+  background-color: #48a0c8;
+}
+.light-blue-button a:hover, .light-blue-button a:focus,
+.light-blue-button input[type=submit]:hover,
+.light-blue-button input[type=submit]:focus,
+.light-blue-button button:hover,
+.light-blue-button button:focus {
+  border-color: #48a0c8;
+  color: #48a0c8 !important;
+  outline: none;
+}
+
 .medium-gray-button a,
-.medium-gray-button input[type=submit] {
-  background-color: #555555;
+.medium-gray-button input[type=submit],
+.medium-gray-button button {
+  background-color: #555;
 }
 .medium-gray-button a:hover, .medium-gray-button a:focus,
 .medium-gray-button input[type=submit]:hover,
-.medium-gray-button input[type=submit]:focus {
-  border-color: #555555;
-  color: #555555 !important;
+.medium-gray-button input[type=submit]:focus,
+.medium-gray-button button:hover,
+.medium-gray-button button:focus {
+  border-color: #555;
+  color: #555 !important;
   outline: none;
 }
 
 .dark-gray-button a,
-.dark-gray-button input[type=submit] {
-  background-color: #111111;
+.dark-gray-button input[type=submit],
+.dark-gray-button button {
+  background-color: #111;
 }
 .dark-gray-button a:hover, .dark-gray-button a:focus,
 .dark-gray-button input[type=submit]:hover,
-.dark-gray-button input[type=submit]:focus {
-  border-color: #111111;
-  color: #111111 !important;
-  outline: none;
-}
-
-.green-button a,
-.green-button input[type=submit] {
-  background-color: #1d6665;
-}
-.green-button a:hover, .green-button a:focus,
-.green-button input[type=submit]:hover,
-.green-button input[type=submit]:focus {
-  border-color: #1d6665;
-  color: #1d6665 !important;
+.dark-gray-button input[type=submit]:focus,
+.dark-gray-button button:hover,
+.dark-gray-button button:focus {
+  border-color: #111;
+  color: #111 !important;
   outline: none;
 }
 
 .white-button a,
-.white-button input[type=submit] {
+.white-button input[type=submit],
+.white-button button {
   background-color: white;
-  color: #111111 !important;
+  color: #111 !important;
 }
 .white-button a:hover, .white-button a:focus,
 .white-button input[type=submit]:hover,
-.white-button input[type=submit]:focus {
+.white-button input[type=submit]:focus,
+.white-button button:hover,
+.white-button button:focus {
   border-color: white;
   color: white !important;
   outline: none;
 }
 .white-button a:hover,
-.white-button input[type=submit]:hover {
+.white-button input[type=submit]:hover,
+.white-button button:hover {
   background-color: transparent;
 }
 
 .blue-button,
 .medium-gray-button,
 .dark-gray-button,
-.green-button,
 .white-button {
   display: inline-block;
 }

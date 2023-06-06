@@ -57,7 +57,7 @@ if ($hide_banner_options == 'hide_banner_image') {
                     <?php endif; ?>
                     <?php if ($button) : ?>
                         <div class="flex justify-center items-center basemt">
-                            <?php echo ns_link_button($button, 'green-button'); ?>
+                            <?php echo ns_link_button($button, 'blue-button'); ?>
                         </div>
                     <?php endif; ?>
                 </div>

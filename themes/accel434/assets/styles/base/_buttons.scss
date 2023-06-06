@@ -2,16 +2,14 @@
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
-.primary-button a,
 .blue-button a,
 .blue-button button,
 .light-blue-button a,
 .medium-gray-button a,
 .dark-gray-button a,
-.white-button a,
-.green-button a {
+.white-button a {
   appearance: none;
-  background-color: $action-color;
+  background-color: $blue;
   border: 2px solid transparent;
   color: white !important;
   cursor: pointer;
@@ -23,7 +21,6 @@ input[type="submit"],
   padding: rem(16px) rem(44px);
   text-align: center;
   text-decoration: none;
-  //   text-transform: uppercase;
   transition: all $base-duration $base-timing;
   user-select: none;
   vertical-align: middle;
@@ -31,8 +28,8 @@ input[type="submit"],
   &:hover,
   &:focus {
     background-color: transparent;
-    border-color: $action-color;
-    color: $action-color !important;
+    border-color: $blue;
+    color: $blue !important;
   }
 
   &:disabled {
@@ -54,7 +51,7 @@ input[type="submit"],
   }
 }
 
-@mixin button-set-up($color: $action-color) {
+@mixin button-set-up($color: $blue) {
   background-color: $color;
 
   &:hover,
@@ -65,32 +62,35 @@ input[type="submit"],
   }
 }
 
-.primary-button a,
 .blue-button a,
 .blue-button input[type="submit"],
 .blue-button button {
-  @include button-set-up($blue-900);
+  @include button-set-up($blue);
+}
+
+.light-blue-button a,
+.light-blue-button input[type="submit"],
+.light-blue-button button {
+  @include button-set-up($light-blue);
 }
 
 .medium-gray-button a,
-.medium-gray-button input[type="submit"] {
-  @include button-set-up($gray-600);
+.medium-gray-button input[type="submit"],
+.medium-gray-button button {
+  @include button-set-up($medium-gray);
 }
 
 .dark-gray-button a,
-.dark-gray-button input[type="submit"] {
-  @include button-set-up($gray-900);
-}
-
-.green-button a,
-.green-button input[type="submit"] {
-  @include button-set-up($green-900);
+.dark-gray-button input[type="submit"],
+.dark-gray-button button {
+  @include button-set-up($dark-gray);
 }
 
 .white-button a,
-.white-button input[type="submit"] {
+.white-button input[type="submit"],
+.white-button button {
   @include button-set-up(white);
-  color: $gray-900 !important;
+  color: $dark-gray !important;
 
   &:hover {
     background-color: transparent;
@@ -100,7 +100,6 @@ input[type="submit"],
 .blue-button,
 .medium-gray-button,
 .dark-gray-button,
-.green-button,
 .white-button {
   display: inline-block;
 }

@@ -149,7 +149,7 @@ function display_slide_content($title = null, $subtitle = null, $first_button = 
                             <?php echo ns_link_button($first_button, 'blue-button'); ?>
                         <?php endif; ?>
                         <?php if (!empty($second_button)) : ?>
-                            <?php echo ns_link_button($second_button, 'green-button'); ?>
+                            <?php echo ns_link_button($second_button, 'blue-button'); ?>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

@@ -42,7 +42,7 @@ select[multiple] {
   }
 
   &:focus {
-    border-color: $action-color;
+    border-color: $blue;
     box-shadow: $form-box-shadow-focus;
     outline: none;
   }

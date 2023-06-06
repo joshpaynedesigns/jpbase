@@ -10,15 +10,15 @@ $toolbar-text-color: #777;
 
 input[type="button"].facetwp-slider-reset,
 .fwp-collection-reset {
-  @include button-set-up($gray-200);
+  @include button-set-up($light-gray);
   box-shadow: none;
-  color: $gray-900;
+  color: $dark-gray;
   font-size: em(13px);
   margin-top: rem(10px);
   padding: rem(10px);
 
   &:hover {
-    color: $gray-900;
+    color: $dark-gray;
   }
 }
 
@@ -204,7 +204,7 @@ input[type="button"].facetwp-slider-reset,
 .featuredProdFlexSlider li.product a.added_to_cart {
   @include transition(all 0.2s ease-in-out);
   padding: 0.618em 1em !important;
-  background: $action-color !important;
+  background: $blue !important;
   border-radius: 0 !important;
   // font-family: $heading-font-family;
   color: white !important;
@@ -217,7 +217,7 @@ input[type="button"].facetwp-slider-reset,
   text-transform: uppercase;
 
   &:hover {
-    background: shade($action-color, 20) !important;
+    background: shade($blue, 20) !important;
   }
 }
 
@@ -272,7 +272,7 @@ input[type="button"].facetwp-slider-reset,
     text-decoration: none !important;
 
     .woocommerce-Price-amount {
-      // color: $action-color !important;
+      // color: $blue !important;
       font-weight: bold;
       text-decoration: none !important;
     }
@@ -305,7 +305,7 @@ input[type="button"].facetwp-slider-reset,
 .featuredProdFlexSlider li.product:hover .product-image,
 .woocommerce ul.products li.product:hover .product-image {
   &:after {
-    background: $primary-color;
+    background: $blue;
     bottom: 0;
     content: "";
     left: 0;
@@ -440,7 +440,7 @@ input[type="button"].facetwp-slider-reset,
 .toolbar {
   border-top: $base-border;
   border-bottom: $base-border;
-  border-color: $gray-200;
+  border-color: $light-gray;
   margin-bottom: em(60);
 
   .single-product & {
@@ -563,7 +563,7 @@ input[type="button"].facetwp-slider-reset,
 
 .woocommerce.single-product div.product p.price,
 .woocommerce div.product span.price {
-  color: $gray-900;
+  color: $dark-gray;
 }
 
 .woocommerce.single-product div.product p.price {
@@ -612,11 +612,11 @@ input[type="button"].facetwp-slider-reset,
 
 .cgd-product-features .cgd-product-feature {
   margin-bottom: 5px;
-  color: $gray-900;
+  color: $dark-gray;
   font-size: rem(14px);
 
   .cgd-product-feature-label {
-    color: $gray-900;
+    color: $dark-gray;
     display: block;
     font-weight: bold;
     text-transform: uppercase;
@@ -644,7 +644,7 @@ input[type="button"].facetwp-slider-reset,
 
     ins {
       @include order(1);
-      color: $action-color;
+      color: $blue;
       text-decoration: none;
     }
 
@@ -751,14 +751,14 @@ input[type="button"].facetwp-slider-reset,
 
 .woocommerce nav.woocommerce-pagination ul li a,
 .woocommerce nav.woocommerce-pagination ul li span {
-  color: $gray-600 !important;
+  color: $medium-gray !important;
   padding: 0.75em 1.25em !important;
 }
 
 .woocommerce nav.woocommerce-pagination ul li a:focus,
 .woocommerce nav.woocommerce-pagination ul li a:hover,
 .woocommerce nav.woocommerce-pagination ul li span.current {
-  background: $gray-200 !important;
+  background: $light-gray !important;
 }
 
 .woocommerce-page div.product .woocommerce-tabs {
@@ -816,7 +816,7 @@ input[type="button"].facetwp-slider-reset,
 }
 
 .woocommerce-MyAccount-navigation {
-  background: $gray-200;
+  background: $light-gray;
   padding-top: 28px;
 
   li {
@@ -889,7 +889,7 @@ body.woocommerce-checkout .site-inner {
   transition: background $base-duration $base-timing;
 
   &:hover {
-    background: $gray-900 !important;
+    background: $dark-gray !important;
   }
 }
 
@@ -903,7 +903,7 @@ body.woocommerce-checkout .site-inner {
   font-size: rem(16px) !important;
 
   &:hover {
-    background: $gray-900 !important;
+    background: $dark-gray !important;
   }
 }
 
@@ -915,7 +915,7 @@ body.woocommerce-checkout .site-inner {
 
 .woocommerce-order-received {
   .shop_table.order_details {
-    background-color: $gray-200;
+    background-color: $light-gray;
     padding: $base-spacing;
     border: none;
     border-radius: 0px;
@@ -1198,7 +1198,7 @@ li.wc_payment_method {
   }
 
   #review_form_wrapper {
-    background: $gray-200;
+    background: $light-gray;
     padding: 2em;
   }
 }
@@ -1216,12 +1216,12 @@ li.wc_payment_method {
   // Add to Cart Button - grid
   .add_to_cart_button,
   .product_type_grouped {
-    background-color: $action-color !important;
+    background-color: $blue !important;
     color: white !important;
     transition: background-color $base-duration $base-timing;
 
     &:hover {
-      background-color: shade($primary-color, 20%) !important;
+      background-color: shade($blue, 20%) !important;
     }
   }
 
@@ -1241,7 +1241,7 @@ li.wc_payment_method {
   }
 
   .woocommerce-message {
-    border-top-color: $primary-color;
+    border-top-color: $blue;
   }
 }
 
@@ -1297,14 +1297,14 @@ li.wc_payment_method {
     margin-bottom: $base-spacing;
 
     &:nth-child(even) {
-      // background-color: $gray-200;
+      // background-color: $light-gray;
     }
 
     a.remove {
       color: #111 !important;
 
       &:hover {
-        background: $gray-200;
+        background: $light-gray;
       }
     }
   }
@@ -1319,12 +1319,12 @@ li.wc_payment_method {
   }
 
   .checkout-button {
-    background-color: $primary-color !important;
+    background-color: $blue !important;
     color: white !important;
     transition: background-color $base-duration $base-timing;
 
     &:hover {
-      background-color: shade($primary-color, 20%) !important;
+      background-color: shade($blue, 20%) !important;
     }
   }
 
@@ -1340,17 +1340,17 @@ li.wc_payment_method {
 // Table stuff
 .woocommerce table.shop_table {
   thead {
-    background-color: $gray-200 !important;
+    background-color: $light-gray !important;
   }
 
   tr {
     &:nth-child(even),
     &.order_item:nth-child(odd) {
-      // background-color: $gray-200 !important;
+      // background-color: $light-gray !important;
     }
 
     &.order-total {
-      background-color: $gray-200 !important;
+      background-color: $light-gray !important;
     }
   }
 
@@ -1365,7 +1365,7 @@ li.wc_payment_method {
 
   &.actions {
     background-color: white !important;
-    border-top: 1px solid $gray-200 !important;
+    border-top: 1px solid $light-gray !important;
   }
 
   &.product-thumbnail {
@@ -1411,11 +1411,11 @@ li.wc_payment_method {
 
 // Checkout Page
 #payment {
-  background-color: $gray-200 !important;
+  background-color: $light-gray !important;
   margin-top: $base-spacing * 2;
 
   ul {
-    border-color: $gray-900 !important;
+    border-color: $dark-gray !important;
   }
 
   .payment_box:after,
@@ -1432,12 +1432,12 @@ li.wc_payment_method {
     padding: 1em;
     text-align: center;
     width: 100%;
-    background-color: $primary-color !important;
+    background-color: $blue !important;
     color: white !important;
 
     &:hover,
     &:focus {
-      background-color: shade($action-color, 20%) !important;
+      background-color: shade($blue, 20%) !important;
       color: white !important;
     }
   }
@@ -1518,7 +1518,7 @@ li.wc_payment_method {
 
     &:hover {
       h3 {
-        color: shade($action-color, 20%) !important;
+        color: shade($blue, 20%) !important;
       }
     }
   }
@@ -1568,15 +1568,15 @@ li.wc_payment_method {
 
 .woocommerce.single-product {
   .woocommerce-message {
-    background-color: shade($gray-200, 5%);
+    background-color: shade($light-gray, 5%);
 
     .button {
-      background-color: $primary-color !important;
+      background-color: $blue !important;
       color: white !important;
       transition: background-color $base-duration $base-timing;
 
       &:hover {
-        background-color: shade($primary-color, 20%) !important;
+        background-color: shade($blue, 20%) !important;
       }
     }
   }
@@ -1697,12 +1697,12 @@ li.wc_payment_method {
 
   // Add to Cart Button - single
   .single_add_to_cart_button {
-    background-color: $action-color !important;
+    background-color: $blue !important;
     color: white !important;
     transition: background-color $base-duration $base-timing;
 
     &:hover {
-      background-color: shade($primary-color, 20%) !important;
+      background-color: shade($blue, 20%) !important;
     }
   }
 
@@ -1729,7 +1729,7 @@ dl.product-addon-totals dt {
 .woocommerce-order-received {
   .shop_table.order_details {
     .order_item:nth-child(even) {
-      background-color: $gray-200 !important;
+      background-color: $light-gray !important;
     }
 
     .order_item:nth-child(odd) {
@@ -1738,7 +1738,7 @@ dl.product-addon-totals dt {
 
     tfoot {
       tr:first-child {
-        background-color: $gray-200 !important;
+        background-color: $light-gray !important;
       }
     }
   }

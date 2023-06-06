@@ -38,11 +38,11 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        @include bg_overlay($gray-900, 0.5);
+        @include bg_overlay($dark-gray, 0.5);
       }
 
       &.primary {
-        background-color: $primary-color;
+        background-color: $blue;
       }
 
       &.white {
@@ -51,15 +51,15 @@
 
       &.white,
       &.none {
-        border: 1px solid $gray-200;
+        border: 1px solid $light-gray;
       }
 
       &.light-gray {
-        background-color: $gray-200;
+        background-color: $light-gray;
       }
 
       &.dark-gray {
-        background-color: $gray-900;
+        background-color: $dark-gray;
       }
     }
   }
