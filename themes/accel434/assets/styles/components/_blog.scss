@@ -11,7 +11,7 @@
   margin-top: 2px;
 
   .story-img {
-    height: 190px;
+    height: rem(250);
     margin-bottom: 20px;
     @include bg();
 

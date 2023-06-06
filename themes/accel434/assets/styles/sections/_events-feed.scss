@@ -48,6 +48,7 @@
       line-height: 1;
       transition: background-color $base-timing $base-duration;
       width: rem(75);
+      aspect-ratio: 1/1;
     }
 
     .event-date-up {

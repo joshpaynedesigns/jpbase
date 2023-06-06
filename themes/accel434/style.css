@@ -2573,15 +2573,28 @@ a.skipLink:hover {
   }
 }
 
+.post-type-archive-staff .staffTermSection {
+  margin-top: 3rem;
+}
+@media (min-width: 900px) {
+  .post-type-archive-staff .staffTermSection {
+    margin-top: 4rem;
+  }
+}
+.post-type-archive-staff .staffTermSection:first-of-type {
+  margin-top: 0;
+}
+
 .staffArchBlock .image-wrap {
   overflow: hidden;
-  background-color: #48a0c8;
   max-width: 25rem;
+  background-color: #48a0c8;
   margin-left: auto;
   margin-right: auto;
 }
 .staffArchBlock .image-wrap img {
   display: block;
+  width: 100%;
   transition: all ease-in-out 300ms;
 }
 .staffArchBlock .name {
@@ -2601,7 +2614,7 @@ a.skipLink:hover {
 }
 
 .singleStaffDetailsInner {
-  background: white;
+  background: #eee;
   margin: 0 auto 1.5em;
   max-width: 350px;
   padding: 1.5em;
@@ -2745,7 +2758,7 @@ a.skipLink:hover {
   margin-top: 2px;
 }
 .story .story-img {
-  height: 190px;
+  height: 15.625rem;
   margin-bottom: 20px;
   background-position: center;
   background-repeat: no-repeat;
@@ -3001,6 +3014,21 @@ Events Single
 }
 .single-tribe_events #tribe-events-pg-template ul.tribe-related-events {
   margin-bottom: 4em;
+}
+
+.tribe-events-single ul.tribe-related-events li .tribe-related-events-thumbnail {
+  margin-bottom: 0;
+}
+
+.tribe-events-single ul.tribe-related-events li .tribe-related-event-info {
+  padding: 0.75rem;
+}
+
+.tribe-events-single ul.tribe-related-events {
+  justify-content: start;
+}
+.tribe-events-single ul.tribe-related-events > li {
+  max-width: 25rem;
 }
 
 .location-arch-upper .facetwp-facet.facetwp-type-map {
@@ -3446,7 +3474,7 @@ Events Single
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  background-color: #111;
+  background-color: #01569f;
 }
 .cta-section .cta-slide .wrap {
   width: 80%;
@@ -3994,9 +4022,15 @@ Events Single
   .ribbon-cta-section .ribbon-content {
     flex-direction: row;
     justify-content: space-between;
+    text-align: left;
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+@media (min-width: 900px) {
+  .ribbon-cta-section.contained .ribbon-content {
     padding-left: 5rem;
     padding-right: 5rem;
-    text-align: left;
   }
 }
 .ribbon-cta-section .ribbon-text {
@@ -4166,6 +4200,7 @@ Events Single
   line-height: 1;
   transition: background-color ease-in-out 300ms;
   width: 4.6875rem;
+  aspect-ratio: 1/1;
 }
 .events-feed-section .event-item .event-date-up {
   font-size: 0.875rem;
@@ -4345,15 +4380,6 @@ Events Single
 
 .testimonials-section .section-title {
   color: white;
-}
-.testimonials-section .testimonial-section-inner {
-  background-color: #01569f;
-  padding: 3rem;
-}
-@media (min-width: 900px) {
-  .testimonials-section .testimonial-section-inner {
-    padding: 4rem;
-  }
 }
 .testimonials-section .testimonial {
   max-width: 60rem;
@@ -4617,7 +4643,7 @@ Events Single
 }
 
 .bg-blue {
-  background-color: #01569f;
+  background-color: #01569f !important;
 }
 
 .bg-light-blue {
@@ -4726,12 +4752,14 @@ Events Single
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  align-items: center;
 }
 @media (min-width: 640px) {
   .one24grid {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: start;
   }
 }
 .one24grid > div,

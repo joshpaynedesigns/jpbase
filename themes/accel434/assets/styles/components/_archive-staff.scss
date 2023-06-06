@@ -4,16 +4,29 @@
   }
 }
 
+.post-type-archive-staff .staffTermSection {
+  margin-top: rem(48);
+
+  @media ($large-screen-up) {
+    margin-top: rem(64);
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
 .staffArchBlock {
   .image-wrap {
     overflow: hidden;
-    background-color: $light-blue;
     max-width: rem(400);
+    background-color: $light-blue;
     margin-left: auto;
     margin-right: auto;
 
     img {
       display: block;
+      width: 100%;
       transition: all $base-timing $base-duration;
     }
   }

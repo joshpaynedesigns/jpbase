@@ -242,3 +242,22 @@ Events Single
     }
   }
 }
+
+.tribe-events-single
+  ul.tribe-related-events
+  li
+  .tribe-related-events-thumbnail {
+  margin-bottom: 0;
+}
+
+.tribe-events-single ul.tribe-related-events li .tribe-related-event-info {
+  padding: rem(12);
+}
+
+.tribe-events-single ul.tribe-related-events {
+  justify-content: start;
+
+  > li {
+    max-width: rem(400);
+  }
+}

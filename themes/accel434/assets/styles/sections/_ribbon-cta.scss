@@ -10,9 +10,18 @@
     @media ($large-screen-up) {
       flex-direction: row;
       justify-content: space-between;
-      padding-left: rem(80);
-      padding-right: rem(80);
       text-align: left;
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+  }
+
+  &.contained {
+    .ribbon-content {
+      @media ($large-screen-up) {
+        padding-left: rem(80);
+        padding-right: rem(80);
+      }
     }
   }
 

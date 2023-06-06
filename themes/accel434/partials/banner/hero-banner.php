@@ -221,6 +221,11 @@ function decide_banner_subtitle()
         $subtitle = get_the_title();
     } elseif (is_category() || is_tag()) {
         $subtitle = get_the_archive_title();
+    } elseif (is_singular('projects')) {
+        $types     = custom_taxonomies_terms(get_the_ID(), 'projects-cat', ' | ', true);
+        if (! empty($types)) {
+            $subtitle = $types;
+        }
     }
 
     return $subtitle;
