@@ -41,10 +41,9 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
                     $webm_vid             = ns_key_value($bp, 'webm_video_file');
                     $mp4_vid              = ns_key_value($bp, 'mp4_video_file');
                     $og_vid               = ns_key_value($bp, 'ogg_video_file');
-                    $image                = ns_key_value($bp, 'image');
-                    $use_default_bg_image = false;
+                    $use_default_bg_image = ns_key_value($bp, 'use_default_bg_image');
 
-                    ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image);
+                    ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button);
                 }
                 ?>
             </div>
@@ -71,9 +70,8 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
                 $og_vid               = null;
                 $subtitle             = null;
                 $second_button        = false;
-                $image               = null;
 
-                ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image);
+                ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button);
                 ?>
             </div>
         </section>
@@ -82,26 +80,24 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
 }
 
 // Function to output a single slide
-function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $incoming_bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image)
+function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $incoming_bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button)
 {
+    $bg_image_url = ns_key_value($incoming_bg_image, 'url');
 
-    $incoming_bg_image_url = ns_key_value($incoming_bg_image, 'url');
-
-    if ($incoming_bg_image_url) {
-        $bg_image_url = $incoming_bg_image_url;
+    if ($use_default_bg_image || empty($bg_image_url)) {
+        $default_bg_image = ns_get_field('default_banner_image', 'options');
+        $bg_image_url = ns_key_value($default_bg_image, 'url');
     }
-
-    $image_class = !empty($image) ? 'has-image' : '';
 
     ?>
 
     <?php if ($type === 'simple') : ?>
-        <div class="banner_slide <?php echo $txt_color; ?> <?php echo $image_class ?>" style="background-image: url(<?php echo $bg_image_url; ?>)">
-            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button, $image); ?>
+        <div class="banner_slide <?php echo $txt_color; ?>" style="background-image: url(<?php echo $bg_image_url; ?>)">
+            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button); ?>
         </div>
 
     <?php elseif ($type === 'video') : ?>
-        <div class="banner_slide <?php echo $txt_color; ?> <?php echo $image_class ?> video-slide" style="background-image: url(<?php echo $bg_image_url; ?>)">
+        <div class="banner_slide <?php echo $txt_color; ?> video-slide" style="background-image: url(<?php echo $bg_image_url; ?>)">
 
             <?php if (!empty($webm_vid) || !empty($mp4_vid || !empty($ogg_video_file))) : ?>
                 <video muted loop autoplay id="cta-slide-video" poster="<?php echo $bg_image_url; ?>">
@@ -117,7 +113,7 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
                 </video>
             <?php endif; ?>
 
-            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button, $image); ?>
+            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button); ?>
 
         </div>
     <?php endif; ?>
