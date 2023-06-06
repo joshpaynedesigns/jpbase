@@ -3839,11 +3839,8 @@ Events Single
   align-items: center;
   text-align: center;
 }
-.boxes-section .box.linked:hover::before {
-  transform: translate(0);
-}
-.boxes-section .box.linked:hover .fake-link {
-  text-decoration: underline;
+.boxes-section .box.linked:hover {
+  transform: scale(1.05);
 }
 .boxes-section .icon-wrap img {
   height: auto;
@@ -3879,10 +3876,21 @@ Events Single
   transition: all 300ms ease-in-out;
 }
 
+.section-sub-title {
+  font-size: 1.25em;
+  max-width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .bg-blue .section-title,
+.bg-blue .section-sub-title,
 .bg-light-blue .section-title,
+.bg-light-blue .section-sub-title,
 .bg-dark-gray .section-title,
-.bg-medium-gray .section-title {
+.bg-dark-gray .section-sub-title,
+.bg-medium-gray .section-title,
+.bg-medium-gray .section-sub-title {
   color: white;
 }
 .bg-blue ul li,
