@@ -122,12 +122,13 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
 
 function display_slide_content($title = null, $subtitle = null, $first_button = null, $overlay = null, $display_arrows = null, $h1 = true, $second_button = false, $image = null)
 {
+    $image_id = ns_key_value($image, 'id');
     ?>
     <div class="wrap">
         <div class="banner_content">
-            <?php if (!empty($image)) : ?>
+            <?php if (!empty($image_id)) : ?>
                 <div class="banner_image">
-                    <?php echo wp_get_attachment_image($image['id'], 'large', false, array('class' => '')); ?>
+                    <?php echo wp_get_attachment_image($image_id, 'large', false, array('class' => '')); ?>
                 </div>
             <?php endif; ?>
             <div class="">
