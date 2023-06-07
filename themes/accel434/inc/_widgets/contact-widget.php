@@ -29,6 +29,7 @@ class ns_Contact_Widget extends WP_Widget
         $address_line_1    = ns_get_field('address_line_1', 'widget_' . $widget_id);
         $address_line_2    = ns_get_field('address_line_2', 'widget_' . $widget_id);
         $address_line_3    = ns_get_field('address_line_3', 'widget_' . $widget_id);
+        $show_get_directions_link    = ns_get_field('show_get_directions_link', 'widget_' . $widget_id);
         $email_address     = ns_get_field('email_address', 'widget_' . $widget_id);
         $phone             = ns_get_field('phone', 'widget_' . $widget_id);
         $phone_numbers     = preg_replace('/[^0-9]/', '', $phone);
@@ -37,7 +38,6 @@ class ns_Contact_Widget extends WP_Widget
         $hide_social_icons = ns_get_field('hide_social_icons', 'widget_' . $widget_id);
         $blurb             = ns_get_field('blurb', 'widget_' . $widget_id);
         $button            = ns_get_field('button', 'widget_' . $widget_id);
-        $or_link            = ns_get_field('or_link', 'widget_' . $widget_id);
 
         echo $args['before_widget'];
         ?>
@@ -65,6 +65,9 @@ class ns_Contact_Widget extends WP_Widget
                         <?php echo $address_line_3; ?>
                     <?php endif; ?>
                 </p>
+                <?php if ($show_get_directions_link && !empty($address_line_1)) : ?>
+                    <p class="get-directions"><a href="https://www.google.com/maps/place/<?php echo $address_line_1 ?>, <?php echo $address_line_2 ?>" target="_blank">Get Directions</a></p>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
@@ -86,12 +89,6 @@ class ns_Contact_Widget extends WP_Widget
                         <?php if (! empty($fax)) : ?>
                             <br/>
                             Fax: <a href="fax:<?php echo $fax_numbers; ?>"><?php echo $fax; ?></a>
-                        <?php endif; ?>
-                        <?php if (! empty($or_link)) : ?>
-                            <br/>
-                            <span class="f14">
-                                Or <?php echo ns_link_link($or_link) ?>
-                            </span>
                         <?php endif; ?>
                     </p>
                 </div>

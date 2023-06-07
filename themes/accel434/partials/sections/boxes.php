@@ -14,30 +14,22 @@ $section_classes = ns_decide_section_classes();
             <?php
             foreach ($boxes as $box) :
                 $background_color    = ns_key_value($box, 'background_color');
-                $box_type    = ns_key_value($box, 'box_type');
-                $title_color    = ns_key_value($box, 'title_color');
-                $text_color    = ns_key_value($box, 'text_color');
+                $icon    = ns_key_value($box, 'icon');
                 $box_title    = ns_key_value($box, 'box_title');
                 $box_text    = ns_key_value($box, 'box_text');
                 $box_url    = ns_key_value($box, 'box_url');
-                $icon    = ns_key_value($box, 'icon');
-                $button    = ns_key_value($box, 'button');
-                $button_color    = ns_key_value($box, 'button_color');
-                $cta_text    = ns_key_value($box, 'cta_text');
+                $show_button    = ns_key_value($box, 'show_button');
+                $dark_bg = ns_is_bg_dark($background_color);
 
-                $is_normal_block = false;
-                $is_icon_block = false;
-                $is_link_block = false;
-                if ('normal' === $box_type) {
-                    $is_normal_block = true;
-                } elseif ('linked' === $box_type) {
-                    $is_link_block = true;
+                $button_class = "blue-button";
+                if ($background_color === 'blue') {
+                    $button_class = "white-button";
                 }
 
-                $block_classes = "box bg-$background_color box-type-$box_type";
+                $block_classes = "box bg-$background_color";
 
                 ?>
-                <?php if (! empty($box_url) && $is_link_block) : ?>
+                <?php if (! empty($box_url)) : ?>
                     <a class="linked <?php echo $block_classes ?>" href="<?php echo $box_url['url']; ?>" target="<?php echo $box_url['target']; ?>">
                 <?php else : ?>
                     <div class="box <?php echo $block_classes ?>">
@@ -49,24 +41,21 @@ $section_classes = ns_decide_section_classes();
                             <div class="icon-wrap basemb"><?php echo wp_get_attachment_image($icon['id'], 'large', false, array( 'class' => '' )); ?></div>
                         <?php endif; ?>
 
-                        <h5 class="box-title mb0 text-<?php echo $title_color ?>"><?php echo $box_title; ?></h5>
+                        <h5 class="box-title mb0 <?php echo $dark_bg ? "text-white" : 'text-dark-gray' ?>"><?php echo $box_title; ?></h5>
 
                         <?php if (! empty($box_text)) : ?>
-                            <p class="box-text mb0 basemt text-<?php echo $text_color ?>"><?php echo $box_text; ?></p>
+                            <p class="box-text mb0 basemt <?php echo $dark_bg ? "text-white" : 'text-dark-gray' ?>"><?php echo $box_text; ?></p>
                         <?php endif; ?>
 
-                        <?php if (! empty($button) && $is_normal_block) : ?>
+                        <?php if (! empty($box_url) && $show_button) : ?>
                             <div class="button-wrap basemt">
-                                <?php echo ns_link_button($button, $button_color . '-button') ?>
-                                <?php if (! empty($cta_text)) : ?>
-                                    <div class="text-<?php echo $text_color ?>"><?php echo $cta_text ?></div>
-                                <?php endif; ?>
+                                <div class="<?php echo $button_class ?> small-button fake-button"><?php echo $box_url['title'] ?></div>
                             </div>
                         <?php endif; ?>
 
                     </div>
 
-                <?php if (! empty($box_url) && $is_link_block) : ?>
+                <?php if (! empty($box_url)) : ?>
                     </a>
                 <?php else : ?>
                     </div>

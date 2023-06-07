@@ -1,11 +1,12 @@
 <?php
+$bg_color = get_sub_field('background_color');
 $section_title = get_sub_field('section_title');
 $section_sub_title = get_sub_field('sub_title');
 $icon_blurbs = get_sub_field('icon_blurbs');
 $open_in_new_tab = get_sub_field('link_behavior');
 $button_details = get_sub_field('section_button');
 
-$section_classes = ns_decide_section_classes();
+$section_classes = ns_decide_section_classes($bg_color);
 ?>
 
 <section class="icon-blurb-section <?php echo $section_classes; ?>">
@@ -26,9 +27,6 @@ $section_classes = ns_decide_section_classes();
                     $icon = $ib['icon']['url'] ?? false;
                     $blurb_title = $ib['blurb_title'] ?? false;
                     $blurb = $ib['blurb'] ?? false;
-                    $show_accordion = $ib['show_accordion'] ?? false;
-                    $accordion_title = $ib['accordion_title'] ?? false;
-                    $accordion_content = $ib['accordion_content'] ?? false;
 
                     ?>
                     <div class="blurb tac">
@@ -49,17 +47,6 @@ $section_classes = ns_decide_section_classes();
 
                             <?php if (! empty($blurb_link)) : ?>
                                 <div class="blurb-link-wrap"><?php echo ns_link_button($blurb_link, 'blue-button small-button') ?></div>
-                            <?php endif; ?>
-
-                            <?php if ($show_accordion && ! empty($accordion_title) && ! empty($accordion_content)) : ?>
-                                <div class="micro-accordion-wrap smallmt">
-                                    <div class="micro-accordion-title fake-arrow-link justify-center"><?php echo $accordion_title ?></div>
-                                    <div class="micro-accordion-content">
-                                        <div class="micro-accordion-inner-content">
-                                            <?php echo $accordion_content ?>
-                                        </div>
-                                    </div>
-                                </div>
                             <?php endif; ?>
                         </div>
                     </div>

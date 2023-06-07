@@ -3,6 +3,29 @@
     "title": "Flex - Boxes Section",
     "fields": [
         {
+            "key": "field_5c76b3c33f5e1",
+            "label": "Background Color",
+            "name": "background_color",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "white": "White",
+                "light-gray": "Light Gray"
+            },
+            "allow_null": 0,
+            "default_value": "white",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
             "key": "field_5c76b3c33f60c",
             "label": "Section Title",
             "name": "section_title",
@@ -38,16 +61,16 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 1,
-            "max": 0,
+            "min": 3,
+            "max": 4,
             "collapsed": "",
             "button_label": "Add Box",
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_640104f54f502",
-                    "label": "Box Color",
-                    "name": "box_color",
+                    "key": "field_647f8f6189be3",
+                    "label": "BG Color Clone",
+                    "name": "bg_color_clone",
                     "aria-label": "",
                     "type": "clone",
                     "instructions": "",
@@ -58,7 +81,6 @@
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "clone": [
                         "group_5ac68f94629c6"
                     ],
@@ -69,32 +91,7 @@
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
-                    "key": "field_6400fcfd3d8fa",
-                    "label": "Box Type",
-                    "name": "box_type",
-                    "aria-label": "",
-                    "type": "button_group",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "choices": {
-                        "normal": "Normal",
-                        "linked": "Linked"
-                    },
-                    "default_value": "",
-                    "return_format": "value",
-                    "allow_null": 0,
-                    "layout": "horizontal",
-                    "parent_repeater": "field_5c76b3c33f67d"
-                },
-                {
-                    "key": "field_6400fcf1a8018",
+                    "key": "field_647f8f8e86587",
                     "label": "Icon",
                     "name": "icon",
                     "aria-label": "",
@@ -103,11 +100,10 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "",
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -130,43 +126,15 @@
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": "",
-                    "parent_repeater": "field_5c76b3c33f67d"
-                },
-                {
-                    "key": "field_640105c694bf6",
-                    "label": "Title Color",
-                    "name": "title_color",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "blue": "Blue",
-                        "white": "White",
-                        "dark-gray": "Dark Gray"
-                    },
-                    "default_value": "blue",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
@@ -179,107 +147,15 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "60",
+                        "width": "33.33",
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_5c76b3c33f67d"
-                },
-                {
-                    "key": "field_640105e994bf7",
-                    "label": "Text Color",
-                    "name": "text_color",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "40",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "blue": "Blue",
-                        "white": "White",
-                        "dark-gray": "Dark Gray"
-                    },
-                    "default_value": "dark-gray",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "parent_repeater": "field_5c76b3c33f67d"
-                },
-                {
-                    "key": "field_640104b54f501",
-                    "label": "Button",
-                    "name": "button",
-                    "aria-label": "",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_6400fcfd3d8fa",
-                                "operator": "==",
-                                "value": "normal"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "return_format": "array",
-                    "parent_repeater": "field_5c76b3c33f67d"
-                },
-                {
-                    "key": "field_6401052554c35",
-                    "label": "Button Color",
-                    "name": "button_color",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_6400fcfd3d8fa",
-                                "operator": "==",
-                                "value": "normal"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "blue": "Blue",
-                        "white": "White",
-                        "medium-gray": "Medium Gray",
-                        "dark-gray": "Dark Gray"
-                    },
-                    "default_value": "blue",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
+                    "maxlength": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
@@ -290,44 +166,41 @@
                     "type": "link",
                     "instructions": "The url you want people to be redirected to when they click the box. (Optional)",
                     "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_6400fcfd3d8fa",
-                                "operator": "!=",
-                                "value": "normal"
-                            }
-                        ]
-                    ],
+                    "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "return_format": "array",
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
-                    "key": "field_640936c6b09b7",
-                    "label": "CTA Text",
-                    "name": "cta_text",
+                    "key": "field_5cd30a8054161",
+                    "label": "Show Button",
+                    "name": "show_button",
                     "aria-label": "",
-                    "type": "text",
+                    "type": "true_false",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5c76b3c347f36",
+                                "operator": "!=empty"
+                            }
+                        ]
+                    ],
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 }
             ]
@@ -342,7 +215,7 @@
             }
         ]
     ],
-    "menu_order": 4,
+    "menu_order": 12,
     "position": "normal",
     "style": "default",
     "label_placement": "top",
@@ -353,5 +226,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686064080
+    "modified": 1686081556
 }

@@ -144,43 +144,6 @@
             "return_format": "array"
         },
         {
-            "key": "field_5e3c87ead5d03",
-            "label": "Header Settings",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "left",
-            "endpoint": 0
-        },
-        {
-            "key": "field_5e3c8809d5d04",
-            "label": "Turn On Fixed Header?",
-            "name": "turn_on_fixed_header",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "This will allow the site header to fix to the top of the browser as the user scrolls down the page.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5733f136a825d",
             "label": "Social Settings",
             "name": "",
@@ -606,26 +569,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_646d0c25c1d96",
-            "label": "Archive Intro Text",
-            "name": "archive_intro_text_blog",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "This optional content will show up under the banner of the archive page.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
         },
         {
             "key": "field_5abd4c20f68ce",
@@ -1262,26 +1205,6 @@
             "append": ""
         },
         {
-            "key": "field_646d0d1bba872",
-            "label": "Archive Intro Text",
-            "name": "archive_intro_text_events",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "This optional content will show up under the banner of the archive page.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
-        },
-        {
             "key": "field_647f6b4bf31c6",
             "label": "Projects",
             "name": "",
@@ -1429,5 +1352,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686072275
+    "modified": 1686079761
 }

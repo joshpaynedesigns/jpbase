@@ -118,11 +118,6 @@ jQuery(document).ready(function () {
     }
   });
 
-  jQuery(".micro-accordion-title").on("click", function () {
-    let content = jQuery(this).next(".micro-accordion-content");
-    content.toggleClass("is-open");
-  });
-
   // Check to see if menu goes outside of container
   jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on(
     "mouseover",

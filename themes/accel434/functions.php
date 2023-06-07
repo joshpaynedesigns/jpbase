@@ -175,11 +175,9 @@ function child_theme_setup()
         if ($hide_banner_options == 'hide_banner_image') {
             $attributes['class'] .= ' no-banner-image';
         }
-        // Add class to Body when it's fixed
-        $turn_on_fixed_header = ns_get_field('turn_on_fixed_header', 'options');
-        if ($turn_on_fixed_header) {
-            $attributes['class'] .= ' fixed-header';
-        }
+
+        $attributes['class'] .= ' fixed-header';
+
         // Add class to Body when it's Alert Bar
         $show_alert_bar = ns_get_field('show_alert_bar', 'options');
         if ($show_alert_bar) {

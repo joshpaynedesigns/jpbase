@@ -89,6 +89,26 @@
             "disabled": 0
         },
         {
+            "key": "field_647f8a7eacebd",
+            "label": "Show Get Directions Link",
+            "name": "show_get_directions_link",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_5786a70e4ec43",
             "label": "Email Address",
             "name": "email_address",
@@ -153,23 +173,6 @@
             "append": "",
             "readonly": 0,
             "disabled": 0
-        },
-        {
-            "key": "field_6405fb5b0094c",
-            "label": "Or Link",
-            "name": "or_link",
-            "aria-label": "",
-            "type": "link",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "relevanssi_exclude": 0,
-            "return_format": "array"
         },
         {
             "key": "field_5aabeb309e4cf",
@@ -246,5 +249,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686063647
+    "modified": 1686080184
 }

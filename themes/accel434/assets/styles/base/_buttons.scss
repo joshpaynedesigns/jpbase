@@ -7,7 +7,9 @@ input[type="submit"],
 .light-blue-button a,
 .medium-gray-button a,
 .dark-gray-button a,
-.white-button a {
+.white-button a,
+.blue-button.fake-button,
+.white-button.fake-button {
   appearance: none;
   background-color: $blue;
   border: 2px solid transparent;
@@ -88,7 +90,8 @@ input[type="submit"],
 
 .white-button a,
 .white-button input[type="submit"],
-.white-button button {
+.white-button button,
+.white-button.fake-button {
   @include button-set-up(white);
   color: $dark-gray !important;
 
