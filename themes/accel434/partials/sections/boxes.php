@@ -1,9 +1,10 @@
 <?php
 
+$background_color = get_sub_field('background_color');
 $section_title = get_sub_field('section_title');
 $boxes = get_sub_field('boxes');
 
-$section_classes = ns_decide_section_classes();
+$section_classes = ns_decide_section_classes($background_color);
 ?>
 
 <section class="boxes-section <?php echo $section_classes; ?>" >

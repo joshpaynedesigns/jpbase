@@ -138,6 +138,7 @@ jQuery(document).ready(function () {
       theSlider.slick({
         arrows: true,
         autoplay: true,
+        adaptiveHeight: true,
         autoplaySpeed: 10000,
         nextArrow: theSliderOuter.find(".right-arrow"),
         prevArrow: theSliderOuter.find(".left-arrow"),
@@ -170,6 +171,7 @@ jQuery(document).ready(function () {
       theSlider.slick({
         arrows: true,
         autoplay: false,
+        adaptiveHeight: true,
         nextArrow: sliderWrap.find(".right-arrow"),
         prevArrow: sliderWrap.find(".left-arrow"),
         slidesToShow: 1,
