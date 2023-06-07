@@ -423,11 +423,18 @@ input[type=submit],
 .blue-button a,
 .blue-button button,
 .light-blue-button a,
+.light-blue-button button,
 .medium-gray-button a,
+.medium-gray-button button,
 .dark-gray-button a,
+.dark-gray-button button,
 .white-button a,
-.blue-button.fake-button,
-.white-button.fake-button {
+.white-button button,
+.blue-button.fake-button > span,
+.light-blue-button.fake-button > span,
+.medium-gray-button.fake-button > span,
+.dark-gray-button.fake-button > span,
+.white-button.fake-button > span {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -462,16 +469,30 @@ input[type=submit]:focus,
 .blue-button button:focus,
 .light-blue-button a:hover,
 .light-blue-button a:focus,
+.light-blue-button button:hover,
+.light-blue-button button:focus,
 .medium-gray-button a:hover,
 .medium-gray-button a:focus,
+.medium-gray-button button:hover,
+.medium-gray-button button:focus,
 .dark-gray-button a:hover,
 .dark-gray-button a:focus,
+.dark-gray-button button:hover,
+.dark-gray-button button:focus,
 .white-button a:hover,
 .white-button a:focus,
-.blue-button.fake-button:hover,
-.blue-button.fake-button:focus,
-.white-button.fake-button:hover,
-.white-button.fake-button:focus {
+.white-button button:hover,
+.white-button button:focus,
+.blue-button.fake-button > span:hover,
+.blue-button.fake-button > span:focus,
+.light-blue-button.fake-button > span:hover,
+.light-blue-button.fake-button > span:focus,
+.medium-gray-button.fake-button > span:hover,
+.medium-gray-button.fake-button > span:focus,
+.dark-gray-button.fake-button > span:hover,
+.dark-gray-button.fake-button > span:focus,
+.white-button.fake-button > span:hover,
+.white-button.fake-button > span:focus {
   background-color: transparent;
   border-color: #01569f;
   color: #01569f !important;
@@ -483,11 +504,18 @@ input[type=submit]:disabled,
 .blue-button a:disabled,
 .blue-button button:disabled,
 .light-blue-button a:disabled,
+.light-blue-button button:disabled,
 .medium-gray-button a:disabled,
+.medium-gray-button button:disabled,
 .dark-gray-button a:disabled,
+.dark-gray-button button:disabled,
 .white-button a:disabled,
-.blue-button.fake-button:disabled,
-.white-button.fake-button:disabled {
+.white-button button:disabled,
+.blue-button.fake-button > span:disabled,
+.light-blue-button.fake-button > span:disabled,
+.medium-gray-button.fake-button > span:disabled,
+.dark-gray-button.fake-button > span:disabled,
+.white-button.fake-button > span:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
@@ -498,11 +526,18 @@ input[type=submit]:disabled:hover,
 .blue-button a:disabled:hover,
 .blue-button button:disabled:hover,
 .light-blue-button a:disabled:hover,
+.light-blue-button button:disabled:hover,
 .medium-gray-button a:disabled:hover,
+.medium-gray-button button:disabled:hover,
 .dark-gray-button a:disabled:hover,
+.dark-gray-button button:disabled:hover,
 .white-button a:disabled:hover,
-.blue-button.fake-button:disabled:hover,
-.white-button.fake-button:disabled:hover {
+.white-button button:disabled:hover,
+.blue-button.fake-button > span:disabled:hover,
+.light-blue-button.fake-button > span:disabled:hover,
+.medium-gray-button.fake-button > span:disabled:hover,
+.dark-gray-button.fake-button > span:disabled:hover,
+.white-button.fake-button > span:disabled:hover {
   background-color: transparent;
 }
 
@@ -516,14 +551,17 @@ input[type=submit]:disabled:hover,
 
 .blue-button a,
 .blue-button input[type=submit],
-.blue-button button {
+.blue-button button,
+.blue-button.fake-button > span {
   background-color: #01569f;
 }
 .blue-button a:hover, .blue-button a:focus,
 .blue-button input[type=submit]:hover,
 .blue-button input[type=submit]:focus,
 .blue-button button:hover,
-.blue-button button:focus {
+.blue-button button:focus,
+.blue-button.fake-button > span:hover,
+.blue-button.fake-button > span:focus {
   border-color: #01569f;
   color: #01569f !important;
   outline: none;
@@ -531,14 +569,17 @@ input[type=submit]:disabled:hover,
 
 .light-blue-button a,
 .light-blue-button input[type=submit],
-.light-blue-button button {
+.light-blue-button button,
+.light-blue-button.fake-button > span {
   background-color: #48a0c8;
 }
 .light-blue-button a:hover, .light-blue-button a:focus,
 .light-blue-button input[type=submit]:hover,
 .light-blue-button input[type=submit]:focus,
 .light-blue-button button:hover,
-.light-blue-button button:focus {
+.light-blue-button button:focus,
+.light-blue-button.fake-button > span:hover,
+.light-blue-button.fake-button > span:focus {
   border-color: #48a0c8;
   color: #48a0c8 !important;
   outline: none;
@@ -546,14 +587,17 @@ input[type=submit]:disabled:hover,
 
 .medium-gray-button a,
 .medium-gray-button input[type=submit],
-.medium-gray-button button {
+.medium-gray-button button,
+.medium-gray-button.fake-button > span {
   background-color: #555;
 }
 .medium-gray-button a:hover, .medium-gray-button a:focus,
 .medium-gray-button input[type=submit]:hover,
 .medium-gray-button input[type=submit]:focus,
 .medium-gray-button button:hover,
-.medium-gray-button button:focus {
+.medium-gray-button button:focus,
+.medium-gray-button.fake-button > span:hover,
+.medium-gray-button.fake-button > span:focus {
   border-color: #555;
   color: #555 !important;
   outline: none;
@@ -561,14 +605,17 @@ input[type=submit]:disabled:hover,
 
 .dark-gray-button a,
 .dark-gray-button input[type=submit],
-.dark-gray-button button {
+.dark-gray-button button,
+.dark-gray-button.fake-button > span {
   background-color: #111;
 }
 .dark-gray-button a:hover, .dark-gray-button a:focus,
 .dark-gray-button input[type=submit]:hover,
 .dark-gray-button input[type=submit]:focus,
 .dark-gray-button button:hover,
-.dark-gray-button button:focus {
+.dark-gray-button button:focus,
+.dark-gray-button.fake-button > span:hover,
+.dark-gray-button.fake-button > span:focus {
   border-color: #111;
   color: #111 !important;
   outline: none;
@@ -577,7 +624,7 @@ input[type=submit]:disabled:hover,
 .white-button a,
 .white-button input[type=submit],
 .white-button button,
-.white-button.fake-button {
+.white-button.fake-button > span {
   background-color: white;
   color: #111 !important;
 }
@@ -586,8 +633,8 @@ input[type=submit]:disabled:hover,
 .white-button input[type=submit]:focus,
 .white-button button:hover,
 .white-button button:focus,
-.white-button.fake-button:hover,
-.white-button.fake-button:focus {
+.white-button.fake-button > span:hover,
+.white-button.fake-button > span:focus {
   border-color: white;
   color: white !important;
   outline: none;
@@ -595,11 +642,12 @@ input[type=submit]:disabled:hover,
 .white-button a:hover,
 .white-button input[type=submit]:hover,
 .white-button button:hover,
-.white-button.fake-button:hover {
+.white-button.fake-button > span:hover {
   background-color: transparent;
 }
 
 .blue-button,
+.light-blue-button,
 .medium-gray-button,
 .dark-gray-button,
 .white-button {

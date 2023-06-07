@@ -19,12 +19,8 @@ $section_classes = ns_decide_section_classes();
                 $box_text    = ns_key_value($box, 'box_text');
                 $box_url    = ns_key_value($box, 'box_url');
                 $show_button    = ns_key_value($box, 'show_button');
+                $button_color    = ns_key_value($box, 'button_color');
                 $dark_bg = ns_is_bg_dark($background_color);
-
-                $button_class = "blue-button";
-                if ($background_color === 'blue') {
-                    $button_class = "white-button";
-                }
 
                 $block_classes = "box bg-$background_color";
 
@@ -49,7 +45,7 @@ $section_classes = ns_decide_section_classes();
 
                         <?php if (! empty($box_url) && $show_button) : ?>
                             <div class="button-wrap basemt">
-                                <div class="<?php echo $button_class ?> small-button fake-button"><?php echo $box_url['title'] ?></div>
+                                <div class="<?php echo $button_color ?> small-button fake-button"><span><?php echo $box_url['title'] ?></span></div>
                             </div>
                         <?php endif; ?>
 

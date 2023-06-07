@@ -5,11 +5,18 @@ input[type="submit"],
 .blue-button a,
 .blue-button button,
 .light-blue-button a,
+.light-blue-button button,
 .medium-gray-button a,
+.medium-gray-button button,
 .dark-gray-button a,
+.dark-gray-button button,
 .white-button a,
-.blue-button.fake-button,
-.white-button.fake-button {
+.white-button button,
+.blue-button.fake-button > span,
+.light-blue-button.fake-button > span,
+.medium-gray-button.fake-button > span,
+.dark-gray-button.fake-button > span,
+.white-button.fake-button > span {
   appearance: none;
   background-color: $blue;
   border: 2px solid transparent;
@@ -66,32 +73,36 @@ input[type="submit"],
 
 .blue-button a,
 .blue-button input[type="submit"],
-.blue-button button {
+.blue-button button,
+.blue-button.fake-button > span {
   @include button-set-up($blue);
 }
 
 .light-blue-button a,
 .light-blue-button input[type="submit"],
-.light-blue-button button {
+.light-blue-button button,
+.light-blue-button.fake-button > span {
   @include button-set-up($light-blue);
 }
 
 .medium-gray-button a,
 .medium-gray-button input[type="submit"],
-.medium-gray-button button {
+.medium-gray-button button,
+.medium-gray-button.fake-button > span {
   @include button-set-up($medium-gray);
 }
 
 .dark-gray-button a,
 .dark-gray-button input[type="submit"],
-.dark-gray-button button {
+.dark-gray-button button,
+.dark-gray-button.fake-button > span {
   @include button-set-up($dark-gray);
 }
 
 .white-button a,
 .white-button input[type="submit"],
 .white-button button,
-.white-button.fake-button {
+.white-button.fake-button > span {
   @include button-set-up(white);
   color: $dark-gray !important;
 
@@ -101,6 +112,7 @@ input[type="submit"],
 }
 
 .blue-button,
+.light-blue-button,
 .medium-gray-button,
 .dark-gray-button,
 .white-button {

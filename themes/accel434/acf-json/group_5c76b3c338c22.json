@@ -7,7 +7,7 @@
             "label": "Background Color",
             "name": "background_color",
             "aria-label": "",
-            "type": "button_group",
+            "type": "select",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
@@ -20,10 +20,13 @@
                 "white": "White",
                 "light-gray": "Light Gray"
             },
-            "allow_null": 0,
             "default_value": "white",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_5c76b3c33f60c",
@@ -147,15 +150,15 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "33.33",
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
                     "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
@@ -168,7 +171,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "50",
+                        "width": "33.33",
                         "class": "",
                         "id": ""
                     },
@@ -192,15 +195,53 @@
                         ]
                     ],
                     "wrapper": {
-                        "width": "50",
+                        "width": "33.33",
                         "class": "",
                         "id": ""
                     },
                     "message": "",
                     "default_value": 0,
-                    "ui": 1,
                     "ui_on_text": "",
                     "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_5c76b3c33f67d"
+                },
+                {
+                    "key": "field_6480a319f1556",
+                    "label": "Button Color",
+                    "name": "button_color",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5cd30a8054161",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "33.33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "blue-button": "Blue",
+                        "light-blue-button": "Light Blue",
+                        "medium-gray-button": "Medium Gray",
+                        "dark-gray-button": "Dark Gray",
+                        "white-button": "White Button"
+                    },
+                    "default_value": "blue-button",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 }
             ]
@@ -226,5 +267,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686081556
+    "modified": 1686152295
 }
