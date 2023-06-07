@@ -146,22 +146,6 @@ jQuery(document).ready(function () {
     });
   }
 
-  let announcementsSliders = jQuery(".announcements-slider");
-  if (announcementsSliders.length > 0) {
-    announcementsSliders.each(function () {
-      let sliderWrap = jQuery(this);
-      let theSlider = sliderWrap.children(".slides-wrap");
-
-      theSlider.slick({
-        arrows: true,
-        autoplay: false,
-        nextArrow: sliderWrap.find(".right-arrow"),
-        prevArrow: sliderWrap.find(".left-arrow"),
-        slidesToShow: 1,
-      });
-    });
-  }
-
   let testimonialSliders = jQuery(".testimonials-slider-wrap");
   if (testimonialSliders.length > 0) {
     testimonialSliders.each(function () {
