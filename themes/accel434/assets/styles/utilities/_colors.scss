@@ -1,46 +1,25 @@
-// Background Color
-.bg-action {
-  background-color: $action-color;
-}
-
 .bg-dark-gray {
-  background-color: $gray-900;
+  background-color: $dark-gray !important;
 }
 
 .bg-light-gray {
-  background-color: $gray-200;
-}
-
-.bg-light-blue {
-  background-color: $blue-200;
+  background-color: $light-gray !important;
 }
 
 .bg-medium-gray {
-  background-color: $gray-600;
-}
-
-.bg-primary {
-  background-color: $primary-color;
-}
-
-.bg-white {
-  background-color: white;
-}
-
-.bg-extra-light-gray {
-  background-color: $gray-100;
+  background-color: $medium-gray !important;
 }
 
 .bg-blue {
-  background-color: $blue-900;
+  background-color: $blue !important;
 }
 
-.bg-green {
-  background-color: $green-900;
+.bg-light-blue {
+  background-color: $light-blue !important;
 }
 
-.bg-light-green {
-  background-color: $green-100;
+.bg-white {
+  background-color: white !important;
 }
 
 .grayscale {

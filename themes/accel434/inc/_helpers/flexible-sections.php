@@ -35,3 +35,15 @@ function ns_decide_section_classes($bg_color = null)
 
     return $classes;
 }
+
+function ns_is_bg_dark($bg_color = null)
+{
+    $dark_bg_colors = array(
+        'medium-gray',
+        'dark-gray',
+        'blue',
+        'light-blue',
+    );
+
+    return in_array($bg_color, $dark_bg_colors);
+}

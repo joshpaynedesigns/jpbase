@@ -1,13 +1,13 @@
 .site-footer {
-  background-color: $green-100;
-  color: $gray-600;
+  background-color: $light-gray;
+  color: $medium-gray;
   font-size: em(14);
   line-height: $base-line-height;
   padding-bottom: rem(32);
   text-align: center;
 
   .footer-creds {
-    border-top: 1px solid $green-300;
+    border-top: 1px solid $medium-gray;
     display: flex;
     flex-direction: column;
     gap: rem(12);
@@ -24,11 +24,11 @@
     text-transform: uppercase;
 
     a {
-      color: $gray-600;
+      color: $medium-gray;
       font-weight: bold;
 
       &:hover {
-        color: $blue-200;
+        color: $light-blue;
       }
     }
   }

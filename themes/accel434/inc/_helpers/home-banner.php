@@ -30,21 +30,20 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
             <div class="banner-slider actual-slider <?php echo $height_class; ?>">
                 <?php
                 foreach ($banner_panels as $bp) {
-                    $type                 = $bp['banner_slide_type'];
-                    $txt_color            = $bp['text_color'];
-                    $overlay              = $bp['overlay'];
-                    $title                = $bp['banner_title'];
-                    $subtitle             = $bp['banner_sub_title'];
-                    $first_button         = $bp['first_button'];
+                    $type                 = ns_key_value($bp, 'banner_slide_type');
+                    $txt_color            = ns_key_value($bp, 'text_color');
+                    $overlay              = ns_key_value($bp, 'overlay');
+                    $title                = ns_key_value($bp, 'banner_title');
+                    $subtitle             = ns_key_value($bp, 'banner_sub_title');
+                    $first_button         = ns_key_value($bp, 'first_button');
                     $second_button        = ns_key_value($bp, 'second_button');
-                    $use_default_bg_image = false;
-                    $bg_image          = $bp['banner_background_image'];
-                    $webm_vid             = $bp['webm_video_file'];
-                    $mp4_vid              = $bp['mp4_video_file'];
-                    $og_vid               = $bp['ogg_video_file'];
-                    $image                = ns_key_value($bp, 'image');
+                    $bg_image             = ns_key_value($bp, 'banner_background_image');
+                    $webm_vid             = ns_key_value($bp, 'webm_video_file');
+                    $mp4_vid              = ns_key_value($bp, 'mp4_video_file');
+                    $og_vid               = ns_key_value($bp, 'ogg_video_file');
+                    $use_default_bg_image = ns_key_value($bp, 'use_default_bg_image');
 
-                    ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image);
+                    ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button);
                 }
                 ?>
             </div>
@@ -71,9 +70,8 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
                 $og_vid               = null;
                 $subtitle             = null;
                 $second_button        = false;
-                $image               = null;
 
-                ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image);
+                ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button);
                 ?>
             </div>
         </section>
@@ -82,26 +80,24 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
 }
 
 // Function to output a single slide
-function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $incoming_bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button, $image)
+function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle, $first_button, $use_default_bg_image, $incoming_bg_image, $webm_vid, $mp4_vid, $og_vid, $display_arrows, $h1, $second_button)
 {
+    $bg_image_url = ns_key_value($incoming_bg_image, 'url');
 
-    $incoming_bg_image_url = ns_key_value($incoming_bg_image, 'url');
-
-    if ($incoming_bg_image_url) {
-        $bg_image_url = $incoming_bg_image_url;
+    if ($use_default_bg_image || empty($bg_image_url)) {
+        $default_bg_image = ns_get_field('default_banner_image', 'options');
+        $bg_image_url = ns_key_value($default_bg_image, 'url');
     }
-
-    $image_class = !empty($image) ? 'has-image' : '';
 
     ?>
 
     <?php if ($type === 'simple') : ?>
-        <div class="banner_slide <?php echo $txt_color; ?> <?php echo $image_class ?>" style="background-image: url(<?php echo $bg_image_url; ?>)">
-            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button, $image); ?>
+        <div class="banner_slide <?php echo $txt_color; ?>" style="background-image: url(<?php echo $bg_image_url; ?>)">
+            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button); ?>
         </div>
 
     <?php elseif ($type === 'video') : ?>
-        <div class="banner_slide <?php echo $txt_color; ?> <?php echo $image_class ?> video-slide" style="background-image: url(<?php echo $bg_image_url; ?>)">
+        <div class="banner_slide <?php echo $txt_color; ?> video-slide" style="background-image: url(<?php echo $bg_image_url; ?>)">
 
             <?php if (!empty($webm_vid) || !empty($mp4_vid || !empty($ogg_video_file))) : ?>
                 <video muted loop autoplay id="cta-slide-video" poster="<?php echo $bg_image_url; ?>">
@@ -117,7 +113,7 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
                 </video>
             <?php endif; ?>
 
-            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button, $image); ?>
+            <?php display_slide_content($title, $subtitle, $first_button, $overlay, $display_arrows, $h1, $second_button); ?>
 
         </div>
     <?php endif; ?>
@@ -126,12 +122,13 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
 
 function display_slide_content($title = null, $subtitle = null, $first_button = null, $overlay = null, $display_arrows = null, $h1 = true, $second_button = false, $image = null)
 {
+    $image_id = ns_key_value($image, 'id');
     ?>
     <div class="wrap">
         <div class="banner_content">
-            <?php if (!empty($image)) : ?>
+            <?php if (!empty($image_id)) : ?>
                 <div class="banner_image">
-                    <?php echo wp_get_attachment_image($image['id'], 'large', false, array('class' => '')); ?>
+                    <?php echo wp_get_attachment_image($image_id, 'large', false, array('class' => '')); ?>
                 </div>
             <?php endif; ?>
             <div class="">
@@ -149,7 +146,7 @@ function display_slide_content($title = null, $subtitle = null, $first_button = 
                             <?php echo ns_link_button($first_button, 'blue-button'); ?>
                         <?php endif; ?>
                         <?php if (!empty($second_button)) : ?>
-                            <?php echo ns_link_button($second_button, 'green-button'); ?>
+                            <?php echo ns_link_button($second_button, 'blue-button'); ?>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

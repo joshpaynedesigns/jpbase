@@ -3,6 +3,32 @@
     "title": "Flex - Icon Blurb Section",
     "fields": [
         {
+            "key": "field_647f8bb7aeae3",
+            "label": "Background Color",
+            "name": "background_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "None",
+                "light-gray": "Light Gray"
+            },
+            "default_value": "none",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_593ee16aa217d",
             "label": "Section Title",
             "name": "section_title",
@@ -164,88 +190,6 @@
                     "append": "",
                     "maxlength": "",
                     "parent_repeater": "field_593ee16aa21ab"
-                },
-                {
-                    "key": "field_63ffb9e377445",
-                    "label": "Show Accordion",
-                    "name": "show_accordion",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "message": "",
-                    "default_value": 0,
-                    "ui_on_text": "",
-                    "ui_off_text": "",
-                    "ui": 1,
-                    "parent_repeater": "field_593ee16aa21ab"
-                },
-                {
-                    "key": "field_63ffb9c46becf",
-                    "label": "Accordion Title",
-                    "name": "accordion_title",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_63ffb9e377445",
-                                "operator": "==",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_593ee16aa21ab"
-                },
-                {
-                    "key": "field_63ffb99a6bece",
-                    "label": "Accordion Content",
-                    "name": "accordion_content",
-                    "aria-label": "",
-                    "type": "wysiwyg",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_63ffb9e377445",
-                                "operator": "==",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "basic",
-                    "media_upload": 0,
-                    "delay": 0,
-                    "parent_repeater": "field_593ee16aa21ab"
                 }
             ]
         }
@@ -270,5 +214,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1685047711
+    "modified": 1686080482
 }

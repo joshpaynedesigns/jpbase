@@ -33,7 +33,7 @@
     }
 
     svg {
-      fill: $gray-900;
+      fill: $dark-gray;
       @media ($large-screen-up) {
         height: rem(32);
         width: auto;
@@ -60,7 +60,7 @@
     .left-arrow,
     .right-arrow {
       svg {
-        fill: $gray-900;
+        fill: $dark-gray;
       }
     }
   }

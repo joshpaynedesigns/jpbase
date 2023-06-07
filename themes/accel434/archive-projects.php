@@ -58,7 +58,7 @@ function projects_archive_custom_loop()
                     <div class="project-info">
                         <h4 class="project-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
                         <p class="project-blurb"><?php echo $project_blurb; ?></p>
-                        <span class="primary-button small-button">
+                        <span class="blue-button small-button">
                             <a href="<?php the_permalink(); ?>">View Project</a>
                         </span>
                     </div>

@@ -17,8 +17,7 @@ function ns_enqueue_scripts()
     wp_enqueue_script('gmaps');
 
     //  Google Fonts
-    wp_enqueue_style('g-fonts-mont', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap', array(), ACCEL_VERSION);
-    wp_enqueue_style('g-fonts-prompt', 'https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&display=swap', array(), ACCEL_VERSION);
+    wp_enqueue_style('g-fonts-mont', 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap', array(), ACCEL_VERSION);
 
     // Slick
     wp_register_script('slick', get_stylesheet_directory_uri() . '/assets/components/slick-carousel/slick/slick.min.js', '', true);

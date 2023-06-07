@@ -1,6 +1,6 @@
 .call-to-action.footer-cta {
   @include bg;
-  background-color: $gray-900;
+  background-color: $dark-gray;
   display: block;
   padding: $base-spacing * 5 0;
   position: relative;
@@ -25,15 +25,15 @@
   }
 
   &.img-bg {
-    @include bg_overlay($gray-900);
+    @include bg_overlay($dark-gray);
   }
 
   &.video-bg {
-    @include bg_overlay($gray-900);
+    @include bg_overlay($dark-gray);
     overflow: hidden;
 
     @media ($large-screen-up) {
-      @include bg_overlay($gray-900, 0);
+      @include bg_overlay($dark-gray, 0);
     }
 
     .autoplay-video {

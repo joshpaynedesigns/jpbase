@@ -32,7 +32,7 @@
   background-size: $size;
 }
 
-@mixin bg_overlay($color: $action-color, $opacity: 0.7) {
+@mixin bg_overlay($color: $blue, $opacity: 0.7) {
   position: relative;
 
   &:before {
@@ -84,4 +84,40 @@
 @function rem($pixels) {
   $clean: strip-unit($pixels);
   @return math.div($clean, 16) + rem;
+}
+
+// Text Colors
+@mixin text_colors() {
+  .text-blue {
+    color: $blue;
+  }
+
+  .text-light-blue {
+    color: $light-blue;
+  }
+
+  .text-dark-gray {
+    color: $dark-gray;
+  }
+
+  .text-medium-gray {
+    color: $medium-gray;
+  }
+
+  .text-light-gray {
+    color: $light-gray;
+  }
+
+  .text-white {
+    color: white;
+
+    a {
+      color: white;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }

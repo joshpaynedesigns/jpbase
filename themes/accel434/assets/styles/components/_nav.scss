@@ -38,7 +38,7 @@ $sub-nav-link-color-hover: $base-font-color;
     }
 
     > a {
-      color: $gray-600;
+      color: $medium-gray;
       display: block;
       padding: 1em 0.4em;
       font-weight: 500;
@@ -54,7 +54,7 @@ $sub-nav-link-color-hover: $base-font-color;
     &.current-menu-ancestor > a,
     &.current-menu-parent > a,
     &.menu-item-has-children.menu-item-hover > a {
-      color: $blue-900;
+      color: $blue;
     }
 
     &:hover,
@@ -129,8 +129,8 @@ $sub-nav-link-color-hover: $base-font-color;
 
     &.nav-button {
       a {
-        background: $action-color;
-        color: $white;
+        background: $blue;
+        color: white;
         display: inline-block;
         font-family: $heading-font-family;
         font-size: em(14);
@@ -142,7 +142,7 @@ $sub-nav-link-color-hover: $base-font-color;
         text-transform: uppercase;
 
         &:hover {
-          background: shade($action-color, 20%);
+          background: shade($blue, 20%);
         }
       }
     }
@@ -152,12 +152,12 @@ $sub-nav-link-color-hover: $base-font-color;
 .secondary-nav-wrap {
   align-items: center;
   display: flex;
-  gap: 1.6em;
+  gap: rem(24);
 
   .menu {
     font-size: rem(12);
     a {
-      color: $gray-600;
+      color: $medium-gray;
       text-decoration: underline;
 
       &:hover {

@@ -5,9 +5,9 @@ $btn_details = get_sub_field('link_details');
 $bar_color = get_sub_field('bar_color');
 $contained_bar = get_sub_field('contained_bar');
 
-$outer_classes = "";
+$outer_classes = "contained";
 if (!$contained_bar) {
-    $outer_classes = $bar_color;
+    $outer_classes = $bar_color . " not-contained";
 }
 
 ?>

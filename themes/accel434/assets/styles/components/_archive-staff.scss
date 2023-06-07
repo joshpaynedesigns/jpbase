@@ -4,17 +4,29 @@
   }
 }
 
+.post-type-archive-staff .staffTermSection {
+  margin-top: rem(48);
+
+  @media ($large-screen-up) {
+    margin-top: rem(64);
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
 .staffArchBlock {
   .image-wrap {
-    border-radius: rem(12);
     overflow: hidden;
-    background-color: $blue-200;
     max-width: rem(400);
+    background-color: $light-blue;
     margin-left: auto;
     margin-right: auto;
 
     img {
       display: block;
+      width: 100%;
       transition: all $base-timing $base-duration;
     }
   }
@@ -26,7 +38,7 @@
   }
 
   .position {
-    color: $gray-600;
+    color: $medium-gray;
   }
 }
 
@@ -37,7 +49,7 @@
     }
 
     .name {
-      color: $blue-200;
+      color: $light-blue;
     }
   }
 }

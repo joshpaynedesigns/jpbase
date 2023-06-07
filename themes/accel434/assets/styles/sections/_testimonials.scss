@@ -3,14 +3,13 @@
     color: white;
   }
 
-  .testimonial-section-inner {
-    background-color: $green-900;
-    padding: 3rem;
+  //   .testimonial-section-inner {
+  //     padding: 3rem;
 
-    @media ($large-screen-up) {
-      padding: 4rem;
-    }
-  }
+  //     @media ($large-screen-up) {
+  //       padding: 4rem;
+  //     }
+  //   }
 
   .testimonial {
     max-width: rem(960);

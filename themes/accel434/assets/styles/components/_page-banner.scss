@@ -14,7 +14,6 @@ $large-b-height: 725px;
   }
 
   .banner_slide {
-
     > .wrap {
       height: 100%;
       position: relative;
@@ -28,7 +27,6 @@ $large-b-height: 725px;
 
   &.small-height-banner {
     .banner_slide {
-
       @media ($large-screen-up) {
         height: $small-b-height;
       }
@@ -37,7 +35,6 @@ $large-b-height: 725px;
 
   &.medium-height-banner {
     .banner_slide {
-
       @media ($large-screen-up) {
         height: $med-b-height;
       }
@@ -46,7 +43,6 @@ $large-b-height: 725px;
 
   &.large-height-banner {
     .banner_slide {
-
       @media ($large-screen-up) {
         height: $large-b-height;
       }
@@ -55,7 +51,6 @@ $large-b-height: 725px;
 
   &.full-screen-height-banner {
     .banner_slide {
-
       @media ($large-screen-up) {
         height: 100vh;
       }
@@ -130,7 +125,7 @@ $large-b-height: 725px;
   }
 
   &.light-text {
-    background-color: black;
+    background-color: $dark-gray;
 
     .banner_subtitle,
     .banner_title {
@@ -139,11 +134,11 @@ $large-b-height: 725px;
   }
 
   &.dark-text {
-    background-color: $green-100;
+    background-color: white;
 
     .banner_subtitle,
     .banner_title {
-      color: $gray-900;
+      color: $dark-gray;
     }
   }
 
