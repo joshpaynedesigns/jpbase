@@ -57,7 +57,7 @@ if ($hide_banner_options == 'hide_banner_image') {
                     <?php endif; ?>
                     <?php if ($button) : ?>
                         <div class="flex justify-center items-center basemt">
-                            <?php echo ns_link_button($button, 'green-button'); ?>
+                            <?php echo ns_link_button($button, 'blue-button'); ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -84,8 +84,8 @@ function decide_banner_bg_img()
         $default_bg_image = ns_get_field('default_banner_image_testimonials', 'options');
     } elseif (is_singular('service') || is_post_type_archive('service')) {
         $default_bg_image = ns_get_field('default_banner_image_services', 'options');
-    } elseif (is_singular('product') || is_post_type_archive('product')) {
-        $default_bg_image = ns_get_field('default_banner_image_products', 'options');
+    } elseif (is_singular('project') || is_post_type_archive('project')) {
+        $default_bg_image = ns_get_field('default_banner_image_projects', 'options');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_bg_image = ns_get_field('default_banner_image_locations', 'options');
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
@@ -118,8 +118,8 @@ function decide_banner_height_class()
         $default_banner_height = ns_get_field('default_banner_height_testimonials', 'option');
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
         $default_banner_height = ns_get_field('default_banner_height_staff', 'option');
-    } elseif (is_post_type_archive('product') || is_singular('product')) {
-        $default_banner_height = ns_get_field('default_banner_height_products', 'option');
+    } elseif (is_post_type_archive('project') || is_singular('project')) {
+        $default_banner_height = ns_get_field('default_banner_height_projects', 'option');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_banner_height = ns_get_field('default_banner_height_locations', 'option');
     } elseif (is_event_calendar_page() || is_singular('tribe_event_series')) {
@@ -149,7 +149,7 @@ function decide_banner_height_class()
 function decide_banner_title()
 {
     $title = '';
-    if (is_home() || is_tag() || is_date()) {
+    if (is_home() || is_tag() || is_date() || is_singular('post')) {
         $page_for_posts = get_option('page_for_posts');
         $custom_title   = ns_get_field('archive_title_blog', 'option');
         $title          = get_the_title($page_for_posts);
@@ -159,12 +159,7 @@ function decide_banner_title()
         }
     } elseif (is_category()) {
         $queried_object = get_queried_object();
-        // $title = 'Resource ' . $queried_object->name;
         $title = $queried_object->name;
-    } elseif (is_tax('resource_topic')) {
-        $queried_object = get_queried_object();
-        // $title = $queried_object->name . ' Library';
-        $title = 'Topic: ' . $queried_object->name;
     } elseif (is_post_type_archive('testimonial')) {
         $title = ns_get_field('archive_title_testimonials', 'option');
         if (empty($title)) {
@@ -180,8 +175,8 @@ function decide_banner_title()
         if (empty($title)) {
             $title = post_type_archive_title('', false);
         }
-    } elseif (is_post_type_archive('product')) {
-        $title = ns_get_field('archive_title_products', 'option');
+    } elseif (is_post_type_archive('projects')) {
+        $title = ns_get_field('archive_title_projects', 'option');
         if (empty($title)) {
             $title = post_type_archive_title('', false);
         }
@@ -216,8 +211,8 @@ function decide_banner_subtitle()
         $subtitle = ns_get_field('archive_sub_title_staff', 'option');
     } elseif (is_post_type_archive('service')) {
         $subtitle = ns_get_field('archive_sub_title_services', 'option');
-    } elseif (is_post_type_archive('product')) {
-        $subtitle = ns_get_field('archive_sub_title_products', 'option');
+    } elseif (is_post_type_archive('project')) {
+        $subtitle = ns_get_field('archive_sub_title_projects', 'option');
     } elseif (is_post_type_archive('location')) {
         $subtitle = ns_get_field('archive_sub_title_locations', 'option');
     } elseif (is_event_calendar_page()) {
@@ -226,6 +221,11 @@ function decide_banner_subtitle()
         $subtitle = get_the_title();
     } elseif (is_category() || is_tag()) {
         $subtitle = get_the_archive_title();
+    } elseif (is_singular('projects')) {
+        $types     = custom_taxonomies_terms(get_the_ID(), 'projects-cat', ' | ', true);
+        if (! empty($types)) {
+            $subtitle = $types;
+        }
     }
 
     return $subtitle;

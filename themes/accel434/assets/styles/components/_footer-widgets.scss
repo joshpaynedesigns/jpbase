@@ -1,6 +1,6 @@
 .footer-widgets {
-  background-color: $green-100;
-  color: $gray-900;
+  background-color: $light-gray;
+  color: $dark-gray;
   padding: rem(48) 0;
   position: relative;
 
@@ -23,7 +23,7 @@
   }
 
   .widget-title.widgettitle {
-    color: $gray-900;
+    color: $dark-gray;
     font-size: rem(24);
   }
 
@@ -63,19 +63,19 @@
     margin-bottom: 0.25em;
 
     a {
-      color: $gray-600;
+      color: $medium-gray;
       font-size: rem(14);
       position: relative;
       transition: color $base-duration $base-timing;
 
       &:hover {
-        color: $blue-900;
+        color: $blue;
       }
     }
   }
 
   .email-phone a {
-    color: $blue-900;
+    color: $blue;
 
     &:hover {
       text-decoration: underline;
@@ -102,7 +102,7 @@
   }
 
   a {
-    color: $gray-600;
+    color: $medium-gray;
     display: inline-block;
     height: 22px;
     margin-right: 10px;
@@ -113,13 +113,13 @@
 
   svg {
     background: transparent;
-    fill: $gray-600;
+    fill: $medium-gray;
     height: 22px;
     transition: all $base-duration $base-timing;
     width: auto;
 
     &:hover {
-      fill: $blue-900;
+      fill: $blue;
     }
   }
 }

@@ -1,6 +1,6 @@
 // Typography
-$base-font-family: "Montserrat";
-$heading-font-family: "Prompt";
+$base-font-family: "Lato";
+$heading-font-family: "Lato";
 
 // Font Sizes
 $base-font-size: 1em;
@@ -20,52 +20,30 @@ $small-spacing: calc($base-spacing / 3);
 $base-z-index: 0;
 
 // Colors
-$black: #111111;
-$white: white;
+$dark-gray: #111;
+$medium-gray: #555;
+$light-gray: #eee;
 
-$blue-900: #01569f;
-$blue-400: #1176bb;
-$blue-200: #48a0c8;
+$blue: #01569f;
+$light-blue: #48a0c8;
 
-$gray-900: #111111;
-$gray-600: #555555;
-$gray-200: #eeeeee;
-$gray-100: #cccccc;
-
-$green-900: #1d6665;
-$green-400: #2c7a76;
-$green-300: #c5dbd8;
-$green-200: #5c978e;
-$green-100: #e5f2f0;
-$green-50: #f1faf9;
-
-// Font Colors
-$base-font-color: $gray-600;
-$heading-font-color: $gray-900;
-$primary-color: $blue-900;
-$action-color: $blue-900;
+$base-font-color: $medium-gray;
+$heading-font-color: $dark-gray;
 
 // Border
-$base-border-color: $gray-100;
+$base-border-color: $light-gray;
 $base-border: 1px solid $base-border-color;
 
-// Background Colors
+// Background Colors (Body)
 $base-background-color: white;
-$secondary-background-color: #f1f1f1;
 
 // Forms
 $form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
 $form-box-shadow-focus: $form-box-shadow,
-  0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
+  0 0 5px adjust-color($blue, $lightness: -5%, $alpha: -0.3);
 
 // Animations
 $base-duration: 300ms;
 $medium-duration: 500ms;
 $long-duration: 800ms;
 $base-timing: ease-in-out;
-
-$blue-green-grad: linear-gradient(
-  90deg,
-  rgba(17, 118, 187, 1) 0%,
-  rgba(44, 122, 118, 1) 100%
-);

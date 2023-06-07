@@ -21,7 +21,7 @@
       }
 
       .blurb-title {
-        color: $gray-900;
+        color: $dark-gray;
         font-size: rem(22);
         line-height: 1;
       }
@@ -63,7 +63,6 @@
     .micro-accordion-inner-content {
       background-color: white;
       border: $base-border;
-      border-radius: rem(6);
       line-height: 148%;
       padding: rem(12) rem(8);
 

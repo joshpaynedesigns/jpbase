@@ -74,9 +74,7 @@
             },
             "choices": {
                 "bg-blue": "Blue",
-                "bg-dark-gray": "Dark Gray",
-                "bg-green": "Green",
-                "grad": "Gradiant"
+                "bg-dark-gray": "Dark Gray"
             },
             "default_value": "blue",
             "return_format": "value",
@@ -124,5 +122,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1685046995
+    "modified": 1686062182
 }

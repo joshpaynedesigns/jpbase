@@ -54,11 +54,6 @@ jQuery(document).ready(function () {
     }
   });
 
-  jQuery(".micro-accordion-title").on("click", function () {
-    let content = jQuery(this).next(".micro-accordion-content");
-    content.toggleClass("is-open");
-  });
-
   // Check to see if menu goes outside of container
   jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on(
     "mouseover",
@@ -143,25 +138,10 @@ jQuery(document).ready(function () {
       theSlider.slick({
         arrows: true,
         autoplay: true,
+        adaptiveHeight: true,
         autoplaySpeed: 10000,
         nextArrow: theSliderOuter.find(".right-arrow"),
         prevArrow: theSliderOuter.find(".left-arrow"),
-      });
-    });
-  }
-
-  let announcementsSliders = jQuery(".announcements-slider");
-  if (announcementsSliders.length > 0) {
-    announcementsSliders.each(function () {
-      let sliderWrap = jQuery(this);
-      let theSlider = sliderWrap.children(".slides-wrap");
-
-      theSlider.slick({
-        arrows: true,
-        autoplay: false,
-        nextArrow: sliderWrap.find(".right-arrow"),
-        prevArrow: sliderWrap.find(".left-arrow"),
-        slidesToShow: 1,
       });
     });
   }
@@ -175,6 +155,7 @@ jQuery(document).ready(function () {
       theSlider.slick({
         arrows: true,
         autoplay: false,
+        adaptiveHeight: true,
         nextArrow: sliderWrap.find(".right-arrow"),
         prevArrow: sliderWrap.find(".left-arrow"),
         slidesToShow: 1,

@@ -34,7 +34,6 @@
   }
 
   .box {
-    border-radius: rem(15);
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -57,13 +56,7 @@
 
     &.linked {
       &:hover {
-        &::before {
-          transform: translate(0);
-        }
-
-        .fake-link {
-          text-decoration: underline;
-        }
+        transform: scale(1.05);
       }
     }
   }

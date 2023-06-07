@@ -1,7 +1,7 @@
 $icon-color: white;
 
 .alert-bar {
-  background: $primary-color;
+  background: $blue;
   color: white;
   padding: 1em 0;
   text-align: center;
@@ -49,12 +49,12 @@ $icon-color: white;
       margin-bottom: 0;
 
       a {
-        color: $gray-900;
+        color: $dark-gray;
       }
 
       a:focus,
       a:hover {
-        color: $action-color;
+        color: $blue;
       }
     }
 
@@ -81,18 +81,13 @@ $icon-color: white;
         background-size: contain;
         display: block;
         float: left;
-        height: 40px;
+        height: rem(28);
         transition: opacity $base-duration $base-timing;
-        width: 135px;
+        width: rem(198);
 
         @media ($large-screen-up) {
-          height: 48px;
-          width: 160px;
-        }
-
-        @media ($xl-screen-up) {
-          height: 65px;
-          width: 220px;
+          height: rem(36);
+          width: rem(258);
         }
 
         &:before {
@@ -134,7 +129,7 @@ $icon-color: white;
       svg {
         fill: transparent;
         height: 18px;
-        stroke: $gray-900;
+        stroke: $dark-gray;
         width: 18px;
       }
 
@@ -143,7 +138,7 @@ $icon-color: white;
         opacity: 1;
 
         svg {
-          stroke: $blue-900;
+          stroke: $blue;
         }
       }
     }
@@ -175,4 +170,10 @@ body.fixed-header .site-header {
   @media (min-width: 783px) {
     top: 32px;
   }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: rem(24);
 }

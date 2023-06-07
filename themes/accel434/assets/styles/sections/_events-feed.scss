@@ -38,8 +38,7 @@
 
     .event-date {
       align-items: center;
-      background-color: $gray-600;
-      border-radius: rem(8);
+      background-color: $medium-gray;
       color: white;
       display: flex;
       flex-direction: column;
@@ -49,6 +48,7 @@
       line-height: 1;
       transition: background-color $base-timing $base-duration;
       width: rem(75);
+      aspect-ratio: 1/1;
     }
 
     .event-date-up {
@@ -69,25 +69,25 @@
     }
 
     .event-title {
-      color: $gray-900;
+      color: $dark-gray;
       font-size: rem(18);
       font-weight: bold;
       transition: all $base-timing $base-duration;
     }
 
     .event-link {
-      color: $blue-900;
+      color: $blue;
       font-size: rem(12);
       font-weight: bold;
     }
 
     &:hover {
       .event-date {
-        background-color: $blue-900;
+        background-color: $blue;
       }
 
       .event-title {
-        color: $blue-900;
+        color: $blue;
       }
     }
   }

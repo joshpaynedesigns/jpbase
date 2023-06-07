@@ -135,33 +135,6 @@
                     "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
-                    "key": "field_6402600fabb62",
-                    "label": "Image",
-                    "name": "image",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "relevanssi_exclude": 0,
-                    "return_format": "array",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "preview_size": "thumbnail",
-                    "parent_repeater": "field_58e7d3111d06f"
-                },
-                {
                     "key": "field_58e7d31120f8d",
                     "label": "Text Color",
                     "name": "text_color",
@@ -287,6 +260,27 @@
                     "parent_repeater": "field_58e7d3111d06f"
                 },
                 {
+                    "key": "field_647f66b61380c",
+                    "label": "Use Default BG Image",
+                    "name": "use_default_bg_image",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "ui": 1,
+                    "parent_repeater": "field_58e7d3111d06f"
+                },
+                {
                     "key": "field_58e7d31120fce",
                     "label": "Background Image",
                     "name": "banner_background_image",
@@ -294,13 +288,20 @@
                     "type": "image",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_647f66b61380c",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "100",
                         "class": "",
                         "id": ""
                     },
-                    "relevanssi_exclude": 0,
                     "return_format": "array",
                     "library": "all",
                     "min_width": "",
@@ -426,5 +427,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681754658
+    "modified": 1686071685
 }

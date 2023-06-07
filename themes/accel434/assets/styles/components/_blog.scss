@@ -11,7 +11,7 @@
   margin-top: 2px;
 
   .story-img {
-    height: 190px;
+    height: rem(250);
     margin-bottom: 20px;
     @include bg();
 
@@ -31,10 +31,10 @@
     margin-bottom: 0.5em;
 
     a {
-      color: $gray-900;
+      color: $dark-gray;
 
       &:hover {
-        color: $action-color;
+        color: $blue;
       }
     }
   }

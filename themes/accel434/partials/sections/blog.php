@@ -47,7 +47,7 @@ $section_classes = ns_decide_section_classes();
                 <?php ns_slider_arrows(32, 32); ?>
             </div>
             <div class="blog-feed-bottom flex justify-center mt-8">
-                <span class="green-button">
+                <span class="blue-button">
                     <a href="<?php echo $arch_link; ?>">View All Posts</a>
                 </span>
             </div>

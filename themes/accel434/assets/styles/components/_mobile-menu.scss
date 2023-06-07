@@ -1,5 +1,5 @@
 // Mobile Navigation Variables
-$mm-bg-color: $gray-900;
+$mm-bg-color: $dark-gray;
 
 body {
   position: relative;
@@ -116,7 +116,7 @@ body {
           }
         }
         a {
-          color: $gray-200;
+          color: $light-gray;
           font-family: $heading-font-family;
         }
       }
@@ -135,7 +135,7 @@ body {
 
     &:hover {
       svg {
-        fill: $blue-900;
+        fill: $blue;
       }
     }
   }
@@ -145,7 +145,7 @@ body {
     height: 28px;
 
     svg {
-      fill: $gray-600;
+      fill: $medium-gray;
     }
   }
 }

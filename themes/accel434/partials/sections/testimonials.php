@@ -13,7 +13,7 @@ $args = array(
 
 $loop = new WP_Query($args);
 
-$section_classes = ns_decide_section_classes();
+$section_classes = ns_decide_section_classes('blue');
 ?>
 
 <?php if ($loop->have_posts()) : ?>

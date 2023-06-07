@@ -8,3 +8,4 @@ cache
 /autoptimize_404_handler.php
 /mu-plugins/wp-migrate-db-pro-compatibility.php
 /ewww/
+/debug.log

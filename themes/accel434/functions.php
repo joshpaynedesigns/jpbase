@@ -88,9 +88,6 @@ function child_theme_setup()
 
     // * Reposition the primary navigation menu
     remove_action('genesis_after_header', 'genesis_do_nav');
-    // add_action('genesis_header', 'genesis_do_nav');
-
-    // add_action('genesis_header', 'ns_search_toggle');
 
     // CPT Archive Nav Fix
     function fix_nav_menu($query)
@@ -111,7 +108,6 @@ function child_theme_setup()
     // Sidebars
     unregister_sidebar('sidebar-alt');
     unregister_sidebar('header-right');
-    unregister_sidebar('sidebar');
 
     add_theme_support('genesis-footer-widgets', 4);
 
@@ -179,11 +175,9 @@ function child_theme_setup()
         if ($hide_banner_options == 'hide_banner_image') {
             $attributes['class'] .= ' no-banner-image';
         }
-        // Add class to Body when it's fixed
-        $turn_on_fixed_header = ns_get_field('turn_on_fixed_header', 'options');
-        if ($turn_on_fixed_header) {
-            $attributes['class'] .= ' fixed-header';
-        }
+
+        $attributes['class'] .= ' fixed-header';
+
         // Add class to Body when it's Alert Bar
         $show_alert_bar = ns_get_field('show_alert_bar', 'options');
         if ($show_alert_bar) {

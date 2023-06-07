@@ -32,7 +32,7 @@
     &.active,
     &:hover,
     &:focus {
-      background: $action-color;
+      background: $blue;
       a {
         color: white;
       }
@@ -41,7 +41,7 @@
     &:hover,
     &:focus {
       border: $base-border;
-      border-color: $action-color;
+      border-color: $blue;
       a {
         color: white;
       }

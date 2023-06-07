@@ -1,5 +1,4 @@
 .accordion-row {
-  border-radius: rem(16);
 }
 
 .accordion-row-header {
@@ -11,13 +10,13 @@
   &:hover,
   &.active-ar {
     .ac-row-title {
-      color: $action-color;
+      color: $blue;
     }
 
     .ac-row-toggle {
       &:before,
       &:after {
-        background: $action-color;
+        background: $blue;
       }
     }
   }

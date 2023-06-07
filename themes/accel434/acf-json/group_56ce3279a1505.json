@@ -49,38 +49,6 @@
                     "min": "",
                     "max": ""
                 },
-                "layout_643f076e09e29": {
-                    "key": "layout_643f076e09e29",
-                    "name": "announcements",
-                    "label": "Announcements Section",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_643f076e09e2a",
-                            "label": "Announcements Details",
-                            "name": "announcements_details",
-                            "aria-label": "",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "clone": [
-                                "group_63ac9e1b25d16"
-                            ],
-                            "display": "seamless",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
                 "layout_643f07a802116": {
                     "key": "layout_643f07a802116",
                     "name": "attachments",
@@ -592,38 +560,6 @@
                     ],
                     "min": "",
                     "max": ""
-                },
-                "layout_643f08ae50147": {
-                    "key": "layout_643f08ae50147",
-                    "name": "video",
-                    "label": "Video Section",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_643f08ae50148",
-                            "label": "Video Details",
-                            "name": "video_details",
-                            "aria-label": "",
-                            "type": "clone",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "clone": [
-                                "group_64020918d8fd2"
-                            ],
-                            "display": "seamless",
-                            "layout": "block",
-                            "prefix_label": 0,
-                            "prefix_name": 0
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
                 }
             },
             "min": "",
@@ -670,5 +606,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681922436
+    "modified": 1686156305
 }

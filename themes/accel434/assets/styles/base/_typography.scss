@@ -1,12 +1,12 @@
 body {
-  background-color: $green-50;
   color: $base-font-color;
   font-family: $base-font-family;
   font-size: 90%;
   line-height: $base-line-height;
+  background-color: $base-background-color;
 
   *::selection {
-    background-color: $action-color;
+    background-color: $blue;
     color: white;
   }
 
@@ -62,14 +62,14 @@ p {
 }
 
 a {
-  color: $blue-900;
+  color: $blue;
   text-decoration: none;
   transition: all $base-duration $base-timing;
 
   &:active,
   &:focus,
   &:hover {
-    color: $blue-200;
+    color: $light-blue;
   }
 }
 
@@ -88,8 +88,8 @@ picture {
 }
 
 blockquote {
-  border-left: 8px solid $blue-200;
-  color: $green-900;
+  border-left: 8px solid $light-blue;
+  color: $blue;
   margin: 4% 5% 4% 0;
   padding: 0 0 0 rem(32);
   position: relative;
@@ -100,7 +100,7 @@ blockquote {
 }
 
 code {
-  background: $gray-200;
+  background: $light-gray;
   border: $base-border;
   color: $base-font-color;
   padding: 2px 4px;
@@ -175,36 +175,10 @@ code {
   margin: 0 0 $base-spacing $base-spacing;
 }
 
-// Font Colors
-.text-white {
-  color: $white;
-}
-
-.text-black {
-  color: $black;
-}
-
-.text-blue {
-  color: $blue-900;
-}
-
-.text-green {
-  color: $green-900;
-}
-
-.text-dark-gray {
-  color: $gray-900;
-}
-
-.text-medium-gray {
-  color: $gray-600;
-}
-
-.text-light-gray {
-  color: $gray-200;
-}
+// Text Colors
+@include text_colors();
 
 // WYSIWYG background color
 #tinymce {
-  background-color: $green-50;
+  background-color: $light-gray;
 }
