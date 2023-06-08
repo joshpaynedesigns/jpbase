@@ -2,14 +2,31 @@
 
 function ns_flexible_sections()
 {
-    echo '<section id="flexible-section-repeater">';
+    if (is_page('resources') || is_category() || is_tax('resource_topic')) {
+        echo '<section id="flexible-section-repeater" class="resource-blocks">';
+    } else {
+        echo '<section id="flexible-section-repeater">';
+    }
     if (post_password_required()) {
         echo '<div id="password-protected" class="wrap">';
         the_content();
         echo '</div>';
     } else {
-        if (have_rows('page_flexible_sections')) {
-            while (have_rows('page_flexible_sections')) {
+        $post_id = false;
+
+        $queried_object = get_queried_object();
+        if (is_object($queried_object) && is_a($queried_object, 'WP_Term')) {
+            $post_id = $queried_object->taxonomy . '_' . $queried_object->term_id;
+        }
+
+        if (have_rows('page_flexible_sections', $post_id)) {
+            while (have_rows('page_flexible_sections', $post_id)) {
+                the_row();
+                $section = get_row_layout();
+                get_template_part('partials/sections/' . $section);
+            }
+        } elseif (have_rows('post_flexible_sections', $post_id)) {
+            while (have_rows('post_flexible_sections', $post_id)) {
                 the_row();
                 $section = get_row_layout();
                 get_template_part('partials/sections/' . $section);
