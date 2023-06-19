@@ -9,6 +9,11 @@
 
 namespace Tribe\Events\Pro\Views\V2\Template;
 
+use Tribe\Events\Pro\Views\V2\Views\Map_View;
+use Tribe\Events\Pro\Views\V2\Views\Photo_View;
+use Tribe\Events\Pro\Views\V2\Views\Summary_View;
+use Tribe\Events\Views\V2\Manager;
+use Tribe\Events\Views\V2\Template\Title as TEC_Title;
 use Tribe__Context as Context;
 
 /**
@@ -18,7 +23,7 @@ use Tribe__Context as Context;
  *
  * @package Tribe\Events\Pro\Views\V2\Template
  */
-class Title extends \Tribe\Events\Views\V2\Template\Title {
+class Title extends TEC_Title {
 
 	/**
 	 * Builds the PRO View title based on context.
@@ -37,7 +42,6 @@ class Title extends \Tribe\Events\Views\V2\Template\Title {
 	public function build_title( $title = '', $depth = true, $separator = ' &#8250; ' ) {
 		$context = $this->context ?: tribe_context();
 		$posts   = $this->get_posts();
-
 		$title = '';
 
 		/**
@@ -75,6 +79,37 @@ class Title extends \Tribe\Events\Views\V2\Template\Title {
 				$this->events_label_plural,
 				date_i18n( $date_format, strtotime( tribe_get_first_week_day( $context->get( 'event_date' ) ) ) )
 			);
+		} else {
+			// Resolve our view slug.
+			$view_slug = $context->get( 'event_display' );
+			if ( $view_slug === null || $view_slug === 'default' ) {
+				$manager   = tribe( Manager::class );
+				$view_slug = $manager->get_default_view();
+			}
+			$range = TEC_Title::build_post_range_title( $context, $context->get( 'event_date', 'now' ), $posts );
+			switch ( $view_slug ) {
+				case Photo_View::get_view_slug():
+					$title = sprintf(
+						__( 'Display of %1$s from %2$s', 'tribe-events-calendar-pro' ),
+						$this->events_label_plural,
+						$range
+					);
+					break;
+				case Summary_View::get_view_slug():
+					$title = sprintf(
+						__( 'Summary of %1$s from %2$s', 'tribe-events-calendar-pro' ),
+						$this->events_label_plural,
+						$range
+					);
+					break;
+				case Map_View::get_view_slug():
+					$title = sprintf(
+						__( 'Map of %1$s from %2$s', 'tribe-events-calendar-pro' ),
+						$this->events_label_plural,
+						$range
+					);
+					break;
+			}
 		}
 
 		/**

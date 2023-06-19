@@ -19,6 +19,7 @@ namespace Tribe\Events\Pro\Admin\Manager;
 
 use WP_REST_Request as Request;
 use Tribe__Admin__Helpers as Admin_Helpers;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Hooks.
@@ -27,7 +28,8 @@ use Tribe__Admin__Helpers as Admin_Helpers;
  *
  * @package Tribe\Events\Pro\Admin\Manager
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
+
 	/**
 	 * Binds and sets up implementations.
 	 *

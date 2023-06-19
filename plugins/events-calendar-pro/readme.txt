@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.8.6
-Stable tag: 6.0.12.1
-Tested up to: 6.2.1
+Stable tag: 6.1.0
+Tested up to: 6.2.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -213,6 +213,17 @@ Previous versions of Events Calendar Pro are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.1.0] 2023-06-14 =
+
+* Version - Events Calendar PRO 6.1.0 is only compatible with The Events Calendar 6.1.0 and higher
+* Feature - Replace Freemius with Telemetry - an in-house info system. [TEC-4700]
+* Feature - Add plugin info to Site Health admin page. [TEC-4701]
+* Fix - Ensure all the strings in the add event page are translatable. [ECP-1453]
+* Fix - Ensure the `Use in Block Editor` option under `Events → Settings → Additional Fields` works as expected. [ECP-1481]
+* Fix - Removing our eager schema updates. This was causing a number of `ALTER` statements being run redundantly. No longer utilizes cache/transient for the last run check as it is not dependable. [TEC-4797]
+* Tweak - Updates title tags on events pages, to be more unique and search specific, taking on formats like "Summary of Events from February 2, 2017 - February 3, 2019". [TEC-4692]\
+* Language - 4 new strings added, 96 updated, 0 fuzzied, and 1 obsoleted
 
 = [6.0.12.1] 2023-05-18 =
 

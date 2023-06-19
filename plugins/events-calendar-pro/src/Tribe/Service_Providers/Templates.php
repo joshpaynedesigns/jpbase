@@ -6,12 +6,15 @@
  * @since 5.0.0
  */
 
+ use TEC\Common\Contracts\Service_Provider;
+
 /**
  * Class Tribe__Events__Pro__Service_Providers__Templates
  *
  * @since 5.0.0
  */
-class Tribe__Events__Pro__Service_Providers__Templates extends tad_DI52_ServiceProvider {
+class Tribe__Events__Pro__Service_Providers__Templates extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations and registers the required filters.

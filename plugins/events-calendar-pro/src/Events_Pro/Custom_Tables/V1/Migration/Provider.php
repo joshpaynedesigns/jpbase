@@ -9,7 +9,6 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Migration;
 
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Migration\Migration_Exception;
 use TEC\Events\Custom_Tables\V1\Migration\Reports\Event_Report;
 use TEC\Events\Custom_Tables\V1\Migration\Strategies\Strategy_Interface;
@@ -19,6 +18,7 @@ use TEC\Events_Pro\Custom_Tables\V1\Migration\Reports\Event_Report_Categories;
 use TEC\Events_Pro\Custom_Tables\V1\Migration\Strategy\Migration_Message_Override;
 use TEC\Events_Pro\Custom_Tables\V1\Migration\Strategy\Migration_Strategy_Guide;
 use TEC\Events_Pro\Custom_Tables\V1\Migration\Strategy\Multi_Rule_Event_Migration_Strategy;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider

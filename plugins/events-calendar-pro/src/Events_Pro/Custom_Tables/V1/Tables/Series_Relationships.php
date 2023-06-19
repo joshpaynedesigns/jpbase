@@ -52,10 +52,10 @@ class Series_Relationships extends Abstract_Custom_Table {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		return "CREATE TABLE `{$table_name}` (
-			`relationship_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-			`series_post_id` BIGINT(20) UNSIGNED NOT NULL,
-			`event_id` BIGINT(20) UNSIGNED NOT NULL,
-			`event_post_id` BIGINT(20) UNSIGNED NOT NULL,
+			`relationship_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			`series_post_id` bigint(20) unsigned NOT NULL,
+			`event_id` bigint(20) unsigned NOT NULL,
+			`event_post_id` bigint(20) unsigned NOT NULL,
 			PRIMARY KEY `relationship_id` (`relationship_id`),
 			KEY `series_post_id` (`series_post_id`),
 			KEY `event_post_id` (`event_post_id`)

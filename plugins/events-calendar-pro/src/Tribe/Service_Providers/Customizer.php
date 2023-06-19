@@ -10,8 +10,10 @@ namespace Tribe\Events\Pro\Service_Providers;
 
 use Tribe__Customizer;
 use Tribe__Utils__Color;
+use TEC\Common\Contracts\Service_Provider;
 
-class Customizer extends \tad_DI52_ServiceProvider {
+class Customizer extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

@@ -9,6 +9,8 @@
 
 namespace Tribe\Events\Pro\Views\V2\Widgets;
 
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 /**
  * Class Service_Provider
  *
@@ -16,7 +18,8 @@ namespace Tribe\Events\Pro\Views\V2\Widgets;
  *
  * @package Tribe\Events\Pro\Views\V2\Widgets
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 	/**
 	 * Binds and sets up implementations.
 	 *

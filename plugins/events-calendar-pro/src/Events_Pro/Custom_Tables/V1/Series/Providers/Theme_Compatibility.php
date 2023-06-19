@@ -9,8 +9,9 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Series\Providers;
 
-use tad_DI52_ServiceProvider;
+
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Theme_Compatibility
@@ -21,7 +22,8 @@ use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Series\Providers
  */
-class Theme_Compatibility extends tad_DI52_ServiceProvider {
+class Theme_Compatibility extends Service_Provider {
+
 	/**
 	 * Register the callbacks or actions used on this service provider.
 	 *

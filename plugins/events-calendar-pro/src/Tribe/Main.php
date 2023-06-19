@@ -81,7 +81,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.0.12.1';
+		const VERSION = '6.1.0';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -90,7 +90,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @deprecated 4.6
 		 *
 		 */
-		const REQUIRED_TEC_VERSION = '6.0.5';
+		const REQUIRED_TEC_VERSION = '6.1.0';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -1668,9 +1668,16 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if ( class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' ) ) {
 				tribe_register_provider( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' );
 			}
+
+			// Set up Site Health
+			tribe_register_provider( TEC\Events_Pro\Site_Health\Provider::class );
+			// Set up Telemetry
+			tribe_register_provider( TEC\Events_Pro\Telemetry\Provider::class );
+
 			if ( class_exists( Zapier_Provider::class ) ) {
 				tribe_register_provider( Zapier_Provider::class );
 			}
+
 			tribe( 'events-pro.admin.settings' );
 			tribe( 'events-pro.ical' );
 			tribe( 'events-pro.assets' );

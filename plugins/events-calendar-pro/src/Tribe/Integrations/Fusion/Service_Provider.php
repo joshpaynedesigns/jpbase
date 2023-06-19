@@ -13,6 +13,8 @@ use \Tribe\Events\Pro\Views\V2\Widgets\Widget_Month;
 use \Tribe\Events\Pro\Views\V2\Widgets\Widget_Week;
 use \Tribe\Events\Pro\Views\V2\Widgets\Widget_Countdown;
 use \Tribe\Events\Pro\Views\V2\Widgets\Widget_Featured_Venue;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 
 /**
  * Class Service_Provider
@@ -21,7 +23,8 @@ use \Tribe\Events\Pro\Views\V2\Widgets\Widget_Featured_Venue;
  *
  * @package Tribe\Events\Pro\Integrations\Fusion
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 
 	/**
 	 * Registers the bindings and hooks the filters required for the Fusion Core integration to work.

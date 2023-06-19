@@ -12,6 +12,8 @@ namespace Tribe\Events\Pro\Models;
 
 use WP_Post;
 use Tribe__Events__Pro__Geo_Loc as Geolocalization;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 
 /**
  * Class Service_Provider
@@ -20,7 +22,8 @@ use Tribe__Events__Pro__Geo_Loc as Geolocalization;
  *
  * @package Tribe\Events\Pro\Models
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 
 	/**
 	 * Binds and sets up implementations.

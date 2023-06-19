@@ -13,12 +13,12 @@
 namespace TEC\Events_Pro\Custom_Tables\V1;
 
 use Exception;
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events_Pro\Custom_Tables\V1\Admin\Notices\Occurrence_Notices;
 use Throwable;
 use Tribe__Admin__Notices;
 use Tribe__Events__Admin_List as TEC_Admin_List;
 use Tribe__Events__Main as TEC;
+use \TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Full_Activation_Provider

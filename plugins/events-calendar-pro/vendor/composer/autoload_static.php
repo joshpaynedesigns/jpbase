@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c
+class ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -184,6 +184,10 @@ class ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Repository\\Custom_Tables_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Repository/Custom_Tables_Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\WP_Query_Monitor_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/WP_Query_Monitor_Filters.php',
         'TEC\\Events_Pro\\Legacy\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Legacy/Query_Filters.php',
+        'TEC\\Events_Pro\\Site_Health\\Info_Section' => __DIR__ . '/../..' . '/src/Events_Pro/Site_Health/Info_Section.php',
+        'TEC\\Events_Pro\\Site_Health\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Site_Health/Provider.php',
+        'TEC\\Events_Pro\\Telemetry\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Telemetry/Provider.php',
+        'TEC\\Events_Pro\\Telemetry\\Telemetry' => __DIR__ . '/../..' . '/src/Events_Pro/Telemetry/Telemetry.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Assets.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Events_Table' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Events_Table.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Hooks.php',
@@ -284,9 +288,9 @@ class ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd6cebc4e290011c0ffc034aeb3eb8b3c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$classMap;
 
         }, null, ClassLoader::class);
     }

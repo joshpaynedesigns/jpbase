@@ -13,8 +13,9 @@
 namespace Tribe\Events\Pro\Admin\Manager;
 
 use Tribe__Events__Pro__Main as Plugin;
-
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Admin__Helpers;
+
 
 /**
  * Register the Assets for Events Pro Admin Manager.
@@ -23,7 +24,8 @@ use Tribe__Admin__Helpers;
  *
  * @package Tribe\Events\Pro\Admin\Manager
  */
-class Assets extends \tad_DI52_ServiceProvider {
+class Assets extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

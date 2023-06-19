@@ -154,7 +154,7 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 		tribe_asset(
 			$events_pro,
 			'gutenberg-events-pro-admin-additional-fields-behavior',
-			'app/admin-additional-fields.js',
+			'admin/admin-additional-fields.js',
 			array(),
 			'admin_enqueue_scripts',
 			array(

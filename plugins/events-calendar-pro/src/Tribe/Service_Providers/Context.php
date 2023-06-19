@@ -11,8 +11,10 @@ namespace Tribe\Events\Pro\Service_Providers;
 use Tribe__Context;
 use Tribe__Utils__Array as Arr;
 use Tribe__Events__Main as TEC;
+use TEC\Common\Contracts\Service_Provider;
 
-class Context extends \tad_DI52_ServiceProvider {
+class Context extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

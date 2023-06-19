@@ -9,6 +9,8 @@
 namespace Tribe\Events\Pro\Rewrite;
 
 use Tribe__Events__Main as TEC;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 
 /**
  * Class Provider
@@ -16,7 +18,8 @@ use Tribe__Events__Main as TEC;
  * @since   4.7.5
  * @package Tribe\Events\Pro\Rewrite
  */
-class Provider extends \tad_DI52_ServiceProvider {
+class Provider extends Provider_Contract {
+
 
 	/**
 	 * Binds and sets up implementations.

@@ -7,6 +7,9 @@
  */
 namespace Tribe\Events\Pro\Admin\Manager;
 
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
+
 /**
  * Class Provider.
  *
@@ -14,7 +17,8 @@ namespace Tribe\Events\Pro\Admin\Manager;
  *
  * @package Tribe\Events\Pro\Admin\Manager
  */
-class Provider extends \tad_DI52_ServiceProvider {
+class Provider extends Provider_Contract {
+
 
 	/**
 	 * Binds and sets up implementations.

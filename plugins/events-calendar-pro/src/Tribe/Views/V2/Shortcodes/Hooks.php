@@ -19,9 +19,9 @@ namespace Tribe\Events\Pro\Views\V2\Shortcodes;
 
 use Tribe\Events\Pro\Views\V2\Assets as Pro_Assets;
 use Tribe\Shortcode\Manager;
-use Tribe__Events__Pro__Shortcodes__Register as Legacy_Shortcodes;
 use WP_REST_Request as Request;
 use Tribe__Events__Main as TEC;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Hooks.
@@ -30,7 +30,8 @@ use Tribe__Events__Main as TEC;
  *
  * @package Tribe\Events\Pro\Views\V2
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
+
 	/**
 	 * Binds and sets up implementations.
 	 *

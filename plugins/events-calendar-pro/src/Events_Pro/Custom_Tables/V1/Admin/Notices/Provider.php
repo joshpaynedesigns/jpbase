@@ -9,8 +9,8 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Admin\Notices;
 
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Events__Main;
 
 /**

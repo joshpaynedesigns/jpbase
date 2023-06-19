@@ -26,6 +26,7 @@ use Tribe\Events\Views\V2\Views\Widgets\Widget_View;
 use Tribe\Events\Views\V2\Widgets\Widget_Abstract;
 use Tribe\Events\Views\V2\Widgets\Widget_List;
 use \Tribe\Events\Pro\Views\V2\Shortcodes\Tribe_Events as Tribe_Events_Shortcode;
+use TEC\Common\Contracts\Service_Provider;
 use WP_Screen;
 
 /**
@@ -35,7 +36,8 @@ use WP_Screen;
  *
  * @package Tribe\Events\Pro\Views\V2\Widgets
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

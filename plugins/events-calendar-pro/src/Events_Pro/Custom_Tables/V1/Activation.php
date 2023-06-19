@@ -78,62 +78,32 @@ class Activation {
 	 * in the context of the same day.
 	 *
 	 * @since 6.0.0
+	 * @since 6.1.0 Reworked transient logic to use tec_timed_option instead. More concise.
 	 */
 	public static function init(): void {
-		$tec_transient = self::get_tec_activation_transient();
-
-		// Run if either TEC or ECP would re-run.
-		if ( wp_using_ext_object_cache() ) {
-			$last_tec_run = wp_cache_get( $tec_transient );
-			$last_ecp_run = wp_cache_get( self::ACTIVATION_TRANSIENT );
-		} else {
-			$last_tec_run = get_transient( $tec_transient );
-			$last_ecp_run = get_transient( self::ACTIVATION_TRANSIENT );
-		}
-
-		$last_tec_run = $last_tec_run && is_numeric( $last_tec_run ) ? (int) $last_tec_run : null;
-		$last_ecp_run = $last_ecp_run && is_numeric( $last_ecp_run ) ? (int) $last_ecp_run : null;
-		if ( $last_ecp_run ) {
-			// Keep the older run time between TEC and ECP, filter out empty values.
-			$last_run_values = array_filter( [ $last_tec_run, $last_ecp_run ] );
-			$last_run        = count( $last_run_values ) > 1 ? min( $last_run_values ) : reset( $last_run_values );
-		} else {
-			// ECP never ran, run now.
-			$last_run = null;
-		}
-		$now = time();
-
-		// If the last run was less than 24 hours ago, bail.
-		if ( $last_run && $last_run > ( $now - DAY_IN_SECONDS ) ) {
+		// If the activation last ran less than 24 hours ago, bail.
+		if ( tec_timed_option()->get( static::ACTIVATION_TRANSIENT ) ) {
 			return;
 		}
 
-		/*
-		 * Delete the transient to make sure the table initialization code in TEC will run again.
-		 * @see TEC\Events\Custom_Tables\V1\Activation::init()
-		 */
-		delete_transient( $tec_transient );
-		wp_cache_delete( $tec_transient );
-		// Clean ECP transients should any other code use them.
-		delete_transient( self::ACTIVATION_TRANSIENT );
-		wp_cache_delete( self::ACTIVATION_TRANSIENT );
+		tec_timed_option()->set( static::ACTIVATION_TRANSIENT, 1, DAY_IN_SECONDS );
 
 		// Register the providers to add the required schemas, TEC will use it to create the ECP tables.
 		if ( ! tribe()->isBound( TEC_Tables_Provider::class ) ) {
 			tribe_register_provider( TEC_Tables_Provider::class );
 		}
-		tribe_register_provider( Tables_Provider::class );
+		if ( ! tribe()->isBound( Tables_Provider::class ) ) {
+			tribe_register_provider( Tables_Provider::class );
+		}
+
+		// Clear TEC transient flag so init() will run.
+		$tec_transient = self::get_tec_activation_transient();
+		tec_timed_option()->delete( $tec_transient );
 
 		// Finally trigger the TEC activation code that will include ECP custom tables schema.
 		TEC_Activation::init();
 
-		if ( wp_using_ext_object_cache() ) {
-			wp_cache_set( self::ACTIVATION_TRANSIENT, $now );
-		} else {
-			set_transient( self::ACTIVATION_TRANSIENT, $now );
-		}
-
-		if ( tribe()->getVar( 'ct1_fully_activated' ) ) {
+		if ( ! tribe()->getVar( 'ct1_fully_activated' ) ) {
 			/**
 			 * On new installations the full activation code will find an empty state and
 			 * will have not activated at this point, do it now if required.
@@ -155,10 +125,8 @@ class Activation {
 	public static function deactivate() {
 		// Delete the transient to make sure the activation code will run again.
 		$transient = self::get_tec_activation_transient();
-		delete_transient( $transient );
-		wp_cache_delete( $transient );
-		delete_transient( self::ACTIVATION_TRANSIENT );
-		wp_cache_delete( self::ACTIVATION_TRANSIENT );
+		tec_timed_option()->delete( $transient );
+		tec_timed_option()->delete( self::ACTIVATION_TRANSIENT );
 
 		tribe()->make( Provisional_Post_Provider::class )->on_deactivation();
 	}
