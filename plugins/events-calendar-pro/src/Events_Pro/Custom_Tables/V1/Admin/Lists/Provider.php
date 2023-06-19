@@ -12,6 +12,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Admin\Lists;
 use TEC\Events_Pro\Custom_Tables\V1\Links\Links;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Admin_List;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Events__Main as TEC;
 use WP_Post;
 use WP_Query;
@@ -23,7 +24,8 @@ use WP_Query;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Admin\Lists
  */
-class Provider extends \tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Hooks on the Admin UI post lists to filter the options and values available.

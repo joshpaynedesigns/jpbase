@@ -9,9 +9,10 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Editors\Manager;
 
-use tad_DI52_ServiceProvider;
+
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Main as Plugin;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider
@@ -20,7 +21,8 @@ use Tribe__Events__Pro__Main as Plugin;
  *
  * @package TEC\Events\Custom_Tables\V1\Editors\Manager
  */
-class Provider extends tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Registers the implementations, hooks and filters required to alter the Events Manager UI flow.

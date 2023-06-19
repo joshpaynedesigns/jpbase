@@ -10,6 +10,7 @@ namespace Tribe\Events\Pro\Event_Status;
 
 use Tribe\Events\Event_Status\Template;
 use Tribe\Events\Event_Status\Template_Modifications;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Event_Status_Provider
@@ -18,7 +19,8 @@ use Tribe\Events\Event_Status\Template_Modifications;
  *
  * @package Tribe\Events\Pro\Event_Status
  */
-class Event_Status_Provider extends \tad_DI52_ServiceProvider {
+class Event_Status_Provider extends Service_Provider {
+
 	const DISABLED = 'TEC_EVENT_STATUS_DISABLED';
 
 	/**

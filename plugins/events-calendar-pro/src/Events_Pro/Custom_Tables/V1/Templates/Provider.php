@@ -9,11 +9,12 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Templates;
 
-use tad_DI52_ServiceProvider;
+
 use TEC\Events_Pro\Custom_Tables\V1\Templates\Templates as Templates_Loader;
 use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Main as Plugin;
+use TEC\Common\Contracts\Service_Provider;
 
 
 /**
@@ -23,7 +24,8 @@ use Tribe__Events__Pro__Main as Plugin;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Templates
  */
-class Provider extends tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Key for the event single group of assets.

@@ -13,8 +13,8 @@ namespace Tribe\Events\Pro\Views\V2\Widgets;
 
 use Tribe__Events__Pro__Main as Pro_Plugin;
 use Tribe\Events\Views\V2\Widgets\Widget_List;
-
 use \Tribe\Events\Views\V2\Assets as TEC_Assets;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Register Assets related to Widgets.
@@ -23,7 +23,8 @@ use \Tribe\Events\Views\V2\Assets as TEC_Assets;
  *
  * @package Tribe\Events\Pro\Views\V2\Widgets
  */
-class Assets extends \tad_DI52_ServiceProvider {
+class Assets extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

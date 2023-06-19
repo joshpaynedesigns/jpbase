@@ -10,7 +10,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Series;
 
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 use TEC\Events\Custom_Tables\V1\Updates\Requests;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Providers\Base;

@@ -11,9 +11,10 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Series\Providers;
 
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Controller;
+
 use Tribe\Events\Views\V2\View_Interface;
 use Tribe\Utils\Theme_Compatibility;
-use Tribe__Events__Main as TEC;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Modifications
@@ -24,7 +25,8 @@ use Tribe__Events__Main as TEC;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Series\Providers
  */
-class Modifications extends \tad_DI52_ServiceProvider {
+class Modifications extends Service_Provider {
+
 	/**
 	 * Register the callbacks or actions used on this service provider.
 	 *

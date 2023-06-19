@@ -14,13 +14,16 @@ use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Google_Maps;
 use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Service_Interface as Geo_Loc_API_Service;
 use Tribe\Events\Pro\Views\V2\Views\Summary_View;
 use Tribe\Events\Pro\Event_Status\Event_Status_Provider;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 
 /**
  * Class Service_Provider
  * @since   4.7.5
  * @package Tribe\Events\Pro\Views\V2
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 
 	/**
 	 * Binds and sets up implementations.

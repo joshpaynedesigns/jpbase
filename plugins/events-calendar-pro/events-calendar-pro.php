@@ -2,7 +2,7 @@
 /**
  * Plugin Name: The Events Calendar Pro
  * Description: The Events Calendar Pro, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
- * Version: 6.0.12.1
+ * Version: 6.1.0
  * Author: The Events Calendar
  * Author URI: https://evnt.is/20
  * Text Domain: tribe-events-calendar-pro
@@ -33,9 +33,6 @@ define( 'EVENTS_CALENDAR_PRO_FILE', __FILE__ );
 
 // Load the required php min version functions
 require_once dirname( EVENTS_CALENDAR_PRO_FILE ) . '/src/functions/php-min-version.php';
-
-// Load Composer autoload file only if we've not included this file already.
-require_once EVENTS_CALENDAR_PRO_DIR . '/vendor/autoload.php';
 
 /**
  * Verifies if we need to warn the user about min PHP version and bail to avoid fatals
@@ -79,7 +76,7 @@ function tribe_register_pro() {
 	remove_action( 'plugins_loaded', 'tribe_register_pro', 50 );
 
 	// if we do not have a dependency checker then shut down
-	if ( ! class_exists( 'Tribe__Abstract_Plugin_Register' ) ) {
+	if ( ! class_exists( 'Tribe__Abstract_Plugin_Register', false ) ) {
 
 		add_action( 'admin_notices', 'tribe_show_fail_message' );
 		add_action( 'network_admin_notices', 'tribe_show_fail_message' );
@@ -107,14 +104,14 @@ add_action( 'plugins_loaded', 'tribe_register_pro', 50 );
  */
 add_action( 'tribe_common_loaded', 'tribe_events_calendar_pro_init' );
 function tribe_events_calendar_pro_init() {
-
-	$classes_exist = class_exists( 'Tribe__Events__Main' ) && class_exists( 'Tribe__Events__Pro__Main' );
 	$plugins_check = function_exists( 'tribe_check_plugin' ) ?
 		tribe_check_plugin( 'Tribe__Events__Pro__Main' )
 		: false;
+
+	$classes_exist = class_exists( 'Tribe__Events__Main', false ) && class_exists( 'Tribe__Events__Pro__Main', false );
 	$version_ok    = $classes_exist && $plugins_check;
 
-	if ( class_exists( 'Tribe__Main' ) && ! is_admin() && ! file_exists( __DIR__ . '/src/Tribe/PUE/Helper.php' ) ) {
+	if ( class_exists( 'Tribe__Main', false ) && ! is_admin() && ! file_exists( __DIR__ . '/src/Tribe/PUE/Helper.php' ) ) {
 		tribe_main_pue_helper();
 	}
 
@@ -134,7 +131,7 @@ function tribe_events_calendar_pro_init() {
 	if ( ! $version_ok ) {
 
 		// if we have the plugin register the dependency check will handle the messages
-		if ( class_exists( 'Tribe__Abstract_Plugin_Register' ) ) {
+		if ( class_exists( 'Tribe__Abstract_Plugin_Register', false ) ) {
 
 			new Tribe__Events__Pro__PUE( __FILE__ );
 
@@ -159,7 +156,7 @@ function tribe_show_fail_message() {
 	$domain = 'tribe-events-calendar-pro';
 
 	// If we don't have Common classes load the old fashioned way
-	if ( ! class_exists( 'Tribe__Main' ) ) {
+	if ( ! class_exists( 'Tribe__Main', false ) ) {
 		load_plugin_textdomain( $domain, false, $mopath );
 	} else {
 		// This will load `wp-content/languages/plugins` files first
@@ -184,9 +181,12 @@ function tribe_show_fail_message() {
  * autoloading.
  */
 function tribe_init_events_pro_autoloading() {
-	if ( ! class_exists( 'Tribe__Autoloader' ) ) {
+	if ( ! class_exists( 'Tribe__Autoloader', false ) ) {
 		return;
 	}
+	// Load Composer autoload file only if we've not included this file already.
+	require_once EVENTS_CALENDAR_PRO_DIR . '/vendor/autoload.php';
+
 	$autoloader = Tribe__Autoloader::instance();
 
 	$autoloader->register_prefix( 'Tribe__Events__Pro__', dirname( __FILE__ ) . '/src/Tribe', 'events-calendar-pro' );
@@ -205,7 +205,7 @@ function tribe_init_events_pro_autoloading() {
 register_deactivation_hook( __FILE__, 'tribe_events_pro_deactivation' );
 function tribe_events_pro_deactivation( $network_deactivating ) {
 
-	if ( ! class_exists( 'Tribe__Abstract_Deactivation' ) ) {
+	if ( ! class_exists( 'Tribe__Abstract_Deactivation', false ) ) {
 		return; // can't do anything since core isn't around
 	}
 
@@ -224,8 +224,8 @@ function tribe_events_pro_activation() {
 	}
 
 	if (
-		class_exists( 'Tribe__Events__Main' )
-		&& class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Activation' )
+		class_exists( 'Tribe__Events__Main', false )
+		&& class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Activation', false )
 		&& ! ( defined( 'TEC_CUSTOM_TABLES_V1_DISABLED' ) && TEC_CUSTOM_TABLES_V1_DISABLED )
 	) {
 		// Register the Custom Tables V1 provider, if defined, to set up the custom tables.

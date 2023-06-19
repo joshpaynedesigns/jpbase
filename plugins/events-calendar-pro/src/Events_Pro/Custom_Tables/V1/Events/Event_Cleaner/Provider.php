@@ -2,7 +2,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Events\Event_Cleaner;
 
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Events__Pro__Recurrence__Meta;
 use Tribe__Events__Pro__Recurrence__Old_Events_Cleaner;
 use Tribe__Events__Pro__Recurrence__Scheduler;

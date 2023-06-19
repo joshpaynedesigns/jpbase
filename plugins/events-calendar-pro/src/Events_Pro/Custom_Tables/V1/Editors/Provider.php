@@ -13,9 +13,11 @@ use TEC\Events\Custom_Tables\V1\Updates\Requests;
 use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Url;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Classic\UI_Lock;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Occurrence;
+
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Editor__Template__Admin;
 use Tribe__Events__Pro__Main as Plugin;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider
@@ -24,7 +26,8 @@ use Tribe__Events__Pro__Main as Plugin;
  *
  * @package TEC\Events\Custom_Tables\V1\Editors
  */
-class Provider extends \tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Key for the series group of assets.

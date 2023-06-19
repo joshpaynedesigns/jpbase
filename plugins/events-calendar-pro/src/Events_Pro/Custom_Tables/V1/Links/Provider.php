@@ -9,7 +9,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Links;
 
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 use WP_Post;
 
 /**
