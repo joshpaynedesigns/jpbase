@@ -9,10 +9,11 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Editors\Classic;
 
-use tad_DI52_ServiceProvider;
+
 use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Duplicate;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Recurrence_Strings;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Events__Main as TEC;
 use WP_Post;
 
@@ -23,7 +24,8 @@ use WP_Post;
  *
  * @package TEC\Events\Custom_Tables\V1\Editors\Classic
  */
-class Provider extends tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Registers the implementations, hooks and filters required to alter the Classic Editor UI flow.

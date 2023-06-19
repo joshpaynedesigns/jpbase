@@ -11,10 +11,10 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Models;
 
 use Generator;
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Tables\Events;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Occurrences\Occurrences_Generator;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider

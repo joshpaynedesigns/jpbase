@@ -48,9 +48,9 @@ class Occurrences extends Abstract_Custom_Field {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		return "CREATE TABLE `{$table_name}` (
-			`has_recurrence` BOOLEAN DEFAULT FALSE,
-            `sequence` BIGINT(20) UNSIGNED DEFAULT 0,
-            `is_rdate` BOOLEAN DEFAULT FALSE
+			`has_recurrence` boolean DEFAULT FALSE,
+            `sequence` bigint(20) unsigned DEFAULT 0,
+            `is_rdate` boolean DEFAULT FALSE
 			) {$charset_collate};";
 	}
 

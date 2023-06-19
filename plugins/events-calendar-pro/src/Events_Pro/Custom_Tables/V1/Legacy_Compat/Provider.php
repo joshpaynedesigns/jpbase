@@ -12,7 +12,6 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Legacy_Compat;
 
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
@@ -21,6 +20,7 @@ use Tribe__Admin__Notices as Admin_Notices;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Main as Pro_Main;
 use Tribe__Events__Pro__Recurrence__Meta as Pro_Recurrence_Meta;
+use TEC\Common\Contracts\Service_Provider;
 use WP_Admin_Bar;
 
 /**

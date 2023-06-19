@@ -10,7 +10,9 @@ for ( $i = 1; $i <= 12; $i++ ) {
 	$interval_options[] = array( 'id' => $i, 'text' => $i );
 }
 $delete_this_button = esc_html__( 'Delete', 'tribe-events-calendar-pro' );
-$label = __( 'Event Series:', 'tribe-events-calendar-pro' );
+$events_label_singular = tribe_get_event_label_singular();
+/* translators: %s is a placeholder for the singular event label e.g. "Event". */
+$label = sprintf( __( 'Recurring %s:', 'tribe-events-calendar-pro' ), $events_label_singular );
 
 $strings = [
 	'time-recurrence-start'               => _x( 'At', 'Begins the line indicating when a recurrence time starts' ,'tribe-events-calendar-pro' ),
@@ -664,7 +666,7 @@ $rule_prefix = 'exclusion';
 				</div>
 			</script>
 			<button id="tribe-add-exclusion"
-					class="button"><?php esc_html_e( 'Add Exclusion', 'tribe-events-calendar-pro' ); ?></button>
+					class="button"><?php esc_html_e( __( 'Add Exclusion', 'tribe-events-calendar-pro' ), 'tribe-events-calendar-pro' ); ?></button>
 		</div>
 	</td>
 </tr>

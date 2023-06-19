@@ -50,9 +50,15 @@ class Tribe__Events__Pro__Geo_Loc {
 	const ESTIMATION_CACHE_KEY = 'geoloc_center_point_estimation';
 
 	/**
-	 * Earth radio in Kms. Used for the distance math.
+	 * Earth radius in Kms. Used for the distance math.
+	 * @deprecated 6.1.0
 	 */
 	const EARTH_RADIO = 6371;
+
+	/**
+	 * Earth radius in Kms. Used for the distance math.
+	 */
+	const EARTH_RADIUS = 6371;
 
 	/**
 	 * Deprecated once we reverted the geolocalization changes to this class
@@ -529,10 +535,10 @@ class Tribe__Events__Pro__Geo_Loc {
 			$force = true;
 
 			// Set a geofence the size of the planet
-			$geofence_radio = self::EARTH_RADIO * M_PI;
+			$geofence_radius = self::EARTH_RADIUS * M_PI;
 
 			// Get all geoloc'ed venues
-			$venues = $this->get_venues_in_geofence( 1, 1, $geofence_radio );
+			$venues = $this->get_venues_in_geofence( 1, 1, $geofence_radius );
 		}
 
 		if ( $force ) {
@@ -829,24 +835,24 @@ class Tribe__Events__Pro__Geo_Loc {
 	 *
 	 * @param float $lat
 	 * @param float $lng
-	 * @param float $geofence_radio
+	 * @param float $geofence_radius
 	 *
 	 * @return array|null
 	 */
-	public function get_venues_in_geofence( $lat, $lng, $geofence_radio = null ) {
+	public function get_venues_in_geofence( $lat, $lng, $geofence_radius = null ) {
 
 		$lat = floatval( $lat );
 
-		if ( empty( $geofence_radio ) ) {
-			$geofence_radio = $this->get_geofence_size();
+		if ( empty( $geofence_radius ) ) {
+			$geofence_radius = $this->get_geofence_size();
 		}
 
 		// get the limits of the geofence
 
-		$maxLat = $lat + rad2deg( $geofence_radio / self::EARTH_RADIO );
-		$minLat = $lat - rad2deg( $geofence_radio / self::EARTH_RADIO );
-		$maxLng = $lng + rad2deg( $geofence_radio / self::EARTH_RADIO / cos( deg2rad( $lat ) ) );
-		$minLng = $lng - rad2deg( $geofence_radio / self::EARTH_RADIO / cos( deg2rad( $lat ) ) );
+		$maxLat = $lat + rad2deg( $geofence_radius / self::EARTH_RADIUS );
+		$minLat = $lat - rad2deg( $geofence_radius / self::EARTH_RADIUS );
+		$maxLng = $lng + rad2deg( $geofence_radius / self::EARTH_RADIUS / cos( deg2rad( $lat ) ) );
+		$minLng = $lng - rad2deg( $geofence_radius / self::EARTH_RADIUS / cos( deg2rad( $lat ) ) );
 
 		$latlng = array(
 			'lat'    => $lat,
@@ -873,9 +879,9 @@ class Tribe__Events__Pro__Geo_Loc {
 		 *		@type float $minLng Minimum longitude constraint
 		 *		@type float $maxLng Maximum longitude constraint
 		 * }
-		 * @param float      $geofence_radio Geofence size in kilometers
+		 * @param float      $geofence_radius Geofence size in kilometers
 		 */
-		$venues = apply_filters( 'tribe_geoloc_pre_get_venues_in_geofence', null, $latlng, $geofence_radio );
+		$venues = apply_filters( 'tribe_geoloc_pre_get_venues_in_geofence', null, $latlng, $geofence_radius );
 
 		if ( null === $venues ) {
 			global $wpdb;
@@ -981,7 +987,7 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		$a        = sin( deg2rad( (double) ( $delta_lat / 2 ) ) ) * sin( deg2rad( (double) ( $delta_lat / 2 ) ) ) + cos( deg2rad( (double) $lat_from ) ) * cos( deg2rad( (double) $lat_to ) ) * sin( deg2rad( (double) ( $delta_lng / 2 ) ) ) * sin( deg2rad( (double) ( $delta_lng / 2 ) ) );
 		$c        = asin( min( 1, sqrt( $a ) ) );
-		$distance = 2 * self::EARTH_RADIO * $c;
+		$distance = 2 * self::EARTH_RADIUS * $c;
 		$distance = round( $distance, 4 );
 
 		return $distance;

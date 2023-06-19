@@ -15,7 +15,7 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Integrations\APM;
 
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series_Post_Type;
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class APM_Integration.

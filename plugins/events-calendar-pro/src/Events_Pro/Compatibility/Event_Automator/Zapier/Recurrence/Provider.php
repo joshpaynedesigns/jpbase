@@ -8,7 +8,7 @@
 
 namespace TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Recurrence;
 
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Maps\Event;
 use WP_Post;
 

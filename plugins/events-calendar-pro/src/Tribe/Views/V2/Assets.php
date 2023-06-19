@@ -16,6 +16,7 @@ use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Events__Main;
 use Tribe__Events__Pro__Main as Plugin;
 use Tribe__Events__Templates;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Register the Assets for Events Pro View V2.
@@ -24,7 +25,8 @@ use Tribe__Events__Templates;
  *
  * @package Tribe\Events\Pro\Views\V2
  */
-class Assets extends \tad_DI52_ServiceProvider {
+class Assets extends Service_Provider {
+
 
 	/**
 	 * Key for this group of assets.

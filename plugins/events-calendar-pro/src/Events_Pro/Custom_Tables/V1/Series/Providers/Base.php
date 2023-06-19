@@ -10,6 +10,8 @@
 namespace TEC\Events_Pro\Custom_Tables\V1\Series\Providers;
 
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series;
+use TEC\Common\Contracts\Service_Provider;
+
 use WP_User;
 
 /**
@@ -19,7 +21,8 @@ use WP_User;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Series\Providers
  */
-class Base extends \tad_DI52_ServiceProvider {
+class Base extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

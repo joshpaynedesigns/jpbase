@@ -10,6 +10,8 @@
 namespace Tribe\Events\Pro\Integrations\Elementor;
 
 use Elementor\Elements_Manager;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
 
 /**
  * Class Service_Provider
@@ -18,18 +20,20 @@ use Elementor\Elements_Manager;
  *
  * @package Tribe\Events\Pro\Integrations\Elementor
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 
 	/**
 	 * Registers the bindings and hooks the filters required for the Elementor integration to work.
 	 *
 	 * @since 5.1.4
+	 * @since 6.1.0 Added check for Elementor\Widget_Base class before registering Elementor widgets to avoid fatal errors.
 	 */
 	public function register() {
 		$this->container->singleton( Shortcodes::class, Shortcodes::class );
 
-		// Support Elementor widgets if views v2 is enabled.
-		if ( tribe_events_views_v2_is_enabled() ) {
+		// Support Elementor widgets if views v2 is enabled and the Elementor\Widget_Base class exists.
+		if ( tribe_events_views_v2_is_enabled() && class_exists( 'Elementor\Widget_Base', false ) ) {
 			$this->container->singleton( Widgets\Widget_Countdown::class, Widgets\Widget_Countdown::class );
 			$this->container->singleton( Widgets\Widget_Event_List::class, Widgets\Widget_Event_List::class );
 			$this->container->singleton( Widgets\Widget_Event_Single_Legacy::class, Widgets\Widget_Event_Single_Legacy::class );

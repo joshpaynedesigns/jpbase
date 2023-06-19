@@ -9,7 +9,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Integrations;
 
-use tad_DI52_ServiceProvider as Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 use TEC\Events_Pro\Custom_Tables\V1\Integrations\APM\APM_Integration;
 use TEC\Events_Pro\Custom_Tables\V1\Integrations\WPML\WPML_Integration;
 use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Recurrence\Provider as Zapier_Recurrence_Provider;

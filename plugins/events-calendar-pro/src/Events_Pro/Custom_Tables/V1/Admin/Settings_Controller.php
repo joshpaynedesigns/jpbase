@@ -9,7 +9,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Admin;
 
-use TEC\Common\Provider\Controller;
+use TEC\Common\Contracts\Provider\Controller;
 
 /**
  * Class Settings_Controller.

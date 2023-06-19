@@ -1,6 +1,9 @@
 <?php
 
 namespace Tribe\Events\Pro\Integrations\Brizy_Builder;
+use TEC\Common\Contracts\Service_Provider as Provider_Contract;
+
+
 
 /**
  * Class Service_Provider
@@ -9,7 +12,8 @@ namespace Tribe\Events\Pro\Integrations\Brizy_Builder;
  *
  * @package Tribe\Events\Pro\Integrations\Brizy_Builder
  */
-class Service_Provider extends \tad_DI52_ServiceProvider {
+class Service_Provider extends Provider_Contract {
+
 
 	/**
 	 * Registers the bindings and hooks the filters required for the Brizy Builder integrations to work.

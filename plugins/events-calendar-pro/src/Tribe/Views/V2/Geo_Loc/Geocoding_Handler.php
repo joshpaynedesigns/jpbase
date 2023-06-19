@@ -13,6 +13,7 @@ namespace Tribe\Events\Pro\Views\V2\Geo_Loc;
 use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Service_Interface as Service;
 use Tribe__Context as Context;
 use Tribe__Events__Pro__Geo_Loc as Fencer;
+use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Geo_Loc_Data;
 
 /**
  * Class Geocoding_Handler
@@ -72,6 +73,13 @@ class Geocoding_Handler extends Base_Handler implements Handler_Interface {
 				'data'    => $geo_loc_data->get_error_data(),
 			] );
 
+			$repository_args['void_query'] = true;
+
+			return $repository_args;
+		}
+
+		if ( ! $geo_loc_data instanceof Geo_Loc_Data ) {
+			// Something went wrong and we didn't catch it above.
 			$repository_args['void_query'] = true;
 
 			return $repository_args;

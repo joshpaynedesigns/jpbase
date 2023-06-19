@@ -11,15 +11,12 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Editors\Block;
 
 use TEC\Events\Custom_Tables\V1\Migration\State;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
-use TEC\Events_Pro\Custom_Tables\V1\Duplicate\Url;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Event;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Recurrence_Strings;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
-use TEC\Events_Pro\Custom_Tables\V1\Updates\Blocks_Meta;
-use Tribe__Events__Main as TEC;
+
 use Tribe__Events__Pro__Editor as Pro_Editor;
-use Tribe__Events__Pro__Main as Plugin;
-use WP_Post;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider
@@ -28,7 +25,8 @@ use WP_Post;
  *
  * @package TEC\Events\Custom_Tables\V1\Editors\Block
  */
-class Provider extends \tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 
 	/**
 	 * Registers the plugin integration with the Blocks Editor if active for Events.
@@ -196,7 +194,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 
 	/**
 	 * Handles the AJAX request fired from the context of the Blocks Editor to fetch
-	 * an Occcurrence redirect data.
+	 * an Occurrence redirect data.
 	 *
 	 * @since 6.0.0
 	 *

@@ -29,7 +29,7 @@ abstract class Base_Handler {
 	protected $fencer;
 
 	/**
-	 * Resolved_Coords_Handler constructor.
+	 * Handler constructor.
 	 *
 	 * @param Fencer $fencer An instance of the Geo Loc class, that will be used to "fence" queries.
 	 */

@@ -10,7 +10,6 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Updates;
 
-use tad_DI52_ServiceProvider as Service_Provider;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
 use WP_Error;
@@ -19,6 +18,7 @@ use WP_Post;
 use WP_REST_Request;
 use Tribe__Events__Main as TEC;
 use WP_REST_Response;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Provider

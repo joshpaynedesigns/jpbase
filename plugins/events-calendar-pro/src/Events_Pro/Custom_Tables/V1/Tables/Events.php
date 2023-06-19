@@ -46,7 +46,7 @@ class Events extends Abstract_Custom_Field {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		return "CREATE TABLE `{$table_name}` (
-			`rset` LONGTEXT COLLATE utf8mb4_unicode_ci DEFAULT NULL
+			`rset` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL
 			) {$charset_collate};";
 	}
 

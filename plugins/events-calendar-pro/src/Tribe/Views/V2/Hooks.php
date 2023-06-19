@@ -45,6 +45,7 @@ use Tribe__Events__Pro__Main as Plugin;
 use Tribe__Events__Rewrite as TEC_Rewrite;
 use Tribe__Events__Venue as Venue;
 use WP_REST_Request as Request;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Hooks.
@@ -53,7 +54,8 @@ use WP_REST_Request as Request;
  *
  * @package Tribe\Events\Pro\Views\V2
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
+
 	/**
 	 * Binds and sets up implementations.
 	 *

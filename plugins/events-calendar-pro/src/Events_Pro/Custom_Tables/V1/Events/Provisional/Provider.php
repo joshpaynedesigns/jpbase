@@ -9,9 +9,10 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Events\Provisional;
 
-use tad_DI52_ServiceProvider;
+
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator as Provisional_ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post_Cache;
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Events__Main as TEC;
 
 /**
@@ -21,7 +22,8 @@ use Tribe__Events__Main as TEC;
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Events\Provisional
  */
-class Provider extends tad_DI52_ServiceProvider {
+class Provider extends Service_Provider {
+
 	/**
 	 * Registers the service provider functions.
 	 *

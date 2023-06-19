@@ -975,7 +975,7 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 	/**
 	 * Allow users to fetch default view For Mobile
 	 *
-	 * @return int
+	 * @return string The default view slug.
 	 * @category Events
 	 *
 	 */
@@ -984,7 +984,7 @@ if ( ! function_exists( 'tribe_get_mobile_default_view' ) ) {
 		$default_view = tribe_get_option( 'mobile_default_view', 'default' );
 
 		if ( 'default' === $default_view ) {
-			$default_view = tribe( Manager::class )->get_default_view_slug();;
+			$default_view = tribe( Manager::class )->get_default_view_slug();
 		}
 
 		/**

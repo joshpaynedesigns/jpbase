@@ -19,6 +19,7 @@ namespace Tribe\Events\Pro\Views\V2\Customizer;
 
 use Tribe\Events\Pro\Views\V2\Customizer\Section\Events_Bar;
 use Tribe\Events\Pro\Views\V2\Customizer\Section\Global_Elements;
+use TEC\Common\Contracts\Service_Provider;
 
 /**
  * Class Hooks
@@ -27,7 +28,8 @@ use Tribe\Events\Pro\Views\V2\Customizer\Section\Global_Elements;
  *
  * @package Tribe\Events\Views\Pro\V2\Customizer
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations.

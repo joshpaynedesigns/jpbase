@@ -6,12 +6,15 @@
  * @since 4.7
  */
 
+ use TEC\Common\Contracts\Service_Provider;
+
 /**
  * Class Tribe__Events__Pro__Service_Providers__ORM
  *
  * @since 4.7
  */
-class Tribe__Events__Pro__Service_Providers__ORM extends tad_DI52_ServiceProvider {
+class Tribe__Events__Pro__Service_Providers__ORM extends Service_Provider {
+
 
 	/**
 	 * Binds and sets up implementations and registers the required filters.
