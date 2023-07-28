@@ -28,6 +28,7 @@ $section_classes = ns_decide_section_classes();
                 <?php endif; ?>
                 <?php if ($at_2) : ?>
                     <div class="flex flex-col gap-4">
+                        <div class="w-full h-1 bg-light-gray mobile-divider"></div>
                         <?php foreach ($at_2 as $file) : ?>
                             <?php ns_attachment_block($file) ?>
                         <?php endforeach; ?>
