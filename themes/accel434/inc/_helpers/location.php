@@ -28,7 +28,7 @@ function ns_locations_archive_location($id = null)
     $permalink      = get_the_permalink($id);
     $address   = ns_get_location_full_address($id);
 
-    $thumbnail = get_the_post_thumbnail_url($id, 'medium');
+    $thumbnail = get_the_post_thumbnail_url($id, 'large');
     if (empty($thumbnail)) {
         $default_img = ns_get_field('default_banner_image_locations', 'option');
         $thumbnail   = $default_img['url'];

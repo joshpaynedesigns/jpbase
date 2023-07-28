@@ -5,7 +5,7 @@ $btn_details = get_sub_field('link_details');
 $bar_color = get_sub_field('bar_color');
 $contained_bar = get_sub_field('contained_bar');
 
-$outer_classes = "contained";
+$outer_classes = "contained sectionmb sectionmt";
 if (!$contained_bar) {
     $outer_classes = $bar_color . " not-contained";
 }

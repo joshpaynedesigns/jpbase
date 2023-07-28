@@ -1,4 +1,5 @@
 import { MobileMenu } from "./mobile-menu.js";
+import { ACFMaps } from "./acf-maps.js";
 
 // SiteHeader Animation on scroll
 var scrollCheck = function () {
@@ -34,6 +35,10 @@ jQuery(document).ready(function () {
   //     scrollCheck();
   //   });
 
+  jQuery(".acf-map").each(function () {
+    ACFMaps.initMap(jQuery(this));
+  });
+
   // Accordion
   jQuery(".accordion-row-header").on("click", function () {
     jQuery(".accordion-row-content").slideUp(300);
@@ -51,7 +56,6 @@ jQuery(document).ready(function () {
   jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on(
     "mouseover",
     function (e) {
-      console.log("hover");
       if (jQuery(this).find(".sub-menu").length) {
         var elm = jQuery(this).children(".sub-menu");
         var off = elm.offset();

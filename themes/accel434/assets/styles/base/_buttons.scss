@@ -4,6 +4,8 @@ input[type="reset"],
 input[type="submit"],
 .blue-button a,
 .blue-button button,
+.primary-button a,
+.primary-button button,
 .light-blue-button a,
 .light-blue-button button,
 .medium-gray-button a,
@@ -13,6 +15,7 @@ input[type="submit"],
 .white-button a,
 .white-button button,
 .blue-button.fake-button > span,
+.primary-button.fake-button > span,
 .light-blue-button.fake-button > span,
 .medium-gray-button.fake-button > span,
 .dark-gray-button.fake-button > span,
@@ -74,7 +77,11 @@ input[type="submit"],
 .blue-button a,
 .blue-button input[type="submit"],
 .blue-button button,
-.blue-button.fake-button > span {
+.blue-button.fake-button > span,
+.primary-button a,
+.primary-button input[type="submit"],
+.primary-button button,
+.primary-button.fake-button > span {
   @include button-set-up($blue);
 }
 
@@ -112,6 +119,7 @@ input[type="submit"],
 }
 
 .blue-button,
+.primary-button,
 .light-blue-button,
 .medium-gray-button,
 .dark-gray-button,

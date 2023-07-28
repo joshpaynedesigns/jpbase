@@ -8,13 +8,8 @@
 function ns_enqueue_scripts()
 {
 
-    // SVG Shim
-    wp_register_script('svg4everybody', get_stylesheet_directory_uri() . '/assets/components/svg4everybody/dist/svg4everybody.min.js', array());
-    wp_enqueue_script('svg4everybody');
-
     // Google Maps
-    wp_register_script('gmaps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4stZyfaZsPwdxHmW7STkkOdgjSIIroC0', array());
-    wp_enqueue_script('gmaps');
+    wp_enqueue_script('gmaps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4stZyfaZsPwdxHmW7STkkOdgjSIIroC0', array());
 
     //  Google Fonts
     wp_enqueue_style('g-fonts-mont', 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap', array(), ACCEL_VERSION);
