@@ -30,7 +30,7 @@ function ns_enqueue_scripts()
     // Accessible Menu
     wp_register_script('gamajo-accessible-menu', get_stylesheet_directory_uri() . '/assets/components/accessible-menu/dist/jquery.accessible-menu.min.js', array('jquery'), '1.0.0', true);
 
-    wp_register_script('sitewide', get_bloginfo('stylesheet_directory') . '/assets/js/build/site-wide.min.js', array('gamajo-accessible-menu', 'jquery'), ACCEL_VERSION, true);
+    wp_register_script('sitewide', get_bloginfo('stylesheet_directory') . '/dist/front.js', array('jquery'), ACCEL_VERSION, true);
 
     wp_enqueue_style('slick-css');
     wp_enqueue_script('modaal');
@@ -38,11 +38,18 @@ function ns_enqueue_scripts()
     wp_enqueue_script('sitewide');
     wp_enqueue_script('slick');
 
+    wp_enqueue_style('accel-styles', get_stylesheet_directory_uri() . '/dist/front.css', '', ACCEL_VERSION);
+
     $data_array = array(
         'stylesheetUrl' => get_stylesheet_directory_uri()
     );
 
     wp_localize_script('sitewide', 'data', $data_array);
 }
-
 add_action('wp_enqueue_scripts', 'ns_enqueue_scripts');
+
+function ns_add_editor_styles_sub_dir()
+{
+    add_editor_style(get_stylesheet_directory_uri() . '/dist/editor-style.css');
+}
+add_action('after_setup_theme', 'ns_add_editor_styles_sub_dir');
