@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b
+class ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -80,6 +80,7 @@ class ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\From_Rset_Converter' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/From_Rset_Converter.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Event_Cleaner' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Cleaner/Event_Cleaner.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Cleaner/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Sequence' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Sequence.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Occurrences\\Occurrences_Generator' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Occurrences/Occurrences_Generator.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\ID_Generator' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/ID_Generator.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/Provider.php',
@@ -288,9 +289,9 @@ class ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInited2ea47eaf3b148e93f679d9a9103a8b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$classMap;
 
         }, null, ClassLoader::class);
     }

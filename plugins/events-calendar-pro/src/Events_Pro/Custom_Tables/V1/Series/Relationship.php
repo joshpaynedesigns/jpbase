@@ -47,43 +47,53 @@ class Relationship {
 			 * so make sure that the previous one (if any) reflects this change, empty state of series.
 			 */
 			Series_Relationship::where( 'event_id', $event->event_id )
-				->where( 'event_post_id', $event->post_id )
-				->delete();
+			                   ->where( 'event_post_id', $event->post_id )
+			                   ->delete();
+		} else {
+			// Insert all the items of the series.
+			foreach ( $series as $series_post_id ) {
+				$has_relationship = Series_Relationship::where( 'event_id', $event->event_id )
+				                                       ->where( 'event_post_id', $event->post_id )
+				                                       ->where( 'series_post_id', $series_post_id )
+				                                       ->exists();
 
-			return;
-		}
+				if ( $has_relationship ) {
+					// This relationship already exists nothing to do, move on with the next one.
+					continue;
+				}
 
-		// Insert all the items of the series.
-		foreach ( $series as $series_post_id ) {
-			$has_relationship = Series_Relationship::where( 'event_id', $event->event_id )
-				->where( 'event_post_id', $event->post_id )
-				->where( 'series_post_id', $series_post_id )
-				->exists();
+				Series_Relationship::insert( [
+					'event_id'       => $event->event_id,
+					'event_post_id'  => $event->post_id,
+					'series_post_id' => $series_post_id,
+				] );
 
-			if ( $has_relationship ) {
-				// This relationship already exists nothing to do, move on with the next one.
-				continue;
+				do_action( 'tribe_log', 'debug', 'Series Relationship inserted.', [
+					'method'         => 'with_event',
+					'event_id'       => $event->event_id,
+					'event_post_id'  => $event->post_id,
+					'series_post_id' => $series_post_id,
+				] );
 			}
 
-			Series_Relationship::insert( [
-				'event_id'       => $event->event_id,
-				'event_post_id'  => $event->post_id,
-				'series_post_id' => $series_post_id,
-			] );
-
-			do_action('tribe_log', 'debug', 'Series Relationship inserted.', [
-				'method' => 'with_event',
-				'event_id' => $event->event_id,
-				'event_post_id' => $event->post_id,
-				'series_post_id' => $series_post_id,
-			]);
+			// Delete all the items that are no longer associated with this event.
+			Series_Relationship::where( 'event_id', $event->event_id )
+			                   ->where( 'event_post_id', $event->post_id )
+			                   ->where_not_in( 'series_post_id', $series )
+			                   ->delete();
 		}
 
-		// Delete all the items that are no longer associated with this event.
-		Series_Relationship::where( 'event_id', $event->event_id )
-			->where( 'event_post_id', $event->post_id )
-			->where_not_in( 'series_post_id', $series )
-			->delete();
+		$event_id = $event->post_id;
+
+		/**
+		 * Fires after the relationship between an Event and a Series has been updated.
+		 *
+		 * @since 6.1.1
+		 *
+		 * @param int        $event_id The ID of the event that was updated.
+		 * @param array<int> $series   The list of series that are now associated with the event.
+		 */
+		do_action( 'tec_events_pro_custom_tables_v1_event_relationship_updated', $event_id, $series_id );
 	}
 
 	/**
@@ -136,6 +146,16 @@ class Relationship {
 		}
 
 		Series_Relationship::insert( $relationships );
+
+		/**
+		 * Fires after the relationship between a Series and a list of Events has been updated.
+		 *
+		 * @since 6.1.1
+		 *
+		 * @param int        $series_id       The ID of the series that was updated.
+		 * @param array<int> $event_posts_ids The list of event post IDs that are now associated with the series.
+		 */
+		do_action( 'tec_events_pro_custom_tables_v1_series_relationships_updated', $series->ID, $event_posts_ids );
 	}
 
 	/**

@@ -15,6 +15,7 @@ use TEC\Events\Custom_Tables\V1\Models\Builder;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events\Custom_Tables\V1\WP_Query\Custom_Tables_Query;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Event_Sequence;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use Tribe__Cache;
@@ -312,21 +313,32 @@ class Custom_Query_Filters {
 			return;
 		}
 
-		$occurrence = static::occurrence_where_same_day( $event_date )
-			->where( 'post_id', $post_id )
-			->order_by( 'start_date', 'ASC' )
-			->offset( $sequence_number - 1 )
-			->first();
-
-		// Ensure this is an occurrence.
+		// Do we have an occurrence for this sequence?
+		$occurrence = Event_Sequence::find_occurrence_by_sequence( $post_id, $sequence_number, $date );
 		if ( ! $occurrence instanceof Occurrence ) {
-			// Not an occurrence - what is this? Skip.
-			do_action( 'tribe_log', 'error', "Could not locate this occurrence by the eventSequence provided.", [ 'method' => __METHOD__ ] );
-
-			return;
+			// Check if there is a valid sequence that was not generated yet?
+			$other_occurrence = Event_Sequence::get_occurrence_on_same_day( $post_id, $date );;
+			if ( ! $other_occurrence instanceof Occurrence ) {
+				// This is a 404
+				$wp_query->query_vars = array();
+				$wp_query->set_404();
+				status_header(404);
+				return;
+			}
+			Event_Sequence::sync_sequences_for( $other_occurrence );
+			$occurrence = Event_Sequence::find_occurrence_by_sequence( $post_id, $sequence_number, $date );
+			// Ensure this is an occurrence.
+			if ( ! $occurrence instanceof Occurrence ) {
+				// This is a 404
+				$wp_query->query_vars = array();
+				$wp_query->set_404();
+				status_header(404);
+				return;
+			}
 		}
 
-		// Yep, this is an occurrence we should route this query to.
+		// Yep, this is an occurrence.
+		// We should route this query to our provisional ID for the occurrence we found on this sequence number.
 		$event_id = $occurrence->provisional_id;
 
 		$this->wp_query_for_sequence_id( $wp_query, $event_id );

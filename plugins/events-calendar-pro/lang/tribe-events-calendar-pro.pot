@@ -2,15 +2,15 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar Pro 6.1.0\n"
+"Project-Id-Version: The Events Calendar Pro 6.1.1\n"
 "Report-Msgid-Bugs-To: https://evnt.is/191x\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-05T09:04:27-07:00\n"
-"PO-Revision-Date: 2023-06-05 16:04\n"
+"POT-Creation-Date: 2023-07-10T08:27:59-07:00\n"
+"PO-Revision-Date: 2023-07-10 15:28\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: tribe-events-calendar-pro\n"
 
@@ -23,9 +23,9 @@ msgid "The Events Calendar Pro, a premium add-on to the open source The Events C
 msgstr ""
 
 #. Author of the plugin
-#: events-calendar-pro.php:176
-#: events-calendar-pro.php:177
-#: src/Tribe/Integrations/Elementor/Service_Provider.php:132
+#: events-calendar-pro.php:173
+#: events-calendar-pro.php:174
+#: src/Tribe/Integrations/Elementor/Service_Provider.php:133
 msgid "The Events Calendar"
 msgstr ""
 
@@ -33,11 +33,11 @@ msgstr ""
 msgid "https://evnt.is/20"
 msgstr ""
 
-#: events-calendar-pro.php:56
+#: events-calendar-pro.php:53
 msgid "Events Calendar Pro"
 msgstr ""
 
-#: events-calendar-pro.php:174
+#: events-calendar-pro.php:171
 msgid "To begin using Events Calendar Pro, please install the latest version of"
 msgstr ""
 
@@ -1099,7 +1099,7 @@ msgid "Create or Find a Series"
 msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/Occurrences_List.php:74
-msgid "No events are associated with this series yet."
+msgid "No events are associated with this Series yet."
 msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/Occurrences_List.php:169
@@ -2887,123 +2887,123 @@ msgstr ""
 msgid "Add Rule"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:115
-#: src/Tribe/Geo_Loc.php:582
+#: src/Tribe/Geo_Loc.php:121
+#: src/Tribe/Geo_Loc.php:588
 #: src/Tribe/Rewrite/Provider.php:164
 msgid "map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:147
+#: src/Tribe/Geo_Loc.php:153
 msgid "Distance"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:193
+#: src/Tribe/Geo_Loc.php:199
 msgid "Map view search distance limit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:195
+#: src/Tribe/Geo_Loc.php:201
 msgid "Set the distance that the location search covers (find events within X distance units of location search input)."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:202
+#: src/Tribe/Geo_Loc.php:208
 msgid "Distance unit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:208
+#: src/Tribe/Geo_Loc.php:214
 #: src/Tribe/Geo_Loc_Filter.php:23
 #: src/Tribe/Views/V2/Views/Map_View.php:490
 msgid "Miles"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:209
+#: src/Tribe/Geo_Loc.php:215
 #: src/Tribe/Geo_Loc_Filter.php:26
 #: src/Tribe/Views/V2/Views/Map_View.php:486
 msgid "Kilometers"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:224
+#: src/Tribe/Geo_Loc.php:230
 msgid "Hide location search"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:225
+#: src/Tribe/Geo_Loc.php:231
 msgid "Removes location search field from the Events Bar on all views."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:324
+#: src/Tribe/Geo_Loc.php:330
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:495
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:362
+#: src/Tribe/Geo_Loc.php:368
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:393
+#: src/Tribe/Geo_Loc.php:399
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:394
+#: src/Tribe/Geo_Loc.php:400
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:492
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1728
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:419
+#: src/Tribe/Geo_Loc.php:425
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:430
+#: src/Tribe/Geo_Loc.php:436
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:431
+#: src/Tribe/Geo_Loc.php:437
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:451
+#: src/Tribe/Geo_Loc.php:457
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:452
+#: src/Tribe/Geo_Loc.php:458
 msgid "for latitude and longitude to be auto-generated; otherwise, you'll only be able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:759
+#: src/Tribe/Geo_Loc.php:765
 msgid "The latitude and longitude for your venue could not be fetched. The Google Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:763
+#: src/Tribe/Geo_Loc.php:769
 msgid "Enter your API Key"
 msgstr ""
 
 #. translators: 1: Error response text, 2: URL
-#: src/Tribe/Geo_Loc.php:1310
+#: src/Tribe/Geo_Loc.php:1316
 msgctxt "debug geodata"
 msgid "Geocode request failed (%1$s - %2$s)"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1338
+#: src/Tribe/Geo_Loc.php:1344
 msgid "There was an error while trying to fix the Venues geolocation information: %s"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1385
+#: src/Tribe/Geo_Loc.php:1391
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1439
+#: src/Tribe/Geo_Loc.php:1445
 msgid "You have venues for which we don't have geolocation information. <a href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1474
+#: src/Tribe/Geo_Loc.php:1480
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1612
+#: src/Tribe/Geo_Loc.php:1618
 msgctxt "The text of the link that will take the user to the Venue edit screen."
 msgid "update the venue address or use latitude & longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1622
+#: src/Tribe/Geo_Loc.php:1628
 msgctxt "The text of the link that will trigger an attempt to fix the Venues geolocation information."
 msgid "try again"
 msgstr ""
@@ -5295,7 +5295,7 @@ msgctxt "The text label for the Venue View."
 msgid "Venue"
 msgstr ""
 
-#: src/Tribe/Views/V2/Views/Week_View.php:109
+#: src/Tribe/Views/V2/Views/Week_View.php:111
 msgctxt "The text label for the Week View."
 msgid "Week"
 msgstr ""

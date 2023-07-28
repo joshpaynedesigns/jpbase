@@ -71,7 +71,7 @@ class Occurrences_List extends WP_List_Table {
 	 * @since 6.0.0
 	 */
 	public function no_items() {
-		_e( 'No events are associated with this series yet.', 'tribe-events-calendar-pro' );
+		_e( 'No events are associated with this Series yet.', 'tribe-events-calendar-pro' );
 	}
 
 	/**

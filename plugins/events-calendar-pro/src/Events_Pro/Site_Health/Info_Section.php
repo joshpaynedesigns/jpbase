@@ -11,8 +11,10 @@ namespace TEC\Events_Pro\Site_Health;
 
 use TEC\Common\Site_Health\Info_Section_Abstract;
 use TEC\Common\Site_Health\Factory;
+use TEC\Events\Custom_Tables\V1\Tables\Occurrences;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series_Post_Type;
-use Tribe__Events__Main;
+use Tribe__Events__Google__Maps_API_Key;
+use Tribe__Events__Main as TEC;
 
 /**
  * Class Site_Health
@@ -100,11 +102,19 @@ class Info_Section extends Info_Section_Abstract {
 			)
 		);
 
-		$recurring_select = $wpdb->prepare(
-			"SELECT COUNT( DISTINCT `post_parent` ) FROM $wpdb->posts WHERE `post_type` = %s AND `post_parent` != ''",
-			Tribe__Events__Main::POSTTYPE
-		);
-		$recurring_events = $wpdb->query( $recurring_select );
+		if ( tribe()->getVar( 'ct1_fully_activated' ) ) {
+			// Custom Tables v1 code.
+			$occurrences = Occurrences::table_name(true);
+			$recurring_select = "SELECT COUNT( DISTINCT( post_id ) ) FROM $occurrences
+				WHERE has_recurrence = 1";
+		} else {
+			// Legacy code.
+			$recurring_select = $wpdb->prepare(
+				"SELECT COUNT( DISTINCT `post_parent` ) FROM $wpdb->posts WHERE `post_type` = %s AND `post_parent` != ''",
+				TEC::POSTTYPE
+			);
+		}
+		$recurring_events = $wpdb->get_var( $recurring_select );
 
 		$this->add_field(
 			Factory::generate_generic_field(
@@ -139,7 +149,7 @@ class Info_Section extends Info_Section_Abstract {
 			Factory::generate_generic_field(
 				'google_maps_custom_key',
 				esc_html__( 'Using custom Google Maps key'),
-				tec_bool_to_string( tribe_get_option( 'google_maps_js_api_key' ) !== \Tribe__Events__Google__Maps_API_Key::$default_api_key ),
+				tec_bool_to_string( tribe_get_option( 'google_maps_js_api_key' ) !== Tribe__Events__Google__Maps_API_Key::$default_api_key ),
 				50
 			)
 		);

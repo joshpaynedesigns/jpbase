@@ -92,8 +92,6 @@ class Full_Activation_Provider extends Service_Provider {
 			} else {
 				add_action( 'current_screen', [ $this, 'remove_admin_filters' ] );
 			}
-
-			return true;
 		} catch ( Throwable $t ) {
 			// This code will never fire on PHP 5.6, but will do in PHP 7.0+.
 
@@ -121,6 +119,15 @@ class Full_Activation_Provider extends Service_Provider {
 			 */
 			do_action( 'tec_events_custom_tables_v1_error', $e );
 		}
+
+		/**
+		 * Fires an action when ECP Custom Tables v1 implementation is fully activated.
+		 *
+		 * @since 6.1.1
+		 */
+		do_action( 'tec_events_pro_custom_tables_v1_fully_activated' );
+
+		return true;
 	}
 
 	/**

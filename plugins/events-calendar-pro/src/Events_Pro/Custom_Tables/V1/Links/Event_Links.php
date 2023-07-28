@@ -12,6 +12,7 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Links;
 use DateTime;
 use TEC\Events\Custom_Tables\V1\Models\Builder;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
+use TEC\Events_Pro\Custom_Tables\V1\Events\Event_Sequence;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Custom_Query_Filters;
 use Tribe__Cache;
@@ -45,7 +46,7 @@ class Event_Links {
 		}
 
 		// Prep for cache, will avoid expensive validation.
-		$cache_key                = __METHOD__ . '_' . $post->ID;
+		$cache_key                = __METHOD__ . '_v2_' . $post->ID;
 		$cache                    = tribe_cache();
 		$resolved_sequence_number = $cache->get( $cache_key, Tribe__Cache_Listener::TRIGGER_SAVE_POST, false );
 		if ( is_numeric( $resolved_sequence_number ) && ! empty( $resolved_sequence_number ) ) {
@@ -58,50 +59,33 @@ class Event_Links {
 		// Confirm this is a legitimate occurrence.
 		$occurrence = Occurrence::find( $provisional_post->normalize_provisional_post_id( $post->ID ) );
 		if ( ! $occurrence instanceof Occurrence ) {
-			do_action( 'tribe_log',
-				'error',
-				__CLASS__,
-				[ 'message' => "Failed to locate occurrence for $post->ID in eventSequence permalink generation." ]
-			);
-
 			// Something went wrong, bail.
 			return $resolved_sequence_number;
 		}
-
 
 		/**
 		 * Search for an occurrence on the same day. These eventSequence routes are only for
 		 * occurrences that cannot route because multiple exist with the same start date.
 		 */
-		$start                  = Tribe__Date_Utils::build_date_object( $occurrence->start_date );
-		$occurrence_on_same_day = Custom_Query_Filters::occurrence_where_same_day( $start )
-			->where( 'occurrence_id', '!=', $occurrence->occurrence_id )
-			->where( 'post_id', '=', $occurrence->post_id )
-			->first();
+		$has_occurrence_on_same_day = Event_Sequence::has_occurrence_on_same_day( $occurrence );
 
 		// Is this a candidate for eventSequence?
-		if ( $occurrence_on_same_day instanceof Occurrence ) {
-			// We want to use the day's occurrence (aka Event Sequence) (1 through n) in the route/permalink.
-			$occurrences = Custom_Query_Filters::occurrence_where_same_day( $start )
-				->where( 'post_id', '=', $occurrence->post_id )
-				->order_by( 'start_date', 'ASC' )
-				->get();
-			$sequence    = 0;
-			// Find which occurrence in this day this is.
-			foreach ( $occurrences as $check_occurrence_sequence ) {
-				$sequence ++;
-				if ( $check_occurrence_sequence->occurrence_id === $occurrence->occurrence_id ) {
-					$resolved_sequence_number = $sequence;
-					break;
-				}
-			}
-			if ( $sequence === 0 ) {
+		if ( $has_occurrence_on_same_day ) {
+			// Sync our sequences.
+			Event_Sequence::sync_sequences_for( $occurrence );
+
+			// Now get our sequence ID.
+			$sequence = Event_Sequence::find_sequence_for_occurrence( $occurrence );
+
+			if ( ! $sequence ) {
 				// Something went wrong, tell about it.
 				do_action( 'tribe_log',
 					'error',
-					__CLASS__,
+					__METHOD__,
 					[ 'message' => "Failed to locate this occurrence in the set of occurrences for this day. Post $post->ID in eventSequence permalink generation." ]
 				);
+			} else {
+				$resolved_sequence_number = $sequence;
 			}
 		}
 
