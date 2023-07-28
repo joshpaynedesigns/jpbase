@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-if ( class_exists( 'Tribe__Main' ) ) {
+if ( class_exists( 'Tribe__Main', false ) ) {
 	return;
 }
 
@@ -23,7 +23,7 @@ class Tribe__Main {
 	const OPTIONNAME          = 'tribe_events_calendar_options';
 	const OPTIONNAMENETWORK   = 'tribe_events_calendar_network_options';
 
-	const VERSION             = '5.1.0';
+	const VERSION             = '5.1.3';
 
 	const FEED_URL            = 'https://theeventscalendar.com/feed/';
 
@@ -149,7 +149,7 @@ class Tribe__Main {
 			require_once dirname( __FILE__ ) . '/Autoloader.php';
 		}
 
-		// Aliases for backwards compatibility. @todo @camwyn: Remove once unneeded.
+		// Aliases for backwards compatibility with our Extensions and Pods.
 		require_once realpath( dirname( dirname( __FILE__ ) ) . '/functions/aliases.php' );
 
 		$autoloader = Tribe__Autoloader::instance();
@@ -789,6 +789,7 @@ class Tribe__Main {
 		$paths = apply_filters( 'tec_common_parent_plugin_file', [] );
 
 		foreach( $paths as $path ) {
+			$path      = wp_normalize_path( $path );
 			$test_path = str_ireplace( '/common', '', $this->parent_plugin_dir );
 
 			if ( stripos( $path, $test_path ) ) {

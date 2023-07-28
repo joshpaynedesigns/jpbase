@@ -7,11 +7,17 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'TEC\\Common\\Configuration\\Configuration' => $baseDir . '/src/Common/Configuration/Configuration.php',
+    'TEC\\Common\\Configuration\\Configuration_Loader' => $baseDir . '/src/Common/Configuration/Configuration_Loader.php',
+    'TEC\\Common\\Configuration\\Configuration_Provider_Interface' => $baseDir . '/src/Common/Configuration/Configuration_Provider_Interface.php',
+    'TEC\\Common\\Configuration\\Constants_Provider' => $baseDir . '/src/Common/Configuration/Constants_Provider.php',
     'TEC\\Common\\Context\\Post_Request_Type' => $baseDir . '/src/Common/Context/Post_Request_Type.php',
     'TEC\\Common\\Contracts\\Container' => $baseDir . '/src/Common/Contracts/Container.php',
     'TEC\\Common\\Contracts\\Provider\\Controller' => $baseDir . '/src/Common/Contracts/Provider/Controller.php',
     'TEC\\Common\\Contracts\\Service_Provider' => $baseDir . '/src/Common/Contracts/Service_Provider.php',
     'TEC\\Common\\Editor\\Full_Site\\Template_Utils' => $baseDir . '/src/Common/Editor/Full_Site/Template_Utils.php',
+    'TEC\\Common\\Exceptions\\Container_Exception' => $baseDir . '/src/Common/Exceptions/Container_Exception.php',
+    'TEC\\Common\\Exceptions\\Not_Bound_Exception' => $baseDir . '/src/Common/Exceptions/Not_Bound_Exception.php',
     'TEC\\Common\\Integrations\\Integration_Abstract' => $baseDir . '/src/Common/Integrations/Integration_Abstract.php',
     'TEC\\Common\\Integrations\\Provider' => $baseDir . '/src/Common/Integrations/Provider.php',
     'TEC\\Common\\Integrations\\Traits\\Module_Integration' => $baseDir . '/src/Common/Integrations/Traits/Module_Integration.php',

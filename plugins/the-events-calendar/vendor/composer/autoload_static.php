@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3
+class ComposerStaticInit5b568ac32f177188f6cdbe7695f65ba8
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -27,6 +27,7 @@ class ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'TEC\\Events\\Configuration\\Provider' => __DIR__ . '/../..' . '/src/Events/Configuration/Provider.php',
         'TEC\\Events\\Custom_Tables\\V1\\Activation' => __DIR__ . '/../..' . '/src/Events/Custom_Tables/V1/Activation.php',
         'TEC\\Events\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Event_Cleaner' => __DIR__ . '/../..' . '/src/Events/Custom_Tables/V1/Events/Event_Cleaner/Event_Cleaner.php',
         'TEC\\Events\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Provider' => __DIR__ . '/../..' . '/src/Events/Custom_Tables/V1/Events/Event_Cleaner/Provider.php',
@@ -299,9 +300,9 @@ class ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1f03095eb3cd79095df0b38a2e1fecc3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5b568ac32f177188f6cdbe7695f65ba8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5b568ac32f177188f6cdbe7695f65ba8::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5b568ac32f177188f6cdbe7695f65ba8::$classMap;
 
         }, null, ClassLoader::class);
     }
