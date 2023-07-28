@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Tribe__Gutenberg__Events__Pro__Blocks__Additional_Fields
+ * Class Tribe__Events__Pro__Editor__Additional_Fields
  *
  * General class with the basic information of all the additional fields, centralized point to access the data of
  * additional if required from external places

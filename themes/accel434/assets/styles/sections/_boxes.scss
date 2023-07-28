@@ -55,8 +55,10 @@
     }
 
     &.linked {
-      &:hover {
-        transform: scale(1.05);
+      &:not(.has-button) {
+        &:hover {
+          transform: scale(1.05);
+        }
       }
     }
   }
@@ -81,13 +83,5 @@
     flex-wrap: wrap;
     gap: rem(18);
     align-items: center;
-  }
-}
-
-.boxes-section.background-wave + .video-section {
-  padding-top: 0 !important;
-
-  @media ($large-screen-up) {
-    padding-top: 0 !important;
   }
 }

@@ -129,7 +129,7 @@
     transition: opacity $base-timing $base-duration;
 
     &::before {
-      background-image: url("assets/images/locate.png") !important;
+      background-image: url("../../images/locate.png") !important;
     }
 
     &:hover {
@@ -167,7 +167,7 @@
     }
 
     .facetwp-selection-value {
-      background-image: url("assets/images/icon-close-white.png");
+      //   background-image: url("../../assets/images/icon-close-white.png");
     }
   }
 }

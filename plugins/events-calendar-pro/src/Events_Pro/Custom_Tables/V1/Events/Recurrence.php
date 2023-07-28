@@ -876,7 +876,7 @@ class Recurrence {
 	 *
 	 * @return $this For chaining.
 	 */
-	public function with_weekly_exclusion( int $interval = 1, array $days = [ 1 ] ): Recurrence {
+	public function with_weekly_exclusion( int $interval = 1, array $days = null ): Recurrence {
 		if ( $this->delay( __FUNCTION__, func_get_args() ) ) {
 			return $this;
 		}

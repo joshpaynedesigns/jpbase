@@ -18,6 +18,8 @@ use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
 use Tribe__Events__Timezones as Timezones;
 
+use DateTime;
+
 /**
  * Class Week_View
  *
@@ -53,7 +55,7 @@ class Week_View extends By_Day_View {
 	 *
 	 * @var array
 	 */
-	protected $cached_event_dates = [];
+	protected array $memoized_dates = [];
 
 	/**
 	 * Visibility for this view.
@@ -727,21 +729,34 @@ class Week_View extends By_Day_View {
 	 * Get the date of the event immediately previous to the current view date.
 	 *
 	 * @since 5.14.2
+	 * @since 6.1.1 Param $current_date included.
 	 *
-	 * @param DateTime $current_date A DateTime object signifying the current date for the view.
+	 * @param DateTime|string|null $current_date A DateTime object signifying the current date for the view.
 	 *
 	 * @return DateTime|false Either the previous event chronologically, the previous month, or false if no next event found.
 	 */
-	public function get_previous_event_date() {
+	public function get_previous_event_date( $current_date = null ) {
 		$args = $this->filter_repository_args( parent::setup_repository_args( $this->context ) );
-		$date         = $this->context->get( 'event_date', 'today' );
-		$current_date = Dates::build_date_object( $date );
+
+		// When dealing with previous event date we only fetch one.
+		$args['posts_per_page'] = 1;
+
+		if ( empty( $current_date ) ) {
+			$current_date = $this->context->get( 'event_date', 'today' );
+		}
+
+		$current_date = Dates::build_date_object( $current_date );
+
+		// If we failed to get a proper DateTime object we return false.
+		if ( ! $current_date instanceof DateTime ) {
+			return false;
+		}
 
 		// Use cache to reduce the performance impact.
 		$cache_key = __METHOD__ . '_' . substr( md5( wp_json_encode( [ $current_date, $args ] ) ), 10 );
 
-		if ( isset( $this->cached_event_dates[ $cache_key ] ) ) {
-			return $this->cached_event_dates[ $cache_key ];
+		if ( isset( $this->memoized_dates[ $cache_key ] ) ) {
+			return $this->memoized_dates[ $cache_key ];
 		}
 
 		list( $week_start ) = $this->calculate_grid_start_end( $current_date );
@@ -754,6 +769,8 @@ class Week_View extends By_Day_View {
 			->first();
 
 		if ( ! $prev_event instanceof \WP_Post ) {
+			$this->memoized_dates[ $cache_key ] = false;
+
 			return false;
 		}
 
@@ -765,7 +782,7 @@ class Week_View extends By_Day_View {
 
 		$prev_date = $prev_date->format( 'W' );
 
-		$this->cached_event_dates[ $cache_key ] = $prev_date;
+		$this->memoized_dates[ $cache_key ] = $prev_date;
 
 		return $prev_date;
 	}
@@ -813,34 +830,53 @@ class Week_View extends By_Day_View {
 	 * Get the date of the event immediately after to the current view date.
 	 *
 	 * @since 5.14.2
+	 * @since 6.1.1 Param $current_date included.
 	 *
-	 * @param DateTime|false $current_date A DateTime object signifying the current date for the view.
+	 * @param DateTime|string|null $current_date A DateTime object signifying the current date for the view.
 	 *
 	 * @return DateTime|false Either the next event chronologically, the next month, or false if no next event found.
 	 */
-	public function get_next_event_date() {
+	public function get_next_event_date( $current_date = null ) {
 		$args = $this->filter_repository_args( parent::setup_repository_args( $this->context ) );
-		$date         = $this->context->get( 'event_date', 'today' );
-		$current_date = Dates::build_date_object( $date );
+
+		// When dealing with previous event date we only fetch one.
+		$args['posts_per_page'] = 1;
+
+		if ( empty( $current_date ) ) {
+			$current_date = $this->context->get( 'event_date', 'today' );
+		}
+
+		$current_date = Dates::build_date_object( $current_date );
+
+		// If we failed to get a proper DateTime object we return false.
+		if ( ! $current_date instanceof DateTime ) {
+			return false;
+		}
+
 		list( $week_start ) = $this->calculate_grid_start_end( $current_date );
 
 		// Use cache to reduce the performance impact.
 		$cache_key = __METHOD__ . '_' . substr( md5( wp_json_encode( [ $current_date, $args ] ) ), 10 );
 
-		if ( isset( $this->cached_event_dates[ $cache_key ] ) ) {
-			return $this->cached_event_dates[ $cache_key ];
+		if ( isset( $this->memoized_dates[ $cache_key ] ) ) {
+			return $this->memoized_dates[ $cache_key ];
 		}
 
 		list( $week_start, $week_end ) = $this->calculate_grid_start_end( $current_date );
 
+		// For the next event date we only care about 1 item.
+		$args['posts_per_page'] = 1;
+
 		// The first event that ends after the end of the month; it could still begin in this month.
 		$next_event = tribe_events()
-			->by_args( $this->filter_repository_args( $args ) )
+			->by_args( $args )
 			->where( 'starts_after', tribe_end_of_day( $week_end->format( 'Y-m-d' ) ) )
 			->order( 'ASC' )
 			->first();
 
 		if ( ! $next_event instanceof \WP_Post ) {
+			$this->memoized_dates[ $cache_key ] = false;
+
 			return false;
 		}
 
@@ -852,7 +888,7 @@ class Week_View extends By_Day_View {
 
 		$next_date = $next_date->format( 'W' );
 
-		$this->cached_event_dates[ $cache_key ] = $next_date;
+		$this->memoized_dates[ $cache_key ] = $next_date;
 
 		return $next_date;
 	}

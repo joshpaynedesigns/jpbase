@@ -22,13 +22,7 @@
 
 use Tribe__Date_Utils as Dates;
 
-/*
- * If the request date is after the event start date, show the request date to avoid users from seeing dates "in the
- * past" in relation to the date they requested (or today's date).
- */
-$display_date = empty( $is_past ) && ! empty( $request_date )
-	? max( $group_date, $request_date )
-	: $group_date;
+$display_date = $group_date;
 
 $event_week_day  = $display_date->format_i18n( 'D' );
 $event_day_num   = $display_date->format_i18n( 'j' );

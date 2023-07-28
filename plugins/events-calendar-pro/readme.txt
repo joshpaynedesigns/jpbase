@@ -4,7 +4,7 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 5.8.6
-Stable tag: 6.1.0
+Stable tag: 6.1.1
 Tested up to: 6.2.2
 Requires PHP: 7.4
 License: GPLv2 or later
@@ -213,6 +213,19 @@ Previous versions of Events Calendar Pro are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.1.1] 2023-07-13 =
+
+* Fix - Performance improvements on Week view when a lot of Future and Past events were found. [ECP-50]
+* Fix - Preventing duplicated queries on views that contain Occurrences of a Series [ECP-50]
+* Feat - Add the `tec_events_pro_custom_tables_v1_event_relationship_updated` and `tec_events_pro_custom_tables_v1_series_relationships_updated` filters to allow developers to hook into the event and series relationship update process. [ET-1486]
+* Fix - Now occurrences that land on the same date for an event, will retain their sequence number and URL when new occurrences are added. The event sequence no longer relies on the order of occurrences. [ECP-1489]
+* Fix - Ensure the Event Time is displayed correctly for Multi-day events in the Summary view. [ECP-1072]
+* Fix - Recurring Events count in telemetry. [ECP-1520]
+* Tweak - Fire the `tec_events_pro_custom_tables_v1_fully_activated` action when the Custom Tables v1 component is activated. [ET-1486]
+* Tweak - Added actions: `tec_events_pro_custom_tables_v1_fully_activated`, `tec_events_pro_custom_tables_v1_event_relationship_updated`, `tec_events_pro_custom_tables_v1_series_relationships_updated`
+* Tweak - Changed views: `v2/summary/date-group/date-tag`
+* Language - 0 new strings added, 31 updated, 1 fuzzied, and 0 obsoleted
 
 = [6.1.0] 2023-06-14 =
 
