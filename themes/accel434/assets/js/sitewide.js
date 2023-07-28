@@ -1,3 +1,5 @@
+import { MobileMenu } from "./mobile-menu.js";
+
 // SiteHeader Animation on scroll
 var scrollCheck = function () {
   var alertBarHeight = jQuery(".alert-bar").outerHeight();
@@ -8,7 +10,6 @@ var scrollCheck = function () {
       jQuery(".site-header, .site-title a").addClass("scrolled");
       jQuery(".site-header, .site-title a").removeClass("unscrolled");
     } else {
-      jQuery(".site-header").css("top", alertBarHeight);
       jQuery(".site-header, .site-title a").removeClass("scrolled");
       jQuery(".site-header, .site-title a").addClass("unscrolled");
     }
@@ -26,14 +27,6 @@ var scrollCheck = function () {
 jQuery(document).ready(function () {
   // Initialize Mobile Menu
   MobileMenu.init();
-
-  // Initialize accessible menus
-  jQuery(document).gamajoAccessibleMenu();
-
-  // Run the svg for everyone
-  svg4everybody({
-    polyfill: true,
-  });
 
   //   scrollCheck();
 
@@ -80,18 +73,20 @@ jQuery(document).ready(function () {
   // 2. Have a div/element with the id of you use in the href above
   // This was adapted from here - https://www.abeautifulsite.net/smoothly-scroll-to-an-element-without-a-jquery-plugin-2
 
-  jQuery('a[href^="#"]').on("click", function (event) {
-    var target = jQuery(this.getAttribute("href"));
-    if (target.length) {
-      event.preventDefault();
-      jQuery("html, body").stop().animate(
-        {
-          scrollTop: target.offset().top,
-        },
-        1000
-      );
-    }
-  });
+  //   Probably don't need this anymore will comment out for now, using scroll-behavior: smooth; in css instead
+
+  //   jQuery('a[href^="#"]').on("click", function (event) {
+  //     var target = jQuery(this.getAttribute("href"));
+  //     if (target.length) {
+  //       event.preventDefault();
+  //       jQuery("html, body").stop().animate(
+  //         {
+  //           scrollTop: target.offset().top,
+  //         },
+  //         1000
+  //       );
+  //     }
+  //   });
 
   // Setting up Modaal Gallery for our photo grid section
   jQuery(".section.gallery").modaal({
