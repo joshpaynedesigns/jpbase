@@ -49,7 +49,6 @@
 .sidebar-primary,
 .full-width .content {
   @include span-columns(12);
-  @include omega();
 }
 
 @media ($large-screen-up) {

@@ -4,7 +4,14 @@
  * Functions
  */
 
-define('ACCEL_VERSION', '0.0.6');
+// Define the theme version
+$theme = wp_get_theme();
+if (! empty($theme)) {
+    $theme_version = $theme->get('Version');
+    define('ACCEL_VERSION', $theme_version);
+} else {
+    define('ACCEL_VERSION', '0.0.6');
+}
 
 // Helper functions
 require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';

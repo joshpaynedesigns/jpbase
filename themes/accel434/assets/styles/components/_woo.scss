@@ -45,7 +45,6 @@ input[type="button"].facetwp-slider-reset,
 
     > .facetwp-template {
       @include span-columns(9);
-      @include omega();
     }
   }
 
@@ -1148,7 +1147,6 @@ li.wc_payment_method {
 
       @media ($medium-screen-up) {
         @include span-columns(4);
-        @include omega(3n);
         height: 300px;
       }
 

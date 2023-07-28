@@ -25,6 +25,10 @@ $section_classes = ns_decide_section_classes($background_color);
 
                 $block_classes = "box bg-$background_color";
 
+                if ($show_button) {
+                    $block_classes .= " has-button";
+                }
+
                 ?>
                 <?php if (! empty($box_url)) : ?>
                     <a class="linked <?php echo $block_classes ?>" href="<?php echo $box_url['url']; ?>" target="<?php echo $box_url['target']; ?>">

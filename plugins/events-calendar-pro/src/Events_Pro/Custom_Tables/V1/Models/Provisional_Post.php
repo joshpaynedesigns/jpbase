@@ -322,17 +322,17 @@ class Provisional_Post {
 		if ( empty( $occurrence_id ) ) {
 			// Not already hydrated, let's do it now.
 			$this->post_cache->hydrate_caches( [ $object_id ] );
-		}
 
-		// Avoid using a method that will either hit the database or cause another `get_post_meta` call.
-		$occurrence_id = get_object_vars( $post )['_tec_occurrence_id'] ?? null;
+			// Avoid using a method that will either hit the database or cause another `get_post_meta` call.
+			$occurrence_id = get_object_vars( $post )['_tec_occurrence_id'] ?? null;
+		}
 
 		if ( empty( $occurrence_id ) ) {
 			return $meta_value;
 		}
 
 		// Attempt to fetch from memoized cache.
-		$cache_key = 'tec_occurrence_meta_' . $occurrence_id;
+		$cache_key = 'event_occurrence_' . $occurrence_id;
 		$cache = tribe_cache();
 
 		// Check if we already memoized this.

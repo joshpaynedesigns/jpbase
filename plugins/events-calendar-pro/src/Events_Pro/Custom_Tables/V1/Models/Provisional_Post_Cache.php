@@ -120,7 +120,7 @@ class Provisional_Post_Cache {
 			$to_hydrate
 		] = array_reduce( $occurrences_ids, function ( array $carry, int $occurrence_id ) use ( $cache ): array {
 			$cache_key = "event_occurrence_$occurrence_id";
-			$cached = $cache->get( $cache_key );
+			$cached = $cache[ $cache_key ];
 			if ( $cached instanceof Occurrence ) {
 				$carry[0][] = $cached;
 			} else {
@@ -129,7 +129,6 @@ class Provisional_Post_Cache {
 
 			return $carry;
 		}, [ [], [] ] );
-
 
 		if ( ! empty( $to_hydrate ) ) {
 			$fetched = [];
@@ -277,6 +276,9 @@ class Provisional_Post_Cache {
 	private function flush_occurrences_from_a_post_id( $post_id ): void {
 		$occurrences             = $this->get_array_from_cache( $post_id );
 		$occurrences[ $post_id ] = true;
+		$cache                   = tribe_cache();
+
+		unset( $cache["event_occurrence_$post_id"] );
 
 		foreach ( array_keys( $occurrences ) as $provisional_ID ) {
 			wp_cache_delete( $provisional_ID, 'posts' );

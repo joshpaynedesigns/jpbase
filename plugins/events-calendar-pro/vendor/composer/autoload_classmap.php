@@ -52,6 +52,7 @@ return array(
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Converter\\From_Rset_Converter' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Converter/From_Rset_Converter.php',
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Event_Cleaner' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Cleaner/Event_Cleaner.php',
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Provider' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Cleaner/Provider.php',
+    'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Event_Sequence' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Event_Sequence.php',
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Occurrences\\Occurrences_Generator' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Occurrences/Occurrences_Generator.php',
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\ID_Generator' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/ID_Generator.php',
     'TEC\\Events_Pro\\Custom_Tables\\V1\\Events\\Provisional\\Provider' => $baseDir . '/src/Events_Pro/Custom_Tables/V1/Events/Provisional/Provider.php',

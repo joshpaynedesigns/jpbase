@@ -1,8 +1,8 @@
 .one23grid,
 .one2grid {
   .story {
-    width: 100%;
     padding: 0 !important;
+    width: 100%;
   }
 }
 
@@ -13,11 +13,23 @@
   .story-img {
     height: rem(250);
     margin-bottom: 20px;
+    position: relative;
     @include bg();
+
+    &::before {
+      background-color: $light-blue;
+      border-radius: rem(12);
+      content: "";
+      display: block;
+      inset: 0;
+      opacity: 0;
+      position: absolute;
+      transition: opacity $base-timing $base-duration;
+    }
 
     &:hover {
       &::before {
-        transform: translate(0);
+        opacity: 0.5;
       }
     }
   }
