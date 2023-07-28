@@ -24,4 +24,17 @@
       }
     }
   }
+
+  .one2grid {
+    flex-direction: column;
+    gap: rem(16);
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+
+      .mobile-divider {
+        display: none;
+      }
+    }
+  }
 }
