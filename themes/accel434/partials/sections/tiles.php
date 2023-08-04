@@ -24,7 +24,7 @@ if (empty($section_title)) {
                 $bg_options = get_sub_field('background_options');
                 $content    = get_sub_field('content');
                 $bg         = get_sub_field('background_image');
-                $bg_color   = get_sub_field('background_color');
+                $bg_color   = get_sub_field('tile_bg_color');
 
                 $bg_class    = '';
                 $solid_class = '';
@@ -33,22 +33,20 @@ if (empty($section_title)) {
 
                 // If set to be image set up the image and text classes
 
-                if ($bg_options == 'image') {
+                if ($bg_options === 'image') {
                     $bg_class   = 'has-image';
                     $text_class = 'text-is-light';
-                } elseif ($bg_options == 'solid') {
+                } elseif ($bg_options === 'solid') {
                     $bg_class    = 'solid';
-                    $solid_color = $bg_color;
+                    $solid_color = 'bg-' . $bg_color;
 
-                    if ('primary' === $bg_color || 'dark-gray' === $bg_color) {
+                    if (ns_is_bg_dark($bg_color)) {
                         $text_class = 'text-is-light';
                     }
-                    if ('white' === $bg_color || 'light-gray' === $bg_color) {
+                    if (ns_is_bg_light($bg_color)) {
                         $text_class = 'text-is-dark';
                     }
                 }
-
-                // If set to be solid set up the bg class
 
                 // Check to see if we are automatically pulling the bg image
                 if (! empty($bg) && $bg_options == 'image') {

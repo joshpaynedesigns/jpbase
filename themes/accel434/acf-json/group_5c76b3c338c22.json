@@ -5,7 +5,7 @@
         {
             "key": "field_5c76b3c33f5e1",
             "label": "Background Color",
-            "name": "background_color",
+            "name": "section_bg_color",
             "aria-label": "",
             "type": "select",
             "instructions": "",
@@ -18,9 +18,14 @@
             },
             "choices": {
                 "none": "None",
-                "light-gray": "Light Gray"
+                "light-gray": "Light Gray",
+                "light-blue": "Light Blue",
+                "medium-gray": "Medium Gray",
+                "dark-gray": "Dark Gray",
+                "blue": "Blue",
+                "green": "Green"
             },
-            "default_value": "white",
+            "default_value": "none",
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
@@ -71,11 +76,11 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_647f8f6189be3",
-                    "label": "BG Color Clone",
-                    "name": "bg_color_clone",
+                    "key": "field_64cd47e6321fb",
+                    "label": "Background Color",
+                    "name": "box_bg_color",
                     "aria-label": "",
-                    "type": "clone",
+                    "type": "select",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -84,13 +89,19 @@
                         "class": "",
                         "id": ""
                     },
-                    "clone": [
-                        "group_5ac68f94629c6"
-                    ],
-                    "display": "seamless",
-                    "layout": "block",
-                    "prefix_label": 0,
-                    "prefix_name": 0,
+                    "choices": {
+                        "medium-gray": "Medium Gray",
+                        "dark-gray": "Dark Gray",
+                        "blue": "Blue",
+                        "green": "Green"
+                    },
+                    "default_value": "blue",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
                     "parent_repeater": "field_5c76b3c33f67d"
                 },
                 {
@@ -230,10 +241,11 @@
                     },
                     "choices": {
                         "blue-button": "Blue",
+                        "primary-button": "Primary",
                         "light-blue-button": "Light Blue",
                         "medium-gray-button": "Medium Gray",
                         "dark-gray-button": "Dark Gray",
-                        "white-button": "White Button"
+                        "white-button": "White"
                     },
                     "default_value": "blue-button",
                     "return_format": "value",
@@ -267,5 +279,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686155993
+    "modified": 1691175127
 }

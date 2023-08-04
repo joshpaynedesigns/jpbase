@@ -104,7 +104,7 @@
                 {
                     "key": "field_593edeff455aa",
                     "label": "Background Color",
-                    "name": "background_color",
+                    "name": "tile_bg_color",
                     "aria-label": "",
                     "type": "select",
                     "instructions": "",
@@ -125,11 +125,13 @@
                     },
                     "choices": {
                         "none": "None",
-                        "primary": "Primary",
                         "light-gray": "Light Gray",
-                        "dark-gray": "Dark Gray"
+                        "medium-gray": "Medium Gray",
+                        "dark-gray": "Dark Gray",
+                        "blue": "Blue",
+                        "light-blue": "Light Blue"
                     },
-                    "default_value": "primary",
+                    "default_value": "none",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -182,5 +184,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1684864662
+    "modified": 1691175791
 }

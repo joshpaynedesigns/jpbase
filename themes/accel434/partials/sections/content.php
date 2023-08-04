@@ -1,6 +1,6 @@
 <?php
 
-$bg_color = get_sub_field('background_color');
+$bg_color = get_sub_field('section_bg_color');
 $title = get_sub_field('section_title');
 $type = get_sub_field('content_type');
 $content = get_sub_field('content');
