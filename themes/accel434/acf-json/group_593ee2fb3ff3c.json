@@ -61,9 +61,9 @@
         {
             "key": "field_5d0a9bb521b77",
             "label": "Bar Color",
-            "name": "bar_color",
+            "name": "ribbon_cta_bg_color",
             "aria-label": "",
-            "type": "button_group",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -73,13 +73,18 @@
                 "id": ""
             },
             "choices": {
-                "bg-blue": "Blue",
-                "bg-dark-gray": "Dark Gray"
+                "medium-gray": "Medium Gray",
+                "dark-gray": "Dark Gray",
+                "blue": "Blue",
+                "light-blue": "Light Blue"
             },
             "default_value": "blue",
             "return_format": "value",
+            "multiple": 0,
             "allow_null": 0,
-            "layout": "horizontal"
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_646d08caf2a51",
@@ -122,5 +127,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1686062182
+    "modified": 1691175981
 }
