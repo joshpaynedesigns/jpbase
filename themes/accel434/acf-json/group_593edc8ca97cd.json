@@ -32,9 +32,9 @@
         {
             "key": "field_5ac6903b27f54",
             "label": "Background Color",
-            "name": "background_color",
+            "name": "section_bg_color",
             "aria-label": "",
-            "type": "clone",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -43,13 +43,21 @@
                 "class": "",
                 "id": ""
             },
-            "clone": [
-                "group_5ac68f94629c6"
-            ],
-            "display": "seamless",
-            "layout": "block",
-            "prefix_label": 0,
-            "prefix_name": 0
+            "choices": {
+                "none": "None",
+                "light-gray": "Light Gray",
+                "medium-gray": "Medium Gray",
+                "dark-gray": "Dark Gray",
+                "blue": "Blue",
+                "light-blue": "Light Blue"
+            },
+            "default_value": "none",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_64400e634481b",
@@ -222,5 +230,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1681919603
+    "modified": 1691175612
 }

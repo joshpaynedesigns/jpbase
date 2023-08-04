@@ -84,7 +84,7 @@ function decide_banner_bg_img()
         $default_bg_image = ns_get_field('default_banner_image_testimonials', 'options');
     } elseif (is_singular('service') || is_post_type_archive('service')) {
         $default_bg_image = ns_get_field('default_banner_image_services', 'options');
-    } elseif (is_singular('project') || is_post_type_archive('project')) {
+    } elseif (is_singular('projects') || is_post_type_archive('projects')) {
         $default_bg_image = ns_get_field('default_banner_image_projects', 'options');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_bg_image = ns_get_field('default_banner_image_locations', 'options');
@@ -118,7 +118,7 @@ function decide_banner_height_class()
         $default_banner_height = ns_get_field('default_banner_height_testimonials', 'option');
     } elseif (is_post_type_archive('staff') || is_singular('staff')) {
         $default_banner_height = ns_get_field('default_banner_height_staff', 'option');
-    } elseif (is_post_type_archive('project') || is_singular('project')) {
+    } elseif (is_post_type_archive('projects') || is_singular('projects')) {
         $default_banner_height = ns_get_field('default_banner_height_projects', 'option');
     } elseif (is_post_type_archive('location') || is_singular('location')) {
         $default_banner_height = ns_get_field('default_banner_height_locations', 'option');
@@ -211,7 +211,7 @@ function decide_banner_subtitle()
         $subtitle = ns_get_field('archive_sub_title_staff', 'option');
     } elseif (is_post_type_archive('service')) {
         $subtitle = ns_get_field('archive_sub_title_services', 'option');
-    } elseif (is_post_type_archive('project')) {
+    } elseif (is_post_type_archive('projects')) {
         $subtitle = ns_get_field('archive_sub_title_projects', 'option');
     } elseif (is_post_type_archive('location')) {
         $subtitle = ns_get_field('archive_sub_title_locations', 'option');

@@ -1,6 +1,6 @@
 <?php
 
-$background_color = get_sub_field('background_color');
+$background_color = get_sub_field('section_bg_color');
 $section_title = get_sub_field('section_title');
 $boxes = get_sub_field('boxes');
 
@@ -14,16 +14,16 @@ $section_classes = ns_decide_section_classes($background_color);
         <div class="boxes">
             <?php
             foreach ($boxes as $box) :
-                $background_color    = ns_key_value($box, 'background_color');
+                $box_bg_color    = ns_key_value($box, 'box_bg_color');
                 $icon    = ns_key_value($box, 'icon');
                 $box_title    = ns_key_value($box, 'box_title');
                 $box_text    = ns_key_value($box, 'box_text');
                 $box_url    = ns_key_value($box, 'box_url');
                 $show_button    = ns_key_value($box, 'show_button');
                 $button_color    = ns_key_value($box, 'button_color');
-                $dark_bg = ns_is_bg_dark($background_color);
+                $dark_bg = ns_is_bg_dark($box_bg_color);
 
-                $block_classes = "box bg-$background_color";
+                $block_classes = "box bg-$box_bg_color";
 
                 if ($show_button) {
                     $block_classes .= " has-button";
