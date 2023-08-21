@@ -498,7 +498,6 @@ class Tribe_Events extends Shortcode_Abstract {
 		$alter_context['shortcode'] = $shortcode_id;
 		$alter_context['id']        = $shortcode_id;
 
-
 		$context = $context->alter( $alter_context );
 
 		return $context;
@@ -986,7 +985,7 @@ class Tribe_Events extends Shortcode_Abstract {
 					->first();
 				if ( empty( $organizer_id ) ) {
 					$organizer_id = tribe_organizers()
-						->where( 'slug', $arguments['organizer'] )
+						->where( 'name', $arguments['organizer'] )
 						->per_page( 1 )
 						->fields( 'ids' )
 						->first();
@@ -1012,7 +1011,7 @@ class Tribe_Events extends Shortcode_Abstract {
 
 				if ( empty( $venue_id ) ) {
 					$venue_id = tribe_venues()
-						->where( 'slug', $arguments['venue'] )
+						->where( 'name', $arguments['venue'] )
 						->per_page( 1 )
 						->fields( 'ids' )
 						->first();

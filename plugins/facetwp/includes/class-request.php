@@ -18,6 +18,12 @@ class FacetWP_Request
     /* (boolean) Initial load? */
     public $is_preload = false;
 
+    /* (string) Name of active FacetWP template */
+    public $template_name;
+
+    /* (array) Response output */
+    public $output;
+
 
     function __construct() {
         $this->process_json();
@@ -32,7 +38,9 @@ class FacetWP_Request
         $json = file_get_contents( 'php://input' );
         if ( 0 === strpos( $json, '{' ) ) {
             $post_data = json_decode( $json, true );
-            if ( isset( $post_data['action'] ) && 0 === strpos( $post_data['action'], 'facetwp' ) ) {
+            $action = $post_data['action'] ?? '';
+
+            if ( is_string( $action ) && 0 === strpos( $action, 'facetwp' ) ) {
                 $_POST = $post_data;
             }
         }

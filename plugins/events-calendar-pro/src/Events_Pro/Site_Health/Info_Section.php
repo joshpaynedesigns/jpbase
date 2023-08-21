@@ -75,8 +75,8 @@ class Info_Section extends Info_Section_Abstract {
 	 * @since 6.1.0
 	 */
 	public function __construct() {
-		$this->label       = esc_html__( 'The Events Calendar PRO', 'events-calendar-pro' );
-		$this->description = esc_html__( 'This section contains information on the Events Calendar PRO Plugin.', 'events-calendar-pro' );
+		$this->label       = esc_html__( 'The Events Calendar PRO', 'tribe-events-calendar-pro' );
+		$this->description = esc_html__( 'This section contains information on the Events Calendar PRO Plugin.', 'tribe-events-calendar-pro' );
 		$this->add_fields();
 	}
 
@@ -119,7 +119,7 @@ class Info_Section extends Info_Section_Abstract {
 		$this->add_field(
 			Factory::generate_generic_field(
 				'recurring_events',
-				esc_html__( 'Unique recurring count', 'the-events-calendar' ),
+				esc_html__( 'Unique recurring count', 'tribe-events-calendar-pro' ),
 				$recurring_events,
 				20
 			)
@@ -130,7 +130,7 @@ class Info_Section extends Info_Section_Abstract {
 		$this->add_field(
 			Factory::generate_generic_field(
 				'default_mobile_view',
-				esc_html__( 'Default mobile view', 'events-calendar-pro' ),
+				esc_html__( 'Default mobile view', 'tribe-events-calendar-pro' ),
 				$mobile_view,
 				30
 			)
@@ -139,7 +139,7 @@ class Info_Section extends Info_Section_Abstract {
 		$this->add_field(
 			Factory::generate_generic_field(
 				'custom_field_count',
-				esc_html__( 'Custom field count', 'events-calendar-pro' ),
+				esc_html__( 'Custom field count', 'tribe-events-calendar-pro' ),
 				count( tribe_get_option( 'custom-fields', [] ) ),
 				40
 			)

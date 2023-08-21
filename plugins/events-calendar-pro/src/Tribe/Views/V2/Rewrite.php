@@ -58,8 +58,25 @@ class Rewrite {
 			$localized_organizer_slug = __( 'organizer', 'the-events-calendar' );
 		}
 
+		$localized_venues_slug = esc_html_x( 'venues', 'The archive for events for multiple venue, "/venues/" URL string component.', 'tribe-events-calendar-pro' );
+
+		if ( $localized_venues_slug === 'venues' ) {
+			// Try translating it using The Events Calendar's translation.
+			$localized_venues_slug = __( 'venues', 'the-events-calendar' );
+		}
+
+		$localized_organizers_slug = esc_html_x( 'organizers', 'The archive for events for multiple organizers, "/organizers/" URL string component.', 'tribe-events-calendar-pro' );
+
+		if ( $localized_organizers_slug === 'organizers' ) {
+			// Try translating it using The Events Calendar's translation.
+			$localized_organizers_slug = __( 'organizers', 'the-events-calendar' );
+		}
+
 		$bases['venue'] = [ 'venue', $localized_venue_slug ];
 		$bases['organizer'] = [ 'organizer', $localized_organizer_slug ];
+
+		$bases['venues'] = [ 'venues', $localized_venues_slug ];
+		$bases['organizers'] = [ 'organizers', $localized_organizers_slug ];
 
 		return $bases;
 	}
@@ -291,6 +308,8 @@ class Rewrite {
 	public function filter_rewrite_query_vars_map( array $query_vars_map = [] ) {
 		$query_vars_map['venue']     = Venue::POSTTYPE;
 		$query_vars_map['organizer'] = Organizer::POSTTYPE;
+		$query_vars_map['venues'] = 'post_type';
+		$query_vars_map['organizers'] = 'post_type';
 
 		return $query_vars_map;
 	}

@@ -8,7 +8,8 @@
  * You can override this template in your own theme by creating a file at
  * [your-theme]/tribe-events/pro/widgets/modules/single-event.php
  *
- * @version 5.0.0
+ * @version 6.2.0
+ * @since 6.2.0 Added `tec_events_view_venue_after_address` action.
  *
  * @package TribeEventsCalendarPro
  */
@@ -17,6 +18,7 @@ $mini_cal_event_atts = tribe_events_get_widget_event_atts();
 
 $post_date = tribe_events_get_widget_event_post_date();
 $post_id   = get_the_ID();
+$post      = get_post( $post_id );
 
 $organizer_ids = tribe_get_organizer_ids();
 $multiple_organizers = count( $organizer_ids ) > 1;
@@ -176,6 +178,17 @@ if ( isset( $address ) && $address && tribe_get_address() != '' ) {
 			<?php if ( $location = trim( ob_get_clean() ) ) : ?>
 				<div class="tribe-events-location tribe-section-s">
 					<?php echo $location; ?>
+					<?php
+					/**
+					 * Fires after the venue has been displayed.
+					 *
+					 * @since 6.2.0
+					 *
+					 * @param WP_Post $event Event post object.
+					 * @param string  $slug  Slug of the view.
+					 */
+					do_action( 'tec_events_view_venue_after_address', $post, 'widget-events-list' );
+					?>
 				</div>
 			<?php endif; ?>
 

@@ -576,13 +576,29 @@ class Hooks extends Service_Provider {
 	 * Maybe toggles the hooks for a widget class on a rest request.
 	 *
 	 * @since 5.5.0
+	 * @since 6.1.4 Test the slug and only trigger for widgets that use the Widget_Shortcode trait (month and week).
 	 *
 	 * @param string           $slug    The current view Slug.
 	 * @param array            $params  Params so far that will be used to build this view.
 	 * @param \WP_REST_Request $request The rest request that generated this call.
 	 */
 	public function maybe_toggle_hooks_for_rest( $slug, $params, \WP_REST_Request $request ) {
-		Widget_Shortcode::maybe_toggle_hooks_for_rest( $slug, $params, $request );
+		// On the shortcode call the slug is not set. We still need to toggle the hooks for the shortcode widgets.
+		if ( empty( $slug ) ) {
+			// Slug isn't set - try the view slug.
+			if ( isset( $params[ 'eventDisplay' ] ) ) {
+				$slug = $params[ 'eventDisplay' ];
+			} else {
+				// No view slug? Bail.
+				return;
+			}
+		}
+
+		if ( $slug === $this->container->make( Widget_Month::class )->get_view_slug() ) {
+			Widget_Month::maybe_toggle_hooks_for_rest( $slug, $params, $request );
+		} else if ( $slug === $this->container->make( Widget_Week::class )->get_view_slug() ) {
+			Widget_Week::maybe_toggle_hooks_for_rest( $slug, $params, $request );
+		}
 	}
 
 	/**

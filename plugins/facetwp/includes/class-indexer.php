@@ -21,9 +21,12 @@ class FacetWP_Indexer
     /* (array) Value modifiers set via the admin UI */
     public $modifiers;
 
+    /* (bool) Whether indexing hooks are in use */
+    public $is_overridden;
+
 
     function __construct() {
-        $this->set_table_prop();
+        $this->set_table( 'auto' );
         $this->run_cron();
 
         if ( apply_filters( 'facetwp_indexer_is_enabled', true ) ) {
@@ -220,7 +223,6 @@ class FacetWP_Indexer
             // Store post IDs
             if ( $this->index_all ) {
                 update_option( 'facetwp_indexing', json_encode( $post_ids ) );
-                $this->set_table_prop();
             }
         }
 
@@ -286,7 +288,6 @@ class FacetWP_Indexer
 
             $this->manage_temp_table( 'replace' );
             $this->manage_temp_table( 'delete' );
-            $this->set_table_prop();
         }
 
         do_action( 'facetwp_indexer_complete' );
@@ -294,12 +295,16 @@ class FacetWP_Indexer
 
 
     /**
-     * Get an array of post IDs to index
-     * @since 3.6.8
+     * Get the array of indexer query args
+     * @since 4.1.8
      */
-    function get_post_ids_to_index( $post_id = false ) {
+    function get_query_args( $post_id = false ) {
+        $post_types = get_post_types( [
+            'exclude_from_search' => false
+        ] );
+
         $args = [
-            'post_type'         => 'any',
+            'post_type'         => $post_types,
             'post_status'       => 'publish',
             'posts_per_page'    => -1,
             'fields'            => 'ids',
@@ -313,8 +318,16 @@ class FacetWP_Indexer
             $args['posts_per_page'] = 1;
         }
 
-        $args = apply_filters( 'facetwp_indexer_query_args', $args );
+        return apply_filters( 'facetwp_indexer_query_args', $args );
+    }
 
+
+    /**
+     * Get an array of post IDs to index
+     * @since 3.6.8
+     */
+    function get_post_ids_to_index( $post_id = false ) {
+        $args = $this->get_query_args( $post_id );
         $query = new WP_Query( $args );
         return (array) $query->posts;
     }
@@ -619,13 +632,17 @@ class FacetWP_Indexer
 
 
     /**
-     * Determine whether a temp index table is in use
-     * @since 3.5
+     * Set either the index or temp table
+     * @param string $table 'auto', 'index', or 'temp'
+     * @since 4.1.4
      */
-    function set_table_prop() {
+    function set_table( $table = 'auto' ) {
         global $wpdb;
 
-        $table = ( '' == get_option( 'facetwp_indexing', '' ) ) ? 'index' : 'temp';
+        if ( 'auto' == $table ) {
+            $table = ( '' == get_option( 'facetwp_indexing', '' ) ) ? 'index' : 'temp';
+        }
+
         $this->table = $wpdb->prefix . 'facetwp_' . $table;
     }
 
@@ -642,6 +659,7 @@ class FacetWP_Indexer
 
         if ( 'create' == $action ) {
             $wpdb->query( "CREATE TABLE $temp_table LIKE $table" );
+            $this->set_table( 'temp' );
         }
         elseif ( 'replace' == $action ) {
             $wpdb->query( "TRUNCATE TABLE $table" );
@@ -649,6 +667,7 @@ class FacetWP_Indexer
         }
         elseif ( 'delete' == $action ) {
             $wpdb->query( "DROP TABLE IF EXISTS $temp_table" );
+            $this->set_table( 'index' );
         }
     }
 

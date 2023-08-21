@@ -9,11 +9,12 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version  5.1.6
+ * @version 6.2.0
+ * @since   6.1.2 Changing our nonce verification structures.
+ * @since 6.2.0 Defer header rendering to the components/header template.
  *
  * @var string   $rest_url             The REST URL.
  * @var string   $rest_method          The HTTP method, either `POST` or `GET`, the View will use to make requests.
- * @var string   $rest_nonce           The REST nonce.
  * @var int      $should_manage_url    int containing if it should manage the URL.
  * @var string   $placeholder_url      The url for the placeholder image if a featured image does not exist.
  * @var array    $events               The array containing the events.
@@ -34,7 +35,6 @@ if ( empty( $disable_event_search ) ) {
 <div
 	<?php tribe_classes( $container_classes ); ?>
 	data-js="tribe-events-view"
-	data-view-rest-nonce="<?php echo esc_attr( $rest_nonce ); ?>"
 	data-view-rest-url="<?php echo esc_url( $rest_url ); ?>"
 	data-view-rest-method="<?php echo esc_attr( $rest_method ); ?>"
 	data-view-manage-url="<?php echo esc_attr( $should_manage_url ); ?>"
@@ -54,15 +54,7 @@ if ( empty( $disable_event_search ) ) {
 
 		<?php $this->template( 'components/before' ); ?>
 
-		<header <?php tribe_classes( $header_classes ); ?>>
-			<?php $this->template( 'components/messages' ); ?>
-
-			<?php $this->template( 'components/breadcrumbs' ); ?>
-
-			<?php $this->template( 'components/events-bar' ); ?>
-
-			<?php $this->template( 'photo/top-bar' ); ?>
-		</header>
+		<?php $this->template( 'components/header' ); ?>
 
 		<?php $this->template( 'components/filter-bar' ); ?>
 

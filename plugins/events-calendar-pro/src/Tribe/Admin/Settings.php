@@ -3,7 +3,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
-
 class Tribe__Events__Pro__Admin__Settings {
 
 	/**
