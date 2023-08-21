@@ -6,6 +6,7 @@ var FWP_MAP = FWP_MAP || {};
     FWP_MAP.markerLookup = {};
     FWP_MAP.is_filtering = false;
     FWP_MAP.is_zooming = false;
+    FWP_MAP.map_loaded = false;
 
     // Get markers for a given post ID
     FWP_MAP.get_post_markers = function(post_id) {
@@ -68,14 +69,18 @@ var FWP_MAP = FWP_MAP || {};
         $this.toggleClass('enabled');
     });
 
-    $().on('facetwp-loaded', function() {
+    FWP_MAP.init = function() {
         if ('undefined' === typeof FWP.settings.map || '' === FWP.settings.map) {
+            return;
+        }
+
+        if ('object' !== typeof google || 'object' !== typeof google.maps) {
             return;
         }
 
         var config = FWP.settings.map.config;
 
-        if (! FWP.loaded) {
+        if (! FWP_MAP.map_loaded) {
 
             FWP_MAP.map = new google.maps.Map(document.getElementById('facetwp-map'), FWP.settings.map.init);
             FWP_MAP.infoWindow = new google.maps.InfoWindow();
@@ -99,6 +104,7 @@ var FWP_MAP = FWP_MAP || {};
             });
 
             FWP_MAP.oms = new OverlappingMarkerSpiderfier(FWP_MAP.map, config.spiderfy);
+            FWP_MAP.map_loaded = true;
         }
         else {
             clearOverlays();
@@ -132,6 +138,7 @@ var FWP_MAP = FWP_MAP || {};
                         done: (resp) => {
                             FWP_MAP.contentCache[args.post_id] = resp;
                             FWP_MAP.infoWindow.setContent(resp);
+                            FWP.hooks.doAction('facetwp_map/marker/click', marker);
                         }
                     });
                 }
@@ -187,6 +194,12 @@ var FWP_MAP = FWP_MAP || {};
         if ('undefined' !== typeof config.cluster) {
             FWP_MAP.mc = new MarkerClusterer(FWP_MAP.map, FWP_MAP.markersArray, config.cluster);
         }
+
+        $().trigger('facetwp-maps-loaded');
+    };
+
+    $().on('facetwp-loaded', function() {
+        FWP_MAP.init();
     });
 
     // Clear markers

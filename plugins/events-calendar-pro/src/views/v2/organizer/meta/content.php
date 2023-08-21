@@ -9,7 +9,8 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.0
+ * @version 6.2.0
+ * @since 6.2.0 Altered the classes for the meta content.
  *
  * @var WP_Post $organizer The organizer post object.
  *
@@ -21,6 +22,6 @@ if ( empty( $content ) ) {
 	return;
 }
 ?>
-<div class="tribe-events-pro-organizer__meta-content tribe-common-g-col tribe-common-b1">
+<div class="tribe-events-pro-organizer__meta-content tribe-common-b1">
 	<?php echo $content; ?>
 </div>

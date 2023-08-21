@@ -2,15 +2,15 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar Pro 6.1.1\n"
+"Project-Id-Version: The Events Calendar Pro 6.2.0\n"
 "Report-Msgid-Bugs-To: https://evnt.is/191x\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-10T08:27:59-07:00\n"
-"PO-Revision-Date: 2023-07-10 15:28\n"
+"POT-Creation-Date: 2023-08-13T21:33:44-07:00\n"
+"PO-Revision-Date: 2023-08-14 04:33\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: tribe-events-calendar-pro\n"
 
@@ -57,7 +57,7 @@ msgstr ""
 #: src/admin-views/event-meta-options.php:3
 #: src/Tribe/Editor.php:212
 #: src/Tribe/Editor.php:250
-#: src/Tribe/Main.php:671
+#: src/Tribe/Main.php:675
 #: src/modules/blocks/additional-fields/elements/settings/template.js:31
 msgid "Additional Fields"
 msgstr ""
@@ -271,7 +271,7 @@ msgstr ""
 
 #: src/admin-views/event-recurrence.php:176
 #: src/admin-views/event-recurrence.php:525
-#: src/Tribe/Main.php:1636
+#: src/Tribe/Main.php:1640
 #: src/Tribe/Rewrite/Provider.php:162
 #: src/modules/custom-tables-v1/data/shared/constants.js:9
 msgid "week"
@@ -707,7 +707,7 @@ msgid "Select a State"
 msgstr ""
 
 #: src/admin-views/tribe-options-defaults.php:42
-#: src/Tribe/Main.php:669
+#: src/Tribe/Main.php:673
 msgid "Default Content"
 msgstr ""
 
@@ -809,6 +809,7 @@ msgid "Use Default View"
 msgstr ""
 
 #: src/admin-views/tribe-options-mobile.php:37
+#: src/Events_Pro/Site_Health/Info_Section.php:133
 msgid "Default mobile view"
 msgstr ""
 
@@ -2370,6 +2371,7 @@ msgid "No %s found in Trash"
 msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Series/Post_Type.php:133
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:158
 msgid "%s published."
 msgstr ""
 
@@ -2386,6 +2388,8 @@ msgid "%s scheduled."
 msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Series/Post_Type.php:137
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:152
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:155
 msgid "%s updated."
 msgstr ""
 
@@ -2445,43 +2449,34 @@ msgctxt "publish box time format"
 msgid "H:i"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:150
 #: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:153
-msgid "Series updated."
-msgstr ""
-
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:151
 msgid "Custom field updated."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:152
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:154
 msgid "Custom field deleted."
 msgstr ""
 
 #. translators: %s: Date and time of the revision.
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:155
-msgid "Series restored to revision from %s."
-msgstr ""
-
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:156
-msgid "Series published."
-msgstr ""
-
 #: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:157
-msgid "Series saved."
+msgid "%s restored to revision from %s."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:158
-msgid "Series submitted."
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:159
+msgid "%s saved."
+msgstr ""
+
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:160
+msgid "%s submitted."
 msgstr ""
 
 #. translators: %s: Scheduled date for the post.
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:160
-msgid "Series scheduled for: %s."
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:162
+msgid "%s scheduled for: %s."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:161
-msgid "Series draft updated."
+#: src/Events_Pro/Custom_Tables/V1/Series/Providers/Modifications.php:163
+msgid "%s draft updated."
 msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Templates/Single_Event_Modifications.php:97
@@ -2532,6 +2527,170 @@ msgstr ""
 #: src/Events_Pro/Custom_Tables/V1/Updates/Transient_Occurrence_Redirector.php:191
 msgctxt "The label of the confirm button in the Occurrence redirect dialog."
 msgid "Okay"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1074
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1079
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1084
+msgid "Search %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1089
+msgid "All %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1094
+msgid "Parent %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1099
+msgid "Parent %1$s %2$s:"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1104
+msgid "Edit %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1109
+msgid "Update %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1114
+msgid "Add New %1$s %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1119
+msgid "New %1$s %2$s Name"
+msgstr ""
+
+#. Translators: %s: Linked Post Type singular label.
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1125
+msgid "%1$s %2$s Link"
+msgstr ""
+
+#. Translators: %s: Linked Post Type singular label.
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1131
+msgid "A link to a particular %1$s %2$s."
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1373
+msgctxt "Breadcrumb for the Archive of the Linked Post type by a given taxonomy"
+msgid "By %1$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1430
+msgctxt "Content title for the Taxonomy View"
+msgid "%1$s from this %3$s of %2$s"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php:1747
+msgid "No %1$s."
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Email_Visibility_Modifier.php:29
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:465
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1533
+msgid "Email"
+msgstr ""
+
+#. translators: %1$s: Event label singular.
+#: src/Events_Pro/Linked_Posts/Organizer/Email_Visibility_Modifier.php:47
+msgctxt "Label for the event archive email visibility setting"
+msgid "Show email on %1$s single"
+msgstr ""
+
+#. translators: %1$s: Organizer label singular.
+#: src/Events_Pro/Linked_Posts/Organizer/Email_Visibility_Modifier.php:55
+msgctxt "Label for the organizer single email visibility setting"
+msgid "Show email on %1$s single"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Phone_Visibility_Modifier.php:29
+msgid "Phone number"
+msgstr ""
+
+#. translators: %1$s: Event label singular.
+#: src/Events_Pro/Linked_Posts/Organizer/Phone_Visibility_Modifier.php:47
+msgctxt "Label for the event single phone number visibility setting"
+msgid "Show phone number on %1$s single"
+msgstr ""
+
+#. translators: %1$s: Organizer label singular.
+#: src/Events_Pro/Linked_Posts/Organizer/Phone_Visibility_Modifier.php:55
+msgctxt "Label for the organizer single phone number visibility setting"
+msgid "Show phone number on %1$s single"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Settings.php:30
+msgctxt "Header for the organizer settings section header"
+msgid "Organizers"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Taxonomy/Category.php:49
+msgctxt "Singular name of Organizer Category, without the Linked Post label"
+msgid "Category"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Taxonomy/Category.php:56
+msgctxt "Plural name of Organizer Category, without the Linked Post label"
+msgid "Categories"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Taxonomy/Category.php:66
+msgctxt "Singular name of Organizer Category, without the Linked Post label, for rewrite purposes."
+msgid "category"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Organizer/Taxonomy/Category.php:78
+msgctxt "Plural name of Organizer Category, without the Linked Post label, for rewrite purposes."
+msgid "categories"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Thumbnail_Inclusion.php:63
+msgid "We recommend a 16:9 aspect ratio for featured images."
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Venue/Controller.php:188
+msgid "This setting applies to all of the venues added to the event."
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Venue/Taxonomy/Category.php:49
+msgctxt "Singular name of Venue Category, without the Linked Post label"
+msgid "Category"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Venue/Taxonomy/Category.php:56
+msgctxt "Plural name of Venue Category, without the Linked Post label"
+msgid "Categories"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Venue/Taxonomy/Category.php:66
+msgctxt "Singular name of Venue Category, without the Linked Post label, for rewrite purposes."
+msgid "category"
+msgstr ""
+
+#: src/Events_Pro/Linked_Posts/Venue/Taxonomy/Category.php:78
+msgctxt "Plural name of Venue Category, without the Linked Post label, for rewrite purposes."
+msgid "categories"
+msgstr ""
+
+#: src/Events_Pro/Site_Health/Info_Section.php:78
+msgid "The Events Calendar PRO"
+msgstr ""
+
+#: src/Events_Pro/Site_Health/Info_Section.php:79
+msgid "This section contains information on the Events Calendar PRO Plugin."
+msgstr ""
+
+#: src/Events_Pro/Site_Health/Info_Section.php:122
+msgid "Unique recurring count"
+msgstr ""
+
+#: src/Events_Pro/Site_Health/Info_Section.php:142
+msgid "Custom field count"
 msgstr ""
 
 #: src/functions/php-min-version.php:51
@@ -3946,11 +4105,6 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:465
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1533
-msgid "Email"
-msgstr ""
-
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:507
 msgid "Custom Content"
 msgstr ""
@@ -4082,183 +4236,191 @@ msgstr ""
 msgid "Zoom Dial-in Info"
 msgstr ""
 
-#: src/Tribe/Main.php:411
+#: src/Tribe/Main.php:415
 #: src/Tribe/Views/V2/Template/Title.php:60
 msgid "All %1$s for %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:417
+#: src/Tribe/Main.php:421
 #: src/Tribe/Views/V2/Template/Title.php:78
 msgid "%1$s for week of %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:486
+#: src/Tribe/Main.php:490
 msgctxt "debug recurrence"
 msgid "Unknown"
 msgstr ""
 
-#: src/Tribe/Main.php:504
+#: src/Tribe/Main.php:508
 msgctxt "debug recurrence"
 msgid "invalid date"
 msgstr ""
 
-#: src/Tribe/Main.php:535
-#: src/Tribe/Main.php:548
+#: src/Tribe/Main.php:539
+#: src/Tribe/Main.php:552
 msgctxt "debug recurrence"
 msgid "incorrect slug"
 msgstr ""
 
 #. Translators: 1: Error message, 2: URL
-#: src/Tribe/Main.php:572
+#: src/Tribe/Main.php:576
 msgctxt "debug recurrence"
 msgid "Invalid instance of a recurring event was requested (%1$s) redirecting to %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:706
+#: src/Tribe/Main.php:709
 msgid "Hide related events"
 msgstr ""
 
-#: src/Tribe/Main.php:707
+#: src/Tribe/Main.php:710
 msgid "Remove related events from the single event view (with classic editor)"
 msgstr ""
 
-#: src/Tribe/Main.php:719
+#: src/Tribe/Main.php:722
 msgid "Hide weekends on Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:720
+#: src/Tribe/Main.php:723
 msgid "Check this to only show weekdays on Week View. This also affects the Events by Week widget."
 msgstr ""
 
-#: src/Tribe/Main.php:732
+#: src/Tribe/Main.php:735
 msgid "Enable the Before HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Main.php:733
+#: src/Tribe/Main.php:736
 msgid "Check this to show the Before HTML from the text area below on events displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:745
+#: src/Tribe/Main.php:748
 msgid "Enable the After HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Main.php:746
+#: src/Tribe/Main.php:749
 msgid "Check this to show the After HTML from the text area below on events displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:760
+#: src/Tribe/Main.php:763
 msgid "Week day format"
 msgstr ""
 
-#: src/Tribe/Main.php:807
+#: src/Tribe/Main.php:765
+msgid "Enter the format to use for week days. Used when showing days of the week in Week view. Example: %1$s"
+msgstr ""
+
+#: src/Tribe/Main.php:781
+msgid "The first four fields accept the date format options available to the PHP %1$s function. <a href=\"%2$s\" target=\"_blank\">Learn how to make your own date format here</a>."
+msgstr ""
+
+#: src/Tribe/Main.php:811
 msgid "Thanks for buying Events Calendar PRO! From all of us at The Events Calendar, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there."
 msgstr ""
 
-#: src/Tribe/Main.php:819
+#: src/Tribe/Main.php:823
 msgid "If this is your first time using The Events Calendar Pro, you're in for a treat and are already well on your way to creating a first event. Here are some basics we've found helpful for users jumping into it for the first time:"
 msgstr ""
 
-#: src/Tribe/Main.php:822
+#: src/Tribe/Main.php:826
 msgid "%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time."
 msgstr ""
 
-#: src/Tribe/Main.php:824
+#: src/Tribe/Main.php:828
 msgid "%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer."
 msgstr ""
 
-#: src/Tribe/Main.php:826
+#: src/Tribe/Main.php:830
 msgid "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy."
 msgstr ""
 
-#: src/Tribe/Main.php:828
+#: src/Tribe/Main.php:832
 msgid "Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event."
 msgstr ""
 
-#: src/Tribe/Main.php:841
+#: src/Tribe/Main.php:845
 msgid "Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play."
 msgstr ""
 
-#: src/Tribe/Main.php:842
+#: src/Tribe/Main.php:846
 msgid "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response."
 msgstr ""
 
-#: src/Tribe/Main.php:843
+#: src/Tribe/Main.php:847
 msgid "Our number one goal is helping you succeed, and to whatever extent possible, we'll help troubleshoot and guide your customizations or tweaks. While we won't build your site for you, and we can't guarantee we'll be able to get you 100% integrated with every theme or plugin out there, we'll do all we can to point you in the right direction and to make you -- and your client, as is often more importantly the case -- satisfied."
 msgstr ""
 
-#: src/Tribe/Main.php:844
+#: src/Tribe/Main.php:848
 msgid "Before posting a new thread, please do a search to make sure your issue hasn't already been addressed. When posting please make sure to provide as much detail about the problem as you can (with screenshots or screencasts if feasible), and make sure that you've identified whether a plugin / theme conflict could be at play in your initial message."
 msgstr ""
 
-#: src/Tribe/Main.php:1096
+#: src/Tribe/Main.php:1100
 msgid "Settings"
 msgstr ""
 
-#: src/Tribe/Main.php:1124
+#: src/Tribe/Main.php:1128
 msgid "Venue updated. <a href=\"%s\">View venue</a>"
 msgstr ""
 
 #. translators: %s: date and time of the revision
-#: src/Tribe/Main.php:1126
+#: src/Tribe/Main.php:1130
 msgid "Venue published. <a href=\"%s\">View venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1127
+#: src/Tribe/Main.php:1131
 msgid "Venue submitted. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1129
+#: src/Tribe/Main.php:1133
 msgid "Venue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview venue</a>"
 msgstr ""
 
 #. translators: Publish box date format, see http://php.net/date
-#: src/Tribe/Main.php:1131
-#: src/Tribe/Main.php:1141
+#: src/Tribe/Main.php:1135
+#: src/Tribe/Main.php:1145
 msgid "M j, Y @ G:i"
 msgstr ""
 
-#: src/Tribe/Main.php:1133
+#: src/Tribe/Main.php:1137
 msgid "Venue draft updated. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1135
+#: src/Tribe/Main.php:1139
 msgid "Organizer updated. <a href=\"%s\">View organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1136
+#: src/Tribe/Main.php:1140
 msgid "Organizer published. <a href=\"%s\">View organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1137
+#: src/Tribe/Main.php:1141
 msgid "Organizer submitted. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1139
+#: src/Tribe/Main.php:1143
 msgid "Organizer scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1143
+#: src/Tribe/Main.php:1147
 msgid "Organizer draft updated. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr ""
 
-#: src/Tribe/Main.php:1198
+#: src/Tribe/Main.php:1202
 msgid "Support"
 msgstr ""
 
-#: src/Tribe/Main.php:1200
+#: src/Tribe/Main.php:1204
 msgid "View All Add-Ons"
 msgstr ""
 
-#: src/Tribe/Main.php:1532
+#: src/Tribe/Main.php:1536
 msgid "Events Calendar PRO"
 msgstr ""
 
-#: src/Tribe/Main.php:1635
+#: src/Tribe/Main.php:1639
 #: src/Tribe/Rewrite/Provider.php:161
 msgid "all"
 msgstr ""
 
-#: src/Tribe/Main.php:1637
+#: src/Tribe/Main.php:1641
 #: src/Tribe/Rewrite/Provider.php:163
 msgid "photo"
 msgstr ""
@@ -5200,12 +5362,12 @@ msgstr ""
 msgid "Google Maps API response is missing some data."
 msgstr ""
 
-#: src/Tribe/Views/V2/Hooks.php:836
+#: src/Tribe/Views/V2/Hooks.php:906
 msgctxt "The default text label for the \"today\" button on the Week View."
 msgid "This Week"
 msgstr ""
 
-#: src/Tribe/Views/V2/Hooks.php:856
+#: src/Tribe/Views/V2/Hooks.php:926
 msgctxt "The default text for the 'today' button's title and aria-label on the Week View."
 msgid "Click to select the current week"
 msgstr ""
@@ -5244,6 +5406,16 @@ msgctxt "The archive for events, \"/organizer/\" URL string component."
 msgid "organizer"
 msgstr ""
 
+#: src/Tribe/Views/V2/Rewrite.php:61
+msgctxt "The archive for events for multiple venue, \"/venues/\" URL string component."
+msgid "venues"
+msgstr ""
+
+#: src/Tribe/Views/V2/Rewrite.php:68
+msgctxt "The archive for events for multiple organizers, \"/organizers/\" URL string component."
+msgid "organizers"
+msgstr ""
+
 #: src/Tribe/Views/V2/Service_Provider.php:40
 msgid "Summary"
 msgstr ""
@@ -5275,9 +5447,14 @@ msgctxt "The text label for the Map View."
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Views/V2/Views/Organizer_View.php:108
+#: src/Tribe/Views/V2/Views/Organizer_View.php:113
 msgctxt "The text label for the Organizer View."
 msgid "Organizer"
+msgstr ""
+
+#: src/Tribe/Views/V2/Views/Organizer_View.php:498
+msgctxt "Content title for the View, displays right above the date selector on the Organizer View."
+msgid "%1$s from this %2$s"
 msgstr ""
 
 #: src/Tribe/Views/V2/Views/Photo_View.php:62
@@ -5290,9 +5467,14 @@ msgctxt "The text label for the Summary View."
 msgid "Summary"
 msgstr ""
 
-#: src/Tribe/Views/V2/Views/Venue_View.php:111
+#: src/Tribe/Views/V2/Views/Venue_View.php:115
 msgctxt "The text label for the Venue View."
 msgid "Venue"
+msgstr ""
+
+#: src/Tribe/Views/V2/Views/Venue_View.php:514
+msgctxt "Content title for the View, displays right above the date selector on the Venue View."
+msgid "%1$s at this %2$s"
 msgstr ""
 
 #: src/Tribe/Views/V2/Views/Week_View.php:111
@@ -5585,9 +5767,14 @@ msgstr ""
 msgid "&larr; Back to %s"
 msgstr ""
 
-#: src/views/pro/widgets/modules/single-event.php:203
+#: src/views/pro/widgets/modules/single-event.php:216
 msgctxt "list separator for final two elements"
 msgid "and"
+msgstr ""
+
+#: src/views/v2/components/multi-venue/suffix.php:27
+msgctxt "Venue count suffix"
+msgid "+%d more"
 msgstr ""
 
 #: src/views/v2/location/form-field.php:20
@@ -5599,7 +5786,7 @@ msgstr ""
 msgid "In a location"
 msgstr ""
 
-#: src/views/v2/map.php:49
+#: src/views/v2/map.php:46
 #: src/views/v2/photo.php:49
 #: src/views/v2/summary.php:48
 #: src/views/v2/week.php:54
@@ -5663,9 +5850,9 @@ msgstr ""
 msgid "Featured"
 msgstr ""
 
-#: src/views/v2/map/event-cards/event-card/event/venue.php:24
+#: src/views/v2/map/event-cards/event-card/event/venue.php:26
 #: src/views/v2/map/event-cards/event-card/tooltip/venue.php:24
-#: src/views/v2/week/mobile-events/day/event/venue.php:20
+#: src/views/v2/week/mobile-events/day/event/venue.php:23
 msgctxt "Address separator"
 msgid ", "
 msgstr ""

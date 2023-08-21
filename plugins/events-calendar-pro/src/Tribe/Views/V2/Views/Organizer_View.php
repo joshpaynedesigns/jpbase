@@ -8,6 +8,7 @@
 
 namespace Tribe\Events\Pro\Views\V2\Views;
 
+use TEC\Events_Pro\Linked_Posts\Organizer\Taxonomy\Category;
 use Tribe\Events\Pro\Rewrite\Rewrite as Pro_Rewrite;
 use Tribe\Events\Views\V2\Messages;
 use Tribe\Events\Views\V2\Utils;
@@ -48,15 +49,19 @@ class Organizer_View extends List_View {
 	 * The organizer parent post name.
 	 *
 	 * @since  4.7.9
+	 * @deprecated 6.2.0 Removed in favor of using $post_id.
 	 *
-	 * @var string
+	 * @var string|string[]
 	 */
 	protected $post_name;
 
 	/**
-	 * The organizer parent post ID.
+	 * The organizer parent post IDs.
 	 *
-	 * @var int
+	 * @since 5.0.0
+	 * @since 6.2.0 Modified to be an array of IDs.
+	 *
+	 * @var array<int>
 	 */
 	protected $post_id;
 
@@ -111,14 +116,35 @@ class Organizer_View extends List_View {
 	}
 
 	/**
-	 * Gets the Organizer ID for this view.
+	 * Gets the Organizer IDs for this view.
 	 *
 	 * @since 5.0.0
+	 * @since 6.2.0 Now returns an array of IDs.
 	 *
-	 * @return int  Post ID for the organizer generating this view.
+	 * @return array<int>  Post ID for the venue generating this view.
 	 */
 	public function get_post_id() {
-		return (int) $this->post_id;
+		return $this->post_id;
+	}
+
+	/**
+	 * Sets the Post ID for the Organizer view.
+	 *
+	 * @since 6.2.0
+	 *
+	 * @param int|array<int> $ids Enables setting the post ids properly.
+	 */
+	public function set_post_id( $ids ): void {
+		if ( is_numeric( $ids ) ) {
+			$ids = [ $ids ];
+		}
+
+		// Don't set if not an array at this point.
+		if ( ! is_array( $ids ) ) {
+			return;
+		}
+
+		$this->post_id = array_filter( array_map( 'absint', $ids ) );;
 	}
 
 	/**
@@ -304,24 +330,31 @@ class Organizer_View extends List_View {
 		$post_id = $context->get( 'post_id', false );
 		$post_name = $context->get( 'tribe_organizer', false );
 
-		if ( empty( $post_name ) ) {
-			$post_name = $context->get( 'name', false );
+		$organizer_category_controller = tribe( Category::class );
+		if ( $context->is( $organizer_category_controller->get_wp_slug() ) ) {
+			$args = $organizer_category_controller->setup_repository_args( $args, $this, $context );
+		} else {
+			if ( empty( $post_name ) ) {
+				$post_name = $context->get( 'name', false );
+			}
+
+			if ( empty( $post_id ) && empty( $post_name ) ) {
+				// This is weirder but let's show the user events anyway.
+				return $args;
+			}
+
+			// When Post ID not set we fall back into name.
+			if ( empty( $post_id ) ) {
+				$organizers = tribe_organizers()->by( 'name', $post_name )->fields( 'ids' );
+				$post_id = $organizers->first();
+			}
+
+			$args['organizer'] = $post_id;
+			$this->set_post_id( $post_id );
 		}
 
-		if ( empty( $post_id ) && empty( $post_name ) ) {
-			// This is weirder but let's show the user events anyway.
-			return $args;
-		}
-
-		// When Post ID not set we fall back into name.
-		if ( empty( $post_id ) ) {
-			$organizers = tribe_organizers()->by( 'name', $post_name )->fields( 'ids' );
-			$post_id = $organizers->first();
-		}
-
-		$context_arr = $context->to_array();
-		$date = Arr::get( $context_arr, 'event_date', 'now' );
-		$event_display = Arr::get( $context_arr, 'event_display_mode', Arr::get( $context_arr, 'event_display' ), 'current' );
+		$date = $context->get( 'event_date', 'now' );
+		$event_display = $context->get( 'event_display_mode', $context->get( 'event_display' ), 'current' );
 
 		if ( 'past' !== $event_display ) {
 			$args['ends_after'] = $date;
@@ -329,11 +362,6 @@ class Organizer_View extends List_View {
 			$args['order']       = 'DESC';
 			$args['ends_before'] = $date;
 		}
-
-		$args['organizer']     = $post_id;
-
-		$this->post_name   = $post_name;
-		$this->post_id     = $post_id;
 
 		return $args;
 	}
@@ -351,12 +379,27 @@ class Organizer_View extends List_View {
 	 */
 	public function get_url( $canonical = false, $force = false ) {
 		$page = $this->url->get_current_page();
+		$post_ids = $this->get_post_id();
+		$organizer_category_controller = tribe( Category::class );
+		$is_taxonomy_page = $this->context->is( $organizer_category_controller->get_wp_slug() );
 
 		$query_args = [
-			'eventDisplay'  => static::$view_slug,
-			Organizer::POSTTYPE => $this->post_name,
-			'paged'         => $page > 1 ? $page : false,
+			'eventDisplay'      => static::$view_slug,
+			'paged'             => $page > 1 ? $page : false,
 		];
+
+
+		if ( ! $is_taxonomy_page ) {
+			$organizer_id = reset( $post_ids );
+
+			if ( ! empty( $organizer_id ) ) {
+				$organizer = tribe_get_organizer_object( $organizer_id );
+			}
+			$query_args[ Organizer::POSTTYPE ] = $organizer->post_name;
+		} else {
+			$query_args['post_type'] = Organizer::POSTTYPE;
+			$query_args[ $organizer_category_controller->get_wp_slug() ] = $this->context->get( $organizer_category_controller->get_wp_slug() );
+		}
 
 		$url = add_query_arg( array_filter( $query_args ), home_url() );
 
@@ -370,7 +413,9 @@ class Organizer_View extends List_View {
 			$url = add_query_arg( [ $event_display_key => $event_display_mode ], $url );
 		}
 
-		$url = remove_query_arg( 'post_type', $url );
+		if ( $is_taxonomy_page ) {
+			$url = remove_query_arg( 'post_type', $url );
+		}
 
 		$event_date = $this->context->get( 'event_date', false );
 		if ( ! empty( $event_date ) ) {
@@ -388,13 +433,18 @@ class Organizer_View extends List_View {
 	 * @since 4.7.9
 	 *
 	 * @param array $breadcrumbs The breadcrumbs array.
-	 * @param View $view        The instance of the view being rendered.
+	 * @param self $view        The instance of the view being rendered.
 	 *
 	 * @return array The filtered breadcrumbs.
 	 *
 	 * @see \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 */
 	public function setup_breadcrumbs( $breadcrumbs, $view ) {
+		$post_id = $view->get_post_id();
+
+		if ( ! is_array( $post_id ) ) {
+			return $breadcrumbs;
+		}
 
 		$breadcrumbs[] = [
 			'link'  => tribe_get_events_link(),
@@ -403,10 +453,52 @@ class Organizer_View extends List_View {
 
 		$breadcrumbs[] = [
 			'link'  => '',
-			'label' => get_the_title( $view->post_id ),
+			'label' => tribe_get_organizer_label_plural(),
+		];
+
+		$breadcrumbs[] = [
+			'link'  => '',
+			'label' => get_the_title( reset( $post_id ) ),
 		];
 
 		return $breadcrumbs;
+	}
+
+	/**
+	 * Setups up the Header Title for this view.
+	 *
+	 * @since 6.2.0
+	 *
+	 * @param string $header_title
+	 * @param View   $view
+	 *
+	 * @return string
+	 */
+	public function setup_header_title( string $header_title, View $view ): string {
+		$post_id = $view->get_post_id();
+		if ( ! is_array( $post_id ) ) {
+			return '';
+		}
+
+		return (string) get_the_title( reset( $post_id ) );
+	}
+
+	/**
+	 * Setups up the Header Title for this view.
+	 *
+	 * @since 6.2.0
+	 *
+	 * @param string $header_title
+	 * @param View   $view
+	 *
+	 * @return string
+	 */
+	public function setup_content_title( string $header_title, View $view ): string {
+		return sprintf(
+			_x( '%1$s from this %2$s', 'Content title for the View, displays right above the date selector on the Organizer View.', 'tribe-events-calendar-pro' ),
+			tribe_get_event_label_plural(),
+			strtolower( tribe_get_organizer_label_singular() )
+		);
 	}
 
 	/**
@@ -418,8 +510,25 @@ class Organizer_View extends List_View {
 	 *
 	 */
 	public function render_meta() {
-		$organizer = get_post( $this->post_id );
-		$template  = $this->get_template();
+		$post_id = $this->get_post_id();
+
+		if ( ! is_array( $post_id ) ) {
+			return '';
+		}
+
+		$organizer = tribe_get_organizer_object( reset( $post_id ) );
+
+		// Bail if we don't have a venue.
+		if ( ! $organizer ) {
+			return '';
+		}
+
+		// Bail if we don't have a venue of the right type.
+		if ( Organizer::POSTTYPE !== $organizer->post_type ) {
+			return '';
+		}
+
+		$template = $this->get_template();
 
 		return $template->template( 'organizer/meta', array_merge( $template->get_values(), [ 'organizer' => $organizer ] ) );
 	}

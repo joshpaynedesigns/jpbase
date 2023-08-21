@@ -85,11 +85,15 @@ class FacetWP_Builder
 
             endwhile;
         }
+        else {
+            $no_results_text = $settings['no_results_text'] ?? '';
+            $output .= do_shortcode( $no_results_text );
+        }
 
         $output .= '</div>';
 
         $output .= $this->render_css();
- 
+
         return $output;
     }
 
@@ -158,7 +162,7 @@ class FacetWP_Builder
         $value = $source;
 
         $selector = '.fwpl-item.' . $name;
-        $selector = ( 'button' == $source ) ? $selector . ' button' : $selector;
+        $selector = ( 'button' == $source ) ? $selector . ' .fwpl-btn' : $selector;
         $this->css[ $selector ] = $this->build_styles( $settings );
 
         if ( 0 === strpos( $source, 'post_' ) || 'ID' == $source ) {
@@ -182,6 +186,39 @@ class FacetWP_Builder
             }
             else {
                 $value = $post->$source;
+            }
+        }
+        elseif ( 0 === strpos( $source, 'cf/attribute_' ) && 'product' == get_post_type( $post->ID ) ) {
+            $value = '';
+            $product = wc_get_product( $post->ID );
+            $attr = substr( $source, 13 );
+            $attributes = array_filter( $product->get_attributes(), 'wc_attributes_array_filter_visible' );
+            if ( isset( $attributes[ $attr ] ) ) {
+                $attribute = $attributes[ $attr ];
+                if ( $attribute->is_taxonomy() ) {
+                    $attribute_taxonomy = $attribute->get_taxonomy_object();
+                    $attribute_values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), [ 'fields' => 'all' ] );
+
+                    foreach ( $attribute_values as $attribute_value ) {
+                        $value_name = esc_html( $attribute_value->name );
+
+                        if ( $attribute_taxonomy->attribute_public ) {
+                            $values[] = '<a href="' . esc_url( get_term_link( $attribute_value->term_id, $attribute->get_name() ) ) . '" rel="tag">' . $value_name . '</a>';
+                        }
+                        else {
+                            $values[] = $value_name;
+                        }
+                    }
+                }
+                else {
+                    $values = $attribute->get_options();
+
+                    foreach ( $values as &$value ) {
+                        $value = make_clickable( esc_html( $value ) );
+                    }
+                }
+
+                $value = implode( ", ", $values );
             }
         }
         elseif ( 0 === strpos( $source, 'cf/' ) ) {
@@ -255,8 +292,8 @@ class FacetWP_Builder
             $value = $this->linkify( $value, $settings['link'] );
         }
         elseif ( 'button' == $source ) {
-            $value = '<button>' . $settings['button_text'] . '</button>';
-            $value = $this->linkify( $value, $settings['link'] );
+            $settings['link']['class'] = 'fwpl-btn';
+            $value = $this->linkify( $settings['button_text'], $settings['link'] );
         }
         elseif ( 'html' == $source ) {
             $value = do_shortcode( $settings['content'] );
@@ -447,9 +484,10 @@ class FacetWP_Builder
     function linkify( $value, $link_data, $term_data = [] ) {
         global $post;
 
-        $type = $link_data['type'];
-        $href = $link_data['href'];
-        $target = $link_data['target'];
+        $type = $link_data['type'] ?? '';
+        $href = $link_data['href'] ?? '';
+        $class = $link_data['class'] ?? '';
+        $target = $link_data['target'] ?? '';
 
         if ( 'none' !== $type ) {
             if ( 'post' == $type ) {
@@ -463,7 +501,11 @@ class FacetWP_Builder
                 $target = ' target="' . $target . '"';
             }
 
-            $value = '<a href="' . $href . '"' . $target . '>' . $value . '</a>';
+            if ( ! empty( $class ) ) {
+                $class = ' class="' . $class . '"';
+            }
+
+            $value = '<a href="' . $href . '"' . $class . $target . '>' . $value . '</a>';
         }
 
         return $value;

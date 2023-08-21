@@ -7,20 +7,22 @@
  *
  * See more documentation about our views templating system.
  *
- * @link https://evnt.is/1aiy
+ * @link    https://evnt.is/1aiy
  *
- * @version 5.0.0
+ * @version 6.2.0
+ * @since   5.0.0 Introduced.
+ * @since 6.2.0 Adding categories template.
  *
  * @var WP_Post $venue The venue post object.
  *
  */
 
-$address = tribe_address_exists( $venue->ID );
-$phone   = tribe_get_phone( $venue->ID );
-$url     = tribe_get_venue_website_url( $venue->ID );
+$address    = tribe_address_exists( $venue->ID );
+$phone      = tribe_get_phone( $venue->ID );
+$url        = tribe_get_venue_website_url( $venue->ID );
 
 if (
-	empty( $address)
+	empty( $address )
 	&& empty( $phone )
 	&& empty( $url )
 ) {

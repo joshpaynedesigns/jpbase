@@ -145,20 +145,22 @@ class Modifications extends Service_Provider {
 			date_i18n( _x( 'H:i', 'publish box time format', 'tribe-events-calendar-pro' ), strtotime( $post->post_date ) )
 		);
 
+		$series_singular_label = tribe( Series::class )->get_label_singular();
+
 		$messages[ Series::POSTTYPE ] = [
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Series updated.', 'tribe-events-calendar-pro' ) . $view_post_link_html,
+			1  => sprintf( __( '%s updated.', 'tribe-events-calendar-pro' ), $series_singular_label ) . $view_post_link_html,
 			2  => __( 'Custom field updated.', 'tribe-events-calendar-pro' ),
 			3  => __( 'Custom field deleted.', 'tribe-events-calendar-pro' ),
-			4  => __( 'Series updated.', 'tribe-events-calendar-pro' ),
+			4  => sprintf( __( '%s updated.', 'tribe-events-calendar-pro' ), $series_singular_label ),
 			/* translators: %s: Date and time of the revision. */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Series restored to revision from %s.', 'tribe-events-calendar-pro' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6  => __( 'Series published.', 'tribe-events-calendar-pro' ) . $view_post_link_html,
-			7  => __( 'Series saved.', 'tribe-events-calendar-pro' ),
-			8  => __( 'Series submitted.', 'tribe-events-calendar-pro' ) . $preview_post_link_html,
+			5  => isset( $_GET['revision'] ) ? sprintf( __( '%s restored to revision from %s.', 'tribe-events-calendar-pro' ), $series_singular_label, wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => sprintf( __( '%s published.', 'tribe-events-calendar-pro' ), $series_singular_label ) . $view_post_link_html,
+			7  => sprintf( __( '%s saved.', 'tribe-events-calendar-pro' ), $series_singular_label ),
+			8  => sprintf( __( '%s submitted.', 'tribe-events-calendar-pro' ), $series_singular_label ) . $preview_post_link_html,
 			/* translators: %s: Scheduled date for the post. */
-			9  => sprintf( __( 'Series scheduled for: %s.', 'tribe-events-calendar-pro' ), '<strong>' . $scheduled_date . '</strong>' ) . $scheduled_post_link_html,
-			10 => __( 'Series draft updated.', 'tribe-events-calendar-pro' ) . $preview_post_link_html,
+			9  => sprintf( __( '%s scheduled for: %s.', 'tribe-events-calendar-pro' ), $series_singular_label, '<strong>' . $scheduled_date . '</strong>' ) . $scheduled_post_link_html,
+			10 => sprintf( __( '%s draft updated.', 'tribe-events-calendar-pro' ), $series_singular_label ) . $preview_post_link_html,
 		];
 
 		return $messages;

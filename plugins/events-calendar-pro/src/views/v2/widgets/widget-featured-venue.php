@@ -9,11 +9,12 @@
  *
  * @link    https://evnt.is/1aiy
  *
+ * @since   6.1.2 Changing our nonce verification structures.
+ *
  * @version 5.3.0
  *
  * @var string               $widget_title               The User-supplied widget title.
  * @var string               $rest_url                   The REST URL.
- * @var string               $rest_nonce                 The REST nonce.
  * @var int                  $should_manage_url          Int indicating if it should manage the URL.
  * @var array<string>        $compatibility_classes      Classes used for the compatibility container.
  * @var array<string>        $container_classes          Classes used for the container of the view.
@@ -39,7 +40,6 @@ if ( empty( $events ) && $hide_if_no_upcoming_events ) {
 	<div
 		<?php tribe_classes( $container_classes ); ?>
 		data-js="tribe-events-view"
-		data-view-rest-nonce="<?php echo esc_attr( $rest_nonce ); ?>"
 		data-view-rest-url="<?php echo esc_url( $rest_url ); ?>"
 		data-view-manage-url="<?php echo esc_attr( $should_manage_url ); ?>"
 		<?php foreach ( $container_data as $key => $value ) : ?>

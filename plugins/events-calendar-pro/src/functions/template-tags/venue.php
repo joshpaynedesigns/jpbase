@@ -5,9 +5,29 @@
  * Display functions for use in WordPress templates.
  */
 
+use \TEC\Events_Pro\Linked_Posts\Venue\Taxonomy\Category as Venue_Category;
+
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
+}
+
+
+if ( ! function_exists( 'tec_events_pro_get_venue_categories' ) ) {
+	/**
+	 * Get the categories for a venue.
+	 *
+	 * @param int|string|WP_Post $venue The venue ID.
+	 *
+	 * @return array
+	 */
+	function tec_events_pro_get_venue_categories( $venue ) {
+		$venue = Tribe__Main::post_id_helper( $venue );
+
+		$organizer_category_controller = tribe( Venue_Category::class );
+
+		return wp_get_object_terms( $venue, $organizer_category_controller->get_wp_slug(), [ 'fields' => 'id=>name' ] );
+	}
 }
 
 if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {

@@ -17,10 +17,15 @@ $events = $this->get( 'events', null );
 if ( ! is_array( $events ) || empty( $events ) ) {
 	return;
 }
+
+$default_classes = [ 'tribe-related-events', 'tribe-clearfix' ];
+
+// Add the custom classes from the block attributes.
+$classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ $attributes['className'] ] ) : $default_classes;
 ?>
 <?php $this->template( 'blocks/related-events/title' ); ?>
 
-<ul class="tribe-related-events tribe-clearfix">
+<ul <?php tribe_classes( $classes ); ?>>
 	<?php foreach ( $events as $event ) : ?>
 		<?php $this->template( 'blocks/related-events/event', array( 'event' => $event ) ); ?>
 	<?php endforeach; ?>

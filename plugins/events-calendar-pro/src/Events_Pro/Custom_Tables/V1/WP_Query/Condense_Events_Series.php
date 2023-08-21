@@ -83,7 +83,7 @@ class Condense_Events_Series {
 			return;
 		}
 
-		add_filter( 'posts_where', [ $this, 'hide_subsequent_recurrences' ], 200, 2 );
+		add_filter( 'posts_join', [ $this, 'hide_subsequent_recurrences' ], 200, 2 );
 	}
 
 	/**
@@ -91,33 +91,57 @@ class Condense_Events_Series {
 	 * Tables Meta Query did not do that already.
 	 *
 	 * @since 6.0.0
+	 * @since 6.1.2 Moved to a new hook, changed from `WHERE` to `JOIN`, and optimized query.
 	 *
-	 * @param string   $where The input `WHERE` query, as parsed and built by the WordPress query.
+	 * @param string   $join The input JOIN clause, as parsed and built by the WordPress query.
 	 * @param WP_Query $query A reference to the WP Query object that is currently filtering its JOIN query.
 	 *
-	 * @return string The filtered `WHERE` query, if required.
+	 * @return string The filtered `JOIN` query, if required.
 	 */
-	public function hide_subsequent_recurrences( $where, $query ) {
+	public function hide_subsequent_recurrences( $join, $query ) {
+		global $wpdb;
 		if ( ! $query instanceof WP_Query ) {
-			return $where;
+			return $join;
 		}
 
-		remove_filter( 'posts_where', [ $this, 'hide_subsequent_recurrences' ], 200 );
+		// Avoid recursing or running again until needed.
+		remove_filter( 'posts_join', [ $this, 'hide_subsequent_recurrences' ], 200 );
+
+		if ( empty( $join ) ) {
+			return $join; // Something went wrong - should have CT1 join by now.
+		}
 
 		$occurrences_table         = Occurrences::table_name( true );
 		$series_relationship_table = Series_Relationships::table_name( true );
+		$posts_table               = $wpdb->posts;
 
+		// Build our various query clauses / params.
 		$filter             = $this->get_filter( $query );
+		$posts_statuses_in  = $this->get_statuses_in( $query );
+		$posts_not_in       = $this->get_posts_not_in( $query );
+		$posts_in           = $this->get_posts_in( $query );
 		$column             = $this->get_column( $filter );
 		$operator           = $this->get_operator( $filter );
 		$value              = $this->get_value( $filter );
 		$date_cast_type     = $this->get_date_cast_type( $value );
 		$aggregate_function = $this->get_aggregate_function( $operator );
 
+		$posts_where = "1=1";
+		if ( $posts_statuses_in ) {
+			$posts_where .= " AND $posts_table.post_status IN($posts_statuses_in)";
+		}
+		if ( $posts_not_in ) {
+			$posts_where .= " AND $posts_table.ID NOT IN($posts_not_in)";
+		}
+		if ( $posts_in ) {
+			$posts_where .= " AND $posts_table.ID IN($posts_in)";
+		}
+
 		// Fetch the first event that is part of a series that matches the date criteria.
 		$related_group = "
 				SELECT {$occurrences_table}.occurrence_id
-				FROM {$occurrences_table}
+				FROM {$posts_table}
+    			INNER JOIN    {$occurrences_table} ON {$posts_table}.ID = {$occurrences_table}.post_id
 				INNER JOIN {$series_relationship_table} ON {$series_relationship_table}.event_post_id = {$occurrences_table}.post_id
 				INNER JOIN (
 				    SELECT relationship.series_post_id, {$aggregate_function}({$occurrences_table}.{$column}) occurrence_date
@@ -126,22 +150,99 @@ class Condense_Events_Series {
 				    WHERE CAST({$occurrences_table}.{$column} AS {$date_cast_type}) {$operator} {$value}
 				    GROUP BY relationship.series_post_id
 				) results_by_series ON results_by_series.series_post_id = {$series_relationship_table}.series_post_id AND results_by_series.occurrence_date = {$occurrences_table}.{$column}
+ 		WHERE {$posts_where}
 		";
 
 		// Fetches all the events that are not part of a series matching the date criteria.
 		$unrelated = "
 				SELECT {$occurrences_table}.occurrence_id
-				FROM {$occurrences_table}
+				FROM {$posts_table}
+    			INNER JOIN {$occurrences_table} ON {$posts_table}.ID = {$occurrences_table}.post_id
 				LEFT JOIN {$series_relationship_table} as relationship ON relationship.event_post_id = {$occurrences_table}.post_id
 				WHERE CAST({$occurrences_table}.{$column} AS {$date_cast_type}) {$operator} {$value}
-				AND relationship.event_post_id IS NULL
+					AND relationship.event_post_id IS NULL
+					AND {$posts_where}
 		";
 
-		$where .= "AND {$occurrences_table}.occurrence_id IN ( {$related_group} UNION DISTINCT {$unrelated} )";
+		$join .= "
+		INNER JOIN ( {$related_group} UNION DISTINCT {$unrelated} ) AS `condense_occurrences`
+			ON `condense_occurrences`.occurrence_id = `$occurrences_table`.occurrence_id";
 
 		$this->cleanup_meta_query( $query );
 
-		return $where;
+		return $join;
+	}
+
+	/**
+	 * Grabs any status query params and builds the IN(*) list.
+	 *
+	 * @since 6.1.2
+	 *
+	 * @param WP_Query $query The query object.
+	 *
+	 * @return string|null If there is a post_status param found, the compiled string.
+	 */
+	private function get_statuses_in( WP_Query $query ): ?string {
+		if ( empty( $query->get( 'post_status' ) ) || ! is_array( $query->get( 'post_status' ) ) ) {
+			return null;
+		}
+
+		// Escape strings for query.
+		$statuses = array_map( function ( $status ) {
+			global $wpdb;
+
+			return (string) $wpdb->prepare( '%s', sanitize_text_field( $status ) );
+		}, $query->get( 'post_status' ) );
+
+		return implode( ',', $statuses );
+	}
+
+	/**
+	 * Grabs any tec_ct1_post__not_in query params and builds the IN(*) list.
+	 *
+	 * @since 6.1.2
+	 *
+	 * @param WP_Query $query The query object.
+	 *
+	 * @return string|null If there is a tec_ct1_post__not_in param found, the compiled string.
+	 */
+	private function get_posts_not_in( WP_Query $query ): ?string {
+		if ( empty( $query->get( 'tec_ct1_post__not_in' ) ) || ! is_array( $query->get( 'tec_ct1_post__not_in' ) ) ) {
+			return null;
+		}
+
+		// Escape strings for query.
+		$ids = array_map( function ( $id ) {
+			global $wpdb;
+
+			return (string) $wpdb->prepare( '%d', $id );
+		}, $query->get( 'tec_ct1_post__not_in' ) );
+
+		return implode( ',', $ids );
+	}
+
+	/**
+	 * Grabs any tec_ct1_post__in query params and builds the IN(*) list.
+	 *
+	 * @since 6.1.2
+	 *
+	 * @param WP_Query $query The query object.
+	 *
+	 * @return string|null If there is a tec_ct1_post__in param found, the compiled string.
+	 */
+	private function get_posts_in( WP_Query $query ): ?string {
+		if ( empty( $query->get( 'tec_ct1_post__in' ) ) || ! is_array( $query->get( 'tec_ct1_post__in' ) ) ) {
+			return null;
+		}
+
+		// Escape strings for query.
+		$ids = array_map( function ( $id ) {
+			global $wpdb;
+
+			return (string) $wpdb->prepare( '%d', $id );
+		}, $query->get( 'tec_ct1_post__in' ) );
+
+		return implode( ',', $ids );
 	}
 
 	/**

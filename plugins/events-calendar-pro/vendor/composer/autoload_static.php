@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf
+class ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -185,6 +185,19 @@ class ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Repository\\Custom_Tables_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Repository/Custom_Tables_Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\WP_Query_Monitor_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/WP_Query_Monitor_Filters.php',
         'TEC\\Events_Pro\\Legacy\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Legacy/Query_Filters.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Contracts\\Taxonomy_Abstract' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Abstract.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Contracts\\Taxonomy_Interface' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Contracts/Taxonomy_Interface.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Controller.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Organizer\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Organizer/Controller.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Organizer\\Email_Visibility_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Organizer/Email_Visibility_Modifier.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Organizer\\Phone_Visibility_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Organizer/Phone_Visibility_Modifier.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Organizer\\Settings' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Organizer/Settings.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Organizer\\Taxonomy\\Category' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Organizer/Taxonomy/Category.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Thumbnail_Inclusion' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Thumbnail_Inclusion.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Venue\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Venue/Controller.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Venue\\Multiple_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Venue/Multiple_Modifier.php',
+        'TEC\\Events_Pro\\Linked_Posts\\Venue\\Taxonomy\\Category' => __DIR__ . '/../..' . '/src/Events_Pro/Linked_Posts/Venue/Taxonomy/Category.php',
+        'TEC\\Events_Pro\\Modifiers\\Contracts\\Visibility_Modifier_Abstract' => __DIR__ . '/../..' . '/src/Events_Pro/Modifiers/Contracts/Visibility_Modifier_Abstract.php',
         'TEC\\Events_Pro\\Site_Health\\Info_Section' => __DIR__ . '/../..' . '/src/Events_Pro/Site_Health/Info_Section.php',
         'TEC\\Events_Pro\\Site_Health\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Site_Health/Provider.php',
         'TEC\\Events_Pro\\Telemetry\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Telemetry/Provider.php',
@@ -289,9 +302,9 @@ class ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf2d657968268f4fee1ea9c7568654ddf::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -10,7 +10,7 @@
  * remove_action( 'some_action', [ tribe( Tribe\Events\Pro\Views\V2\Hooks::class ), 'some_method' ] );
  * remove_action( 'some_action', [ tribe( 'pro.views.v2.hooks' ), 'some_method' ] );
  *
- * @since 4.7.5
+ * @since   4.7.5
  *
  * @package Tribe\Events\Pro\Views\V2
  */
@@ -37,6 +37,7 @@ use Tribe\Events\Pro\Views\V2\Views\Week_View;
 use Tribe\Events\Views\V2\Messages as TEC_Messages;
 use Tribe\Events\Views\V2\View;
 use Tribe\Events\Views\V2\View_Interface;
+use Tribe\Events\Views\V2\Template;
 use Tribe__Context as Context;
 use Tribe__Customizer__Section as Customizer_Section;
 use Tribe__Events__Main as TEC;
@@ -50,7 +51,7 @@ use TEC\Common\Contracts\Service_Provider;
 /**
  * Class Hooks.
  *
- * @since 4.7.5
+ * @since   4.7.5
  *
  * @package Tribe\Events\Pro\Views\V2
  */
@@ -113,6 +114,10 @@ class Hooks extends Service_Provider {
 		add_filter( 'tribe_events_views_v2_view_page_reset_ignored_params', [ $this, 'filter_page_reset_ignored_params' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_view_venue_breadcrumbs', [ $this, 'filter_view_venue_breadcrumbs' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_view_organizer_breadcrumbs', [ $this, 'filter_view_organizer_breadcrumbs' ], 10, 2 );
+		add_filter( 'tec_events_views_v2_view_venue_header_title', [ $this, 'filter_view_venue_header_title' ], 10, 2 );
+		add_filter( 'tec_events_views_v2_view_organizer_header_title', [ $this, 'filter_view_organizer_header_title' ], 10, 2 );
+		add_filter( 'tec_events_views_v2_view_venue_content_title', [ $this, 'filter_view_venue_content_title' ], 10, 2 );
+		add_filter( 'tec_events_views_v2_view_organizer_content_title', [ $this, 'filter_view_organizer_content_title' ], 10, 2 );
 		add_filter( 'redirect_canonical', [ $this, 'filter_prevent_canonical_redirect' ] );
 
 		add_filter( 'tribe_events_views_v2_rest_params', [ $this, 'filter_rest_request_view_slug' ], 10, 2 );
@@ -225,8 +230,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @return array
 	 */
-	public function filter_include_query_vars( array $vars ) : array {
+	public function filter_include_query_vars( array $vars ): array {
 		$vars[] = 'tribe_recurrence_list';
+
 		return $vars;
 	}
 
@@ -255,9 +261,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.5
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string   $file     Complete path to include the PHP File.
+	 * @param array    $name     Template name.
+	 * @param Template $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_hide_recurring_events( $file, $name, $template ) {
 		$this->container->make( Hide_Recurring_Events_Toggle::class )->render( $template );
@@ -268,9 +274,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.5
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string   $file     Complete path to include the PHP File.
+	 * @param array    $name     Template name.
+	 * @param Template $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_location_form_field( $file, $name, $template ) {
 		$this->container->make( Location_Search_Field::class )->render( $template );
@@ -281,9 +287,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.8
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string   $file     Complete path to include the PHP File.
+	 * @param array    $name     Template name.
+	 * @param Template $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_day_event_recurring_icon( $file, $name, $template ) {
 		$this->container->make( Day_Event_Recurring_Icon::class )->render( $template );
@@ -294,9 +300,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.8
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string   $file     Complete path to include the PHP File.
+	 * @param array    $name     Template name.
+	 * @param Template $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_list_event_recurring_icon( $file, $name, $template ) {
 		$this->container->make( List_Event_Recurring_Icon::class )->render( $template );
@@ -307,9 +313,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.8
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string   $file     Complete path to include the PHP File.
+	 * @param array    $name     Template name.
+	 * @param Template $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_month_calendar_event_recurring_icon( $file, $name, $template ) {
 		$this->container->make( Month_Calendar_Event_Recurring_Icon::class )->render( $template );
@@ -320,9 +326,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.10
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string $file     Complete path to include the PHP File.
+	 * @param array  $name     Template name.
+	 * @param self   $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_month_calendar_event_tooltip_recurring_icon( $file, $name, $template ) {
 		$this->container->make( Month_Calendar_Event_Tooltip_Recurring_Icon::class )->render( $template );
@@ -333,9 +339,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.7.0
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string $file     Complete path to include the PHP File.
+	 * @param array  $name     Template name.
+	 * @param self   $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_month_calendar_event_multiday_recurring_icon( $file, $name, $template ) {
 		$this->container->make( Month_Calendar_Event_Multiday_Recurring_Icon::class )->render( $template );
@@ -346,9 +352,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.8
 	 *
-	 * @param string $file      Complete path to include the PHP File.
-	 * @param array  $name      Template name.
-	 * @param self   $template  Current instance of the Tribe__Template.
+	 * @param string $file     Complete path to include the PHP File.
+	 * @param array  $name     Template name.
+	 * @param self   $template Current instance of the Tribe__Template.
 	 */
 	public function action_include_month_mobile_event_recurring_icon( $file, $name, $template ) {
 		$this->container->make( Month_Mobile_Event_Recurring_Icon::class )->render( $template );
@@ -371,8 +377,8 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since  5.0.0
 	 *
-	 * @param  array   $params  Params received on the Request.
-	 * @param  Request $request Full WP Rest Request instance.
+	 * @param array   $params  Params received on the Request.
+	 * @param Request $request Full WP Rest Request instance.
 	 *
 	 * @return array            Params after view slug is setup.
 	 */
@@ -400,8 +406,8 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.3.0
 	 *
-	 * @param array<string>      $arguments Which arguments we are ignoring.
-	 * @param View|null  $view      Current view that we are filtering.
+	 * @param array<string> $arguments Which arguments we are ignoring.
+	 * @param View|null     $view      Current view that we are filtering.
 	 *
 	 * @return array Array of params with the hide_subsequent_recurrences added.
 	 */
@@ -415,7 +421,7 @@ class Hooks extends Service_Provider {
 	 * @since 4.7.5
 	 *
 	 * @param array          $template_vars The View template variables.
-	 * @param View_Interface $view The current View instance.
+	 * @param View_Interface $view          The current View instance.
 	 */
 	public function filter_events_views_v2_view_template_vars( array $template_vars, View_Interface $view ) {
 		return $this->container->make( View_Filters::class )->filter_template_vars( $template_vars, $view->get_context() );
@@ -463,13 +469,15 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 4.7.9
 	 *
-	 * @param string         $url       The current View URL.
+	 * @uses  \Tribe\Events\Pro\Views\V2\View_Filters::filter_view_url()
+	 *
 	 * @param bool           $canonical Whether to return the canonical (pretty) URL or not.
 	 * @param View_Interface $view      The View instance that is currently rendering.
 	 *
+	 * @param string         $url       The current View URL.
+	 *
 	 * @return string The filtered View URL.
 	 *
-	 * @uses  \Tribe\Events\Pro\Views\V2\View_Filters::filter_view_url()
 	 */
 	public function filter_tribe_events_views_v2_view_url( $url, $canonical, View_Interface $view ) {
 		return $this->container->make( View_Filters::class )->filter_view_url( $url, $canonical, $view );
@@ -536,7 +544,7 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since  5.0.0
 	 *
-	 * @param  array $bases Previous set of bases.
+	 * @param array $bases Previous set of bases.
 	 *
 	 * @return array       Bases after adding the venue and organizer.
 	 */
@@ -563,15 +571,16 @@ class Hooks extends Service_Provider {
 	 * Differently from other Views, the Map View sets up its rewrite rules in the
 	 * `Tribe__Events__Pro__Geo_Loc::add_routes` method.
 	 *
+	 * @see   \Tribe__Events__Pro__Geo_Loc::add_routes() for where this code is applying.
 	 * @since 4.7.9
 	 *
-	 * @param array<string,string> $rules         The geocode based rewrite rules.
 	 * @param array<string,string> $bases         The geocode rewrite bases.
 	 * @param array<string,string> $rewrite_slugs The geocode slugs.
 	 *
+	 * @param array<string,string> $rules         The geocode based rewrite rules.
+	 *
 	 * @return array<string,string> The filtered geocode based rewrite rules.
 	 *
-	 * @see \Tribe__Events__Pro__Geo_Loc::add_routes() for where this code is applying.
 	 */
 	public function filter_geocode_rewrite_rules( $rules, $bases, $rewrite_slugs ) {
 		if ( empty( $rules ) || empty( $bases ) || empty( $rewrite_slugs ) ) {
@@ -584,14 +593,15 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters recurring view breadcrumbs
 	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 * @since 4.7.9
 	 *
+	 * @param View  $view        The instance of the view being rendered.
+	 *
 	 * @param array $breadcrumbs The breadcrumbs array.
-	 * @param array $view        The instance of the view being rendered.
 	 *
 	 * @return array The filtered breadcrumbs
 	 *
-	 * @see \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 */
 	public function filter_view_all_breadcrumbs( $breadcrumbs, $view ) {
 		return $this->container->make( All_View::class )->setup_breadcrumbs( $breadcrumbs, $view );
@@ -600,14 +610,15 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters Organizer view breadcrumbs
 	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 * @since 4.7.9
 	 *
+	 * @param View  $view        The instance of the view being rendered.
+	 *
 	 * @param array $breadcrumbs The breadcrumbs array.
-	 * @param array $view        The instance of the view being rendered.
 	 *
 	 * @return array The filtered breadcrumbs
 	 *
-	 * @see \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 */
 	public function filter_view_organizer_breadcrumbs( $breadcrumbs, $view ) {
 		return $this->container->make( Organizer_View::class )->setup_breadcrumbs( $breadcrumbs, $view );
@@ -616,17 +627,86 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters Venue view breadcrumbs
 	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 * @since 4.7.9
 	 *
-	 * @param array $breadcrumbs The breadcrumbs array.
 	 * @param array $view        The instance of the view being rendered.
+	 *
+	 * @param array $breadcrumbs The breadcrumbs array.
 	 *
 	 * @return array The filtered breadcrumbs
 	 *
-	 * @see \Tribe\Events\Views\V2\View::get_breadcrumbs() for where this code is applying.
 	 */
 	public function filter_view_venue_breadcrumbs( $breadcrumbs, $view ) {
 		return $this->container->make( Venue_View::class )->setup_breadcrumbs( $breadcrumbs, $view );
+	}
+
+	/**
+	 * Filters Organizer view header title.
+	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_header_title() for where this code is applying.
+	 * @since 6.2.0
+	 *
+	 * @param array  $view         The instance of the view being rendered.
+	 *
+	 * @param string $header_title The header title for the view.
+	 *
+	 * @return string The filtered header title.
+	 *
+	 */
+	public function filter_view_organizer_header_title( $header_title, $view ) {
+		return $this->container->make( Organizer_View::class )->setup_header_title( $header_title, $view );
+	}
+
+	/**
+	 * Filters header title for the Venue view.
+	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_header_title() for where this code is applying.
+	 * @since 6.2.0
+	 *
+	 * @param array  $view         The instance of the view being rendered.
+	 *
+	 * @param string $header_title The header title for the view.
+	 *
+	 * @return string The filtered header title.
+	 *
+	 */
+	public function filter_view_venue_header_title( $header_title, $view ) {
+		return $this->container->make( Venue_View::class )->setup_header_title( $header_title, $view );
+	}
+
+	/**
+	 * Filters Organizer view content title.
+	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_content_title() for where this code is applying.
+	 * @since 6.2.0
+	 *
+	 * @param array  $view          The instance of the view being rendered.
+	 *
+	 * @param string $content_title The content title for the view.
+	 *
+	 * @return string The filtered content title.
+	 *
+	 */
+	public function filter_view_organizer_content_title( $content_title, $view ) {
+		return $this->container->make( Organizer_View::class )->setup_content_title( $content_title, $view );
+	}
+
+	/**
+	 * Filters content title for the Venue view.
+	 *
+	 * @see   \Tribe\Events\Views\V2\View::get_content_title() for where this code is applying.
+	 * @since 6.2.0
+	 *
+	 * @param array  $view          The instance of the view being rendered.
+	 *
+	 * @param string $content_title The content title for the view.
+	 *
+	 * @return string The filtered content title.
+	 *
+	 */
+	public function filter_view_venue_content_title( $content_title, $view ) {
+		return $this->container->make( Venue_View::class )->setup_content_title( $content_title, $view );
 	}
 
 	/**
@@ -634,7 +714,7 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.0.0
 	 *
-	 * @param   array  $html_classes  Array of classes used for this view.
+	 * @param array $html_classes Array of classes used for this view.
 	 *
 	 * @return  array                 Array of classes after adding tribe-events-pro
 	 */
@@ -691,11 +771,7 @@ class Hooks extends Service_Provider {
 		}
 
 		$view      = $template->get_view();
-		$organizer = get_post( $view->get_post_id() );
 
-		if ( ! $organizer || Organizer::POSTTYPE !== $organizer->post_type ) {
-			return;
-		}
 
 		return $view->render_meta();
 	}
@@ -717,30 +793,24 @@ class Hooks extends Service_Provider {
 			return;
 		}
 
-		$view    = $template->get_view();
-		$venue   = tribe_get_venue_object( $view->get_post_id() );
-
-		if ( ! $venue || Venue::POSTTYPE !== $venue->post_type ) {
-			return;
-		}
-
-		return $view->render_meta();
+		return $template->get_view()->render_meta();
 	}
 
 	/**
 	 * Filters the handled rewrite rules, the one used to parse plain links into permalinks, to add the ones
 	 * managed by PRO.
 	 *
+	 * @see   Rewrite::filter_handled_rewrite_rules() for the implementation.
 	 * @since 5.0.1
+	 *
+	 * @param array<string,string> $all_rules     All the rewrite rules handled by WordPress.
 	 *
 	 * @param array<string,string> $handled_rules The handled rules, as produced by The Events Calendar base code; in
 	 *                                            the same format used by WordPress to store and manage rewrite rules.
-	 * @param array<string,string> $all_rules All the rewrite rules handled by WordPress.
 	 *
 	 * @return array<string,string> The filtered rewrite rules, including the ones handled by Events PRO; in the same
 	 *                              format used by WordPress to handle rewrite rules.
 	 *
-	 * @see Rewrite::filter_handled_rewrite_rules() for the implementation.
 	 */
 	public function filter_handled_rewrite_rules( array $handled_rewrite_rules = [], array $all_rewrite_rules = [] ) {
 		if ( empty( $all_rewrite_rules ) ) {
@@ -755,6 +825,7 @@ class Hooks extends Service_Provider {
 	 * Filters the query vars map used by the Rewrite component to parse plain links into permalinks to add the elements
 	 * needed to support PRO components.
 	 *
+	 * @see   Rewrite::filter_rewrite_query_vars_map for the implementation.
 	 * @since 5.0.1
 	 *
 	 * @param array<string,string> $query_vars_map The query variables map, as produced by The Events Calendar code.
@@ -762,7 +833,6 @@ class Hooks extends Service_Provider {
 	 *
 	 * @return array<string,string> The query var map, filtered to add the query vars handled by PRO.
 	 *
-	 * @see   Rewrite::filter_rewrite_query_vars_map for the implementation.
 	 */
 	public function filter_rewrite_query_vars_map( array $query_vars_map = [] ) {
 		return $this->container->make( Rewrite::class )->filter_rewrite_query_vars_map( $query_vars_map );
@@ -901,14 +971,14 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.12.3 - Moved to ECP, where it belongs.
 	 *
-	 * @param string $default_view The view slug for the default view.
-	 * @param string|null $type The type of default View to return, either 'desktop' or 'mobile'; defaults to `mobile`.
+	 * @param string      $default_view The view slug for the default view.
+	 * @param string|null $type         The type of default View to return, either 'desktop' or 'mobile'; defaults to `mobile`.
 	 *
 	 * @return string The filtered default View slug.
 	 *
 	 */
 	public function filter_tec_events_default_view( $default_view, $type ) {
-		return  $this->container->make( View_Filters::class )->filter_tec_events_default_view( $default_view, $type );
+		return $this->container->make( View_Filters::class )->filter_tec_events_default_view( $default_view, $type );
 	}
 
 	/**
@@ -935,7 +1005,7 @@ class Hooks extends Service_Provider {
 	 * This function used to pass the domain to code in common for translations.
 	 * That doesn't work properly, so we've deprecated this, it's now handled in the View classes.
 	 *
-	 * @since 5.1.0
+	 * @since      5.1.0
 	 * @deprecated 6.0.3 This is no longer necessary. Handled in the View classes themselves.
 	 */
 	public function filter_view_label_domain( $domain, $slug, $view_class ) {
@@ -948,13 +1018,13 @@ class Hooks extends Service_Provider {
 			return $domain;
 		}
 
-		return  'tribe-events-calendar-pro';
+		return 'tribe-events-calendar-pro';
 	}
 
 	/**
 	 * Filters the currently registered Customizer sections to add or modify them.
 	 *
-	 * @since 5.1.1
+	 * @since      5.1.1
 	 * @deprecated 5.9.0
 	 *
 	 * @param array<string,array<string,array<string,int|float|string>>> $sections   The registered Customizer sections.
@@ -974,7 +1044,7 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
 	 *
-	 * @since 5.1.1
+	 * @since      5.1.1
 	 * @deprecated 5.9.0
 	 *
 	 * @param string             $css_template The CSS template, as produced by the Global Elements.
@@ -999,7 +1069,7 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
 	 *
-	 * @since 5.1.1
+	 * @since      5.1.1
 	 * @deprecated 5.9.0
 	 *
 	 * @param string             $css_template The CSS template, as produced by the Global Elements.
@@ -1026,7 +1096,7 @@ class Hooks extends Service_Provider {
 	 * Filters the should display filters for organizer and venue views.
 	 * Superseded by filter_hide_filter_bar() above.
 	 *
-	 * @since 5.0.1
+	 * @since      5.0.1
 	 * @deprecated 5.1.1
 	 *
 	 * @param bool           $should_display_filters Boolean on whether to display filters or not.
@@ -1043,7 +1113,7 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters the default view in the views manager for shortcodes navigation.
 	 *
-	 * @since 4.7.9
+	 * @since      4.7.9
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 *
 	 * @param string $view_class Fully qualified class name for default view.
@@ -1057,12 +1127,12 @@ class Hooks extends Service_Provider {
 	/**
 	 * Alters the context of the view based on the shortcode params stored in the database based on the ID.
 	 *
-	 * @since  5.0.0
+	 * @since      5.0.0
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 *
-	 * @param  Context $view_context Context for this request.
-	 * @param  string  $view_slug    Slug of the view we are building.
-	 * @param  View    $instance     Which view instance we are dealing with.
+	 * @param Context $view_context Context for this request.
+	 * @param string  $view_slug    Slug of the view we are building.
+	 * @param View    $instance     Which view instance we are dealing with.
 	 *
 	 * @return Context               Altered version of the context ready for shortcodes.
 	 */
@@ -1074,7 +1144,7 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters the View URL to add the shortcode query arg, if required.
 	 *
-	 * @since 4.7.9
+	 * @since      4.7.9
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 *
 	 * @param array  $query_args Arguments used to build the URL.
@@ -1090,7 +1160,7 @@ class Hooks extends Service_Provider {
 	/**
 	 * Filters the View URL to add the shortcode query arg, if required.
 	 *
-	 * @since 4.7.9
+	 * @since      4.7.9
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 *
 	 * @param string         $url       The View current URL.
@@ -1101,13 +1171,14 @@ class Hooks extends Service_Provider {
 	 */
 	public function filter_shortcode_view_url( $url, $canonical, $view ) {
 		_deprecated_function( __METHOD__, '5.5.0' );
+
 		return $this->container->make( Shortcodes\Manager::class )->filter_view_url( $url, $view );
 	}
 
 	/**
 	 * Filters the View repository args to add the ones required by shortcodes to work.
 	 *
-	 * @since 4.7.9
+	 * @since      4.7.9
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 *
 	 * @param array<string,mixed> $repository_args An array of repository arguments that will be set for all Views.
@@ -1118,6 +1189,7 @@ class Hooks extends Service_Provider {
 	 */
 	public function filter_view_repository_args( $repository_args, $context, $view ) {
 		_deprecated_function( __METHOD__, '5.5.0' );
+
 		return $this->container->make( Shortcodes\Tribe_Events::class )->filter_view_repository_args( $repository_args, $context, $view );
 	}
 
@@ -1128,7 +1200,7 @@ class Hooks extends Service_Provider {
 	 *
 	 * It's important to leave gaps on priority for better injection.
 	 *
-	 * @since 4.7.5
+	 * @since      4.7.5
 	 * @deprecated 5.5.0 Move the filtering into Tribe_Events shortcode class.
 	 */
 	public function action_disable_shortcode_v1() {
