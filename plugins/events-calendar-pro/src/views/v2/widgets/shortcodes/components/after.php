@@ -17,6 +17,9 @@
  * @see     tribe_classes()
  *
  */
+ if ( empty( $widget ) ) {
+	return;
+}
 
 use Tribe__Utils__Array as Arr;
 use \Tribe__Template as Template;

@@ -9,11 +9,17 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.2.0
+ * @version 6.2.0
+ * @since 6.2.0 Avoid rendering if the email should not be visible.
  *
  * @var WP_Post $organizer The organizer post object.
  *
  */
+
+if ( ! tec_events_pro_organizer_email_is_visible( 'organizer-single' ) ) {
+	return;
+}
+
 
 $email = tribe_get_organizer_email( $organizer->ID );
 

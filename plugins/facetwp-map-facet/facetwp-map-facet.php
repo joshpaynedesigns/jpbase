@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Map Facet
 Description: Map facet type
-Version: 1.0.1
+Version: 1.0.4
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-map-facet
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'FACETWP_MAP_FACET_VERSION', '1.0.1' );
+define( 'FACETWP_MAP_FACET_VERSION', '1.0.4' );
 
 
 /**
@@ -30,6 +30,7 @@ add_filter( 'facetwp_facet_types', function( $facet_types ) {
 class FacetWP_Facet_Map_Addon
 {
 
+    public $label;
     public $map_facet;
     public $proximity_facet;
     public $proximity_coords;
@@ -49,7 +50,7 @@ class FacetWP_Facet_Map_Addon
             if ( isset( $_POST['action'] ) && 'facetwp_map_marker_content' == $_POST['action'] ) {
                 $post_id = (int) $_POST['post_id'];
                 $facet_name = $_POST['facet_name'];
-    
+
                 echo $this->get_marker_content( $post_id, $facet_name );
                 wp_die();
             }
@@ -87,7 +88,7 @@ class FacetWP_Facet_Map_Addon
         $api_key = apply_filters( 'facetwp_gmaps_api_key', $api_key );
 
         // URL hook (e.g. for adding a "region" param)
-        $url = '//maps.googleapis.com/maps/api/js?libraries=places&key=' . $api_key;
+        $url = '//maps.googleapis.com/maps/api/js?libraries=places&key=' . $api_key . '&callback=Function.prototype';
 
         return apply_filters( 'facetwp_gmaps_url', $url );
     }
@@ -107,11 +108,11 @@ class FacetWP_Facet_Map_Addon
         $height = is_numeric( $height ) ? $height . 'px' : $height;
 
         $class = '';
-        $btn_label = __( 'Enable map filtering', 'facetwp-map-facet' );
+        $btn_label = ( isset( $params['facet']['btn_label'] ) && '' != $params['facet']['btn_label'] ) ? $params['facet']['btn_label'] : facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) );
 
         if ( $this->is_map_filtering_enabled() ) {
             $class = ' enabled';
-            $btn_label = __( 'Reset', 'facetwp-map-facet' );
+            $btn_label = ( isset( $params['facet']['reset_label'] ) && '' != $params['facet']['reset_label'] ) ? $params['facet']['reset_label'] : facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) );
         }
 
         $output = '<div id="facetwp-map" style="width:' . $width . '; height:' . $height . '"></div>';
@@ -439,8 +440,8 @@ class FacetWP_Facet_Map_Addon
         FWP()->display->assets['markerclusterer'] = [ FACETWP_MAP_URL . '/assets/js/markerclusterer.js', FACETWP_MAP_FACET_VERSION ];
         FWP()->display->assets['facetwp-map-front'] = [ FACETWP_MAP_URL . '/assets/js/front.js', FACETWP_MAP_FACET_VERSION ];
 
-        FWP()->display->json['map']['filterText'] = __( 'Enable map filtering', 'facetwp-map-facet' );
-        FWP()->display->json['map']['resetText'] = __( 'Reset', 'facetwp-map-facet' );
+        FWP()->display->json['map']['filterText'] = ( isset( $this->map_facet['btn_label'] ) && '' != $this->map_facet['btn_label'] ) ? $this->map_facet['btn_label'] : facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) );
+        FWP()->display->json['map']['resetText']= ( isset( $this->map_facet['reset_label'] ) && '' != $this->map_facet['reset_label'] ) ? $this->map_facet['reset_label'] : facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) );
         FWP()->display->json['map']['facet_name'] = $this->map_facet['name'];
         FWP()->display->json['map']['ajaxurl'] = admin_url( 'admin-ajax.php' );
     }
@@ -476,6 +477,18 @@ class FacetWP_Facet_Map_Addon
                     <option value="blue-water"><?php _e( 'Blue Water', 'facetwp-map-facet' ); ?></option>
                     <option value="midnight-commander"><?php _e( 'Midnight Commander', 'facetwp-map-facet' ); ?></option>
                 </select>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e( 'Enable filtering button', 'facetwp-map-facet' ); ?>:</div>
+            <div>
+                <input type="text" class="facet-btn-label" placeholder="<?php echo facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) ); ?>" />
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div><?php _e( 'Reset button', 'facetwp-map-facet' ); ?>:</div>
+            <div>
+                <input type="text" class="facet-reset-label" placeholder="<?php  echo facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) ); ?>" />
             </div>
         </div>
         <div class="facetwp-row">

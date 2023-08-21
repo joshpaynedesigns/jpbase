@@ -59,7 +59,6 @@ tribe.events.views.toggleRecurrence = {};
 			view_data: {
 				hide_subsequent_recurrences: is_checked ? true : null,
 			},
-			_wpnonce: $container.data( 'view-rest-nonce' ),
 		};
 
 		tribe.events.views.manager.request( data, $container );

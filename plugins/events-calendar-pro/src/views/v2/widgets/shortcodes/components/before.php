@@ -18,6 +18,10 @@
  *
  */
 
+if ( empty( $widget ) ) {
+	return;
+}
+
 use Tribe__Utils__Array as Arr;
 use \Tribe__Template as Template;
 use \Tribe\Events\Views\V2\Widgets\Widget_Abstract;

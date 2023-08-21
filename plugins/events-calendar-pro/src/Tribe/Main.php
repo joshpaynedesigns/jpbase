@@ -1,6 +1,7 @@
 <?php
 
 use TEC\Events_Pro\Base\Query_Filters as Base_Query_Filters;
+use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Zapier_Provider;
 use TEC\Events_Pro\Legacy\Query_Filters as Legacy_Query_Filters;
 use Tribe\Events\Pro\Views\V2\Views\Map_View;
 use Tribe\Events\Pro\Views\V2\Views\Photo_View;
@@ -9,7 +10,6 @@ use Tribe\Events\Pro\Views\V2\Views\Week_View;
 use Tribe\Events\Views\V2\Views\Day_View;
 use Tribe\Events\Views\V2\Views\List_View;
 use Tribe\Events\Views\V2\Views\Month_View;
-use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Zapier_Provider;
 
 if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	class Tribe__Events__Pro__Main {
@@ -33,7 +33,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		public $photoSlug = 'photo';
 
 		public $singular_event_label;
+		public $singular_event_label_lowercase;
 		public $plural_event_label;
+		public $plural_event_label_lowercase;
 
 		/** @var Tribe__Events__Pro__Recurrence__Permalinks */
 		public $permalink_editor = null;
@@ -81,7 +83,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.1.1';
+		const VERSION = '6.2.0';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -99,7 +101,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$this->pluginSlug = 'events-calendar-pro';
 
 			require_once( $this->pluginPath . 'src/functions/template-tags/general.php' );
+			require_once( $this->pluginPath . 'src/functions/template-tags/organizer.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/venue.php' );
+			require_once( $this->pluginPath . 'src/functions/template-tags/organizer.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/widgets.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/ical.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/series.php' );
@@ -684,7 +688,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public function filter_settings_tab_fields( $fields, $tab ) {
 			_deprecated_function( __METHOD__, '6.0.4', 'filter_display_settings_tab_fields' );
-
 			return $this->filter_display_settings_tab_fields( $fields, $tab );
 		}
 
@@ -694,9 +697,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @since 6.0.4
 		 *
 		 * @param array $fields
-		 * @param string $tab
 		 */
 		public function filter_display_settings_tab_fields( $fields ) {
+
 			$fields = Tribe__Main::array_insert_after_key(
 				'tribeDisableTribeBar',
 				$fields,
@@ -759,7 +762,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 						'type'            => 'text',
 						'label'           => __( 'Week day format', 'tribe-events-calendar-pro' ),
 						'tooltip'         => sprintf(
-							esc_html__( 'Enter the format to use for week days. Used when showing days of the week in Week view. Example: %1$s', 'the-events-calendar' ),
+							esc_html__( 'Enter the format to use for week days. Used when showing days of the week in Week view. Example: %1$s', 'tribe-events-calendar-pro' ),
 							date( get_option( 'weekDayFormat', 'D jS' ), $sample_date )
 						),
 						'default'         => 'D jS',
@@ -769,12 +772,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				)
 			);
 
+
 			// We add weekDayFormat above, so there are four fields.
 			$fields['tribeEventsDateFormatExplanation']   = [
 				'type' => 'html',
 				'html' => '<p>'
 					. sprintf(
-						__( 'The first four fields accept the date format options available to the PHP %1$s function. <a href="%2$s" target="_blank">Learn how to make your own date format here</a>.', 'tribe-common' ),
+						__( 'The first four fields accept the date format options available to the PHP %1$s function. <a href="%2$s" target="_blank">Learn how to make your own date format here</a>.', 'tribe-events-calendar-pro' ),
 						'<code>date()</code>',
 						'https://wordpress.org/support/article/formatting-date-and-time/'
 					)
@@ -1673,6 +1677,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			tribe_register_provider( TEC\Events_Pro\Site_Health\Provider::class );
 			// Set up Telemetry
 			tribe_register_provider( TEC\Events_Pro\Telemetry\Provider::class );
+
+			tribe_register_provider( TEC\Events_Pro\Linked_Posts\Controller::class );
 
 			if ( class_exists( Zapier_Provider::class ) ) {
 				tribe_register_provider( Zapier_Provider::class );

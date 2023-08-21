@@ -14,6 +14,9 @@
  * @var WP_Post $organizer The organizer post object.
  *
  */
+if ( ! tec_events_pro_organizer_phone_is_visible( 'organizer-single' ) ) {
+	return;
+}
 
 $phone = tribe_get_organizer_phone( $organizer->ID );
 

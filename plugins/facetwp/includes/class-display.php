@@ -46,7 +46,7 @@ class FacetWP_Display
 
     /**
      * Set default values for atts
-     * 
+     *
      * Old: [facetwp template="foo" static]
      * New: [facetwp template="foo" static="true"]
      */
@@ -233,10 +233,12 @@ class FacetWP_Display
             }
 
             echo $inline_scripts;
+
+            do_action( 'facetwp_scripts' );
 ?>
 <script>
 window.FWP_JSON = <?php echo json_encode( $this->json ); ?>;
-window.FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
+window.FWP_HTTP = <?php echo json_encode( FWP()->helper->escape( $http_params ) ); ?>;
 </script>
 <?php
         }

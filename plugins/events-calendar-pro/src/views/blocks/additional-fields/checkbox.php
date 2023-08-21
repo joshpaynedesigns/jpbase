@@ -19,8 +19,12 @@ if ( empty( $output ) ) {
 	return;
 }
 
+$default_classes = [ 'tribe-block', 'tribe-block__additional-field', 'tribe-block__additional-field__checkbox' ];
+
+// Add the custom classes from the block attributes.
+$classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ $attributes['className'] ] ) : $default_classes;
 ?>
-<div class="tribe-block tribe-block__additional-field tribe-block__additional-field__checkbox">
+<div <?php tribe_classes( $classes ); ?>>
 	<h3><?php echo esc_html( $label ); ?></h3>
 	<?php echo esc_html( $output ); ?>
 </div>

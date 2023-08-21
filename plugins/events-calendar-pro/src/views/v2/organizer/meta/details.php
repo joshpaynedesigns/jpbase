@@ -9,17 +9,22 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.0
+ * @version 6.2.0
+ *
+ * @since 5.0.0 Introduced.
+ * @since 6.2.0 Modified the classes for meta detail output.
  *
  * @var WP_Post $organizer   The organizer post object.
  * @var bool    $has_details Boolean on whether details exist or not.
  */
 
+$has_details = $has_details ?? false;
+
 if ( ! $has_details ) {
 	return;
 }
 ?>
-<div class="tribe-events-pro-organizer__meta-details tribe-common-g-col">
+<div class="tribe-events-pro-organizer__meta-details">
 
 	<?php $this->template( 'organizer/meta/details/phone', [ 'organizer' => $organizer ] ); ?>
 
