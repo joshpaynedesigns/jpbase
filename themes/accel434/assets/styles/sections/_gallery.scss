@@ -52,6 +52,10 @@
   }
 
   .single-gallery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+
     .gallery-row {
       display: flex;
       flex-wrap: wrap;
