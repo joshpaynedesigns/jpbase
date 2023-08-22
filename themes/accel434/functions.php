@@ -6,12 +6,9 @@
 
 // Define the theme version
 $theme = wp_get_theme();
-if (! empty($theme)) {
-    $theme_version = $theme->get('Version');
-    define('ACCEL_VERSION', $theme_version);
-} else {
-    define('ACCEL_VERSION', '0.0.6');
-}
+$theme_version = $theme->get('Version');
+// actual theme version is set in style.css
+define('ACCEL_VERSION', $theme_version);
 
 // Helper functions
 require_once get_stylesheet_directory() . '/inc/_helpers/00-load-helpers.php';
