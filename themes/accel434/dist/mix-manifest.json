@@ -1,5 +1,20 @@
 {
     "/front.js": "/front.js",
     "/editor-style.css": "/editor-style.css",
-    "/front.css": "/front.css"
+    "/front.css": "/front.css",
+    "/icons/arrow-white.svg": "/icons/arrow-white.svg",
+    "/icons/close.svg": "/icons/close.svg",
+    "/icons/email.svg": "/icons/email.svg",
+    "/icons/facebook.svg": "/icons/facebook.svg",
+    "/icons/flickr.svg": "/icons/flickr.svg",
+    "/icons/icon_mag.svg": "/icons/icon_mag.svg",
+    "/icons/instagram.svg": "/icons/instagram.svg",
+    "/icons/linkedin.svg": "/icons/linkedin.svg",
+    "/icons/phone.svg": "/icons/phone.svg",
+    "/icons/pinterest.svg": "/icons/pinterest.svg",
+    "/icons/ribbon-cta-arrow.svg": "/icons/ribbon-cta-arrow.svg",
+    "/icons/search.svg": "/icons/search.svg",
+    "/icons/twitter.svg": "/icons/twitter.svg",
+    "/icons/vimeo.svg": "/icons/vimeo.svg",
+    "/icons/youtube.svg": "/icons/youtube.svg"
 }
