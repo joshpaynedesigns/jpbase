@@ -1,2 +1,644 @@
-(()=>{"use strict";var e,o={106:()=>{var e=data.stylesheetUrl,o={config:{},toggleNav:function(){var e=o.config.toggles.actualPage,r=o.config.toggles.mobileMenu,t=o.config.toggles.header,i=o.config.toggles.body;e.el.toggleClass(e.classToggle),r.el.toggleClass(r.classToggle),i.el.toggleClass(i.classToggle),o.config.flags.fixedHeader&&t.el.toggleClass(t.classToggle)},toggleSubNav:function(e){e.toggleClass("active"),e.children(".sub-menu").slideToggle(500)},slideToggleNav:function(){o.config.targets.mobileNavContainer.slideToggle(300)},setUpIcons:function(){var r=new XMLHttpRequest,t=o.config.targets.mobileMenuCloseIconContainer;r.open("GET",e+"/assets/icons/src/close.svg",!0),r.send(),r.onload=function(e){t.html(r.responseText)}},init:function(e,r){(r=r||{toggles:{},targets:{},flags:{}}).toggles.actualPage=r.toggles.actualPage||{el:jQuery(".site-container"),classToggle:"move-left"},r.toggles.header=r.toggles.header||{el:jQuery("header"),classToggle:"move-left"},r.toggles.mobileMenu=r.toggles.mobileMenu||{el:jQuery(".mobile-menu"),classToggle:"move-in"},r.toggles.body=r.toggles.body||{el:jQuery("body"),classToggle:"locked"},r.targets.mobileNavigation=r.targets.mobileNavigation||jQuery(".mobile-navigation"),r.targets.mobileNavContainer=r.targets.mobileNavContainer||jQuery(".mobile-navigation-container"),r.targets.mobileMenuIcon=r.targets.mobileMenuIcon||jQuery(".mobile-menu-icon"),r.targets.mobileMenuCloseIconContainer=r.targets.mobileMenuCloseIconContainer||r.toggles.mobileMenu.el.find(".icon-close-container"),r.flags.fixedHeader=r.flags.fixedHeader||!1,r.templateUrl=r.templateUrl||e||"",o.config=r,o.config.targets.mobileMenuIcon.on("click",o.toggleNav),o.config.targets.mobileMenuIcon.on("click",o.slideToggleNav),o.config.targets.mobileMenuCloseIconContainer.on("click",o.toggleNav),jQuery(".mobile-menu .menu").children("li.menu-item-has-children").on("click",(function(){o.toggleSubNav(jQuery(this))})),o.setUpIcons()}},r={initMarker:function(e,o){var r=e.data("lat"),t=e.data("lng"),i={lat:parseFloat(r),lng:parseFloat(t)},a=new google.maps.Marker({position:i,map:o});if(o.markers.push(a),e.html()){var n=new google.maps.InfoWindow({content:e.html()});google.maps.event.addListener(a,"click",(function(){n.open(o,a)}))}},centerMap:function(e){var o=new google.maps.LatLngBounds;e.markers.forEach((function(e){o.extend({lat:e.position.lat(),lng:e.position.lng()})})),1==e.markers.length?e.setCenter(o.getCenter()):e.fitBounds(o)},initMap:function(e){var o=e.find(".marker"),t={zoom:e.data("zoom")||16,mapTypeId:google.maps.MapTypeId.ROADMAP},i=new google.maps.Map(e[0],t);return i.markers=[],o.each((function(){r.initMarker(jQuery(this),i)})),r.centerMap(i),i}};jQuery(document).ready((function(){o.init(),jQuery(".acf-map").each((function(){r.initMap(jQuery(this))})),jQuery(".accordion-row-header").on("click",(function(){if(jQuery(".accordion-row-content").slideUp(300),!jQuery(this).hasClass("active-ar"))return jQuery(".accordion-row-header").removeClass("active-ar"),jQuery(this).next(".accordion-row-content").slideDown(300),jQuery(this).addClass("active-ar"),!1;jQuery(this).removeClass("active-ar")})),jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on("mouseover",(function(e){if(jQuery(this).find(".sub-menu").length){var o=jQuery(this).children(".sub-menu"),r=o.offset().left,t=o.width();jQuery("body").height();r+t<=jQuery("body").width()||jQuery(this).children(".sub-menu").addClass("edge")}})),jQuery(".section.gallery").modaal({type:"image"}),jQuery('a[href$=".gif"], a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".bmp"]').modaal({type:"image"}),jQuery(".top-icon-section__search, .header-search-box__close-search").on("click",(function(e){jQuery(".header-search-box, body").toggleClass("search-is-open"),jQuery('.header-search-box input[type="search"]').focus()}));var e=jQuery(".banner-slider-outer");e.length>0&&e.each((function(){var e=jQuery(this);e.find(".banner-slider").slick({arrows:!0,autoplay:!1,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow")})}));var t=jQuery(".cta-slider-wrap");t.length>0&&t.each((function(){var e=jQuery(this);e.find(".cta-slider").slick({arrows:!0,autoplay:!0,adaptiveHeight:!0,autoplaySpeed:1e4,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow")})}));var i=jQuery(".testimonials-slider-wrap");i.length>0&&i.each((function(){var e=jQuery(this);e.children(".testimonials-slider").slick({arrows:!0,autoplay:!1,adaptiveHeight:!0,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow"),slidesToShow:1})}));var a=jQuery(".stories-slider-wrap");a.length>0&&a.each((function(){var e=jQuery(this);e.children(".stories-slider").slick({arrows:!0,autoplay:!1,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow"),slidesToShow:1,adaptiveHeight:!0})}));var n=jQuery(".events-list-slider");n.length>0&&n.each((function(){var e=jQuery(this);e.children(".events-list-slides").slick({arrows:!0,autoplay:!1,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow"),slidesToShow:2,responsive:[{breakpoint:700,settings:{slidesToShow:1}}]})}));var s=jQuery(".blog-feed-slider");s.length>0&&s.each((function(){var e=jQuery(this);e.children(".blog-feed-slides").slick({arrows:!0,autoplay:!1,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow"),slidesToShow:3,responsive:[{breakpoint:960,settings:{slidesToShow:2}},{breakpoint:600,settings:{slidesToShow:1}}]})}));var l=jQuery(".projects-feed-outer");l.length>0&&l.each((function(){var e=jQuery(this);e.children(".projects-feed").slick({arrows:!0,autoplay:!1,nextArrow:e.find(".right-arrow"),prevArrow:e.find(".left-arrow"),slidesToShow:3,responsive:[{breakpoint:960,settings:{slidesToShow:2}},{breakpoint:600,settings:{slidesToShow:1}}]})})),jQuery("#cta-slide-video").on("canplaythrough",(function(){this.play()})),jQuery(".logos-slider .logos-slides").slick({arrows:!0,autoplay:!0,autoplaySpeed:7e3,infinite:!0,slidesToShow:5,slidesToScroll:1,nextArrow:jQuery(".logos-slider .right-arrow"),prevArrow:jQuery(".logos-slider .left-arrow"),responsive:[{breakpoint:1100,settings:{slidesToShow:4}},{breakpoint:900,settings:{slidesToShow:3}},{breakpoint:600,settings:{slidesToShow:2}},{breakpoint:400,settings:{slidesToShow:1}}]})}))},970:()=>{},62:()=>{}},r={};function t(e){var i=r[e];if(void 0!==i)return i.exports;var a=r[e]={exports:{}};return o[e](a,a.exports,t),a.exports}t.m=o,e=[],t.O=(o,r,i,a)=>{if(!r){var n=1/0;for(c=0;c<e.length;c++){for(var[r,i,a]=e[c],s=!0,l=0;l<r.length;l++)(!1&a||n>=a)&&Object.keys(t.O).every((e=>t.O[e](r[l])))?r.splice(l--,1):(s=!1,a<n&&(n=a));if(s){e.splice(c--,1);var g=i();void 0!==g&&(o=g)}}return o}a=a||0;for(var c=e.length;c>0&&e[c-1][2]>a;c--)e[c]=e[c-1];e[c]=[r,i,a]},t.o=(e,o)=>Object.prototype.hasOwnProperty.call(e,o),(()=>{var e={413:0,226:0,538:0};t.O.j=o=>0===e[o];var o=(o,r)=>{var i,a,[n,s,l]=r,g=0;if(n.some((o=>0!==e[o]))){for(i in s)t.o(s,i)&&(t.m[i]=s[i]);if(l)var c=l(t)}for(o&&o(r);g<n.length;g++)a=n[g],t.o(e,a)&&e[a]&&e[a][0](),e[a]=0;return t.O(c)},r=self.webpackChunkaccel434=self.webpackChunkaccel434||[];r.forEach(o.bind(null,0)),r.push=o.bind(null,r.push.bind(r))})(),t.O(void 0,[226,538],(()=>t(106))),t.O(void 0,[226,538],(()=>t(970)));var i=t.O(void 0,[226,538],(()=>t(62)));i=t.O(i)})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./assets/js/acf-maps.js":
+/*!*******************************!*\
+  !*** ./assets/js/acf-maps.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ACFMaps: () => (/* binding */ ACFMaps)
+/* harmony export */ });
+var ACFMaps = {
+  initMarker: function initMarker($marker, map) {
+    // Get position from marker.
+    var lat = $marker.data("lat");
+    var lng = $marker.data("lng");
+    var latLng = {
+      lat: parseFloat(lat),
+      lng: parseFloat(lng)
+    };
+
+    // Create marker instance.
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map
+    });
+
+    // Append to reference for later use.
+    map.markers.push(marker);
+
+    // If marker contains HTML, add it to an infoWindow.
+    if ($marker.html()) {
+      // Create info window.
+      var infowindow = new google.maps.InfoWindow({
+        content: $marker.html()
+      });
+
+      // Show info window when marker is clicked.
+      google.maps.event.addListener(marker, "click", function () {
+        infowindow.open(map, marker);
+      });
+    }
+  },
+  centerMap: function centerMap(map) {
+    // Create map boundaries from all map markers.
+    var bounds = new google.maps.LatLngBounds();
+    map.markers.forEach(function (marker) {
+      bounds.extend({
+        lat: marker.position.lat(),
+        lng: marker.position.lng()
+      });
+    });
+
+    // Case: Single marker.
+    if (map.markers.length == 1) {
+      map.setCenter(bounds.getCenter());
+
+      // Case: Multiple markers.
+    } else {
+      map.fitBounds(bounds);
+    }
+  },
+  initMap: function initMap($el) {
+    // Find marker elements within map.
+    var $markers = $el.find(".marker");
+
+    // Create gerenic map.
+    var mapArgs = {
+      zoom: $el.data("zoom") || 16,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map($el[0], mapArgs);
+
+    // Add markers.
+    map.markers = [];
+    $markers.each(function () {
+      ACFMaps.initMarker(jQuery(this), map);
+    });
+
+    // Center map based on markers.
+    ACFMaps.centerMap(map);
+
+    // Return map instance.
+    return map;
+  }
+};
+
+/***/ }),
+
+/***/ "./assets/js/mobile-menu.js":
+/*!**********************************!*\
+  !*** ./assets/js/mobile-menu.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MobileMenu: () => (/* binding */ MobileMenu)
+/* harmony export */ });
+var stylesheetUrl = data.stylesheetUrl;
+var MobileMenu = {
+  config: {},
+  toggleNav: function toggleNav() {
+    var actualPage = MobileMenu.config.toggles.actualPage;
+    var mobileMenu = MobileMenu.config.toggles.mobileMenu;
+    var header = MobileMenu.config.toggles.header;
+    var body = MobileMenu.config.toggles.body;
+    actualPage.el.toggleClass(actualPage.classToggle);
+    mobileMenu.el.toggleClass(mobileMenu.classToggle);
+    body.el.toggleClass(body.classToggle);
+
+    // If it's a fixed header, move it left as well. Otherwise, let the actual page move everything
+    if (MobileMenu.config.flags.fixedHeader) {
+      header.el.toggleClass(header.classToggle);
+    }
+  },
+  toggleSubNav: function toggleSubNav(parent) {
+    parent.toggleClass("active");
+    parent.children(".sub-menu").slideToggle(500);
+  },
+  slideToggleNav: function slideToggleNav() {
+    MobileMenu.config.targets.mobileNavContainer.slideToggle(300);
+  },
+  setUpIcons: function setUpIcons() {
+    var ajax = new XMLHttpRequest();
+    var closeIconContainer = MobileMenu.config.targets.mobileMenuCloseIconContainer;
+    ajax.open("GET", stylesheetUrl + "/assets/icons/src/close.svg", true);
+    ajax.send();
+    ajax.onload = function (e) {
+      closeIconContainer.html(ajax.responseText);
+    };
+  },
+  init: function init(template_url, configObj) {
+    configObj = configObj || {
+      toggles: {},
+      targets: {},
+      flags: {}
+    };
+    configObj.toggles.actualPage = configObj.toggles.actualPage || {
+      el: jQuery(".site-container"),
+      classToggle: "move-left"
+    };
+    configObj.toggles.header = configObj.toggles.header || {
+      el: jQuery("header"),
+      classToggle: "move-left"
+    };
+    configObj.toggles.mobileMenu = configObj.toggles.mobileMenu || {
+      el: jQuery(".mobile-menu"),
+      classToggle: "move-in"
+    };
+    configObj.toggles.body = configObj.toggles.body || {
+      el: jQuery("body"),
+      classToggle: "locked"
+    };
+    configObj.targets.mobileNavigation = configObj.targets.mobileNavigation || jQuery(".mobile-navigation");
+    configObj.targets.mobileNavContainer = configObj.targets.mobileNavContainer || jQuery(".mobile-navigation-container");
+    configObj.targets.mobileMenuIcon = configObj.targets.mobileMenuIcon || jQuery(".mobile-menu-icon");
+    configObj.targets.mobileMenuCloseIconContainer = configObj.targets.mobileMenuCloseIconContainer || configObj.toggles.mobileMenu.el.find(".icon-close-container");
+    configObj.flags.fixedHeader = configObj.flags.fixedHeader || false;
+    configObj.templateUrl = configObj.templateUrl || template_url || "";
+    MobileMenu.config = configObj;
+    MobileMenu.config.targets.mobileMenuIcon.on("click", MobileMenu.toggleNav);
+    MobileMenu.config.targets.mobileMenuIcon.on("click", MobileMenu.slideToggleNav);
+    MobileMenu.config.targets.mobileMenuCloseIconContainer.on("click", MobileMenu.toggleNav);
+    jQuery(".mobile-menu .menu").children("li.menu-item-has-children").on("click", function () {
+      MobileMenu.toggleSubNav(jQuery(this));
+    });
+    MobileMenu.setUpIcons();
+  }
+};
+
+/***/ }),
+
+/***/ "./assets/js/sitewide.js":
+/*!*******************************!*\
+  !*** ./assets/js/sitewide.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mobile_menu_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mobile-menu.js */ "./assets/js/mobile-menu.js");
+/* harmony import */ var _acf_maps_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./acf-maps.js */ "./assets/js/acf-maps.js");
+
+
+
+// SiteHeader Animation on scroll
+var scrollCheck = function scrollCheck() {
+  var alertBarHeight = jQuery(".alert-bar").outerHeight();
+  var position = jQuery(window).scrollTop();
+  if (jQuery("body").hasClass("show-alert-bar")) {
+    if (position > alertBarHeight) {
+      jQuery(".site-header").css("top", 0);
+      jQuery(".site-header, .site-title a").addClass("scrolled");
+      jQuery(".site-header, .site-title a").removeClass("unscrolled");
+    } else {
+      jQuery(".site-header, .site-title a").removeClass("scrolled");
+      jQuery(".site-header, .site-title a").addClass("unscrolled");
+    }
+  } else {
+    if (position > 0) {
+      jQuery(".site-header, .site-title a").addClass("scrolled");
+      jQuery(".site-header, .site-title a").removeClass("unscrolled");
+    } else {
+      jQuery(".site-header, .site-title a").removeClass("scrolled");
+      jQuery(".site-header, .site-title a").addClass("unscrolled");
+    }
+  }
+};
+jQuery(document).ready(function () {
+  // Initialize Mobile Menu
+  _mobile_menu_js__WEBPACK_IMPORTED_MODULE_0__.MobileMenu.init();
+
+  //   scrollCheck();
+
+  //   jQuery(window).scroll(function () {
+  //     scrollCheck();
+  //   });
+
+  jQuery(".acf-map").each(function () {
+    _acf_maps_js__WEBPACK_IMPORTED_MODULE_1__.ACFMaps.initMap(jQuery(this));
+  });
+
+  // Accordion
+  jQuery(".accordion-row-header").on("click", function () {
+    jQuery(".accordion-row-content").slideUp(300);
+    if (jQuery(this).hasClass("active-ar")) {
+      jQuery(this).removeClass("active-ar");
+    } else {
+      jQuery(".accordion-row-header").removeClass("active-ar");
+      jQuery(this).next(".accordion-row-content").slideDown(300);
+      jQuery(this).addClass("active-ar");
+      return false;
+    }
+  });
+
+  // Check to see if menu goes outside of container
+  jQuery(".primary-nav-wrap .menu-item.menu-item-has-children").on("mouseover", function (e) {
+    if (jQuery(this).find(".sub-menu").length) {
+      var elm = jQuery(this).children(".sub-menu");
+      var off = elm.offset();
+      var l = off.left;
+      var w = elm.width();
+      var docH = jQuery("body").height();
+      var docW = jQuery("body").width();
+      var isEntirelyVisible = l + w <= docW;
+      if (!isEntirelyVisible) {
+        jQuery(this).children(".sub-menu").addClass("edge");
+      }
+    }
+  });
+
+  // Simply Smooth scrolling. Requires two things.
+  // 1. Use an a tag with an href contianing the id of an element so <a href="#target-div">Click to go to Target</a>
+  // 2. Have a div/element with the id of you use in the href above
+  // This was adapted from here - https://www.abeautifulsite.net/smoothly-scroll-to-an-element-without-a-jquery-plugin-2
+
+  //   Probably don't need this anymore will comment out for now, using scroll-behavior: smooth; in css instead
+
+  //   jQuery('a[href^="#"]').on("click", function (event) {
+  //     var target = jQuery(this.getAttribute("href"));
+  //     if (target.length) {
+  //       event.preventDefault();
+  //       jQuery("html, body").stop().animate(
+  //         {
+  //           scrollTop: target.offset().top,
+  //         },
+  //         1000
+  //       );
+  //     }
+  //   });
+
+  // Setting up Modaal Gallery for our photo grid section
+  jQuery(".section.gallery").modaal({
+    type: "image"
+  });
+
+  // Setting up Modaal Gallery for any linked photos
+  jQuery('a[href$=".gif"], a[href$=".jpg"], a[href$=".jpeg"], a[href$=".png"], a[href$=".bmp"]').modaal({
+    type: "image"
+  });
+
+  // Click to display search form in header
+  jQuery(".top-icon-section__search, .header-search-box__close-search").on("click", function (event) {
+    jQuery(".header-search-box, body").toggleClass("search-is-open");
+    jQuery('.header-search-box input[type="search"]').focus();
+  });
+  var bannerSliderOuter = jQuery(".banner-slider-outer");
+  if (bannerSliderOuter.length > 0) {
+    bannerSliderOuter.each(function () {
+      var theSliderOuter = jQuery(this);
+      var theSlider = theSliderOuter.find(".banner-slider");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: theSliderOuter.find(".right-arrow"),
+        prevArrow: theSliderOuter.find(".left-arrow")
+      });
+    });
+  }
+  var ctaSliderWrap = jQuery(".cta-slider-wrap");
+  if (ctaSliderWrap.length > 0) {
+    ctaSliderWrap.each(function () {
+      var theSliderOuter = jQuery(this);
+      var theSlider = theSliderOuter.find(".cta-slider");
+      theSlider.slick({
+        arrows: true,
+        autoplay: true,
+        adaptiveHeight: true,
+        autoplaySpeed: 10000,
+        nextArrow: theSliderOuter.find(".right-arrow"),
+        prevArrow: theSliderOuter.find(".left-arrow")
+      });
+    });
+  }
+  var testimonialSliders = jQuery(".testimonials-slider-wrap");
+  if (testimonialSliders.length > 0) {
+    testimonialSliders.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".testimonials-slider");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        adaptiveHeight: true,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 1
+      });
+    });
+  }
+  var storiesSliders = jQuery(".stories-slider-wrap");
+  if (storiesSliders.length > 0) {
+    storiesSliders.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".stories-slider");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 1,
+        adaptiveHeight: true
+      });
+    });
+  }
+  var eventsSlider = jQuery(".events-list-slider");
+  if (eventsSlider.length > 0) {
+    eventsSlider.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".events-list-slides");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 2,
+        responsive: [{
+          breakpoint: 700,
+          settings: {
+            slidesToShow: 1
+          }
+        }]
+      });
+    });
+  }
+  var blogSlider = jQuery(".blog-feed-slider");
+  if (blogSlider.length > 0) {
+    blogSlider.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".blog-feed-slides");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 3,
+        responsive: [{
+          breakpoint: 960,
+          settings: {
+            slidesToShow: 2
+          }
+        }, {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1
+          }
+        }]
+      });
+    });
+  }
+  var projectsSlider = jQuery(".projects-feed-outer");
+  if (projectsSlider.length > 0) {
+    projectsSlider.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".projects-feed");
+      theSlider.slick({
+        arrows: true,
+        autoplay: false,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        slidesToShow: 3,
+        responsive: [{
+          breakpoint: 960,
+          settings: {
+            slidesToShow: 2
+          }
+        }, {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1
+          }
+        }]
+      });
+    });
+  }
+  jQuery("#cta-slide-video").on("canplaythrough", function () {
+    this.play();
+  });
+  var logoSliders = jQuery(".logos-slider");
+  if (logoSliders.length > 0) {
+    logoSliders.each(function () {
+      var sliderWrap = jQuery(this);
+      var theSlider = sliderWrap.children(".logos-slides");
+      theSlider.slick({
+        arrows: true,
+        autoplay: true,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        autoplaySpeed: 7000,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        responsive: [{
+          breakpoint: 1100,
+          settings: {
+            slidesToShow: 4
+          }
+        }, {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 3
+          }
+        }, {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2
+          }
+        }, {
+          breakpoint: 400,
+          settings: {
+            slidesToShow: 1
+          }
+        }]
+      });
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./assets/styles/style.scss":
+/*!**********************************!*\
+  !*** ./assets/styles/style.scss ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./assets/styles/editor-style.scss":
+/*!*****************************************!*\
+  !*** ./assets/styles/editor-style.scss ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = __webpack_modules__;
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/jsonp chunk loading */
+/******/ 	(() => {
+/******/ 		// no baseURI
+/******/ 		
+/******/ 		// object to store loaded and loading chunks
+/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
+/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
+/******/ 		var installedChunks = {
+/******/ 			"/front": 0,
+/******/ 			"editor-style": 0,
+/******/ 			"front": 0
+/******/ 		};
+/******/ 		
+/******/ 		// no chunk on demand loading
+/******/ 		
+/******/ 		// no prefetching
+/******/ 		
+/******/ 		// no preloaded
+/******/ 		
+/******/ 		// no HMR
+/******/ 		
+/******/ 		// no HMR manifest
+/******/ 		
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
+/******/ 		
+/******/ 		// install a JSONP callback for chunk loading
+/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
+/******/ 			var [chunkIds, moreModules, runtime] = data;
+/******/ 			// add "moreModules" to the modules object,
+/******/ 			// then flag all "chunkIds" as loaded and fire callback
+/******/ 			var moduleId, chunkId, i = 0;
+/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
+/******/ 				for(moduleId in moreModules) {
+/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
+/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
+/******/ 					}
+/******/ 				}
+/******/ 				if(runtime) var result = runtime(__webpack_require__);
+/******/ 			}
+/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
+/******/ 			for(;i < chunkIds.length; i++) {
+/******/ 				chunkId = chunkIds[i];
+/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
+/******/ 					installedChunks[chunkId][0]();
+/******/ 				}
+/******/ 				installedChunks[chunkId] = 0;
+/******/ 			}
+/******/ 			return __webpack_require__.O(result);
+/******/ 		}
+/******/ 		
+/******/ 		var chunkLoadingGlobal = self["webpackChunkaccel434"] = self["webpackChunkaccel434"] || [];
+/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
+/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["editor-style","front"], () => (__webpack_require__("./assets/js/sitewide.js")))
+/******/ 	__webpack_require__.O(undefined, ["editor-style","front"], () => (__webpack_require__("./assets/styles/style.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["editor-style","front"], () => (__webpack_require__("./assets/styles/editor-style.scss")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
+/******/ 	
+/******/ })()
+;
 //# sourceMappingURL=front.js.map

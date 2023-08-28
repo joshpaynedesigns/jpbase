@@ -70,7 +70,7 @@
     left: 0;
     transform: translateX(-50%);
 
-    @media ($medium-screen-up) {
+    @media ($large-screen-up) {
       transform: translateX(-100%);
     }
 
@@ -83,7 +83,7 @@
     right: 0;
     transform: translateX(50%);
 
-    @media ($medium-screen-up) {
+    @media ($large-screen-up) {
       transform: translateX(100%);
     }
   }
