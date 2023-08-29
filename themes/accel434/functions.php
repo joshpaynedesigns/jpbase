@@ -615,12 +615,10 @@ function ns_get_short_description($post_id = null, $length = null)
         }
 
         if (empty($content)) {
-            $content = get_post_meta($post_id, 'page_flexible_sections_0_content', true);
-        }
-        if (empty($content)) {
             $post    = get_post($post_id);
             $content = strip_shortcodes($post->post_content);
         }
+
         $excerpt = $content;
     }
 
