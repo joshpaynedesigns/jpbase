@@ -79,7 +79,7 @@ body {
 
       &:after {
         transition: all $medium-duration $base-timing;
-        background-image: url("../../../dist/icons/arrow-white.svg");
+        background-image: url("../../icons/src/arrow-white.svg");
         background-position: 50% 50%;
         background-repeat: no-repeat;
         background-size: cover;
