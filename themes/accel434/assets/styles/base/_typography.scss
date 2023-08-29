@@ -2,6 +2,13 @@ html {
   scroll-behavior: smooth;
 }
 
+:target:before {
+  content: "";
+  display: block;
+  height: 68px;
+  margin: -68px 0 0;
+}
+
 body {
   color: $base-font-color;
   font-family: $base-font-family;

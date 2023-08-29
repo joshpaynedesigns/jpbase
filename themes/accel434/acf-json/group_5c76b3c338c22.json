@@ -19,11 +19,10 @@
             "choices": {
                 "none": "None",
                 "light-gray": "Light Gray",
-                "light-blue": "Light Blue",
                 "medium-gray": "Medium Gray",
                 "dark-gray": "Dark Gray",
                 "blue": "Blue",
-                "green": "Green"
+                "light-blue": "Light Blue"
             },
             "default_value": "none",
             "return_format": "value",
@@ -69,8 +68,8 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 3,
-            "max": 4,
+            "min": 1,
+            "max": 0,
             "collapsed": "",
             "button_label": "Add Box",
             "rows_per_page": 20,
@@ -90,12 +89,14 @@
                         "id": ""
                     },
                     "choices": {
+                        "none": "None",
+                        "light-gray": "Light Gray",
                         "medium-gray": "Medium Gray",
                         "dark-gray": "Dark Gray",
                         "blue": "Blue",
-                        "green": "Green"
+                        "light-blue": "Light Blue"
                     },
-                    "default_value": "blue",
+                    "default_value": "none",
                     "return_format": "value",
                     "multiple": 0,
                     "allow_null": 0,
@@ -279,5 +280,5 @@
     "active": false,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1691175127
+    "modified": 1693264365
 }

@@ -267,40 +267,48 @@ jQuery(document).ready(function () {
     this.play();
   });
 
-  jQuery(".logos-slider .logos-slides").slick({
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 7000,
-    infinite: true,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    nextArrow: jQuery(".logos-slider .right-arrow"),
-    prevArrow: jQuery(".logos-slider .left-arrow"),
-    responsive: [
-      {
-        breakpoint: 1100,
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 400,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
-  });
+  let logoSliders = jQuery(".logos-slider");
+  if (logoSliders.length > 0) {
+    logoSliders.each(function () {
+      let sliderWrap = jQuery(this);
+      let theSlider = sliderWrap.children(".logos-slides");
+
+      theSlider.slick({
+        arrows: true,
+        autoplay: true,
+        nextArrow: sliderWrap.find(".right-arrow"),
+        prevArrow: sliderWrap.find(".left-arrow"),
+        autoplaySpeed: 7000,
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1100,
+            settings: {
+              slidesToShow: 4,
+            },
+          },
+          {
+            breakpoint: 900,
+            settings: {
+              slidesToShow: 3,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+            },
+          },
+          {
+            breakpoint: 400,
+            settings: {
+              slidesToShow: 1,
+            },
+          },
+        ],
+      });
+    });
+  }
 });
