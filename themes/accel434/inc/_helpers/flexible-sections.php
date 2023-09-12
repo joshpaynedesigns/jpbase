@@ -46,7 +46,7 @@ function ns_decide_section_classes($bg_color = null)
         $classes .= "sectionpt sectionpb";
     }
 
-    if (! empty($bg_color)) {
+    if (! empty($bg_color) && $bg_color != 'none') {
         $classes .= " has-bg-color bg-" . $bg_color;
 
         if (ns_is_bg_dark($bg_color)) {
