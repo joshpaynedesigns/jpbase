@@ -136,13 +136,6 @@
 Events Single
 ****/
 .single-tribe_events {
-  li {
-    padding-left: 0;
-
-    &:before {
-      display: none;
-    }
-  }
 
   .site-inner > .wrap {
     max-width: none;
@@ -173,6 +166,14 @@ Events Single
 
       @media ($large-screen-up) {
         margin-bottom: 6em;
+      }
+
+      li {
+        padding-left: 0;
+
+        &:before {
+          display: none;
+        }
       }
 
       .tribe-events-single-event-title {
