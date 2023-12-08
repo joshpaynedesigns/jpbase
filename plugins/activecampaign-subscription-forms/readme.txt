@@ -3,7 +3,7 @@ Contributors: activecampaign
 Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
 Requires at least: 2.0
 Requires PHP: 5.4
-Tested up to: 6.0
+Tested up to: 6.3.1
 Stable tag: trunk
 
 Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
@@ -108,6 +108,9 @@ With [ActiveCampaign Postmark](https://postmarkapp.com/?utm_source=activecampaig
 
 
 == Changelog ==
+
+= 8.1.13 =
+* Verifying 6.3.1 compatibility, updated listing
 
 = 8.1.12 =
 * Security fix to address XSS vulnerability

@@ -36,7 +36,7 @@ class Provider extends Service_Provider {
 	 * @since 6.1.0
 	 */
 	public function add_actions() {
-		add_action( 'tec_common_telemetry_loaded', [ $this, 'tec_telemetry_register_plugin' ] );
+		add_action( 'activate' . EVENTS_CALENDAR_PRO_FILE, [ $this, 'register_tec_ecp_telemetry_on_activation' ] );
 	}
 
 	/**
@@ -46,15 +46,6 @@ class Provider extends Service_Provider {
 	 */
 	public function add_filters() {
 		add_filter( 'tec_telemetry_slugs', [ $this, 'filter_tec_telemetry_slugs' ] );
-	}
-
-	/**
-	 * Registers our plugin with Telemetry in Common.
-	 *
-	 * @since 6.1.0
-	 */
-	public function tec_telemetry_register_plugin() {
-		return $this->container->get( Common_Telemetry::class )->register_tec_telemetry_plugins();
 	}
 
 	/**
@@ -68,5 +59,23 @@ class Provider extends Service_Provider {
 	 */
 	public function filter_tec_telemetry_slugs( $slugs ) {
 		return $this->container->get( Telemetry::class )->filter_tec_telemetry_slugs( $slugs );
+	}
+
+	/**
+	 * Registers the plugin with Telemetry on plugin activation.
+	 *
+	 * @since 6.2.1.1
+	 */
+	public function register_tec_ecp_telemetry_on_activation() {
+		// Activate plugin in Telemetry. We do this on 5 to make sure it triggers before the library does.
+	add_action(
+		'shutdown',
+		[ $this, 'register_tec_telemetry_child_plugins' ], 5 );
+	}
+
+	public function register_tec_telemetry_child_plugins() {
+		$common_telemetry = self::$container->get( Common_Telemetry::class );
+		$status = $common_telemetry->calculate_optin_status();
+		$common_telemetry->register_tec_telemetry_plugins( $status );
 	}
 }

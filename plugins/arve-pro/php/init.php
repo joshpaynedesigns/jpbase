@@ -3,7 +3,7 @@ namespace Nextgenthemes\ARVE\Pro;
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\init', 15 );
 
-function init() {
+function init(): void {
 
 	if ( ! defined( 'Nextgenthemes\ARVE\VERSION' ) ||
 		version_compare( \Nextgenthemes\ARVE\VERSION, '9.7.14', '<' )
@@ -50,7 +50,7 @@ function init() {
 }
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
-function activation_hook() {
+function activation_hook(): void {
 	if ( function_exists( '\Nextgenthemes\WP\activate_defined_key' ) ) {
 		\Nextgenthemes\WP\activate_defined_key( __FILE__ );
 	}

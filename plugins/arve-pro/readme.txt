@@ -18,6 +18,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2023-11-04 5.3.7 =
+
+* Improved: Hide some theme specific menus when the lightbox is open.
+
 = 2023-04-18 5.3.6 =
 
 * Fix: Some styles not correctly applying in the Block editor.

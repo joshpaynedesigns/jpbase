@@ -9,8 +9,9 @@ jobs:
     name: PHP Unit tests
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
-        php: [ '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
+        php: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ] # https://www.php.net/supported-versions
         wordpress: [ 'latest' ] # https://wordpress.org/download/releases/
     services:
       mysql:
@@ -31,8 +32,6 @@ jobs:
           ref: master
           path: .
           token: ${{ secrets.REPO_TOKEN }}
-
-      - run: pwd
 
       - name: rm -rf symbiosistheme.com
         run: rm -rf symbiosistheme.com
@@ -80,11 +79,12 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@cb8f453143149404c7fd670b5f37c91d395b3054 # 2.25.1 # https://github.com/shivammathur/setup-php/releases/
+        uses: shivammathur/setup-php@7fdd3ece872ec7ec4c098ae5ab7637d5e0a96067 # 2.26.0 # https://github.com/shivammathur/setup-php/releases/
         with:
           php-version: ${{ matrix.php }}
+          ini-values: zend.assertions=1, error_reporting=-1, display_errors=On
           extensions: mbstring, dom, zip, mysql, gd
-          tools:  phpunit-polyfills
+          tools: phpunit-polyfills:1
           coverage: none #optional
 
       - name: Start mysql service

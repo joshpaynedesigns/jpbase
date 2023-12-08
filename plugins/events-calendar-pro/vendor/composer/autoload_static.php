@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c
+class ComposerStaticInit1e41a74fdee86bbcd31ce5322208a56d
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -95,6 +95,7 @@ class ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Integrations\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Integrations/Provider.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Integrations\\WPML\\WPML_Integration' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Integrations/WPML/WPML_Integration.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Legacy_Compat\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Legacy_Compat/Provider.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\Legacy_Compat\\RecurrenceMeta' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Legacy_Compat/RecurrenceMeta.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Links\\Event_Links' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Links/Event_Links.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Links\\Links' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Links/Links.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Links\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Links/Provider.php',
@@ -177,6 +178,8 @@ class ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Condense_Events_Series' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Condense_Events_Series.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Custom_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Custom_Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Not_In_Series_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Not_In_Series_Modifier.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Not_Recurring_Custom_Tables_Query_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Not_Recurring_Custom_Tables_Query_Modifier.php',
+        'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Not_Recurring_Query_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Not_Recurring_Query_Modifier.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Events_Series_Relationship_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Events_Series_Relationship_Modifier.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\Occurrences_Series_Relationship_Modifier' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/Occurrences_Series_Relationship_Modifier.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Modifiers\\With_Series_Normalization' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Modifiers/With_Series_Normalization.php',
@@ -302,9 +305,9 @@ class ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitec8670251c1ceddd3e5f82468896fa8c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1e41a74fdee86bbcd31ce5322208a56d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1e41a74fdee86bbcd31ce5322208a56d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit1e41a74fdee86bbcd31ce5322208a56d::$classMap;
 
         }, null, ClassLoader::class);
     }

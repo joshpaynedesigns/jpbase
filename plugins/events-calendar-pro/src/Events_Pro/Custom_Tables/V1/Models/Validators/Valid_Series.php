@@ -24,8 +24,6 @@ class Valid_Series extends Validator {
 	 * {@inheritDoc}
 	 */
 	public function validate( Model $model, $name, $value ) {
-		$this->error_message = '';
-
 		if ( empty( $value ) ) {
 			return true;
 		}
@@ -33,7 +31,7 @@ class Valid_Series extends Validator {
 		$is_event_series = tribe_is_event_series( $value );
 
 		if ( ! $is_event_series ) {
-			$this->error_message = 'The provided value is not a valid Series type.';
+			$this->error_messages[] = 'The provided value is not a valid Series type.';
 		}
 
 		return $is_event_series;

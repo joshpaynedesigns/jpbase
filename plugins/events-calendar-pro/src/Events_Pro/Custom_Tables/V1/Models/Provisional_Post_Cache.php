@@ -49,15 +49,6 @@ class Provisional_Post_Cache {
 	];
 
 	/**
-	 * The base, a positive integer, of the Provisional Post IDs.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @var int
-	 */
-	private $base;
-
-	/**
 	 * A reference to the provisional ID generator instance.
 	 *
 	 * @since 6.0.0
@@ -80,15 +71,12 @@ class Provisional_Post_Cache {
 	 * Returns the current base value.
 	 *
 	 * @since 6.0.0
+	 * @since 6.2.1 This no longer pulls from a memoized value, it will always defer to the ID generator.
 	 *
 	 * @return int
 	 */
 	public function get_base(): int {
-		if ( empty( $this->base ) ) {
-			$this->base = $this->generator->current();
-		}
-
-		return $this->base;
+		return $this->generator->current();
 	}
 
 	/**

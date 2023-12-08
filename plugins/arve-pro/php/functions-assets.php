@@ -5,7 +5,7 @@ use function \Nextgenthemes\ARVE\Common\register_asset;
 use function \Nextgenthemes\ARVE\Common\add_dep_to_script;
 use function \Nextgenthemes\ARVE\Common\add_dep_to_style;
 
-function register_assets() {
+function register_assets(): void {
 
 	register_asset(
 		[

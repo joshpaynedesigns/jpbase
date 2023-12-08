@@ -152,7 +152,7 @@ class Series_Filter extends Filter implements Builder_Where_Contract {
 		$series_relationships = Series_Relationships::table_name( true );
 		$occurrences          = Occurrences::table_name( true );
 
-		$this->joinClause = "\n INNER JOIN ${series_relationships} sr ON sr.event_post_id = ${occurrences}.post_id";
+		$this->joinClause = "\n INNER JOIN {$series_relationships} sr ON sr.event_post_id = {$occurrences}.post_id";
 	}
 
 	/**
