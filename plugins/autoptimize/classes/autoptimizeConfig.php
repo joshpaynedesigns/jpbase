@@ -335,7 +335,7 @@ echo sprintf( __( 'You can manually create rules for different types of pages or
 </tr>
 <tr valign="top" class="css_sub" id="autoptimize_css_defer_inline">
 <th scope="row"></th>
-<td><label><textarea rows="10" cols="10" style="width:100%;" placeholder="<?php _e( 'Paste the above the fold CSS here. You can leave this empty when using the automated Critical CSS integration.', 'autoptimize' ); ?>" name="autoptimize_css_defer_inline"><?php echo autoptimizeStyles::sanitize_css( autoptimizeOptionWrapper::get_option( 'autoptimize_css_defer_inline' ) ); ?></textarea></label></td>
+<td><label><textarea rows="10" cols="10" style="width:100%;" spellcheck="false" placeholder="<?php _e( 'Paste the above the fold CSS here. You can leave this empty when using the automated Critical CSS integration.', 'autoptimize' ); ?>" name="autoptimize_css_defer_inline"><?php echo autoptimizeStyles::sanitize_css( autoptimizeOptionWrapper::get_option( 'autoptimize_css_defer_inline' ) ); ?></textarea></label></td>
 </tr>
 <tr valign="top" class="css_sub css_aggregate">
 <th scope="row"><?php _e( 'Inline all CSS?', 'autoptimize' ); ?></th>
@@ -485,13 +485,11 @@ if ( true === autoptimizeImages::imgopt_active() && true === apply_filters( 'aut
     <?php _e( 'Add a "metabox" to the post/ page edit screen allowing different optimizations to be turned off on a per post/ page level?', 'autoptimize' ); ?></label></td>
     </tr>
     <?php } ?>
-    <?php if ( false !== (bool) autoptimizeOptionWrapper::get_option( 'autoptimize_installed_before_compatibility', false ) ) { ?>
     <tr valign="top">
     <th scope="row"><?php _e( 'Disable extra compatibilty logic?', 'autoptimize' ); ?></th>
-    <td><label class="cb_label"><input type="checkbox" name="autoptimize_installed_before_compatibility" checked="checked" />
-    <?php _e( 'In Autoptimize 3.0 extra compatibiity logic was added (e.g. for Gutenberg blocks, Revolution Slider, jQuery-heavy plugins, ...), but if you had Autoptimize installed already before the update to 3.0, this compatibility code was disabled. <strong>Untick this option to permanently enable the compatibility logic</strong>.', 'autoptimize' ); ?></label></td>
+    <td><label class="cb_label"><input type="checkbox" name="autoptimize_installed_before_compatibility" <?php echo $conf->get( 'autoptimize_installed_before_compatibility' ) ? 'checked="checked" ' : ''; ?>/>
+    <?php _e( 'Autoptimize applies extra "compatibiity logic" to prevent issues with JS optimization (for e.g. Gutenberg blocks, Revolution Slider, jQuery-heavy plugins, ...) but may sometimes be a bit too careful. If you have render-blocking JS issues, you can try disabling this logic here. Make sure to test your site thoroughly though!', 'autoptimize' ); ?></label></td>
     </tr>
-    <?php } ?>
 </table>
 </li>
 
@@ -808,11 +806,11 @@ if ( true === autoptimizeImages::imgopt_active() && true === apply_filters( 'aut
     public static function get_defaults()
     {
         static $config = array(
-            'autoptimize_html'                           => 0,
+            'autoptimize_html'                           => 1,
             'autoptimize_html_keepcomments'              => 0,
             'autoptimize_html_minify_inline'             => 0,
             'autoptimize_enable_site_config'             => 1,
-            'autoptimize_js'                             => 0,
+            'autoptimize_js'                             => 1,
             'autoptimize_js_aggregate'                   => 0,
             'autoptimize_js_defer_not_aggregate'         => 1,
             'autoptimize_js_defer_inline'                => 1,
@@ -821,7 +819,7 @@ if ( true === autoptimizeImages::imgopt_active() && true === apply_filters( 'aut
             'autoptimize_js_justhead'                    => 0,
             'autoptimize_js_include_inline'              => 0,
             'autoptimize_js_forcehead'                   => 0,
-            'autoptimize_css'                            => 0,
+            'autoptimize_css'                            => 1,
             'autoptimize_css_aggregate'                  => 0,
             'autoptimize_css_exclude'                    => '',
             'autoptimize_css_justhead'                   => 0,

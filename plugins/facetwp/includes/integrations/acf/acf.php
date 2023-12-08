@@ -216,7 +216,7 @@ class FacetWP_Integration_ACF
         $output = [];
 
         // checkboxes
-        if ( 'checkbox' == $type || 'select' == $type || 'radio' == $type ) {
+        if ( 'checkbox' == $type || 'select' == $type || 'radio' == $type || 'button_group' == $type ) {
             if ( false !== $value ) {
                 foreach ( (array) $value as $val ) {
                     $display_value = isset( $field['choices'][ $val ] ) ?

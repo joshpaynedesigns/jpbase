@@ -28,6 +28,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__PUE' ) ) {
 		private static $plugin_file;
 
 		/**
+		 * @var Tribe__PUE__Checker
+		 */
+		public Tribe__PUE__Checker  $pue_instance;
+
+		/**
 		 * Constructor function. a.k.a. Let's get this party started!
 		 *
 		 * @param string $plugin_file file path.

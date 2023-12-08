@@ -16,9 +16,11 @@ use Tribe\Events\Views\V2\View_Interface;
 use Tribe\Events\Views\V2\Views\Traits\List_Behavior;
 use Tribe__Events__Main as TEC;
 use Tribe__Utils__Array as Arr;
+use Tribe\Events\Views\V2\Views\Traits\With_Noindex;
 
 class Map_View extends View {
 	use List_Behavior;
+	use With_Noindex;
 
 	/**
 	 * Slug for this view.

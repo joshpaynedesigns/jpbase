@@ -63,12 +63,14 @@ class From_Rset_Converter {
 		$rset_string = implode( "\n", (array) $rset_data );
 		$rset        = new RSet_Wrapper( $rset_string );
 		$dtstart     = $rset->get_dtstart();
-		$dtend       = $rset->get_dtend();
 
 		// Default to the RSET's DTSTART/DTEND before retrieving outside data.
 		$tz      = Timezones::build_timezone_object( get_post_meta( $post_id, '_EventTimezone', true ) );
 		$dtstart = $dtstart ?? Dates::immutable( get_post_meta( $post_id, '_EventStartDate', true ), $tz );
-		$dtend   = $dtend ?? Dates::immutable( get_post_meta( $post_id, '_EventEndDate', true ), $tz );
+		// There is always a "dtend" from get_dtend() - ensure it is a valid/parsed dtend, or defer to our stored meta value.
+		$dtend = $rset->get_duration() === null
+			? Dates::immutable( get_post_meta( $post_id, '_EventEndDate', true ), $tz )
+			: $rset->get_dtend();
 
 		return $this->convert_to_event_recurrence_from_dates( $rset_data, $dtstart, $dtend, $use_default_duration );
 	}
@@ -244,6 +246,8 @@ class From_Rset_Converter {
 	 * Converts an occurrence date information to the legacy format.
 	 *
 	 * @since 6.0.0
+	 * @since 6.2.1 Now normalizing RDATEs to 'same-time' => 'no'. This avoids overhead of maintaining both after being removed from the 6.0 interface,
+	 *            as this is not well represented in RSET data and requires some assumptions.
 	 *
 	 * @param DateTime          $start          The occurrence date object.
 	 * @param int               $duration       This rdates duration.
@@ -262,7 +266,6 @@ class From_Rset_Converter {
 		$this_is_midnight  = '00:00:00' === $start->format( 'H:i:s' );
 		$event_is_midnight = '00:00:00' === $dtstart->format( 'H:i:s' );
 
-
 		if ( $this_is_midnight && ! $event_is_midnight ) {
 			$start = $start->setTime(
 				$dtstart->format( 'H' ),
@@ -271,14 +274,10 @@ class From_Rset_Converter {
 			);
 		}
 
-		$the_start_time = $start->format( 'H:i:s' );
 		// Set up a mutable date, so we can increment to the end time.
 		$end            = new DateTime( null, $start->getTimezone() );
 		$end->setTimestamp( $start->getTimestamp() );
 		$end->add( new DateInterval( "PT{$duration}S" ) );
-
-		$event_start_time = $dtstart->format( 'H:i:s' );
-		$same_time        = $the_start_time === $event_start_time && $duration === $event_duration;
 
 		$converted = [
 			'type'   => 'Custom',
@@ -293,14 +292,12 @@ class From_Rset_Converter {
 				],
 		];
 
-		if ( $same_time ) {
-			$converted['custom']['same-time'] = 'yes';
-		} else {
-			$converted['custom']['same-time']  = 'no';
-			$converted['custom']['start-time'] = $start->format( 'g:ia' );
-			$converted['custom']['end-time']   = $end->format( 'g:ia' );
-			$converted['custom']['end-day']    = $this->old_format_end_day( $start, $end );
-		}
+		// Normalize DATE occurrences to same-time no - we do not need to preserve same-time yes anymore.
+		$converted['custom']['same-time']  = 'no';
+		$converted['custom']['start-time'] = $start->format( 'g:ia' );
+		$converted['custom']['end-time']   = $end->format( 'g:ia' );
+		$converted['custom']['end-day']    = $this->old_format_end_day( $start, $end );
+
 		$event_end = clone $dtstart;
 		$event_end = $event_end->add( new DateInterval( 'PT' . $event_duration . 'S' ) );
 		$converted['EventStartDate'] = $dtstart->format( 'Y-m-d H:i:s' );

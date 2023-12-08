@@ -482,6 +482,7 @@ class WPSEO_Admin_Asset_Manager {
 			'feature-flag'                => 'feature-flag-package',
 			'helpers'                     => 'helpers-package',
 			'jed'                         => 'jed-package',
+			'chart.js'                    => 'chart.js-package',
 			'legacy-components'           => 'components-package',
 			'network-admin-script'        => 'network-admin',
 			'redux'                       => 'redux-package',
@@ -549,6 +550,7 @@ class WPSEO_Admin_Asset_Manager {
 				'src'  => 'metabox-' . $flat_version,
 				'deps' => [
 					self::PREFIX . 'admin-css',
+					self::PREFIX . 'tailwind',
 					'wp-components',
 				],
 			],
@@ -619,6 +621,11 @@ class WPSEO_Admin_Asset_Manager {
 			[
 				'name' => 'new-settings',
 				'src'  => 'new-settings-' . $flat_version,
+				'deps' => [ self::PREFIX . 'tailwind' ],
+			],
+			[
+				'name' => 'black-friday-banner',
+				'src'  => 'black-friday-banner-' . $flat_version,
 				'deps' => [ self::PREFIX . 'tailwind' ],
 			],
 			[

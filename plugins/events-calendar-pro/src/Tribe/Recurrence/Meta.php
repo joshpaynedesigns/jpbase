@@ -1083,7 +1083,18 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			return $dates;
 		}
 
-		$sql       = "
+		/**
+		 * This filter allows overriding the legacy query to fetch occurrence start dates.
+		 *
+		 * @since TBD
+		 *
+		 * @param null $results Fetch occurrence start dates to override typical query, or null to continue.
+		 * @param int  $post_id The post ID for this recurring event.
+		 */
+		$results = apply_filters( 'tec_events_pro_recurrence_get_start_dates', null, (int) $post_id );
+
+		if ( $results === null ) {
+			$sql = "
 			SELECT     meta_value
 			FROM       {$wpdb->postmeta} m
 			INNER JOIN {$wpdb->posts} p ON p.ID=m.post_id
@@ -1096,12 +1107,13 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			ORDER BY meta_value ASC
 		";
 
+			$sql     = $wpdb->prepare( $sql, $post_id, $post_id, Tribe__Events__Main::POSTTYPE );
+			$results = $wpdb->get_col( $sql );
+		}
 
-		$sql       = $wpdb->prepare( $sql, $post_id, $post_id, Tribe__Events__Main::POSTTYPE );
-		$result    = $wpdb->get_col( $sql );
-		$cache->set( 'event_dates_' . $post_id, $result, Tribe__Cache::NO_EXPIRATION, 'save_post' );
+		$cache->set( 'event_dates_' . $post_id, $results, Tribe__Cache::NO_EXPIRATION, 'save_post' );
 
-		return $result;
+		return $results;
 	}
 
 	/**

@@ -353,8 +353,8 @@ class Organizer_View extends List_View {
 			$this->set_post_id( $post_id );
 		}
 
-		$date = $context->get( 'event_date', 'now' );
-		$event_display = $context->get( 'event_display_mode', $context->get( 'event_display' ), 'current' );
+		$date          = $context->get( 'event_date', 'now' );
+		$event_display = $context->get( 'event_display_mode', $context->get( 'event_display' ) );
 
 		if ( 'past' !== $event_display ) {
 			$args['ends_after'] = $date;

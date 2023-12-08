@@ -419,10 +419,10 @@ trait With_Event_Recurrence {
 	 * @param bool                      $reset   Whether to reset the flag or respect the one
 	 *                                           already set, if found.
 	 *
-	 * @return array<string,array> The updated recurrence rule, in the format used by the
-	 *                             `_EventRecurrence` meta.
+	 * @return array<string,array>|mixed The updated recurrence rule, in the format used by the
+	 *                                   `_EventRecurrence` meta, or what was passed in if unable to identify.
 	 */
-	private function add_off_pattern_flag_to_rule( $rule, int $post_id = null, bool $reset = false ): array {
+	private function add_off_pattern_flag_to_rule( $rule, int $post_id = null, bool $reset = false ) {
 		if ( ! (
 			is_array( $rule )
 			&& ( isset( $rule['custom']['type'] ) || isset( $rule['type'] ) ) )

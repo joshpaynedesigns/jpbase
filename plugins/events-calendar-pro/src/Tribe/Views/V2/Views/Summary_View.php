@@ -14,8 +14,11 @@ use Tribe__Date_Utils as Dates;
 use Tribe\Events\Views\V2\Views\List_View;
 use Tribe\Utils\Date_I18n;
 use Tribe\Utils\Date_I18n_Immutable;
+use Tribe\Events\Views\V2\Views\Traits\With_Noindex;
 
 class Summary_View extends List_View {
+	use With_Noindex;
+
 	/**
 	 * Statically accessible slug for this view.
 	 *
@@ -431,6 +434,5 @@ class Summary_View extends List_View {
 	 */
 	public function get_rewrite_slugs(): array {
 		return  [ static::get_view_slug(), translate( static::get_view_slug(), 'tribe-events-calendar-pro' ) ];
-
 	}
 }

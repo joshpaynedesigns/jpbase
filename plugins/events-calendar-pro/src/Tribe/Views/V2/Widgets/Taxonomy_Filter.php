@@ -256,7 +256,7 @@ class Taxonomy_Filter {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @param array<string,string> $value The input values to iterate through and display.
+	 * @param string|array<string,string> $value The input values to iterate through and display. Can be a json_encoded string.
 	 *
 	 * @return array<string,string> $list_items The array of taxonomy items.
 	 */
