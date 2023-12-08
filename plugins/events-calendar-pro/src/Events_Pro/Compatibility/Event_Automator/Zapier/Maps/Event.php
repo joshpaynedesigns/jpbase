@@ -65,9 +65,9 @@ class Event {
 		// Pro Recurring Fields.
 		$pro_fields = [
 			'recurring'      => true,
-			'recurring_meta' => $recurrence_meta,
-			'rrule'          => $converted_rrules,
-			'exclusions'     => $converted_exclusions,
+			'recurring_meta' => $recurrence_meta ?? [],
+			'rrule'          => $converted_rrules ?? [],
+			'exclusions'     => $converted_exclusions ?? [],
 		];
 
 		$next_event = array_merge( $next_event, $pro_fields );
@@ -147,9 +147,10 @@ class Event {
 				continue;
 			}
 
-			$additional_fields[ $field['name'] ] = [
-				'label' => $field['label'],
-				'value' => $additional_field_pairs[ $field['label'] ],
+			$value = $additional_field_pairs[ $field['label'] ];
+			$additional_fields[] = [
+				'additional_field_label' => $field['label'],
+				'additional_field_value' => strval( $value ),
 			];
 		}
 

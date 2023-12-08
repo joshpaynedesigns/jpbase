@@ -282,7 +282,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	}
 
 	/**
-	 * add custom meta fields to the event array passed thru the importer
+	 * Add custom meta fields to the event array passed through the importer
 	 */
 	public static function import_additional_fields( $import_fields ) {
 		$custom_fields = (array) tribe_get_option( 'custom-fields' );

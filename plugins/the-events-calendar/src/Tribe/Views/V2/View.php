@@ -694,8 +694,7 @@ class View implements View_Interface {
 		$repository_args = $this->filter_repository_args( $this->setup_repository_args() );
 
 		// Need our nonces for AJAX requests.
-		$nonces     = Rest_Endpoint::get_rest_nonces();
-		$nonce_html = "<script data-js='tribe-events-view-nonce-data' type='application/json'>" . wp_json_encode( $nonces ) . "</script>";
+		$nonce_html = Rest_Endpoint::get_rest_nonce_html( Rest_Endpoint::get_rest_nonces() );
 
 		/*
 		 * Some Views might need to access this out of this method, let's make the filtered repository arguments
@@ -1236,8 +1235,6 @@ class View implements View_Interface {
 			$this->url = false === $merge ?
 				new Url( add_query_arg( $query_args ) )
 				: $this->url->add_query_args( $query_args );
-
-			return;
 		}
 	}
 
@@ -1297,7 +1294,7 @@ class View implements View_Interface {
 		 *                                      template.
 		 * @param View_Interface $view          The current view whose template variables are being set.
 		 */
-		$template_vars = apply_filters( 'tribe_events_views_v2_view_template_vars', $template_vars, $this ); // @todo ~.5s
+		$template_vars = apply_filters( 'tribe_events_views_v2_view_template_vars', $template_vars, $this );
 		$view_slug     = static::$view_slug;
 
 		/**
@@ -1607,8 +1604,12 @@ class View implements View_Interface {
 			$this->repository->by_args( $this->repository_args );
 		}
 
-		// Check if we memoized these vars and if memoize is enabled.
-		$memoize_key = 'setup_template_vars_' . md5( __METHOD__ . json_encode( $this->repository_args ) );
+		// Pre build query, so we can determine the unique hash for this event query.
+		$this->repository->build_query();
+		$repository_query_hash = $this->repository->hash();
+
+		// Check if we memoized this query and if memoize was enabled.
+		$memoize_key = tribe_cache()->make_key( $this->context->to_array(), __METHOD__ ) . $repository_query_hash;
 		$vars        = tribe_cache()->get( $memoize_key, Tribe__Cache_Listener::TRIGGER_SAVE_POST, null, Tribe__Cache::NON_PERSISTENT );
 		if ( ! empty( $vars ) ) {
 			return $vars;

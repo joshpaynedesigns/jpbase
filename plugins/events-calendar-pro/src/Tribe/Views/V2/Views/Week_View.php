@@ -17,6 +17,7 @@ use Tribe\Utils\Date_I18n;
 use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
 use Tribe__Events__Timezones as Timezones;
+use Tribe\Events\Views\V2\Views\Traits\With_Noindex;
 
 use DateTime;
 
@@ -29,6 +30,7 @@ use DateTime;
  */
 class Week_View extends By_Day_View {
 	use With_Fast_Forward_Link;
+	use With_Noindex;
 
 	/**
 	 * Slug for this view

@@ -24,14 +24,21 @@ class ID_Generator {
 	 * we set a base that's high enough.
 	 *
 	 * @since 6.0.0
+	 * @since 6.2.1 Removed the auto set to initial base, always find the value above the max post ID.
 	 */
 	public function install() {
-		if ( $this->needs_change() ) {
-			do {
-				$this->update();
-			} while ( $this->needs_change() );
-		} else {
-			update_option( $this->option_name(), $this->initial_base(), true );
+		$this->sync_above_max_id();
+	}
+
+	/**
+	 * Iterate on the base value, to find a valid provisional base number from the current max post ID in the wp_posts
+	 * table.
+	 *
+	 * @since 6.2.1
+	 */
+	public function sync_above_max_id() {
+		while ( $this->needs_change() ) {
+			$this->update();
 		}
 	}
 
@@ -63,7 +70,14 @@ class ID_Generator {
 	public function max_post_id() {
 		global $wpdb;
 
-		return (int) $wpdb->get_var( "SELECT MAX(`ID`) FROM {$wpdb->posts}" );
+		return (int) $wpdb->get_var(
+			$wpdb->prepare( "
+			SELECT `AUTO_INCREMENT`
+			FROM  INFORMATION_SCHEMA.TABLES
+			WHERE TABLE_SCHEMA = DATABASE()
+			  AND TABLE_NAME = %s",
+				$wpdb->posts
+			) );
 	}
 
 	/**
@@ -90,6 +104,8 @@ class ID_Generator {
 	 * Get the current value from the options or fallback to the default value if it was not defined.
 	 *
 	 * @since 6.0.0
+	 * @since 6.2.1 The default value is now 0 instead of initial base.
+	 *
 	 * @return int
 	 */
 	public function current() {

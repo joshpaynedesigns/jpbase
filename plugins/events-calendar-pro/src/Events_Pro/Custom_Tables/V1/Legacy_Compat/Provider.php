@@ -12,10 +12,7 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Legacy_Compat;
 
-use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events\Custom_Tables\V1\Provider_Contract;
-use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
-use TEC\Events_Pro\Custom_Tables\V1\Repository\Events;
 use Tribe__Admin__Notices as Admin_Notices;
 use Tribe__Events__Main as TEC;
 use Tribe__Events__Pro__Main as Pro_Main;
@@ -78,6 +75,24 @@ class Provider extends Service_Provider implements Provider_Contract {
 
 		// Do not redirect from post names to child posts.
 		remove_action( 'parse_query', [ $pro, 'set_post_id_for_recurring_event_query' ], 101 );
+
+		if ( ! has_filter( 'tec_events_pro_recurrence_get_start_dates', [ $this, 'recurrence_get_start_dates' ] ) ) {
+			add_filter( 'tec_events_pro_recurrence_get_start_dates', [ $this, 'recurrence_get_start_dates' ], 10, 2 );
+		}
+	}
+
+	/**
+	 * Will fetch the occurrence dates for the post specified.
+	 *
+	 * @since TBD
+	 *
+	 * @param null|array $occurrences The results if any have been filtered.
+	 * @param int        $post_id     The post ID to fetch occurrences for.
+	 *
+	 * @return string[] The occurrence dates found.
+	 */
+	public function recurrence_get_start_dates( $occurrences, $post_id ): array {
+		return $this->container->make( RecurrenceMeta::class )->recurrence_get_start_dates( $occurrences, $post_id );
 	}
 
 	/**

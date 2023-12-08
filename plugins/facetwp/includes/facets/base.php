@@ -58,7 +58,7 @@ class FacetWP_Facet
         if ( '-1' == $count ) {
             return 1000;
         }
-        elseif ( ctype_digit( $count ) ) {
+        elseif ( ctype_digit( "$count" ) ) { // ctype_digit expects input string
             return $count;
         }
 

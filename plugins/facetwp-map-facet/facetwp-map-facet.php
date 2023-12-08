@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Map Facet
 Description: Map facet type
-Version: 1.0.4
+Version: 1.0.5
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-map-facet
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'FACETWP_MAP_FACET_VERSION', '1.0.4' );
+define( 'FACETWP_MAP_FACET_VERSION', '1.0.5' );
 
 
 /**
@@ -108,15 +108,15 @@ class FacetWP_Facet_Map_Addon
         $height = is_numeric( $height ) ? $height . 'px' : $height;
 
         $class = '';
-        $btn_label = ( isset( $params['facet']['btn_label'] ) && '' != $params['facet']['btn_label'] ) ? $params['facet']['btn_label'] : facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) );
+        $btn_label = ( isset( $params['facet']['btn_label'] ) && '' != $params['facet']['btn_label'] ) ? $params['facet']['btn_label'] :  __( 'Enable map filtering', 'facetwp-map-facet' );
 
         if ( $this->is_map_filtering_enabled() ) {
             $class = ' enabled';
-            $btn_label = ( isset( $params['facet']['reset_label'] ) && '' != $params['facet']['reset_label'] ) ? $params['facet']['reset_label'] : facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) );
+            $btn_label = ( isset( $params['facet']['reset_label'] ) && '' != $params['facet']['reset_label'] ) ? $params['facet']['reset_label'] : __( 'Reset', 'facetwp-map-facet' ) ;
         }
 
         $output = '<div id="facetwp-map" style="width:' . $width . '; height:' . $height . '"></div>';
-        $output .= '<div><button class="facetwp-map-filtering' . $class . '">' . esc_html( $btn_label ) . '</button></div>';
+        $output .= '<div><button class="facetwp-map-filtering' . $class . '">' . esc_html( facetwp_i18n( $btn_label ) ) . '</button></div>';
         return $output;
     }
 
@@ -440,8 +440,11 @@ class FacetWP_Facet_Map_Addon
         FWP()->display->assets['markerclusterer'] = [ FACETWP_MAP_URL . '/assets/js/markerclusterer.js', FACETWP_MAP_FACET_VERSION ];
         FWP()->display->assets['facetwp-map-front'] = [ FACETWP_MAP_URL . '/assets/js/front.js', FACETWP_MAP_FACET_VERSION ];
 
-        FWP()->display->json['map']['filterText'] = ( isset( $this->map_facet['btn_label'] ) && '' != $this->map_facet['btn_label'] ) ? $this->map_facet['btn_label'] : facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) );
-        FWP()->display->json['map']['resetText']= ( isset( $this->map_facet['reset_label'] ) && '' != $this->map_facet['reset_label'] ) ? $this->map_facet['reset_label'] : facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) );
+        $btn_label = ( isset( $this->map_facet['btn_label'] ) && '' != $this->map_facet['btn_label'] ) ? $this->map_facet['btn_label'] : __( 'Enable map filtering', 'facetwp-map-facet' ) ;
+        FWP()->display->json['map']['filterText'] = facetwp_i18n( $btn_label );
+
+        $reset_label = ( isset( $this->map_facet['reset_label'] ) && '' != $this->map_facet['reset_label'] ) ? $this->map_facet['reset_label'] : __( 'Reset', 'facetwp-map-facet');
+        FWP()->display->json['map']['resetText'] = facetwp_i18n( $reset_label );
         FWP()->display->json['map']['facet_name'] = $this->map_facet['name'];
         FWP()->display->json['map']['ajaxurl'] = admin_url( 'admin-ajax.php' );
     }

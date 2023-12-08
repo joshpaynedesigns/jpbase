@@ -191,8 +191,12 @@ class autoptimizeMain
                 }
 
                 // And disable Jetpack's site accelerator if JS or CSS opt. are active.
-                if ( class_exists( 'Jetpack' ) && apply_filters( 'autoptimize_filter_main_disable_jetpack_cdn', true ) && ( $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) ) ) {
-                    add_filter( 'jetpack_force_disable_site_accelerator', '__return_true' );
+                if ( class_exists( 'Jetpack' ) && apply_filters( 'autoptimize_filter_main_disable_jetpack_cdn', true ) && ( $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) || autoptimizeImages::imgopt_active() ) ) {
+                    add_filter( 'jetpack_force_disable_site_accelerator', '__return_true' ); // this does not seemt to work any more?
+                    if ( true === autoptimizeImages::imgopt_active() ) {
+                        // only disable photon if AO is optimizing images.
+                        add_filter( 'jetpack_photon_skip_for_url', '__return_true' );
+                    }
                 }
 
                 // Add "no cache found" notice.
@@ -224,6 +228,7 @@ class autoptimizeMain
         if ( autoptimizeConfig::is_admin_and_not_ajax() ) {
             new autoptimizePartners();
             new autoptimizeExitSurvey();
+            new autoptimizeProTab();
         }
     }
 
@@ -255,10 +260,12 @@ class autoptimizeMain
 
     public function maybe_run_ao_compat()
     {
+        $conf = autoptimizeConfig::instance();
+
         // Condtionally loads the compatibility-class to ensure more out-of-the-box compatibility with big players.
         $_run_compat = true;
 
-        if ( autoptimizeOptionWrapper::get_option( 'autoptimize_installed_before_compatibility', false ) ) {
+        if ( 'on' === $conf->get( 'autoptimize_installed_before_compatibility' ) ) {
             // If AO was already running before Compatibility logic was added, don't run compat by default
             // because it can be assumed everything works and we want to avoid (perf) regressions that
             // could occur due to compatibility code.
@@ -749,7 +756,7 @@ class autoptimizeMain
     public static function notice_installed()
     {
         echo '<div class="updated"><p>';
-        printf( __( 'Thank you for installing and activating Autoptimize. Please configure it under %1$sSettings -> Autoptimize%2$s to start improving your site\'s performance.', 'autoptimize' ), '<a href="options-general.php?page=autoptimize">', '</a>' );
+        printf( __( 'Thank you for installing and activating Autoptimize. Your site is being optimized immediately, please test the frontend to ensure everything still works as expected. If needed you can change JavaScript or CSS optimization settings under %1$sSettings -> Autoptimize%2$s .', 'autoptimize' ), '<a href="options-general.php?page=autoptimize">', '</a>' );
         echo '</p></div>';
     }
 

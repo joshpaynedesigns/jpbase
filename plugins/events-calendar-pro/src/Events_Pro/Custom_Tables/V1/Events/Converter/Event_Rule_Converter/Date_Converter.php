@@ -14,7 +14,6 @@ class Date_Converter extends Abstract_Event_Rule_Converter {
 	 * @inheritDoc
 	 */
 	public function convert_to_rrule( bool $is_exrule = false ): string {
-
 		$rule = $this->rule;
 		if ( ! isset( $rule['custom']['date']['date'] ) ) {
 			throw Requirement_Error::due_to_missing_required_information(

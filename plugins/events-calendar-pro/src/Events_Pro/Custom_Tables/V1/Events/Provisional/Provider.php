@@ -48,12 +48,10 @@ class Provider extends Service_Provider {
 	 * @param $post_id
 	 */
 	public function flush_cache( $post_id ) {
-		$ID_generator     = $this->container->make( Provisional_ID_Generator::class );
-		$provisional_post = $this->container->make( Provisional_Post_Cache::class );
-
-		while ( $ID_generator->needs_change() ) {
-			$provisional_post->flush_all();
-			$ID_generator->update();
+		$ID_generator = $this->container->make( Provisional_ID_Generator::class );
+		if ( $ID_generator->needs_change() ) {
+			tribe( Provisional_Post_Cache::class )->flush_all();
+			$ID_generator->sync_above_max_id();
 		}
 	}
 

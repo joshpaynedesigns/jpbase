@@ -59,6 +59,11 @@ class Duplicate {
 	protected $provisional_post;
 
 	/**
+	 * @var Url
+	 */
+	protected Url $url;
+
+	/**
 	 * Duplicate constructor.
 	 *
 	 * @since 6.0.0

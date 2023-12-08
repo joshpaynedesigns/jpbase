@@ -44,6 +44,41 @@ class WPML_Integration extends Service_Provider {
 		);
 
 		add_filter( 'wpml_get_ls_translations', [ $this, 'filter_provisional_id_ls_translation' ], 10, 2 );
+
+		add_filter( 'post_type_link', [ $this, 'filter_permalinks_with_provisional_id' ], 15, 2 );
+	}
+
+	/**
+	 * Filter the permalink to retain the lang param. When provisional IDs are involved, the WPML
+	 * parser will fail to locate the lang and lose the permalink.
+	 *
+	 * @since TBD
+	 *
+	 * @param string  $post_link The post link that has been pre-filtered.
+	 * @param WP_Post $post      The WP_Post for this permalink.
+	 *
+	 * @return string
+	 */
+	public function filter_permalinks_with_provisional_id( $post_link, WP_Post $post ) {
+		if ( $post->post_type !== \Tribe__Events__Main::POSTTYPE ) {
+			return $post_link;
+		}
+
+		// We only need to fix provisional posts, WPML can't find us by that ID.
+		if ( ! tribe( Provisional_Post::class )->is_provisional_post_id( $post->ID ) ) {
+			return $post_link;
+		}
+
+		// Recurring events are already being handled properly elsewhere. If that changes remove this conditional.
+		if ( tribe_is_recurring_event( $post->ID ) ) {
+			return $post_link;
+		}
+
+		// Remove the home URL from permalink.
+		$post_link = str_replace( array( home_url( '/' ), site_url( '/' ) ), '', $post_link );
+
+		// Add the home URL back and retain the lang query param.
+		return home_url( user_trailingslashit( $post_link ) );
 	}
 
 	/**

@@ -387,7 +387,12 @@ class Single_Event_Modifications {
 		foreach ( $args['object_ids'] as $id ) {
 			// Use the post as the place to get the ID as it might be cached already.
 			$post = get_post( $id );
-			if ( $post instanceof WP_Post && isset( $post->_tec_occurrence ) && $post->_tec_occurrence instanceof Occurrence ) {
+			// Order of evaluation matters.
+			$should_redirect = $post instanceof WP_Post
+			                   && $this->provisional_post->is_provisional_post_id( $id )
+			                   && isset( $post->_tec_occurrence )
+			                   && $post->_tec_occurrence instanceof Occurrence;
+			if ( $should_redirect ) {
 				$redirected_ids[] = $post->_tec_occurrence->post_id;
 			} else {
 				$normal_ids[] = $id;

@@ -414,11 +414,21 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 * Saves the Event Recurrence meta in the WRITE part of the request.
 	 *
 	 * @since 6.0.0
+	 * @since 6.2.3.1 Avoid saving the recurrence meta if the post is not an Event.
 	 *
-	 * @param int                 $event_id The Event post ID.
+	 * @param int                 $event_id The post ID of the Event or Revision.
 	 * @param array<string,mixed> $data     The Event update data, as provided by the TEC API.
 	 */
 	public function save_recurrence_meta( int $event_id, array $data = [] ): void {
+		if ( get_post_type( $event_id ) !== TEC::POSTTYPE ) {
+			/*
+			 * Updates to the meta of a Revision would be redirected to the actual post,
+			 * an Event in this case, causing possible override of the correct meta.
+			 * No point in moving on if the post is not a valid Event.
+			 */
+			return;
+		}
+
 		$this->container->make( Controller::class )->save_recurrence_meta( $event_id, $data );
 	}
 

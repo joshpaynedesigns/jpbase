@@ -33,4 +33,3 @@ if ( $num_venues < 2 ) {
 	);
 	?>
 </span>
-<?php

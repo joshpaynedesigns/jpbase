@@ -23,7 +23,7 @@
 		echo esc_html(
 			sprintf(
 				/* translators: %1$s: event (plural), %2$s: ticket (plural), %3$s: RSVP (plural). */
-				__( '%2$s and %3$s are not yet supported on recurring %1$s.', 'tribe-events-calendar-pro' ),
+				__('Recurrence patterns are not yet supported for %1$s with %2$s or %3$s.', 'tribe-events-calendar-pro' ),
 				tribe_get_event_label_plural_lowercase(),
 				tribe_get_ticket_label_plural_lowercase(),
 				tribe_get_rsvp_label_plural()

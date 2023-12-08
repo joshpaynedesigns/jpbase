@@ -360,7 +360,10 @@ final class FacetWP_Helper
             }
         }
         else {
-            if ( $wpdb->dbh && $wpdb->use_mysqli ) {
+            // Use mysqli_real_escape_string if WP 6.4+ or $wpdb->use_mysqli is true
+            // The $wpdb->use_mysqli property was removed in WP 6.4
+            // Since the mysqli driver is now required
+            if ( ! isset( $wpdb->use_mysqli ) || ( $wpdb->dbh && $wpdb->use_mysqli ) ) {
                 $output = mysqli_real_escape_string( $wpdb->dbh, $input );
             }
             else {

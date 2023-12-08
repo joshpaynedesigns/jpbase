@@ -15,7 +15,9 @@ use TEC\Events\Custom_Tables\V1\WP_Query\Modifiers\WP_Query_Modifier;
 use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\Custom_Tables_Query_Monitor;
 use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\Query_Monitor;
 use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\WP_Query_Monitor;
+use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Modifiers\Events_Not_Recurring_Custom_Tables_Query_Modifier;
 use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Modifiers\Events_Not_In_Series_Modifier;
+use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Modifiers\Events_Not_Recurring_Query_Modifier;
 use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Modifiers\Events_Series_Relationship_Modifier;
 use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Modifiers\Occurrences_Series_Relationship_Modifier;
 use WP_Query;
@@ -36,17 +38,23 @@ class WP_Query_Monitor_Filters {
 	 */
 	public function filter_query_modifier_implementations( array $implementations, $query_monitor ): array {
 		if ( $query_monitor instanceof WP_Query_Monitor ) {
-			if ( ! in_array( Events_Series_Relationship_Modifier::class, $implementations ) ) {
+			if ( ! in_array( Events_Series_Relationship_Modifier::class, $implementations, true ) ) {
 				$implementations[] = Events_Series_Relationship_Modifier::class;
 			}
-			if ( ! in_array( Events_Not_In_Series_Modifier::class, $implementations ) ) {
+			if ( ! in_array( Events_Not_In_Series_Modifier::class, $implementations, true ) ) {
 				$implementations[] = Events_Not_In_Series_Modifier::class;
+			}
+			if ( ! in_array( Events_Not_Recurring_Query_Modifier::class, $implementations, true ) ) {
+				$implementations[] = Events_Not_Recurring_Query_Modifier::class;
 			}
 		}
 
 		if ( $query_monitor instanceof Custom_Tables_Query_Monitor ) {
 			if ( ! in_array( Occurrences_Series_Relationship_Modifier::class, $implementations ) ) {
 				$implementations[] = Occurrences_Series_Relationship_Modifier::class;
+			}
+			if ( ! in_array( Events_Not_Recurring_Custom_Tables_Query_Modifier::class, $implementations, true ) ) {
+				$implementations[] = Events_Not_Recurring_Custom_Tables_Query_Modifier::class;
 			}
 		}
 
