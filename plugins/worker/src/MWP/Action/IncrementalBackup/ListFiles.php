@@ -213,7 +213,7 @@ class MWP_Action_IncrementalBackup_ListFiles extends MWP_Action_IncrementalBacku
     private function createFileResult(SplFileInfo $file)
     {
         $fileResult = array(
-            'path'        => $this->replaceWindowsPath($this->getRelativePath($file->getPathname(), ABSPATH)),
+            'path'        => $this->replaceWindowsPath($this->getRelativePath($file->getPathname(), $this->cleanPath(ABSPATH))),
             'pathEncoded' => false,
             'isLink'      => false,
             'exists'      => false,
@@ -273,5 +273,9 @@ class MWP_Action_IncrementalBackup_ListFiles extends MWP_Action_IncrementalBacku
         }
 
         return $iterator;
+    }
+
+    private function cleanPath($path) {
+        return preg_replace('#/{2,}#', '/', $path);
     }
 }

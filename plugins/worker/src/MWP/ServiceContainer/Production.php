@@ -31,7 +31,6 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AddConnectionKeyInfo($this->getWordPressContext()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_SetHitCounter($this->getWordPressContext(), $this->getHitCounter(), $this->getRequestStack(), $this->getParameter('hit_counter_blacklisted_ips'), $this->getParameter('hit_counter_blacklisted_user_agents')));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AutomaticLogin($this->getWordPressContext(), $this->getNonceManager(), $this->getSigner(), $this->getConfiguration(), $this->getSessionStore()));
-        $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AddStatusPage($this->getWordPressContext(), $this->getConfiguration()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_CommandListener($this->getWordPressContext(), $this->getSigner(), $this->getConfiguration(), $this->getNonceManager()));
 
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AuthenticateServiceRequest($this->getConfiguration(), $this->getSigner(), $this->getWordPressContext()));
