@@ -3,7 +3,7 @@
 Plugin Name: ManageWP - Worker
 Plugin URI: https://managewp.com
 Description: We help you efficiently manage all your WordPress websites. <strong>Updates, backups, 1-click login, migrations, security</strong> and more, on one dashboard. This service comes in two versions: standalone <a href="https://managewp.com">ManageWP</a> service that focuses on website management, and <a href="https://godaddy.com/pro">GoDaddy Pro</a> that includes additional tools for hosting, client management, lead generation, and more.
-Version: 4.9.17
+Version: 4.9.19
 Author: GoDaddy
 Author URI: https://godaddy.com
 License: GPL2
@@ -575,8 +575,8 @@ if (!function_exists('mwp_init')):
         // reason (eg. the site can't ping itself). Handle that case early.
         register_activation_hook(__FILE__, 'mwp_activation_hook');
 
-        $GLOBALS['MMB_WORKER_VERSION']  = '4.9.17';
-        $GLOBALS['MMB_WORKER_REVISION'] = '2023-04-05 00:00:00';
+        $GLOBALS['MMB_WORKER_VERSION']  = '4.9.19';
+        $GLOBALS['MMB_WORKER_REVISION'] = '2024-01-09 00:00:00';
 
         // Ensure PHP version compatibility.
         if (version_compare(PHP_VERSION, '5.2', '<')) {
@@ -710,13 +710,13 @@ if (!function_exists('mwp_init')):
         add_action('in_plugin_update_message-'.plugin_basename(__FILE__), 'add_worker_update_info');
 
         add_filter('cron_schedules', 'mwp_link_monitor_cron_recurrence_interval');
-        add_action('mwp_check_for_post_update', 'mwp_send_posts_to_link_monitor');
+
         if (mwp_context()->optionGet('mwp_link_monitor_enabled')) {
             add_action('save_post', 'mwp_add_post_to_link_monitor_check');
             add_action('delete_post', 'mwp_add_post_to_link_monitor_check');
 
-            if (!wp_next_scheduled('mwp_check_for_post_update')) {
-                wp_schedule_event(time(), 'every_five_minutes', 'mwp_check_for_post_update');
+            if (wp_next_scheduled('mwp_check_for_post_update')) {
+                wp_clear_scheduled_hook('mwp_check_for_post_update');
             }
         }
         // Public key updating cron.
