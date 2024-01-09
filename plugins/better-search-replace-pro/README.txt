@@ -2,7 +2,7 @@
 Contributors: wpengine, deliciousbrains, mattshaw
 Tags: search replace, search and replace, update urls, database, search replace database, update database urls, update live url, better search replace, search&replace
 Requires at least: 3.0.1
-Tested up to: 6.3.1
+Tested up to: 6.4
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -89,7 +89,10 @@ This is likely an issue with your PHP memory limit. Try temporarily increasing i
 
 == Changelog ==
 
-= 1.4.3 - August 31, 2023 =
+= 1.4.4 - December 14, 2023 =
+* Fix: Numerical properties of objects are now skipped to avoid causing errors
+
+= 1.4.3 - September 5, 2023 =
 * New: Links to plugin documentation, support, feedback, and changelog are now available in the footer of WP Admin
 * Improvement: PHP 8.2 and Better Search Replace are now compatible
 * Improvement: License keys can now be removed from inactive sites

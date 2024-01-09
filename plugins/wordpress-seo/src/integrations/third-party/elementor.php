@@ -434,7 +434,8 @@ class Elementor implements Integration_Interface {
 				'has_taxonomies'           => $this->current_post_type_has_taxonomies(),
 			],
 			'shortcodes'  => [
-				'wpseo_shortcode_tags' => $this->get_valid_shortcode_tags(),
+				'wpseo_shortcode_tags'          => $this->get_valid_shortcode_tags(),
+				'wpseo_filter_shortcodes_nonce' => \wp_create_nonce( 'wpseo-filter-shortcodes' ),
 			],
 		];
 
@@ -612,7 +613,23 @@ class Elementor implements Integration_Interface {
 			$values['cornerstoneActive'] = false;
 		}
 
+		$values['elementorMarkerStatus'] = $this->is_highlighting_available() ? 'enabled' : 'hidden';
+
 		return $values;
+	}
+
+	/**
+	 * Checks whether the highlighting functionality is available for Elementor:
+	 * - in Free it's always available (as an upsell).
+	 * - in Premium it's available as long as the version is 21.8-RC0 or above.
+	 *
+	 * @return bool Whether the highlighting functionality is available.
+	 */
+	private function is_highlighting_available() {
+		$is_premium      = \YoastSEO()->helpers->product->is_premium();
+		$premium_version = \YoastSEO()->helpers->product->get_premium_version();
+
+		return ! $is_premium || \version_compare( $premium_version, '21.8-RC0', '>=' );
 	}
 
 	/**

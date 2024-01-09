@@ -94,7 +94,7 @@ class MMB_User extends MMB_Core
         foreach ((array) $temp_users as $temp) {
             $user['user_id']         = $temp->ID;
             $user['user_login']      = $temp->user_login;
-            $user['wp_capabilities'] = array_keys($temp->$field);
+            $user['wp_capabilities'] = is_array($temp->$field) ? array_keys($temp->$field) : array();
             $users[]                 = $user;
         }
 

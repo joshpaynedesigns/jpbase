@@ -58,7 +58,8 @@ class MMB_Core
     {
         $enabledNotice = $this->isNoticeEnabled();
 
-        if (count(mwp_get_communication_keys()) > 0 || !$enabledNotice) {
+        $keys = mwp_get_communication_keys();
+        if (is_array($keys) && count($keys) > 0 || !$enabledNotice) {
             return;
         }
 
@@ -72,8 +73,8 @@ class MMB_Core
     public function admin_notice()
     {
         $enabledNotice = $this->isNoticeEnabled();
-
-        if (count(mwp_get_communication_keys()) > 0 || !$enabledNotice) {
+        $keys = mwp_get_communication_keys();
+        if (is_array($keys) && count($keys) > 0 || !$enabledNotice) {
             return;
         }
 
