@@ -51,7 +51,7 @@
   @return $number;
 }
 
-@function em($pixels) {
+@function rem($pixels) {
   $clean: strip-unit($pixels);
   @return math.div($clean, 16) + em;
 }

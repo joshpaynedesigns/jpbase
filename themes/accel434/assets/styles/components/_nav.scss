@@ -93,7 +93,7 @@ $sub-nav-link-color-hover: $base-font-color;
 
         a {
           color: $sub-nav-link-color;
-          font-size: em(14);
+          font-size: rem(14);
           padding: 0 0 1em 0;
           position: relative;
 
@@ -133,7 +133,7 @@ $sub-nav-link-color-hover: $base-font-color;
         color: white;
         display: inline-block;
         font-family: $heading-font-family;
-        font-size: em(14);
+        font-size: rem(14);
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
         line-height: 1em;

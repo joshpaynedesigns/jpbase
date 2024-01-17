@@ -67,7 +67,7 @@
   }
 
   .tribe-events-c-breadcrumbs__list {
-    font-size: em(30px) !important;
+    font-size: rem(30px) !important;
 
     .tribe-events-c-breadcrumbs__list-item {
       margin-left: 0;
@@ -136,7 +136,6 @@
 Events Single
 ****/
 .single-tribe_events {
-
   .site-inner > .wrap {
     max-width: none;
     width: 100%;
@@ -181,10 +180,10 @@ Events Single
         padding: 0;
         font-weight: bold;
         // text-transform: uppercase;
-        font-size: em(30);
+        font-size: rem(30);
 
         @media ($medium-screen-up) {
-          font-size: em(40);
+          font-size: rem(40);
         }
       }
 

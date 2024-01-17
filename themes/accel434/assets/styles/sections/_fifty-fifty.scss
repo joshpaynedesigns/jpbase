@@ -27,7 +27,7 @@
         padding: 4em 0;
 
         p {
-          font-size: em(16);
+          font-size: rem(16);
         }
 
         @media ($large-screen-up) {
@@ -103,7 +103,7 @@
 
           .image-blurb-content {
             color: white;
-            font-size: em(20px);
+            font-size: rem(20px);
             padding-left: $base-spacing;
             padding-right: $base-spacing;
             position: absolute;

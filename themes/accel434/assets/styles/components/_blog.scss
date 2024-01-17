@@ -34,7 +34,7 @@
   }
 
   .story-date {
-    font-size: em(15);
+    font-size: rem(15);
   }
 
   .story-title {
@@ -66,12 +66,12 @@
 
   .story-blurb-content {
     color: #555;
-    font-size: em(14);
+    font-size: rem(14);
     margin-bottom: 0.75em;
   }
 
   .read-more {
-    font-size: em(14);
+    font-size: rem(14);
     font-weight: 500;
   }
 }

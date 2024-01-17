@@ -13,7 +13,7 @@ input[type="button"].facetwp-slider-reset,
   @include button-set-up($light-gray);
   box-shadow: none;
   color: $dark-gray;
-  font-size: em(13px);
+  font-size: rem(13px);
   margin-top: rem(10px);
   padding: rem(10px);
 
@@ -50,7 +50,7 @@ input[type="button"].facetwp-slider-reset,
 
   .sidebar {
     .widget {
-      margin-bottom: em(40);
+      margin-bottom: rem(40);
       padding: 0;
     }
   }
@@ -357,8 +357,8 @@ input[type="button"].facetwp-slider-reset,
     border-width: 1px !important;
     box-shadow: none !important;
     color: $toolbar-text-color;
-    font-size: em(14px);
-    padding: em(10px);
+    font-size: rem(14px);
+    padding: rem(10px);
     width: 100%;
 
     @media ($medium-screen-up) {
@@ -376,7 +376,7 @@ input[type="button"].facetwp-slider-reset,
     height: 0px;
     pointer-events: none;
     position: absolute;
-    right: em(14px);
+    right: rem(14px);
     top: 50%;
     width: 0px;
   }
@@ -440,7 +440,7 @@ input[type="button"].facetwp-slider-reset,
   border-top: $base-border;
   border-bottom: $base-border;
   border-color: $light-gray;
-  margin-bottom: em(60);
+  margin-bottom: rem(60);
 
   .single-product & {
     margin-top: 80px;
@@ -490,7 +490,7 @@ input[type="button"].facetwp-slider-reset,
 .woocommerce div.product .product_title {
   font-family: $heading-font-family;
   text-transform: uppercase;
-  font-size: em(42);
+  font-size: rem(42);
   line-height: 1em;
   position: relative;
   padding-bottom: 0.5em !important;
@@ -521,10 +521,10 @@ input[type="button"].facetwp-slider-reset,
 }
 
 .single-product #content {
-  margin-top: em(30);
+  margin-top: rem(30);
 
   @media ($medium-screen-up) {
-    margin-top: em(60);
+    margin-top: rem(60);
   }
 
   @media ($large-screen-up) {
@@ -859,10 +859,10 @@ abbr[title] {
 
 body.woocommerce-cart .site-inner,
 body.woocommerce-checkout .site-inner {
-  margin: em(150px) 0 em(35px);
+  margin: rem(150px) 0 rem(35px);
 
   @media ($large-screen-up) {
-    margin: em(200px) 0 em(50px);
+    margin: rem(200px) 0 rem(50px);
   }
 }
 
@@ -1086,11 +1086,11 @@ li.wc_payment_method {
 
 #awrc-contact {
   h3 {
-    font-size: em(24px);
+    font-size: rem(24px);
   }
 
   h4 {
-    font-size: em(18px);
+    font-size: rem(18px);
     text-transform: none;
   }
 }
@@ -1105,7 +1105,7 @@ li.wc_payment_method {
   margin-bottom: 3em;
 
   .page-title {
-    font-size: em(42);
+    font-size: rem(42);
   }
 }
 
@@ -1167,7 +1167,7 @@ li.wc_payment_method {
 // Woo Rateings & Reviews
 .woocommerce-tabs {
   h2 {
-    font-size: em(30);
+    font-size: rem(30);
     padding-bottom: 0;
     font-family: $base-font-family;
 
@@ -1269,7 +1269,7 @@ li.wc_payment_method {
       float: right;
 
       @media (max-width: 350px) {
-        font-size: em(14px);
+        font-size: rem(14px);
         margin-bottom: $small-spacing;
       }
     }
@@ -1312,7 +1312,7 @@ li.wc_payment_method {
     // width: auto !important;
 
     h2 {
-      font-size: em(32);
+      font-size: rem(32);
     }
   }
 
@@ -1556,7 +1556,7 @@ li.wc_payment_method {
 
     .price {
       color: $base-font-color !important;
-      // font-size: em(16px) !important;
+      // font-size: rem(16px) !important;
       // position: absolute;
       // right: $small-spacing/2;
       // top: $small-spacing/2;
@@ -1651,7 +1651,7 @@ li.wc_payment_method {
       }
 
       .addon-name {
-        font-size: em(18px) !important;
+        font-size: rem(18px) !important;
         margin-bottom: $small-spacing/2 !important;
         font-weight: 400 !important;
       }
@@ -1665,7 +1665,7 @@ li.wc_payment_method {
 
         label {
           font-weight: 200 !important;
-          font-size: em(14px);
+          font-size: rem(14px);
 
           input {
             margin-top: $small-spacing/4;

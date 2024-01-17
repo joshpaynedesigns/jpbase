@@ -8,13 +8,13 @@ $icon-color: white;
 
   .alert-text p {
     display: inline-block;
-    font-size: em(18);
+    font-size: rem(18);
     line-height: 1.5em;
     margin-bottom: 0;
   }
 
   .alert-button a {
-    font-size: em(12);
+    font-size: rem(12);
     margin: 0.5em 0 0.5em 1em;
     padding: 0.5em 1em 0.4em 1em;
   }
@@ -44,7 +44,7 @@ $icon-color: white;
     padding: 1em 0;
 
     .site-title {
-      font-size: em(40);
+      font-size: rem(40);
       font-weight: 500;
       margin-bottom: 0;
 

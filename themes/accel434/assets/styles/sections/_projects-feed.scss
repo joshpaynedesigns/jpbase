@@ -28,7 +28,7 @@
 
       .project-info {
         .project-title {
-          // font-size: em(18);
+          // font-size: rem(18);
           // text-transform: uppercase;
           font-weight: bold;
         }
@@ -40,12 +40,12 @@
         }
 
         .project-blurb {
-          font-size: em(14);
+          font-size: rem(14);
           color: $base-font-color;
         }
 
         .project-link {
-          font-size: em(14);
+          font-size: rem(14);
           text-transform: uppercase;
         }
       }
