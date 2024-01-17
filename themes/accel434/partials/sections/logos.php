@@ -5,7 +5,7 @@
     $section_classes = ns_decide_section_classes();
 ?>
 
-<section class="logos-section <?php echo $section_classes; ?>">
+<section id="logossection" class="logos-section <?php echo $section_classes; ?>">
     <div class="wrap">
         <?php ns_section_header($section_title, 'basemb2 text-center'); ?>
 

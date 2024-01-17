@@ -1,32 +1,6 @@
 .boxes-section {
   position: relative;
 
-  &.background-wave {
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
-    padding: $mobile-section-margin 0;
-
-    @media ($large-screen-up) {
-      margin-bottom: 0 !important;
-      margin-top: 0 !important;
-      padding: $desk-section-margin 0;
-    }
-
-    .wave-bg-wrap {
-      bottom: 0;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      z-index: -1;
-
-      svg {
-        height: 100%;
-        width: 100%;
-      }
-    }
-  }
-
   .boxes {
     display: flex;
     flex-wrap: wrap;

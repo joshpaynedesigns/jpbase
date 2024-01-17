@@ -41,25 +41,9 @@
         @include bg_overlay($dark-gray, 0.5);
       }
 
-      &.primary {
-        background-color: $blue;
-      }
-
-      &.white {
-        background-color: white;
-      }
-
-      &.white,
-      &.none {
+      &.bg-white,
+      &.bg-none {
         border: 1px solid $light-gray;
-      }
-
-      &.light-gray {
-        background-color: $light-gray;
-      }
-
-      &.dark-gray {
-        background-color: $dark-gray;
       }
     }
   }

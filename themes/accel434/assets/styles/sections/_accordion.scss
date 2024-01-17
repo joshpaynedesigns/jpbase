@@ -1,4 +1,22 @@
 .accordion-row {
+  transition: all $base-duration $base-timing;
+  border-color: $medium-gray;
+
+  &:hover,
+  &.active-ar {
+    border-color: $blue;
+
+    .ac-row-title {
+      color: $dark-gray;
+    }
+
+    .ac-row-toggle {
+      &:before,
+      &:after {
+        background: $dark-gray;
+      }
+    }
+  }
 }
 
 .accordion-row-header {
@@ -6,26 +24,14 @@
   cursor: pointer;
   display: flex;
   justify-content: space-between;
-
-  &:hover,
-  &.active-ar {
-    .ac-row-title {
-      color: $blue;
-    }
-
-    .ac-row-toggle {
-      &:before,
-      &:after {
-        background: $blue;
-      }
-    }
-  }
 }
 
 .ac-row-title {
   font-size: rem(16);
   max-width: 84%;
   transition: all $base-duration $base-timing;
+  color: $medium-gray;
+  text-transform: none;
 }
 
 .ac-row-toggle {
@@ -33,23 +39,23 @@
 
   &:before,
   &:after {
-    background: $base-font-color;
+    background: $medium-gray;
     content: "";
     display: block;
-    height: 3px;
+    height: rem(3);
     position: absolute;
-    top: -2px;
+    top: rem(-2);
     transition: all $base-duration $base-timing;
-    width: 14px;
+    width: rem(14);
   }
 
   &:before {
-    right: 15px;
+    right: rem(15);
     transform: rotate(45deg);
   }
 
   &:after {
-    right: 7px;
+    right: rem(7);
     transform: rotate(-45deg);
   }
 
