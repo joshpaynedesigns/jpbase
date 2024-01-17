@@ -20,7 +20,7 @@
       }
 
       .project-img {
-        height: 200px;
+        height: rem(200);
         @include bg();
         margin-bottom: 1em;
         display: block;
@@ -34,7 +34,7 @@
         }
 
         .project-cats {
-          margin-top: -5px;
+          margin-top: rem(-5);
           margin-bottom: 0.7em;
           color: $base-font-color;
         }

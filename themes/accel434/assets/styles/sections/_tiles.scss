@@ -24,10 +24,6 @@
         padding: rem(75) rem(48);
       }
 
-      @media screen and (min-width: 1200px) {
-        padding: $base-spacing * 3 $base-spacing * 2;
-      }
-
       .tile-block-excerpt {
         position: relative;
         z-index: 100;
@@ -43,7 +39,7 @@
 
       &.bg-white,
       &.bg-none {
-        border: 1px solid $light-gray;
+        border: rem(1) solid $light-gray;
       }
     }
   }

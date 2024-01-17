@@ -36,7 +36,7 @@
 
   span,
   time {
-    margin-right: 5px;
+    margin-right: rem(5);
 
     &:last-child {
       margin-right: 0;
@@ -55,7 +55,7 @@
 
 .entry-terms {
   display: block;
-  padding-bottom: 5px;
+  padding-bottom: rem(5);
 
   &:last-child {
     padding-bottom: 0;

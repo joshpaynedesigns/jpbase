@@ -30,7 +30,7 @@
   .widget_ns_footer_contact {
     .footer-logo {
       margin-bottom: 0.5em;
-      max-width: 300px;
+      max-width: rem(300);
     }
 
     .get-directions {
@@ -104,17 +104,17 @@
   a {
     color: $medium-gray;
     display: inline-block;
-    height: 22px;
-    margin-right: 10px;
+    height: rem(22);
+    margin-right: rem(10);
     overflow: hidden;
     text-decoration: none !important;
-    width: 22px;
+    width: rem(22);
   }
 
   svg {
     background: transparent;
     fill: $medium-gray;
-    height: 22px;
+    height: rem(22);
     transition: all $base-duration $base-timing;
     width: auto;
 

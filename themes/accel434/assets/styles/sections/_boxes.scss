@@ -15,7 +15,7 @@
     padding: rem(48);
     position: relative;
 
-    @media (min-width: 400px) {
+    @media (min-width: rem(400)) {
       min-width: rem(200);
     }
 

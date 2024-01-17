@@ -41,7 +41,7 @@
       background: white;
       bottom: 5%;
       color: #666;
-      font-size: 9px;
+      font-size: rem(9);
       font-weight: 600;
       left: 5%;
       max-width: 90%;
@@ -67,10 +67,10 @@
     .gallery-img-wrap {
       flex-basis: 48%;
       flex-grow: 1;
-      height: 200px;
+      height: rem(200);
 
       @media ($large-screen-up) {
-        height: 300px;
+        height: rem(300);
       }
     }
 

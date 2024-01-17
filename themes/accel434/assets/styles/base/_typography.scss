@@ -18,7 +18,7 @@ body {
     color: white;
   }
 
-  @media screen and (min-width: 900px) {
+  @media screen and (min-width: rem(900)) {
     font-size: $base-font-size;
   }
 }
@@ -96,7 +96,7 @@ picture {
 }
 
 blockquote {
-  border-left: 8px solid $light-blue;
+  border-left: rem(8) solid $light-blue;
   color: $blue;
   margin: 4% 5% 4% 0;
   padding: 0 0 0 rem(32);
@@ -111,14 +111,14 @@ code {
   background: $light-gray;
   border: $base-border;
   color: $base-font-color;
-  padding: 2px 4px;
+  padding: rem(2) rem(4);
 }
 
 .wp-caption .wp-caption-text {
   font-size: rem(12);
-  letter-spacing: 1px;
+  letter-spacing: rem(1);
   line-height: 1.2;
-  margin: 10px 0;
+  margin: rem(10) 0;
   text-transform: uppercase;
 }
 

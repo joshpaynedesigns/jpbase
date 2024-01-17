@@ -8,11 +8,11 @@
 
 .story {
   display: block;
-  margin-top: 2px;
+  margin-top: rem(2);
 
   .story-img {
     height: rem(250);
-    margin-bottom: 20px;
+    margin-bottom: rem(20);
     position: relative;
     @include bg();
 
@@ -54,7 +54,7 @@
     margin-bottom: 1em;
 
     span {
-      border-right: 1px solid #555;
+      border-right: rem(1) solid #555;
       padding-right: 0.3em;
 
       &:last-child {
@@ -80,7 +80,7 @@
 .post-template-default.single {
   .site-inner {
     .wrap {
-      max-width: 650px;
+      max-width: rem(650);
     }
   }
 
@@ -94,7 +94,7 @@
 .locations-list .story {
   .story-img {
     @media ($large-screen-up) {
-      height: 300px;
+      height: rem(300);
     }
   }
 }

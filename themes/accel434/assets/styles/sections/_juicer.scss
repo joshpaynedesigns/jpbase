@@ -15,7 +15,7 @@
 
   .juicer-feed.slider {
     .referral {
-      margin-bottom: 10px;
+      margin-bottom: rem(10);
 
       a {
         color: black !important;
@@ -23,7 +23,7 @@
     }
 
     .slick-prev {
-      left: 1px;
+      left: rem(1);
 
       &:before {
         display: block;
@@ -31,7 +31,7 @@
     }
 
     .slick-next {
-      right: 1px;
+      right: rem(1);
 
       &:before {
         display: block;

@@ -32,7 +32,7 @@
         color: #777;
 
         span {
-          border-right: 1px solid #999;
+          border-right: rem(1) solid #999;
           padding-right: 0.3em;
 
           &:last-child {

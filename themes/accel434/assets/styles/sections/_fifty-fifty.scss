@@ -53,7 +53,7 @@
 
       &.image {
         background-color: black;
-        height: 400px;
+        height: rem(400);
         position: relative;
 
         @media ($large-screen-up) {
@@ -91,7 +91,7 @@
           width: 100%;
 
           @media ($large-screen-up) {
-            max-width: 600px;
+            max-width: rem(600);
           }
 
           .image-blurb-inner-wrap {
@@ -103,7 +103,7 @@
 
           .image-blurb-content {
             color: white;
-            font-size: rem(20px);
+            font-size: rem(20);
             padding-left: $base-spacing;
             padding-right: $base-spacing;
             position: absolute;
@@ -154,21 +154,21 @@
         }
 
         .play-button {
-          border: 2px solid white;
+          border: rem(2) solid white;
           border-radius: 50%;
-          height: 80px;
+          height: rem(80);
           left: 50%;
           position: absolute;
           top: 50%;
           transform: translate(-50%, -50%);
           transition: all $base-duration $base-timing;
-          width: 80px;
+          width: rem(80);
           z-index: 200;
 
           &:after {
             border-color: transparent transparent transparent white;
             border-style: solid;
-            border-width: 12px 0 12px 20px;
+            border-width: rem(12) 0 rem(12) rem(20);
             content: "";
             display: block;
             height: 0;
@@ -184,11 +184,11 @@
 
         &:hover {
           .play-button {
-            height: 110px;
-            width: 110px;
+            height: rem(110);
+            width: rem(110);
 
             &:after {
-              border-width: 17px 0 17px 25px;
+              border-width: rem(17) 0 rem(17) rem(25);
             }
           }
         }

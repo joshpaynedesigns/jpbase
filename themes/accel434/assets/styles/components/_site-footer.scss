@@ -7,7 +7,7 @@
   text-align: center;
 
   .footer-creds {
-    border-top: 1px solid $medium-gray;
+    border-top: rem(1) solid $medium-gray;
     display: flex;
     flex-direction: column;
     gap: rem(12);

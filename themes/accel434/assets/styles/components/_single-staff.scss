@@ -1,18 +1,18 @@
 .singleStaffDetailsInner {
   background: $light-gray;
   margin: 0 auto $base-spacing;
-  max-width: 350px;
+  max-width: rem(350);
   padding: $base-spacing;
 
   img {
     display: block;
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: rem(750)) {
     margin-bottom: 0;
     margin-right: $base-spacing;
-    min-width: 350px;
-    width: 350px;
+    min-width: rem(350);
+    width: rem(350);
   }
 
   .singleStaffName {
@@ -31,7 +31,7 @@
 
 .single-staff {
   .content {
-    @media screen and (min-width: 750px) {
+    @media screen and (min-width: rem(750)) {
       display: flex;
     }
   }
