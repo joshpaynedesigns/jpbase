@@ -13,10 +13,10 @@
         display: flex;
         justify-content: center;
         margin-bottom: 1em;
-        min-height: 100px;
+        min-height: rem(100);
 
         .blurb-image {
-          width: 100px;
+          width: rem(100);
         }
       }
 
@@ -47,16 +47,16 @@
 
     .micro-accordion-content {
       left: 0;
-      max-height: 0px;
+      max-height: rem(0);
       overflow: hidden;
       position: absolute;
       right: 0;
-      top: calc(100% + 8px);
+      top: calc(100% + rem(8));
       transition: max-height $base-duration $base-timing;
       z-index: 100;
 
       &.is-open {
-        max-height: 1000px;
+        max-height: rem(1000);
       }
     }
 

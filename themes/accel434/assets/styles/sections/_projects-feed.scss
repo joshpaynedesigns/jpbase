@@ -20,7 +20,7 @@
       }
 
       .project-img {
-        height: 200px;
+        height: rem(200);
         @include bg();
         margin-bottom: 1em;
         display: block;
@@ -28,24 +28,24 @@
 
       .project-info {
         .project-title {
-          // font-size: em(18);
+          // font-size: rem(18);
           // text-transform: uppercase;
           font-weight: bold;
         }
 
         .project-cats {
-          margin-top: -5px;
+          margin-top: rem(-5);
           margin-bottom: 0.7em;
           color: $base-font-color;
         }
 
         .project-blurb {
-          font-size: em(14);
+          font-size: rem(14);
           color: $base-font-color;
         }
 
         .project-link {
-          font-size: em(14);
+          font-size: rem(14);
           text-transform: uppercase;
         }
       }

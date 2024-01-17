@@ -1,8 +1,8 @@
-$xsmall-b-height-mobile: 200px;
-$xsmall-b-height: 250px;
-$small-b-height: 350px;
-$med-b-height: 600px;
-$large-b-height: 725px;
+$xsmall-b-height-mobile: rem(200);
+$xsmall-b-height: rem(250);
+$small-b-height: rem(350);
+$med-b-height: rem(600);
+$large-b-height: rem(725);
 
 .banner-slider {
   display: block;
@@ -59,7 +59,7 @@ $large-b-height: 725px;
 
   &.hide_banner_image {
     .banner_slide {
-      border-bottom: 1px solid #eee;
+      border-bottom: rem(1) solid #eee;
       height: $xsmall-b-height-mobile;
 
       @media ($large-screen-up) {

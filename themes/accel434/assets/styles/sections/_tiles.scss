@@ -24,10 +24,6 @@
         padding: rem(75) rem(48);
       }
 
-      @media screen and (min-width: 1200px) {
-        padding: $base-spacing * 3 $base-spacing * 2;
-      }
-
       .tile-block-excerpt {
         position: relative;
         z-index: 100;
@@ -41,25 +37,9 @@
         @include bg_overlay($dark-gray, 0.5);
       }
 
-      &.primary {
-        background-color: $blue;
-      }
-
-      &.white {
-        background-color: white;
-      }
-
-      &.white,
-      &.none {
-        border: 1px solid $light-gray;
-      }
-
-      &.light-gray {
-        background-color: $light-gray;
-      }
-
-      &.dark-gray {
-        background-color: $dark-gray;
+      &.bg-white,
+      &.bg-none {
+        border: rem(1) solid $light-gray;
       }
     }
   }

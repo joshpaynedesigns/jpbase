@@ -8,13 +8,13 @@ $icon-color: white;
 
   .alert-text p {
     display: inline-block;
-    font-size: em(18);
+    font-size: rem(18);
     line-height: 1.5em;
     margin-bottom: 0;
   }
 
   .alert-button a {
-    font-size: em(12);
+    font-size: rem(12);
     margin: 0.5em 0 0.5em 1em;
     padding: 0.5em 1em 0.4em 1em;
   }
@@ -22,7 +22,7 @@ $icon-color: white;
 
 .site-header {
   background-color: white;
-  border-bottom: 1px solid #eee;
+  border-bottom: rem(1) solid #eee;
   position: relative;
   right: 0;
   top: 0;
@@ -44,7 +44,7 @@ $icon-color: white;
     padding: 1em 0;
 
     .site-title {
-      font-size: em(40);
+      font-size: rem(40);
       font-weight: 500;
       margin-bottom: 0;
 
@@ -70,7 +70,7 @@ $icon-color: white;
       .site-title {
         display: block;
         font-size: 1em;
-        text-indent: -9999px;
+        text-indent: rem(-9999);
       }
 
       .site-title > a {
@@ -121,16 +121,16 @@ $icon-color: white;
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
-      height: 18px;
+      height: rem(18);
       opacity: 0.6;
       transition: all $base-duration $base-timing;
-      width: 18px;
+      width: rem(18);
 
       svg {
         fill: transparent;
-        height: 18px;
+        height: rem(18);
         stroke: $dark-gray;
-        width: 18px;
+        width: rem(18);
       }
 
       &:hover {
@@ -152,23 +152,29 @@ body.fixed-header .site-header {
 }
 
 .move-left .site-header {
-  right: 300px;
+  right: rem(300);
 }
 
 body.fixed-header .site-container {
   position: relative;
 }
 
-body.fixed-header .site-header {
-  top: 0;
-  position: sticky;
+body.fixed-header {
+  :target {
+    scroll-margin-top: rem(32);
+  }
+
+  .site-header {
+    top: 0;
+    position: sticky;
+  }
 }
 
 .admin-bar.fixed-header .site-header {
-  top: 46px;
+  top: rem(46);
 
-  @media (min-width: 783px) {
-    top: 32px;
+  @media (min-width: rem(783)) {
+    top: rem(32);
   }
 }
 

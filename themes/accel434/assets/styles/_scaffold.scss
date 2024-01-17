@@ -2,14 +2,14 @@
 --------------------------------------------- */
 
 .wrap {
-  @include outer-container(1200px);
+  @include outer-container(rem(1200));
   width: 90%;
 }
 
 .site-inner {
   .wrap {
     @media ($large-screen-up) {
-      @include outer-container(1200px);
+      @include outer-container(rem(1200));
     }
 
     .archIntroText {

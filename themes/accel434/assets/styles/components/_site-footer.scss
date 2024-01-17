@@ -1,13 +1,13 @@
 .site-footer {
   background-color: $footer-bg-gray;
   color: $medium-gray;
-  font-size: em(14);
+  font-size: rem(14);
   line-height: $base-line-height;
   padding-bottom: rem(32);
   text-align: center;
 
   .footer-creds {
-    border-top: 1px solid $medium-gray;
+    border-top: rem(1) solid $medium-gray;
     display: flex;
     flex-direction: column;
     gap: rem(12);

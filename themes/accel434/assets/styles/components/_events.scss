@@ -8,7 +8,7 @@
     appearance: none;
     background-color: $blue;
     border-radius: 0;
-    border: 2px solid transparent;
+    border: rem(2) solid transparent;
     color: white;
     cursor: pointer;
     display: inline-block;
@@ -67,7 +67,7 @@
   }
 
   .tribe-events-c-breadcrumbs__list {
-    font-size: em(30px) !important;
+    font-size: rem(30) !important;
 
     .tribe-events-c-breadcrumbs__list-item {
       margin-left: 0;
@@ -79,7 +79,7 @@
   }
 
   .tribe-events-calendar-list {
-    max-width: 800px;
+    max-width: rem(800);
     margin: 0 auto;
 
     .tribe-events-calendar-list__event-row {
@@ -91,7 +91,7 @@
         width: 60%;
       }
 
-      @media screen and (min-width: 870px) {
+      @media screen and (min-width: rem(870)) {
         width: 100%;
       }
 
@@ -136,7 +136,6 @@
 Events Single
 ****/
 .single-tribe_events {
-
   .site-inner > .wrap {
     max-width: none;
     width: 100%;
@@ -154,13 +153,13 @@ Events Single
     }
 
     .tribe-events-back {
-      margin-bottom: 20px;
+      margin-bottom: rem(20);
     }
 
     .tribe-events-content-wrap {
       margin: 0 auto;
       padding: 0;
-      max-width: 1200px;
+      max-width: rem(1200);
       width: 90%;
       margin-bottom: 4em;
 
@@ -181,10 +180,10 @@ Events Single
         padding: 0;
         font-weight: bold;
         // text-transform: uppercase;
-        font-size: em(30);
+        font-size: rem(30);
 
         @media ($medium-screen-up) {
-          font-size: em(40);
+          font-size: rem(40);
         }
       }
 
@@ -212,19 +211,19 @@ Events Single
     .tribe-events-event-meta {
       margin-bottom: 0;
       background-color: #eee;
-      padding-left: 30px;
+      padding-left: rem(30);
       position: relative;
 
       dt {
         margin-bottom: 0;
 
         &:not(:first-child) {
-          margin-top: 10px;
+          margin-top: rem(10);
         }
       }
 
       .tribe-events-address {
-        line-height: 20px;
+        line-height: rem(20);
       }
     }
 

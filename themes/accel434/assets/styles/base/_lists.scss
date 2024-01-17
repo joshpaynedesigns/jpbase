@@ -2,24 +2,24 @@
 .site-inner ul {
   list-style-type: none;
   margin: 0;
-  margin-bottom: 28px;
+  margin-bottom: rem(28);
   padding: 0;
 
   li {
     list-style-type: none;
-    margin-bottom: rem(10px);
-    padding-left: rem(24px);
+    margin-bottom: rem(10);
+    padding-left: rem(24);
     position: relative;
 
     &:before {
       background-color: $medium-gray;
       border-radius: 50%;
       content: "";
-      height: 8px;
-      left: 4px;
+      height: rem(8);
+      left: rem(4);
       position: absolute;
-      top: 8px;
-      width: 8px;
+      top: rem(8);
+      width: rem(8);
     }
 
     ul {
@@ -37,8 +37,8 @@
   padding: 0;
 
   li {
-    margin-bottom: rem(12px);
-    margin-left: rem(24px);
+    margin-bottom: rem(12);
+    margin-left: rem(24);
     position: relative;
 
     ol {

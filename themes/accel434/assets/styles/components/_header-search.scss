@@ -1,65 +1,64 @@
 .header-search-box {
-    @include base_transition();
-    display: none;
+  @include base_transition();
+  display: none;
 
-    .inner-wrap {
-        align-items: center;
-        display: flex;
+  .inner-wrap {
+    align-items: center;
+    display: flex;
+  }
+
+  &.search-is-open {
+    background-color: white;
+    bottom: 0;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 0 $base-spacing;
+
+    .scrolled & {
+      border-bottom: $base-border;
     }
 
-    &.search-is-open {
-        background-color: white;
-        bottom: 0;
-        display: block;
-        height: 100%;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        padding: 0 $base-spacing;
-
-        .scrolled & {
-            border-bottom: $base-border;
-        }
-
-        label {
-            // display: none;
-            text-indent: -9999px;
-            display: inline-block;
-            height: 0;
-            color: #000;
-        }
-
-        input {
-            border: none;
-            box-shadow: none;
-            position: absolute;
-            top: 50%;
-            transform: translateY( -50% );
-            margin: 0;
-            width: 80%;
-        }
-
-        input[type='submit'] {
-            display: none;
-        }
-
-        .header-search-box__close-search {
-            align-items: center;
-            display: flex;
-            height: auto;
-            position: absolute;
-            right: $base-spacing;
-            top: 50%;
-            transform: translateY( -50% );
-            width: 40px;
-
-            &:hover {
-                cursor: pointer;
-            }
-
-        }
+    label {
+      // display: none;
+      text-indent: rem(-9999);
+      display: inline-block;
+      height: 0;
+      color: #000;
     }
+
+    input {
+      border: none;
+      box-shadow: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+      width: 80%;
+    }
+
+    input[type="submit"] {
+      display: none;
+    }
+
+    .header-search-box__close-search {
+      align-items: center;
+      display: flex;
+      height: auto;
+      position: absolute;
+      right: $base-spacing;
+      top: 50%;
+      transform: translateY(-50%);
+      width: rem(40);
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }

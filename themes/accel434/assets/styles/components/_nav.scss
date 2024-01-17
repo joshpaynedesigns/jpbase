@@ -30,7 +30,7 @@ $sub-nav-link-color-hover: $base-font-color;
 
     &:after {
       content: "";
-      height: 20px;
+      height: rem(20);
       left: 0;
       position: absolute;
       top: 100%;
@@ -73,14 +73,14 @@ $sub-nav-link-color-hover: $base-font-color;
 
     .sub-menu {
       background: $sub-nav-bg-color;
-      margin: 10px 0 0 -15px;
+      margin: rem(10) 0 0 rem(-15);
       opacity: 0;
-      padding: 30px 30px;
+      padding: rem(30) rem(30);
       position: absolute;
       top: 250%;
       transition: all $medium-duration $base-timing;
       visibility: hidden;
-      width: 200px;
+      width: rem(200);
       z-index: 100;
 
       li {
@@ -93,7 +93,7 @@ $sub-nav-link-color-hover: $base-font-color;
 
         a {
           color: $sub-nav-link-color;
-          font-size: em(14);
+          font-size: rem(14);
           padding: 0 0 1em 0;
           position: relative;
 
@@ -118,7 +118,7 @@ $sub-nav-link-color-hover: $base-font-color;
       }
 
       .sub-menu {
-        margin: -41px 0 0 199px;
+        margin: rem(-41) 0 0 rem(199);
       }
 
       &.edge {
@@ -133,7 +133,7 @@ $sub-nav-link-color-hover: $base-font-color;
         color: white;
         display: inline-block;
         font-family: $heading-font-family;
-        font-size: em(14);
+        font-size: rem(14);
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
         line-height: 1em;

@@ -11,10 +11,10 @@ $heading-line-height: 1.2;
 
 // Section Margins
 $mobile-section-margin: 4em;
-$desk-section-margin: em(100px);
+$desk-section-margin: rem(100);
 
 // Other Sizes
-$base-border-radius: 3px;
+$base-border-radius: rem(3);
 $base-spacing: $base-line-height * 1em;
 $small-spacing: calc($base-spacing / 3);
 $base-z-index: 0;
@@ -33,15 +33,15 @@ $heading-font-color: $dark-gray;
 
 // Border
 $base-border-color: $light-gray;
-$base-border: 1px solid $base-border-color;
+$base-border: rem(1) solid $base-border-color;
 
 // Background Colors (Body)
 $base-background-color: white;
 
 // Forms
-$form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
+$form-box-shadow: inset 0 rem(1) rem(3) rgba(#000, 0.06);
 $form-box-shadow-focus: $form-box-shadow,
-  0 0 5px adjust-color($blue, $lightness: -5%, $alpha: -0.3);
+  0 0 rem(5) adjust-color($blue, $lightness: -5%, $alpha: -0.3);
 
 // Animations
 $base-duration: 300ms;

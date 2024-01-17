@@ -41,14 +41,20 @@ jQuery(document).ready(function () {
 
   // Accordion
   jQuery(".accordion-row-header").on("click", function () {
-    jQuery(".accordion-row-content").slideUp(300);
-    if (jQuery(this).hasClass("active-ar")) {
-      jQuery(this).removeClass("active-ar");
+    var accordionRow = jQuery(this).parent(".accordion-row");
+    var content = accordionRow.find(".accordion-row-content");
+
+    if (accordionRow.hasClass("active-ar")) {
+      content.slideUp(300);
+      accordionRow.removeClass("active-ar");
     } else {
-      jQuery(".accordion-row-header").removeClass("active-ar");
-      jQuery(this).next(".accordion-row-content").slideDown(300);
-      jQuery(this).addClass("active-ar");
-      return false;
+      jQuery(".accordion-row.active-ar")
+        .find(".accordion-row-content")
+        .slideUp(300);
+      jQuery(".accordion-row.active-ar").removeClass("active-ar");
+
+      content.slideDown(300);
+      accordionRow.addClass("active-ar");
     }
   });
 

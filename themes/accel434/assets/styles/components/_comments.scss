@@ -31,7 +31,7 @@ $allowed-tags-background-color: $light-gray;
   border-bottom: $base-border;
   border-color: $comment-border-color;
   clear: both;
-  min-height: 75px;
+  min-height: rem(75);
   padding: $small-spacing;
   position: relative;
 
@@ -50,7 +50,7 @@ $allowed-tags-background-color: $light-gray;
   }
 
   .comment-edit-link {
-    margin-left: 5px;
+    margin-left: rem(5);
   }
 
   .says {
@@ -61,20 +61,20 @@ $allowed-tags-background-color: $light-gray;
 .comment .avatar {
   border: $base-border;
   border-color: $comment-background-color;
-  border-size: 4px;
+  border-width: rem(4);
   border-radius: 100%;
   margin-right: $small-spacing;
 
   @media ($large-screen-up) {
-    left: -24px;
-    top: 15px;
+    left: rem(-24);
+    top: rem(15);
     position: absolute;
-    width: 48px;
+    width: rem(48);
   }
 }
 
 .comment .children {
-  border-left: 1px dashed $comment-border-color;
+  border-left: rem(1) dashed $comment-border-color;
   padding-left: $base-spacing;
 
   header {
@@ -82,7 +82,7 @@ $allowed-tags-background-color: $light-gray;
   }
 
   .avatar {
-    left: -50px;
+    left: rem(-50);
   }
 }
 
