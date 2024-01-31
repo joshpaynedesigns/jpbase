@@ -1036,7 +1036,7 @@ tribe_events_pro_admin.recurrence = {
 		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
-		var $count_text = $rule.find( '.occurence-count-text' );
+		var $count_text = $rule.find( '.occurrence-count-text' );
 		var end_count   = parseInt( $rule.find( '.recurrence_end_count' ).val(), 10 );
 		var type_text   = $el.data( 'plural' );
 

@@ -36,24 +36,64 @@ class Provider extends Service_Provider implements Provider_Contract {
 		 * When the Pro repository needs the callback to create or update an Event recurrences,
 		 * let's return one that will avoid the default logic.
 		 */
-		if ( ! has_filter( 'tribe_repository_event_recurrence_create_callback', [
-			$this,
-			'create_recurrence_callback'
-		] ) ) {
-			add_filter( 'tribe_repository_event_recurrence_create_callback', [
-				$this,
-				'create_recurrence_callback'
-			], 20, 4 );
+		if (
+			! has_filter(
+				'tribe_repository_event_recurrence_create_callback',
+				[ $this, 'create_recurrence_callback' ]
+			)
+		) {
+			add_filter(
+				'tribe_repository_event_recurrence_create_callback',
+				[ $this, 'create_recurrence_callback' ],
+				20,
+				4
+			);
 		}
-		if ( ! has_filter( 'tribe_repository_event_recurrence_update_callback', [
-			$this,
-			'create_recurrence_callback'
-		] ) ) {
-			add_filter( 'tribe_repository_event_recurrence_update_callback', [
-				$this,
-				'create_recurrence_callback'
-			], 20, 4 );
+
+		if (
+			! has_filter(
+				'tribe_repository_event_recurrence_update_callback',
+				[ $this, 'create_recurrence_callback' ]
+			)
+		) {
+			add_filter(
+				'tribe_repository_event_recurrence_update_callback',
+				[ $this, 'create_recurrence_callback' ],
+				20,
+				4
+			);
 		}
+
+		if (
+			! has_filter(
+				'tribe_repository_events_before_delete',
+				[ $this, 'tribe_repository_events_before_delete' ]
+			)
+		) {
+			add_filter(
+				'tribe_repository_events_before_delete',
+				[ $this, 'tribe_repository_events_before_delete' ],
+				10,
+				3
+			);
+		}
+	}
+
+	/**
+	 * Filters the post IDs to delete, and deletes the Event if it's not a provisional post.
+	 *
+	 *  @since 6.3.1
+	 *
+	 * @param int[]|null   $return     The post IDs to delete.
+	 * @param Events__Repo $repository The repository instance.
+	 *
+	 * @return array
+	 */
+	public function tribe_repository_events_before_delete( $return, $repository ) {
+		return $this
+			->container
+			->make( Events::class )
+			->repository_delete_by_post( $return, $repository );
 	}
 
 	/**
@@ -67,10 +107,17 @@ class Provider extends Service_Provider implements Provider_Contract {
 			[ $this, 'create_recurrence_callback' ],
 			20
 		);
+
 		remove_filter(
 			'tribe_repository_event_recurrence_update_callback',
 			[ $this, 'create_recurrence_callback' ],
 			20
+		);
+
+		remove_filter(
+			'tribe_repository_events_before_delete',
+			[ $this, 'tribe_repository_events_before_delete' ],
+			10
 		);
 	}
 

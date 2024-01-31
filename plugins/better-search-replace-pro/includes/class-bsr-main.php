@@ -87,6 +87,11 @@ class Better_Search_Replace {
 			require_once BSR_PATH . 'includes/EDD_SL_Plugin_Updater.php';
 		}
 
+		if ( PHP_VERSION_ID < 70000 ) {
+			require_once BSR_PATH . 'vendor/brumann/polyfill-unserialize/src/Unserialize.php';
+			require_once BSR_PATH . 'vendor/brumann/polyfill-unserialize/src/DisallowedClassesSubstitutor.php';
+		}
+
 		$this->loader = new BSR_Loader();
 	}
 

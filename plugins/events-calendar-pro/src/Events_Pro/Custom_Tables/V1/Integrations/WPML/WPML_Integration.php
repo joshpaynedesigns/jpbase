@@ -46,13 +46,33 @@ class WPML_Integration extends Service_Provider {
 		add_filter( 'wpml_get_ls_translations', [ $this, 'filter_provisional_id_ls_translation' ], 10, 2 );
 
 		add_filter( 'post_type_link', [ $this, 'filter_permalinks_with_provisional_id' ], 15, 2 );
+
+		add_filter( 'wpml_meta_box_post', [ $this, 'filter_post_metabox' ] );
+	}
+
+	/**
+	 * Filters the provisional ID so WPML can process the post object properly.
+	 *
+	 *  @since 6.3.1
+	 *
+	 * @param WP_Post $post The post object for this metabox.
+	 *
+	 * @return WP_Post
+	 */
+	public function filter_post_metabox( $post ) {
+		if ( get_post_type( $post ) === TEC::POSTTYPE ) {
+			$post     = clone $post;
+			$post->ID = Occurrence::normalize_id( $post->ID );
+		}
+
+		return $post;
 	}
 
 	/**
 	 * Filter the permalink to retain the lang param. When provisional IDs are involved, the WPML
 	 * parser will fail to locate the lang and lose the permalink.
 	 *
-	 * @since TBD
+	 * @since 6.3.0
 	 *
 	 * @param string  $post_link The post link that has been pre-filtered.
 	 * @param WP_Post $post      The WP_Post for this permalink.
@@ -60,7 +80,7 @@ class WPML_Integration extends Service_Provider {
 	 * @return string
 	 */
 	public function filter_permalinks_with_provisional_id( $post_link, WP_Post $post ) {
-		if ( $post->post_type !== \Tribe__Events__Main::POSTTYPE ) {
+		if ( $post->post_type !== TEC::POSTTYPE ) {
 			return $post_link;
 		}
 

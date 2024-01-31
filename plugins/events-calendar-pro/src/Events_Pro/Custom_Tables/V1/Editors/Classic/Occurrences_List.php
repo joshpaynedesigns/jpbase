@@ -165,11 +165,19 @@ class Occurrences_List extends WP_List_Table {
 	 * @return array<string, string> An array with the columns ID names and display name.
 	 */
 	public function get_columns(): array {
-		return [
+		$columns = [
 			'title'      => __( 'Title', 'tribe-events-calendar-pro' ),
-			'start_date' => __( 'Start Date', 'tribe-events-calendar-pro' ),
 			'actions'    => __( 'Actions', 'tribe-events-calendar-pro' ),
 		];
+
+		/**
+		 * Allows filtering the columns available in the Series Occurrence list view.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param array<string, string> $columns An array with the columns ID names and display name.
+		 */
+		return apply_filters( 'tec_events_pro_custom_tables_v1_series_occurrent_list_columns', $columns );
 	}
 
 	/**
@@ -192,14 +200,18 @@ class Occurrences_List extends WP_List_Table {
 					case 'title':
 						$this->print_title( $occurrence );
 						break;
-					case 'start_date':
-						$this->print_start_date_entry( $occurrence );
-
-						break;
 					case 'actions':
 						$this->print_actions_entry( $occurrence );
-
 						break;
+					default:
+						/**
+						 * Trigger an action by column name.
+						 *
+						 * @since 6.3.0
+						 *
+						 * @param Occurrence $occurrence The occurrence object.
+						 */
+						do_action( "tec_events_pro_custom_tables_v1_series_occurrent_list_column_{$column_name}", $occurrence );
 				}
 				echo '</td>';
 			}
@@ -323,26 +335,25 @@ class Occurrences_List extends WP_List_Table {
 	 *
 	 * @since 6.0.1
 	 *
+	 * @since 6.3.0 Changed return type to string to only return the start date.
+	 *
 	 * @param Occurrence $occurrence The occurrence object.
 	 *
-	 * @return void Prints the content of the start date column.
+	 * @return string The start date of the occurrence.
 	 */
-	private function print_start_date_entry( Occurrence $occurrence ): void {
+	private function get_start_date( Occurrence $occurrence ): string {
 		$event = Event::where( 'event_id', $occurrence->event_id )->first();
 		$timezone = $event instanceof Event ? $event->timezone : 'UTC';
 		$format = tribe_get_date_format( true );
-		echo Dates::immutable( $occurrence->start_date, $timezone )->format( $format );
-
-		if ( $occurrence->has_recurrence ) {
-			echo '<svg style="margin-left: 10px;" viewBox="0 0 12 12" width="12" height="12"><title>' . __( 'Recurring', 'tribe-events-calendar-pro' ) . '</title><use xlink:href="#recurring" /></svg>';
-		}
+		return Dates::immutable( $occurrence->start_date, $timezone )->format( $format );
 	}
-
 
 	/**
 	 * Print the content of the title column.
 	 *
 	 * @since 6.0.1
+	 *
+	 * @since 6.3.0 Added admin-views template for title and moved start date into same column.
 	 *
 	 * @param Occurrence $occurrence The occurrence object.
 	 *
@@ -350,9 +361,12 @@ class Occurrences_List extends WP_List_Table {
 	 */
 	private function print_title( Occurrence $occurrence ): void {
 		$post = get_post( $occurrence->post_id );
-		if ( $post instanceof WP_Post ) {
-			echo esc_html( _draft_or_post_title( $post ) );
-			_post_states( $post );
-		}
+
+		$admin_views = new \Tribe__Events__Pro__Editor__Template__Admin();
+		$admin_views->template( '/series-metabox/events-list/title', [
+			'event' => $post,
+			'start_date' => $this->get_start_date( $occurrence ),
+			'has_recurrence' => $occurrence->has_recurrence,
+		] );
 	}
 }

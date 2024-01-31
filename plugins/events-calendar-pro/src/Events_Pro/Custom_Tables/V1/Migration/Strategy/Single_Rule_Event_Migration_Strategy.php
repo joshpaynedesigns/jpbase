@@ -71,7 +71,7 @@ class Single_Rule_Event_Migration_Strategy implements Strategy_Interface {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function apply( Event_Report $event_report ) {
+	public function apply( Event_Report $event_report ): Event_Report {
 		$upserted = Event::upsert( [ 'post_id' ], Event::data_from_post( $this->post_id ) );
 
 		if ( $upserted === false ) {
@@ -129,7 +129,7 @@ class Single_Rule_Event_Migration_Strategy implements Strategy_Interface {
 
 		$event_report->add_series( get_post( $series_post_id ) );
 
-		return $event_report->add_strategy( self::get_slug() )
+		return $event_report->add_strategy( static::get_slug() )
 		                    ->set( 'is_single', false )
 		                    ->migration_success();
 	}

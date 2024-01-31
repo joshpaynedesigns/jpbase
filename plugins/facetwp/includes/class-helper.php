@@ -573,6 +573,24 @@ final class FacetWP_Helper
         return $output;
     }
 
+    /**
+     * Get indexable post types
+     */
+    function get_indexable_types() {
+
+        $args = FWP()->indexer->get_query_args();
+        $types = (array) ( $args['post_type'] ?? 'post' );
+        $statuses = (array) ( $args['post_status'] ?? 'publish' );
+
+        if ( ! in_array( 'inherit', $statuses ) && in_array( 'attachment', $types ) ) {
+            $types = array_values( array_diff( $types, [ 'attachment' ] ) );
+        }
+
+        sort( $types );
+
+        return $types;
+
+    }
 
     /**
      * Grab the license key

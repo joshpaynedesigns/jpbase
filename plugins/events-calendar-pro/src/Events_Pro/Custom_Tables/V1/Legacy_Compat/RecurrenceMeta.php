@@ -2,7 +2,7 @@
 /**
  * Handle integration with the legacy Tribe__Events__Pro__Recurrence__Meta class.
  *
- * @since   TBD
+ * @since   6.3.0
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Legacy_Compat
  */
@@ -15,7 +15,7 @@ use wpdb;
 /**
  * Class RecurrenceMeta
  *
- * @since   TBD
+ * @since   6.3.0
  *
  * @package TEC\Events_Pro\Custom_Tables\V1\Legacy_Compat
  */
@@ -23,7 +23,7 @@ class RecurrenceMeta {
 	/**
 	 * Will fetch the occurrence dates for the post specified.
 	 *
-	 * @since TBD
+	 * @since 6.3.0
 	 *
 	 * @param null|array $occurrences The results if any have been filtered.
 	 * @param int        $post_id     The post ID to fetch occurrences for.

@@ -380,7 +380,7 @@ class Multi_Rule_Event_Migration_Strategy implements Strategy_Interface {
 	 * {@inheritDoc}
 	 */
 	public function apply( Event_Report $event_report ): Event_Report {
-		$event_report->add_strategy( self::get_slug() )
+		$event_report->add_strategy( static::get_slug() )
 		             ->set( 'is_single', false );
 
 		$source_post = get_post( $this->post_id );
@@ -526,7 +526,7 @@ class Multi_Rule_Event_Migration_Strategy implements Strategy_Interface {
 			$event_report->add_created_event( $clone, $occurrences_generated );
 		}
 
-		return $event_report;
+		return $event_report->migration_success();
 	}
 
 	/**

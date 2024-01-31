@@ -16,6 +16,9 @@ use Tribe__Events__Rewrite as Rewrite;
 use Tribe__Utils__Array as Arr;
 use Tribe\Events\Views\V2\Views\Traits\With_Noindex;
 
+/**
+ * Class Photo_View
+ */
 class Photo_View extends View {
 	use List_Behavior;
 	use With_Noindex;
@@ -68,6 +71,13 @@ class Photo_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no previous View exists.
 	 */
 	public function prev_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );
@@ -96,6 +106,13 @@ class Photo_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no next View exists.
 	 */
 	public function next_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );
@@ -137,10 +154,16 @@ class Photo_View extends View {
 		$date           = $this->context->get( 'event_date', $default_date );
 		$event_date_var = $default_date === $date ? '' : $date;
 
-		$past = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'event_display_mode' => 'past',
-			'paged'              => $page,
-		] ) ) );
+		$past = tribe_events()->by_args(
+			$this->setup_repository_args(
+				$this->context->alter(
+					[
+						'event_display_mode' => 'past',
+						'paged'              => $page,
+					]
+				)
+			)
+		);
 
 		if ( $past->count() > 0 ) {
 			$event_display_key = Utils\View::get_past_event_display_key();
@@ -202,10 +225,16 @@ class Photo_View extends View {
 		$date           = $this->context->get( 'event_date', $default_date );
 		$event_date_var = $default_date === $date ? '' : $date;
 
-		$upcoming = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'eventDisplay' => static::$view_slug,
-			'paged'        => $page,
-		] ) ) );
+		$upcoming = tribe_events()->by_args(
+			$this->setup_repository_args(
+				$this->context->alter(
+					[
+						'eventDisplay' => static::$view_slug,
+						'paged'        => $page,
+					]
+				)
+			)
+		);
 
 		if ( $upcoming->count() > 0 ) {
 			$query_args = [
@@ -247,9 +276,17 @@ class Photo_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param Context|null $context A context to use to setup the args, or `null` to use the View Context.
+	 *
+	 * @return array The arguments, ready to be set on the View repository instance.
 	 */
 	protected function setup_repository_args( \Tribe__Context $context = null ) {
-		$context = null !== $context ? $context : $this->context;
+		if ( is_null( $context ) ) {
+			$context = $this->context;
+		}
 
 		$args = parent::setup_repository_args( $context );
 
@@ -282,7 +319,7 @@ class Photo_View extends View {
 		$template_vars = parent::setup_template_vars();
 
 		$template_vars['placeholder_url'] = trailingslashit( \Tribe__Events__Pro__Main::instance()->pluginUrl )
-		                                    . 'src/resources/images/tribe-event-placeholder-image.svg';
+			. 'src/resources/images/tribe-event-placeholder-image.svg';
 
 		if ( ! empty( $template_vars['events'] ) && 'past' === $this->context->get( 'event_display_mode' ) ) {
 			// Past events are fetched by in DESC start date, but shown in ASC order.

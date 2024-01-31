@@ -99,7 +99,7 @@ class Events_Metaboxes {
 			]
 		);
 
-		return array_combine(
+		$series_data = array_combine(
 			wp_list_pluck( $series_posts, 'ID' ),
 			array_map(
 				static function ( WP_Post $series_post ) use ( $related_series_id, $post_statuses ) {
@@ -120,14 +120,31 @@ class Events_Metaboxes {
 						: $series_post->post_title;
 
 					return [
-						$title,
-						$related_series_id === $series_post->ID,
-						get_edit_post_link( $series_post ),
+						'title'     => $title,
+						'selected'  => $related_series_id === $series_post->ID,
+						'edit_link' => get_edit_post_link( $series_post ),
 					];
 				},
 				$series_posts
 			)
 		);
+
+		/**
+		 * Filters the data used to populate the Series dropdown in the context of an Event.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param array<int,array<string,mixed>> A map from each Series ID to its title, selection status, edit link
+		 *                                       and other data.
+		 * @param int $event_id                  The ID of the Event being edited.
+		 */
+		$series_data = apply_filters(
+			'tec_events_pro_custom_tables_v1_series_relationships_dropdown_data',
+			$series_data,
+			$event_id
+		);
+
+		return $series_data;
 	}
 
 	/**
@@ -135,29 +152,24 @@ class Events_Metaboxes {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param array<int,array<string|bool>> A map from each Series ID to its title, relation
-	 *                                      with the Event, and its edit link.
+	 * @param array<int,array{
+	 *      selected: bool,
+	 *      title: string,
+	 *      edit_link: string
+	 * }> $series A map from each Series ID to its title, relation  with the Event, and its edit link.
 	 *
-	 * @return array<string,bool|string> The series selection state.
+	 * @return array{has_selection: bool, edit_series_link: string} The Series selection.
 	 */
 	private function get_series_selection( array $series = [] ) {
-		return array_reduce(
-			$series,
-			static function ( $state, $series_post ) {
-				if ( $state[ 'has_selection' ] ) {
-					return $state;
-				}
-
-				if ( empty( $series_post[ 1 ] ) ) {
-					return $state;
-				}
-
+		foreach ( $series as $id => $series_data ) {
+			if ( $series_data['selected'] ?? true ) {
 				return [
-					'has_selection'    => $series_post[ 1 ],
-					'edit_series_link' => $series_post[ 2 ],
+					'has_selection'    => true,
+					'edit_series_link' => $series_data['edit_link'] ?? get_edit_post_link( $id )
 				];
-			},
-			[ 'has_selection' => false, 'edit_series_link' => '#' ]
-		);
+			}
+		}
+
+		return [ 'has_selection' => false, 'edit_series_link' => '#' ];
 	}
 }

@@ -55,8 +55,6 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 		deleteButton: '#delete-action a.submitdelete',
 		recurrence: '.tribe-event-recurrence',
 		exclusion: '.tribe-event-exclusion',
-		recurrenceDescription: '.tribe-recurrence-description',
-		recurrenceDescriptionInput: '[name="recurrence[description]"]',
 		recurrenceTypeButton: '.tribe-event-recurrence-rule > .tribe-buttonset .tribe-button-field[data-value]',
 	};
 
@@ -168,30 +166,6 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 		obj.sync.syncRecurrenceState();
 
 		tec.classicEditorEvents.eventDate.setPreviousEventDate();
-	};
-
-	/**
-	 * Hides the recurrence description section and sets the description input to
-	 * a blank string.
-	 *
-	 * @todo This function should be converted to template modifications when
-	 *     integrated into ECP.
-	 *
-	 * @since 6.0.0
-	 *
-	 * @return {void} The function will hide the description section.
-	 */
-	obj.hideRecurrenceDescription = function () {
-		const deprecatedDescriptions = document.querySelectorAll( obj.selectors.recurrenceDescription );
-
-		deprecatedDescriptions.forEach( function ( description ) {
-			description.style.display = 'none';
-			const descriptionInput = description.querySelector( obj.selectors.recurrenceDescriptionInput );
-			if ( ! descriptionInput ) {
-				return;
-			}
-			descriptionInput.value = '';
-		} );
 	};
 
 	/**
@@ -398,7 +372,6 @@ tec.classicEditorEvents = tec.classicEditorEvents || {};
 
 		$document.on( 'setup.dependency', function () {
 			obj.initExistingRecurrenceExclusionRows();
-			obj.hideRecurrenceDescription();
 			obj.setupMutationObserver();
 			obj.bindEvents();
 

@@ -2143,10 +2143,11 @@
                 },
                 sanitizeName(name) {
                     let val = name.trim().toLowerCase();
+                    let res = [ 'pager', 'sort', 'labels', 'length', 'name', 'method', 'num_choices' ];
                     val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
                     val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
                     val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
-                    val = ('pager' == val || 'sort' == val || 'labels' == val) ? val + '_' : val; // reserved
+                    val = res.includes(val) ? val + '_' : val; // reserved
                     return val;
                 },
                 documentClick({target}) {

@@ -18,6 +18,11 @@ use Tribe__Events__Main as TEC;
 use Tribe__Utils__Array as Arr;
 use Tribe\Events\Views\V2\Views\Traits\With_Noindex;
 
+/**
+ * Class Map_View
+ *
+ * A map-and-sidebar style view for events.
+ */
 class Map_View extends View {
 	use List_Behavior;
 	use With_Noindex;
@@ -64,6 +69,8 @@ class Map_View extends View {
 	 * @since 5.0.1
 	 *
 	 * {@inheritDoc}
+	 *
+	 * @param Messages|null $messages An instance of the messages collection.
 	 */
 	public function __construct( Messages $messages = null ) {
 		parent::__construct( $messages );
@@ -80,7 +87,11 @@ class Map_View extends View {
 	protected static $label = 'Map';
 
 	/**
-	 * @inheritDoc
+	 * {@inheritdoc}
+	 *
+	 *  @since 6.3.1
+	 *
+	 * @return string
 	 */
 	public static function get_view_label(): string {
 		static::$label = _x( 'Map', 'The text label for the Map View.', 'tribe-events-calendar-pro' );
@@ -88,9 +99,32 @@ class Map_View extends View {
 		return static::filter_view_label( static::$label );
 	}
 
+	/**
+	 * {@inheritdoc}
+	 *
+	 *  @since 6.3.1
+	 *
+	 * @return string
+	 */
+	public static function get_view_link_label(): string {
+		static::$label = sprintf(
+			/* Translators: %1$s is the lowercase pluralized label for events. */
+			_x( 'View %1s on a map.', 'Label for link to map view.', 'tribe-events-calendar-pro' ),
+			tribe_get_event_label_plural_lowercase()
+		);
+
+		return static::filter_view_link_label( static::$label );
+	}
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no previous View exists.
 	 */
 	public function prev_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );
@@ -119,6 +153,13 @@ class Map_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no next View exists.
 	 */
 	public function next_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );
@@ -160,10 +201,16 @@ class Map_View extends View {
 		$date           = $this->context->get( 'event_date', $default_date );
 		$event_date_var = $default_date === $date ? '' : $date;
 
-		$past = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'event_display_mode' => 'past',
-			'paged'              => $page,
-		] ) ) );
+		$past = tribe_events()->by_args(
+			$this->setup_repository_args(
+				$this->context->alter(
+					[
+						'event_display_mode' => 'past',
+						'paged'              => $page,
+					]
+				)
+			)
+		);
 
 		if ( $past->count() > 0 ) {
 			$event_display_key = Utils\View::get_past_event_display_key();
@@ -225,10 +272,16 @@ class Map_View extends View {
 		$date           = $this->context->get( 'event_date', $default_date );
 		$event_date_var = $default_date === $date ? '' : $date;
 
-		$upcoming = tribe_events()->by_args( $this->setup_repository_args( $this->context->alter( [
-			'eventDisplay' => static::$view_slug,
-			'paged'        => $page,
-		] ) ) );
+		$upcoming = tribe_events()->by_args(
+			$this->setup_repository_args(
+				$this->context->alter(
+					[
+						'eventDisplay' => static::$view_slug,
+						'paged'        => $page,
+					]
+				)
+			)
+		);
 
 		if ( $upcoming->count() > 0 ) {
 			$query_args = [
@@ -270,19 +323,25 @@ class Map_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param Context|null $context A context to use to setup the args, or `null` to use the View Context.
+	 *
+	 * @return array The arguments, ready to be set on the View repository instance.
 	 */
 	protected function setup_repository_args( \Tribe__Context $context = null ) {
-		$context = null !== $context ? $context : $this->context;
+		if ( is_null( $context ) ) {
+			$context = $this->context;
+		}
 
-		$args = parent::setup_repository_args( $context );
-
-		$context_arr = $context->to_array();
-
-		$date = Arr::get( $context_arr, 'event_date', 'now' );
+		$args               = parent::setup_repository_args( $context );
+		$context_arr        = $context->to_array();
+		$date               = Arr::get( $context_arr, 'event_date', 'now' );
 		$event_display_mode = Arr::get( $context_arr, 'event_display_mode', Arr::get( $context_arr, 'event_display' ), 'current' );
 
 		if ( 'past' !== $event_display_mode ) {
-			$args['order']       = 'ASC';
+			$args['order']      = 'ASC';
 			$args['ends_after'] = $date;
 		} else {
 			$args['order']       = 'DESC';
@@ -294,6 +353,11 @@ class Map_View extends View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.4
+	 * @since 5.2.1 Add the `rest_method` to the template variables.
+	 *
+	 * @return array An array of Template variables for the View Template.
 	 */
 	protected function setup_template_vars() {
 		$template_vars           = parent::setup_template_vars();
@@ -314,7 +378,7 @@ class Map_View extends View {
 
 		$template_vars = tribe( Maps::class )->setup_map_provider( $template_vars );
 		$template_vars = $this->setup_events_by_venue( $template_vars );
-		$template_vars = $this->setup_datepicker_template_vars($template_vars);
+		$template_vars = $this->setup_datepicker_template_vars( $template_vars );
 
 		$template_vars['show_distance'] = $show_distance;
 		$template_vars['geoloc_unit']   = $this->setup_geoloc_unit();
@@ -334,7 +398,7 @@ class Map_View extends View {
 	protected function setup_events_by_venue( $template_vars ) {
 		$template_vars['events_by_venue'] = [];
 
-		foreach( $template_vars['events'] as $event ) {
+		foreach ( $template_vars['events'] as $event ) {
 			foreach ( $event->venues as $venue ) {
 				if ( empty( $template_vars['events_by_venue'][ $venue->ID ] ) ) {
 					$geolocation = $venue->geolocation;
@@ -353,9 +417,9 @@ class Map_View extends View {
 
 					// WP_Post instances will be suppressed by the data filter, so we convert it to an object.
 					$template_vars['events_by_venue'][ $venue->ID ]            = (object) [
-						'ID' => $venue->ID,
+						'ID'          => $venue->ID,
 						'geolocation' => $geolocation,
-						'post_title' => $venue->post_title,
+						'post_title'  => $venue->post_title,
 					];
 					$template_vars['events_by_venue'][ $venue->ID ]->event_ids = [];
 				}
@@ -410,12 +474,15 @@ class Map_View extends View {
 		$geo_loc->assign_distance_to_posts( $events, $lat_from, $lng_from );
 
 		// Sort by distances _before_ we add the unit string.
-		$events =  wp_list_sort( $events, 'distance', $direction );
+		$events = wp_list_sort( $events, 'distance', $direction );
 
 		// Convert the distance to the current unit.
-		array_walk( $events, static function ( \WP_Post $event ) {
-			$event->distance = tribe_get_distance_with_unit( $event->distance );
-		} );
+		array_walk(
+			$events,
+			static function ( \WP_Post $event ) {
+				$event->distance = tribe_get_distance_with_unit( $event->distance );
+			}
+		);
 
 		return $events;
 	}
@@ -448,7 +515,8 @@ class Map_View extends View {
 	 *
 	 * @since 5.1.1
 	 *
-	 * @param array $events
+	 * @param array $events The events to show.
+	 *
 	 * @return array
 	 */
 	protected function maybe_remove_non_venue_events( $events ) {
@@ -468,9 +536,12 @@ class Map_View extends View {
 			return $events;
 		}
 
-		return array_filter( $events, static function ( \WP_Post $event ) {
-			return ! empty( $event->venues->count() );
-		} );
+		return array_filter(
+			$events,
+			static function ( \WP_Post $event ) {
+				return ! empty( $event->venues->count() );
+			}
+		);
 	}
 
 	/**

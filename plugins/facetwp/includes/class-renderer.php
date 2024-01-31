@@ -603,7 +603,8 @@ class FacetWP_Renderer
             'settings'      => FWP()->helper->settings['settings'],
             'last_indexed'  => $last_indexed,
             'row_counts'    => FWP()->helper->get_row_counts(),
-            'hooks_used'    => $this->get_hooks_used()
+            'hooks_used'    => $this->get_hooks_used(),
+            'post_types'    => FWP()->helper->get_indexable_types()
         ];
 
         // Reduce debug payload

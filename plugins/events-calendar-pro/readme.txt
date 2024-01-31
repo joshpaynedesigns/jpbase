@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
 Requires at least: 6.2.0
-Stable tag: 6.2.4
-Tested up to: 6.4.1
+Stable tag: 6.3.1
+Tested up to: 6.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -214,6 +214,33 @@ Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
 
+= [6.3.1] 2024-01-24 =
+
+* Version - Events Calendar PRO 6.3.1 is only compatible with The Events Calendar 6.3.1 and higher
+* Fix - Ensure the Recurring Event Description field that has been deprecated and removed no longer shows on the Event edit screen. [ECP-1582]
+* Fix - Handles a post ID to a recurring event when doing a delete with the ORM like so `tribe_events()->where('id', 123 )->delete();`. Previously it would convert to an occurrence and not delete the whole recurring event. [TEC-4935]
+* Fix - Updating validation error reporting API. [TECENG-46]
+* Fix - WPML translation metabox was failing to load on the Edit Events page when Events Pro was active. [ECP-1629]
+* Fix - Fix PHP 8.2 deprecation errors `PHP Deprecated:  strip_tags(): Passing null to parameter #1 ($string) of type string is deprecated in /.../wp-admin/admin-header.php on line 36`. [ECP-1603]
+* Fix - Prevent a potential fatal with the Featured Venue Widget if the selected venue has been deleted. [ECP-1644]
+* Tweak - Added filters: `tec_events_pro_custom_tables_v1_series_occurrent_list_columns`, `tec_events_pro_custom_tables_v1_add_to_series_available_events`, `tec_events_pro_show_recurrence_description`
+* Tweak - Added actions: `tec_events_pro_custom_tables_v1_series_occurrent_list_column_{$column_name}`, `tec_events_pro_custom_tables_v1_series_relationships_after`
+* Tweak - Removed actions: `tribe_log`
+* Language - 2 new strings added, 56 updated, 1 fuzzied, and 1 obsoleted
+
+= [6.3.0] 2024-01-22 =
+
+* Feature - New Ticket type when using with Event Tickets for Series Posts.
+* Feature - Series Passes show on Series frontend page.
+* Feature - Series Passes show on frontend for events in Series.
+* Feature - Attendees and Orders pages for Series with passes.
+* Feature - New Attached Ticket Types column on the Series admin list of events.
+* Feature - Migration path to custom tables for sites with recurring events with tickets.
+* Tweak - Updating to be compatible with the new Trash Old Events frequency option structure in The Events Calendar. [ECP-1604]
+* Tweak - Added filters: `tec_events_pro_custom_tables_v1_series_occurrent_list_columns`, `tec_events_pro_custom_tables_v1_add_to_series_available_events`
+* Tweak - Added actions: `tec_events_pro_custom_tables_v1_series_occurrent_list_column_{$column_name}`, `tec_events_pro_custom_tables_v1_series_relationships_after`
+* Language - 0 new strings added, 9 updated, 0 fuzzied, and 0 obsoleted
+
 = [6.2.4] 2023-11-14 =
 
 * Fix - WPML permalink resolution was failing to retain the `lang` query param in some edge cases, namely on single posts with Pro activated. [TEC-4798]
@@ -232,7 +259,6 @@ Remember to always make a backup of your database and files before updating!
 * Fix - Organizer and venue views were not paginating to the past events due to a `past` flag getting lost during context switching. [ECP-1591]
 * Tweak - Updated recurrence pattern warning text when tickets are already attached. [ECP-1529]
 * Language - 1 new strings added, 0 updated, 0 fuzzied, and 1 obsoleted
-
 
 = [6.2.2] 2023-10-03 =
 
@@ -266,7 +292,6 @@ Remember to always make a backup of your database and files before updating!
 * Fix - Specifying post slugs for venues and organizers within shortcodes will now find posts as expected. [ECP-1540]
 * Tweak - Added filters: `tec_events_pro_linked_post_taxonomy_singular_label_without_linked_post`, `tec_events_pro_linked_post_taxonomy_{$slug}_singular_label_without_linked_post`, `tec_events_pro_linked_post_taxonomy_plural_label_without_linked_post`, `tec_events_pro_linked_post_taxonomy_{$slug}_plural_label_without_linked_post`, `tec_events_pro_linked_post_taxonomy_rewrite_slug_singular`, `tec_events_pro_linked_post_taxonomy_{$slug}_rewrite_slug_singular`, `tec_events_pro_linked_post_taxonomy_rewrite_slug_plural`, `tec_events_pro_linked_post_taxonomy_{$slug}_rewrite_slug_plural`, `tec_events_pro_linked_post_taxonomy_linked_post_type`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type`, `tec_events_pro_linked_post_taxonomy_linked_post_type_rewrite_slug_singular`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_rewrite_slug_singular`, `tec_events_pro_linked_post_taxonomy_linked_post_type_rewrite_slug_plural`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_rewrite_slug_plural`, `tec_events_pro_linked_post_taxonomy_linked_post_type_view_slug`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_view_slug`, `tec_events_pro_linked_post_taxonomy_linked_post_type_label_singular`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_label_singular`, `tec_events_pro_linked_post_taxonomy_linked_post_type_label_singular_lowercase`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_label_singular_lowercase`, `tec_events_pro_linked_post_taxonomy_linked_post_type_label_plural`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_label_plural`, `tec_events_pro_linked_post_taxonomy_linked_post_type_label_plural_lowercase`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_label_plural_lowercase`, `tec_events_pro_linked_post_taxonomy_linked_post_type_repository`, `tec_events_pro_linked_post_taxonomy_{$slug}_linked_post_type_repository`, `tec_events_pro_linked_post_taxonomy_{$slug}_configuration`, `tec_events_pro_linked_post_taxonomy_{$slug}_labels`, `tec_events_pro_{$slug}_visibility_get_setting_options`, `tec_events_pro_{$slug}_visibility_get_setting_definition`, `tec_events_pro_{$slug}_visibility_is_visible`, `tec_events_pro_{$slug}_visibility_is_visible:{$area}`, `tec_events_pro_{$slug}_visibility_is_visible:{$area}:{$post}`* Tweak - Changed views: `pro/widgets/modules/single-event`, `v2/map`, `v2/map/event-cards/event-card/event/venue`, `v2/organizer/meta`, `v2/organizer/meta/content`, `v2/organizer/meta/details`, `v2/organizer/meta/details/email`, `v2/organizer/meta/details/phone`, `v2/photo`, `v2/summary`, `v2/venue/meta`, `v2/venue/meta/details`, `v2/week/mobile-events/day/event/venue`, `v2/widgets/widget-events-list/event/venue`
 * Language - 35 new strings added, 55 updated, 0 fuzzied, and 0 obsoleted
-
 
 = [6.1.2] 2023-08-10 =
 

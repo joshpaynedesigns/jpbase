@@ -12,6 +12,10 @@ class Tribe__Events__Pro__Recurrence {
 	private $series_rules;
 	private $by_occurrence_count;
 	private $event;
+	/**
+	 * @var string
+	 */
+	private $start_time;
 	private $minDate = 0;
 	private $maxDate = 2147483647; // Y2K38, an arbitrary limit. TODO: revisit this in twenty years
 	private $last_request_constrained = false;

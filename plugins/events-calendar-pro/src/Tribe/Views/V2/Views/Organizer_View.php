@@ -16,7 +16,6 @@ use Tribe\Events\Views\V2\View;
 use Tribe\Events\Views\V2\Views\List_View;
 use Tribe__Context as Context;
 use Tribe__Events__Organizer as Organizer;
-use Tribe__Utils__Array as Arr;
 
 /**
  * Class Organizer_View
@@ -91,6 +90,8 @@ class Organizer_View extends List_View {
 	 * @since 5.0.1
 	 *
 	 * {@inheritDoc}
+	 *
+	 * @param Messages|null $messages An instance of the messages collection.
 	 */
 	public function __construct( Messages $messages = null ) {
 		parent::__construct( $messages );
@@ -110,9 +111,22 @@ class Organizer_View extends List_View {
 	 * @inheritDoc
 	 */
 	public static function get_view_label(): string {
-		static::$label = _x( 'Organizer', 'The text label for the Organizer View.', 'tribe-events-calendar-pro' );
+		static::$label = tribe_get_organizer_label_singular();
 
 		return static::filter_view_label( static::$label );
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function get_view_link_label(): string {
+		static::$label = sprintf(
+			/* Translators: %1$s is the lowercase pluralized label for events. */
+			_x( 'View %1s.', 'Label for link to map view.', 'tribe-events-calendar-pro' ),
+			tribe_get_organizer_label_singular_lowercase()
+		);
+
+		return static::filter_view_link_label( static::$label );
 	}
 
 	/**
@@ -164,6 +178,13 @@ class Organizer_View extends List_View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no previous View exists.
 	 */
 	public function prev_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );
@@ -192,6 +213,13 @@ class Organizer_View extends List_View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @since 4.9.3
+	 *
+	 * @param bool  $canonical Whether to return the canonical version of the URL or the normal one.
+	 * @param array $passthru_vars An array of query arguments that will be passed thru intact, and appended to the URL.
+	 *
+	 * @return string The URL associated to this View logical, next view or an empty string if no next View exists.
 	 */
 	public function next_url( $canonical = false, array $passthru_vars = [] ) {
 		$cache_key = __METHOD__ . '_' . md5( wp_json_encode( func_get_args() ) );

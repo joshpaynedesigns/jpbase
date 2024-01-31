@@ -318,9 +318,15 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @return string The filtered query.
 	 */
 	public function hydrate_provisional_post( $query_sql ) {
-		return $this->noop ?
-			$query_sql
-			: $this->container->make( Provisional_Post::class )->hydrate_provisional_post_query( $query_sql );
+		if ( $this->noop ) {
+			return $query_sql;
+		}
+
+		remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+		$query_sql = $this->container->make( Provisional_Post::class )->hydrate_provisional_post_query( $query_sql );
+		add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+
+		return $query_sql;
 	}
 
 	/**

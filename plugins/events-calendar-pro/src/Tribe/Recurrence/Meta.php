@@ -1086,7 +1086,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		/**
 		 * This filter allows overriding the legacy query to fetch occurrence start dates.
 		 *
-		 * @since TBD
+		 * @since 6.3.0
 		 *
 		 * @param null $results Fetch occurrence start dates to override typical query, or null to continue.
 		 * @param int  $post_id The post ID for this recurring event.

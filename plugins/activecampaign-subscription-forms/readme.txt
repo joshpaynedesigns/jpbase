@@ -108,6 +108,8 @@ With [ActiveCampaign Postmark](https://postmarkapp.com/?utm_source=activecampaig
 
 
 == Changelog ==
+= 8.1.14 =
+* Fixing shortcode CSS display in Form Preview
 
 = 8.1.13 =
 * Verifying 6.3.1 compatibility, updated listing

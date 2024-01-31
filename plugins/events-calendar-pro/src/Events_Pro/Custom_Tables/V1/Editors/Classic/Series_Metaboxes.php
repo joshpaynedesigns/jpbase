@@ -88,6 +88,16 @@ class Series_Metaboxes {
 		);
 
 		include __DIR__ . '/partials/series-event-relationship.php';
+
+		/**
+		 * Fires after the content of the Series metabox has been rendered.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param WP_Post[] $events         A list of posts representing the ordered Events that match the criteria.
+		 * @param int       $series_post_id The ID of the Series post.
+		 */
+		do_action( 'tec_events_pro_custom_tables_v1_series_relationships_after', $events, $series_post_id );
 	}
 
 	/**
@@ -150,6 +160,16 @@ class Series_Metaboxes {
 			ORDER BY e.start_date ASC, p.post_title ASC, p.ID ASC";
 
 		$available = $this->get_all_results( $query, 'ID' );
+
+		/**
+		 * Filters the list of all the Events available to be added to a Series.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param int[] $available A list of all the Event IDs available to be added to a Series.
+		 * @param int $series_post_id The ID of the Series post.
+		 */
+		$available = apply_filters( 'tec_events_pro_custom_tables_v1_add_to_series_available_events', $available, $series_post_id );
 
 		$events = array_map( 'get_post', array_filter( (array) $available ) );
 

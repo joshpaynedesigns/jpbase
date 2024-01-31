@@ -162,8 +162,8 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
         WHERE facet_name = '{$facet['name']}' AND facet_display_value != '' $where_clause";
         $row = $wpdb->get_row( $sql );
 
-        $min = substr( $row->minDate, 0, 10 );
-        $max = substr( $row->maxDate, 0, 10 );
+        $min = substr( $row->minDate ?? 0, 0, 10 );
+        $max = substr( $row->maxDate ?? 0, 0, 10 );
 
         if ( 'both' == $fields ) {
             $min_upper = ! empty( $selected_values[1] ) ? $selected_values[1] : $max;

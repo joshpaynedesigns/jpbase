@@ -49,7 +49,7 @@ class Venue_View extends Widget_View {
 	 * @return array<string,mixed> The arguments, ready to be set on the View repository instance.
 	 */
 	protected function setup_repository_args( Context $context = null ) {
-		$context            = null !== $context ? $context : $this->context;
+		$context            ??= $this->context;
 		$args               = parent::setup_repository_args( $context );
 		$args['venue']      = $context->get( 'venue', false );
 		$args['ends_after'] = $context->get( 'now', 'now' );
@@ -61,7 +61,7 @@ class Venue_View extends Widget_View {
 	 * {@inheritDoc}
 	 */
 	public function get_view_more_text() {
-		return esc_html__( 'View More', 'tribe-events-calendar-pro');
+		return esc_html__( 'View More', 'tribe-events-calendar-pro' );
 	}
 
 	/**
@@ -74,6 +74,10 @@ class Venue_View extends Widget_View {
 	public function get_view_more_link() {
 		$venue_id  = $this->context->get( 'venue' );
 		$venue_obj = tribe_get_venue_object( $venue_id );
+
+		if ( is_null( $venue_obj ) ) {
+			return '';
+		}
 
 		return $venue_obj->permalink;
 	}
@@ -90,13 +94,16 @@ class Venue_View extends Widget_View {
 		$venue_id  = $this->context->get( 'venue' );
 		$venue_obj = tribe_get_venue_object( $venue_id );
 
-		$text = sprintf(
-			__( /* Translators: 1: lowercase plural event term 2: venue name */ 'View more %1$s at %2$s.', 'tribe-events-calendar-pro' ),
+		if ( is_null( $venue_obj ) ) {
+			return '';
+		}
+
+		return sprintf(
+			/* Translators: 1: lowercase plural event term 2: venue name */
+			__( 'View more %1$s at %2$s.', 'tribe-events-calendar-pro' ),
 			tribe_get_event_label_plural_lowercase(),
 			$venue_obj->post_title
 		);
-
-		return $text;
 	}
 
 	/**
@@ -124,6 +131,8 @@ class Venue_View extends Widget_View {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param array $events An array of the View events, if any.
 	 */
 	protected function setup_messages( array $events ) {
 		if ( ! empty( $events ) ) {

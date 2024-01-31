@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.13
+Version: 8.1.14
 Author URI: http://www.activecampaign.com
 */
 
@@ -64,6 +64,7 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.11: Removing obsolete Javascript
 ## version 8.1.12: Security fix to address XSS vulnerability
 ## version 8.1.13: Verify 6.3.1 Compatibility. Updated listing
+## version 8.1.14: Fixing shortcode CSS display in Form Preview
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -611,7 +612,7 @@ function activecampaign_plugin_options()
 
                     ?>
 
-                    <p><?php echo __("Embed using"); ?><code>[activecampaign form=<?php echo $form_id; ?> css=<?php echo (isset($instance["css"]) && !empty($instance["css"][$form["id"]]))? '1' : '0'; ?>]</code></p>
+                    <p><?php echo __("Embed using"); ?><code>[activecampaign form=<?php echo $form_id; ?> css=<?php echo (isset($instance["css"]) && !empty($instance["css"][$form_id]))? '1' : '0'; ?>]</code></p>
 
                     <hr style="border: 1px dotted #ccc; border-width: 1px 0 0 0; margin-top: 40px;" />
 

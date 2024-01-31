@@ -123,6 +123,9 @@ class Provider extends Service_Provider {
 		add_filter( 'tribe_pro_recurrence_template_years', [ $this, 'filter_yearly_exclusions_template' ], 10, 2 );
 
 		add_action( 'tec_events_pro_output_before_rules_ui', [ $this, 'print_locked_ui_notice' ] );
+
+		// We no longer use the Recurrence Description field.
+		add_filter( 'tec_events_pro_show_recurrence_description', '__return_false' );
 	}
 
 	/**

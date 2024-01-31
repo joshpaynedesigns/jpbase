@@ -125,10 +125,27 @@ class Ajax {
 			], 403 );
 		}
 
-		wp_send_json_success( [
+		$series_data = [
 			'id'        => $series_post->ID,
 			'edit_link' => get_edit_post_link( $series_post->ID, 'unencoded' ),
-		] );
+			'title'     => get_the_title( $series_post->ID ),
+		];
+
+		/**
+		 * Filter the Series data returned by the AJAX request to fetch the selected Series data.
+		 *
+		 * @since 6.3.0
+		 *
+		 * @param array<string,mixed> $series_data The Series data.
+		 * @param WP_Post             $series_post The Series post.
+		 */
+		$series_data = apply_filters(
+			'tec_events_pro_custom_tables_v1_block_editor_ajax_series_data',
+			$series_data,
+			$series_post,
+		);
+
+		wp_send_json_success( $series_data );
 	}
 
 	/**

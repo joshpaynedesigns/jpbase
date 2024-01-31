@@ -100,9 +100,7 @@ class Provisional_Post {
 			return $query;
 		}
 
-		remove_filter( 'query', [ $this, 'hydrate_provisional_post_query' ] );
 		$occurrence = $this->get_occurrence_row( $provisional_id );
-		add_filter( 'query', [ $this, 'hydrate_provisional_post_query' ] );
 
 		if ( ! $occurrence instanceof Occurrence ) {
 			// We might be getting a request for a cached Occurrence: it will not be found.

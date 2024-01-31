@@ -555,7 +555,8 @@
 
         FWP_MAP.placesService.getDetails({
             placeId: place_id,
-            fields: ['geometry']
+            fields: ['geometry'],
+            sessionToken: FWP_MAP.sessionToken,
         }, function(place, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 $facet.find('.facetwp-lat').val(place.geometry.location.lat());

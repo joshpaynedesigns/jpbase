@@ -20,9 +20,16 @@ $strings = [
 	'time-recurrence-time-date-separator' => _x( 'the', 'custom recurrence time/date separator', 'tribe-events-calendar-pro' ),
 ];
 $strings = apply_filters( 'tribe_events_pro_recurrence_admin_template_strings', $strings );
-?>
 
-<?php
+/**
+ * A filter to show or hide the Recurrence Description field.
+ *
+ *  @since 6.3.1
+ *
+ * @param bool $show_recurrence_description Whether the recurrence description meta field should show or not.
+ */
+$show_recurrence_description = apply_filters( 'tec_events_pro_show_recurrence_description', true );
+
 /**
  * Hook before recurring event meta fields
  *
@@ -86,8 +93,12 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 					<button class="tribe-confirm-delete-this tribe-delete-this button-primary button-red">
 						<?php echo $delete_this_button ?>
 					</button>
-					<input type="hidden" name="is_recurring[]" data-field="is_recurring"
-						   value="{{#if is_recurring}}true{{else}}false{{/if}}"/>
+					<input
+						type="hidden"
+						name="is_recurring[]"
+						data-field="is_recurring"
+						value="{{#if is_recurring}}true{{else}}false{{/if}}"
+					/>
 
 					<div data-input="#recurrence_rule_--_type" class="tribe-buttonset">
 						<input
@@ -100,16 +111,32 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 								data-plural="<?php esc_attr_e( 'events', 'tribe-events-calendar-pro' ) ?>"
 								value="{{ custom.type }}"
 						>
-						<a data-value="Daily" class="tribe-button-field" href="#"
-						   data-singular="<?php esc_attr_e( 'day', 'tribe-events-calendar-pro' ); ?>"><?php esc_html_e( 'Daily', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Weekly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Weekly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Monthly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Monthly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Yearly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Yearly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Date" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Once', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Daily"
+							class="tribe-button-field"
+							href="#"
+							data-singular="<?php esc_attr_e( 'day', 'tribe-events-calendar-pro' ); ?>"
+						><?php esc_html_e( 'Daily', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Weekly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Weekly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Monthly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Monthly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Yearly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Yearly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Date"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Once', 'tribe-events-calendar-pro' ); ?></a>
 						<?php
 						/**
 						 * Filters the recurrence rule type buttons after template for the recurrence UI.
@@ -124,8 +151,11 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 					</div>
 
 					<span class="tribe-dependent" data-depends="#recurrence_rule_--_type" data-condition-not="Yearly">
-					<span class="tribe-dependent recurrence-custom-container" data-depends="#recurrence_rule_--_type"
-						  data-condition="Date">
+					<span
+						class="tribe-dependent recurrence-custom-container"
+						data-depends="#recurrence_rule_--_type"
+						data-condition="Date"
+					>
 						<span class="tribe-field-inline-text"><?php esc_html_e( 'On', 'tribe-events-calendar-pro' ); ?></span>
 						<input
 								autocomplete="off"
@@ -138,8 +168,11 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 						/>
 					</span>
 
-					<span class="tribe-dependent tribe-recurrence-type" data-depends="#recurrence_rule_--_type"
-						  data-condition-not="Date">
+					<span
+						class="tribe-dependent tribe-recurrence-type"
+						data-depends="#recurrence_rule_--_type"
+						data-condition-not="Date"
+					>
 						<span class="tribe-field-inline-text"><?php esc_html_e( 'Every', 'tribe-events-calendar-pro' ); ?></span>
 						<select
 								id="recurrence_rule_--_interval"
@@ -158,36 +191,63 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 								<option value="1">1</option>
 							{{/if}}
 						</select>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#recurrence_rule_--_type"
-							  data-condition="Daily">
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition="1">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#recurrence_rule_--_type"
+							data-condition="Daily"
+						>
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition="1"
+							>
 								<?php esc_html_e( 'day', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'days', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#recurrence_rule_--_type"
-							  data-condition="Weekly">
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition="1">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#recurrence_rule_--_type"
+							data-condition="Weekly"
+						>
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition="1"
+							>
 								<?php esc_html_e( 'week', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'weeks', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#recurrence_rule_--_type"
-							  data-condition="Monthly">
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition="1">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#recurrence_rule_--_type"
+							data-condition="Monthly"
+						>
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition="1"
+							>
 								<?php esc_html_e( 'month', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'months', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
@@ -227,8 +287,11 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 							include apply_filters( 'tribe_pro_recurrence_template_years', Tribe__Events__Pro__Main::instance()->pluginPath . '/src/admin-views/recurrence/years.php', $rule_type );
 							?>
 						</div>
-						<div class="recurrence-row tribe-dependent" data-depends="#recurrence_rule_--_type"
-							 data-condition-not-empty>
+						<div
+							class="recurrence-row tribe-dependent"
+							data-depends="#recurrence_rule_--_type"
+							data-condition-not-empty
+						>
 						<span class="tribe-field-inline-text first-label-in-line">
 							<?php echo esc_html( $strings['time-recurrence-start'] ); ?>
 						</span>
@@ -249,8 +312,11 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 									data-depends="#recurrence_rule_--_same_time"
 									data-condition="yes"
 							></span>
-							<span class="tribe-dependent" data-depends="#recurrence_rule_--_same_time"
-								  data-condition="no">
+							<span
+								class="tribe-dependent"
+								data-depends="#recurrence_rule_--_same_time"
+								data-condition="no"
+							>
 							<?php
 							/**
 							 * Filters the time template for the recurrence UI
@@ -314,23 +380,31 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 									class="recurrence_end_count"
 									value="{{this.[end-count]}}"
 							>
-							<span class='occurence-count-text tribe-field-inline-text'><?php _ex( 'events', 'occurence count text', 'tribe-events-calendar-pro' ) ?></span>
+							<span class='occurrence-count-text tribe-field-inline-text'><?php echo esc_html_x( 'events', 'occurrence count text', 'tribe-events-calendar-pro' ); ?></span>
 						</span>
 							<span class="rec-error rec-end-error">
 							<?php esc_html_e( 'You must select a recurrence end date', 'tribe-events-calendar-pro' ); ?>
 						</span>
 						</div>
-						<input type="hidden" name="recurrence[rules][][custom][type-text]" data-field="custom-type-text"
-							   value="{{custom.[type-text]}}"/>
-						<input type="hidden" name="recurrence[rules][][occurrence-count-text]"
-							   data-field="occurrence-count-text"
-							   value="<?php esc_attr_e( _x( 'events', 'occurence count text', 'tribe-events-calendar-pro' ) ) ?>"/>
+						<input
+							type="hidden" name="recurrence[rules][][custom][type-text]"
+							data-field="custom-type-text"
+							value="{{custom.[type-text]}}"
+						/>
+						<input
+							type="hidden"
+							name="recurrence[rules][][occurrence-count-text]"
+							data-field="occurrence-count-text"
+							value="<?php echo esc_attr_x( 'events', 'occurrence count text', 'tribe-events-calendar-pro' ); ?>"
+						/>
 					</div>
 					<div class="tribe-event-recurrence-description"></div>
 					<?php if ( ! $lock_rules_ui ): ?>
-						<div class="tribe-dependent tribe-recurrence-details-option"
-							 data-depends="#recurrence_rule_--_type"
-							 data-condition-not-empty>
+						<div
+							class="tribe-dependent tribe-recurrence-details-option"
+							data-depends="#recurrence_rule_--_type"
+							data-condition-not-empty
+						>
 					<span class="tribe-handle" title="Click to toggle">
 						<span class="show"><?php esc_html_e( 'Show Details', 'tribe-events-calendar-pro' ); ?></span>
 						<span class="hide"><?php esc_html_e( 'Hide Details', 'tribe-events-calendar-pro' ); ?></span>
@@ -446,16 +520,32 @@ $rule_prefix = 'exclusion';
 								data-plural="<?php esc_attr_e( 'events', 'tribe-events-calendar-pro' ) ?>"
 								value="{{ custom.type }}"
 						>
-						<a data-value="Daily" class="tribe-button-field" href="#"
-						   data-singular="<?php esc_attr_e( 'day', 'tribe-events-calendar-pro' ); ?>"><?php esc_html_e( 'Daily', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Weekly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Weekly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Monthly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Monthly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Yearly" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Yearly', 'tribe-events-calendar-pro' ); ?></a>
-						<a data-value="Date" class="tribe-button-field"
-						   href="#"><?php esc_html_e( 'Once', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Daily"
+							class="tribe-button-field"
+							href="#"
+							data-singular="<?php esc_attr_e( 'day', 'tribe-events-calendar-pro' ); ?>"
+						><?php esc_html_e( 'Daily', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Weekly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Weekly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Monthly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Monthly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Yearly"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Yearly', 'tribe-events-calendar-pro' ); ?></a>
+						<a
+							data-value="Date"
+							class="tribe-button-field"
+							href="#"
+						><?php esc_html_e( 'Once', 'tribe-events-calendar-pro' ); ?></a>
 						<?php
 						/**
 						 * Filters the exclusion rule type buttons after template for the recurrence UI.
@@ -470,8 +560,11 @@ $rule_prefix = 'exclusion';
 					</div>
 
 					<div class="tribe-dependent" data-depends="#exclusion_rule_--_type" data-condition-not="Yearly">
-					<span class="tribe-dependent recurrence-custom-container" data-depends="#exclusion_rule_--_type"
-						  data-condition="Date">
+					<span
+						class="tribe-dependent recurrence-custom-container"
+						data-depends="#exclusion_rule_--_type"
+						data-condition="Date"
+					>
 						<span class="tribe-field-inline-text"><?php esc_html_e( 'On', 'tribe-events-calendar-pro' ); ?></span>
 						<input
 								autocomplete="off"
@@ -483,8 +576,11 @@ $rule_prefix = 'exclusion';
 								value="{{ custom.date.date }}"
 						/>
 					</span>
-						<span class="tribe-dependent tribe-recurrence-type" data-depends="#exclusion_rule_--_type"
-							  data-condition-not="Date">
+						<span
+							class="tribe-dependent tribe-recurrence-type"
+							data-depends="#exclusion_rule_--_type"
+							data-condition-not="Date"
+						>
 						<span class="tribe-field-inline-text"><?php esc_html_e( 'Every', 'tribe-events-calendar-pro' ); ?></span>
 						<select
 								type="text"
@@ -509,41 +605,62 @@ $rule_prefix = 'exclusion';
 								<option value="10"><?php esc_html_e( '10', 'tribe-events-calendar-pro' ); ?></option>
 							{{/tribe_recurrence_select}}
 						</select>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#exclusion_rule_--_type"
-							  data-condition="Daily">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#exclusion_rule_--_type"
+							data-condition="Daily"
+						>
 							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval" data-condition="1">
 								<?php esc_html_e( 'day', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#exclusion_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'days', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#exclusion_rule_--_type"
-							  data-condition="Weekly">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#exclusion_rule_--_type"
+							data-condition="Weekly"
+						>
 							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval" data-condition="1">
 								<?php esc_html_e( 'week', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#exclusion_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'weeks', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
-						<span class="tribe-field-inline-text tribe-dependent" data-depends="#exclusion_rule_--_type"
-							  data-condition="Monthly">
+						<span
+							class="tribe-field-inline-text tribe-dependent"
+							data-depends="#exclusion_rule_--_type"
+							data-condition="Monthly"
+						>
 							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval" data-condition="1">
 								<?php esc_html_e( 'month', 'tribe-events-calendar-pro' ); ?>
 							</span>
-							<span class="tribe-dependent" data-depends="#exclusion_rule_--_interval"
-								  data-condition-not="1">
+							<span
+								class="tribe-dependent"
+								data-depends="#exclusion_rule_--_interval"
+								data-condition-not="1"
+							>
 								<?php esc_html_e( 'months', 'tribe-events-calendar-pro' ); ?>
 							</span>
 						</span>
 					</span>
 					</div>
 					<div class="tribe-recurrence-details">
-						<div class="tribe-dependent weekly" data-depends="#exclusion_rule_--_type"
-							 data-condition="Weekly">
+						<div
+							class="tribe-dependent weekly"
+							data-depends="#exclusion_rule_--_type"
+							data-condition="Weekly"
+						>
 							<?php
 							/**
 							 * Filters the week template for the recurrence UI
@@ -554,8 +671,11 @@ $rule_prefix = 'exclusion';
 							include apply_filters( 'tribe_pro_recurrence_template_weeks', Tribe__Events__Pro__Main::instance()->pluginPath . '/src/admin-views/recurrence/weeks.php', $rule_type );
 							?>
 						</div>
-						<div class="tribe-dependent monthly" data-depends="#exclusion_rule_--_type"
-							 data-condition="Monthly">
+						<div
+							class="tribe-dependent monthly"
+							data-depends="#exclusion_rule_--_type"
+							data-condition="Monthly"
+						>
 							<?php
 							/**
 							 * Filters the month template for the recurrence UI
@@ -578,11 +698,17 @@ $rule_prefix = 'exclusion';
 							?>
 						</div>
 
-						<input type="hidden" name="recurrence[exclusions][][custom][same-time]" data-field="same-time"
-							   value="yes">
-
-						<div class="tribe-dependent recurrence-row recurrence-end"
-							 data-depends="#exclusion_rule_--_type" data-condition-not-empty>
+						<input
+							type="hidden"
+							name="recurrence[exclusions][][custom][same-time]"
+							data-field="same-time"
+							value="yes"
+						>
+						<div
+							class="tribe-dependent recurrence-row recurrence-end"
+							data-depends="#exclusion_rule_--_type"
+							data-condition-not-empty
+						>
 						<span class="tribe-dependent" data-depends="#exclusion_rule_--_type" data-condition-not="Date">
 							<span class="recurrence-end-range">
 								<span class="tribe-field-inline-text">
@@ -630,7 +756,7 @@ $rule_prefix = 'exclusion';
 										class="recurrence_end_count"
 										value="{{this.[end-count]}}"
 								>
-								<span class='occurence-count-text tribe-field-inline-text'><?php _ex( 'events', 'occurence count text', 'tribe-events-calendar-pro' ) ?></span>
+								<span class='occurrence-count-text tribe-field-inline-text'><?php echo esc_html_x( 'events', 'occurrence count text', 'tribe-events-calendar-pro' ); ?></span>
 							</span>
 							<span class="rec-error rec-end-error">
 								<?php esc_html_e( 'You must select a recurrence end date', 'tribe-events-calendar-pro' ); ?>
@@ -639,11 +765,17 @@ $rule_prefix = 'exclusion';
 						</div>
 						<div class="recurrence-rows">
 							<div class="recurrence-row custom-recurrence-frequency">
-								<input type="hidden" name="recurrence[exclusions][][custom][type-text]"
-									   data-field="custom-type-text" value="{{custom.[type-text]}}"/>
-								<input type="hidden" name="recurrence[exclusions][][occurrence-count-text]"
-									   data-field="occurrence-count-text"
-									   value="<?php esc_attr_e( _x( 'events', 'occurence count text', 'tribe-events-calendar-pro' ) ) ?>"/>
+								<input
+									type="hidden"
+									name="recurrence[exclusions][][custom][type-text]"
+									data-field="custom-type-text" value="{{custom.[type-text]}}"
+								/>
+								<input
+									type="hidden"
+									name="recurrence[exclusions][][occurrence-count-text]"
+									data-field="occurrence-count-text"
+									value="<?php echo esc_attr_x( 'events', 'occurrence count text', 'tribe-events-calendar-pro' ); ?>"
+								/>
 								<span class="rec-error rec-days-error"><?php esc_html_e( 'Frequency of recurring event must be a number', 'tribe-events-calendar-pro' ); ?></span>
 							</div>
 						</div>
@@ -670,18 +802,29 @@ $rule_prefix = 'exclusion';
 		</div>
 	</td>
 </tr>
-
-<tr class="recurrence-row tribe-recurrence-description">
-	<td class="recurrence-description-header"><?php esc_html_e( 'Recurrence Description:', 'tribe-events-calendar-pro' ); ?></td>
-	<td>
-		<label class="screen-reader-text" for="recurrence-description"><?php esc_html_e( 'Recurrence Description', 'tribe-events-calendar-pro' ); ?></label>
-		<input id="recurrence-description" type="text" name="recurrence[description]" value="<?php echo esc_attr( empty( $recurrence['description'] ) ? '' : $recurrence['description'] ); ?>"/>
-		<div class="tribe-event-recurrence-description">
-			<?php esc_html_e( 'Use this field if you want to override the auto-generated descriptions of event recurrence', 'tribe-events-calendar-pro' ); ?>
-		</div>
-	</td>
-</tr>
-<?php
+	<?php
+	if ( $show_recurrence_description ) :
+	?>
+	<tr class="recurrence-row tribe-recurrence-description">
+		<td class="recurrence-description-header"><?php esc_html_e( 'Recurrence Description:', 'tribe-events-calendar-pro' ); ?></td>
+		<td>
+			<label
+				class="screen-reader-text"
+				for="recurrence-description"
+			><?php esc_html_e( 'Recurrence Description', 'tribe-events-calendar-pro' ); ?></label>
+			<input
+				id="recurrence-description"
+				type="text"
+				name="recurrence[description]"
+				value="<?php echo esc_attr( empty( $recurrence['description'] ) ? '' : $recurrence['description'] ); ?>"
+			/>
+			<div class="tribe-event-recurrence-description">
+				<?php esc_html_e( 'Use this field if you want to override the auto-generated descriptions of event recurrence', 'tribe-events-calendar-pro' ); ?>
+			</div>
+		</td>
+	</tr>
+	<?php
+endif;
 /**
  * Hook after recurring event meta fields
  *

@@ -59,7 +59,6 @@ class Event_Tickets_With_Rules_Migration_Strategy implements Strategy_Interface 
 	 * {@inheritDoc}
 	 */
 	public function apply( Event_Report $event_report ) {
-		// @todo Do we care about the ticket provider here?
 		$event_report->set_tickets_provider( 'unknown' );
 		$text = tribe( String_Dictionary::class );
 

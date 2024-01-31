@@ -7,6 +7,8 @@
  * @var bool                          $creation_enabled Whether the current user is allowed to create Series.
  * @var string                        $create_label     The creation label.
  * @var bool                          $clear_enabled    Whether clearing the dropdown selection is allowed or not.
+ * @var bool                          $has_selection    Whether the dropdown has a selection or not.
+ * @var string                        $edit_series_link The link to edit the selected Series, if any.
  */
 ?>
 <div class="tec-events-pro-series">
@@ -32,6 +34,7 @@
 			data-create-choice-template="<?php echo __( 'Create: <%= term %> (Draft)', 'tribe-events-calendar-pro' ); ?>"
 			data-allow-html
 			data-force-search
+			data-clear-to-value="-1"
 		<?php endif; ?>
 		<?php if ( ! $clear_enabled ) : ?>
 			data-prevent-clear
@@ -45,12 +48,16 @@
 			<?php echo esc_html( $create_label ); ?>
 		</option>
 
-		<?php foreach ( $series as $series_id => list( $series_title, $selected, $edit_link ) ): ?>
+		<?php foreach ( $series as $series_id => $series_data ): ?>
 			<option
-				value="<?php echo esc_attr( json_encode( [ 'id' => $series_id, 'title' => $series_title ] ) ); ?>"
-				data-edit-link="<?php echo esc_url( $edit_link ); ?>"
-				<?php selected( (bool) $selected ) ?>>
-				<?php echo esc_html( $series_title ); ?>
+				value="<?php echo esc_attr(
+					json_encode(
+						array_merge( [ 'id' => $series_id, 'title' => $series_data['title'] ], $series_data )
+					)
+				); ?>"
+				data-edit-link="<?php echo esc_url( $series_data['edit_link'] ); ?>"
+				<?php selected( (bool) $series_data['selected'] ) ?>>
+				<?php echo esc_html( $series_data['title'] ); ?>
 			</option>
 		<?php endforeach; ?>
 	</select>

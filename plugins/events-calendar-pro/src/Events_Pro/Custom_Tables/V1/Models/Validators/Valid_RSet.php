@@ -21,8 +21,6 @@ class Valid_RSet extends Validator {
 	 */
 	public function validate( Model $model, $name, $value ) {
 		try {
-			$this->error_message = '';
-
 			if ( empty( $value ) ) {
 				return true;
 			}
@@ -40,7 +38,7 @@ class Valid_RSet extends Validator {
 
 			return true;
 		} catch ( \InvalidArgumentException $exception ) {
-			$this->error_message = $exception->getMessage();
+			$this->add_error_message( $exception->getMessage() );
 
 			return false;
 		}

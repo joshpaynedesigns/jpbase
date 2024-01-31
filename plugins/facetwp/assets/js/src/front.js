@@ -96,7 +96,9 @@ window.FWP = (($) => {
                             values += '<span class="facetwp-selection-value" data-value="' + choice.value + '">' + FWP.helper.escapeHtml(choice.label) + '</span>';
                         });
 
-                        selections += '<li data-facet="' + key + '"><span class="facetwp-selection-label">' + FWP.settings.labels[key] + ':</span> ' + values + '</li>';
+                        if ('' !== values) {
+                            selections += '<li data-facet="' + key + '"><span class="facetwp-selection-label">' + FWP.settings.labels[key] + ':</span> ' + values + '</li>';
+                        }
                     });
 
                     if ('' !== selections) {

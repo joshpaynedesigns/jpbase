@@ -14,12 +14,11 @@ use TEC\Events\Custom_Tables\V1\Repository\Events as TEC_Events;
 use TEC\Events\Custom_Tables\V1\Tables\Events as EventsSchema;
 use TEC\Events\Custom_Tables\V1\Tables\Occurrences as OccurrencesSchema;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Recurrence;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use TEC\Events_Pro\Custom_Tables\V1\Tables\Series_Relationships as Series_RelationshipsSchema;
 use TEC\Events_Pro\Custom_Tables\V1\Traits\With_Ical_Strings;
-use TEC\Events_Pro\Custom_Tables\V1\Updates\Update_Type;
-use TEC\Events_Pro\Custom_Tables\V1\Updates\WP_Function_Edit;
 use RuntimeException;
 use Tribe__Date_Utils as Dates;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Post_Type as Series_Post_Type;
@@ -44,7 +43,34 @@ class Events extends TEC_Events {
 	 */
 	protected $update_data = [];
 
+	/**
+	 * A map of the postarr data per post ID.
+	 *
+	 *  @since 6.3.1
+	 *
+	 * @var array<int,array<string,mixed>>
+	 */
 	private $postarrs = [];
+
+
+	/**
+	 * Filter and check if we should hijack the default tribe_events()->delete() logic.
+	 * This is important because post ID's will be converted provisional IDs and
+	 *
+	 * @param int[]|null   $return     The post IDs to delete.
+	 * @param Events__Repo $repository The repository instance.
+	 *
+	 * @return array
+	 */
+	public function repository_delete_by_post( $return, $repository ) {
+		if ( ! empty( $repository->query_args['p'] ) && ! tribe( Provisional_Post::class )->is_provisional_post_id( $repository->query_args['p'] ) ) {
+			wp_delete_post( $repository->query_args['p'] );
+
+			return [ (int) $repository->query_args['p'] ];
+		}
+
+		return $return;
+	}
 
 	/**
 	 * Since the creation of Occurrences is handled in the upsert method,
@@ -83,9 +109,13 @@ class Events extends TEC_Events {
 		try {
 			if ( ! empty( $series ) ) {
 				// If the Series will be created now, then assign them the Event post status.
-				$series = $this->process_series_data( (array) $series, $match_by_name, [
-					'post_status' => get_post_status( $event->post_id )
-				] );
+				$series = $this->process_series_data(
+					(array) $series,
+					$match_by_name,
+					[
+						'post_status' => get_post_status( $event->post_id ),
+					]
+				);
 
 				// Associate new Event to the existing Series.
 				tribe( Relationship::class )->with_event( $event, $series );
@@ -116,7 +146,8 @@ class Events extends TEC_Events {
 	 * @param array<string,mixed> $payload  The recurrence payload.
 	 *
 	 * @return bool Whether the update was successful or not.
-	 * @throws \ReflectionException
+	 *
+	 * @throws \ReflectionException If the Event model cannot be found.
 	 */
 	public function upsert_occurrences( int $event_id, array $payload ): bool {
 		/** @var Event $event */
@@ -128,9 +159,9 @@ class Events extends TEC_Events {
 
 		$postarr = $this->postarrs[ $event_id ] ?? [];
 		unset( $this->postarrs[ $event_id ] );
-		$series = $postarr['series'] ?? [];
+		$series               = $postarr['series'] ?? [];
 		$series_match_by_name = ! empty( $postarr['series_match_by_name'] );
-		$is_recurring = ! empty( $postarr['recurrence'] );
+		$is_recurring         = ! empty( $postarr['recurrence'] );
 
 		if ( $is_recurring && empty( $series ) ) {
 			// A recurring event must have a Series associated to it.
@@ -147,9 +178,9 @@ class Events extends TEC_Events {
 		$recurrence = $payload['recurrence'];
 
 		if ( $this->is_icalendar_string( $recurrence ) ) {
-			$timezone = get_post_meta( $event_id, '_EventTimezone', true );
-			$dtstart = Dates::immutable( get_post_meta( $event_id, '_EventStartDate', true ), $timezone );
-			$dtend = Dates::immutable( get_post_meta( $event_id, '_EventEndDate', true ), $timezone );
+			$timezone   = get_post_meta( $event_id, '_EventTimezone', true );
+			$dtstart    = Dates::immutable( get_post_meta( $event_id, '_EventStartDate', true ), $timezone );
+			$dtend      = Dates::immutable( get_post_meta( $event_id, '_EventEndDate', true ), $timezone );
 			$recurrence = Recurrence::from_icalendar_string( $recurrence, $dtstart, $dtend )
 				->to_event_recurrence();
 		}
@@ -167,10 +198,15 @@ class Events extends TEC_Events {
 		try {
 			$event->occurrences()->save_occurrences();
 		} catch ( \Exception $e ) {
-			do_action( 'tribe_log', 'error', 'Failed to upsert recurring Event Occurrences.', [
-				'source'  => __CLASS__,
-				'post_id' => $event_id,
-			] );
+			do_action(
+				'tribe_log',
+				'error',
+				'Failed to upsert recurring Event Occurrences.',
+				[
+					'source'  => __CLASS__,
+					'post_id' => $event_id,
+				]
+			);
 
 			return false;
 		}
@@ -190,10 +226,10 @@ class Events extends TEC_Events {
 	public function get_occurrence_count_for_series( int $post_id ): int {
 		global $wpdb;
 
-		$events_table = EventsSchema::table_name( true );
+		$events_table        = EventsSchema::table_name( true );
 		$series_events_table = Series_RelationshipsSchema::table_name( true );
-		$occurrence_table = OccurrencesSchema::table_name( true );
-		$query = "
+		$occurrence_table    = OccurrencesSchema::table_name( true );
+		$query               = "
 			SELECT COUNT(*)
 			FROM `{$series_events_table}`
 			INNER JOIN `{$events_table}`
@@ -203,9 +239,9 @@ class Events extends TEC_Events {
 			INNER JOIN `{$occurrence_table}`
 				ON `{$series_events_table}`.event_id = `{$occurrence_table}`.event_id
 			WHERE `{$wpdb->posts}`.post_status != 'trash'
-			 	AND `{$series_events_table}`.`series_post_id` = %s";
+			 	AND `{$series_events_table}`.`series_post_id` = {$post_id}";
 
-		return (int) $wpdb->get_var( $wpdb->prepare( $query, $post_id ) );
+		return (int) $wpdb->get_var( $wpdb->prepare( $query ) );
 	}
 
 	/**
@@ -221,21 +257,24 @@ class Events extends TEC_Events {
 	 * @return array<int> The post IDs of the inserted or updated Series.
 	 */
 	protected function process_series_data( array $series_data, bool $match_by_name = true, array $create_overrides = [] ): array {
-		$vinsert = array_map( static function ( $series ) use ( $match_by_name ) {
-			if ( is_numeric( $series ) ) {
-				return [ 'id' => $series ];
-			}
+		$vinsert = array_map(
+			static function ( $series ) use ( $match_by_name ) {
+				if ( is_numeric( $series ) ) {
+					return [ 'id' => $series ];
+				}
 
-			$match = $match_by_name ?
-				get_page_by_title( $series, OBJECT, Series_Post_Type::POSTTYPE )
-				: null;
+				$match = $match_by_name ?
+					get_page_by_title( $series, OBJECT, Series_Post_Type::POSTTYPE )
+					: null;
 
-			if ( $match instanceof WP_Post ) {
-				return [ 'id' => $match->ID ];
-			}
+				if ( $match instanceof WP_Post ) {
+					return [ 'id' => $match->ID ];
+				}
 
-			return [ 'title' => $series ];
-		}, $series_data );
+				return [ 'title' => $series ];
+			},
+			$series_data
+		);
 
 		return Series::vinsert_many( $vinsert, $create_overrides );
 	}

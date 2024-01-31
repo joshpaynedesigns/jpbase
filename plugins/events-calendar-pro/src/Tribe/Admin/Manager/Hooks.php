@@ -54,6 +54,7 @@ class Hooks extends Service_Provider {
 		add_action( 'in_admin_footer', tribe_callback( Page::class, 'inject_manager_link' ) );
 		add_action( 'admin_notices', tribe_callback( Modal\Split_Upcoming::class, 'render_modal' ) );
 		add_action( 'admin_notices', tribe_callback( Modal\Split_Single::class, 'render_modal' ) );
+		add_action( 'load-tribe_events_page_tribe-admin-manager', [ $this, 'add_page_title' ], 15 );
 	}
 
 	/**
@@ -62,12 +63,23 @@ class Hooks extends Service_Provider {
 	 * @since 5.9.0
 	 */
 	protected function add_filters() {
-		add_filter( 'admin_title', [ $this, 'filter_admin_title' ], 15, 2 );
 		add_filter( 'submenu_file', [ $this, 'change_default_events_menu_url' ] );
 		add_filter( 'tribe_general_settings_tab_fields', [ $this, 'filter_settings_general_tab' ], 25 );
 		add_filter( 'wp_redirect', [ $this, 'filter_edit_page_redirect_to_render_admin_manager' ] );
 		add_filter( 'tec_events_views_v2_disable_tribe_bar', [ $this, 'filter_views_v2_disable_tribe_bar_on_event_manager_page' ] );
 		add_filter( 'tec_events_views_v2_hide_location_search', [ $this, 'filter_views_v2_hide_location_search_on_event_manager_page' ] );
+	}
+
+	/**
+	 * Set the global admin page title when this page is being loaded.
+	 *
+	 *  @since 6.3.1
+	 */
+	public function add_page_title() {
+		global $title;
+		if ( empty( $title ) ) {
+			$title = $this->container->make( Page::class )->get_page_title(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		}
 	}
 
 	/**
@@ -87,20 +99,6 @@ class Hooks extends Service_Provider {
 		}
 
 		add_filter( 'tribe_events_shortcode_tribe_events_should_display', '__return_true' );
-	}
-
-	/**
-	 * Modify the Admin Title for the calendar manager page.
-	 *
-	 * @since 5.9.0
-	 *
-	 * @param string $admin_title Administration title.
-	 * @param string $title       Original title.
-	 *
-	 * @return string Modified page of the Calendar Manager.
-	 */
-	public function filter_admin_title( $admin_title, $title ) {
-		return $this->container->make( Page::class )->filter_admin_title( $admin_title, $title );
 	}
 
 	/**

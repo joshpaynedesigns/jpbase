@@ -13,6 +13,7 @@ use TEC\Events\Custom_Tables\V1\Models\Event as Event_Model;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Editors\Classic\UI_Lock;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Occurrence as Occurrence_Model;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
 use Tribe__Date_Utils as Dates;
 use Tribe__Timezones as Timezones;
 use WP_Post;
@@ -48,7 +49,7 @@ class Event {
 			$occurrence = $post->_tec_occurrence;
 			$event      = Event_Model::find( $occurrence->event_id, 'event_id' );
 		} else {
-			$event = Event_Model::find( $id, 'post_id' );
+			$event = Event_Model::find( $post->ID, 'post_id' );
 			if ( $event instanceof Event_Model ) {
 				$occurrence = Occurrence::where( 'event_id', $event->event_id )->first();
 			}
@@ -77,6 +78,10 @@ class Event {
 		$lock_exclusions_ui = (bool) apply_filters( 'tec_events_pro_lock_exclusions_ui', false );
 
 		$is_rdate = $this->is_request_for_rdate( $occurrence );
+
+		$is_in_series = $occurrence instanceof Occurrence
+		                && Series_Relationship::find( $occurrence->post_id, 'event_post_id' ) !== null;
+
 		$tec_event_details = [
 			'id'                => $id,
 			'occurrence'        => $occurrence instanceof Occurrence ? $occurrence->to_array() : [],
@@ -85,6 +90,7 @@ class Event {
 			'isRdate'           => $is_rdate,
 			'lockRulesUi'       => $lock_rules_ui,
 			'lockExclusionsUi'  => $lock_exclusions_ui,
+			'isInSeries'        => $is_in_series,
 		];
 		if ( $is_rdate && $lock_rules_ui ) {
 			$ui_lock                                 = tribe( UI_Lock::class );

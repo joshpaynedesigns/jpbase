@@ -26,6 +26,14 @@ use Throwable;
  * @package TEC\Events_Pro\Custom_Tables\V1
  */
 class Provider extends Service_Provider {
+	/**
+	 * The custom action that will be fired when the provider registers.
+	 *
+	 * @since 6.3.0
+	 *
+	 * @return void
+	 */
+	public static string $registration_action = 'tec_pro_ct1_provider_registered';
 
 	/**
 	 * A flag property indicating whether the Service Provider did register or not.
