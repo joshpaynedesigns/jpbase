@@ -1,5 +1,10 @@
 html {
+  font-size: 90%;
   scroll-behavior: smooth;
+
+  @media screen and (min-width: rem(900)) {
+    font-size: $base-font-size;
+  }
 }
 
 :target {
@@ -9,17 +14,12 @@ html {
 body {
   color: $base-font-color;
   font-family: $base-font-family;
-  font-size: 90%;
   line-height: $base-line-height;
   background-color: $base-background-color;
 
   *::selection {
     background-color: $blue;
     color: white;
-  }
-
-  @media screen and (min-width: rem(900)) {
-    font-size: $base-font-size;
   }
 }
 
