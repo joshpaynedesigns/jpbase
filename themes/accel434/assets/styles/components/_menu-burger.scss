@@ -1,9 +1,9 @@
 .mobile-menu-icon {
   cursor: pointer;
-  height: rem(20);
+  height: 20px;
   position: relative;
   transition: $base-duration $base-timing;
-  width: rem(30);
+  width: 30px;
   z-index: 310;
 
   @media ($large-screen-up) {
@@ -13,9 +13,9 @@
 
 .mobile-menu-icon span {
   background: $dark-gray;
-  border-radius: rem(2);
+  border-radius: 2px;
   display: block;
-  height: rem(4);
+  height: 4px;
   left: 0;
   position: absolute;
   transform: rotate(0deg);
@@ -24,16 +24,16 @@
 }
 
 .mobile-menu-icon span:nth-child(1) {
-  top: rem(0);
+  top: 0px;
 }
 
 .mobile-menu-icon span:nth-child(2),
 .mobile-menu-icon span:nth-child(3) {
-  top: rem(8);
+  top: 8px;
 }
 
 .mobile-menu-icon span:nth-child(4) {
-  top: rem(16);
+  top: 16px;
 }
 
 .site-container.move-left .mobile-menu-icon span:nth-child(1) {
