@@ -19,33 +19,33 @@ body {
   width: 100%;
 
   &.move-left {
-    right: rem(285);
+    right: 285px;
   }
 }
 
 .mobile-menu {
   box-sizing: border-box;
-  padding: rem(30);
+  padding: 30px;
   background-color: $mm-bg-color;
   height: 100%;
   overflow: auto;
   position: fixed;
-  right: rem(-300);
+  right: -300px;
   top: 0;
-  width: rem(300);
+  width: 300px;
   z-index: 2000;
   transition: all $medium-duration $base-timing;
-  font-size: 1rem;
+  font-size: 16px;
 
   &.move-in {
     right: 0;
   }
 
   .admin-bar & {
-    margin-top: rem(32);
+    margin-top: 32px;
 
-    @media (max-width: rem(782)) {
-      margin-top: rem(46);
+    @media (max-width: 782px) {
+      margin-top: 46px;
     }
   }
 
@@ -70,7 +70,7 @@ body {
       font-weight: 600;
       color: white;
       display: block;
-      margin-bottom: rem(20);
+      margin-bottom: 20px;
       line-height: 1em;
       text-transform: uppercase;
     }
@@ -85,12 +85,12 @@ body {
         background-size: cover;
         content: "";
         cursor: pointer;
-        height: rem(26);
+        height: 26px;
         position: absolute;
-        right: rem(-5);
-        top: rem(-3);
+        right: -5px;
+        top: -3px;
         transform: rotate(0);
-        width: rem(26);
+        width: 26px;
       }
       &.active {
         &:after {
@@ -98,10 +98,10 @@ body {
         }
       }
       .sub-menu {
-        padding-left: rem(10);
+        padding-left: 10px;
         display: none;
-        margin-bottom: rem(22);
-        margin-top: rem(-10);
+        margin-bottom: 22px;
+        margin-top: -10px;
 
         li {
           margin-left: 0;
@@ -125,10 +125,10 @@ body {
 
   .icon-close-container {
     position: absolute;
-    width: rem(28);
-    height: rem(28);
-    top: rem(16);
-    right: rem(14);
+    width: 28px;
+    height: 28px;
+    top: 16px;
+    right: 14px;
     cursor: pointer;
     z-index: 99999;
     transition: all $base-timing $base-duration;
@@ -141,8 +141,8 @@ body {
   }
 
   .icon-close {
-    width: rem(28);
-    height: rem(28);
+    width: 28px;
+    height: 28px;
 
     svg {
       fill: $medium-gray;
@@ -151,7 +151,7 @@ body {
 }
 
 .mobile-menu-search {
-  margin-top: rem(30);
+  margin-top: 30px;
   input[type="submit"] {
     display: none !important;
   }
