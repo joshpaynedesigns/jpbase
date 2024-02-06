@@ -39,7 +39,7 @@ $section_classes = ns_decide_section_classes('blue');
                         <?php endwhile; ?>
                     <?php wp_reset_postdata(); ?>
                     </div>
-                    <?php ns_slider_arrows(32, 32); ?>
+                    <?php ns_slider_arrows(32); ?>
                 </div>
                 <?php if ($show_view_all_button) : ?>
                     <div class="testimonials-feed-bottom flex justify-center basemt">

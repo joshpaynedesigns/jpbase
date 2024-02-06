@@ -107,7 +107,7 @@ function ns_search_toggle()
         <div class="top-icon-section">
             <div class="searchWrap">
                 <span class="top-icon-section__search searchIcon">
-                    <?php echo get_svg_icon('search', '', 22, 22); ?>
+                    <?php echo ns_get_svg_icon('search', 22); ?>
                 </span>
             </div>
         </div>

@@ -1,44 +1,59 @@
 <?php
 
-/**
- * Get SVG Icon from Sprite
- * @param  string $file_name  file name of svg icon in /assets/icons/src
- * @param  string $class_name class name to be added to parent svg element
- * @param  integer $height    specify the height of the svg element
- * @param  integer $width     specify the width of the svg element
- * @return string             svg element to return
- */
-function get_svg_icon($file_name, $class_name = '', $height = '', $width = '') {
-    $prefix = 'ico';
-    $path = get_stylesheet_directory_uri() . '/assets/icons/dist/src.svg';
-    $svg_class = '';
-    $height_attr = '';
-    $width_attr = '';
+function ns_minify_svg($svg_contents)
+{
+    // Remove comments
+    $svg_contents = preg_replace('/<!--.*?-->/', '', $svg_contents);
 
-    // Set the class name of the SVG element
-    if ( ! empty( $class_name ) ) {
-        $svg_class = 'class="' . $class_name . '"';
+    // Remove newlines and tabs
+    $svg_contents = preg_replace('/[\r\n\t]/', '', $svg_contents);
+
+    // Remove unnecessary spaces within tags
+    $svg_contents = preg_replace('/\s*=\s*/', '=', $svg_contents);
+
+    // Remove multiple consecutive spaces
+    $svg_contents = preg_replace('/\s+/', ' ', $svg_contents);
+
+    // Trim leading and trailing spaces
+    $svg_contents = trim($svg_contents);
+
+    return $svg_contents;
+}
+
+function ns_get_svg_icon($file_name, $width = 20, $class = '')
+{
+    $file_path = get_stylesheet_directory() . '/assets/icons/' . $file_name . '.svg';
+
+    if (! file_exists($file_path)) {
+        return "";
     }
 
-    // Set the height of the SVG element
-    if ( ! empty( $height ) ) {
-        $svg_height = intval( $height );
-        $height_attr = 'height="' . $height . 'px"';
+    // Get the contents of the SVG file
+    $svg_content = file_get_contents($file_path);
+
+    if (empty($svg_content)) {
+        return "";
     }
 
-    // Set the width of the SVG element
-    if ( ! empty( $width ) ) {
-        $svg_width = intval( $width );
-        $width_attr = 'width="' . $width . 'px"';
+    // Parse the SVG content into a SimpleXMLElement
+    $xml_element = new SimpleXMLElement($svg_content);
+
+    // Add the new width attribute (or replace existing one)
+    $xml_element['width'] = $width;
+
+    if (empty($class)) {
+        $class = $file_name;
     }
 
-    // Save the SVG element into var
-    $output = '<svg ' . $svg_class . $height_attr . $width_attr . '><use xlink:href="' . $path .'#' . $prefix . '-' . $file_name . '" /></svg>';
+    // Add the new class attribute (or replace the existing one)
+    $xml_element['class'] = $class;
 
-    // Return SVG element if file_name exists
-    if (! empty( $file_name ) ) {
-        return $output;
-    } else {
-        return 'Sorry that icon can\'t be found.';
+    // Minify the SVG
+    $svg_string = ns_minify_svg($xml_element->asXML());
+
+    if (! empty($svg_string)) {
+        return $svg_string;
     }
+
+    return "";
 }
