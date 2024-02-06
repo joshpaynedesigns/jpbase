@@ -23,7 +23,7 @@
     }
 
     .slick-prev {
-      left: rem(1);
+      left: 1px;
 
       &:before {
         display: block;
@@ -31,7 +31,7 @@
     }
 
     .slick-next {
-      right: rem(1);
+      right: 1px;
 
       &:before {
         display: block;

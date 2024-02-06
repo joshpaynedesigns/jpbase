@@ -59,7 +59,7 @@ $large-b-height: rem(725);
 
   &.hide_banner_image {
     .banner_slide {
-      border-bottom: rem(1) solid #eee;
+      border-bottom: 1px solid #eee;
       height: $xsmall-b-height-mobile;
 
       @media ($large-screen-up) {

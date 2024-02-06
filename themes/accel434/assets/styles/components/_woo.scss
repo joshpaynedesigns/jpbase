@@ -354,7 +354,7 @@ input[type="button"].facetwp-slider-reset,
     background-color: white !important;
     border-radius: 0;
     border: $base-border !important;
-    border-width: rem(1) !important;
+    border-width: 1px !important;
     box-shadow: none !important;
     color: $toolbar-text-color;
     font-size: rem(14);
@@ -1363,7 +1363,7 @@ li.wc_payment_method {
 
   &.actions {
     background-color: white !important;
-    border-top: rem(1) solid $light-gray !important;
+    border-top: 1px solid $light-gray !important;
   }
 
   &.product-thumbnail {

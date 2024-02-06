@@ -74,7 +74,7 @@ $allowed-tags-background-color: $light-gray;
 }
 
 .comment .children {
-  border-left: rem(1) dashed $comment-border-color;
+  border-left: 1px dashed $comment-border-color;
   padding-left: $base-spacing;
 
   header {
