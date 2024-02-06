@@ -48,7 +48,7 @@ function ns_do_home_banner($custom_height = null, $banner_height = null, $banner
                 ?>
             </div>
             <?php if ($display_arrows) : ?>
-                <?php ns_slider_arrows(32, 32, $txt_color); ?>
+                <?php ns_slider_arrows(32); ?>
             <?php endif; ?>
         </section>
         <?php
@@ -162,15 +162,15 @@ function display_slide_content($title = null, $subtitle = null, $first_button = 
 }
 
 // Displays the slider arrows
-function ns_slider_arrows($height = 22, $width = 22, $classes = "")
+function ns_slider_arrows($width = 22, $classes = "text-white")
 {
     ?>
     <div class="arrows-wrap <?php echo $classes ?>">
         <div class="left-arrow">
-            <?php echo get_svg_icon('arrow-white', '', $height, $width); ?>
+            <?php echo ns_get_svg_icon('arrow', $width); ?>
         </div>
         <div class="right-arrow">
-            <?php echo get_svg_icon('arrow-white', '', $height, $width); ?>
+            <?php echo ns_get_svg_icon('arrow', $width); ?>
         </div>
     </div>
     <?php

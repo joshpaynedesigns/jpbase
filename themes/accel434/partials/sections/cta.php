@@ -41,6 +41,6 @@ $cta_slider = get_sub_field('cta_slider');
                 </div>
             <?php endforeach; ?>
         </div>
-        <?php ns_slider_arrows(22, 22) ?>
+        <?php ns_slider_arrows(22) ?>
     </div>
 </section>

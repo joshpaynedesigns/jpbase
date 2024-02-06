@@ -29,7 +29,7 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-            <?php ns_slider_arrows(32, 32); ?>
+            <?php ns_slider_arrows(32, 'text-dark-gray'); ?>
         </div>
     </div>
 </section>
