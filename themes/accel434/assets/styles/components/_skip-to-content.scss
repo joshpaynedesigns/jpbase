@@ -1,11 +1,11 @@
 .skipLink {
-  height: rem(1);
+  height: 1px;
   left: rem(-1000);
   overflow: hidden;
   position: absolute;
   text-align: left;
   top: rem(-1000);
-  width: rem(1);
+  width: 1px;
 }
 
 a.skipLink:active,

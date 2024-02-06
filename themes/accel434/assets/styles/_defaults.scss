@@ -218,7 +218,7 @@ img {
   }
 }
 
-@supports (padding: max(rem(0))) {
+@supports (padding: max(0px)) {
   .site-container {
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);

@@ -44,7 +44,7 @@ $section_classes = ns_decide_section_classes();
                     <?php endwhile; ?>
                     <?php wp_reset_postdata(); ?>
                 </div>
-                <?php ns_slider_arrows(32, 32); ?>
+                <?php ns_slider_arrows(32, 'text-dark-gray'); ?>
             </div>
             <div class="blog-feed-bottom flex justify-center mt-8">
                 <span class="blue-button">
