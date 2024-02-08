@@ -40,11 +40,11 @@ $sub-nav-link-color-hover: $base-font-color;
     > a {
       color: $medium-gray;
       display: block;
-      padding: 1em 0.4em;
+      padding: rem(16) 0.4rem;
       font-weight: 500;
 
       @media ($xl-screen-up) {
-        padding: 1em 0.8em;
+        padding: rem(16) 0.8rem;
       }
     }
 
@@ -94,7 +94,7 @@ $sub-nav-link-color-hover: $base-font-color;
         a {
           color: $sub-nav-link-color;
           font-size: rem(14);
-          padding: 0 0 1em 0;
+          padding: 0 0 rem(16) 0;
           position: relative;
 
           &:after {
@@ -136,9 +136,9 @@ $sub-nav-link-color-hover: $base-font-color;
         font-size: rem(14);
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
-        line-height: 1em;
-        margin-left: 1em;
-        padding: 0.8em 1em;
+        line-height: rem(16);
+        margin-left: rem(16);
+        padding: 0.8rem rem(16);
         text-transform: uppercase;
 
         &:hover {

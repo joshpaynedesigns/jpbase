@@ -10,7 +10,7 @@
     .entry-title {
       padding-top: 0;
       font-size: rem(36);
-      margin-bottom: 0.2em;
+      margin-bottom: 0.2rem;
 
       a {
         color: #111;
@@ -33,7 +33,7 @@
 
   article {
     background-color: $light-gray;
-    padding: 2em;
+    padding: rem(32);
     margin-bottom: $base-spacing;
 
     .entry-content {
