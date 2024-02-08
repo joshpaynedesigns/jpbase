@@ -39,7 +39,7 @@
 
   .story-title {
     font-weight: 600;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
 
     a {
       color: $dark-gray;
@@ -51,11 +51,11 @@
   }
 
   .story-cats {
-    margin-bottom: 1em;
+    margin-bottom: rem(16);
 
     span {
       border-right: 1px solid #555;
-      padding-right: 0.3em;
+      padding-right: 0.3rem;
 
       &:last-child {
         border: none;
@@ -67,7 +67,7 @@
   .story-blurb-content {
     color: #555;
     font-size: rem(14);
-    margin-bottom: 0.75em;
+    margin-bottom: 0.75rem;
   }
 
   .read-more {

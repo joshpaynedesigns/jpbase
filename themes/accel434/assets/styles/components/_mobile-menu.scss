@@ -71,7 +71,7 @@ body {
       color: white;
       display: block;
       margin-bottom: 20px;
-      line-height: 1em;
+      line-height: rem(16);
       text-transform: uppercase;
     }
     &.menu-item-has-children {

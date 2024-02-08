@@ -7,12 +7,12 @@
     position: relative;
 
     @media ($medium-screen-up) {
-      margin-left: -1em;
-      width: calc(100% + 2em);
+      margin-left: rem(-16);
+      width: calc(100% + rem(32));
     }
 
     .project {
-      padding: 0 1em;
+      padding: 0 rem(16);
       display: block;
 
       &:focus {
@@ -22,7 +22,7 @@
       .project-img {
         height: rem(200);
         @include bg();
-        margin-bottom: 1em;
+        margin-bottom: rem(16);
         display: block;
       }
 
@@ -35,7 +35,7 @@
 
         .project-cats {
           margin-top: rem(-5);
-          margin-bottom: 0.7em;
+          margin-bottom: 0.7rem;
           color: $base-font-color;
         }
 
@@ -53,7 +53,7 @@
   }
 
   .projects-feed-bottom {
-    margin-top: 2em;
+    margin-top: rem(32);
     text-align: center;
   }
 }

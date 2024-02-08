@@ -1,19 +1,19 @@
 .sidebar {
   font-size: $base-font-size;
-  margin-top: 2em;
+  margin-top: rem(32);
 
   @media ($large-screen-up) {
     margin-top: 0;
   }
 
   ul {
-    line-height: 1.2em;
+    line-height: 1.2rem;
   }
 
   li {
     // border-bottom: $base-border;
-    margin-bottom: 1em !important;
-    // padding-bottom: 1em !important;
+    margin-bottom: rem(16) !important;
+    // padding-bottom: rem(16) !important;
     padding-left: 0 !important;
 
     &:before {
@@ -36,14 +36,14 @@
 
   .widget {
     background-color: white;
-    margin-bottom: 2em;
+    margin-bottom: rem(32);
 
     @media ($large-screen-up) {
       margin-bottom: $base-spacing * 2;
     }
 
     @media ($large-screen-up) {
-      padding: 0 0 0 2em;
+      padding: 0 0 0rem (32);
     }
   }
 }
