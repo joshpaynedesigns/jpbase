@@ -11,7 +11,7 @@
     }
 
     .cta-content {
-      padding: 10em 0;
+      padding: 10rem 0;
       position: relative;
       z-index: 100;
       color: white;
@@ -47,7 +47,7 @@
     .cta-content-wrap {
       background: $blue;
       background: rgba(0, 0, 0, 0.6);
-      padding: 2em;
+      padding: rem(32);
 
       @media ($large-screen-up) {
         background: none;
@@ -76,7 +76,7 @@
     position: absolute;
     top: 50%;
     z-index: 100;
-    // margin-top: 2em;
+    // margin-top:rem(32);
 
     &.slick-hidden {
       display: none !important;

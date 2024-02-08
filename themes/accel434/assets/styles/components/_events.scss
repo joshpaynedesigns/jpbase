@@ -108,7 +108,7 @@
       }
 
       .tribe-events-calendar-list__event-title {
-        line-height: 1em;
+        line-height: rem(16);
       }
 
       .tribe-events-calendar-list__event-venue {
@@ -116,7 +116,7 @@
       }
 
       .tribe-event-button {
-        margin-top: 1em;
+        margin-top: rem(16);
 
         &:visited {
           color: white;
@@ -161,10 +161,10 @@ Events Single
       padding: 0;
       max-width: rem(1200);
       width: 90%;
-      margin-bottom: 4em;
+      margin-bottom: 4rem;
 
       @media ($large-screen-up) {
-        margin-bottom: 6em;
+        margin-bottom: 6rem;
       }
 
       li {
@@ -230,15 +230,15 @@ Events Single
     .tribe-events-related-events-title {
       border: none;
       padding-top: 0;
-      margin-top: 2em;
+      margin-top: rem(32);
 
       @media ($large-screen-up) {
-        margin-top: 3em;
+        margin-top: 3rem;
       }
     }
 
     ul.tribe-related-events {
-      margin-bottom: 4em;
+      margin-bottom: 4rem;
     }
   }
 }

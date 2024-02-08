@@ -3,7 +3,7 @@ $base-font-family: "Lato";
 $heading-font-family: "Lato";
 
 // Font Sizes
-$base-font-size: 1em;
+$base-font-size: 1rem;
 
 // Line height
 $base-line-height: 1.5;
@@ -15,7 +15,7 @@ $desk-section-margin: rem(100);
 
 // Other Sizes
 $base-border-radius: rem(3);
-$base-spacing: $base-line-height * 1em;
+$base-spacing: $base-line-height * 1rem;
 $small-spacing: calc($base-spacing / 3);
 $base-z-index: 0;
 
