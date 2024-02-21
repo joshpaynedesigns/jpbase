@@ -24,20 +24,21 @@ $section_classes = ns_decide_section_classes('blue');
                 <div class="testimonials-slider-wrap ns-slider-arrows-wrap arrows-white">
                     <div class="testimonials-slider">
                         <?php while ($loop->have_posts()) :
-                            $loop->the_post(); ?>
+                            $loop->the_post(); 
+                            $testimonial_company = ns_get_field('testimonial_company', get_the_ID());
+                            ?>
                             <div class="">
                                 <div class="testimonial text-center text-white">
                                     <?php echo wp_trim_words(get_the_content(), 64, '...'); ?>
                                     <div class="testimonial-title smallmt font-bold f18">
                                         <span class=""><?php the_title(); ?></span>
-                                        <?php if (! empty(get_field('testimonial_company'))) : ?>
-                                            <span class=""> | <?php the_field('testimonial_company'); ?></span>
-                                        <?php endif; ?>
+                                            <?php if (! empty($testimonial_company)) : ?>
+                                        <span class=""> | <?php echo $testimonial_company ?></span>
+                                    <?php endif; ?>
                                         </div>
                                 </div>
                             </div>
-                        <?php endwhile; ?>
-                    <?php wp_reset_postdata(); ?>
+                        <?php endwhile; wp_reset_postdata(); ?>
                     </div>
                     <?php ns_slider_arrows(32); ?>
                 </div>

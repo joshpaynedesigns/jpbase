@@ -36,17 +36,19 @@ function ns_testimonials_lower_archive()
             <?php if ($testimonials_query->have_posts()) : ?>
                 <div class="testimonial-archive-list">
                     <?php while ($testimonials_query->have_posts()) : ?>
-                        <?php $testimonials_query->the_post(); ?>
+                        <?php $testimonials_query->the_post(); 
+                        $testimonial_company = ns_get_field('testimonial_company', get_the_ID());
+                        ?>
                         <div class="testimonial text-center text-white">
                             <?php echo wp_trim_words(get_the_content(), 64, '...'); ?>
                             <div class="testimonial-title smallmt font-bold f18">
                                 <span class=""><?php the_title(); ?></span>
-                                <?php if (! empty(get_field('testimonial_company'))) : ?>
-                                    <span class=""> | <?php the_field('testimonial_company'); ?></span>
+                                <?php if (! empty($testimonial_company)) : ?>
+                                    <span class=""> | <?php echo $testimonial_company ?></span>
                                 <?php endif; ?>
                                 </div>
                         </div>
-                    <?php endwhile; ?>
+                    <?php endwhile; wp_reset_postdata(); ?>
                 </div>
             <?php else : ?>
                 Sorry, no matching testimonials.
