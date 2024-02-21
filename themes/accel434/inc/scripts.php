@@ -8,8 +8,10 @@
 function ns_enqueue_scripts()
 {
 
-    // Google Maps
-    wp_enqueue_script('gmaps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4stZyfaZsPwdxHmW7STkkOdgjSIIroC0', array());
+    // Google Maps API on single locations frontend
+    if (is_singular('location')) {
+        wp_enqueue_script('gmaps', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4stZyfaZsPwdxHmW7STkkOdgjSIIroC0&callback=Function.prototype', array());
+    }
 
     //  Google Fonts
     wp_enqueue_style('g-fonts-mont', 'https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap', array(), ACCEL_VERSION);

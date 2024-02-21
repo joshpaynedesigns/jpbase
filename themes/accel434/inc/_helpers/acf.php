@@ -4,6 +4,13 @@ if ( ! function_exists( 'get_field' ) ) {
 	add_action( 'admin_notices', 'ns_acf_is_required_notice' );
 }
 
+// Disable ACF Shortcodes
+add_action( 'acf/init', 'set_acf_settings' );
+function set_acf_settings() {
+    acf_update_setting( 'enable_shortcode', false );
+}
+
+//ACF Google Maps API for WP backend
 add_filter( 'acf/fields/google_map/api', 'ns_acf_google_map_api' );
 function ns_acf_google_map_api( $api ) {
 	$api['key'] = 'AIzaSyA4stZyfaZsPwdxHmW7STkkOdgjSIIroC0';
