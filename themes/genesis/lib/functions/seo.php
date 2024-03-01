@@ -98,7 +98,7 @@ function genesis_seo_compatibility_check() {
 	}
 
 	if ( ! genesis_is_wpseo_outputting_jsonld() && ! apply_filters( 'genesis_disable_microdata', false ) ) {
-		include_once dirname( __FILE__ ) . '/schema.php';
+		include_once __DIR__ . '/schema.php';
 	}
 
 	// Disable Genesis <title> generation if SEO Title Tag is active.

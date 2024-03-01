@@ -1,8 +1,8 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use function \Nextgenthemes\ARVE\build_tag;
-use function \Nextgenthemes\ARVE\Common\remote_get_body_cached;
+use function Nextgenthemes\ARVE\build_tag;
+use function Nextgenthemes\ARVE\Common\remote_get_body_cached;
 
 function latest_youtube_video_from_channel( $a ) {
 
@@ -54,12 +54,12 @@ function append_lightbox_link( $html, array $a ) {
 	}
 
 	$html .= build_tag(
-		[
+		array(
 			'name'       => 'lightbox-link',
 			'tag'        => 'a',
 			'inner_html' => trim( $a['title'] ),
 			'attr'       => bigger_picture_attr( $a ),
-		],
+		),
 		$a
 	);
 

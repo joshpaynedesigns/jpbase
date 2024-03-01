@@ -11,7 +11,7 @@
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
-use \StudioPress\Genesis\Admin\WidgetImport;
+use StudioPress\Genesis\Admin\WidgetImport;
 
 /**
  * Return a cached onboarding config.
@@ -595,7 +595,7 @@ function genesis_onboarding_import_content( array $content ) {
 				set_post_thumbnail( $post_id, $attachment_id );
 
 				if ( $remote_image_import && is_readable( $local_image_path ) ) {
-					unlink( $local_image_path );
+					wp_delete_file( $local_image_path );
 				}
 
 			}

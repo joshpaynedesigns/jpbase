@@ -1,6 +1,7 @@
 <?php
 namespace Nextgenthemes\ARVE\Common;
 
+// phpcs:disable SlevomatCodingStandard.TypeHints
 class Settings {
 	private static $no_reset_sections = array( 'debug', 'random-video', 'keys' );
 
@@ -104,10 +105,10 @@ class Settings {
 			array(
 				'methods'             => 'POST',
 				'args'                => $this->settings,
-				'permission_callback' => function() {
+				'permission_callback' => function () {
 					return current_user_can( 'manage_options' );
 				},
-				'callback'            => function( \WP_REST_Request $request ) {
+				'callback'            => function ( \WP_REST_Request $request ) {
 					$this->save_options( $request->get_params() );
 					die( '1' );
 				},

@@ -7,7 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'TEC\\Events\\Block_Templates\\Archive_Events\\Archive_Block_Template' => $baseDir . '/src/Events/Block_Templates/Archive_Events/Archive_Block_Template.php',
+    'TEC\\Events\\Block_Templates\\Block_Template_Contract' => $baseDir . '/src/Events/Block_Templates/Block_Template_Contract.php',
+    'TEC\\Events\\Block_Templates\\Controller' => $baseDir . '/src/Events/Block_Templates/Controller.php',
+    'TEC\\Events\\Block_Templates\\Single_Event\\Single_Block_Template' => $baseDir . '/src/Events/Block_Templates/Single_Event/Single_Block_Template.php',
+    'TEC\\Events\\Blocks\\Archive_Events\\Block' => $baseDir . '/src/Events/Blocks/Archive_Events/Block.php',
     'TEC\\Events\\Blocks\\Controller' => $baseDir . '/src/Events/Blocks/Controller.php',
+    'TEC\\Events\\Blocks\\Single_Event\\Block' => $baseDir . '/src/Events/Blocks/Single_Event/Block.php',
     'TEC\\Events\\Configuration\\Provider' => $baseDir . '/src/Events/Configuration/Provider.php',
     'TEC\\Events\\Custom_Tables\\V1\\Activation' => $baseDir . '/src/Events/Custom_Tables/V1/Activation.php',
     'TEC\\Events\\Custom_Tables\\V1\\Events\\Event_Cleaner\\Event_Cleaner' => $baseDir . '/src/Events/Custom_Tables/V1/Events/Event_Cleaner/Event_Cleaner.php',
@@ -140,6 +146,8 @@ return array(
     'TEC\\Events\\Integrations\\Plugins\\Event_Tickets\\Emails\\Provider' => $baseDir . '/src/Events/Integrations/Plugins/Event_Tickets/Emails/Provider.php',
     'TEC\\Events\\Integrations\\Plugins\\Event_Tickets\\Emails\\Template' => $baseDir . '/src/Events/Integrations/Plugins/Event_Tickets/Emails/Template.php',
     'TEC\\Events\\Integrations\\Plugins\\Event_Tickets\\Provider' => $baseDir . '/src/Events/Integrations/Plugins/Event_Tickets/Provider.php',
+    'TEC\\Events\\Integrations\\Plugins\\Event_Tickets\\Site_Health\\Controller' => $baseDir . '/src/Events/Integrations/Plugins/Event_Tickets/Site_Health/Controller.php',
+    'TEC\\Events\\Integrations\\Plugins\\Event_Tickets\\Site_Health\\Subsection' => $baseDir . '/src/Events/Integrations/Plugins/Event_Tickets/Site_Health/Subsection.php',
     'TEC\\Events\\Integrations\\Plugins\\Rank_Math\\Provider' => $baseDir . '/src/Events/Integrations/Plugins/Rank_Math/Provider.php',
     'TEC\\Events\\Integrations\\Plugins\\Tickets_Wallet_Plus\\Controller' => $baseDir . '/src/Events/Integrations/Plugins/Tickets_Wallet_Plus/Controller.php',
     'TEC\\Events\\Integrations\\Plugins\\Tickets_Wallet_Plus\\Passes\\Apple_Wallet\\Event_Modifier' => $baseDir . '/src/Events/Integrations/Plugins/Tickets_Wallet_Plus/Passes/Apple_Wallet/Event_Modifier.php',

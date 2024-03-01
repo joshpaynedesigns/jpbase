@@ -1,46 +1,112 @@
 <?php
+/**
+ * Provides a shortcode to place the Details for a Event inline.
+ * Parses the shortcode data to place the Details for a Event inline.
+ *
+ * @since 4.4
+ *
+ * @see Tribe__Events__Pro__Shortcodes__Tribe_Inline
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+// phpcs:disable StellarWP.Classes.ValidClassName.NotSnakeCase
 
+/**
+ * Sets the Event Details Shortcode to be able to place the Details for an Event inline
+ * Assists the Event Details shortcode in placing the details for an Event inline.
+ *
+ * @since 4.4
+ */
 class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 
 	/**
+	 * The shortcode output.
+	 *
+	 * @since 4.4
+	 *
 	 * @var string
 	 */
 	protected $output = '';
 
 	/**
+	 * Argument placeholders to be parsed.
+	 *
+	 * @since 4.4
+	 *
 	 * @var array
 	 */
 	protected $placeholders = array();
 
 	/**
+	 * Argument placeholders to be parsed when the Event is private or password-protected.
+	 *
+	 * @since 6.3.1.1
+	 *
+	 * @var array
+	 */
+	protected $protected_placeholders = [];
+
+	/**
+	 * Argument placeholders to be excluded/removed when the Event is private or password-protected.
+	 *
+	 * @since 6.3.1.1
+	 *
+	 * @var array
+	 */
+	protected $excluded_placeholders = [];
+
+	/**
 	 * Container for the shortcode attributes.
+	 *
+	 * @since 4.4
 	 *
 	 * @var array
 	 */
 	protected $atts = array();
 
 	/**
+	 * The Event ID.
+	 *
+	 * @since 4.4
+	 *
 	 * @var int
 	 */
 	protected $id = 0;
 
 	/**
+	 * Holds the Organizer IDs.
+	 *
+	 * @since 4.4
+	 *
 	 * @var array
 	 */
 	protected $organizer_id = array();
 
 	/**
+	 * The content for the shortcode.
+	 *
+	 * @since 4.4
+	 *
 	 * @var string
 	 */
 	protected $content = '';
 
 	/**
-	 * Construct
+	 * The shortcode instance.
+	 *
+	 * @since 4.4
+	 *
+	 * @var Tribe__Events__Pro__Shortcodes__Tribe_Inline
+	 */
+	public $shortcode;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 4.4
 	 *
 	 * @param Tribe__Events__Pro__Shortcodes__Tribe_Inline $shortcode
 	 */
@@ -56,7 +122,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 		 *
 		 * @param array $placeholders
 		 */
-		$this->placeholders = apply_filters( 'tribe_events_pro_inline_placeholders', $this->placeholders() );
+		$this->placeholders           = apply_filters( 'tribe_events_pro_inline_placeholders', $this->placeholders() );
+		$this->protected_placeholders = apply_filters( 'tribe_events_pro_inline_protected_placeholders', $this->protected_placeholders() );
+		$this->excluded_placeholders  = apply_filters( 'tribe_events_pro_inline_excluded_placeholders', $this->excluded_placeholders() );
 
 		$this->process();
 
@@ -65,7 +133,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Placeholders to be parsed
+	 * Placeholders to be parsed.
+	 *
+	 * @since 4.4
 	 *
 	 * @return array
 	 */
@@ -105,16 +175,53 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 
 	/**
 	 * Process the placeholders
+	 *
+	 * @since 4.4
+	 * @since 6.3.1.1 Excludes private and password-protected posts.
 	 */
 	protected function process() {
 
 		// Prevents unbalanced tags (and thus broken HTML) on final shortcode output.
 		$this->content = force_balance_tags( $this->content );
 
+		/*if ( current_user_can( 'read', $this->id ) ) {
+			$this->process_placeholders();
+		} else {
+			$this->process_protected_placeholders();
+		}*/
+		if ( current_user_can( 'read', $this->id ) ) {
+			$this->process_placeholders();
+		} elseif ( 'private' === get_post_status ( $this->id ) ) {
+			$this->content = sprintf(
+				/* translators: %1$s and %2$s are the opening and closing paragraph tags, respectively */
+				__( '%1$sYou must log in to access this content.%2$s', 'tribe-events-calendar-pro' ),
+				'<p>',
+				'</p>'
+			);
+		} else {
+			$this->process_protected_placeholders();
+		}
+
+		/**
+		 * Filter Processed Content.
+		 * Includes only first Organizer.
+		 *
+		 * Note this is after the protected/excluded placeholders are processed/removed.
+		 *
+		 * @param string $html
+		 */
+		$this->output = apply_filters( 'tribe_events_pro_inline_output', $this->content );
+	}
+
+	/**
+	 * Process the placeholders.
+	 *
+	 * @since 6.3.1.1
+	 */
+	protected function process_placeholders() {
 		$this->organizer_id = tribe_get_organizer_ids( $this->id );
 
 		foreach ( $this->placeholders as $tag => $handler ) {
-
 			if ( false === strpos( $this->content, $tag ) ) {
 				continue;
 			}
@@ -128,32 +235,89 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 			$value         = is_callable( $handler ) ? call_user_func( $handler, $id ) : '';
 			$this->content = str_replace( $tag, $value, $this->content );
 		}
-
-		/**
-		 * Filter Processed Content
-		 * Includes only first organizer
-		 *
-		 * @param string $html
-		 */
-		$this->output = apply_filters( 'tribe_events_pro_inline_output', $this->content );
 	}
 
 	/**
-	 * Process the placeholders
+	 * Process the placeholders for private and password-protected events.
+	 *
+	 * This only processes the placeholders in the $this->protected_placeholders array
+	 * and it removes the ones in the $this->excluded_placeholders array.
+	 *
+	 * @since 6.3.1.1
+	 */
+	protected function process_protected_placeholders() {
+		foreach ( $this->protected_placeholders as $tag => $handler ) {
+			if ( false === strpos( $this->content, $tag ) ) {
+				continue;
+			}
+
+			$id = $this->id;
+			// Used to support multiple organizers.
+			if ( 'organizer' === substr( $tag, 1, 9 ) ) {
+				$id = 0;
+			}
+
+			if ( in_array( $tag, $this->excluded_placeholders, true ) ) {
+				// Remove excluded placeholders.
+				$value = '';
+			} elseif ( is_callable( $handler ) ) {
+				// Process the placeholder.
+				$value = call_user_func( $handler, $id );
+			} else {
+				// Remove invalid placeholders.
+				$value = '';
+			}
+
+			$this->content = str_replace( $tag, $value, $this->content );
+		}
+	}
+
+	/**
+	 * Placeholders to be parsed when the Event is private or password-protected.
+	 *
+	 * @since 6.3.1.1
+	 */
+	protected function protected_placeholders() {
+		return [
+			'{title}'        => 'get_the_title',
+			'{name}'         => 'get_the_title',
+			'{title:linked}' => [ $this, 'linked_title' ],
+			'{link}'         => 'get_permalink',
+			'{url}'          => [ $this, 'url_open' ],
+			'{/url}'         => [ $this, 'url_close' ],
+			'{start_date}'   => [ $this, 'start_date' ],
+			'{start_time}'   => [ $this, 'start_time' ],
+			'{end_date}'     => [ $this, 'end_date' ],
+			'{end_time}'     => [ $this, 'end_time' ],
+		];
+	}
+
+	/**
+	 * Placeholders to be removed when the Event is private or password-protected.
+	 *
+	 * Generated on the fly to allow for filtering of the original placeholder arrays.
+	 *
+	 * @since 6.3.1.1
+	 */
+	protected function excluded_placeholders() {
+		return array_keys( array_diff_key( $this->placeholders(), $this->protected_placeholders() ) );
+	}
+
+	/**
+	 * Process the Organizers - for multiple Organizers.
+	 *
+	 * @since 4.4
 	 */
 	protected function process_multiple_organizers() {
 
 		$multiple = count( $this->organizer_id ) > 1;
 
-		// only parse again if multiple organizers connected to event
+		// Only parse again if multiple Organizers connected to the Event.
 		if ( $multiple ) {
-
 			preg_match_all( '/{(organizer.*?)(\\d+)}/', $this->content, $match );
 
 			if ( null !== $match && is_array( $match[1] ) ) {
-
 				foreach ( $match[1] as $key => $tag ) {
-
 					if ( ! isset( $match[2][ $key ] ) ) {
 						continue;
 					}
@@ -185,7 +349,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Linked Event/Post Title
+	 * Linked Event/Post title.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -194,7 +360,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Opening URL Tag
+	 * Opening URL tag.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -203,7 +371,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Closing URL Tag
+	 * Closing URL tag.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -212,30 +382,47 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Content with applied filters
+	 * Content with applied filters.
+	 * This excludes posting portions of private and password protected posts.
+	 * But it allows filtering after that decision.
 	 *
-	 * @return mixed|void
+	 * @since 4.4
+	 * @since 6.3.1.1 Now uses content_unfiltered() to get the content.
+	 * @since 6.3.1.1 Excludes private and password-protected posts.
+	 *
+	 * @return string The value of the post field on success, empty string on failure. (filtered)
 	 */
 	public function content() {
 
-		$content = get_post_field( 'post_content', $this->id );
+		$content = $this->content_unfiltered();
 
 		return apply_filters( 'the_content', $content );
 	}
 
 	/**
-	 * Unfiltered Content
+	 * Get the unfiltered content.
+	 * This excludes posting portions of private and password protected posts.
+	 *
+	 * @since 4.4
+	 * @since 6.3.1.1 Excludes private and password-protected posts.
 	 *
 	 * @return string
 	 */
 	public function content_unfiltered() {
+		$content = '';
 
-		return get_post_field( 'post_content', $this->id );
+		// If the user can't access the post, we bail.
+		if ( current_user_can( 'read', $this->id ) ) {
+			$content = get_post_field( 'post_content', $this->id );
+		}
 
+		return $content;
 	}
 
 	/**
-	 * Get Excerpt Using Tribe's Function
+	 * Get the excerpt using TEC's function.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -246,7 +433,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Featured Image with no link
+	 * Featured image with no link.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -255,7 +444,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Start Date Formatted by Tribe Setting
+	 * Start date formatted by Events setting.
+	 *
+	 * @since 4.4
 	 *
 	 * @return null|string
 	 */
@@ -264,7 +455,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Start time if not all day event
+	 * Start time if not all day Event.
+	 *
+	 * @since 4.4
 	 *
 	 * @return null|string
 	 */
@@ -277,7 +470,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * End Date Formatted by Tribe Setting
+	 * End date formatted by Events setting.
+	 *
+	 * @since 4.4
 	 *
 	 * @return null|string
 	 */
@@ -286,7 +481,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * End time if not all day event
+	 * End time if not all day Event.
+	 *
+	 * @since 4.4
 	 *
 	 * @return null|string
 	 */
@@ -299,7 +496,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Event Cost with formatting
+	 * Event Cost with formatting.
+	 *
+	 * @since 4.4
 	 *
 	 * @return string
 	 */
@@ -307,9 +506,10 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 		return tribe_get_cost( $this->id, true );
 	}
 
-
 	/**
-	 * Linked Venue Title
+	 * Linked Venue title.
+	 *
+	 * @since 4.4
 	 *
 	 * @return bool|string
 	 */
@@ -325,7 +525,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Venue Address displayed inline
+	 * Venue address displayed inline.
+	 *
+	 * @since 4.4
 	 *
 	 * @return bool|string
 	 */
@@ -355,7 +557,7 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Linked Organizer Title
+	 * Organizer name.
 	 *
 	 * @return string
 	 */
@@ -372,7 +574,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Linked Organizer Title
+	 * Linked Organizer title.
+	 *
+	 * @since 4.4
 	 *
 	 * @return bool|string
 	 */
@@ -389,7 +593,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Get Organizer Phone
+	 * Get Organizer phone.
+	 *
+	 * @since 4.4
 	 *
 	 * @return bool|string
 	 */
@@ -408,7 +614,7 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Get Organizer Email
+	 * Get Organizer email.
 	 *
 	 * @return bool|string
 	 */
@@ -426,7 +632,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	}
 
 	/**
-	 * Get Organizer Website Link
+	 * Get Organizer website Link.
+	 *
+	 * @since 4.4
 	 *
 	 * @return bool|string
 	 */
@@ -446,10 +654,11 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	/**
 	 * Returns the output of the parsed content for this shortcode
 	 *
+	 * @since 4.4
+	 *
 	 * @return string
 	 */
 	public function output() {
 		return $this->output;
 	}
-
 }

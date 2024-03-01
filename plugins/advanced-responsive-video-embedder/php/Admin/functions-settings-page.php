@@ -1,8 +1,9 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Common;
 
 function settings_content() {
 
@@ -80,10 +81,10 @@ function filter_save_options( $options ) {
 		$product_id  = get_products()[ $action->product ]['id'];
 		$product_key = $options[ $action->product ];
 
-		$options[ $action->product . '_status' ] = api_action( $product_id, $product_key, $action->action );
+		$options[ $action->product . '_status' ] = Common\api_action( $product_id, $product_key, $action->action );
 	}
 
-	return $option;
+	return $options;
 }
 
 // unused, trigger recaching is rebuild is probably better, also there this leaves the times in the DB so will this even work?

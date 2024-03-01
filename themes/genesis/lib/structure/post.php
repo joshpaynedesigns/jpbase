@@ -970,7 +970,7 @@ function genesis_numeric_posts_nav() {
 		]
 	);
 
-	$before_number = genesis_a11y() ? '<span class="screen-reader-text">' . __( 'Go to page', 'genesis' ) . '</span>' : '';
+	$before_number = genesis_a11y() ? '<span class="screen-reader-text">' . __( 'Page', 'genesis' ) . '</span>' : '';
 
 	echo '<ul>';
 
@@ -1005,7 +1005,7 @@ function genesis_numeric_posts_nav() {
 		$aria  = '';
 		if ( $paged === $link ) {
 			$class = ' class="active" ';
-			$aria  = ' aria-label="' . esc_attr__( 'Current page', 'genesis' ) . '" aria-current="page"';
+			$aria  = ' aria-current="page"';
 		}
 
 		printf(

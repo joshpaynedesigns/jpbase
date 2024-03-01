@@ -1,15 +1,16 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use const \Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common\Admin\Notices;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Common\Admin\Notices;
 
-use function \Nextgenthemes\ARVE\Common\ver;
-use function \Nextgenthemes\ARVE\Common\attr;
-use function \Nextgenthemes\ARVE\Common\kses_basic;
-use function \Nextgenthemes\ARVE\Common\enqueue_asset;
+use function Nextgenthemes\ARVE\Common\ver;
+use function Nextgenthemes\ARVE\Common\attr;
+use function Nextgenthemes\ARVE\Common\kses_basic;
+use function Nextgenthemes\ARVE\Common\enqueue_asset;
 
 const ALLOWED_HTML = array(
 	'a'      => array(
@@ -68,8 +69,9 @@ function action_admin_init_setup_messages() {
 	}
 
 	if ( PHP_VERSION_ID < 70400 ) {
+
 		$msg = esc_html__(
-			'Your php version is very outdated, the next version of ARVE will probably require 7.4+ please update (ask your host to update).',
+			'Your php version is very outdated, the next version of ARVE will require 7.4+ please update (ask your host to update).',
 			'advanced-responsive-video-embedder'
 		);
 
@@ -83,7 +85,7 @@ function action_admin_init_setup_messages() {
 
 function ad_html() {
 
-	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interested in additional features and/or want to support the work I do on this plugin, please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
 
 	$html = "<p>$html</p><ul>";
 

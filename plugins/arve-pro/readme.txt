@@ -18,6 +18,14 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
+= 2024-02-28 5.3.10 =
+
+* Improved: Make sure the plugin does not execute (and cause fatal errors) with upcoming release of ARVE 10.0. A compatible version 6.0 will be released.
+
+= 2023-11-04 5.3.8 =
+
+* Fix: Use !important css rule to fix menu hiding when lighbox is open from last version.
+
 = 2023-11-04 5.3.7 =
 
 * Improved: Hide some theme specific menus when the lightbox is open.

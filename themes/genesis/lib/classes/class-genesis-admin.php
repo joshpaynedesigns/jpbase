@@ -465,7 +465,7 @@ abstract class Genesis_Admin {
 	 */
 	public function help_content( $screen, $tab ) {
 
-		$hook_len = strlen( $this->pagehook ) + 1;
+		$hook_len = $this->pagehook ? strlen( $this->pagehook ) + 1 : 0;
 		$view     = $this->help_base . substr( $tab['id'], $hook_len ) . '.php';
 
 		if ( is_file( $view ) ) {
