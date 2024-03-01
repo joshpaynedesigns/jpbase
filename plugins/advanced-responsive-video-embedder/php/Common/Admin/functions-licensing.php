@@ -1,7 +1,8 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE\Common;
 
 function init_edd_updaters() {
 

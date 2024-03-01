@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 function register_assets() {
@@ -49,10 +50,10 @@ function register_assets() {
 				'path'                 => PLUGIN_DIR . '/build/block.js',
 				//'deps'                 => array( 'arve' ),
 				'footer'               => 'false',
-				'inline_script_before' => [
+				'inline_script_before' => array(
 					'settings' => $settings,
 					'options'  => $options,
-				],
+				),
 			)
 		);
 
@@ -114,6 +115,7 @@ function gutenberg_block( $attr, $content, $block ) {
 			<div class="components-placeholder__instructions">Please paste Video URL / iframe Embed Code in the Sidebar for this Block.</div>
 		</div>
 		<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 		return \ob_get_clean();
 	}
 

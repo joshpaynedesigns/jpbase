@@ -1,7 +1,8 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common\Admin;
 
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE\Common;
 
 function plugin_ver_status( $folder_and_filename ) {
 
@@ -61,20 +62,20 @@ function list_hooks( $hook = '' ) {
 	if ( isset( $wp_filter[ $hook ]->callbacks ) ) {
 		array_walk(
 			$wp_filter[ $hook ]->callbacks,
-			function( $callbacks, $priority ) use ( &$hooks ) {
+			function ( $callbacks, $priority ) use ( &$hooks ) {
 				foreach ( $callbacks as $id => $callback ) {
 					$hooks[] = array_merge(
-						[
+						array(
 							'id'       => $id,
 							'priority' => $priority,
-						],
+						),
 						$callback
 					);
 				}
 			}
 		);
 	} else {
-		return [];
+		return array();
 	}
 
 	foreach ( $hooks as &$item ) {

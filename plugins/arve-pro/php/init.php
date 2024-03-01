@@ -6,12 +6,13 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\init', 15 );
 function init(): void {
 
 	if ( ! defined( 'Nextgenthemes\ARVE\VERSION' ) ||
-		version_compare( \Nextgenthemes\ARVE\VERSION, '9.7.14', '<' )
+		version_compare( \Nextgenthemes\ARVE\VERSION, '9.7.14', '<' ) ||
+		version_compare( \Nextgenthemes\ARVE\VERSION, '10.0.0-dev', '>=' )
 	) {
 		return;
 	}
 
-	if ( version_compare( get_option( 'nextgenthemes_arve_pro_version' ), VERSION, '<' ) ) {
+	if ( version_compare( (string) get_option( 'nextgenthemes_arve_pro_version' ), VERSION, '<' ) ) {
 		update_option( 'nextgenthemes_arve_oembed_recache', time() );
 		update_option( 'nextgenthemes_arve_pro_version', VERSION );
 	}
@@ -30,28 +31,28 @@ function init(): void {
 
 	add_filter( 'shortcode_atts_arve', __NAMESPACE__ . '\shortcode_atts_extra_data', -20 );
 
-	foreach ( [
+	foreach ( array(
 		'autoplay',
 		'thumbnail',
-	] as $filter ) {
+	) as $filter ) {
 		add_filter( "nextgenthemes/arve/args/$filter", __NAMESPACE__ . "\\arg_filter_$filter", 10, 2 );
 	}
 
-	foreach ( [
+	foreach ( array(
 		'arve',
 		'button',
 		'iframe',
 		'thumbnail',
 		'title',
 		'video',
-	] as $tag ) {
+	) as $tag ) {
 		add_filter( "nextgenthemes/arve/$tag", __NAMESPACE__ . "\\tag_filter_$tag", 10, 2 );
-	};
+	}
 }
 
 register_activation_hook( __FILE__, __NAMESPACE__ . '\activation_hook' );
 function activation_hook(): void {
-	if ( function_exists( '\Nextgenthemes\WP\activate_defined_key' ) ) {
-		\Nextgenthemes\WP\activate_defined_key( __FILE__ );
+	if ( function_exists( '\Nextgenthemes\ARVE\Common\activate_defined_key' ) ) {
+		\Nextgenthemes\ARVE\Common\activate_defined_key( __FILE__ );
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
 function theme_version() {
@@ -139,7 +140,7 @@ function _asset( array $args ) {
 		if ( $args['mce'] ) {
 			add_filter(
 				'mce_css',
-				function( $mce_css ) use ( $args ) {
+				function ( $mce_css ) use ( $args ) {
 					if ( ! empty( $mce_css ) ) {
 						$mce_css .= ',';
 					}

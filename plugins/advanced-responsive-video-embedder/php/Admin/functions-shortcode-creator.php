@@ -1,8 +1,9 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Admin;
 
-use \Nextgenthemes\ARVE;
-use \Nextgenthemes\ARVE\Common;
+use Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE\Common;
 
 function add_media_button() {
 
@@ -31,6 +32,7 @@ function create_shortcode_dialog() {
 
 		<div id="arve-sc-vue">
 			<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 			Common\Admin\print_settings_blocks(
 				$settings,
 				ARVE\settings_sections(),
@@ -40,17 +42,27 @@ function create_shortcode_dialog() {
 			?>
 			<p id="arve-shortcode" class="arve-shortcode">
 				<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 				print_shortcode_template();
 				?>
 			</p>
 		</div>
 
 		<div>
-			<button class="arve-sc-dialog__cancel-btn button-secondary"><?php esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); ?></button>
-			<button class="arve-sc-dialog__submit-btn button-primary"><?php esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); ?></button>
+			<button class="arve-sc-dialog__cancel-btn button-secondary">
+			<?php
+			// phpcs:disable SlevomatCodingStandard.TypeHints esc_html_e( 'Cancel', 'advanced-responsive-video-embedder' ); 
+			?>
+			</button>
+			<button class="arve-sc-dialog__submit-btn button-primary">
+			<?php
+			// phpcs:disable SlevomatCodingStandard.TypeHints esc_html_e( 'Insert Shortcode', 'advanced-responsive-video-embedder' ); 
+			?>
+			</button>
 		</div>
 	</dialog>
 	<?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 }
 
 function print_shortcode_template() {

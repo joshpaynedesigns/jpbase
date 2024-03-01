@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE;
 
 /**
@@ -55,16 +56,16 @@ function filter_embed_oembed_html( $cache, $url, array $attr, $post_ID ) {
 	if ( $oembed_data ) {
 		$a['url']         = $url;
 		$a['oembed_data'] = $oembed_data;
-		$a['origin_data'] = [
+		$a['origin_data'] = array(
 			'from'    => 'filter_embed_oembed_html',
 			'post_id' => $post_ID,
-		];
+		);
 
 		$cache = build_video( $a );
 	}
 
 	// if ( isset( $_GET['arve-debug-oembed'] ) ) {
-	// 	$cache .= '<template class="arve-filter-oembed-html"></template>';
+	//  $cache .= '<template class="arve-filter-oembed-html"></template>';
 	// }
 
 	return $cache;

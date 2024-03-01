@@ -259,10 +259,10 @@ function genesis_constants() {
 	// Define Theme Info Constants.
 	// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '3.4.0' );
-	define( 'PARENT_THEME_BRANCH', '3.3' );
+	define( 'PARENT_THEME_VERSION', '3.5.0' );
+	define( 'PARENT_THEME_BRANCH', '3.5' );
 	define( 'PARENT_DB_VERSION', '3301' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', strtotime( '06 September 2022' ) ) );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', strtotime( '18 January 2024' ) ) );
 
 	// Define Parent and Child Directory Location and URL Constants.
 	define( 'PARENT_DIR', get_template_directory() );

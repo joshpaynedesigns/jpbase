@@ -5,7 +5,7 @@ Tags: optimize, image, convert, webp, resize, compress, lazy load, optimization,
 Requires at least: 6.1
 Tested up to: 6.4
 Requires PHP: 7.3
-Stable tag: 7.2.3
+Stable tag: 7.3.0
 License: GPLv3
 
 Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
@@ -139,6 +139,19 @@ That's not a question, but since I made it up, I'll answer it. See this resource
 
 * Feature requests can be viewed and submitted on our [feedback portal](https://feedback.ewww.io/b/features)
 * If you would like to help translate this plugin in your language, [join the team](https://translate.wordpress.org/projects/wp-plugins/ewww-image-optimizer/)
+
+= 7.3.0 =
+*Release Date - February 20, 2024*
+
+* added: API processing for large images done asynchronously to avoid timeouts
+* added: Store resize results to prevent repeated attempts to scale images that yield larger filesizes
+* added: warning to remove outdated AGR plugin
+* changed: improved timeout handling/avoidance for scheduled optimization
+* fixed: JS WebP can't check for local images when using S3 on multisite in sub-folder mode
+* fixed: corrupted images (with an unrecognized file header) being repeatedly scanned by the bulk/scheduled optimizer
+* fixed: GIF images not offloaded by WP Offload Media when operating in free cloud-based mode due to no thumbnail generation
+* fixed: Easy IO applying resize parameters to existing (re)sizes
+* security: improve authentication for some plugin actions
 
 = 7.2.3 =
 *Release Date - January 4, 2024*

@@ -1,18 +1,18 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use function \Nextgenthemes\ARVE\Common\remote_get_json;
-use function \Nextgenthemes\ARVE\options;
+use function Nextgenthemes\ARVE\Common\remote_get_json;
+use function Nextgenthemes\ARVE\options;
 
 function arg_filter_autoplay( $autoplay, array $a ) {
 
 	if ( in_array(
 		$a['mode'],
-		[
+		array(
 			'lazyload',
 			'lightbox',
 			'link-lightbox',
-		],
+		),
 		true
 	) ) {
 		$autoplay = true;
@@ -24,14 +24,14 @@ function arg_filter_autoplay( $autoplay, array $a ) {
 function shortcode_atts_extra_data( array $a ) {
 
 	$cur_post = get_post();
-	$oembeds  = [
+	$oembeds  = array(
 		#  $a         -  oembed
 		'title'       => 'title',
 		'description' => 'description',
 		'author_name' => 'author_name',
 		'duration'    => 'duration',
 		'thumbnail'   => 'thumbnail_url',
-	];
+	);
 
 	foreach ( $oembeds as $key => $oembed_var ) {
 
@@ -98,11 +98,11 @@ function arg_filter_thumbnail( $thumbnail, array $a ) {
 function get_thumb_from_api( $thumbnail, array $a ) {
 
 	switch ( $a['provider'] ) {
-		case 'alugha':
+		case 'DOWN?alugha':
 			$thumbnail = get_json_thumbnail(
 				$a,
 				"https://api.alugha.com/v1/videos/{$a['id']}",
-				[],
+				array(),
 				'thumb'
 			);
 			break;
@@ -117,6 +117,7 @@ function get_json_thumbnail( $a, $url, $remote_get_args, $json_name ) {
 
 	if ( is_wp_error( $thumb ) ) {
 		$a['errors']->add( 'thumb-api-call', $thumb->get_error_message() );
+		$thumb = '';
 	}
 
 	return $thumb;
