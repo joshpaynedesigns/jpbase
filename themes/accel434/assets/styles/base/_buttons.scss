@@ -22,7 +22,7 @@ input[type="submit"],
 .white-button.fake-button > span {
   appearance: none;
   background-color: $blue;
-  border: rem(2) solid transparent;
+  border: 2px solid transparent;
   color: white !important;
   cursor: pointer;
   display: inline-block;
@@ -30,7 +30,7 @@ input[type="submit"],
   font-size: rem(16);
   font-weight: 500;
   line-height: 1;
-  padding: rem(16) rem(44);
+  padding: rem(16) rem(34);
   text-align: center;
   text-decoration: none;
   transition: all $base-duration $base-timing;
@@ -58,7 +58,7 @@ input[type="submit"],
   display: inline-block;
 
   a {
-    font-size: rem(12);
+    font-size: rem(14);
     padding: rem(13) rem(24);
   }
 }
