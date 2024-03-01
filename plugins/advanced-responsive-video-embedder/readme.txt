@@ -3,9 +3,9 @@ Contributors: nico23
 Donate link: https://nextgenthemes.com/donate/
 Tags: YouTube, Vimeo, lazyload, thumbnail, video, responsive, embeds, video-embedder, iframe, lightweight, simplicity, shortcodes
 Requires at least: 4.9.16
-Tested up to: 6.3.1
+Tested up to: 6.5
 Requires PHP: 5.6
-Stable tag: 9.10.12
+Stable tag: 9.10.14
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -195,8 +195,19 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
+### 2024-02-29 9.10.14 ###
+* Fix: Wrongly displayed message about outdated PHP version.
+
+### 2024-02-29 9.10.13.1 ###
+* Cut development files from the distribution.
+
+### 2024-02-29 9.10.13 ###
+* Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
+* Tested with latest WP 6.5-nightly
+* Plugin is no longer being tested with PHP versions below 7.2+, in theory the 9.x versions should work with PHP 5.6+.
+
 ### 2023-09-16 9.10.12 ###
-* Tested with latest WP version.
+* Tested with latest WP 6.5-nightly
 * Updated warning that next major version will required php 7.4+.
 
 ### 2023-05-17 9.10.9 ###

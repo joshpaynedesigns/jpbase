@@ -176,7 +176,7 @@ function genesis_add_singular_image_output_customizer_checkboxes( $config ) {
 		}
 		$post_type = get_post_type_object( $type );
 
-		$new_controls[ "show_featured_image_${type}" ] = [
+		$new_controls[ "show_featured_image_{$type}" ] = [
 			// translators: the post type label.
 			'label'    => sprintf( __( 'Show Featured Images on %s', 'genesis' ), $post_type->label ),
 			'section'  => 'genesis_single',

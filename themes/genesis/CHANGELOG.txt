@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 Up until release 2.7.0, this project did _not_ follow semantic versioning. It followed the WordPress policy where updates of x and y in an x.y.z version number means a major release, and updates to z means a patch release.
 
+## [3.5.0] - 2024-01-22
+
+### Fixed
+
+* Fix `Elements with visible text labels do not have matching accessible names`.
+* Resolve php 8.2 error passing null to strlen.
+
 ## [3.4.0] - 2022-09-06
 
 ### Fixed

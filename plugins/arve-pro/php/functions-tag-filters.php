@@ -1,10 +1,10 @@
 <?php
 namespace Nextgenthemes\ARVE\Pro;
 
-use \Nextgenthemes\ARVE;
+use Nextgenthemes\ARVE;
 
 function noscript_wrap( $html, array $a ) {
-	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox', 'link-lightbox' ], true ) ) {
+	if ( in_array( $a['mode'], array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ) {
 		$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
 	}
 	return $html;
@@ -37,7 +37,7 @@ function tag_filter_arve( array $tag, array $a ) {
 		$tag['tag'] = 'span';
 	}
 
-	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && ! empty( $a['hover_effect'] ) ) {
+	if ( in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) && ! empty( $a['hover_effect'] ) ) {
 		$tag['attr']['class'] .= ' arve-hover-effect-' . $a['hover_effect'];
 	}
 
@@ -72,7 +72,7 @@ function tag_filter_iframe( array $tag, array $a ) {
 	if ( $a['disable_links'] && ! empty( $tag['attr']['sandbox'] ) ) {
 
 		$sandbox_arr = \explode( ' ', $tag['attr']['sandbox'] );
-		$sandbox_arr = \array_diff( $sandbox_arr, [ 'allow-popups', 'allow-popups-to-escape-sandbox' ] );
+		$sandbox_arr = \array_diff( $sandbox_arr, array( 'allow-popups', 'allow-popups-to-escape-sandbox' ) );
 
 		$tag['attr']['sandbox'] = \implode( ' ', $sandbox_arr );
 	}
@@ -86,7 +86,7 @@ function tag_filter_iframe( array $tag, array $a ) {
 
 function tag_filter_title( array $tag, array $a ) {
 
-	if ( ! $a['hide_title'] && in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && $a['title'] ) {
+	if ( ! $a['hide_title'] && in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) && $a['title'] ) {
 		$tag['tag']           = 'h5';
 		$tag['inner_html']    = trim( $a['title'] );
 		$tag['attr']['class'] = 'arve-title';
@@ -134,7 +134,7 @@ function srcset( array $a ) {
 
 function tag_filter_thumbnail( array $tag, array $a ) {
 
-	if ( ! in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) || empty( $a['img_src'] ) ) {
+	if ( ! in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) || empty( $a['img_src'] ) ) {
 		return $tag;
 	}
 
@@ -180,7 +180,7 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 
 function tag_filter_button( array $tag, array $a ) {
 
-	if ( ! in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) ) {
+	if ( ! in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) ) {
 		return $tag;
 	}
 
