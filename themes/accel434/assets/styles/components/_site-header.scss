@@ -81,13 +81,13 @@ $icon-color: white;
         background-size: contain;
         display: block;
         float: left;
-        height: rem(28);
         transition: opacity $base-duration $base-timing;
-        width: rem(198);
+        height: 28px;
+        width: 198px;
 
         @media ($large-screen-up) {
-          height: rem(36);
-          width: rem(258);
+          height: 36px;
+          width: 258px;
         }
 
         &:before {
