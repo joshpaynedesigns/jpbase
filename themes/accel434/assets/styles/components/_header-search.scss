@@ -1,45 +1,72 @@
 .header-search-box {
   @include base_transition();
   display: none;
+  background-color: $blue;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  &:before {
+    content:'';
+    background-color: $blue;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  &:after {
+    content:'';
+    background-color: $blue;
+    position: absolute;
+    top: 0;
+    right: 50%;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
 
   .inner-wrap {
     align-items: center;
     display: flex;
+    height: 100%;
   }
 
   &.search-is-open {
-    background-color: white;
-    bottom: 0;
     display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 0 $base-spacing;
-
-    .scrolled & {
-      border-bottom: $base-border;
-    }
 
     label {
-      // display: none;
       text-indent: rem(-9999);
       display: inline-block;
       height: 0;
-      color: #000;
+      color: white;
     }
 
     input {
+      background: transparent;
+      color: white;
       border: none;
       box-shadow: none;
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
+      transform: translateY( -50% );
       margin: 0;
       width: 80%;
+      border-radius: 0;
+      border-bottom: 2px solid #fff;
+      padding-left: 0;
+
+      &::placeholder {
+        color: white;
+        opacity: 0.5;
+      }
     }
 
     input[type="submit"] {
@@ -51,13 +78,16 @@
       display: flex;
       height: auto;
       position: absolute;
-      right: $base-spacing;
+      right: 0;
       top: 50%;
       transform: translateY(-50%);
       width: rem(40);
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all $base-duration $base-timing;
 
       &:hover {
-        cursor: pointer;
+        opacity: 1;
       }
     }
   }

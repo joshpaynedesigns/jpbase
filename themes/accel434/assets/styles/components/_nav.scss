@@ -1,6 +1,6 @@
 $sub-nav-bg-color: white;
-$sub-nav-link-color: rgba($base-font-color, 0.6);
-$sub-nav-link-color-hover: $base-font-color;
+$sub-nav-link-color: rgba($base-font-color, 0.7);
+$sub-nav-link-color-hover: $dark-gray;
 
 .header-nav-wrap {
   display: none;
@@ -38,7 +38,8 @@ $sub-nav-link-color-hover: $base-font-color;
     }
 
     > a {
-      color: $medium-gray;
+      color: #bbb;
+      color: rgba(255,255,255,0.7);
       display: block;
       padding: rem(16) 0.4rem;
       font-weight: 500;
@@ -54,7 +55,7 @@ $sub-nav-link-color-hover: $base-font-color;
     &.current-menu-ancestor > a,
     &.current-menu-parent > a,
     &.menu-item-has-children.menu-item-hover > a {
-      color: $blue;
+      color: white;
     }
 
     &:hover,
@@ -129,20 +130,21 @@ $sub-nav-link-color-hover: $base-font-color;
 
     &.nav-button {
       a {
-        background: $blue;
-        color: white;
+        background: white;
+        color: $dark-gray !important;
+        border: 2px solid transparent;
         display: inline-block;
-        font-family: $heading-font-family;
+        font-family: $base-font-family;
         font-size: rem(14);
-        -webkit-font-smoothing: antialiased;
-        font-weight: 400;
-        line-height: rem(16);
+        padding: rem(10) rem(18);
+        font-weight: 500;
+        line-height: 1;
         margin-left: rem(16);
-        padding: 0.8rem rem(16);
-        text-transform: uppercase;
 
         &:hover {
-          background: shade($blue, 20%);
+          background-color: transparent;
+          border-color: white;
+          color: white !important;
         }
       }
     }

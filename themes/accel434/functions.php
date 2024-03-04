@@ -180,8 +180,6 @@ function child_theme_setup()
             $attributes['class'] .= ' no-banner-image';
         }
 
-        $attributes['class'] .= ' fixed-header';
-
         // Add class to Body when it's Alert Bar
         $show_alert_bar = ns_get_field('show_alert_bar', 'options');
         if ($show_alert_bar) {
