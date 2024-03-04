@@ -4,14 +4,19 @@ $small-b-height: rem(350);
 $med-b-height: rem(600);
 $large-b-height: rem(725);
 
-.banner-slider {
-  display: block;
-  font-size: 80%;
-  width: 100%;
+.home-hero-outer,
+.page-hero-wrap {
+  position: relative;
+  margin-top: -57px;
 
   @media ($large-screen-up) {
-    font-size: 100%;
+    margin-top: -68px;
   }
+}
+
+.banner-slider {
+  display: block;
+  width: 100%;
 
   .banner_slide {
     > .wrap {

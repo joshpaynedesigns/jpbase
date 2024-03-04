@@ -7,7 +7,6 @@ var scrollCheck = function () {
   var position = jQuery(window).scrollTop();
   if (jQuery("body").hasClass("show-alert-bar")) {
     if (position > alertBarHeight) {
-      jQuery(".site-header").css("top", 0);
       jQuery(".site-header, .site-title a").addClass("scrolled");
       jQuery(".site-header, .site-title a").removeClass("unscrolled");
     } else {
@@ -29,12 +28,13 @@ jQuery(document).ready(function () {
   // Initialize Mobile Menu
   MobileMenu.init();
 
-  //   scrollCheck();
+  scrollCheck();
 
-  //   jQuery(window).scroll(function () {
-  //     scrollCheck();
-  //   });
+  jQuery(window).scroll(function () {
+    scrollCheck();
+  });
 
+  // Initialize Google Map on single location
   jQuery(".acf-map").each(function () {
     ACFMaps.initMap(jQuery(this));
   });

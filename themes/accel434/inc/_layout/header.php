@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Add Mobile Menu Trigger
- *
- * @author Wesley Cole
- * @link http://objectiv.co/
- */
-
+// Add Mobile Menu Trigger
 function ns_mobile_trigger()
 {
 
@@ -51,12 +45,7 @@ function ns_regular_menus_output()
     <?php
 }
 
-/**
- * Add Mobile Menu
- *
- * @author Wesley Cole
- * @link http://objectiv.co/
- */
+// Add Mobile Menu
 add_action('genesis_before_header', 'ns_mobile_menu');
 function ns_mobile_menu()
 {
@@ -80,8 +69,7 @@ function ns_mobile_menu()
     }
 }
 
-
-// Add an "Author" meta tag with  the blog name as the value.
+// Add an "Author" meta tag with the blog name as the value.
 function ns_add_author_to_head()
 {
     ?>
@@ -99,8 +87,7 @@ function objective_url_get_contents($url)
     return wp_remote_retrieve_body(wp_remote_get($url, $args));
 }
 
-
-// Add a search icon to the  header right
+// Add a search icon to the header right
 function ns_search_toggle()
 {
     ?>
@@ -123,7 +110,7 @@ function ns_header_search_box()
         <div class="inner-wrap">
             <?php get_search_form(); ?>
             <div class="header-search-box__close-search">
-                <svg class="icon-close" fill="#b2b2b2" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
+                <svg class="icon-close" fill="#ffffff" height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
             </div>
         </div>
     </div>
@@ -134,11 +121,11 @@ function ns_header_search_box()
 add_action('genesis_before', 'alert_bar');
 function alert_bar()
 {
-    $show_alert_bar       = ns_get_field('show_alert_bar', 'option');
-    $alert_bar_color      = ns_get_field('alert_bar_color', 'option');
-    $alert_bar_text       = ns_get_field('alert_bar_text', 'option');
+    $show_alert_bar = ns_get_field('show_alert_bar', 'option');
+    $alert_bar_color = ns_get_field('alert_bar_color', 'option');
+    $alert_bar_text = ns_get_field('alert_bar_text', 'option');
     $alert_bar_text_color = ns_get_field('alert_bar_text_color', 'option');
-    $alert_bar_button     = ns_get_field('alert_bar_button', 'option');
+    $alert_bar_button = ns_get_field('alert_bar_button', 'option');
     ?>
     <?php if ($show_alert_bar) : ?>
         <div class="alert-bar" style="background-color: <?php echo $alert_bar_color; ?>;">
