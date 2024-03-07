@@ -49,7 +49,7 @@ function ns_locations_lower_archive() {
 		 'post_type'   => 'location',
 		 'post_status' => 'publish',
 		 'order'       => 'ASC',
-		 'orderby'     => 'title',
+		 'orderby'     => 'menu_order',
 		 'facetwp'     => true,
 	 );
 
