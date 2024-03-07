@@ -128,6 +128,7 @@ jQuery(document).ready(function () {
       theSlider.slick({
         arrows: true,
         autoplay: false,
+        adaptiveHeight: true,
         nextArrow: theSliderOuter.find(".right-arrow"),
         prevArrow: theSliderOuter.find(".left-arrow"),
       });
@@ -269,7 +270,7 @@ jQuery(document).ready(function () {
     });
   }
 
-  jQuery("#cta-slide-video").on("canplaythrough", function () {
+  jQuery(".cta-slide-video").on("canplaythrough", function () {
     this.play();
   });
 

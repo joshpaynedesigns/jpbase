@@ -11,7 +11,7 @@ function ns_page_banner()
         if (! ns_is_woo()) {
             echo get_template_part('partials/banner/hero', 'banner');
         }
-    } elseif ($hide_banner_options != 'hide_banner') {
+    } elseif ($hide_banner_options != 'hide_banner' && !is_singular('staff')) {
         echo get_template_part('partials/banner/hero', 'banner');
     }
     echo '<div class="skipContentAnchor" id="afterBanner"></div>';
