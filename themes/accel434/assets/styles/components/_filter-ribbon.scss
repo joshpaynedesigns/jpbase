@@ -20,8 +20,11 @@
 
   .facetwp-facet {
     margin-bottom: 0;
-    max-width: rem(350);
     width: 100%;
+
+    @media ($large-screen-up) {
+      // max-width: rem(350);
+    }
 
     .facetwp-input-wrap {
       width: 100%;
@@ -83,21 +86,16 @@
     }
 
     &.facetwp-facet-reset {
-      display: none;
-
-      @media ($medium-screen-up) {
-        display: block;
-        width: 100%;
-      }
 
       button {
         background-color: white;
         border: none;
         font-size: rem(16);
         justify-content: center;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         transition: opacity $base-timing $base-duration;
         width: 100%;
+        color: $dark-gray !important;
 
         &:hover {
           opacity: 0.8;
@@ -167,7 +165,7 @@
     }
 
     .facetwp-selection-value {
-      //   background-image: url("../../assets/images/icon-close-white.png");
+        background-image: url("../../images/icon-close-white.png");
     }
   }
 }
