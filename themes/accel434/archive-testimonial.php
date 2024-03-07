@@ -26,7 +26,7 @@ function ns_testimonials_lower_archive()
          'post_type'   => 'testimonial',
          'post_status' => 'publish',
          'order'       => 'ASC',
-         'orderby'     => 'title',
+         'orderby'     => 'menu_order',
      );
 
      $testimonials_query = new WP_Query($args);
