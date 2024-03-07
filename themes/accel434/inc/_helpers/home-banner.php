@@ -100,7 +100,7 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
         <div class="banner_slide <?php echo $txt_color; ?> video-slide" style="background-image: url(<?php echo $bg_image_url; ?>)">
 
             <?php if (!empty($webm_vid) || !empty($mp4_vid || !empty($ogg_video_file))) : ?>
-                <video muted loop autoplay id="cta-slide-video" poster="<?php echo $bg_image_url; ?>">
+                <video muted loop autoplay class="cta-slide-video" poster="<?php echo $bg_image_url; ?>">
                     <?php if (!empty($webm_vid)) : ?>
                         <source src="<?php echo $webm_vid; ?>" type="video/webm">
                     <?php endif; ?>
@@ -110,6 +110,7 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
                     <?php if (!empty($mp4_vid)) : ?>
                         <source src="<?php echo $mp4_vid; ?>" type="video/mp4">
                     <?php endif; ?>
+                    <track src="" kind="captions">
                 </video>
             <?php endif; ?>
 
@@ -146,7 +147,7 @@ function display_slide_content($title = null, $subtitle = null, $first_button = 
                             <?php echo ns_link_button($first_button, 'blue-button'); ?>
                         <?php endif; ?>
                         <?php if (!empty($second_button)) : ?>
-                            <?php echo ns_link_button($second_button, 'blue-button'); ?>
+                            <?php echo ns_link_button($second_button, 'light-blue-button'); ?>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
