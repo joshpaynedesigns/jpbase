@@ -3,7 +3,7 @@ $cta_slider = get_sub_field('cta_slider');
 ?>
 
 <section class="cta-section">
-    <div class="cta-slider-wrap">
+    <div class="cta-slider-wrap ns-slider-arrows-wrap">
         <div class="cta-slider">
             <?php foreach ($cta_slider as $cta_slide) :
                 $bg_type = $cta_slide['background_type'];
@@ -41,6 +41,6 @@ $cta_slider = get_sub_field('cta_slider');
                 </div>
             <?php endforeach; ?>
         </div>
-        <?php ns_slider_arrows(22) ?>
+        <?php ns_slider_arrows(32) ?>
     </div>
 </section>
