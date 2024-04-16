@@ -1,15 +1,32 @@
 <?php
 
 $section_title = get_sub_field('section_title');
+$category_filter = get_sub_field('category_filter');
 $show_view_all_button = get_sub_field('show_view_all_button');
 $arch_link = get_post_type_archive_link('testimonial');
 
-$args = array(
-    'post_type' => 'testimonial',
-    'posts_per_page' => -1,
-    'orderby' => 'menu_order',
-    'order'   => 'ASC',
-);
+if (!empty($category_filter)) {
+    $args = array(
+        'post_type' => 'testimonial',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order',
+        'order'   => 'ASC',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'testimonial-cat',
+                'field' => 'term_id',
+                'terms' => $category_filter->term_id,
+            ),
+        )
+    );
+} else {
+    $args = array(
+        'post_type' => 'testimonial',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order',
+        'order'   => 'ASC',
+    );
+}
 
 $loop = new WP_Query($args);
 
@@ -45,7 +62,7 @@ $section_classes = ns_decide_section_classes('blue');
                 <?php if ($show_view_all_button) : ?>
                     <div class="testimonials-feed-bottom flex justify-center basemt">
                         <span class="white-button">
-                            <a href="<?php echo $arch_link ?>">View All</a>
+                            <a href="<?php echo $arch_link ?>">View All Testimonials</a>
                         </span>
                     </div>
                 <?php endif; ?>
