@@ -1,62 +1,90 @@
 {
-  "key": "group_5b3fc28b6ac38",
-  "title": "Flex - Testimonials Slider",
-  "fields": [
-    {
-      "key": "field_5b3fc2a7334e2",
-      "label": "Section Title",
-      "name": "section_title",
-      "type": "text",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "75",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "",
-      "placeholder": "",
-      "prepend": "",
-      "append": "",
-      "maxlength": ""
-    },
-    {
-      "key": "field_5d7953be575b5",
-      "label": "Show View All Button",
-      "name": "show_view_all_button",
-      "type": "true_false",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "25",
-        "class": "",
-        "id": ""
-      },
-      "message": "",
-      "default_value": 1,
-      "ui": 1,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    }
-  ],
-  "location": [
-    [
-      {
-        "param": "post_type",
-        "operator": "==",
-        "value": "post"
-      }
-    ]
-  ],
-  "menu_order": 5,
-  "position": "normal",
-  "style": "default",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": 0,
-  "description": "",
-  "modified": 1568232420
+    "key": "group_5b3fc28b6ac38",
+    "title": "Flex - Testimonials Slider",
+    "fields": [
+        {
+            "key": "field_5b3fc2a7334e2",
+            "label": "Section Title",
+            "name": "section_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_661ec6d4e5885",
+            "label": "Category Filter",
+            "name": "category_filter",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "testimonial-cat",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "field_type": "select",
+            "allow_null": 1,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_5d7953be575b5",
+            "label": "Show View All Button",
+            "name": "show_view_all_button",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.33",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": false,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1713293051
 }
