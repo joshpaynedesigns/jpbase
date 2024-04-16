@@ -4,8 +4,8 @@ Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp
 Tags: events, calendar, event, schedule, organizer
 Donate link: https://evnt.is/29
 Requires at least: 6.2
-Stable tag: 6.3.3.1
-Tested up to: 6.4.3
+Stable tag: 6.3.6
+Tested up to: 6.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -231,6 +231,25 @@ Previous versions of The Events Calendar are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.3.6] 2024-04-09 =
+
+* Fix - Adds timezone offset to the dates in the Outlook subscribe links on event pages. [TEC-4831]
+* Fix - Improve updated views CSS overwrites for buttons and view selector. [TEC-5047]
+* Fix - Resolves an issue where the global posts were not the correct range or sort order. This now stores the ones from the view repository to be used in the WP title filters. [TEC-4845]
+* Fix - Fixes a PHP warning `Undefined array key "venue" in /var/www/html/wp-content/plugins/the-events-calendar/src/Tribe/Linked_Posts.php on line 1007`.
+* Tweak - Changed views: `blocks/classic-event-details`, `blocks/event-website`, `v2/components/events-bar/views`, `v2/components/json-ld-data`, `v2/components/subscribe-links/list`, `v2/day/top-bar/datepicker`, `v2/list/top-bar/datepicker`, `v2/month/top-bar/datepicker`
+* Language - 0 new strings added, 15 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.3.5] 2024-03-20 =
+
+* Tweak - Updated version of tribe-common with fixes for ECP.
+
+= [6.3.4] 2024-03-12 =
+
+* Tweak - When using Event Tickets Wallet Plus the Apple Pass will now display date fields differently based off of Single, Multi, or Series Events. [ETWP-95]
+* Tweak - Added filters: `tec_tickets_wallet_plus_apple_wallet_date_format`, `tec_tickets_wallet_plus_apple_wallet_time_format`
+* Language - 2 new strings added, 6 updated, 0 fuzzied, and 0 obsoleted
 
 = [6.3.3.1] 2024-02-22 =
 

@@ -293,6 +293,13 @@
     color: #eeeeee;
 }
 
+/* Date Range */
+.facetwp-date.disabled,
+.facetwp-date.disabled::placeholder {
+    color: #b4b4b4;
+    opacity: 1;
+}
+
 /* Listing Builder */
 
 .fwpl-btn {

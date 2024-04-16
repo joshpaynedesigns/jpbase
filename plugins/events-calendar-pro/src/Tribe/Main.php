@@ -83,7 +83,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.3.1.1';
+		const VERSION = '6.3.3';
 
 	    /**
 		 * The Events Calendar Required Version
@@ -1679,6 +1679,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			tribe_register_provider( TEC\Events_Pro\Telemetry\Provider::class );
 
 			tribe_register_provider( TEC\Events_Pro\Linked_Posts\Controller::class );
+
+			// Site Editor Templates.
+			tribe_register_provider( TEC\Events_Pro\Block_Templates\Controller::class );
+
+			// Blocks Registration.
+			tribe_register_provider( TEC\Events_Pro\Blocks\Controller::class );
 
 			if ( class_exists( Zapier_Provider::class ) ) {
 				tribe_register_provider( Zapier_Provider::class );

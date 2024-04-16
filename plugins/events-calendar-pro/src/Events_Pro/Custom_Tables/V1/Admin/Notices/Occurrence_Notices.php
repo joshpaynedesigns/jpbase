@@ -51,7 +51,7 @@ class Occurrence_Notices {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Events $events_repo
+	 * @param Events $events_repo The CT1 events repository.
 	 */
 	public function __construct( Events $events_repo ) {
 		$this->events_repository = $events_repo;
@@ -76,7 +76,7 @@ class Occurrence_Notices {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param $post_id
+	 * @param int $post_id The post ID of the event to register the notice for.
 	 */
 	public function register( $post_id ) {
 		Admin_Notices::instance()->register_transient(
@@ -115,7 +115,7 @@ class Occurrence_Notices {
 			}
 		}
 
-		// Send a JSON answer with the status of dismissal
+		// Send a JSON answer with the status of dismissal.
 		wp_send_json( Admin_Notices::instance()->dismiss( $slug ) );
 	}
 
@@ -142,7 +142,7 @@ class Occurrence_Notices {
 			return '';
 		}
 
-		// This is only for classic editor
+		// This is only for classic editor.
 		if ( tribe( 'events.editor.compatibility' )->is_blocks_editor_toggled_on() ) {
 			return '';
 		}
@@ -210,7 +210,7 @@ class Occurrence_Notices {
 		// The verbs are published, saved (for new draft events), and updated (for changes to an existing event of any post status).
 		if ( $data['is_updated'] ) {
 			$verb_message = sprintf( __( '%1$s updated.', 'tribe-events-calendar-pro' ), $event_status_message );
-		} else if ( $data['is_inserted'] && $post->post_status === 'draft' ) {
+		} elseif ( $data['is_inserted'] && $post->post_status === 'draft' ) {
 			$verb_message = sprintf( __( '%1$s saved.', 'tribe-events-calendar-pro' ), $event_status_message );
 		} else {
 			$verb_message = sprintf( __( '%1$s published.', 'tribe-events-calendar-pro' ), $event_status_message );
