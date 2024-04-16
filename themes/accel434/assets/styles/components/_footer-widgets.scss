@@ -94,36 +94,22 @@
 }
 
 .social-links {
-  clear: both;
   display: flex;
   flex-wrap: wrap;
-  gap: rem(4);
+  align-items: center;
+  gap: rem(10);
   margin-top: rem(16);
-  position: relative;
-
-  li {
-    display: inline;
-  }
 
   a {
-    color: $medium-gray;
-    display: inline-block;
-    height: rem(22);
-    margin-right: rem(10);
-    overflow: hidden;
-    text-decoration: none !important;
-    width: rem(22);
+    display: inline-flex;
   }
 
   svg {
-    background: transparent;
-    fill: $medium-gray;
-    height: rem(22);
+    color: $medium-gray;
     transition: all $base-duration $base-timing;
-    width: auto;
 
     &:hover {
-      fill: $blue;
+      color: $blue;
     }
   }
 }
