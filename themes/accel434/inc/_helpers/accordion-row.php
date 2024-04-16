@@ -7,7 +7,7 @@ function obj_accordion_row( $details = null ) {
                 <h6 class="ac-row-title mb0"><?php echo $details['ac_row_title'] ?></h6>
                 <div class="ac-row-toggle"></div>
             </div>
-            <div class="accordion-row-content basept basepb baseml basemr base-border-top lmb0">
+            <div class="accordion-row-content basept basepb baseml basemr base-border-top lcmb0">
                 <?php echo $details['ac_row_content']; ?>
             </div>
         </div> 

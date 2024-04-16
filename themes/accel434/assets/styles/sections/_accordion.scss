@@ -1,19 +1,18 @@
 .accordion-row {
   transition: all $base-duration $base-timing;
-  border-color: $medium-gray;
 
   &:hover,
   &.active-ar {
-    border-color: $blue;
+    border-color: #ccc;
 
     .ac-row-title {
-      color: $dark-gray;
+      color: $blue;
     }
 
     .ac-row-toggle {
       &:before,
       &:after {
-        background: $dark-gray;
+        background: $blue;
       }
     }
   }
@@ -28,6 +27,7 @@
 
 .ac-row-title {
   font-size: 16px;
+  font-weight: bold;
   max-width: 84%;
   transition: all $base-duration $base-timing;
   color: $medium-gray;
