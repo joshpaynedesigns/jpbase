@@ -29,7 +29,7 @@ export const MobileMenu = {
     var closeIconContainer =
       MobileMenu.config.targets.mobileMenuCloseIconContainer;
 
-    ajax.open("GET", stylesheetUrl + "/assets/icons/src/close.svg", true);
+    ajax.open("GET", stylesheetUrl + "/assets/icons/close.svg", true);
     ajax.send();
     ajax.onload = function (e) {
       closeIconContainer.html(ajax.responseText);

@@ -65,43 +65,4 @@
       width: 100%;
     }
   }
-
-  .left-arrow,
-  .right-arrow {
-    @include base_transition();
-    transform: translateY(-50%);
-    transition: all $base-timing $base-duration;
-    display: block !important;
-    opacity: 0.5;
-    position: absolute;
-    top: 50%;
-    z-index: 100;
-    // margin-top:rem(32);
-
-    &.slick-hidden {
-      display: none !important;
-    }
-
-    svg {
-      fill: white;
-      height: rem(40);
-      width: rem(40);
-    }
-
-    &:hover {
-      cursor: pointer;
-      opacity: 1;
-    }
-  }
-
-  .left-arrow {
-    left: 1vw;
-    svg {
-      transform: rotate(180deg);
-    }
-  }
-
-  .right-arrow {
-    right: 1vw;
-  }
 }

@@ -1,5 +1,5 @@
 <?php
-    $width = $args['width'] ?? 20;
+    $width = $args['width'] ?? 22;
 ?>
 
 <?php if (ns_get_field('social_selection', 'option')) : ?>
