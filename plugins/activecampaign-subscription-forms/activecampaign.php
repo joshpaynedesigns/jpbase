@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.14
+Version: 8.1.16
 Author URI: http://www.activecampaign.com
 */
 
@@ -65,6 +65,8 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.12: Security fix to address XSS vulnerability
 ## version 8.1.13: Verify 6.3.1 Compatibility. Updated listing
 ## version 8.1.14: Fixing shortcode CSS display in Form Preview
+## version 8.1.15: Security fix to address SSRF vulnerability with API URL verification and wp_safe_remote_get. Removing unreachable deprecated curl code
+## version 8.1.16: Verify 6.5 Compatibility. Updated listing
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -186,6 +188,11 @@ function activecampaign_shortcodes($args)
     return "";
 }
 
+function activecampaign_verify_api_host($api_host)
+{
+    return (bool) preg_match('/^https:\/\/([a-zA-Z0-9_\-]+)\.(api\-us1|activehosted)\.com$/', $api_host);
+}
+
 /*
  * The ActiveCampaign settings page.
  */
@@ -214,46 +221,54 @@ function activecampaign_plugin_options()
                 exit;
             }
 
-
-            $ac = new ActiveCampaignWordPress($_POST["api_url"], $_POST["api_key"]);
-
-            if (!(int)$ac->credentials_test()) {
-                echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid credentials (URL and/or API key).", "menu-activecampaign") . "</p>";
-            } else {
-                $instance = $_POST;
-
-                // first form submit (after entering API credentials).
-
-                // get account details.
-                $account = $ac->api("account/view");
-                $instance["account_view"] = get_object_vars($account);
-                $instance["account"] = property_exists($account, 'account')? $account->account : null;
-				$instance["tracking_actid"] = activecampaign_fetch_accountid($ac);
-
-                // get forms.
-                $instance = activecampaign_getforms($ac, $instance);
-                $instance = activecampaign_form_html($ac, $instance);
-
-                $connected = true;
-
-				// If fetches didn't return domain or account, we can't display embeds, so fail out. This can happen with non-admin API credentials
-				$domain = (isset($instance["account_view"]) && isset($instance["account_view"]["account"]))? $instance["account_view"]["account"] : null;
-				if(!isset($instance["account"]) || !isset($domain)){
-					$connected = false;
-					$instance = [];
-					echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: You entered valid credentials, but the associated API User is not an ActiveCampaign Admin group member. Please use API credentials from a User within the Admin group.", "menu-activecampaign") . "</p>";
-				}
+            // Verify host against whitelist of known domains
+            if(!activecampaign_verify_api_host($_POST["api_url"])){
+                echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid API URL \"{$_POST["api_url"]}\" please ensure https without extra whitespace.", "menu-activecampaign") . "</p>";
             }
-        } else {
-            // one or both of the credentials fields is empty. it will just disconnect below because $instance is empty.
+            else{
+                $ac = new ActiveCampaignWordPress($_POST["api_url"], $_POST["api_key"]);
+
+                if (!(int)$ac->credentials_test()) {
+                    echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid credentials (URL and/or API key). \"{$_POST["api_url"]}\"", "menu-activecampaign") . "</p>";
+                } else {
+                    $instance = $_POST;
+
+                    // first form submit (after entering API credentials).
+
+                    // get account details.
+                    $account = $ac->api("account/view");
+                    $instance["account_view"] = get_object_vars($account);
+                    $instance["account"] = property_exists($account, 'account')? $account->account : null;
+                    $instance["tracking_actid"] = activecampaign_fetch_accountid($ac);
+
+                    // get forms.
+                    $instance = activecampaign_getforms($ac, $instance);
+                    $instance = activecampaign_form_html($ac, $instance);
+
+                    $connected = true;
+
+                    // If fetches didn't return domain or account, we can't display embeds, so fail out. This can happen with non-admin API credentials
+                    $domain = (isset($instance["account_view"]) && isset($instance["account_view"]["account"]))? $instance["account_view"]["account"] : null;
+                    if(!isset($instance["account"]) || !isset($domain)){
+                        $connected = false;
+                        $instance = [];
+                        echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: You entered valid credentials, but the associated API User is not an ActiveCampaign Admin group member. Please use API credentials from a User within the Admin group.", "menu-activecampaign") . "</p>";
+                    }
+                }
+            }
         }
+        // else one or both of the credentials fields is empty. it will just disconnect below because $instance is empty.
 
         update_option("settings_activecampaign", $instance);
     } else {
         $instance = get_option("settings_activecampaign");
 //dbg($instance);
 
-        if (isset($instance["api_url"]) && $instance["api_url"] && isset($instance["api_key"]) && $instance["api_key"]) {
+        if (
+            isset($instance["api_url"], $instance["api_key"])
+            && $instance["api_url"] && $instance["api_key"]
+            && activecampaign_verify_api_host($instance["api_url"])
+        ) {
             // instance saved already.
             $connected = true;
         } else {
@@ -267,7 +282,11 @@ function activecampaign_plugin_options()
 
                 $widget_info = current($widget); // take the first item.
 
-                if (isset($widget_info["api_url"]) && $widget_info["api_url"] && isset($widget_info["api_key"]) && $widget_info["api_key"]) {
+                if (
+                    isset($widget_info["api_url"], $widget_info["api_key"])
+                    && $widget_info["api_url"] && $widget_info["api_key"]
+                    && activecampaign_verify_api_host($widget_info["api_url"])
+                ) {
                     // if they already supplied an API URL and key in the widget.
                     $instance["api_url"] = $widget_info["api_url"];
                     $instance["api_key"] = $widget_info["api_key"];

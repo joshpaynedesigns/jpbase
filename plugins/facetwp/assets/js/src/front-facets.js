@@ -304,7 +304,13 @@
 
             $this.addClass('ready'); // add class before fDate()
 
-            new fDate(this, opts);
+            if (opts.minDate.length && opts.maxDate.length) {
+                new fDate(this, opts);
+            } else {
+                let emptyText = $this.attr('data-empty');
+                $this.attr('placeholder', emptyText).attr('disabled','disabled').addClass('disabled');
+            }
+            
         });
     });
 
