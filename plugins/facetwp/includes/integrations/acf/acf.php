@@ -377,27 +377,29 @@ class FacetWP_Integration_ACF
      * Generates a flat array of fields within a specific field group
      */
     function flatten_fields( $fields, $field_group, $hierarchy = '', $parents = '' ) {
-        foreach ( $fields as $field ) {
+        if ( !empty( $fields ) ) {
+            foreach ( $fields as $field ) {
 
-            // append the hierarchy string
-            $new_hierarchy = $hierarchy . '/' . $field['key'];
+                // append the hierarchy string
+                $new_hierarchy = $hierarchy . '/' . $field['key'];
 
-            // loop again for repeater or group fields
-            if ( 'repeater' == $field['type'] || 'group' == $field['type'] ) {
-                $new_parents = $parents . $field['label'] . ' &rarr; ';
+                // loop again for repeater or group fields
+                if ( ( 'repeater' == $field['type'] || 'group' == $field['type'] ) && !empty( $field['sub_fields'] ) ) {
+                    $new_parents = $parents . $field['label'] . ' &rarr; ';
 
-                $this->parent_type_lookup[ $field['key'] ] = $field['type'];
-                $this->flatten_fields( $field['sub_fields'], $field_group, $new_hierarchy, $new_parents );
-            }
-            else {
-                $this->fields[] = [
-                    'key'           => $field['key'],
-                    'name'          => $field['name'],
-                    'label'         => $field['label'],
-                    'hierarchy'     => trim( $new_hierarchy, '/' ),
-                    'parents'       => $parents,
-                    'group_title'   => $field_group['title'],
-                ];
+                    $this->parent_type_lookup[ $field['key'] ] = $field['type'];
+                    $this->flatten_fields( $field['sub_fields'], $field_group, $new_hierarchy, $new_parents );
+                }
+                else {
+                    $this->fields[] = [
+                        'key'           => $field['key'],
+                        'name'          => $field['name'],
+                        'label'         => $field['label'],
+                        'hierarchy'     => trim( $new_hierarchy, '/' ),
+                        'parents'       => $parents,
+                        'group_title'   => $field_group['title'],
+                    ];
+                }
             }
         }
     }

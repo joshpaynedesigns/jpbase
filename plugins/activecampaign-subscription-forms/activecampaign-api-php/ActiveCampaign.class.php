@@ -41,7 +41,7 @@ class ActiveCampaignWordPress extends AC_ConnectorWordPress
             'user-agent' => 'ActiveCampaign WordPress Plugin',
             'Api-Token' => $this->api_key ) );
 		$request_url = $this->url_base.'/api/3/'.$path.'?'.http_build_query($params);
-		$response = wp_remote_get($request_url, $args);
+		$response = wp_safe_remote_get($request_url, $args);
 
 		// If the response code is actually based off WP_ERROR Send the error back instead;
 		if (is_object($response) && get_class($response) === 'WP_Error') {

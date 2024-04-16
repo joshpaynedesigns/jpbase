@@ -142,6 +142,10 @@ a:hover {
     animation: spin 1.1s infinite linear;
 }
 
+.facetwp-region input::placeholder {
+    color: #b4b4b4;
+}
+
 [v-cloak] {
     display: none;
 }

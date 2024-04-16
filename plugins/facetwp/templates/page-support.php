@@ -58,18 +58,63 @@ WP_MEMORY_LIMIT:            <?php echo WP_MEMORY_LIMIT; ?>
 
 WP_MAX_MEMORY_LIMIT:        <?php echo WP_MAX_MEMORY_LIMIT; ?>
 
+WP_DEBUG:                   <?php echo ( WP_DEBUG ) ? 'ON' : 'OFF'; ?>
+
+WP_DEBUG_LOG:               <?php echo ( WP_DEBUG_LOG ) ? 'ON' : 'OFF'; ?>
+
 
 <?php
-        foreach ( $plugins as $plugin_path => $plugin ) {
-            if ( in_array( $plugin_path, $active_plugins ) ) {
-                echo $plugin['Name'] . ' ' . $plugin['Version'] . "\n";
+        if( is_multisite() ) {
+
+            echo 'WP Multisite:' . '\n\n';
+
+            $active_network_plugins = get_site_option( 'active_sitewide_plugins' );
+
+            echo '### Network activated:' . '\n';
+
+            foreach ( $active_network_plugins as $plugin_path => $plugin_data ) {
+                $network_plugin = get_plugin_data(WP_PLUGIN_DIR . '/' . $plugin_path);
+                echo $network_plugin['Name'] . ' ' . $network_plugin['Version'] . '\n';
+            }
+
+            $sites = get_sites();
+            $current_subsite_id = get_current_blog_id();
+
+            foreach ( $sites as $subsite ) {
+
+                $subsite_id = get_object_vars( $subsite )['blog_id'];
+                $subsite_name = get_blog_details( $subsite_id )->blogname;
+                $active_plugins = get_blog_option( $subsite->blog_id, 'active_plugins' );
+
+                if ( intval( $subsite_id ) === $current_subsite_id ) {
+                    echo '\n### Sub-site #' . $subsite_id . ' - ' . $subsite_name . ' (Current):\n';
+                } else {
+                    echo '\n### Sub-site #' . $subsite_id . ' - ' . $subsite_name . ':\n';
+                }
+
+                if ( ! empty( $active_plugins ) ) {
+                    foreach ( $plugins as $plugin_path => $plugin ) {
+                        if ( in_array( $plugin_path, $active_plugins ) ) {
+                            echo $plugin['Name'] . ' ' . $plugin['Version'] . '\n';
+                        }
+                    }
+                } else {
+                    echo 'No active plugins' . '\n';
+                }
+            }
+            
+        } else {
+            foreach ( $plugins as $plugin_path => $plugin ) {
+                if ( in_array( $plugin_path, $active_plugins ) ) {
+                    echo $plugin['Name'] . ' ' . $plugin['Version'] . '\n';
+                }
             }
         }
 
         $output = ob_get_clean();
         $output = str_replace( '.php', '-php', $output );
         $output = preg_replace( "/[ ]{2,}/", ' ', trim( $output ) );
-        $output = str_replace( "\n", '{n}', $output );
+        $output = str_replace( '\n', '{n}', $output );
         $output = urlencode( $output );
         return $output;
     }

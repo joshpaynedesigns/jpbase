@@ -3,9 +3,9 @@ Contributors: msaari
 Donate link: https://www.relevanssi.com/buy-premium/
 Tags: search, relevance, better search, product search, woocommerce search
 Requires at least: 4.9
-Tested up to: 6.3
+Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 4.22.1
+Stable tag: 4.22.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,13 @@ Each document database is full of useless words. All the little words that appea
 * John Calahan for extensive 4.0 beta testing.
 
 == Changelog ==
+= 4.22.2 =
+* Security fix: Prevent CSV injection attack in log export.
+* Security fix: Restrict access to doc count updates.
+* Minor fix: Product variations check the parent product for access restrictions, to avoid situations where variations of a draft product appear in the results.
+* Minor fix: Improved TablePress compatibility.
+* Minor fix: Added error handling to the Ninja Table compatibility code.
+
 = 4.22.1 =
 * Security fix: Relevanssi had a vulnerability where anyone could access the search logs and click logs. The log export is now protected.
 * Minor fix: Relevanssi had problems with Polylang when a post or term didn't have language specified. Now Relevanssi handles those situations better.
@@ -207,6 +214,9 @@ Each document database is full of useless words. All the little words that appea
 * Minor fix: Taxonomy query handling was improved. This should help in particular Polylang users who've had problems with Relevanssi ignoring Polylang language restrictions.
 
 == Upgrade notice ==
+= 4.22.2 =
+* Security hardening, improved compatibility with WooCommerce, TablePress and Ninja Tables.
+
 = 4.22.1 =
 * Security hardening, better Polylang support.
 

@@ -135,6 +135,8 @@ final class FacetWP_Helper
 
                 // Valid facet type?
                 if ( in_array( $facet['type'], array_keys( $this->facet_types ) ) ) {
+                    $defaults = $this->facet_types[ $facet['type'] ]->field_defaults ?? [];
+                    $facet = array_merge( $defaults, $facet );
                     $tmp_facets[ $name ] = $facet;
                 }
             }
