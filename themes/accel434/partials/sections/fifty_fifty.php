@@ -23,7 +23,7 @@ if ($show_content_over_image && ! empty($over_image_content)) {
             <?php if (! empty($video_url)) : ?>
                 <div class="video-bg-overlay"></div>
                 <span class="play-button"></span>
-                <?php echo do_shortcode('[arve url="' . $video_url . '" mode="lightbox" loop="no" muted="no" /]'); ?>
+                <?php echo do_shortcode('[arve url="' . $video_url . '" mode="link-lightbox" loop="no" muted="no" /]'); ?>
             <?php endif; ?>
             <?php if ($show_content_over_image) : ?>
                 <div class="image-blurb-wrap content-<?php echo $content_pos; ?>">
