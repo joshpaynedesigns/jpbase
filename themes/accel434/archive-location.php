@@ -21,7 +21,7 @@ function ns_intro_text() {
 function ns_locations_upper_archive() {
 	?>
 
-	<section class="location-arch-upper sectionmt">
+	<section class="location-arch-upper">
 		<div class="filter-ribbon">
             <div class="upper">
                 <?php echo do_shortcode( '[facetwp facet="location_services"]' ); ?>
