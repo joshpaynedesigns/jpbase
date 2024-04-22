@@ -648,6 +648,11 @@ class BSR_DB {
 	 */
 	public function recursive_unserialize_replace( $from = '', $to = '', $data = '', $serialised = false, $case_insensitive = false ) {
 		try {
+			// If search string doesn't exist in data, do an early return.
+			if ( is_string( $data ) && false === strpos( $data, $from ) ) {
+				return $data;
+			}
+
 			if ( is_string( $data ) && ( $unserialized = self::unserialize( $data ) ) !== false ) {
 				$data = $this->recursive_unserialize_replace( $from, $to, $unserialized, true, $case_insensitive );
 			}
