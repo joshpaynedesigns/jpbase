@@ -280,23 +280,23 @@ class BSR_Admin {
 										$time = $report['end'] - $report['start'];
 
 										if ( $report['change'] != 0 ) {
-											$report['change'] = '<strong>' . $report['change'] . '</strong>';
+											$report['change'] = '<strong>' . esc_html( $report['change'] ) . '</strong>';
 
 											if ( is_array( $report['changes'] ) ) {
-												$report['change'] .= ' <a href="?action=bsr_view_details&changes=true&table=' . $table_name . '">[' . __( 'View', 'better-search-replace' ) . ']</a>';
+												$report['change'] .= ' <a href="?action=bsr_view_details&changes=true&table=' . esc_html( $table_name ) . '">[' . __( 'View', 'better-search-replace' ) . ']</a>';
 											}
 
 										}
 
 										if ( $report['updates'] != 0 ) {
-											$report['updates'] = '<strong>' . $report['updates'] . '</strong>';
+											$report['updates'] = '<strong>' . esc_html( $report['updates'] ) . '</strong>';
 										}
 
 										if ( 'bsrtmp_' === substr( $table_name, 0, 7 ) ) {
 											$table_name = substr( $table_name, 7 );
 										}
 
-										echo '<tr><td class="bsr-first">' . $table_name . '</td><td class="bsr-second">' . $report['change'] . '</td><td class="bsr-third">' . $report['updates'] . '</td><td class="bsr-fourth">' . round( $time, 3 ) . __( ' seconds', 'better-search-replace' ) . '</td></tr>';
+										echo '<tr><td class="bsr-first">' . esc_html( $table_name ) . '</td><td class="bsr-second">' . $report['change'] . '</td><td class="bsr-third">' . $report['updates'] . '</td><td class="bsr-fourth">' . round( $time, 3 ) . __( ' seconds', 'better-search-replace' ) . '</td></tr>';
 									}
 								?>
 								</tbody>
