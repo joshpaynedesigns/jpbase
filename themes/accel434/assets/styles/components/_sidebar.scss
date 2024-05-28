@@ -40,10 +40,7 @@
 
     @media ($large-screen-up) {
       margin-bottom: $base-spacing * 2;
-    }
-
-    @media ($large-screen-up) {
-      padding: 0 0 0rem (32);
+      padding: 0 0 0 rem(32);
     }
   }
 }
