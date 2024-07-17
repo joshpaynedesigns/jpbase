@@ -1,0 +1,23 @@
+{
+    "name": "nextgenthemes/wp-shared",
+    "type": "wp-package",
+    "license": "GPL-3.0",
+    "autoload": {
+        "files": [
+            "includes/WP/load-files.php",
+            "includes/WP/Admin/load-admin-files.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Nicolas Jonas"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "scripts": {
+        "update-alpine": "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
+    },
+    "version": "2024.07.06.11.04.21"
+}

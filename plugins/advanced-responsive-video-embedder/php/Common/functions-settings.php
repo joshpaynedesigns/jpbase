@@ -2,66 +2,13 @@
 // phpcs:disable SlevomatCodingStandard.TypeHints
 namespace Nextgenthemes\ARVE\Common;
 
-function nextgenthemes_settings_instance() {
-
-	static $inst = null;
-
-	if ( null === $inst ) {
-
-		$inst = new Settings(
-			array(
-				'namespace'           => 'nextgenthemes',
-				'settings'            => nextgenthemes_settings(),
-				'sections'            => array(
-					'keys'         => esc_html__( 'License Keys', 'advanced-responsive-video-embedder' ),
-					'beta-updates' => esc_html__( 'Beta Updates', 'advanced-responsive-video-embedder' ),
-				),
-				'menu_title'          => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-				'settings_page_title' => esc_html__( 'NextGenThemes Settings', 'advanced-responsive-video-embedder' ),
-			)
-		);
-		$inst->set_defined_product_keys();
-	}
-
-	return $inst;
-}
+function nextgenthemes_settings_instance() {}
 
 function ngt_options() {
-	$o = nextgenthemes_settings_instance()->get_options();
-	return apply_filters( 'nextgenthemes/settings', $o );
+	return array();
 }
 
-function migrate_old_licenses() {
-
-	$options_ver = get_option( 'nextgenthemes_options_ver' );
-
-	if ( \version_compare( $options_ver, '9.0', '>=' ) ) {
-		return;
-	}
-
-	$products = get_products();
-	foreach ( $products as $p => $value ) {
-
-		$old_key        = get_option( "nextgenthemes_{$p}_key" );
-		$old_key_status = get_option( "nextgenthemes_{$p}_key_status" );
-
-		$new_options = get_option( 'nextgenthemes', array() );
-
-		if ( $old_key ) {
-			$options       = (array) get_option( 'nextgenthemes' );
-			$options[ $p ] = $old_key;
-			update_option( 'nextgenthemes', $options );
-		}
-
-		if ( $old_key_status ) {
-			$options                   = (array) get_option( 'nextgenthemes' );
-			$options[ $p . '_status' ] = $old_key_status;
-			update_option( 'nextgenthemes', $options );
-		}
-	}
-
-	update_option( 'nextgenthemes_options_ver', '9.0' );
-}
+function migrate_old_licenses() {}
 
 function nextgenthemes_settings() {
 

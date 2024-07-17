@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Main Tribe Events Calendar class.
  */
@@ -40,23 +39,23 @@ if ( ! class_exists( 'Tribe__Events__Main' ) ) {
 		const POSTTYPE            = 'tribe_events';
 		const VENUE_POST_TYPE     = 'tribe_venue';
 		const ORGANIZER_POST_TYPE = 'tribe_organizer';
-		const VERSION             = '6.3.7';
+		const VERSION             = '6.5.1.6';
 
 		/**
 		 * Min Pro Addon.
 		 *
 		 * @deprecated 4.8
 		 */
-		const MIN_ADDON_VERSION   = '6.2.9-dev';
+		const MIN_ADDON_VERSION = '6.5.0.1';
 
 		/**
 		 * Min Common
 		 *
 		 * @deprecated 4.8
 		 */
-		const MIN_COMMON_VERSION  = '5.1.15.1-dev';
+		const MIN_COMMON_VERSION = '5.2.7-dev';
 
-		const WP_PLUGIN_URL       = 'https://wordpress.org/extend/plugins/the-events-calendar/';
+		const WP_PLUGIN_URL = 'https://wordpress.org/extend/plugins/the-events-calendar/';
 
 		/**
 		 * Min Version of WordPress
@@ -77,7 +76,7 @@ if ( ! class_exists( 'Tribe__Events__Main' ) ) {
 		 *
 		 * @since 4.8
 		 */
-		protected $min_et_version = '5.8.0-dev';
+		protected $min_et_version = '5.10.0-dev';
 
 		/**
 		 * Maybe display data wrapper
@@ -699,6 +698,9 @@ if ( ! class_exists( 'Tribe__Events__Main' ) ) {
 
 			// SEO support.
 			tribe_register_provider( TEC\Events\SEO\Controller::class );
+
+			// Register new Admin Notice system.
+			tribe_register_provider( TEC\Events\Admin\Notice\Provider::class );
 
 			/**
 			 * Allows other plugins and services to override/change the bound implementations.
@@ -3973,7 +3975,6 @@ if ( ! class_exists( 'Tribe__Events__Main' ) ) {
 		/**
 		 * Specify the "preview venue" to link to an event.
 		 *
-		 *
 		 * @since 4.5.1
 		 *
 		 * @param int $event_id The ID of the event being previewed.
@@ -4002,7 +4003,6 @@ if ( ! class_exists( 'Tribe__Events__Main' ) ) {
 
 		/**
 		 * Specify the "preview organizer" to link to an event.
-		 *
 		 *
 		 * @since 4.5.1
 		 *

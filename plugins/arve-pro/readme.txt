@@ -1,8 +1,9 @@
 === ARVE Pro Addon ===
 Donate link: https://nextgenthemes.com/donate/
-Requires at least: 4.9.0
-Tested up to: 5.7.0
-Requires PHP: 5.6.0
+Tag: lightbox, lazyload
+Requires at least: 6.3
+Tested up to: 6.5
+Requires PHP: 7.4
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,25 +19,27 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 ## Changelog ##
 
-= 2024-02-28 5.3.10 =
+= 2024-07-06 6.0.4 =
 
-* Improved: Make sure the plugin does not execute (and cause fatal errors) with upcoming release of ARVE 10.0. A compatible version 6.0 will be released.
+* Fix: Accessibility with buttons. `aria-label` was not correctly added. 
 
-= 2023-11-04 5.3.8 =
+= 2024-06-15 6.0.3 =
 
-* Fix: Use !important css rule to fix menu hiding when lighbox is open from last version.
+* Improved: Accessibility with buttons and link lightbox link. `aria-label` now contains the title, added `aria-haspopup="dialog"` to indicate the lightbox opening. 
 
-= 2023-11-04 5.3.7 =
+= 2024-05-22 6.0.2 =
 
-* Improved: Hide some theme specific menus when the lightbox is open.
+* Fix: Show play button in lightbox mode with video file and no thumbnail.
 
-= 2023-04-18 5.3.6 =
+= 2024-04-25 6.0.0 =
 
-* Fix: Some styles not correctly applying in the Block editor.
+* New: `lightbox_aspect_ratio` shortcode parameter and block setting to make set the lightbox ratio differently from the thumbnail.
+* Fix: Latest video from YouTube Playlist not working in all cases.
+* Fix: Disable links feature not working in lightbox.
 
 = 2023-04-05 5.3.5 =
 
-* Fix: JS errors in some circumstaces like ARVE mixing with other players.
+* Fix: JS errors in some circumstances like ARVE mixing with other players.
 * Fix: Some styles not correctly applying in the Block editor.
 
 = 2023-01-25 5.3.4 =

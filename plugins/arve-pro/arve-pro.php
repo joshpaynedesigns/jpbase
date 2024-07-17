@@ -6,9 +6,10 @@
  *
  * @wordpress-plugin
  * Plugin Name:       ARVE Pro Addon
+ * Requires Plugins:  advanced-responsive-video-embedder
  * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
  * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
- * Version:           5.3.10.1
+ * Version:           6.0.4
  * Author:            Nicolas Jonas
  * Author URI:        https://nextgenthemes.com
  * License:           GPL 3.0
@@ -16,11 +17,12 @@
  * Text Domain:       arve-pro
  * Domain Path:       /languages
  */
+declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Pro;
 
-const VERSION      = '5.3.10.1';
+const VERSION      = '6.0.4';
 const PLUGIN_FILE  = __FILE__;
-const SRCSET_SIZES = array( 320, 640, 960, 1280, 1920 );
 const PLUGIN_DIR   = __DIR__;
+const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
 
 require_once __DIR__ . '/php/init.php';
