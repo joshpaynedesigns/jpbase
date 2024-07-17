@@ -1,11 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Pro;
 
-use function Nextgenthemes\ARVE\Common\remote_get_json;
+use function Nextgenthemes\WP\remote_get_json;
 
-function json_api_call( $api_url, $atts ) {
+/**
+ * @return mixed
+ */
+function json_api_call( string $api_url, array $atts ) {
 
-	$wp_remote_get_args = array();
+	$wp_remote_get_args = [];
 
 	// wp_remote_get_fails for yahoo.
 	if ( 'yahoo' === $atts['provider'] ) {
@@ -18,20 +21,8 @@ function json_api_call( $api_url, $atts ) {
 
 	} elseif ( 'twitch' === $atts['provider'] ) {
 
-		$wp_remote_get_args['headers'] = array( 'Client-ID' => 'in8d3vsv6bmbmsdrfoch204ict7kos7' );
+		$wp_remote_get_args['headers'] = [ 'Client-ID' => 'in8d3vsv6bmbmsdrfoch204ict7kos7' ];
 	}
 
 	$response = remote_get_json( $api_url, $wp_remote_get_args );
-}
-
-function is_mobile() {
-
-	static $is_mobile = null;
-
-	if ( null === $is_mobile ) {
-		$detect    = new \Mobile_Detect();
-		$is_mobile = $detect->isMobile();
-	}
-
-	return $is_mobile;
 }

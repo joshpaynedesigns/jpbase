@@ -1,18 +1,24 @@
-<?php
+<?php declare(strict_types=1);
 namespace Nextgenthemes\ARVE\Pro;
 
-use Nextgenthemes\ARVE;
+use function Nextgenthemes\ARVE\iframesrc_urlarg_autoplay;
+use function Nextgenthemes\ARVE\translation;
+use function Nextgenthemes\ARVE\options;
+use function Nextgenthemes\ARVE\height_from_width_and_ratio;
+use function Nextgenthemes\ARVE\new_height;
 
-function noscript_wrap( $html, array $a ) {
-	if ( in_array( $a['mode'], array( 'lazyload', 'lightbox', 'link-lightbox' ), true ) ) {
+function noscript_wrap( string $html, array $a ): string {
+
+	if ( 'lazyload' === $a['mode'] ) {
 		$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
 	}
+
 	return $html;
 }
 
-function tag_filter_arve( array $tag, array $a ) {
+function tag_filter_arve( array $tag, array $a ): array {
 
-	$reset = ARVE\options()['reset_after_played'];
+	$reset = options()['reset_after_played'];
 
 	switch ( $reset ) {
 		default:
@@ -37,7 +43,7 @@ function tag_filter_arve( array $tag, array $a ) {
 		$tag['tag'] = 'span';
 	}
 
-	if ( in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) && ! empty( $a['hover_effect'] ) ) {
+	if ( in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && ! empty( $a['hover_effect'] ) ) {
 		$tag['attr']['class'] .= ' arve-hover-effect-' . $a['hover_effect'];
 	}
 
@@ -54,39 +60,22 @@ function tag_filter_arve( array $tag, array $a ) {
 	}
 
 	if ( 'link-lightbox' === $a['mode'] ) {
-		$tag['attr']['hidden'] = '';
+		#$tag['attr']['hidden'] = '';
 	}
 
 	return $tag;
 }
 
-function tag_filter_video( array $tag, array $a ) {
+function tag_filter_video( array $tag, array $a ): array {
 
 	$tag['attr']['onloadstart'] = 'this.volume=' . ( $a['volume'] / 100 );
 
 	return $tag;
 }
 
-function tag_filter_iframe( array $tag, array $a ) {
+function tag_filter_title( array $tag, array $a ): array {
 
-	if ( $a['disable_links'] && ! empty( $tag['attr']['sandbox'] ) ) {
-
-		$sandbox_arr = \explode( ' ', $tag['attr']['sandbox'] );
-		$sandbox_arr = \array_diff( $sandbox_arr, array( 'allow-popups', 'allow-popups-to-escape-sandbox' ) );
-
-		$tag['attr']['sandbox'] = \implode( ' ', $sandbox_arr );
-	}
-
-	if ( 'normal' === $a['mode'] ) {
-		$tag['attr']['loading'] = 'lazy';
-	}
-
-	return $tag;
-}
-
-function tag_filter_title( array $tag, array $a ) {
-
-	if ( ! $a['hide_title'] && in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) && $a['title'] ) {
+	if ( ! $a['hide_title'] && in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) && $a['title'] ) {
 		$tag['tag']           = 'h5';
 		$tag['inner_html']    = trim( $a['title'] );
 		$tag['attr']['class'] = 'arve-title';
@@ -95,6 +84,9 @@ function tag_filter_title( array $tag, array $a ) {
 	return $tag;
 }
 
+/**
+ * @return mixed
+ */
 function srcset( array $a ) {
 
 	if ( empty( $a['img_src'] ) ) {
@@ -109,21 +101,8 @@ function srcset( array $a ) {
 		$srcset = $a['oembed_data']->arve_srcset;
 	}
 
-	if ( 'vimeo' === $a['provider'] && str_contains( $a['img_src'], 'i.vimeocdn.com' ) ) {
-
-		foreach ( SRCSET_SIZES as $size ) :
-
-			$url = preg_replace( '#^(.*)_([0-9x]{3,9}(\.jpg)?)$#i', "$1_$size", $a['img_src'] );
-
-			$srcset_comb[] = "$url {$size}w";
-
-		endforeach;
-
-		$srcset = implode( ', ', $srcset_comb );
-	}
-
-	$thumb_id = get_post_thumbnail_id();
-	$options  = ARVE\options();
+	$thumb_id = \get_post_thumbnail_id();
+	$options  = options();
 
 	if ( empty( $srcset ) && $options['thumbnail_post_image_fallback'] && $thumb_id ) {
 		$srcset = wp_get_attachment_image_srcset( $$thumb_id, 'small' );
@@ -132,9 +111,16 @@ function srcset( array $a ) {
 	return $srcset;
 }
 
-function tag_filter_thumbnail( array $tag, array $a ) {
+/**
+ * Function for filtering tags and generating thumbnails.
+ *
+ * @param array $tag The tag array to be filtered.
+ * @param array $a The array containing mode, img source, thumbnail, oembed data, and aspect ratio.
+ * @return array The filtered tag array.
+ */
+function tag_filter_thumbnail( array $tag, array $a ): array {
 
-	if ( ! in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) || empty( $a['img_src'] ) ) {
+	if ( ! in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true ) || empty( $a['img_src'] ) ) {
 		return $tag;
 	}
 
@@ -147,7 +133,7 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 		if ( $image ) {
 			list( , $att_width, $att_height ) = $image;
 
-			$height = ARVE\new_height(
+			$height = new_height(
 				$att_width,
 				$att_height,
 				$width
@@ -156,14 +142,14 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 	} elseif ( ! empty( $a['oembed_data']->thumbnail_width ) &&
 		! empty( $a['oembed_data']->thumbnail_height )
 	) {
-		$height = ARVE\new_height(
-			$a['oembed_data']->thumbnail_width,
-			$a['oembed_data']->thumbnail_height,
+		$height = new_height(
+			(float) $a['oembed_data']->thumbnail_width,
+			(float) $a['oembed_data']->thumbnail_height,
 			$width
 		);
 	} else {
 		$ratio  = empty( $a['aspect_ratio'] ) ? '16:9' : $a['aspect_ratio'];
-		$height = ARVE\height_from_width_and_ratio( $width, $ratio );
+		$height = height_from_width_and_ratio( $width, $ratio );
 	}
 
 	$tag['tag']             = 'img';
@@ -171,25 +157,26 @@ function tag_filter_thumbnail( array $tag, array $a ) {
 	$tag['attr']['src']     = $a['img_src'];
 	$tag['attr']['srcset']  = srcset( $a );
 	$tag['attr']['class']   = 'arve-thumbnail';
-	$tag['attr']['loading'] = 'lazy';
 	$tag['attr']['width']   = $width;
 	$tag['attr']['height']  = $height;
+	$tag['attr']['loading'] = 'lazy';
 
 	return $tag;
 }
 
-function tag_filter_button( array $tag, array $a ) {
+function tag_filter_button( array $tag, array $a ): array {
 
 	if ( ! in_array( $a['mode'], array( 'lazyload', 'lightbox' ), true ) ) {
 		return $tag;
 	}
 
-	if (
-		'html5' === $a['provider'] &&
-		empty( $a['img_src'] )
-	) {
-		$a['play_icon_style'] = 'none';
-	}
+	// TODO: check if this is cool on all devices.
+	// if (
+	//  'html5' === $a['provider'] &&
+	//  empty( $a['img_src'] )
+	// ) {
+	//  $a['play_icon_style'] = 'none';
+	// }
 
 	$svg      = '';
 	$svg_file = PLUGIN_DIR . "/svg/{$a['play_icon_style']}.svg";
@@ -220,7 +207,10 @@ function tag_filter_button( array $tag, array $a ) {
 	$tag['attr']['type']        = 'button';
 	$tag['attr']['class']       = 'arve-play-btn arve-play-btn--' . $a['play_icon_style'];
 	$tag['attr']['data-target'] = '#' . $a['uid'];
-	$tag['attr']['aria-label']  = __( 'Play video', 'arve-pro' );
+	$tag['attr']['aria-label']  = sprintf(
+		translation('play_video_%'),
+		$a['title']
+	);
 
 	if ( 'lightbox' === $a['mode'] ) {
 		$tag['attr'] = bigger_picture_attr( $a, $tag['attr'] );
@@ -229,25 +219,51 @@ function tag_filter_button( array $tag, array $a ) {
 	return $tag;
 }
 
-function bigger_picture_attr( array $a, array $attr = array() ) {
+function bigger_picture_attr( array $a, array $attr = array() ): array {
 
-	$ratio = $a['aspect_ratio'] ? $a['aspect_ratio'] : '16:9';
+	if ( ! empty( $a['lightbox_aspect_ratio'] ) ) {
+		$ratio = $a['lightbox_aspect_ratio'];
+	} else {
+		$ratio = $a['aspect_ratio'] ?? '16:9';
+	}
 
-	$attr['data-target'] = '#' . $a['uid'];
-	$attr['data-width']  = ARVE\options()['lightbox_maxwidth'];
-	$attr['data-height'] = ARVE\height_from_width_and_ratio( $attr['data-width'], $ratio );
-	$attr['data-thumb']  = $a['img_src'];
-
-	$attr['aria-label'] = __( 'Open Lightbox with video', 'arve-pro' );
+	$attr['data-target']   = '#' . $a['uid'];
+	$attr['data-width']    = options()['lightbox_maxwidth'];
+	$attr['data-height']   = height_from_width_and_ratio( $attr['data-width'], $ratio );
+	$attr['data-thumb']    = $a['img_src'];
+	$attr['aria-haspopup'] = 'dialog';
+	$attr['aria-label']    = sprintf(
+		translation('play_video_%'),
+		$a['title']
+	);
 
 	if ( 'html5' === $a['provider'] ) {
+
+		unset($a['video_attr']['width']);
+		unset($a['video_attr']['muted']);
+		unset($a['video_attr']['autoplay']);
+		$a['video_attr']['class'] = str_replace( 'arve-video', '', $a['video_attr']['class'] );
+
+		$attr['data-attr']    = array_filter( $a['video_attr'], __NAMESPACE__ . '\is_not_false_and_not_null' );
 		$attr['href']         = $a['video_sources'][0]['src'];
-		$attr['data-sources'] = wp_json_encode( $a['video_sources'], 0, 2);
-		$attr['data-tracks']  = wp_json_encode( $a['tracks'], 0, 2);
+		$attr['data-sources'] = \wp_json_encode( $a['video_sources'], 0, 2);
+		$attr['data-tracks']  = \wp_json_encode( $a['tracks'], 0, 2);
 	} else {
+
+		unset( $a['iframe_attr']['src'] ); // bigger picture use data-iframe instead
+		$a['iframe_attr']['class'] = str_replace( 'arve-iframe', '', $a['iframe_attr']['class'] );
+
+		$attr['data-attr']   = array_filter( $a['iframe_attr'], __NAMESPACE__ . '\is_not_false_and_not_null' );
+		$attr['data-iframe'] = iframesrc_urlarg_autoplay( $a['src'], $a['provider'], true );
 		$attr['href']        = $a['url'];
-		$attr['data-iframe'] = ARVE\iframe_src_autoplay_args( true, $a );
 	}
 
 	return $attr;
+}
+
+/**
+ * @param mixed $value The value to check
+ */
+function is_not_false_and_not_null( $value ): bool {
+	return false !== $value && null !== $value;
 }
