@@ -221,7 +221,7 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 				'<p>',
 				'</p>'
 			);
-		} elseif ( ! is_user_logged_in() || current_user_can( 'read', $this->id ) ) {
+		} elseif ( ! is_user_logged_in() || current_user_can( 'read_post', $this->id ) ) {
 			$placeholders = $this->placeholder_callbacks();
 		} else {
 			$placeholders = $this->public_placeholder_callbacks();
@@ -464,7 +464,7 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 		$content = '';
 
 		// If the user can't access the post, we bail.
-		if ( ! is_user_logged_in() || current_user_can( 'read', $this->id ) ) {
+		if ( ! is_user_logged_in() || ! current_user_can( 'read_post', $this->id ) ) {
 			$content = get_post_field( 'post_content', $this->id );
 		}
 
