@@ -3,12 +3,92 @@
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
 
-### 2024-03-26 9.10.16 ###
-* Just a admin message asking to test the upcoming version 10.
+### 2024-07-06 10.2.3 ###
+* Fix: Help toggle in new ARVE Shortcode dialog.
+* Improved: Show message that the ARVE Button in Classic Editor needs WP 6.6 (sorry, to be released 2024-07-16).
 
-### 2024-02-29 9.10.15 ###
-* Improved: Update Edd Updater Class.
-* Fix: Reduced changelog site and tags for correct display on wp.org
+### 2024-06-17 10.2.2 ###
+* Fix: Rare src mismatch errors with YouTube.
+* Improved: Set block api version to 3.
+* Improved: Show message that the ARVE Block needs Gutenberg active or WP 6.6.
+
+### 2024-06-17 10.2.1 ###
+* Improved: Set WP required version to 6.5 in main plugin file, previously only set in readme.
+
+### 2024-06-15 10.2.0 ###
+* New: Invidious URL Parameter setting for new extra privacy addon.
+* Fix: Encoding and JSON errors related how things were stored in oembed cache.
+* Fix: Issue activating licenses.
+* Improved: Yet another Setting page overhaul, dropping Alpine.js for WP Interactivity API.
+* Improved: Bring back reset buttons for settings sections.
+* Improved: A couple of typos.
+* Removed Shortcode UI support. (That plugin did now have a release in 5 years, the ARVE dialog is better anyway IMO)
+* Compatibility with latest Pro addon.
+
+### 2024-05-27 10.1.1 ###
+* Improved: Changes how the referrer setting works. `no-referrer` by default `strict-origin-when-cross-origin` for selected providers.
+* Fix: Some YouTube videos (music?) do not without without allowing reverer to to be send so YouTube was added to the list to allow it by default.
+
+### 2024-05-24 10.1.0 ###
+* Improved: ARVE own video IDs are no longer random, this is better for SEO and other things.
+* New: Support for [ok.ru](http://ok.ru).
+* New: Rutube video url detection. (only embed code worked before).
+
+### 2024-05-23 10.0.10 ###
+* Fix: Videos with quotes in the title/description caused json_decode syntax error.
+
+### 2024-05-22 10.0.9 ###
+* Fix: Some Vimeo videos not working without cache working.
+* Fix: src mismatch error testing.
+* Improved: Error display.
+
+### 2024-05-21 10.0.8.1 ###
+* Fix: Do not delete cache every time.
+
+### 2024-05-21 10.0.8 ###
+* Fix: Some broken Vimeo videos. And possibly other bugs.
+
+### 2024-05-21 10.0.7 ###
+* Fix: Lazyload and Lightbox (Pro) were not displayed when used with video files.
+
+### 2024-05-17 10.0.6 ###
+
+#### Improved
+* Performance of oembed deletion.
+* Move the "Delete oEmbed cache" button to the top of the Debug tab in the Settings. Press it if you have trouble with thumbnails.
+
+### 2024-05-15 10.0.5 ###
+* Fix?: Initialize deletion of oembed caches later.
+* New/Fix: Setting to allow domain restricted videos.
+* Fix: Show Blog entries in correct order on settings page.
+
+### 2024-05-13 10.0.4 ###
+* Fix: Fatal error prevention for people using outdated versions of ARVE Pro while upgrading the main plugin to version 10. Update to Pro 6.x.x is mandatory.
+
+### 2024-05-12 10.0.3 ###
+* Fix: Vimeo domain restriction
+
+### 2024-05-12 10.0.2 ###
+* Fix: Activation error related to script dependencies. (Elementor)
+
+### 2024-05-11 10.0.1 ###
+
+#### New ####
+* Elementor Widget.
+* Support for Kick.
+* Optional ARVE button on the admin bar for quick access to the ARVE Settings page.
+* Support for new [DSGVO and Extra Privacy](https://nextgenthemes.com/plugins/arve-privacy/) addon.
+
+#### Fixed ####
+* Pasting iframe embed code in the URL/Embed Code field in the Block Editor.
+
+#### Improved ####
+* Lots code changes to modernize and make the code more robust.
+* Better way to negate WPs own aspect ratio for embed blocks.
+* [Further privacy enhancements](https://nextgenthemes.com/privacy-enhanced-and-safer-iframes-in-arve-10-0/).
+* New look and UX improvement to the shortcode creation dialog in Classic Editor.
+* Loop and Mute previously were only used for (self hosted) video files. These shortcode attributes now add `loop=1&mute1` to the iframe `src` as well. Note not every provider supports them. To loop YouTube videos the video ID was also need as the `playlist=` parameter. ARVE is doing this automatically now.
+* Sandbox setting has been replaced with 'Enable Encrypted Media'.
 
 ### 2024-02-29 9.10.14 ###
 * Fix: Wrongly displayed message about outdated PHP version.
@@ -17,7 +97,7 @@
 * Cut development files from the distribution.
 
 ### 2024-02-29 9.10.13 ###
-* Improved: Make Admin notice dismiss without jQuery. May fix an extremly rare issue of dismiss failing.   
+* Improved: Make Admin notice dismiss without jQuery. May fix an extremely rare issue of dismiss failing.   
 * Tested with latest WP 6.5-nightly
 * Plugin is no longer being tested with PHP versions below 7.2+, in theory the 9.x versions should work with PHP 5.6+.
 
