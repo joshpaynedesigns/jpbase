@@ -4,8 +4,8 @@ Donate link: https://yoa.st/1up
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
-Tested up to: 6.5
-Stable tag: 22.5
+Tested up to: 6.6
+Stable tag: 23.0
 Requires PHP: 7.2.5
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -315,53 +315,44 @@ Your question has most likely been answered on our help center: [yoast.com/help/
 
 == Changelog ==
 
-= 22.5 =
+= 23.0 =
 
-Release date: 2024-04-16
+Release date: 2024-07-02
 
-Yoast SEO 22.5 brings general maintenance updates across the plugin, improved guidance around best practice for taxonomies and a more effortless user experience overall. For more details about the release check out [the release post for 22.5](https://yoa.st/release-16-4-24).
-
-#### Enhancements
-
-* Prevents image formats other than JPG, GIF, PNG and WEBP to be used for the `twitter:image` meta tag.
-* Recalibrates the recommended length of the text on taxonomy pages for the _text length_ assessment.
-
-#### Bugfixes
-
-* Fixes an incompatibility with `ES_WP_Query` library used by the WordPress VIP Enterprise Search.
-
-#### Other
-
-* Renames all user-facing `Twitter` references to `X`, including the X profile's `sameAs` schema output URL.
-* Adds an "AI for SEO" course card to the Academy page.
-* Removes the link to the now-retired Google Mobile-Friendly Test from the admin bar menu.
-* Renames the `leiCode` fields to `LEI code` in the plugin's settings.
-* Resolves a typo in the list of German transition words. Props to [magnusmartin85](https://github.com/magnusmartin85).
-* Deprecates unused method `is_image_url_valid`.
-
-= 22.4 =
-
-Release date: 2024-04-03
-
-Yoast SEO 22.4 brings optimizations and bug fixes. Our customers who use Elementor can wave goodbye to that unnecessary redirect when saving a post for the first time. Find more about Yoast SEO 22.4 in [our release post](https://yoa.st/release-3-4-24)!
+Yoast SEO 23.0 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/release-2-7-24).
 
 #### Enhancements
 
-* Removes a duplicated database query on author pages with internal images.
-* Removes two unnecessary database queries on pages where external images are of SEO interest, like author pages with Gravatar author images.
+* Removes a redundant database write query, when saving a post.
 
 #### Bugfixes
 
-* Fixes a bug where an unneeded redirect would be created when a post was first published in Elementor.
+* Fixes a bug where unnecessary data was written in the Yoast database on non-production sites (or when the relevant `Yoast\WP\SEO\should_index_indexables` filter was used to disable such a behavior).
 
 #### Other
 
-* Deprecates the slug of the `_dependencies` property of the private `$plugins` property in the `WPSEO_Plugin_Availability` class.
-* Fixes the width of the `Page type` dropdown field in the `Settings` page.
-* Replaces `.substr()` with `.substring()` in JS files since it's deprecated.
-* Stops showing deprecation warnings when retrieving data for paid add-ons goes wrong.
-* Stops showing notifications about incompatibility with the WooCommerce's new beta product editor, after WooCommerce is deactivated.
-* Stops showing a notification prompting to install Yoast Woo SEO, after WooCommerce is deactivated.
+* Deprecates the Wordproof feature.
+* Deprecates the following classes: `Wordproof`, `Wordproof_App_Config`, `Wordproof_Helper`, `Wordproof_Integration_Active_Conditional`, `Wordproof_Plugin_Inactive_Conditional`,  `Wordproof_Translations`.
+
+= 22.9 =
+
+Release date: 2024-06-18
+
+Yoast SEO 22.9 brings more enhancements and bugfixes. [Find more information about our software releases and updates here](https://yoa.st/release-18-6-24).
+
+#### Enhancements
+
+* Helps guide Elementor users to Yoast when they have the new editor top bar activated.
+* Adds additional filter options for the `og:image` meta tags.
+* Improves compatibility with custom RSS feeds. Props to @gsusI.
+
+#### Bugfixes
+
+* Fixes a bug where a PHP notice would be thrown on RSS feeds when a canonical URL can not be created for its parent page.
+
+#### Others
+
+* Changes the copy in the admin sidebar from `Premium` to `Upgrades`.
 
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).

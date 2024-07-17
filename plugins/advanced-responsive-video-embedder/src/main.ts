@@ -7,7 +7,7 @@ declare global {
 }
 
 const d = document;
-const qsa = d.querySelectorAll.bind( d ) as typeof d.querySelectorAll;
+const qsa = d.querySelectorAll.bind( d );
 const jq = window.jQuery;
 
 globalID();
@@ -25,7 +25,7 @@ if ( jq && typeof jq.fn.fitVids !== 'undefined' ) {
 	} );
 }
 
-function removeUnwantedStuff(){
+function removeUnwantedStuff(): void {
 	qsa(
 		'.arve p, .arve .video-wrap, .arve .fluid-width-video-wrapper, .arve .fluid-vids'
 	).forEach( ( el ) => {
@@ -39,30 +39,14 @@ function removeUnwantedStuff(){
 		}
 	} );
 
-	qsa( '.arve br' ).forEach( ( el ) => {
-		el.remove();
-	} );
-
 	qsa( '.arve-iframe, .arve-video' ).forEach( ( el ) => {
 		el.removeAttribute( 'width' );
 		el.removeAttribute( 'height' );
 		el.removeAttribute( 'style' );
 	} );
-
-	qsa( '.wp-block-embed' ).forEach( ( el ) => {
-		if ( el.querySelector( '.arve' ) ) {
-			el.classList.remove( 'wp-embed-aspect-16-9', 'wp-has-aspect-ratio' );
-
-			const wrapper = el.querySelector( '.wp-block-embed__wrapper' );
-
-			if ( wrapper ) {
-				unwrap( wrapper );
-			}
-		}
-	} );
 }
 
-export function globalID(){
+export function globalID(): void {
 	// Usually the id should be already there added with php using the language_attributes filter
 	if ( 'html' === d.documentElement.id ) {
 		return;
@@ -75,7 +59,7 @@ export function globalID(){
 	}
 }
 
-function unwrap( el: Element ){
+function unwrap( el: Element ): void {
 	const parent = el.parentNode;
 	// make eslint STFU
 	if ( ! parent ) {
@@ -89,7 +73,7 @@ function unwrap( el: Element ){
 	parent.removeChild( el );
 }
 
-export function domReady( callback ){
+export function domReady( callback ): void {
 	if ( typeof d === 'undefined' ) {
 		return;
 	}
