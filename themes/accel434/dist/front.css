@@ -3471,9 +3471,9 @@ Events Single
     flex-direction: row;
     flex-wrap: wrap;
     gap: 2rem;
-    justify-content: space-between;
+    justify-content: center;
   }
-  #flexible-section-repeater .content-section .content-section-wrap.fifty-fifty, #flexible-section-repeater .content-section .content-section-wrap.thirty-seventy {
+  #flexible-section-repeater .content-section .content-section-wrap.fifty-fifty, #flexible-section-repeater .content-section .content-section-wrap.thirty-seventy, #flexible-section-repeater .content-section .content-section-wrap.seventy-thirty {
     gap: 4rem;
   }
 }
@@ -3487,7 +3487,7 @@ Events Single
 }
 @media (min-width: 56.25rem) {
   #flexible-section-repeater .content-section .content-section-wrap.fifty-fifty > div {
-    width: calc(50% - 2.1rem);
+    width: calc(50% - 2rem);
   }
 }
 @media (min-width: 56.25rem) {
@@ -3502,22 +3502,22 @@ Events Single
 }
 @media (min-width: 56.25rem) {
   #flexible-section-repeater .content-section .content-section-wrap.thirty-seventy > div:first-of-type {
-    width: calc(30% - 2.1rem);
+    width: calc(30% - 2rem);
   }
 }
 @media (min-width: 56.25rem) {
   #flexible-section-repeater .content-section .content-section-wrap.thirty-seventy > div:last-of-type {
-    width: calc(70% - 2.1rem);
+    width: calc(70% - 2rem);
   }
 }
 @media (min-width: 56.25rem) {
   #flexible-section-repeater .content-section .content-section-wrap.seventy-thirty > div:first-of-type {
-    width: calc(70% - 2.1rem);
+    width: calc(70% - 2rem);
   }
 }
 @media (min-width: 56.25rem) {
   #flexible-section-repeater .content-section .content-section-wrap.seventy-thirty > div:last-of-type {
-    width: calc(30% - 2.1rem);
+    width: calc(30% - 2rem);
   }
 }
 
