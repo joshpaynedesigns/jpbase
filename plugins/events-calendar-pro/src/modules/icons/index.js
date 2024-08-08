@@ -5,3 +5,4 @@ export { default as RelatedEvents } from './related-events-placeholder.svg';
 export { default as MiniCalendar } from './mini-calendar.svg';
 export { default as EventsCountdown } from './events-countdown.svg';
 export { default as EventsFeaturedVenue } from './events-featured-venue.svg';
+export { default as Virtual } from './virtual.svg';

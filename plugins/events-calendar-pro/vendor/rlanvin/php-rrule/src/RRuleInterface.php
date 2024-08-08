@@ -25,7 +25,7 @@ interface RRuleInterface extends \Iterator, \ArrayAccess, \Countable
 	public function getOccurrences($limit = null);
 
 	/**
-	 * Return all the ocurrences after a date, before a date, or between two dates.
+	 * Return all the occurrences after a date, before a date, or between two dates.
 	 *
 	 * @param mixed $begin Can be null to return all occurrences before $end
 	 * @param mixed $end Can be null to return all occurrences after $begin
@@ -50,7 +50,7 @@ interface RRuleInterface extends \Iterator, \ArrayAccess, \Countable
 	public function isFinite();
 
 	/**
-	 * Return true if the rrule has no end condition (infite)
+	 * Return true if the rrule has no end condition (infinite)
 	 *
 	 * @return bool
 	 */

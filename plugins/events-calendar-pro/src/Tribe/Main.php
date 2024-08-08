@@ -88,7 +88,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '6.5.0';
+		const VERSION = '7.0.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -96,7 +96,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 *
 		 * @deprecated 4.6
 		 */
-		const REQUIRED_TEC_VERSION = '6.5.0';
+		const REQUIRED_TEC_VERSION = '6.6.0';
 
 		/**
 		 * Constructor.
@@ -1859,6 +1859,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if ( class_exists( Zapier_Provider::class ) ) {
 				tribe_register_provider( Zapier_Provider::class );
 			}
+
+			// Set up Virtual Events via the compatibility layer.
+			tribe_register_provider( TEC\Events_Pro\Integrations\Events_Virtual_Provider::class );
 
 			tribe( 'events-pro.admin.settings' );
 			tribe( 'events-pro.ical' );

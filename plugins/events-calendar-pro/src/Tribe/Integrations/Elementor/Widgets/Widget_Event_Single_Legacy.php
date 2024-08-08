@@ -9,16 +9,19 @@
 
 namespace Tribe\Events\Pro\Integrations\Elementor\Widgets;
 
+use Elementor\Plugin as Elementor_Plugin;
+use Elementor\Modules\Library\Documents\Library_Document;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Box_Shadow;
+use Tribe__Events__Main as TEC;
 use Tribe\Events\Views\V2\Assets;
 use Tribe\Events\Views\V2\Template_Bootstrap;
-use Tribe__Utils__Array as Arr;
 use TEC\Events\Integrations\Plugins\Elementor\Widgets\Traits\Event_Query;
+use Tribe__Utils__Array as Arr;
 
 // phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 
@@ -72,15 +75,25 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 * @since 5.4.0
 	 */
 	protected function render() {
+		global $post, $wp_query;
+
+		// Prevent display on singular tribe_event post type. Since `is_singular` is not reliable in the admin, we'll check another way as well.
+		if ( is_singular( TEC::POSTTYPE ) ) {
+			return true;
+		}
+
+		// Second check for singular tribe_event post type as `is_singular` is not always reliable in the admin.
+		if ( $post->post_type === TEC::POSTTYPE ) {
+			return true;
+		}
+
+		$backup_query         = $wp_query;
 		$settings             = $this->get_settings_for_display();
 		$event_query_settings = $this->get_event_query_settings( $settings );
 		$event_query_settings = $this->set_id_from_repository_if_unset( $event_query_settings );
 
 		/** @var Template_Bootstrap $bootstrap */
 		$bootstrap = tribe( Template_Bootstrap::class );
-
-		global $post, $wp_query;
-		$backup_query = $wp_query;
 
 		$repository = $this->build_event_repository( $event_query_settings );
 		$repository->per_page( 1 );
@@ -89,7 +102,6 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		if ( ! $posts ) {
 			return;
 		}
-
 
 		$wp_query = $repository->get_query_for_posts( $posts );
 		$post     = $posts[0];
@@ -291,7 +303,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		if ( tribe_is_truthy( Arr::get( $settings, 'related-events' ) ) ) {
 			tribe_asset_enqueue( 'tribe-events-full-pro-calendar-style' );
 			tribe_asset_enqueue( 'tribe-events-calendar-pro-style' );
-			tribe_asset_enqueue( 'tribe-events-calendar-pro-override-style' );
+			tribe_asset_enqueue( 'tribe-events-calendar-pro-override-style', false );
 		}
 
 		if ( tribe_is_truthy( Arr::get( $settings, 'tickets' ) ) ) {
@@ -325,6 +337,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 * @since 5.4.0
 	 */
 	protected function register_controls() {
+		$this->add_legacy_warning();
+
 		$this->add_event_query_section();
 
 		$this->start_controls_section(
@@ -334,6 +348,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
+
 
 		$this->add_control(
 			'title',
@@ -413,7 +428,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			]
 		);
 
-		if ( class_exists( 'Tribe__Tickets__Main' ) ) {
+		if ( did_action( 'tribe_tickets_plugin_loaded' ) ) {
 			$this->add_control(
 				'tickets',
 				[
@@ -2667,7 +2682,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		tribe_asset_enqueue_group( 'events-styles' );
 		tribe_asset_enqueue( 'tribe-events-full-pro-calendar-style' );
 		tribe_asset_enqueue( 'tribe-events-calendar-pro-style' );
-		tribe_asset_enqueue( 'tribe-events-calendar-pro-override-style' );
+		tribe_asset_enqueue( 'tribe-events-calendar-pro-override-style', false );
 		tribe_asset_enqueue( 'tribe-events-virtual-single-skeleton' );
 
 		tribe_asset_enqueue( 'event-tickets-reset-css' );
@@ -2720,5 +2735,45 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				]
 			);
 		}
+	}
+
+	/**
+	 * Conditionally adds the warning about use of the Legacy Widget on single Events.
+	 *
+	 * @since 7.0.1
+	 */
+	protected function add_legacy_warning(): void {
+		$document = Elementor_Plugin::instance()->documents->get_current();
+
+		// Prevent on our event templates.
+		if ( ! $document instanceof Library_Document ) {
+			return;
+		}
+
+		$this->start_controls_section(
+			'legacy_warning_label',
+			[
+				'label' => __( 'Important note on Legacy Event Widget', 'tribe-events-calendar-pro' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'legacy_warning',
+			[
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'raw'             => sprintf(
+					/* Translators: %1$s is the url to the documentation */
+					__(
+						'The Legacy Event widget is not supported in single-event layouts. If this template is applied to a single event, the widget will not display. <a href="%1$s" target="_blank">Learn more</a>.',
+						'tribe-events-calendar-pro'
+					),
+					esc_url( 'https://evnt.is/1q' )
+				),
+			]
+		);
+
+		$this->end_controls_section();
 	}
 }

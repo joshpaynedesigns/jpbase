@@ -217,6 +217,7 @@ class FacetWP_Request
         $is_main_query = ( $query->is_singular || $query->is_feed ) ? false : $is_main_query;
         $is_main_query = ( $query->get( 'suppress_filters', false ) ) ? false : $is_main_query; // skip get_posts()
         $is_main_query = ( '' !== $query->get( 'facetwp' ) ) ? (bool) $query->get( 'facetwp' ) : $is_main_query; // flag
+        $is_main_query = ( doing_filter( 'get_the_excerpt' ) ) ? false : $is_main_query; // skip for excerpts
         return apply_filters( 'facetwp_is_main_query', $is_main_query, $query );
     }
 
