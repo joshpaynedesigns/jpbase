@@ -24,9 +24,6 @@ function ns_enqueue_scripts()
     wp_register_script('modaal', get_stylesheet_directory_uri() . '/assets/components/modaal/dist/js/modaal.min.js', array('jquery'), false, true);
     wp_register_style('modaal-css', get_stylesheet_directory_uri() . '/assets/components/modaal/dist/css/modaal.min.css');
 
-    // Accessible Menu
-    wp_register_script('gamajo-accessible-menu', get_stylesheet_directory_uri() . '/assets/components/accessible-menu/dist/jquery.accessible-menu.min.js', array('jquery'), '1.0.0', true);
-
     wp_register_script('sitewide', get_bloginfo('stylesheet_directory') . '/dist/front.js', array('jquery'), ACCEL_VERSION, true);
 
     wp_enqueue_style('slick-css');
