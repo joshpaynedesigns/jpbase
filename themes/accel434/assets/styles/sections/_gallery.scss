@@ -69,7 +69,7 @@
       flex-grow: 1;
       height: rem(200);
 
-      @media ($large-screen-up) {
+      @media ($medium-screen-up) {
         height: rem(300);
       }
     }
@@ -94,18 +94,22 @@
       }
 
       &.three-images .gallery-img-wrap {
-        flex-basis: 15%;
+        flex-basis: 31%;
+
+        @media ($large-screen-up) {
+          height: rem(350);
+        }
 
         &:nth-child(2),
         &:nth-child(4),
         &:nth-child(9) {
-          flex-basis: 33%;
+          flex-basis: 43%;
         }
 
         &:nth-child(3),
         &:nth-child(5),
         &:nth-child(7) {
-          flex-basis: 20%;
+          flex-basis: 21%;
         }
       }
     }
