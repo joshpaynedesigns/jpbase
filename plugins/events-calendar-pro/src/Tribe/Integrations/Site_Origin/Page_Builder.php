@@ -105,7 +105,7 @@ class Tribe__Events__Pro__Integrations__Site_Origin__Page_Builder {
 				&& $class === $widget['panels_info']['class']
 			) {
 				tribe_asset_enqueue( 'widget-calendar-pro-style' );
-				tribe_asset_enqueue( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style' );
+				tribe_asset_enqueue( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style', false );
 
 				// Only need to enqueue them once
 				$styles_enqueued = true;

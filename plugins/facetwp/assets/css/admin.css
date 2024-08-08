@@ -385,7 +385,20 @@ h3 .facetwp-btn {
 }
 
 .facetwp-region .facetwp-content.locked {
-    opacity: 0.4;
+    position: relative;
+}
+
+/* Unclickable locked overlay */
+.facetwp-region .facetwp-content.locked:after {
+    content: " ";
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 10000;
 }
 
 /* fSelect overrides */
@@ -467,6 +480,10 @@ h3 .facetwp-btn {
 
 .facetwp-card > div:hover {
     white-space: normal;
+}
+
+.facetwp-card .card-label .label-text + span {
+    margin-left: 0.4em; /* locked icon */
 }
 
 .facetwp-card:hover .card-label {

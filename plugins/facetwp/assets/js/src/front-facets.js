@@ -15,7 +15,8 @@
 
         // We need useCapture, so add the event listeners manually
         // useCapture handles outer elements first (unlike event bubbling)
-        this.addEventListener('click', function() {
+        // use mousedown instead of click for better dropdown support
+        this.addEventListener('mousedown', function() {
             var $items = $('.facetwp-facet-' + $(this).attr('data-name'));
             if (1 < $items.len()) {
                 $items.addClass('facetwp-ignore');
@@ -310,7 +311,7 @@
                 let emptyText = $this.attr('data-empty');
                 $this.attr('placeholder', emptyText).attr('disabled','disabled').addClass('disabled');
             }
-            
+
         });
     });
 
@@ -846,14 +847,25 @@
 
                 var slider = this;
                 noUiSlider.create(slider, slider_opts);
+
+                // Only trigger a refresh if slider handles have actually moved
+                slider.noUiSlider.on('slide', function () {
+                    $this.attr('data-has-moved', 'true');
+                });
+
                 slider.noUiSlider.on('update', function(values, handle) {
                     FWP.settings[facet_name]['lower'] = values[0];
                     FWP.settings[facet_name]['upper'] = values[1];
                     FWP.hooks.doAction('facetwp/set_label/slider', $parent);
                 });
+
+                // This runs after click or handle slide
                 slider.noUiSlider.on('set', function() {
-                    FWP.active_facet = $this.closest('.facetwp-facet');
-                    FWP.autoload();
+                    if ('true' === $this.attr('data-has-moved')) {
+                        $this.attr('data-has-moved', '');
+                        FWP.active_facet = $this.closest('.facetwp-facet');
+                        FWP.autoload();
+                    }
                 });
 
                 $this.addClass('ready');

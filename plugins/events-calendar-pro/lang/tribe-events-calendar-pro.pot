@@ -2,15 +2,15 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar Pro 6.4.0.1\n"
+"Project-Id-Version: The Events Calendar Pro 7.0.1\n"
 "Report-Msgid-Bugs-To: https://evnt.is/191x\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-05-06T10:25:00-07:00\n"
-"PO-Revision-Date: 2024-05-06 17:25\n"
+"POT-Creation-Date: 2024-08-05T09:08:52-07:00\n"
+"PO-Revision-Date: 2024-08-05 16:08\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: tribe-events-calendar-pro\n"
 
@@ -25,7 +25,8 @@ msgstr ""
 #. Author of the plugin
 #: events-calendar-pro.php:173
 #: events-calendar-pro.php:174
-#: src/Tribe/Integrations/Elementor/Service_Provider.php:128
+#: src/Tribe/Integrations/Elementor/Service_Provider.php:126
+#: src/modules/blocks/single-venue/index.js:31
 msgid "The Events Calendar"
 msgstr ""
 
@@ -33,7 +34,7 @@ msgstr ""
 msgid "https://evnt.is/20"
 msgstr ""
 
-#: events-calendar-pro.php:55
+#: events-calendar-pro.php:56
 msgid "Events Calendar Pro"
 msgstr ""
 
@@ -426,6 +427,106 @@ msgstr ""
 msgid "Use this field if you want to override the auto-generated descriptions of event recurrence"
 msgstr ""
 
+#: src/admin-views/facebook/find-app-id.php:25
+msgctxt "The link label to get the Facebook App ID."
+msgid "How to find your Facebook App ID."
+msgstr ""
+
+#: src/admin-views/facebook/find-page-id.php:25
+msgctxt "The link label to get the Facebook page/group ID."
+msgid "How to find your Facebook page/group ID."
+msgstr ""
+
+#: src/admin-views/facebook/intro-text.php:21
+msgctxt "API connection header"
+msgid "Facebook Live Video"
+msgstr ""
+
+#: src/admin-views/facebook/page/add-link.php:20
+msgctxt "Label to connect an page to the Facebook Live API."
+msgid "Add Facebook Page"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/add-button.php:21
+msgctxt "Add a facebook page from the list of Facebook live pages."
+msgid "Add"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/delete-button.php:22
+msgctxt "Removes a facebook page from the list of Facebook live pages."
+msgid "Remove facebook page"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:21
+msgctxt "The status of the Page's access token."
+msgid "Not Connected"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:26
+msgctxt "The message to display if a Faceook Page is not connected."
+msgid "click \"Continue with Facebook\" to authorize it."
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:39
+msgctxt "The status of the Page's access token."
+msgid "Connected"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:44
+msgctxt "The message to display if a Faceook Page is connected."
+msgid "token expires:"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:49
+msgctxt "The label of the link to clear the token."
+msgid "clear token"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:69
+msgctxt "The label of the status of the Page's access token."
+msgid "Status: "
+msgstr ""
+
+#: src/admin-views/facebook/page/components/update-button.php:21
+msgctxt "Save a facebook page from the list of Facebook live pages."
+msgid "Update Facebook Page."
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:33
+msgctxt "Label for the name of the Facebook page connected to the site."
+msgid "Page Name"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:35
+msgctxt "The placeholder for the Facebook Page name."
+msgid "Enter a Facebook Page Name"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:36
+msgctxt "The screen reader text of the label for the Facebook Page name."
+msgid "Enter a Facebook Page name."
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:46
+msgctxt "Label for the id of the Facebook page connected to the site."
+msgid "Page ID"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:48
+msgctxt "The placeholder for the Facebook page id."
+msgid "Enter a Facebook Page ID"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:49
+msgctxt "The screen reader text of the label for the Facebook page id."
+msgid "Enter a Facebook Page ID."
+msgstr ""
+
+#: src/admin-views/facebook/save.php:27
+msgctxt "Save a Facebook App ID and App Secret."
+msgid "Save Facebook App"
+msgstr ""
+
 #: src/admin-views/geolocation-fix-text.php:12
 msgid "Fix geolocation data"
 msgstr ""
@@ -436,6 +537,53 @@ msgstr ""
 
 #: src/admin-views/geolocation-fix-text.php:18
 msgid "We will use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues)."
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:46
+msgctxt "Refreshes a Google account from the website."
+msgid "Refresh Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:54
+msgctxt "Disables the Google Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:76
+msgctxt "Removes a Google account from the website."
+msgid "Remove Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields.php:24
+#: src/admin-views/microsoft/api/authorize-fields.php:24
+#: src/admin-views/webex/api/authorize-fields.php:24
+#: src/admin-views/zoom/api/authorize-fields.php:24
+msgid "Connected Accounts"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Google API."
+msgid "Add Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields/add-link.php:40
+msgctxt "Settings help text for multiple Google accounts button"
+msgid "Using multiple Google Accounts"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Google"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:28
+msgctxt "Settings help text for multiple Google accounts."
+msgid "You need to connect your site to a Google account to be able to generate Google Meet links for your"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:35
+msgctxt "Settings link text for multiple Google accounts."
+msgid "Read more about adding and managing Google Accounts."
 msgstr ""
 
 #: src/admin-views/manager/create-new-event.php:39
@@ -478,6 +626,46 @@ msgstr ""
 
 #: src/admin-views/manager/page.php:40
 msgid "List"
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:46
+msgctxt "Refreshes a Microsoft account from the website."
+msgid "Refresh Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:54
+msgctxt "Disables the Microsoft Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:76
+msgctxt "Removes a Microsoft account from the website."
+msgid "Remove Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Microsoft API."
+msgid "Add Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/authorize-fields/add-link.php:42
+msgctxt "Settings help text for multiple Microsoft accounts button"
+msgid "Using multiple Microsoft Accounts"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Microsoft"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:28
+msgctxt "Settings help text for multiple Microsoft accounts."
+msgid "You need to connect your site to a Microsoft account to be able to generate Microsoft Meeting links for your"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:35
+msgctxt "Settings link text for multiple Microsoft accounts."
+msgid "Read more about adding and managing Microsoft Accounts."
 msgstr ""
 
 #: src/admin-views/recurrence/months.php:22
@@ -742,9 +930,9 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:250
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:175
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:743
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:471
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:478
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1405
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:483
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:490
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1417
 msgid "Organizer"
 msgstr ""
 
@@ -761,9 +949,9 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:261
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:188
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:790
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:499
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:506
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1677
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:511
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:518
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1689
 msgid "Venue"
 msgstr ""
 
@@ -839,6 +1027,293 @@ msgstr ""
 msgid "Change the default view for Mobile users."
 msgstr ""
 
+#: src/admin-views/virtual-metabox/api/display.php:51
+msgctxt "Option to display Meeting link details in event."
+msgid "Meeting link with details"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/api/meeting-link-error-details.php:30
+msgctxt "Accessible label of the control to dismiss a failure to generate an API connection."
+msgid "Dismiss"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/api/type-options.php:45
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:301
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:303
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:301
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:297
+msgctxt "The placeholder for the dropdown to select a host."
+msgid "Select a Host"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/controls.php:37
+msgctxt "Title for video source."
+msgid "Video or Meeting Link URL"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/controls.php:51
+msgctxt "Label for button to find the video source."
+msgid "Find"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/video-preview.php:24
+msgctxt "Label for video preview of the Smart URL/autodetect."
+msgid "Preview"
+msgstr ""
+
+#. Translators: %1$s: singular ticket term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share-tickets.php:35
+msgctxt "Include virtual link in ticket emails."
+msgid "Include link in %1$s emails"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share.php:24
+msgid "Share:"
+msgstr ""
+
+#. Translators: %1$s: singular RSVP term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share.php:46
+msgctxt "Include virtual link in RSVP emails."
+msgid "Include link in %1$s emails"
+msgstr ""
+
+#. Translators: %1$s: singular RSVP term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-rsvp.php:45
+msgctxt "Only show virtual content to users with RSVPs."
+msgid "%1$s Attendees only"
+msgstr ""
+
+#. Translators: %1$s is the URL
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-rsvp.php:64
+msgctxt "Explains why the radio button is disabled and how to enable it via ticket settings."
+msgid "Login requirements for RSVPs must be active to use this option. <a href=\"%1$s\">Go to Tickets settings.</a>"
+msgstr ""
+
+#. Translators: %1$s: singular ticket term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-tickets.php:46
+msgctxt "Only show virtual content to users with tickets."
+msgid "%1$s Attendees only"
+msgstr ""
+
+#. Translators: %1$s is the URL
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-tickets.php:65
+msgctxt "Explains why the radio button is disabled and how to enable it via ticket settings."
+msgid "Login requirements for tickets must be active to use this option. <a href=\"%1$s\">Go to Tickets settings.</a>"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:25
+#: src/admin-views/virtual-metabox/container/show-to.php:26
+msgid "Show to:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:45
+#: src/admin-views/virtual-metabox/container/show-to.php:46
+msgctxt "Show virtual content to all users."
+msgid "Everyone"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:65
+#: src/admin-views/virtual-metabox/container/show-to.php:66
+msgctxt "Show virtual content to logged-in users only."
+msgid "Logged in users"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:40
+#: src/admin-views/widget-admin-advanced-list.php:28
+msgid "Display:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:54
+msgctxt "Option to embed video in event."
+msgid "Embed Video"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:75
+msgctxt "Show watch button or embed only at the start of the event."
+msgid "Linked Button"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:92
+msgctxt "Label for virtual events watch button, defaults to watch"
+msgid "Label"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/event-type.php:26
+msgid "Type of Event:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/event-type.php:35
+msgctxt "Resets the virtual settings"
+msgid "Remove Virtual Settings"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:36
+msgid "Virtual %1$s"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:58
+msgid "Configure Virtual %1$s"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:81
+msgctxt "Event State of being virtual-only checkbox label"
+msgid "Mark as a virtual %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/label.php:25
+msgid "Virtual Event Label:"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/label.php:41
+msgctxt "Show virtual events marker on single event page."
+msgid "Show on %1$s page"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/label.php:62
+msgctxt "Show virtual events marker on calendar views."
+msgid "Show on calendar views"
+msgstr ""
+
+#. Translators: plural event term.
+#: src/admin-views/virtual-metabox/container/label.php:76
+msgid "Virtual %1$s will be indexed on Google as online %1$s."
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/show-when.php:26
+msgid "Show when:"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:42
+msgctxt "Show watch button or embed when the event is published."
+msgid "%1$s is published"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:66
+msgctxt "Show watch button or embed only at the start of the event."
+msgid "%1$s starts"
+msgstr ""
+
+#. Translators: %1$d: number of minutes of lead-up before event %2$s: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:89
+msgctxt "Explains when the link will show."
+msgid "Link and/or embed will appear on the page %1$d minutes before the %2$s start time."
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/video-source.php:25
+msgid "Add Video or Meeting Link:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/video-source.php:50
+msgctxt "The placeholder for the dropdown to choose the virtual video source."
+msgid "Choose Video Source"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/facebook/controls.php:35
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "Facebook Live"
+msgstr ""
+
+#. translators: %1$s: Google Meet phone pin.
+#: src/admin-views/virtual-metabox/google/details.php:136
+#: src/views/google/email/details/dial-in-content.php:42
+#: src/views/google/single/google-details.php:115
+msgctxt "The label for the Google Phone Pin, prefixed by the Pin label."
+msgid "Pin: %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/google/setup.php:61
+msgctxt "Title for Google Meeting creation."
+msgid "Google Meeting"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/microsoft/setup.php:62
+msgctxt "Title for Microsoft Meeting creation."
+msgid "Microsoft Meeting"
+msgstr ""
+
+#. translators: %1$s: Webex meeting password.
+#: src/admin-views/virtual-metabox/webex/details.php:124
+msgctxt "The label for the webex Meeting password, prefixed by password label."
+msgid "Password*: %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/webex/details.php:136
+msgctxt "The message about how the Webex meeting password displays."
+msgid "Webex meeting password will display based on the Virtual \"Show to\" settings. "
+msgstr ""
+
+#: src/admin-views/virtual-metabox/webex/setup.php:61
+msgctxt "Title for Webex Meeting creation."
+msgid "Webex Meeting"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:36
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "YouTube Live"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:44
+msgctxt "Label for virtual events YouTube channel id."
+msgid "YouTube Channel ID:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:61
+msgctxt "The settings for YouTube Integration for an event."
+msgid "Video Settings"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/zoom/accounts.php:50
+#: src/admin-views/virtual-metabox/zoom/setup.php:63
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "Zoom Meeting"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:43
+msgctxt "Refreshes a Webex account from the website."
+msgid "Refresh Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:51
+msgctxt "Disables the Webex Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:73
+msgctxt "Removes a Webex account from the website."
+msgid "Remove Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Webex API."
+msgid "Add Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/authorize-fields/add-link.php:42
+msgctxt "Settings help text for multiple Webex accounts button"
+msgid "Using multiple Webex Accounts"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Webex"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:28
+msgctxt "Settings help text for multiple Webex accounts."
+msgid "You need to connect your site to a Webex account to be able to generate Webex links for your"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:35
+msgctxt "Settings link text for multiple Webex accounts."
+msgid "Read more about adding and managing Webex Accounts."
+msgstr ""
+
 #: src/admin-views/widget-admin-advanced-list.php:13
 #: src/admin-views/widget-admin-calendar.php:13
 #: src/admin-views/widget-admin-countdown.php:14
@@ -851,10 +1326,6 @@ msgstr ""
 #: src/admin-views/widget-admin-advanced-list.php:17
 #: src/admin-views/widget-admin-venue.php:27
 msgid "Number of events to show:"
-msgstr ""
-
-#: src/admin-views/widget-admin-advanced-list.php:28
-msgid "Display:"
 msgstr ""
 
 #: src/admin-views/widget-admin-advanced-list.php:31
@@ -890,10 +1361,10 @@ msgstr ""
 #: src/admin-views/widget-admin-advanced-list.php:38
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:267
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:1074
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:488
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:517
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1481
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1806
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:500
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:529
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1493
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1818
 #: src/views/v2/widgets/widget-featured-venue/venue/phone.php:25
 #: src/views/v2/widgets/widget-featured-venue/venue/phone.php:26
 msgid "Phone"
@@ -902,10 +1373,10 @@ msgstr ""
 #: src/admin-views/widget-admin-advanced-list.php:40
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:281
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:1113
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:490
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:518
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1635
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1883
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:502
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:530
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1647
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1895
 #: src/views/v2/widgets/widget-featured-venue/venue/website.php:26
 #: src/views/v2/widgets/widget-featured-venue/venue/website.php:27
 msgid "Website"
@@ -1038,8 +1509,57 @@ msgctxt "\"Remove\" label for selected term."
 msgid "(remove)"
 msgstr ""
 
+#: src/admin-views/youtube/components/trash.php:30
+msgctxt "Delete YouTube channel id by AJAX."
+msgid "Delete YouTube Channel ID"
+msgstr ""
+
+#: src/admin-views/youtube/intro-text.php:21
+msgctxt "API connection header"
+msgid "YouTube Live"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:43
+msgctxt "Refreshes a Zoom account from the website."
+msgid "Refresh Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:51
+msgctxt "Disables the Zoom Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:73
+msgctxt "Removes a Zoom account from the website."
+msgid "Remove Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Zoom API."
+msgid "Add Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/authorize-fields/add-link.php:42
+msgctxt "Settings help text for multiple Zoom accounts button"
+msgid "Using multiple Zoom Accounts"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Zoom"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:28
+msgctxt "Settings help text for multiple Zoom accounts."
+msgid "You need to connect your site to a Zoom account to be able to generate Zoom links for your"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:35
+msgctxt "Settings link text for multiple Zoom accounts."
+msgid "Read more about adding and managing Zoom Accounts."
+msgstr ""
+
 #: src/Events_Pro/Custom_Tables/V1/Admin/Lists/Columns.php:38
-#: tests/ct1_integration/TEC/Events_Pro/Custom_Tables/V1/Admin/Lists/ColumnsTest.php:33
 msgid "Series"
 msgstr ""
 
@@ -1050,31 +1570,38 @@ msgid_plural "%d occurrences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:205
+#. translators: %s is the event label.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:217
 msgid "Draft %s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:212
+#. translators: %s is the event status message.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:225
 msgid "%1$s updated."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:214
+#. translators: %s is the event status message.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:228
 msgid "%1$s saved."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:216
+#. translators: %s is the event status message.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:231
 msgid "%1$s published."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:223
-msgid "%1$s %3$sView %2$s%3$s"
+#. translators: %1$s is the verb message, %2$s is the event link, %3$s is the event label, %4$s is the event link closing tag.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:238
+msgid "%1$s %2$sView %3$s%4$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:231
+#. translators: %1$s is the event label.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:242
 msgid "recurring %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:236
+#. translators: %1$s is the event type, %2$s is the series link, %3$s is the series link closing tag, %4$d is the total number of events in the series, %5$s is the event label, %6$s is the through date.
+#: src/Events_Pro/Custom_Tables/V1/Admin/Notices/Occurrence_Notices.php:248
 msgid "This %1$s is part of a %2$sSeries%3$s with %4$d total %5$s through %6$s."
 msgstr ""
 
@@ -1127,7 +1654,7 @@ msgstr ""
 
 #: src/Events_Pro/Custom_Tables/V1/Editors/Classic/Occurrences_List.php:169
 #: src/Tribe/APM_Filters/APM_Filters.php:91
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:344
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:356
 msgid "Title"
 msgstr ""
 
@@ -1200,16 +1727,16 @@ msgid "yearly"
 msgstr ""
 
 #. Translators: %1$s - single event term.
-#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:13
+#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:16
 msgid "Recurring %1$s."
 msgstr ""
 
 #. translators: %1$s: event (plural), %2$s: ticket (plural), %3$s: RSVP (plural).
-#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:26
+#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:29
 msgid "Recurrence patterns are not yet supported for %1$s with %2$s or %3$s."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:35
+#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/partials/recurrence-not-supported-with-tickets.php:38
 #: src/modules/custom-tables-v1/blocks/recurrence/hooks.js:34
 msgid "Read about our plans for future features."
 msgstr ""
@@ -1276,6 +1803,14 @@ msgctxt "custom recurrence time/date separator"
 msgid "on the"
 msgstr ""
 
+#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/Recurrence.php:75
+msgid "tickets"
+msgstr ""
+
+#: src/Events_Pro/Custom_Tables/V1/Editors/Classic/Recurrence.php:79
+msgid "RSVPs"
+msgstr ""
+
 #: src/Events_Pro/Custom_Tables/V1/Editors/Event.php:133
 #: src/modules/elements/series-ends/template.js:124
 msgid "Ends"
@@ -1311,48 +1846,48 @@ msgctxt "The tooltip shown when hovering the close control."
 msgid "Close"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:234
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:340
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:238
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:349
 msgid "Edit Recurring %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:235
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:341
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:239
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:350
 msgid "Trash Recurring %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:236
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:342
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:240
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:351
 msgid "Ok"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:237
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:343
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:241
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:352
 msgid "All %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:238
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:344
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:242
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:353
 msgid "This and following %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:239
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:345
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:243
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:354
 msgid "This %1$s"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:240
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:346
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:244
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:355
 msgid "Convert this occurrence to a single %1$s."
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:241
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:347
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:245
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:356
 msgid "all day"
 msgstr ""
 
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:242
-#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:348
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:246
+#: src/Events_Pro/Custom_Tables/V1/Editors/Provider.php:357
 msgid "These changes will affect this %1$s and all following %2$s"
 msgstr ""
 
@@ -2526,6 +3061,26 @@ msgctxt "The label of the confirm button in the Occurrence redirect dialog."
 msgid "Okay"
 msgstr ""
 
+#. Translators: %1$s: The new plugin version
+#. translators: %1$s: The plugin version
+#: src/Events_Pro/Integrations/Events_Virtual_Provider.php:46
+#: src/Tribe/Integrations/Event_Automator/Service_Provider.php:49
+msgctxt "Plugin name upgraded to version."
+msgid "The Events Calendar Pro to %1$s"
+msgstr ""
+
+#. Translators: %1$s is the plugin that was deactivated, %2$s is the plugin name, %3$s is the opening anchor tag, %4$s is the closing anchor tag.
+#: src/Events_Pro/Integrations/Events_Virtual_Provider.php:96
+msgctxt "Notice message for the forced deactivation of the Virtual Events plugin after updating Events Pro to the merged version."
+msgid "%1$s has been deactivated as it's now bundled into %2$s. %3$sLearn More%4$s."
+msgstr ""
+
+#. Translators: %1$s: Virtual Events, %2$s: Virtual Events, %3$s: he Events Calendar Pro, %4$s: Open anchor tag to the learn more page, %5$s: Closing tag.
+#: src/Events_Pro/Integrations/Events_Virtual_Provider.php:114
+msgctxt "Notice message for the forced deactivation of the Virtual Events plugin after attempting to activate, and the plugin was merged to Events Pro."
+msgid "%1$s could not be activated. The %2$s functionality has been merged into %3$s. %4$sLearn More%5$s."
+msgstr ""
+
 #: src/Events_Pro/Integrations/Plugins/Elementor/Widgets/Event_Additional_Fields.php:55
 msgid "Event Additional Fields"
 msgstr ""
@@ -2564,8 +3119,8 @@ msgid "Additional Fields Value"
 msgstr ""
 
 #: src/Events_Pro/Integrations/Plugins/Elementor/Widgets/Event_Additional_Fields.php:371
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:828
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1790
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:840
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1802
 msgid "Link Color"
 msgstr ""
 
@@ -2587,29 +3142,29 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:257
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:270
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:284
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:347
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:360
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:373
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:386
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:399
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:412
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:427
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:452
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:481
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:509
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:541
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:555
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:569
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:591
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:604
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:617
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:630
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:643
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2617
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2630
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2643
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2656
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2719
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:359
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:372
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:385
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:398
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:411
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:424
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:439
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:464
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:493
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:521
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:553
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:567
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:581
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:603
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:616
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:629
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:642
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:655
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2629
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2642
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2655
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2668
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2728
 #: src/Tribe/Recurrence/Meta.php:307
 msgid "Yes"
 msgstr ""
@@ -2628,29 +3183,29 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:258
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:271
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:285
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:348
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:361
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:374
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:387
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:400
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:413
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:428
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:453
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:482
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:510
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:542
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:556
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:570
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:592
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:605
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:618
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:631
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:644
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2618
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2631
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2644
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2657
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2720
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:360
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:373
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:386
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:399
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:412
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:425
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:440
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:465
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:494
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:522
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:554
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:568
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:582
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:604
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:617
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:630
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:643
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:656
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2630
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2643
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2656
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2669
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2729
 msgid "No"
 msgstr ""
 
@@ -2660,8 +3215,8 @@ msgstr ""
 
 #: src/Events_Pro/Integrations/Plugins/Elementor/Widgets/Related_Events.php:54
 #: src/Tribe/Editor/Blocks/Related_Events.php:26
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:614
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2183
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:626
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2195
 #: src/modules/blocks/related-events/index.js:22
 #: src/modules/blocks/related-events/index.js:38
 #: src/modules/blocks/related-events/template.js:28
@@ -2679,8 +3234,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2513
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2931
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:436
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:693
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2245
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:705
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2257
 msgid "Event Title"
 msgstr ""
 
@@ -2755,8 +3310,8 @@ msgid "No %1$s."
 msgstr ""
 
 #: src/Events_Pro/Linked_Posts/Organizer/Email_Visibility_Modifier.php:29
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:489
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1558
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:501
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1570
 msgid "Email"
 msgstr ""
 
@@ -2939,6 +3494,46 @@ msgstr ""
 msgid "The current default phone is: %s"
 msgstr ""
 
+#: src/functions/template-tags/virtual.php:74
+msgctxt "Capitalized version of the \"virtual\" term."
+msgid "Virtual"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:102
+msgctxt "Lowercase version of the \"virtual\" term."
+msgid "virtual"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:131
+msgctxt "Capitalized \"virtual\" term, capitalized singular event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:165
+msgctxt "Lowercase \"virtual\" term, singular lowercase event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:199
+msgctxt "Capitalized \"virtual\" term, capitalized plural event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:233
+msgctxt "Lowercase \"virtual\" term, lowercase plural event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:266
+msgctxt "Capitalized version of the \"hybrid\" term."
+msgid "Hybrid"
+msgstr ""
+
+#: src/functions/template-tags/virtual.php:295
+msgctxt "Capitalized \"hybrid\" term, capitalized singular event term."
+msgid "%1$s %2$s"
+msgstr ""
+
 #: src/functions/template-tags/widgets.php:149
 msgid "%s for week of %s"
 msgstr ""
@@ -3034,9 +3629,9 @@ msgid "Event Cats"
 msgstr ""
 
 #: src/Tribe/APM_Filters/APM_Filters.php:101
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:383
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:896
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2010
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:395
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:908
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2022
 msgid "Description"
 msgstr ""
 
@@ -3062,12 +3657,12 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: src/Tribe/Assets.php:400
+#: src/Tribe/Assets.php:414
 msgctxt "Event title map marker prefix"
 msgid "%s: "
 msgstr ""
 
-#: src/Tribe/Assets.php:401
+#: src/Tribe/Assets.php:415
 msgid "Address: "
 msgstr ""
 
@@ -3123,123 +3718,123 @@ msgstr ""
 msgid "Add Rule"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:121
-#: src/Tribe/Geo_Loc.php:588
+#: src/Tribe/Geo_Loc.php:123
+#: src/Tribe/Geo_Loc.php:604
 #: src/Tribe/Rewrite/Provider.php:164
 msgid "map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:153
+#: src/Tribe/Geo_Loc.php:155
 msgid "Distance"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:199
+#: src/Tribe/Geo_Loc.php:200
 msgid "Map view search distance limit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:201
+#: src/Tribe/Geo_Loc.php:202
 msgid "Set the distance that the location search covers (find events within X distance units of location search input)."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:208
+#: src/Tribe/Geo_Loc.php:209
 msgid "Distance unit"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:214
+#: src/Tribe/Geo_Loc.php:216
 #: src/Tribe/Geo_Loc_Filter.php:23
 #: src/Tribe/Views/V2/Views/Map_View.php:563
 msgid "Miles"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:215
+#: src/Tribe/Geo_Loc.php:217
 #: src/Tribe/Geo_Loc_Filter.php:26
 #: src/Tribe/Views/V2/Views/Map_View.php:559
 msgid "Kilometers"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:230
+#: src/Tribe/Geo_Loc.php:235
 msgid "Hide location search"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:231
+#: src/Tribe/Geo_Loc.php:236
 msgid "Removes location search field from the Events Bar on all views."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:330
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:519
+#: src/Tribe/Geo_Loc.php:341
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:531
 msgid "Map"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:368
+#: src/Tribe/Geo_Loc.php:379
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:399
+#: src/Tribe/Geo_Loc.php:410
 msgid "Near"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:400
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:516
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1753
+#: src/Tribe/Geo_Loc.php:411
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:528
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1765
 msgid "Location"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:425
+#: src/Tribe/Geo_Loc.php:438
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:436
+#: src/Tribe/Geo_Loc.php:449
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:437
+#: src/Tribe/Geo_Loc.php:450
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:457
+#: src/Tribe/Geo_Loc.php:471
 msgid "Enter a custom Google Maps API key"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:458
+#: src/Tribe/Geo_Loc.php:472
 msgid "for latitude and longitude to be auto-generated; otherwise, you'll only be able to enter the values manually."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:765
+#: src/Tribe/Geo_Loc.php:790
 msgid "The latitude and longitude for your venue could not be fetched. The Google Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:769
+#: src/Tribe/Geo_Loc.php:794
 msgid "Enter your API Key"
 msgstr ""
 
 #. translators: 1: Error response text, 2: URL
-#: src/Tribe/Geo_Loc.php:1316
+#: src/Tribe/Geo_Loc.php:1341
 msgctxt "debug geodata"
 msgid "Geocode request failed (%1$s - %2$s)"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1344
+#: src/Tribe/Geo_Loc.php:1370
 msgid "There was an error while trying to fix the Venues geolocation information: %s"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1391
+#: src/Tribe/Geo_Loc.php:1446
 msgid "Fix venues data"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1445
+#: src/Tribe/Geo_Loc.php:1501
 msgid "You have venues for which we don't have geolocation information. <a href='%s'>Click here to generate it</a>."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1480
+#: src/Tribe/Geo_Loc.php:1537
 msgid "Fixed geolocation data for %d venues"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1618
+#: src/Tribe/Geo_Loc.php:1680
 msgctxt "The text of the link that will take the user to the Venue edit screen."
 msgid "update the venue address or use latitude & longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1628
+#: src/Tribe/Geo_Loc.php:1690
 msgctxt "The text of the link that will trigger an attempt to fix the Venues geolocation information."
 msgid "try again"
 msgstr ""
@@ -3264,8 +3859,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:101
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:148
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:119
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:336
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:684
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:347
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:696
 msgid "Content"
 msgstr ""
 
@@ -3285,7 +3880,7 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Countdown.php:147
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:468
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:417
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:670
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:682
 msgid "The style of this widget is often affected by your theme and plugins. If you experience an issue, try switching to a basic WordPress theme and deactivate related plugins."
 msgstr ""
 
@@ -3312,11 +3907,11 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:1046
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:1085
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:1124
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:705
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:753
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:869
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:908
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2569
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:717
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:765
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:881
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:920
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2581
 msgid "Text Color"
 msgstr ""
 
@@ -3339,8 +3934,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2011
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2394
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2788
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1060
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2442
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1072
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2454
 msgid "Default"
 msgstr ""
 
@@ -3491,7 +4086,7 @@ msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:535
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:632
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2580
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2592
 msgid "Icon Color"
 msgstr ""
 
@@ -3514,11 +4109,11 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3115
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3148
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3201
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:789
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1177
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1231
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2194
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2558
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:801
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1189
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1243
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2206
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2570
 msgid "Background Color"
 msgstr ""
 
@@ -3527,8 +4122,8 @@ msgid "View Selector"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:625
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:580
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2051
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:592
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2063
 msgid "Navigation"
 msgstr ""
 
@@ -3547,18 +4142,18 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:696
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3128
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3159
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:800
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1493
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1570
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1818
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:812
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1505
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1582
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1830
 msgid "Label Color"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:710
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:813
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1508
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1585
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1833
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:825
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1520
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1597
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1845
 msgid "Label Typography"
 msgstr ""
 
@@ -3611,25 +4206,25 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2998
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3020
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:3181
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1191
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1258
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1297
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1336
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1375
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1454
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1647
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1726
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1765
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1895
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1948
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1985
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2022
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2075
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2114
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2153
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2220
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2257
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2294
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1203
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1270
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1309
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1348
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1387
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1466
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1659
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1738
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1777
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1907
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1960
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1997
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2034
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2087
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2126
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2165
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2232
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2269
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2306
 msgid "Color"
 msgstr ""
 
@@ -3673,8 +4268,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2108
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2491
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2885
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:449
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1220
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:461
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1232
 msgid "Event Details"
 msgstr ""
 
@@ -3761,8 +4356,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:1895
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2278
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2672
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:396
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:938
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:408
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:950
 msgid "Featured Image"
 msgstr ""
 
@@ -3770,8 +4365,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:1904
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2287
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2681
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:950
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2332
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:962
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2344
 msgid "Width"
 msgstr ""
 
@@ -3779,8 +4374,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:1939
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2322
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2716
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:988
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2370
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1000
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2382
 msgid "Max Width"
 msgstr ""
 
@@ -3788,8 +4383,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:1974
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2357
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2751
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1023
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2405
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1035
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2417
 msgid "Height"
 msgstr ""
 
@@ -3797,8 +4392,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2005
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2388
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2782
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1054
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2436
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1066
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2448
 msgid "Object Fit"
 msgstr ""
 
@@ -3806,8 +4401,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2012
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2395
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2789
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1061
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2443
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1073
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2455
 msgid "Fill"
 msgstr ""
 
@@ -3815,8 +4410,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2013
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2396
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2790
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1062
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2444
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1074
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2456
 msgid "Cover"
 msgstr ""
 
@@ -3824,8 +4419,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2014
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2397
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2791
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1063
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2445
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1075
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2457
 msgid "Contain"
 msgstr ""
 
@@ -3833,8 +4428,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2036
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2419
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2813
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1085
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2467
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1097
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2479
 msgid "Opacity"
 msgstr ""
 
@@ -3842,8 +4437,8 @@ msgstr ""
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2075
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2458
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php:2852
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1133
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2515
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1145
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2527
 msgid "Border Radius"
 msgstr ""
 
@@ -3899,9 +4494,9 @@ msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:162
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:696
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:370
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:460
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:857
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:382
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:472
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:869
 msgid "Cost"
 msgstr ""
 
@@ -3916,13 +4511,13 @@ msgid "Zip"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:407
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:660
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:672
 msgid "Notes On Event Styling"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:480
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:524
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:458
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:470
 msgid "Date"
 msgstr ""
 
@@ -3932,7 +4527,7 @@ msgid "Month"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:569
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:459
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:471
 msgid "Time"
 msgstr ""
 
@@ -3941,6 +4536,7 @@ msgid "Calendar Link"
 msgstr ""
 
 #: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_List.php:798
+#: src/modules/blocks/single-venue/index.js:38
 msgid "Venue Title"
 msgstr ""
 
@@ -3948,172 +4544,208 @@ msgstr ""
 msgid "Venue Details"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:66
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:69
 msgid "Legacy Event"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:357
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:741
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2282
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:369
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:753
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2294
 msgid "Date/Time"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:409
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1166
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:421
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1178
 msgid "Notices"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:423
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:435
 msgid "RSVP/Tickets"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:424
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:436
 msgid "RSVP/Tickets are not available in preview mode."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:442
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:454
 msgid "Details"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:461
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:473
 msgid "Categories"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:462
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:474
 msgid "Tags"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:487
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:515
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1442
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1714
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:499
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:527
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1454
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1726
 msgid "Name"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:531
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:543
 msgid "Custom Content"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:538
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1925
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:550
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1937
 msgid "Custom Fields"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:551
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:563
 msgid "Before HTML"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:552
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:564
 msgid "Customizable HTML to display before the event."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:565
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:577
 msgid "After HTML"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:566
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:578
 msgid "Customizable HTML to display after the event."
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:588
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2063
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:600
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2075
 msgid "All Events Link"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:601
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2102
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:613
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2114
 msgid "Calendar Links"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:627
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:639
 msgid "Footer"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:640
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:652
 msgid "Event Navigation"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:780
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:792
 #: src/modules/blocks/recurrence-description/template.js:14
 msgid "Recurring Event"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:841
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:853
 msgid "Link Typography"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1246
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1936
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1258
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1948
 msgid "Headings"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1285
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1973
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1297
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1985
 msgid "Labels"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1324
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1336
 msgid "Descriptions"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1363
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1375
 msgid "Links"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1416
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1688
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1428
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1700
 msgid "Heading Color"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1530
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1855
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1542
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1867
 msgid "Phone Color"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1545
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1870
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1557
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1882
 msgid "Phone Typography"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1607
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1619
 msgid "Email Color"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1622
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:1634
 msgid "Email Typography"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2141
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2153
 msgid "Footer Navigation"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2208
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2220
 msgid "Heading"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2320
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2332
 msgid "Thumbnail"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2550
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2606
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2562
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2618
 msgid "Virtual"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2614
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2626
 msgid "Video Embed"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2627
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2639
 msgid "Watch Button"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2640
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2652
 msgid "Zoom Link"
 msgstr ""
 
-#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2653
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2665
 msgid "Zoom Dial-in Info"
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2756
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy_Replacement.php:102
+msgid "Important note on Legacy Event Widget"
+msgstr ""
+
+#. Translators: %1$s is the url to the documentation
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy.php:2768
+msgid "The Legacy Event widget is not supported in single-event layouts. If this template is applied to a single event, the widget will not display. <a href=\"%1$s\" target=\"_blank\">Learn more</a>."
+msgstr ""
+
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy_Replacement.php:57
+msgid "Legacy Event (disabled)"
+msgstr ""
+
+#. Translators: %1$s and %2$s are the opening and closing bold tags, respectively.
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy_Replacement.php:87
+msgid "%1$sThe Legacy Event widget is not supported in this layout!%1$s"
+msgstr ""
+
+#. Translators: %1$s is the url to the documentation
+#: src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy_Replacement.php:114
+msgid "The Legacy Event widget is not supported in this layout. <a href=\"%1$s\" target=\"_blank\">Learn more</a>."
+msgstr ""
+
+#. translators: %1$s is the plugin that was deactivated, %2$s is the plugin name, %3$s is the opening anchor tag, %4$s is the closing anchor tag.
+#: src/Tribe/Integrations/Event_Automator/Service_Provider.php:99
+msgctxt "Notice message for the forced deactivation of the Event Automator plugin after updating Events Pro to the merged version."
+msgid "%1$s has been deactivated as it's now bundled into %2$s. %3$sLearn More%4$s."
+msgstr ""
+
+#. translators: %1$s: Event Automator, %2$s: Event Automator, %3$s: he Events Calendar Pro, %4$s: Open anchor tag to the learn more page, %5$s: Closing tag.
+#: src/Tribe/Integrations/Event_Automator/Service_Provider.php:117
+msgctxt "Notice message for the forced deactivation of the Event Automator plugin after attempting to activate, and the plugin was merged to Events Pro."
+msgid "%1$s could not be activated. The %1$s functionality has been merged into %2$s. %3$sLearn More%4$s."
 msgstr ""
 
 #. Translators: 1: Plural event label, 2: Title of the current page
@@ -5654,6 +6286,1386 @@ msgctxt "The \"week of\" header"
 msgid "Week of %s"
 msgstr ""
 
+#: src/Tribe/Virtual/Assets.php:484
+msgctxt "The block editor message to display to confirm a user would like to delete the virtual settings."
+msgid ""
+"Are you sure you want to delete the virtual settings? \n"
+"This will also delete any virtual event blocks for this event. \n"
+"\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: src/Tribe/Virtual/Assets.php:491
+msgctxt "The classic editor message to display to confirm a user would like to delete the virtual settings."
+msgid ""
+"Are you sure you want to delete the virtual settings? \n"
+"\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/AJAX.php:84
+msgctxt "The autodetect no url found message."
+msgid "No URL found."
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/AJAX.php:106
+msgctxt "An error raised in the context of the Autodetect ajax request."
+msgid "The post ID is missing from the request."
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/AJAX.php:118
+msgctxt "An error raised in the context of the Autodetect ajax request."
+msgid "The event could not be found."
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/AJAX.php:155
+msgctxt "The autodetect no video source found message."
+msgid "No video found. Please check the URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/Metabox.php:153
+msgctxt "The label to choose the Smart URL/autodetect source."
+msgid "Video source:"
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/Metabox.php:164
+msgctxt "The placeholder for the dropdown to choose the virtual Smart URL/autodetect source."
+msgid "Choose a video source:"
+msgstr ""
+
+#: src/Tribe/Virtual/Autodetect/Metabox.php:176
+msgctxt "Explains what the smart url/autodetect video source is used for."
+msgid "Video source is detected based on the URL you’ve entered. If no video was found, you may need to manually select a different video source from the dropdown below and click Find."
+msgstr ""
+
+#: src/Tribe/Virtual/Compatibility/Events_Control_Extension/metabox-container.php:29
+msgctxt "Event status default option"
+msgid "Scheduled"
+msgstr ""
+
+#: src/Tribe/Virtual/Compatibility/Events_Control_Extension/metabox-container.php:34
+msgctxt "Event status of being canceled in the select field"
+msgid "Canceled"
+msgstr ""
+
+#: src/Tribe/Virtual/Compatibility/Events_Control_Extension/metabox-container.php:40
+msgctxt "Event status of being postponed in the select field"
+msgid "Postponed"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural event term.
+#: src/Tribe/Virtual/Compatibility/Filter_Bar/Events_Virtual_Filter.php:126
+msgid "Show all %1$s"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural virtual event term.
+#: src/Tribe/Virtual/Compatibility/Filter_Bar/Events_Virtual_Filter.php:134
+msgid "Show only %1$s"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural virtual event term.
+#: src/Tribe/Virtual/Compatibility/Filter_Bar/Events_Virtual_Filter.php:142
+msgid "Hide %1$s"
+msgstr ""
+
+#. Translators: Opening and closing tags.
+#: src/Tribe/Virtual/Compatibility/Online_Event_Extension/Settings.php:39
+msgid "%1$sYou have the %2$sVirtual Events%3$s plugin installed, these settings are superseded by it.%4$s"
+msgstr ""
+
+#. Translators: Opening and closing tags.
+#: src/Tribe/Virtual/Compatibility/Online_Event_Extension/Settings.php:50
+msgid "%1$sYou should deactivate The Events Control extension as all functionality is handled by the Virtual Events plugin.%2$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Editor/Blocks/Virtual_Event.php:29
+msgid "Virtual Events"
+msgstr ""
+
+#: src/Tribe/Virtual/Event_Meta.php:275
+msgctxt "Default label of the virtual event URL call-to-action link."
+msgid "Watch"
+msgstr ""
+
+#: src/Tribe/Virtual/Event_Meta.php:294
+msgctxt "Default placeholder text for the virtual event smart URL input."
+msgid "Enter URL (YouTube, Zoom, Outlook Event, Webex, etc.)"
+msgstr ""
+
+#: src/Tribe/Virtual/Event_Status/Compatibility/Filter_Bar/Events_Status_Virtual_Filter.php:40
+msgctxt "Moved online label for filter bar to show moved online events."
+msgid "Show only moved online events"
+msgstr ""
+
+#: src/Tribe/Virtual/Event_Status/Status_Labels.php:62
+msgctxt "Moved Online event status label"
+msgid "Moved Online"
+msgstr ""
+
+#: src/Tribe/Virtual/Hooks.php:1025
+msgctxt "The label of the video source option."
+msgid "Search for video or meeting link"
+msgstr ""
+
+#: src/Tribe/Virtual/Hooks.php:1062
+msgctxt "The name of the autodetect source."
+msgid "OEmbed"
+msgstr ""
+
+#. Translators: %1$s: Virtual Events label, %2$s: Events label singular
+#: src/Tribe/Virtual/Importer/Events.php:68
+msgctxt "Column name for importer of virtual events."
+msgid "Configure %1$s %2$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:79
+msgctxt "Column name for importer of virtual event type."
+msgid "Type of %1$s (Virtual, Hybrid)"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:88
+msgctxt "Column name for importer of virtual event source url."
+msgid "Video Source URL"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:95
+msgctxt "Column name for importer of virtual event to embed the video."
+msgid "Embed Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:102
+msgctxt "Column name for importer of virtual event linked button shows."
+msgid "Linked Button"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:109
+msgctxt "Column name for importer of virtual event linked button text."
+msgid "Linked Button Text"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:116
+msgctxt "Column name for importer of virtual event for when to show the emebed."
+msgid "Show Embed At"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:123
+msgctxt "Column name for importer of virtual event to show virtual icon on signle view."
+msgid "Show Virtual Event Icon on Single"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:130
+msgctxt "Column name for importer of virtual event to show virtual icon on all views."
+msgid "Show Virtual Event on all Views"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:137
+msgctxt "Column name for importer of virtual event to show the embed to."
+msgid "Show Embed to"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:144
+msgctxt "Column name for importer of virtual event RSVP email link."
+msgid "Include Link in RSVP Email"
+msgstr ""
+
+#: src/Tribe/Virtual/Importer/Events.php:151
+msgctxt "Column name for importer of virtual event ticket email link."
+msgid "Include Link in Ticket Email"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:801
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:900
+msgctxt "Account ID is missing on status change error message."
+msgid "The %1$s Account ID or Account is missing to change the status."
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:824
+msgctxt "Message to display when the %1$s account could not be loaded after being enabled."
+msgid "There seems to be a problem with the connection to this %1$s account. Please refresh the connection."
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:838
+msgctxt "Enables the API Account for the Website."
+msgid "%1$s connection enabled for %2$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:843
+msgctxt "Disables the API Account for the Website."
+msgid "%1$s connection disabled for %2$s"
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:871
+msgctxt "The message to display before a user attempts to refresh a %1$s account connection."
+msgid "Before refreshing the connection, make sure you are logged into the %1$s account in this browser."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been deleted.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:917
+msgctxt "Account ID is missing on status change error message."
+msgid "%1$s was successfully deleted"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been deleted.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:932
+msgctxt "Message to display when the %1$s account could not be loaded after being enabled."
+msgid "The %1$s Account access token could not be revoked."
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Virtual/Integrations/Abstract_Account_Api.php:955
+msgctxt "The message to display to confirm a user would like to delete a %1$s account."
+msgid "Are you sure you want to delete this %1$s connection? This operation cannot be undone. Existing meetings tied to this account will not be impacted."
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:299
+msgctxt "The label used to designate the next step after selecting an API Account."
+msgid "Next "
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:305
+msgctxt "The label to choose an API account."
+msgid "Choose account:"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:315
+msgctxt "The placeholder for the dropdown to select an API account."
+msgid "Select an Account"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:395
+msgctxt "The message for smart url/autodetect when there are no valid api accounts."
+msgid "No accounts found. Use the link to authorize a new account or reauthorize an existing account:"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:412
+msgctxt "The label of an api accounts dropdown."
+msgid "Choose account:"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:419
+msgctxt "The placeholder for the dropdown to select an account."
+msgid "Select an Account"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:507
+msgctxt "The label of the button to try and generate an connection again."
+msgid "Try again"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic.php:562
+msgctxt "The label of the button to link back to the settings to refresh an API account."
+msgid "Refresh your account on the settings page"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:31
+msgctxt "Title for an API integration in the event classic editor UI."
+msgid "%1$s Meeting"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:50
+msgctxt "Label for the link to set up an API integration in the event classic editor UI."
+msgid "Set up %1$s integration"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:69
+msgctxt "The label for the admin UI control that allows removing an API integration from the event."
+msgid "Remove %1$s link"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:91
+msgctxt "Header of the disabled account details section when an account is disabled."
+msgid "%1$s Account Disabled"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:100
+msgctxt "Header of the account details section shown when no account is loaded."
+msgid "%1$s Account Not Found"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:122
+msgctxt "The message to display when an API account is disabled."
+msgid "The %1$s account is disabled on your website, please use the link to go to the API settings and activate it."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:131
+msgctxt "The message to display when an API account is not found."
+msgid "The %1$s account is not found on your website, please use the link and add back the account to your site."
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:151
+msgctxt "The label of the button to link back to the settings to enable an API account."
+msgid "Enable your account on the settings page"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:156
+msgctxt "The label of the button to link back to the settings to add an API account."
+msgid "Add your account on the settings page"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:173
+msgctxt "A message to indicate an unknown error happened while interacting with the an API integration."
+msgid "Unknown error from %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:190
+msgctxt "Header shown if no hosts are found before generating an API connection."
+msgid "No Hosts Found"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:207
+msgctxt "The message shown if no hosts are found before generating an API connection."
+msgid "The %1$s account could not load any hosts, please follow the link to refresh your account and try again."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:226
+msgctxt "Header of the details shown when an attempt to generate an API connection fails."
+msgid "%1$s Link"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:245
+msgctxt "Message shown when an attempt to generate an API connection fails."
+msgid "We were not able to generate a %1$s link."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:264
+msgctxt "Header of the error details section shown when an attempt to generate an API connection link fails."
+msgid "%1$s error:"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Virtual/Integrations/Editor/Abstract_Classic_Labels.php:283
+msgctxt "The message to display to confirm a user would like to remove an API connection from an event."
+msgid "Are you sure you want to remove the %1$s meeting from this event? This operation cannot be undone."
+msgstr ""
+
+#. translators: %1$s: the API name, %2$s: the error as returned from the API.
+#: src/Tribe/Virtual/Integrations/Request_Api.php:179
+msgctxt "The prefix of a message reporting a %1$s API communication error, the placeholder is for the error."
+msgid "Error while trying to communicate with %1$s API: %2$s. Please try again in a minute."
+msgstr ""
+
+#. translators: the placeholders are, %1$s: the API name, %2$s: the expected code, and %3$s: the actual response code.
+#: src/Tribe/Virtual/Integrations/Request_Api.php:234
+msgctxt "The message reporting an API unexpected response code, placeholders are the AP name and the codes."
+msgid "%1$s API response is not the expected one, expected %2$s, received %3$s. Please, try again in a minute."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Classic_Editor.php:97
+msgctxt "The label of Facebook Page to choose."
+msgid "Choose Page:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Classic_Editor.php:107
+msgctxt "The placeholder for the dropdown to select a Facebook Page."
+msgid "Select a Facebook Page"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Classic_Editor.php:135
+msgctxt "The title of Facebook Live incomplete setup message."
+msgid "Facebook Live"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Classic_Editor.php:140
+msgctxt "The message to complete the Facebook setup."
+msgid "No connected Facebook Pages found. You must connect a Facebook App to your site before you can add Facebook Live videos to events."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Classic_Editor.php:146
+msgctxt "The label of the link to setup Facebook Live."
+msgid "Set up Facebook Live"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:553
+msgctxt "The local id for the facebook page is missing error message."
+msgid "The local id to save the Facebook Page is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:567
+msgctxt "Facebook Page Name or ID is missing error message."
+msgid "The Facebook Page Name or ID is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:595
+msgctxt "Facebook Page is saved to the options."
+msgid "Facebook Page Saved."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:682
+msgctxt "Facebook Page ID, local ID, or access token is missing error message."
+msgid "The Facebook Page ID, local ID, or access token is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:695
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No Facebook Page found to update."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:710
+msgctxt "Facebook Page is saved to the options."
+msgid "Facebook Page access token saved."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:740
+msgctxt "Facebook Page ID local ID is missing error message."
+msgid "No access token to clear as the the Facebook Page local ID is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:753
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No access token is cleared as no Facebook Page was found to update."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:765
+msgctxt "Facebook Page access token is cleared message."
+msgid "Facebook Page access token cleared."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:792
+msgctxt "Facebook Page new fields are added message."
+msgid "Facebook Page fields added."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:830
+msgctxt "Facebook Page local id missing when trying to delete error message."
+msgid "The Facebook Page local id is missing and cannot be deleted."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:842
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No Facebook Page Found to Delete."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:854
+msgctxt "Message when a Facebook Page is deleted from the options table."
+msgid "Facebook Page Deleted."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:918
+msgctxt "The start of the message for smart url/autodetect when there is no Facebook App ID."
+msgid "No connected Facebook Pages found. You must"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:924
+msgctxt "The link text in message for smart url/autodetect when there is no Facebook App ID."
+msgid "connect a Facebook App"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Page_API.php:929
+msgctxt "The end of the message for smart url/autodetect when there is no Facebook App ID."
+msgid "to your site before you can add a Facebook video to an event."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:136
+msgid "Facebook App ID"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:137
+msgctxt "The Facebook App ID to use for Facebook Live."
+msgid "Enter your Facebook App ID."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:142
+msgid "Facebook App Secret"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:143
+msgctxt "The Facebook App secret key to use for Facebook Live."
+msgid "Enter your Facebook App Secret."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:165
+msgctxt "The label for the Facebook Video settings."
+msgid "Facebook Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:169
+msgctxt "The label to disable Facebook JS sdk."
+msgid "Disable Facebook JS SDK for Facebook Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:170
+msgctxt "The tooltip for the option to disable the Facebook JS SDK."
+msgid "Disable the Facebook JS SDK script for single events on the frontend. This may be necessary to prevent conflicts with other Facebook plugins or scripts."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:293
+msgctxt "Facebook App ID is missing error message."
+msgid "The Facebook App ID field is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:307
+msgctxt "Facebook App Secret is missing error message."
+msgid "The Facebook App Secret field is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:328
+msgctxt "The message after a Facebook app id and secret have been saved."
+msgid "The Facebook App was successfully saved."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Settings.php:341
+msgctxt "The message after a Facebook app id and secret did not save successfully."
+msgid "The Facebook App was not saved."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Template_Modifications.php:239
+msgctxt "Facebook offline message"
+msgid "The Live Stream is Offline."
+msgstr ""
+
+#. translators: the placeholder is for the error as returned from Facebook API.
+#: src/Tribe/Virtual/Meetings/Facebook/Video_API.php:287
+msgctxt "The prefix of a message reporting a Facebook API communication error, the placeholder is for the error."
+msgid "Error while trying to communicate with Facebook API: %1$s. Please try again in a minute."
+msgstr ""
+
+#. translators: the placeholders are, respectively, for the expected and actual response codes.
+#: src/Tribe/Virtual/Meetings/Facebook/Video_API.php:318
+msgctxt "The message reporting a Facebook API unexpected response code, placeholders are the codes."
+msgid "Facebook API response is not the expected one, expected %1$s, received %2$s. Please, try again in a minute."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Video_API.php:510
+msgctxt "Facebook video autodetect missing video url error message."
+msgid "No video found. Please enter a Facebook video URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Video_API.php:519
+msgctxt "Invalid Facebook video url for autodetect error message."
+msgid "This is not a valid Facebook video URL. Please recheck the URL and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook/Video_API.php:531
+msgctxt "Facebook video valid success message."
+msgid "Success! Save your event to add this video."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:249
+msgctxt "The name of the video source."
+msgid "Facebook Live"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:307
+msgctxt "The name of the autodetect source."
+msgid "Facebook Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:467
+msgctxt "The message to display if no local id is found when trying to authorize a facebook page."
+msgid "The local id for the Facebook is not set."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:482
+msgctxt "The message to display if no Facebook page wrap found."
+msgid "No Facebook Page data found."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:497
+msgctxt "The message to display if no connection is established to the Facebook sdk."
+msgid "The Facebook Page could not be connected to your site, please try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:512
+msgctxt "The message to display if a Facebook user could not obtain an extended access token."
+msgid "The attempt to get an extended Facebook user access token failed with error"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:527
+msgctxt "The message to display if a Facebook Page could not obtain an access token."
+msgid "Unable to capture the Facebook page’s access token. Please verify your Facebook app credentials. The attempt failed with error"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:542
+msgctxt "The message to display to confirm when deleting a Facebook Page."
+msgid "Are you sure you want to delete the Facebook Page? Deleting it will disconnect any upcoming virtual events using this Facebook Page."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Facebook_Provider.php:557
+msgctxt "The message to display to confirm clear Facebook Page's access token."
+msgid "Are you sure you want to clear the access token? Clearing it will disconnect any upcoming virtual events using this Facebook Page until you authorize the page again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Abstract_Meetings.php:149
+msgctxt "Google Host Email is missing error message."
+msgid "The Google Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Abstract_Meetings.php:159
+msgctxt "Account ID is missing error message."
+msgid "The Google Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Abstract_Meetings.php:168
+msgctxt "Google account loading error message."
+msgid "The Google Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Account_API.php:135
+msgctxt "The message shown to a user providing a wrong Google API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been refreshed from Google .
+#: src/Tribe/Virtual/Meetings/Google/Account_API.php:201
+msgctxt "The refresh message for a Google account."
+msgid "Google connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added from Google .
+#: src/Tribe/Virtual/Meetings/Google/Account_API.php:210
+msgctxt "The Google account added message."
+msgid "Google Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Api.php:411
+msgctxt "The start of the message for smart url/autodetect when there is no Google account found."
+msgid "No Google account found."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Api.php:417
+msgctxt "The link in of the message for smart url/autodetect when no Google account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:161
+msgctxt "Title of the details box shown for a generated Google Meet link in the backend."
+msgid "Google Meet:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:177
+msgctxt "Message for a manually connected Google Meet."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Google Meet."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:202
+msgctxt "The label used to designate the host of a Google Meet."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:208
+msgctxt "The label used to prefix a Google Meet in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:271
+msgctxt "The label used to designate the account of a Google Meet."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:277
+msgctxt "The label of the toggle to show the links to generate Google Meet."
+msgid "Generate Google Link"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:283
+msgctxt "The label used to designate the next step in generation of a Google Meet."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:289
+msgctxt "The label of the Google Meet host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:334
+msgctxt "Label for the control to generate a Google Meet link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:380
+msgctxt "Account ID is missing error message."
+msgid "The Google Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Classic_Editor.php:389
+msgctxt "Google account loading error message."
+msgid "The Google Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Meetings.php:69
+msgctxt "Google autodetect missing video url error message."
+msgid "No url found. Please enter a Google Meet URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Meetings.php:78
+msgctxt "No Google Event link found for autodetect error message."
+msgid "No Google Event link found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Meetings.php:87
+msgctxt "No Google Event ID found for autodetect error message."
+msgid "No Google Event ID found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Meetings.php:120
+msgctxt "No Google Meet found for autodetect error message."
+msgid "This Google Meet could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google/Meetings.php:139
+msgctxt "Google Meet connected success message."
+msgid "Google Meet successfully connected!"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google_Provider.php:123
+msgctxt "The name of the video source."
+msgid "Google Meet"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Google_Provider.php:146
+msgctxt "The name of the autodetect source."
+msgid "Google Meet"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Abstract_Meetings.php:127
+msgctxt "Microsoft Host Email is missing error message."
+msgid "The Microsoft Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Abstract_Meetings.php:137
+msgctxt "The no Microsoft meeting provider is selected error message."
+msgid "No Microsoft meeting provider selected, please choose an available meeting provider."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Abstract_Meetings.php:147
+msgctxt "Account ID is missing error message."
+msgid "The Microsoft Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Abstract_Meetings.php:156
+msgctxt "Microsoft account loading error message."
+msgid "The Microsoft Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:108
+msgctxt "The message shown to a user providing a wrong Microsoft API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Microsoft .
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:172
+msgctxt "The refresh message for a Microsoft account."
+msgid "Microsoft connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Microsoft .
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:181
+msgctxt "The Microsoft account added message."
+msgid "Microsoft Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:304
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Teams"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:307
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Teams is active when you have it enabled in your work or school account. (it is not available in personal accounts)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:316
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Skype (business)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:319
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Skype for business use is active when you have it enabled in your work or school account. (it is not available in personal accounts)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:328
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Skype (personal)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Account_API.php:331
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Skype for personal use is active when you have a paid Office 365 subscription."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Api.php:325
+msgctxt "The start of the message for smart url/autodetect when there is no Microsoft account found."
+msgid "No Microsoft account found."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Api.php:331
+msgctxt "The link in of the message for smart url/autodetect when no Microsoft account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:159
+msgctxt "Title of the details box shown for a generated Microsoft Meet link in the backend."
+msgid "Microsoft Meet:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:175
+msgctxt "Message for a manually connected Microsoft Meet."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Microsoft Meet."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:200
+msgctxt "The label used to designate the host of a Microsoft Meet."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:206
+msgctxt "The label used to prefix a Microsoft Meet in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:272
+msgctxt "The label used to designate the account of a Microsoft Meet."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:279
+msgctxt "The label of the toggle to show the links to generate Microsoft Meet."
+msgid "Generate Microsoft Link"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:285
+msgctxt "The label used to designate the next step in generation of a Microsoft Meet."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:291
+msgctxt "The label of the Microsoft Meet host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:379
+msgctxt "Account ID is missing error message."
+msgid "The Microsoft Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Classic_Editor.php:388
+msgctxt "Microsoft account loading error message."
+msgid "The Microsoft Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Meetings.php:69
+msgctxt "Microsoft autodetect missing video url error message."
+msgid "No url found. Please enter a Outlook Event URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Meetings.php:78
+msgctxt "No Microsoft Event link found for autodetect error message."
+msgid "No Microsoft Event link found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Meetings.php:109
+msgctxt "No Microsoft Meet found for autodetect error message."
+msgid "This Microsoft Meet could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft/Meetings.php:128
+msgctxt "Microsoft Meet connected success message."
+msgid "Microsoft Meet successfully connected!"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft_Provider.php:140
+msgctxt "The name of the video source."
+msgid "Microsoft (Teams and Skype)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Microsoft_Provider.php:163
+msgctxt "The name of the autodetect source."
+msgid "Microsoft (Teams and Skype)"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Abstract_Meetings.php:149
+msgctxt "Webex Host Email is missing error message."
+msgid "The Webex Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Abstract_Meetings.php:159
+msgctxt "Account ID is missing error message."
+msgid "The Webex Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Abstract_Meetings.php:168
+msgctxt "Webex account loading error message."
+msgid "The Webex Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Abstract_Meetings.php:176
+msgctxt "Webex all day error message."
+msgid "The Webex API does not support all day events, please set a start date and end date with time for both."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Abstract_Meetings.php:218
+msgctxt "Webex no duration error message."
+msgid "To create an event please set the event end time at least 10 minutes from the start time."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Account_API.php:144
+msgctxt "The message shown to a user providing a wrong Webex API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Webex .
+#: src/Tribe/Virtual/Meetings/Webex/Account_API.php:205
+msgctxt "The refresh message for a Webex account."
+msgid "Webex connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Webex .
+#: src/Tribe/Virtual/Meetings/Webex/Account_API.php:214
+msgctxt "The Webex account added message."
+msgid "Webex Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Api.php:334
+msgctxt "The start of the message for smart url/autodetect when there is no Webex account found."
+msgid "No Webex account found. "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Api.php:340
+msgctxt "The link in of the message for smart url/autodetect when no Webex account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:161
+msgctxt "Title of the details box shown for a generated Webex Meeting link in the backend."
+msgid "Webex Meeting:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:177
+msgctxt "Message for a manually connected Webex meeting or webinar."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Webex meeting."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:202
+msgctxt "The label used to designate the host of a Webex Meeting."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:208
+msgctxt "The label used to prefix a Webex Meeting in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:271
+msgctxt "The label used to designate the account of a Webex Meeting."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:277
+msgctxt "The label of the toggle to show the links to generate Webex Meeting."
+msgid "Generate Webex Link"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:283
+msgctxt "The label used to designate the next step in generation of a Webex Meeting."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:289
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:287
+msgctxt "The label of the meeting or webinar host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:335
+msgctxt "Label for the control to generate a Webex meeting link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:381
+msgctxt "Account ID is missing error message."
+msgid "The Webex Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Classic_Editor.php:390
+msgctxt "Webex account loading error message."
+msgid "The Webex Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#. translators: %1$s:  Webex meeting password.
+#: src/Tribe/Virtual/Meetings/Webex/Event_Export.php:155
+msgctxt "The label for the Webex Meeting password, followed by the password for an exported event."
+msgid "Webex Password: %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Meetings.php:69
+msgctxt "Webex autodetect missing video url error message."
+msgid "No url found. Please enter a Webex meeting URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Meetings.php:78
+msgctxt "No Webex Meeting web link  found for autodetect error message."
+msgid "No Webex Meeting web link found. Please check your web link URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Meetings.php:108
+msgctxt "No Webex meeting or webinar found for autodetect error message."
+msgid "This Webex meeting could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex/Meetings.php:127
+msgctxt "Webex meeting/webinar connected success message."
+msgid "Webex meeting successfully connected!"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex_Provider.php:316
+msgctxt "The name of the video source."
+msgid "Webex"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Webex_Provider.php:339
+msgctxt "The name of the autodetect source."
+msgid "Webex"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:159
+msgctxt "YouTube default setting"
+msgid "Autoplay Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:164
+msgctxt "YouTube default setting tooltip"
+msgid "Autoplay is being deprecated by most browsers and is prevented in Chrome and Safari, it maybe removed in all the browsers soon."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:175
+msgctxt "YouTube default setting"
+msgid "Include live chat"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:187
+msgctxt "YouTube default setting"
+msgid "Mute Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:192
+msgctxt "YouTube default setting tooltip"
+msgid "Best used with autoplay."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:203
+msgctxt "YouTube default setting"
+msgid "Modest Branding"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:208
+msgctxt "YouTube default setting tooltip"
+msgid "Hides the YouTube logo in the control bar."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:219
+msgctxt "YouTube default setting"
+msgid "Restrict Related Videos"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:224
+msgctxt "YouTube default setting tooltip"
+msgid "Restricts related videos to only come from your channel."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:235
+msgctxt "YouTube default setting"
+msgid "Hide Controls"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:240
+msgctxt "YouTube default setting tooltip"
+msgid "Hides the video control bar."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:295
+msgctxt "Settings help text for finding a YouTube channel id."
+msgid "Click here to find channel ID"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:304
+msgctxt "The field label for the default YouTube channel ID"
+msgid "Default YouTube Live Channel ID"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:305
+msgctxt "The field placeholder for the default YouTube channel ID"
+msgid "Enter your YouTube Live ID"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:345
+msgctxt "YouTube channel ID is missing on delete error message."
+msgid "The YouTube channel ID field is missing."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:354
+msgctxt "The message after a YouTube channel ID has been deleted from the Website."
+msgid "The YouTube channel ID was successfully deleted."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Settings.php:364
+msgctxt "The message to display if a YouTube channel ID could not be deleted."
+msgid "The YouTube channel ID could not be deleted."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Template_Modifications.php:123
+msgctxt "The default settings for YouTube Integration."
+msgid "Default Settings"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube/Template_Modifications.php:219
+msgctxt "YouTube offline message"
+msgid "The Live Stream is Offline."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube_Provider.php:149
+msgctxt "The name of the video source."
+msgid "YouTube Live"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/YouTube_Provider.php:290
+msgctxt "The message to display to confirm a user would like to delete a YouTube channel ID."
+msgid "Are you sure you want to delete your default YouTube channel ID?"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Abstract_Meetings.php:192
+msgctxt "Host ID is missing error message."
+msgid "The Zoom Host ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Abstract_Meetings.php:204
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:562
+msgctxt "Account ID is missing error message."
+msgid "The Zoom Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Abstract_Meetings.php:215
+msgctxt "Zoom account loading error message."
+msgid "The Zoom Account could not be loaded to access to API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Account_API.php:115
+#: src/Tribe/Virtual/Meetings/Zoom/OAuth.php:101
+msgctxt "The message shown to a user providing a wrong Zoom API OAuth authorization nonce."
+msgid "You are not authorized to do this"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Account_API.php:311
+msgctxt "The refresh message if the account exists."
+msgid "Zoom connection refreshed for %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Account_API.php:312
+msgctxt "The refresh message if the account exists."
+msgid "Zoom Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:411
+msgctxt "Zoom autodetect missing video url error message."
+msgid "No url found. Please enter a Zoom meeting URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:420
+msgctxt "No Zoom meeting/webinar ID found for autodetect error message."
+msgid "No Zoom ID found. Please check your meeting URL."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:454
+msgctxt "No Zoom meeting or webinar found for autodetect error message."
+msgid "This Zoom meeting could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:472
+msgctxt "Zoom meeting/webinar connected success message."
+msgid "Zoom meeting successfully connected!"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:488
+msgctxt "The start of the message for smart url/autodetect when there is no Zoom account found."
+msgid "No Zoom account found. Please check"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Api.php:494
+msgctxt "The link in of the message for smart url/autodetect when no Zoom account is found."
+msgid "check your account connection."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:172
+msgctxt "The label for the admin UI control that allows removing the Zoom Meeting or Webinar link from the event."
+msgid "Remove Zoom link"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:264
+msgctxt "The lowercase \"or\" label used to offer the creation of a Zoom Meetings or Webinars API link."
+msgid "or"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:269
+msgctxt "The label used to designate the account of a Zoom Meeting or Webinar."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:275
+msgctxt "The label of the toggle to show the links to generate Zoom Meetings or Webinars."
+msgid "Generate Zoom Link"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:281
+msgctxt "The label used to designate the next step in generation of a Zoom Meeting or Webinar."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:334
+msgctxt "Label for the control to generate a Zoom meeting link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:339
+msgctxt "Label for the control to generate a Zoom webinar link in the event classic editor UI."
+msgid "Webinar"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:356
+msgctxt "Explains why the webinar field is disabled when creating a meeting/webinar for an event."
+msgid "Webinars are not enabled for this host. Webinar support is enabled by the account plan in Zoom."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:430
+msgctxt "Title of the details box shown for a generated Zoom Webinar link in the backend."
+msgid "Zoom Webinar:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:435
+msgctxt "Title of the details box shown for a generated Zoom Meeting link in the backend."
+msgid "Zoom Meeting:"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:469
+msgctxt "Message for a manually connected Zoom meeting or webinar."
+msgid "This webinar is manually connected to the event and changes to the event will not alter the Zoom webinar."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:474
+msgctxt "Message for a manually connected Zoom meeting or webinar."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Zoom meeting."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:500
+msgctxt "The label used to designate the host of a Zoom Meeting or Webinar."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:506
+msgctxt "The label used to prefix a Zoom Meeting or Webinar ID in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:516
+msgctxt "The label of the alternative host multiselect"
+msgid "Alternative Hosts"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:526
+msgctxt "The placeholder for the multiselect to select alternative hosts."
+msgid "Add Alternative hosts"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Classic_Editor.php:571
+msgctxt "Zoom account loading error message."
+msgid "The Zoom Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Migration_Notice.php:69
+msgctxt "The migration notice to authorize the new Zoom App."
+msgid "Thank you for updating to the latest version of Virtual Events. You will need to <a href=\"%1$s\">reconnect your Zoom account</a> for the plugin to work as intended."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Users.php:145
+msgctxt "The event is missing error message for Zoom user validation."
+msgid "User validation failed because no event was found."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Users.php:157
+msgctxt "Host ID is missing error message for Zoom user validation."
+msgid "The Zoom Host ID is missing to access the API, please select a host from the dropdown and try again."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Users.php:169
+msgctxt "Account ID is missing error message for Zoom user validation."
+msgid "The Zoom Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Users.php:181
+msgctxt "Zoom account loading error message for Zoom user validation."
+msgid "The Zoom Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom/Users.php:193
+msgctxt "Zoom API loading error message for Zoom user validation."
+msgid "The Zoom API did not return the user settings. Please try refreshing the account in the Events Integration Settings."
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom_Provider.php:485
+msgctxt "The name of the video source."
+msgid "Zoom"
+msgstr ""
+
+#: src/Tribe/Virtual/Meetings/Zoom_Provider.php:561
+msgctxt "The name of the autodetect source."
+msgid "Zoom"
+msgstr ""
+
+#: src/Tribe/Virtual/Metabox.php:83
+msgctxt "Meta box title for the Virtual Event controls"
+msgid "Virtual Event"
+msgstr ""
+
+#. Translators: %1$s: opening anchor tag, %2$s: closing anchor tag
+#: src/Tribe/Virtual/OEmbed.php:164
+msgctxt "Tells user that URL cannot be embedded, and links to the WordPress oEmbed page for a list of embeddable sites."
+msgid "This video cannot be embedded because the source is not supported by %1$sWordPress oEmbed%2$s."
+msgstr ""
+
+#: src/Tribe/Virtual/OEmbed.php:193
+msgctxt "Tells user the URL is embedded and to save to use that url."
+msgid "Success! Save your event to add this video."
+msgstr ""
+
+#. Translators: %1$s: opening anchor tag, %2$s: closing anchor tag
+#: src/Tribe/Virtual/OEmbed.php:222
+msgctxt "Tells user the URL is used in the linked button and that it cannot be embedded, and links to the WordPress oEmbed page for a list of embeddable sites."
+msgid "This video cannot be embedded because the source is not supported by %1$sWordPress oEmbed%2$s. You can link to the video source with a button instead."
+msgstr ""
+
+#: src/Tribe/Virtual/OEmbed.php:338
+msgctxt "The label for the autodetect video source input."
+msgid "Video"
+msgstr ""
+
+#: src/Tribe/Virtual/Traits/With_AJAX.php:43
+msgctxt "Ajax error message."
+msgid "The provided nonce is not valid."
+msgstr ""
+
+#: src/Tribe/Virtual/Traits/With_AJAX.php:71
+msgctxt "An error raised in the context of the Zoom API integration."
+msgid "The post ID is missing from the request."
+msgstr ""
+
+#: src/views/compatibility/event-tickets/email/ticket-email-link.php:30
+msgid "Join"
+msgstr ""
+
 #: src/views/custom-tables-v1/components/icons/series.php:25
 #: src/views/custom-tables-v1/components/series-relationship-icon-link-pill.php:41
 #: src/views/custom-tables-v1/components/series-relationship-icon-link.php:41
@@ -5666,8 +7678,46 @@ msgstr ""
 msgid "Condense %1$s Series"
 msgstr ""
 
+#: src/views/google/email/details/dial-in-header.php:18
+msgid "Join Google Meet Call"
+msgstr ""
+
+#. translators: %1$s: Google Meet ID.
+#: src/views/google/email/details/join-content.php:43
+#: src/views/google/single/google-details.php:72
+msgctxt "The label for the Google Meet ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/google/email/details/join-header.php:18
+msgid "Join Google Video"
+msgstr ""
+
 #: src/views/integrations/elementor/widgets/event-related/item/thumb.php:30
 msgid "placeholder image"
+msgstr ""
+
+#: src/views/integrations/event-tickets-wallet-plus/pdf/pass/body/virtual-event/link/header.php:28
+#: src/views/integrations/event-tickets/emails/template-parts/body/virtual-event/link.php:38
+msgctxt "Link to Virtual Event on the Ticket Email"
+msgid "Virtual Event"
+msgstr ""
+
+#. translators: %1$s: Microsoft Meet ID.
+#: src/views/microsoft/email/details/join-content.php:43
+#: src/views/microsoft/single/microsoft-details.php:72
+msgctxt "The label for the Microsoft Meet ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/microsoft/email/details/join-header.php:17
+msgctxt "The header for Microsoft Skype link in a ticket email."
+msgid "Join Skype Video"
+msgstr ""
+
+#: src/views/microsoft/email/details/join-header.php:19
+msgctxt "The header for Microsoft Teams link in a ticket email."
+msgid "Join Teams Video"
 msgstr ""
 
 #: src/views/pro/related-events.php:27
@@ -6036,6 +8086,60 @@ msgctxt "Recurring label for event in featured venue widget."
 msgid "Recurring"
 msgstr ""
 
+#. translators: %1$s: Webex meeting ID.
+#: src/views/webex/email/details/join-content.php:45
+#: src/views/webex/single/webex-details.php:72
+msgctxt "The label for the Webex Meeting ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/webex/email/details/join-header.php:20
+msgid "Join Webex"
+msgstr ""
+
+#. translators: %1$s: Webex meeting password.
+#: src/views/webex/email/details/password-content.php:28
+msgctxt "The Webex Meeting password, prefixed by password label."
+msgid "Password: %1$s"
+msgstr ""
+
+#: src/views/webex/email/details/password-header.php:20
+msgid "Webex Password"
+msgstr ""
+
+#. translators: %1$s:  Webex meeting password.
+#: src/views/webex/single/webex-details.php:105
+msgctxt "The label for the Webex Meeting password, followed by the password."
+msgid "Password: %1$s"
+msgstr ""
+
+#: src/views/zoom/email/details/dial-in-header.php:18
+msgid "Join Zoom Call"
+msgstr ""
+
+#. translators: %1$s: Zoom meeting ID.
+#: src/views/zoom/email/details/join-content.php:44
+#: src/views/zoom/zoom-details.php:71
+msgctxt "The label for the Zoom Meeting ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/zoom/email/details/join-header.php:18
+msgid "Join Zoom Video"
+msgstr ""
+
+#. translators: %1$s: ID label, %2$s: Zoom meeting ID.
+#: src/views/zoom/single/zoom-details.php:72
+msgctxt "The label for the Zoom Meeting ID, prefixed by ID label."
+msgid "%1$s: %2$s"
+msgstr ""
+
+#. translators: %1$s: country, %2$s: Zoom meeting phone number.
+#: src/views/zoom/single/zoom-details.php:112
+msgctxt "The country and phone number for Zoom meeting."
+msgid "(%1$s) %2$s"
+msgstr ""
+
 #: src/modules/blocks/additional-fields/checkbox/settings/template.js:28
 msgid "Custom Dividers"
 msgstr ""
@@ -6086,6 +8190,27 @@ msgstr ""
 
 #: src/modules/blocks/related-events/template.js:148
 msgid "Display Images"
+msgstr ""
+
+#: src/modules/blocks/single-venue/index.js:26
+#: src/modules/blocks/single-venue/index.js:30
+msgid "Single Venue"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/index.js:22
+msgid "Virtual Event"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/index.js:23
+msgid "Displays the virtual event block."
+msgstr ""
+
+#: src/modules/blocks/virtual-event/template.js:19
+msgid "Virtual Event Details"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/template.js:22
+msgid "Configure Virtual Event details using the section at the bottom of this page"
 msgstr ""
 
 #: src/modules/custom-tables-v1/blocks/recurrence/hooks.js:26

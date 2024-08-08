@@ -1,5 +1,6 @@
 <?php
 
+use Tribe\Events\Pro\Integrations\Event_Automator\Service_Provider as Event_Automator;
 use Tribe\Events\Pro\Integrations\Elementor\Service_Provider as Elementor_Integration;
 use Tribe\Events\Pro\Integrations\Fusion\Service_Provider as Fusion_Integration;
 use Tribe__Events__Pro__Integrations__Beaver_Builder__Page_Builder as BB_Page_Builder;
@@ -114,6 +115,7 @@ class Tribe__Events__Pro__Integrations__Manager {
 		$this->load_site_origin_integration();
 		$this->load_beaver_builder_integration();
 		$this->load_elementor_integration();
+		$this->load_event_automator();
 		$this->load_fusion_integration();
 		$this->load_brizy_builder_integration();
 	}
@@ -138,6 +140,21 @@ class Tribe__Events__Pro__Integrations__Manager {
 				}
 			);
 		}
+	}
+
+	/**
+	 * Loads the Event Automator integration.
+	 *
+	 * @since 7.0.0 Migrated to ECP from Event Automator
+	 */
+	public function load_event_automator() {
+		if ( ! defined( 'TRIBE_EVENTS_FILE' ) ) {
+			do_action( 'tribe_log', 'error', __CLASS__, [ 'error' => 'The Events Calendar plugin does not exist.' ] );
+
+			return;
+		}
+
+		tribe_register_provider( Event_Automator::class );
 	}
 
 	/**

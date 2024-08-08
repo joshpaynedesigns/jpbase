@@ -61,7 +61,7 @@ class Zapier_Provider extends Provider_Contract {
 	 * @since 6.0.11
 	 */
 	protected function add_filters() {
-		add_filter( 'tec_automator_map_event_details', [ $this, 'add_additional_fields' ], 10, 2 );
+		add_filter( 'tec_automator_map_event_details', [ $this, 'add_additional_fields' ], 10, 3 );
 	}
 
 	/**

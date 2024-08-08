@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../LocalSites/bsrdev/app/public"
+		}
+	],
+	"settings": {}
+}

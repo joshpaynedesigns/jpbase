@@ -82,7 +82,7 @@ class Provider extends Service_Provider {
 			] );
 		}
 
-		add_filter( 'tribe_events_community_allowed_event_fields', [ $this, 'register_events_to_series_request_key' ] );
+		add_filter( 'tec_events_community_allowed_fields', [ $this, 'register_events_to_series_request_key' ] );
 		add_filter( 'tribe_tickets_settings_post_types', [ $this, 'filter_remove_series_post_type' ] );
 		add_action( 'init', [ $this, 'remove_series_from_ticketable_post_types' ] );
 
