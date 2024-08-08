@@ -8,7 +8,7 @@
 class Tribe__Events__Pro__iCal {
 
 	/**
-	 * Attach hooks
+	 * Attach hooks.
 	 *
 	 * @since 4.7.5
 	 */

@@ -118,7 +118,7 @@ class RRule implements RRuleInterface
 		'YEARLY' => self::YEARLY
 	);
 
-	/** 
+	/**
 	 * Weekdays numbered from 1 (ISO-8601 or `date('N')`).
 	 * Used internally but public if a reference list is needed.
 	 *
@@ -274,7 +274,7 @@ class RRule implements RRuleInterface
 					'Failed to parse DTSTART ; it must be a valid date, timestamp or \DateTime object'
 				);
 			}
-		} 
+		}
 		else {
 			$this->dtstart = new \DateTime(); // for PHP 7.1+ this contains microseconds which causes many problems
 			if ( version_compare(PHP_VERSION, '7.1.0') >= 0 ) {
@@ -482,7 +482,7 @@ class RRule implements RRuleInterface
 
 			sort($this->byhour);
 		}
-		elseif ( $this->freq < self::HOURLY ) { 
+		elseif ( $this->freq < self::HOURLY ) {
 			$this->byhour = array((int) $this->dtstart->format('G'));
 		}
 
@@ -989,7 +989,7 @@ class RRule implements RRuleInterface
 		}
 
 		// we ended the loop without finding
-		return false; 
+		return false;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1005,7 +1005,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->current = $this->iterate(true);
 		$this->key = 0;
@@ -1030,7 +1030,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function next()
+	public function next(): void
 	{
 		$this->current = $this->iterate();
 		$this->key += 1;
@@ -1039,7 +1039,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->current !== null;
 	}
@@ -1050,7 +1050,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return is_numeric($offset) && $offset >= 0 && ! is_float($offset) && $offset < count($this);
 	}
@@ -1090,7 +1090,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		throw new \LogicException('Setting a Date in a RRule is not supported');
 	}
@@ -1098,7 +1098,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		throw new \LogicException('Unsetting a Date in a RRule is not supported');
 	}
@@ -1113,7 +1113,7 @@ class RRule implements RRuleInterface
 	 *
 	 * @return int
 	 */
-	public function count()
+	public function count(): int
 	{
 		if ( $this->isInfinite() ) {
 			throw new \LogicException('Cannot count an infinite recurrence rule.');
@@ -1408,7 +1408,7 @@ class RRule implements RRuleInterface
 	 * - for HOURLY frequencies it builds the minutes and second of the given hour
 	 * - for MINUTELY frequencies it builds the seconds of the given minute
 	 * - for SECONDLY frequencies, it returns an array with one element
-	 * 
+	 *
 	 * This method is called everytime an increment of at least one hour is made.
 	 *
 	 * @param int $hour
@@ -1489,7 +1489,7 @@ class RRule implements RRuleInterface
 	 * This method is a generator that works for PHP 5.3/5.4 (using static variables)
 	 *
 	 * The main idea is: a brute force made fast by not relying on date() functions
-	 * 
+	 *
 	 * There is one big loop that examines every interval of the given frequency
 	 * (so every day, every week, every month or every year), constructs an
 	 * array of all the yeardays of the interval (for daily frequencies, the array
@@ -1513,7 +1513,7 @@ class RRule implements RRuleInterface
 	 * convoluted.
 	 * Moreover, at such frequencies, the brute-force approach starts to really
 	 * suck. For example, a rule like
-	 * "Every minute, every Jan 1st between 10:00 and 10:59, for 10 years" 
+	 * "Every minute, every Jan 1st between 10:00 and 10:59, for 10 years"
 	 * requires a tremendous amount of useless iterations to jump from Jan 1st 10:59
 	 * at year 1 to Jan 1st 10.00 at year 2.
 	 *
@@ -1704,7 +1704,7 @@ class RRule implements RRuleInterface
 							}
 						}
 						else { // if ( ($yearday >= $masks['year_len']
-							if ( ! in_array($yearday + 1 - $masks['year_len'], $this->byyearday) && ! in_array(- $masks['next_year_len'] + $yearday - $mask['year_len'], $this->byyearday) ) {
+							if ( ! in_array($yearday + 1 - $masks['year_len'], $this->byyearday) && ! in_array(- $masks['next_year_len'] + $yearday - $masks['year_len'], $this->byyearday) ) {
 								continue;
 							}
 						}
@@ -1942,7 +1942,7 @@ class RRule implements RRuleInterface
 							}
 						}
 						if ( ( ! $this->byhour || in_array($hour, $this->byhour) )
-							&& ( ! $this->byminute || in_array($minute, $this->byminute) ) 
+							&& ( ! $this->byminute || in_array($minute, $this->byminute) )
 							&& ( ! $this->bysecond || in_array($second, $this->bysecond) ) ) {
 							$found = true;
 							break;
@@ -1972,7 +1972,7 @@ class RRule implements RRuleInterface
 // constants
 // Every mask is 7 days longer to handle cross-year weekly periods.
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $MONTH_MASK = array(
@@ -1991,7 +1991,7 @@ class RRule implements RRuleInterface
 		1,1,1,1,1,1,1
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $MONTH_MASK_366 = array(
@@ -2010,7 +2010,7 @@ class RRule implements RRuleInterface
 		1,1,1,1,1,1,1
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $MONTHDAY_MASK = array(
@@ -2029,7 +2029,7 @@ class RRule implements RRuleInterface
 		1,2,3,4,5,6,7
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $MONTHDAY_MASK_366 = array(
@@ -2048,7 +2048,7 @@ class RRule implements RRuleInterface
 		1,2,3,4,5,6,7
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $NEGATIVE_MONTHDAY_MASK = array(
@@ -2067,7 +2067,7 @@ class RRule implements RRuleInterface
 		-31,-30,-29,-28,-27,-26,-25
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $NEGATIVE_MONTHDAY_MASK_366 = array(
@@ -2086,7 +2086,7 @@ class RRule implements RRuleInterface
 		-31,-30,-29,-28,-27,-26,-25
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $WEEKDAY_MASK = array(
@@ -2103,14 +2103,14 @@ class RRule implements RRuleInterface
 		1,2,3,4,5,6,7,1,2,3,4,5,6,7,1,2,3,4,5,6,7,1,2,3,4,5,6,7,1,2,3,4,5,6,7
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $LAST_DAY_OF_MONTH_366 = array(
 		0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366
 	);
 
-	/** 
+	/**
 	 * @var array
 	 */
 	protected static $LAST_DAY_OF_MONTH = array(
@@ -2120,7 +2120,7 @@ class RRule implements RRuleInterface
 	/**
 	 * @var array
 	 * Maximum number of cycles after which a calendar repeats itself. This
-	 * is used to detect infinite loop: if no occurrence has been found 
+	 * is used to detect infinite loop: if no occurrence has been found
 	 * after this numbers of cycles, we can abort.
 	 *
 	 * The Gregorian calendar cycle repeat completely every 400 years
@@ -2160,7 +2160,7 @@ class RRule implements RRuleInterface
 	 */
 	static protected $intl_loaded = null;
 
-	/** 
+	/**
 	 * Select a translation in $array based on the value of $n
 	 *
 	 * Used for selecting plural forms.
@@ -2212,7 +2212,7 @@ class RRule implements RRuleInterface
 		}
 	}
 
-	/** 
+	/**
 	 * Test if intl extension is loaded
 	 * @return bool
 	 */
@@ -2235,7 +2235,7 @@ class RRule implements RRuleInterface
 			$use_intl = self::intlLoaded();
 		}
 		$files = array();
-		
+
 		if ( $use_intl ) {
 			$parsed = \Locale::parseLocale($locale);
 			$files[] = $parsed['language'];

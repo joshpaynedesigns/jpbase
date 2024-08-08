@@ -239,9 +239,10 @@ class Events extends TEC_Events {
 			INNER JOIN `{$occurrence_table}`
 				ON `{$series_events_table}`.event_id = `{$occurrence_table}`.event_id
 			WHERE `{$wpdb->posts}`.post_status != 'trash'
-			 	AND `{$series_events_table}`.`series_post_id` = {$post_id}";
+			 	AND `{$series_events_table}`.`series_post_id` = %d";
 
-		return (int) $wpdb->get_var( $wpdb->prepare( $query ) );
+		// phpcs:ignore
+		return (int) $wpdb->get_var( $wpdb->prepare( $query, $post_id ) );
 	}
 
 	/**

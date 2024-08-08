@@ -841,6 +841,10 @@ class Week_View extends By_Day_View {
 	public function get_next_event_date( $current_date = null ) {
 		$args = $this->filter_repository_args( parent::setup_repository_args( $this->context ) );
 
+		if ( isset( $args['past'] ) && tribe_is_truthy( $args['past'] ) ) {
+			return false;
+		}
+
 		// When dealing with previous event date we only fetch one.
 		$args['posts_per_page'] = 1;
 

@@ -456,7 +456,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->current = $this->iterate(true);
 		$this->key = 0;
@@ -481,7 +481,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function next()
+	public function next(): void
 	{
 		$this->current = $this->iterate();
 		$this->key += 1;
@@ -490,7 +490,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->current !== null;
 	}
@@ -501,7 +501,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return is_numeric($offset) && $offset >= 0 && ! is_float($offset) && $offset < count($this);
 	}
@@ -541,7 +541,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		throw new \LogicException('Setting a Date in a RSet is not supported (use addDate)');
 	}
@@ -549,7 +549,7 @@ class RSet implements RRuleInterface
 	/**
 	 * @internal
 	 */
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		throw new \LogicException('Unsetting a Date in a RSet is not supported (use addDate)');
 	}
@@ -560,10 +560,10 @@ class RSet implements RRuleInterface
 	/**
 	 * Returns the number of recurrences in this set. It will have go
 	 * through the whole recurrence, if this hasn't been done before, which
-	 * introduces a performance penality.
+	 * introduces a performance penalty.
 	 * @return int
 	 */
-	public function count()
+	public function count(): int
 	{
 		if ( $this->isInfinite() ) {
 			throw new \LogicException('Cannot count an infinite recurrence set.');

@@ -4,6 +4,8 @@
 
 .facetwp-facet.is-loading {
     opacity: 0.6;
+    /** prevent clicks during refresh **/
+    pointer-events: none;
 }
 
 .facetwp-overlay {

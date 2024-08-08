@@ -85,6 +85,11 @@ class FacetWP_Integration_ACF
             // get values (for sub-fields, use the parent repeater)
             $value = get_field( $hierarchy[0], $object_id, false );
 
+            // prevent null values from being run through format_date()
+            if ( $value === null ) {
+                return true; // skip
+            }
+
             // handle repeater values
             if ( 1 < count( $hierarchy ) ) {
 

@@ -832,11 +832,12 @@ class RSet_Wrapper extends RSet {
 	 *
 	 * @param int $offset The offset to return the Occurrence for.
 	 *
-	 * @return DateTime|Occurrence|null The Occurrence at the specified offset.
+	 * @return mixed DateTime|Occurrence|null The Occurrence at the specified offset.
 	 *
 	 * @throws Exception If there's any issue building the Date objects required.
 	 */
-	public function offsetGet( $offset ): ?DateTime {
+	#[\ReturnTypeWillChange]
+	public function offsetGet( $offset ) {
 		return $this->build_return_occurrence( parent::offsetGet( $offset ) );
 	}
 
