@@ -25,14 +25,15 @@ select {
 }
 
 input,
-select[multiple] {
+textarea,
+select {
   background-color: $base-background-color;
   border: $base-border;
   box-shadow: $form-box-shadow;
   box-sizing: border-box;
   font-family: $base-font-family;
   font-size: $base-font-size;
-  margin-bottom: $small-spacing;
+  margin-bottom: 1rem;
   padding: calc($base-spacing / 3);
   transition: border-color $base-duration $base-timing;
   width: 100%;
@@ -82,6 +83,8 @@ select {
   width: auto;
 }
 
+
+// ActiveCampaign
 ._form {
   select {
     width: 100%;
@@ -92,6 +95,7 @@ select {
   }
 }
 
+//Gravity Forms
 .site-inner .gform_wrapper {
   margin: 0;
 
