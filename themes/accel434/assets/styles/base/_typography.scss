@@ -7,6 +7,18 @@ html {
   }
 }
 
+html {
+  box-sizing: border-box;
+}
+
+* {
+  &,
+  &::after,
+  &::before {
+    box-sizing: inherit;
+  }
+}
+
 :target {
   scroll-margin-top: 2rem;
 }
