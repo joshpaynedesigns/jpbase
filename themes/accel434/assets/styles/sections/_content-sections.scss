@@ -48,7 +48,7 @@
     &.twenty-five {
       > div {
         @media ($large-screen-up) {
-          width: calc(25% - 1.51rem);
+          width: calc(25% - 1.5rem);
         }
       }
     }
