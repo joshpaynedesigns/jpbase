@@ -17,7 +17,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_623235b8aca5c",
@@ -158,7 +159,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_5733f3b421ace",
@@ -407,7 +409,8 @@
                 "id": ""
             },
             "placement": "left",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_58482d425cbf8",
@@ -439,7 +442,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for blog singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -454,12 +457,10 @@
                 "large": "Large",
                 "full-screen": "Full Screen"
             },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
             "default_value": "medium",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_5ac50c07baed2",
@@ -476,7 +477,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_5ac50c20baed3",
@@ -508,7 +510,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_blog",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for blog singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -523,12 +525,10 @@
                 "large": "Large",
                 "full-screen": "Full Screen"
             },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
             "default_value": "medium",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_5ac50ca3baed5",
@@ -585,7 +585,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_5abd4c48f68cf",
@@ -617,7 +618,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_staff",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for staff singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -632,12 +633,10 @@
                 "large": "Large",
                 "full-screen": "Full Screen"
             },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
             "default_value": "medium",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_5abd4c80f68d1",
@@ -714,7 +713,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_5bc9e48069a89",
@@ -746,7 +746,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_locations",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -761,12 +761,10 @@
                 "large": "Large",
                 "full-screen": "Full Screen"
             },
-            "allow_null": 0,
-            "other_choice": 0,
             "default_value": "medium",
-            "layout": "horizontal",
             "return_format": "value",
-            "save_other_choice": 0
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_5bc9e49d69a8b",
@@ -844,7 +842,8 @@
             },
             "relevanssi_exclude": 0,
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_640240dc0ba5c",
@@ -877,7 +876,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_testimonials",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -886,7 +885,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "small": "Small",
                 "medium": "Medium",
@@ -896,9 +894,7 @@
             "default_value": "medium",
             "return_format": "value",
             "allow_null": 0,
-            "other_choice": 0,
-            "layout": "horizontal",
-            "save_other_choice": 0
+            "layout": "horizontal"
         },
         {
             "key": "field_640240da0ba5a",
@@ -978,7 +974,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_643d998ba750b",
@@ -1010,7 +1007,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_events",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -1028,9 +1025,7 @@
             "default_value": "medium",
             "return_format": "value",
             "allow_null": 0,
-            "other_choice": 0,
-            "layout": "horizontal",
-            "save_other_choice": 0
+            "layout": "horizontal"
         },
         {
             "key": "field_646d0d05ba870",
@@ -1087,7 +1082,8 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_647f6b5bf31c7",
@@ -1119,7 +1115,7 @@
             "label": "Default Banner Height",
             "name": "default_banner_height_projects",
             "aria-label": "",
-            "type": "radio",
+            "type": "button_group",
             "instructions": "Select the banner height for singles and the archives.",
             "required": 0,
             "conditional_logic": 0,
@@ -1137,9 +1133,7 @@
             "default_value": "medium",
             "return_format": "value",
             "allow_null": 0,
-            "other_choice": 0,
-            "layout": "horizontal",
-            "save_other_choice": 0
+            "layout": "horizontal"
         },
         {
             "key": "field_647f6b84f31ca",
@@ -1220,5 +1214,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1709851129
+    "modified": 1723136918
 }
