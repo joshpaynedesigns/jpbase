@@ -94,7 +94,7 @@ class FacetWP_Init
      * Register the FacetWP settings page
      */
     function admin_menu() {
-        add_options_page( 'FacetWP', 'FacetWP', 'manage_options', 'facetwp', [ $this, 'settings_page' ] );
+        add_options_page( 'FacetWP', 'FacetWP', apply_filters( 'facetwp_admin_settings_capability', 'manage_options' ), 'facetwp', [ $this, 'settings_page' ] );
     }
 
 

@@ -12,9 +12,11 @@
  * @since 5.0.0
  * @since 5.1.1 Moved icons out to separate templates.
  * @since 5.9.1
+ * @since TBD Now allows for hiding the event end time with $show_end_time.
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  * @var obj     $date_formats Object containing the date formats.
+ * @var bool    $show_end_time Flag to disable end time from displaying.
  *
  * @see tribe_get_event() For the format of the event object.
  *
@@ -22,7 +24,9 @@
  */
 
 $time_format = tribe_get_time_format();
-$display_end_date = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' );
+$show_end_time ??= true;
+$display_end_date = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' )
+					&& $show_end_time;
 ?>
 <div class="tribe-events-pro-photo__event-datetime tribe-common-b2">
 	<?php $this->template( 'photo/event/date-time/featured' ); ?>

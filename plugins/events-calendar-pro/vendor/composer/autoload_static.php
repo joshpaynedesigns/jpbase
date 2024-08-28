@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3ba91f80769cafecc923d9d421244ba2
+class ComposerStaticInita24d29fe98fa92b36701f9701b18dba7
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -249,6 +249,7 @@ class ComposerStaticInit3ba91f80769cafecc923d9d421244ba2
         'TEC\\Events_Pro\\Site_Health\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Site_Health/Provider.php',
         'TEC\\Events_Pro\\Telemetry\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Telemetry/Provider.php',
         'TEC\\Events_Pro\\Telemetry\\Telemetry' => __DIR__ . '/../..' . '/src/Events_Pro/Telemetry/Telemetry.php',
+        'TEC\\Events_Pro\\Views\\Hide_End_Time_Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Views/Hide_End_Time_Provider.php',
         'TEC\\Events_Virtual\\Compatibility\\Event_Automator\\Zapier\\Maps\\Event' => __DIR__ . '/../..' . '/src/Events_Virtual/Compatibility/Event_Automator/Zapier/Maps/Event.php',
         'TEC\\Events_Virtual\\Compatibility\\Event_Automator\\Zapier\\Zapier_Provider' => __DIR__ . '/../..' . '/src/Events_Virtual/Compatibility/Event_Automator/Zapier/Zapier_Provider.php',
         'TEC\\Events_Virtual\\Custom_Tables\\V1\\Provider' => __DIR__ . '/../..' . '/src/Events_Virtual/Custom_Tables/V1/Provider.php',
@@ -285,6 +286,7 @@ class ComposerStaticInit3ba91f80769cafecc923d9d421244ba2
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Event_Single_Legacy_Replacement' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Event_Single_Legacy_Replacement.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets\\Widget_Events_View' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets/Widget_Events_View.php',
         'Tribe\\Events\\Pro\\Integrations\\Elementor\\Widgets_Manager' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Elementor/Widgets_Manager.php',
+        'Tribe\\Events\\Pro\\Integrations\\Event_Automator\\Power_Automate_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Event_Automator/Power_Automate_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Event_Automator\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Event_Automator/Service_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Event_Automator\\Zapier_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Event_Automator/Zapier_Provider.php',
         'Tribe\\Events\\Pro\\Integrations\\Fusion\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Integrations/Fusion/Service_Provider.php',
@@ -510,9 +512,9 @@ class ComposerStaticInit3ba91f80769cafecc923d9d421244ba2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3ba91f80769cafecc923d9d421244ba2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3ba91f80769cafecc923d9d421244ba2::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit3ba91f80769cafecc923d9d421244ba2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita24d29fe98fa92b36701f9701b18dba7::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita24d29fe98fa92b36701f9701b18dba7::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita24d29fe98fa92b36701f9701b18dba7::$classMap;
 
         }, null, ClassLoader::class);
     }

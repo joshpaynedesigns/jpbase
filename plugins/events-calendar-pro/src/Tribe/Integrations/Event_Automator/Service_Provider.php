@@ -37,6 +37,7 @@ class Service_Provider extends Plugin_Merge_Provider_Abstract {
 		tribe_register_provider( \TEC\Event_Automator\Plugin::class );
 
 		// Register ECP specific services.
+		$this->container->register( Power_Automate_Provider::class );
 		$this->container->register( Zapier_Provider::class );
 	}
 

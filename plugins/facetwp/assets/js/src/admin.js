@@ -1372,11 +1372,21 @@
         Vue.component('facet-edit', {
             data() {
                 return {
-                    facet: {}
+                    facet: {},
+                    codeEditors: {
+                        marker_content: null
+                    }
                 }
             },
             created() {
                 this.facet = this.$root.editing;
+            },
+            mounted() {
+                if ('map' === this.facet.type) {
+
+                    // Init template code editor
+                    this.initCodeMirror('marker-content-editor', 'marker_content', false);
+                }
             },
             methods: {
                 setName(e) {
@@ -1384,6 +1394,42 @@
                 },
                 unlock() {
                     Vue.delete(this.facet, '_code');
+                },
+                initCodeMirror(textareaId, type, reset) {
+                    try {
+                        let textarea = document.getElementById(textareaId);
+
+                        // Reset editor and start over when switching facet type and back to Map
+                        // Same behavior as other facet settings when switching facet type
+                        if (reset) {
+                            this.codeEditors[type] = null;
+                        }
+                        let editor = wp.codeEditor.initialize(jQuery(textarea), fwp_editor_settings);
+
+                        // Update when editor content changed
+                        this.updateCodeMirrorContent(editor, type);
+
+                        // Store a reference to the CodeMirror instance
+                        this.codeEditors[type] = editor;
+
+                    } catch (error) {
+                        console.error('Error initializing CodeMirror:', error);
+                    }
+                },
+                updateCodeMirrorContent(editor, type) {
+
+                    // Process editor changes so they can be saved
+                    try {
+                        if (editor !== null) {
+                            editor.codemirror.on('change', () => {
+                                let newContent = editor.codemirror.getValue();
+                                newContent = JSON.parse(JSON.stringify(newContent));
+                                Vue.set(this.facet, type, newContent);
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error updating CodeMirror content:', error);
+                    }
                 }
             },
             template: `
@@ -1424,7 +1470,7 @@
                             <data-sources :facet="facet"></data-sources>
                         </div>
                     </div>
-                    <facet-settings :facet="facet"></facet-settings>
+                    <facet-settings :facet="facet" :initCodeMirror="initCodeMirror"></facet-settings>
                 </div>
             </div>
             `
@@ -1435,7 +1481,11 @@
             data() {
                 return {
                     template: {},
-                    tab: 'display'
+                    tab: 'display',
+                    codeEditors: {
+                        template: null,
+                        query: null
+                    }
                 }
             },
             created() {
@@ -1464,6 +1514,28 @@
                     });
                 }
             },
+            mounted() {
+
+                // Init template code editor
+                this.initCodeMirror('template-editor', 'template');
+
+                // Update query editor when 'Convert to query args' button is clicked
+                this.$root.$on('query-updated', () => {
+                    this.codeEditors['query'].codemirror.setValue(this.template.query);
+                });
+            },
+            watch: {
+                tab(newTab, oldTab) {
+
+                    // Init query code editor
+                    if (newTab !== oldTab) {
+                        if (newTab === 'query') {
+                            this.initCodeMirror('query-editor', 'query');
+                            this.refreshCodeMirror(this.codeEditors['query']);
+                        }
+                    }
+                }
+            },
             methods: {
                 setName(e) {
                     this.template.name = this.$root.sanitizeName(e.target.innerHTML);
@@ -1474,9 +1546,61 @@
                 switchMode() {
                     const now = this.template.modes[this.tab];
                     this.template.modes[this.tab] = ('visual' === now) ? 'advanced' : 'visual';
+
+                    let editor = null;
+
+                    // Refresh editor when switching to advanced on both tabs
+                    if ('visual' === now) {
+                        if (this.tab === 'display') {
+                            editor = this.codeEditors['template'];
+                        } else {
+                            editor = this.codeEditors['query'];
+                        }
+                    }
+                    this.refreshCodeMirror(editor);
+
                 },
                 unlock() {
                     Vue.delete(this.template, '_code');
+                },
+                initCodeMirror(textareaId, type) {
+                    try {
+                        let textarea = document.getElementById(textareaId);
+
+                        if (this.codeEditors[type] === null) {
+                            let editor = wp.codeEditor.initialize(jQuery(textarea), fwp_editor_settings);
+
+                            // Update when editor content changed
+                            this.updateCodeMirrorContent(editor, type);
+
+                            // Store a reference to the CodeMirror instance
+                            this.codeEditors[type] = editor;
+                        }
+                    } catch (error) {
+                        console.error('Error initializing CodeMirror:', error);
+                    }
+                },
+                refreshCodeMirror(editor) {
+                    if ( editor !== null ) {
+                        this.$nextTick(() => {
+                            editor.codemirror.refresh();
+                        });
+                    }
+                },
+                updateCodeMirrorContent(editor, type) {
+
+                    // Process editor changes so they can be saved
+                    try {
+                        if (editor !== null) {
+                            editor.codemirror.on('change', () => {
+                                let newContent = editor.codemirror.getValue();
+                                newContent = JSON.parse(JSON.stringify(newContent));
+                                Vue.set(this.template, type, newContent);
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error updating CodeMirror content:', error);
+                    }
                 }
             },
             template: `
@@ -1514,7 +1638,8 @@
                         </div>
                         <div class="table-row" v-show="template.modes.display == 'advanced'">
                             <h3>{{ 'Display Code' | i18n }} <a class="facetwp-btn" href="https://facetwp.com/help-center/listing-templates/listing-builder/using-the-listing-builder-in-dev-mode/#how-to-use-display-code-in-dev-mode" target="_blank">{{ 'Help' | i18n }}</a></h3>
-                            <textarea v-model="template.template"></textarea>
+                            <textarea id="template-editor" v-model="template.template"></textarea>
+                            <p class="note">{{ 'To search your code, click in the editor, then use Ctrl+F (Windows/Linux) or Cmd+F (Mac).' | i18n }}</p>
                         </div>
                     </div>
 
@@ -1524,7 +1649,8 @@
                         </div>
                         <div class="table-row" v-show="template.modes.query == 'advanced'">
                             <h3>{{ 'Query Arguments' | i18n }} <a class="facetwp-btn" href="https://facetwp.com/help-center/listing-templates/listing-builder/using-the-listing-builder-in-dev-mode/#how-to-use-query-arguments-in-dev-mode" target="_blank">{{ 'Help' | i18n }}</a></h3>
-                            <textarea v-model="template.query"></textarea>
+                            <textarea id="query-editor" v-model="template.query"></textarea>
+                            <p class="note">{{ 'To search your code, click in the editor, then use Ctrl+F (Windows/Linux) or Cmd+F (Mac).' | i18n }}</p>
                         </div>
                     </div>
                 </div>
@@ -1542,7 +1668,7 @@
         });
 
         Vue.component('facet-settings', {
-            props: ['facet'],
+            props: ['facet','initCodeMirror'],
             template: '<component :is="dynComponent" :facet="facet"></component>',
             methods: {
                 getFields(aliases) {
@@ -1657,7 +1783,14 @@
                     if ('search' == val || 'pager' == val || 'reset' == val || 'sort' == val) {
                         Vue.delete(this.facet, 'source');
                     }
-                }
+                    if ('map' == val) {
+                        this.$nextTick(() => {
+
+                            // Init template code editor
+                            this.initCodeMirror('marker-content-editor', 'marker_content', true);
+                        });
+                    }
+                },
             }
         });
 
@@ -2087,6 +2220,9 @@
                             json = json.replace(/[\}]/g, ']');
                             json = json.replace(/":/g, '" =>');
                             template.query = json;
+
+                            // Emit an event when template.query is changed to trigger updating the editor
+                            this.$root.$emit('query-updated');
                         }
                     })
                 },

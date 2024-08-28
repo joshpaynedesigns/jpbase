@@ -121,6 +121,18 @@
     padding-left: 60px;
 }
 
+.facetwp-type-fselect .fs-option.d4 .fs-option-label {
+    padding-left: 80px;
+}
+
+.facetwp-type-fselect .fs-option.d5 .fs-option-label {
+    padding-left: 100px;
+}
+
+.facetwp-type-fselect .fs-option.d6 .fs-option-label {
+    padding-left: 120px;
+}
+
 /* Hierarchy */
 
 .facetwp-depth {
