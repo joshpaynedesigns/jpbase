@@ -1,7 +1,8 @@
 /* ## Site Containers
 --------------------------------------------- */
 
-.wrap {
+.wrap,
+.tribe_event_series {
   @include outer-container(rem(1200));
   width: 90%;
 }
@@ -22,9 +23,11 @@
 .single-post .jump-table-content,
 .single-staff .site-inner,
 .single-tribe_venue .site-inner,
+.single-tribe_organizer .site-inner,
 .blog .site-inner,
 .archive .site-inner,
 .search .site-inner,
+.single-tribe_event_series .site-inner,
 .page-template-default .site-inner {
   margin-bottom: $mobile-section-margin;
   margin-top: $mobile-section-margin;
