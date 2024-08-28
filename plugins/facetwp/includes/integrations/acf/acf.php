@@ -75,6 +75,20 @@ class FacetWP_Integration_ACF
     function index_acf_values( $return, $params ) {
         $defaults = $params['defaults'];
         $facet = $params['facet'];
+        $post_id = (int) $defaults['post_id'];
+        $post_type = get_post_type( $post_id );
+
+        // Index out of stock products?
+        $index_all = ( 'yes' === FWP()->helper->get_setting( 'wc_index_all', 'no' ) );
+        $index_all = apply_filters( 'facetwp_index_all_products', $index_all );
+
+        if ( function_exists( 'wc_get_product' ) && ( 'product' == $post_type || 'product_variation' == $post_type ) ) {
+            $product = wc_get_product( $post_id );
+
+            if ( ! $product || ( ! $index_all && ! $product->is_in_stock() ) ) {
+                return true; // skip
+            }
+        }
 
         if ( isset( $facet['source'] ) && 'acf/' == substr( $facet['source'], 0, 4 ) ) {
             $hierarchy = explode( '/', substr( $facet['source'], 4 ) );
@@ -97,7 +111,7 @@ class FacetWP_Integration_ACF
                 $value = $this->process_field_value( $value, $hierarchy, $parent_field_key );
 
                 // get the sub-field properties
-                $sub_field = get_field_object( $hierarchy[0], $object_id, false, false );
+                $sub_field = get_field_object( end($hierarchy), $object_id, false, false );
 
                 foreach ( $value as $key => $val ) {
                     $this->repeater_row = $key;

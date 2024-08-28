@@ -208,8 +208,8 @@ class Series_Filters {
 
 		$context = tribe_context()->alter(
 			[
-				'event_display'      => $event_display,
-				'event_display_mode' => $event_display,
+				'event_display'      => $view_slug,
+				'event_display_mode' => $view_slug,
 			]
 		);
 

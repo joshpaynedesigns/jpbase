@@ -131,7 +131,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	/**
 	 * event_meta_options
 	 *
-	 * loads the custom field options screen
+	 * Loads the custom field options screen.
 	 *
 	 * @return void
 	 */

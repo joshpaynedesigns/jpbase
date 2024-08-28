@@ -1027,3 +1027,23 @@ if ( ! function_exists( 'tribe_update_event_with_series' ) ) {
 		return true;
 	}
 }
+
+if ( ! function_exists( 'tec_events_pro_maybe_unserialize' ) ) {
+	/**
+	 * Unserializes data only if it was serialized.
+	 *
+	 * @since TBD
+	 *
+	 * @param mixed      $data            Data that might be unserialized.
+	 * @param bool|array $allowed_classes Array of classes that are allowed to be unserialized.
+	 *
+	 * @return mixed Unserialized data can be any type.
+	 */
+	function tec_events_pro_maybe_unserialize( $data, $allowed_classes = false ) {
+		if ( is_serialized( $data ) ) { // Don't attempt to unserialize data that wasn't serialized going in.
+			return @unserialize( trim( $data ), [ 'allowed_classes' => $allowed_classes ] );  // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
+		}
+
+		return $data;
+	}
+}

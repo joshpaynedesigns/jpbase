@@ -3,7 +3,7 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Stable tag: 7.0.1
+Stable tag: 7.0.2.1
 Requires at least: 6.3
 Tested up to: 6.6.1
 Requires PHP: 7.4
@@ -213,6 +213,20 @@ Previous versions of Events Calendar Pro are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [7.0.2.1] 2024-08-26 =
+
+* Security - Prevents PHP Object Serialization exploit for Widgets on Legacy Support. Thanks WordFence for the report.
+
+= [7.0.2] 2024-09-20 =
+
+* Feature - Adding the Remove Event End Time feature from the Tweaks addon to the Photo, Summary and Map views. [TEC-5080]
+* Fix - Resolves a pagination issue when using the `tec_events_pro_custom_tables_v1_series_event_view_slug` filter to override the default Series view. [ECP-1589]
+* Fix - Exporting all Attendees as a CSV file in the new Tickets Attendees Page. [ET-2094]
+* Fix - Moved event related endpoint registering for Power Automate and Zapier endpoints to Events Calendar Pro. [EVA-160]
+* Tweak - Added actions: `tec_events_pro_init`
+* Tweak - Changed views: `v2/map/event-cards/event-card/event/date-time`, `v2/photo/event/date-time`, `v2/summary/date-group/event/date/single`
+* Language - 3 new strings added, 52 updated, 0 fuzzied, and 0 obsoleted
 
 = [7.0.1] 2024-08-06 =
 

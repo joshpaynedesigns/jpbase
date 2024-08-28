@@ -9,11 +9,13 @@
  *
  * @since 5.0.1
  * @since 5.1.1 Moved icons out to separate templates.
+ * @since TBD Now allows for hiding the event end time with $show_end_time.
  *
  * @link https://evnt.is/1aiy
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  * @var obj     $date_formats Object containing the date formats.
+ * @var bool    $show_end_time Flag to disable end time from displaying.
  *
  * @see tribe_get_event() For the format of the event object.
  *
@@ -22,8 +24,11 @@
 
 use Tribe__Date_Utils as Dates;
 
+$show_end_time ??= true;
+
 $time_format = tribe_get_time_format();
-$display_end_time = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' );
+$display_end_time = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' )
+					&& $show_end_time;
 
 if ( $event->multiday ) {
 	$start      = $event->schedule_details->value();

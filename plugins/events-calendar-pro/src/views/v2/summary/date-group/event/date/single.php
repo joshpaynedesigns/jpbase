@@ -11,15 +11,20 @@
  * @link http://evnt.is/1aiy
  *
  * @version 5.7.0
+ * @version TBD Now allows for hiding the event end time with $show_end_time.
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @var bool $show_end_time Flag to disable end time from displaying.
  *
  * @see tribe_get_event() For the format of the event object.
  */
-
+$show_end_time ??= true;
 ?>
 <span class="tribe-event-date-start">
 	<?php echo esc_html( $event->summary_view->start_time ); ?>
-</span> - <span class="tribe-event-date-end">
+</span>
+<?php if ( $show_end_time ) { ?>
+- <span class="tribe-event-date-end">
 	<?php echo esc_html( $event->summary_view->end_time ); ?>
 </span>
+<?php } ?>
