@@ -124,11 +124,15 @@ class Provider extends Service_Provider {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param int $id The Occurrence post ID to normalize.
+	 * @param int|string $id The Occurrence post ID to normalize.
 	 *
-	 * @return int The normalized Occurrence post ID.
+	 * @return int|null The normalized Occurrence post ID or null if the ID is not valid.
 	 */
-	public function normalize_occurrence_id( int $id ): int {
+	public function normalize_occurrence_id( $id ): ?int {
+		if ( ! is_numeric( $id ) ) {
+			return null;
+		}
+
 		return $this->container->make( Occurrence::class )->normalize_occurrence_post_id( $id );
 	}
 

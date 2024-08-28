@@ -60,8 +60,9 @@ class FacetWP_Settings
                         'notes' => 'After enabling, type "FWP.settings.debug" into the browser console on your front-end facet page',
                         'html' => $this->get_setting_html( 'debug_mode', 'toggle', [
                             'true_value' => 'on',
-                            'false_value' => 'off'
-                        ])
+                            'false_value' => 'off',
+                            'message' => 'Debug Mode exposes some of your settings and can influence loading speeds.<br />Make sure to disable it when not needed for troubleshooting.'
+                        ]),
                     ]
                 ]
             ],
@@ -192,6 +193,7 @@ class FacetWP_Settings
             'orderby' => [
                 'type' => 'select',
                 'label' => __( 'Sort by', 'fwp' ),
+                'default' => 'count',
                 'choices' => [
                     'count' => __( 'Highest count', 'fwp' ),
                     'display_value' => __( 'Display value', 'fwp' ),
@@ -395,6 +397,7 @@ class FacetWP_Settings
 
 $true_value = $atts['true_value'] ?? 'yes';
 $false_value = $atts['false_value'] ?? 'no';
+$message = $atts['message'] ?? '';
 
 ?>
         <label class="facetwp-switch">
@@ -406,6 +409,10 @@ $false_value = $atts['false_value'] ?? 'no';
             />
             <span class="facetwp-slider"></span>
         </label>
+
+        <?php if ( '' != $message ) { ?>
+            <div v-if="app.settings.<?php echo $setting_name; ?> == '<?php echo $true_value; ?>'" class="facetwp-toggle-status field-notes"><?php echo $message; ?></div>
+        <?php } ?>
 
 <?php endif;
 

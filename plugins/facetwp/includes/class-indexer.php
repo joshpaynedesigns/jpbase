@@ -27,6 +27,9 @@ class FacetWP_Indexer
 
     function __construct() {
         $this->set_table( 'auto' );
+
+        add_action( 'facetwp_indexer_cron', [ $this, 'get_progress' ] );
+
         $this->run_cron();
 
         if ( apply_filters( 'facetwp_indexer_is_enabled', true ) ) {
@@ -45,7 +48,6 @@ class FacetWP_Indexer
         add_action( 'edited_term',              [ $this, 'edit_term' ], 10, 3 );
         add_action( 'delete_term',              [ $this, 'delete_term' ], 10, 3 );
         add_action( 'set_object_terms',         [ $this, 'set_object_terms' ] );
-        add_action( 'facetwp_indexer_cron',     [ $this, 'get_progress' ] );
         add_filter( 'wp_insert_post_parent',    [ $this, 'is_wp_insert_post' ] );
     }
 
@@ -256,7 +258,7 @@ class FacetWP_Indexer
                     wp_cache_delete( 'facetwp_indexing_cancelled', 'options' );
 
                     if ( 'yes' === get_option( 'facetwp_indexing_cancelled', 'no' ) ) {
-                        update_option( 'facetwp_transients', '' );
+                        update_option( 'facetwp_indexing_data', '' );
                         update_option( 'facetwp_indexing', '' );
                         $this->manage_temp_table( 'delete' );
                         exit;
@@ -268,7 +270,7 @@ class FacetWP_Indexer
                         'retries'       => $attempt,
                         'touch'         => time(),
                     ];
-                    update_option( 'facetwp_transients', json_encode( $transients ) );
+                    update_option( 'facetwp_indexing_data', json_encode( $transients ) );
                 }
             }
 
@@ -283,7 +285,7 @@ class FacetWP_Indexer
         // Indexing complete
         if ( $this->index_all ) {
             update_option( 'facetwp_last_indexed', time(), 'no' );
-            update_option( 'facetwp_transients', '', 'no' );
+            update_option( 'facetwp_indexing_data', '', 'no' );
             update_option( 'facetwp_indexing', '', 'no' );
 
             $this->manage_temp_table( 'replace' );
@@ -616,7 +618,7 @@ class FacetWP_Indexer
      * @since 1.7.8
      */
     function get_transient( $name = false ) {
-        $transients = get_option( 'facetwp_transients' );
+        $transients = get_option( 'facetwp_indexing_data' );
 
         if ( ! empty( $transients ) ) {
             $transients = json_decode( $transients, true );

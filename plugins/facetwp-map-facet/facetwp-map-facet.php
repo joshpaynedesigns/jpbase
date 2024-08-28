@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Map Facet
 Description: Map facet type
-Version: 1.0.5
+Version: 1.1
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-map-facet
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'FACETWP_MAP_FACET_VERSION', '1.0.5' );
+define( 'FACETWP_MAP_FACET_VERSION', '1.1' );
 
 
 /**
@@ -565,7 +565,10 @@ class FacetWP_Facet_Map_Addon
         </div>
         <div class="facetwp-row">
             <div><?php _e( 'Marker content', 'facetwp-map-facet' ); ?>:</div>
-            <div><textarea class="facet-marker-content"></textarea></div>
+            <div>
+                <textarea class="facet-marker-content" id="marker-content-editor" v-model="facet.marker_content"></textarea>
+                <p class="note"><?php _e( 'To search your code, click in the editor, then use Ctrl+F (Windows/Linux) or Cmd+F (Mac).', 'facetwp-map-facet' ); ?></p>
+            </div>
         </div>
 <?php
     }

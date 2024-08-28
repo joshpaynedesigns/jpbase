@@ -17,14 +17,6 @@ use TEC\Event_Automator\Zapier\REST\V1\Endpoints\New_Events;
 use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Updated_Events;
 use TEC\Event_Automator\Zapier\Settings;
 
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Actions\Find_Attendees;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Actions\Find_Tickets;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Attendees;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Checkin;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Orders;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Refunded_Orders;
-use TEC\Event_Automator\Zapier\REST\V1\Endpoints\Updated_Attendees;
-
 /**
  * Class Zapier_Provider
  *
@@ -114,14 +106,6 @@ class Zapier_Provider extends Service_Provider {
 		$this->container->make( Create_Events::class )->add_to_dashboard();
 		$this->container->make( Update_Events::class )->add_to_dashboard();
 		$this->container->make( Find_Events::class )->add_to_dashboard();
-
-		$this->container->make( Attendees::class )->add_to_dashboard();
-		$this->container->make( Updated_Attendees::class )->add_to_dashboard();
-		$this->container->make( Checkin::class )->add_to_dashboard();
-		$this->container->make( Orders::class )->add_to_dashboard();
-		$this->container->make( Refunded_Orders::class )->add_to_dashboard();
-		$this->container->make( Find_Attendees::class )->add_to_dashboard();
-		$this->container->make( Find_Tickets::class )->add_to_dashboard();
 	}
 
 	/**

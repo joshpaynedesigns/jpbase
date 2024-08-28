@@ -11,6 +11,7 @@ class FacetWP_Builder
     function __construct() {
         add_filter( 'facetwp_query_args', [ $this, 'hydrate_date_values' ], 999 );
         add_filter( 'facetwp_builder_dynamic_tag_value', [ $this, 'dynamic_tag_value' ], 0, 3 );
+        add_action( 'admin_enqueue_scripts', [ $this, 'initialize_builder_editor' ] );
     }
 
 
@@ -293,7 +294,7 @@ class FacetWP_Builder
         }
         elseif ( 'button' == $source ) {
             $settings['link']['class'] = 'fwpl-btn';
-            $value = $this->linkify( $settings['button_text'], $settings['link'] );
+            $value = $this->linkify( facetwp_i18n( $settings['button_text'] ), $settings['link'] );
         }
         elseif ( 'html' == $source ) {
             $value = do_shortcode( $settings['content'] );
@@ -873,5 +874,14 @@ class FacetWP_Builder
         }
 
         return is_array( $values ) ? $temp : $temp[0];
+    }
+
+    /**
+     * Initialize CodeMirror for Listing Builder editors
+     * @since 4.3.1
+     */
+    function initialize_builder_editor() {
+        $fwp_editor_settings = wp_enqueue_code_editor( array( 'type' => 'php' ) );
+        wp_localize_script( 'jquery', 'fwp_editor_settings', $fwp_editor_settings );
     }
 }

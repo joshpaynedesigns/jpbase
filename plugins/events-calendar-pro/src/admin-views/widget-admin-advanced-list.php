@@ -66,7 +66,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 
 if ( is_string( $instance['filters'] ) ) {
-	$instance['filters'] = json_decode( maybe_unserialize( $instance['filters'] ) );
+	$instance['filters'] = json_decode( tec_events_pro_maybe_unserialize( $instance['filters'] ) );
 }
 
 $class = '';

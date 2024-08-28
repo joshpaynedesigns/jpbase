@@ -5,7 +5,7 @@ Tags: embed, video, lazyload, lightbox, rumble
 Requires at least: 6.6
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 10.3.1
+Stable tag: 10.3.2
 License: GPL-3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,10 @@ Please read the [official documentation](https://wordpress.org/support/article/m
 
 * [ARVE Pro changelog](https://nextgenthemes.com/plugins/arve-pro/#changelog)
 * [ARVE Random Videos changelog](https://nextgenthemes.com/plugins/arve-random-video/#changelog)
+
+### 2024-08-22 10.3.2 ###
+
+* New: URL detection for VK.com videos.
 
 ### 2024-08-02 10.3.1 ###
 

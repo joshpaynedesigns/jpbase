@@ -2,6 +2,7 @@
 
 use TEC\Events_Pro\Base\Query_Filters as Base_Query_Filters;
 use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Zapier_Provider;
+use TEC\Events_Pro\Views\Hide_End_Time_Provider;
 use TEC\Events_Pro\Legacy\Query_Filters as Legacy_Query_Filters;
 use Tribe\Events\Pro\Views\V2\Views\Map_View;
 use Tribe\Events\Pro\Views\V2\Views\Photo_View;
@@ -88,7 +89,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '7.0.1';
+		const VERSION = '7.0.2.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -96,7 +97,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 *
 		 * @deprecated 4.6
 		 */
-		const REQUIRED_TEC_VERSION = '6.6.0';
+		const REQUIRED_TEC_VERSION = '6.6.2';
 
 		/**
 		 * Constructor.
@@ -492,6 +493,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				// After setting the enabled view we Flush the rewrite rules.
 				flush_rewrite_rules(); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 			}
+
+			/**
+			 * Fires after the Events Calendar PRO has been initialized.
+			 *
+			 * @since TBD
+			 */
+			do_action( 'tec_events_pro_init' );
 		}
 
 		/**
@@ -1862,6 +1870,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			// Set up Virtual Events via the compatibility layer.
 			tribe_register_provider( TEC\Events_Pro\Integrations\Events_Virtual_Provider::class );
+
+			// View modifier for end time.
+			tribe_register_provider( Hide_End_Time_Provider::class );
 
 			tribe( 'events-pro.admin.settings' );
 			tribe( 'events-pro.ical' );

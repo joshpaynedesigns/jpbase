@@ -11,8 +11,6 @@ namespace TEC\Events_Pro\Custom_Tables\V1\Views\V2;
 
 use TEC\Events\Custom_Tables\V1\Views\V2\By_Day_View_Compatibility as TEC_By_Day_View_Compatibility;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series_Relationship;
-use TEC\Events_Pro\Custom_Tables\V1\Templates\Templates;
-use Tribe\Events\Views\V2\View;
 use Tribe__Events__Pro__Main as Plugin;
 use TEC\Common\Contracts\Service_Provider;
 use Tribe__Template;
