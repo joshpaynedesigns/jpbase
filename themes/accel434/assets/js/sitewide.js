@@ -24,6 +24,21 @@ var scrollCheck = function () {
   }
 };
 
+// Remove banner bg videos on mobile
+jQuery(function() {
+  const bgv = jQuery('.cta-slide-video');
+
+  if (bgv.is(':visible')) {
+    jQuery('source', bgv).each(
+      function() {
+        const el = jQuery(this);
+        el.attr('src', el.data('src'));
+      }
+    );
+    bgv[0].load();
+  }
+});
+
 jQuery(document).ready(function () {
   // Initialize Mobile Menu
   MobileMenu.init();

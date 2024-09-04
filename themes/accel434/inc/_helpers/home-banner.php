@@ -102,13 +102,13 @@ function ns_banner_display_slide($type, $txt_color, $overlay, $title, $subtitle,
             <?php if (!empty($webm_vid) || !empty($mp4_vid || !empty($ogg_video_file))) : ?>
                 <video muted loop autoplay class="cta-slide-video" poster="<?php echo $bg_image_url; ?>">
                     <?php if (!empty($webm_vid)) : ?>
-                        <source src="<?php echo $webm_vid; ?>" type="video/webm">
+                        <source data-src="<?php echo $webm_vid; ?>" type="video/webm">
                     <?php endif; ?>
                     <?php if (!empty($og_vid)) : ?>
-                        <source src="<?php echo $og_vid; ?>" type="video/ogg">
+                        <source data-src="<?php echo $og_vid; ?>" type="video/ogg">
                     <?php endif; ?>
                     <?php if (!empty($mp4_vid)) : ?>
-                        <source src="<?php echo $mp4_vid; ?>" type="video/mp4">
+                        <source data-src="<?php echo $mp4_vid; ?>" type="video/mp4">
                     <?php endif; ?>
                     <track src="" kind="captions">
                 </video>
