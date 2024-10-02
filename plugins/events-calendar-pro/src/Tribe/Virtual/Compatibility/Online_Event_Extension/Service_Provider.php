@@ -41,7 +41,7 @@ class Service_Provider extends Provider_Contract {
 		$this->container->bind( 'Tribe__Extension__Virtual__Event__Ticket', $instance );
 
 		add_action( 'tribe_plugins_loaded', [ $this, 'handle_actions' ], 20 );
-		add_filter( 'tribe_settings_tab_fields', [ $this, 'inject_extension_settings' ], 100, 2 );
+		add_filter( 'tribe_addons_tab', [ $this, 'inject_extension_settings' ], 100 );
 	}
 
 	/**
@@ -66,9 +66,9 @@ class Service_Provider extends Provider_Contract {
 	 *
 	 * @return array $fields The fields within tribe settings page
 	 */
-	public function inject_extension_settings( $fields, $tab ) {
+	public function inject_extension_settings( $fields ) {
 		$settings = $this->container->make( Settings::class );
 
-		return $settings->inject_extension_settings( $fields, $tab );
+		return $settings->inject_extension_settings( $fields );
 	}
 }

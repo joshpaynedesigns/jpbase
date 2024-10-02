@@ -89,7 +89,11 @@ This is likely an issue with your PHP memory limit. Try temporarily increasing i
 
 == Changelog ==
 
-= 1.4.7 - May, 30, 2024 =
+= 1.4.8 - September 3, 2024 =
+* Fix: Case-sensitive dry runs no longer highlight case-insensitive matches when previewing results
+* Fix: Case-insensitive dry runs no longer change the case of matching terms when previewing results
+
+= 1.4.7 - May 30, 2024 =
 * Fix: The case-insensitive setting once again allows case-insensitive strings to be matched within serialized data, fixing a regression introduced in version 1.4.6
 
 = 1.4.6 - April 17, 2024 =

@@ -21,17 +21,21 @@ $authorize_link = $url->to_authorize();
 $connect_label  = _x( 'Add Google Account', 'Label to connect an account to the Google API.', 'tribe-events-calendar-pro' );
 
 $classes = [
-	'tec-events-virtual-meetings-api-settings_add-account-button'   => true,
+	'button'                                                         => true,
+	'tec-settings-form__add-account-button' => true,
+	'tec-events-virtual-meetings-api-settings_add-account-button' => true, 
 	'tec-events-virtual-meetings-google-settings_add-account-button' => true,
 ];
+
 ?>
 <a
 	href="<?php echo esc_url( $authorize_link ); ?>"
 	<?php tribe_classes( $classes ); ?>
 >
+	<span class="dashicons dashicons-plus"></span>
 	<?php echo esc_html( $connect_label ); ?>
 </a>
-<div class="tec-events-virtual-meetings-api-settings_add-account-button-helper-text tec-events-virtual-meetings-google-settings_add-account-button-helper-text">
+<p class="tec-events-virtual-meetings-api-settings_add-account-button-helper-text tec-events-virtual-meetings-google-settings_add-account-button-helper-text">
 	<?php
 	$url = 'https://evnt.is/1b8r';
 	echo sprintf(
@@ -44,4 +48,4 @@ $classes = [
 		)
 	);
 	?>
-</div>
+</p>

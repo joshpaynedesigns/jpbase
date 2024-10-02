@@ -118,51 +118,62 @@ class Settings {
 		] );
 
 		$facebook_fields = [
-			// Facebook Live.
-			$this->get_prefix( 'wrapper_open' )  => [
+			$this->get_prefix( 'facebook-integration-content-wrapper_open' )  => [
 				'type' => 'html',
-				'html' => '<div id="tribe-settings-facebook-integration" class="' . implode( ' ', $live_wrapper_classes ) . '">',
+				'html' => '<div class="tec-settings-form__content-section">'
 			],
-			$this->get_prefix( 'header' )        => [
+			// Facebook Live.
+			$this->get_prefix( 'header' )            => [
 				'type' => 'html',
 				'html' => $this->get_intro_text(),
 			],
-			$this->get_prefix( 'app_open' )  => [
+			$this->get_prefix( 'wrapper_open' )      => [
+				'type' => 'html',
+				'html' => '<div id="tribe-settings-facebook-integration" class="' . implode( ' ', $live_wrapper_classes ) . '">',
+			],
+			$this->get_prefix( 'app_open' )          => [
 				'type' => 'html',
 				'html' => '<div class="tribe-settings-facebook-application__container">',
 			],
-			$this->get_prefix( 'app_id' )     => [
+			$this->get_prefix( 'app_id' )            => [
 				'type'            => 'text',
 				'label'           => esc_html__( 'Facebook App ID', 'tribe-events-calendar-pro' ),
 				'placeholder'     => esc_html_x( 'Enter your Facebook App ID.', 'The Facebook App ID to use for Facebook Live.', 'tribe-events-calendar-pro' ),
 				'validation_type' => 'html',
 			],
-			$this->get_prefix( 'app_secret' ) => [
+			$this->get_prefix( 'app_secret' )        => [
 				'type'            => 'text',
 				'label'           => esc_html__( 'Facebook App Secret', 'tribe-events-calendar-pro' ),
 				'placeholder'     => esc_html_x( 'Enter your Facebook App Secret.', 'The Facebook App secret key to use for Facebook Live.', 'tribe-events-calendar-pro' ),
 				'validation_type' => 'html',
 			],
-			$this->get_prefix( 'app_close' ) => [
+			$this->get_prefix( 'app_close' )         => [
 				'type' => 'html',
 				'html' => '</div>',
 			],
-			$this->get_prefix( 'find_app_id' ) => [
+			$this->get_prefix( 'find_app_id' )       => [
 				'type' => 'html',
 				'html' => $this->get_find_app_id(),
 			],
-			$this->get_prefix( 'authorize' )     => [
+			$this->get_prefix( 'authorize' )         => [
 				'type' => 'html',
 				'html' => $this->get_authorize_fields(),
 			],
-			$this->get_prefix( 'wrapper_close' ) => [
+			$this->get_prefix( 'wrapper_close' )     => [
 				'type' => 'html',
-				'html' => '<div class="clear"></div></div>',
+				'html' => '</div>',
 			],
-			// Facebook Video.
+			$this->get_prefix( 'integration-content-wrapper_close' )  => [
+				'type' => 'html',
+				'html' => '</div">',
+			],
+			$this->get_prefix( 'video-content-wrapper_open' )  => [
+				'type' => 'html',
+				'html' => '<div class="tec-settings-form__content-section">',
+			],
 			$this->get_prefix( 'header-video' )      => [
 				'type' => 'html',
-				'html' => '<h3>' . esc_html_x( 'Facebook Video', 'The label for the Facebook Video settings.', 'tribe-events-calendar-pro' ) . '</h3>',
+				'html' => '<h3 class="tec-settings-form__section-header tec-settings-form__section-header--sub">' . esc_html_x( 'Facebook Video', 'The label for the Facebook Video settings.', 'tribe-events-calendar-pro' ) . '</h3>',
 			],
 			$this->get_prefix( 'disable_fb_js_sdk' ) => [
 				'type'            => 'checkbox_bool',
@@ -170,6 +181,10 @@ class Settings {
 				'tooltip'         => esc_html_x( 'Disable the Facebook JS SDK script for single events on the frontend. This may be necessary to prevent conflicts with other Facebook plugins or scripts.', 'The tooltip for the option to disable the Facebook JS SDK.', 'tribe-events-calendar-pro' ),
 				'default'         => false,
 				'validation_type' => 'boolean',
+			],
+			$this->get_prefix( 'video-content-wrapper_close' ) => [
+				'type' => 'html',
+				'html' => '</div>',
 			],
 		];
 

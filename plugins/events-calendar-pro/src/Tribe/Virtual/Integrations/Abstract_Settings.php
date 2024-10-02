@@ -91,24 +91,21 @@ abstract class Abstract_Settings {
 		$wrapper_classes = tribe_get_classes( [
 			'tec-settings-api-application'                            => true,
 			'tec-events-settings-' . static::$api_id . '-application' => true,
+			'tec-settings-form__content-section'                      => true,
 		] );
 
 		$api_fields = [
-			static::$option_prefix . 'wrapper_open'  => [
+			static::$option_prefix . '-wrapper_open'  => [
 				'type' => 'html',
 				'html' => '<div id="tribe-settings-' . static::$api_id . '-application" class="' . implode( ' ', $wrapper_classes ) . '">'
 			],
-			static::$option_prefix . 'header'        => [
+			static::$option_prefix . 'authorize' => [
 				'type' => 'html',
-				'html' => $this->get_intro_text(),
+				'html' => $this->get_intro_text() . $this->get_authorize_fields(),
 			],
-			static::$option_prefix . 'authorize'     => [
+			static::$option_prefix . '-wrapper_close'  => [
 				'type' => 'html',
-				'html' => $this->get_authorize_fields(),
-			],
-			static::$option_prefix . 'wrapper_close' => [
-				'type' => 'html',
-				'html' => '<div class="clear"></div></div>',
+				'html' => '</div">'
 			],
 		];
 
@@ -134,12 +131,7 @@ abstract class Abstract_Settings {
 		 */
 		$api_fields = apply_filters( 'tec_events_virtual_meetings_' . static::$api_id . '_settings_fields', $api_fields, $this );
 
-		// Insert the link after the other APIs and before the Google Maps API ones.
-		$gmaps_fields = array_splice( $fields, array_search( $this->get_integrations_fields_key(), array_keys( $fields ) ) );
-
-		$fields = array_merge( $fields, $api_fields, $gmaps_fields );
-
-		return $fields;
+		return $fields + $api_fields;
 	}
 
 	/**

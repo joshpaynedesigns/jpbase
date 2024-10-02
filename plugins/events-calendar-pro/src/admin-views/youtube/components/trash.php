@@ -19,7 +19,7 @@
 
 ?>
 
-<div class="tribe-settings-youtube-integration__channel-delete">
+<span class="tribe-settings-youtube-integration__channel-delete">
 	<button
 		class="dashicons dashicons-trash tribe-settings-youtube-integration__delete-channel"
 		type="button"
@@ -30,4 +30,4 @@
 			<?php echo esc_html_x( 'Delete YouTube Channel ID', 'Delete YouTube channel id by AJAX.', 'tribe-events-calendar-pro' ); ?>
 		</span>
 	</button>
-</div>
+</span>

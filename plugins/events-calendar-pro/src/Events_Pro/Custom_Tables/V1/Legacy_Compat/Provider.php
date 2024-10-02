@@ -69,8 +69,8 @@ class Provider extends Service_Provider implements Provider_Contract {
 		// Remove the PRO filters that are setting up queries on Recurring Events.
 		remove_action( 'tribe_events_pre_get_posts', [ $pro, 'setup_hide_recurrence_in_query' ] );
 
-		if ( ! has_filter( 'tribe_settings_tab_fields', [ $this, 'rename_recurring_settings_on_admin' ] ) ) {
-			add_filter( 'tribe_settings_tab_fields', [ $this, 'rename_recurring_settings_on_admin' ], 10, 2 );
+		if ( ! has_filter( 'tec_general_settings_editing_section', [ $this, 'rename_recurring_settings_on_admin' ] ) ) {
+			add_filter( 'tec_general_settings_editing_section', [ $this, 'rename_recurring_settings_on_admin' ], 10 );
 		}
 
 		// Do not redirect from post names to child posts.
@@ -162,7 +162,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 		add_filter( 'post_row_actions', [ Pro_Recurrence_Meta::class, 'edit_post_row_actions' ], 10, 2 );
 		remove_filter( 'tribe_events_pro_editor_save_recurrence_meta', '__return_true' );
 		add_action( 'tribe_events_pre_get_posts', [ $pro, 'setup_hide_recurrence_in_query' ] );
-		remove_filter( 'tribe_settings_tab_fields', [ $this, 'rename_recurring_settings_on_admin' ] );
+		remove_filter( 'tec_general_settings_editing_section', [ $this, 'rename_recurring_settings_on_admin' ] );
 	}
 
 	/**
@@ -231,11 +231,8 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *
 	 * @return  array<string, array<string, mixed>> An array with the updated settings.
 	 */
-	public function rename_recurring_settings_on_admin( $settings, $id ) {
+	public function rename_recurring_settings_on_admin( $settings ) {
 		// We are targeting the general tab from the admin.
-		if ( $id !== 'general' ) {
-			return $settings;
-		}
 
 		// Make sure $settings is always an array.
 		if ( ! is_array( $settings ) ) {

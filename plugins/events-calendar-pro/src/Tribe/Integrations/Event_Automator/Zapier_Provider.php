@@ -73,7 +73,7 @@ class Zapier_Provider extends Service_Provider {
 	 * @since 7.0.0
 	 */
 	protected function add_filters() {
-		add_filter( 'tribe_addons_tab_fields', [ $this, 'filter_tec_integrations_tab_fields' ] );
+		add_filter( 'tec_settings_gmaps_js_api_start', [ $this, 'filter_tec_integrations_tab_fields' ] );
 		add_filter( 'rest_pre_dispatch', [ $this, 'pre_dispatch_verification_for_create_events' ], 10, 3 );
 		add_filter( 'rest_pre_dispatch', [ $this, 'pre_dispatch_verification_for_update_events' ], 10, 3 );
 		add_filter( 'rest_request_before_callbacks', [ $this, 'modify_rest_api_params_before_validation' ], 1, 3 );
