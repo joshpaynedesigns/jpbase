@@ -17,26 +17,6 @@
  */
 
 ?>
-<h3 id="tec-microsoft-application-credentials" class="tec-settings-microsoft-application__title">
+<h3 id="tec-microsoft-application-credentials" class="tec-settings-microsoft-application__title tec-settings-form__section-header tec-settings-form__section-header--sub">
 	<?php echo esc_html_x( 'Microsoft', 'API connection header', 'tribe-events-calendar-pro' ); ?>
 </h3>
-<p>
-	<?php
-	$url = 'https://evnt.is/1b9c';
-	echo sprintf(
-		'%1$s %2$s. <a href="%3$s" target="_blank">%4$s</a>',
-		esc_html_x(
-			'You need to connect your site to a Microsoft account to be able to generate Microsoft Meeting links for your',
-		'Settings help text for multiple Microsoft accounts.',
-		'tribe-events-calendar-pro'
-		),
-		tribe_get_virtual_event_label_plural_lowercase(),
-		esc_url( $url ),
-		esc_html_x(
-			'Read more about adding and managing Microsoft Accounts.',
-			'Settings link text for multiple Microsoft accounts.',
-			'tribe-events-calendar-pro'
-		)
-	);
-	?>
-</p>

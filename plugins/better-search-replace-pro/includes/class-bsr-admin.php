@@ -255,13 +255,13 @@ class BSR_Admin {
 						$from_str 	= htmlentities( $change['from'] );
 
 						// Highlight the changes.
-						if ( true == $results['case_insensitive'] ) {
-							$from_str 	= str_ireplace( $search_for, '<span class="bsr-old-val">' . $search_for . '</span>', $from_str );
+						if ( 'on' === $results['case_insensitive'] ) {
+							$from_str       = preg_replace( '/(' . preg_quote($search_for, '/') . ')/i', '<span class="bsr-old-val">\1</span>', $from_str );
 						} else {
 							$from_str 	= str_replace( $search_for, '<span class="bsr-old-val">' . $search_for . '</span>', $from_str );
 						}
 
-						$to_str = str_replace( '<span class="bsr-old-val">' . $search_for . '</span>', '<span class="bsr-new-val">' . $replace_with . '</span>', $from_str );
+						$to_str = str_ireplace( '<span class="bsr-old-val">' . $search_for . '</span>', '<span class="bsr-new-val">' . $replace_with . '</span>', $from_str );
 
 						echo '<tr class="bsr-row-desc"><td><strong>' . sprintf( __( 'Row %d, Column \'%s\'', 'better-search-replace' ), $change['row'], $change['column'] ) . '</strong></td></tr>';
 						echo '<tr><td class="bsr-change">' . $from_str . '</td><td class="bsr-change">' . $to_str . '</td></tr>';
@@ -449,13 +449,13 @@ class BSR_Admin {
 		$old_version = get_option( 'bsr_version' );
 
 		if ( $old_version !== BSR_VERSION ) {
-			if ( version_compare( '1.3.6', $old_version, '>' ) ) {				
+			if ( version_compare( '1.3.6', $old_version, '>' ) ) {
 				$upload_dir  = wp_upload_dir();
 				$old_file = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';
 				@unlink( $old_file );
 				@unlink( $old_file . '.gz' );
 			}
-	
+
 			update_option( 'bsr_version', BSR_VERSION );
 		}
 	}

@@ -82,7 +82,7 @@ class YouTube_Provider extends Meeting_Provider {
 	 */
 	protected function add_filters() {
 		add_filter( 'tribe_rest_event_data', [ $this, 'attach_rest_properties' ], 10, 2 );
-		add_filter( 'tribe_addons_tab_fields', [ $this, 'filter_addons_tab_fields' ], 20 );
+		add_filter( 'tec_settings_gmaps_js_api_start', [ $this, 'filter_addons_tab_fields' ], 20 );
 		add_filter( 'tribe_field_div_end', [ $this, 'setup_channel_trash_icon' ], 10, 2 );
 		add_filter( 'tribe_events_virtual_video_sources', [ $this, 'add_video_source' ], 15, 2 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_youtube_source_google_calendar_parameters' ], 10, 5 );

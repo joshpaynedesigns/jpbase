@@ -37,6 +37,8 @@ class Event {
 	/**
 	 * Get event details from post ID provided.
 	 *
+	 * @since 7.0.3 Using `$id` to avoid PHP warnings if `$post` is `null`.
+	 *
 	 * @param int|null $id Post ID of the event.
 	 *
 	 * @return array<string,mixed> Details of the event.
@@ -49,7 +51,7 @@ class Event {
 			$occurrence = $post->_tec_occurrence;
 			$event      = Event_Model::find( $occurrence->event_id, 'event_id' );
 		} else {
-			$event = Event_Model::find( $post->ID, 'post_id' );
+			$event = Event_Model::find( $id, 'post_id' );
 			if ( $event instanceof Event_Model ) {
 				$occurrence = Occurrence::where( 'event_id', $event->event_id )->first();
 			}

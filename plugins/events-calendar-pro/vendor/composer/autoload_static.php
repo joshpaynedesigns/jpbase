@@ -71,6 +71,8 @@ class ComposerStaticInita24d29fe98fa92b36701f9701b18dba7
         'RRule\\RRuleInterface' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RRuleInterface.php',
         'RRule\\RSet' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RSet.php',
         'RRule\\RfcParser' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RfcParser.php',
+        'TEC\\Events_Pro\\Admin\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Admin/Controller.php',
+        'TEC\\Events_Pro\\Admin\\Settings' => __DIR__ . '/../..' . '/src/Events_Pro/Admin/Settings.php',
         'TEC\\Events_Pro\\Base\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Base/Query_Filters.php',
         'TEC\\Events_Pro\\Block_Templates\\Controller' => __DIR__ . '/../..' . '/src/Events_Pro/Block_Templates/Controller.php',
         'TEC\\Events_Pro\\Block_Templates\\Single_Venue\\Single_Block_Template' => __DIR__ . '/../..' . '/src/Events_Pro/Block_Templates/Single_Venue/Single_Block_Template.php',

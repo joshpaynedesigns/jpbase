@@ -12,7 +12,7 @@
  * @since 5.0.0
  * @since 5.1.1 Moved icons out to separate templates.
  * @since 5.9.1
- * @since TBD Now allows for hiding the event end time with $show_end_time.
+ * @since 7.0.3 Now allows for hiding the event end time with $show_end_time.
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  * @var obj     $date_formats Object containing the date formats.

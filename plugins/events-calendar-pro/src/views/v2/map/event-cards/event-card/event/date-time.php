@@ -9,7 +9,7 @@
  *
  * @since 5.0.1
  * @since 5.1.1 Moved icons out to separate templates.
- * @since TBD Now allows for hiding the event end time with $show_end_time.
+ * @since 7.0.3 Now allows for hiding the event end time with $show_end_time.
  *
  * @link https://evnt.is/1aiy
  *

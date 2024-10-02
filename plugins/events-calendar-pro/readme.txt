@@ -3,7 +3,7 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Stable tag: 7.0.2.1
+Stable tag: 7.1.0
 Requires at least: 6.3
 Tested up to: 6.6.1
 Requires PHP: 7.4
@@ -214,11 +214,23 @@ Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
 
+= [7.1.0] 2024-09-25 =
+
+* Version - Events Calendar Pro 7.1.0 is only compatible with The Events Calendar 6.7.0 and higher.
+* Feature - New and improved settings layout and styles. [TEC-5124]
+* Language - 17 new strings added, 193 updated, 4 fuzzied, and 21 obsoleted
+
+= [7.0.3] 2024-09-11 =
+
+* Tweak - Fixed PHP warning regarding the attempt to read property `ID` on null.
+* Tweak - Changed views: `v2/week/grid-body/events-day/event/date`
+* Language - 1 new strings added, 51 updated, 0 fuzzied, and 0 obsoleted
+
 = [7.0.2.1] 2024-08-26 =
 
 * Security - Prevents PHP Object Serialization exploit for Widgets on Legacy Support. Thanks WordFence for the report.
 
-= [7.0.2] 2024-09-20 =
+= [7.0.2] 2024-08-20 =
 
 * Feature - Adding the Remove Event End Time feature from the Tweaks addon to the Photo, Summary and Map views. [TEC-5080]
 * Fix - Resolves a pagination issue when using the `tec_events_pro_custom_tables_v1_series_event_view_slug` filter to override the default Series view. [ECP-1589]
@@ -237,7 +249,7 @@ Remember to always make a backup of your database and files before updating!
 
 = [7.0.0] 2024-07-22 =
 
-* Version - Events Calendar Pro 7.0.0 is only compatible with The Events Calendar 6.6.0 and higher.
+* Version - Events Calendar Pro 7.1.0 is only compatible with The Events Calendar 6.7.0 and higher.
 * Feature - Added virtual events.
 * Feature - Added ability to add zoom virtual events.
 * Feature - Added live streaming ability with Facebook Live and YouTube.

@@ -607,7 +607,7 @@ class Zoom_Provider extends Meeting_Provider {
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
 	 */
 	protected function add_filters() {
-		add_filter( 'tribe_addons_tab_fields', [ $this, 'filter_addons_tab_fields' ] );
+		add_filter( 'tec_settings_gmaps_js_api_start', [ $this, 'filter_addons_tab_fields' ] );
 
 		foreach ( [ Meetings::$meeting_type, Webinars::$meeting_type ] as $meeting_type ) {
 			add_filter(

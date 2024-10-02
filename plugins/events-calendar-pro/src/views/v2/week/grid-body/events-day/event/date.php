@@ -16,13 +16,16 @@
  * @var WP_Post $event        The event post object with properties added by the `tribe_get_event` function.
  * @var obj     $date_formats Object containing the date formats.
  * @var string  $time_format  The format used to display the time.
+ * @var bool    $show_end_time Flag to disable end time from displaying.
  *
  * @see tribe_get_event() For the format of the event object.
  *
  * @version 5.1.1
  */
 
-$display_end_date = $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' );
+$show_end_time  ??= true;
+$display_end_date = $show_end_time
+	&& $event->dates->start_display->format( 'H:i' ) !== $event->dates->end_display->format( 'H:i' );
 ?>
 
 <div class="tribe-events-pro-week-grid__event-datetime">

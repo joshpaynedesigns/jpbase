@@ -23,7 +23,10 @@
  * @var string               $panel          The content of the panel for the slide toggle.
  * @var bool                 $expanded       Whether the panel starts open or closed.
  */
-$accordion_wrap_classes = [ 'tribe-events-virtual-meetings__accordion-wrapper' ];
+$accordion_wrap_classes = [
+	'tribe-field-wrap',
+	'tribe-events-virtual-meetings__accordion-wrapper',
+];
 if ( ! empty( $classes_wrap ) ) {
 	$accordion_wrap_classes = array_merge( $accordion_wrap_classes, $classes_wrap );
 }

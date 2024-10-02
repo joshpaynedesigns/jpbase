@@ -148,10 +148,11 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 	 *
 	 * @since 3.0.0
 	 * @since 5.0.0 Introduced caching based on Post ID or Parent Post ID.
-	 * @deprecated 6.0.7 To correct misspelling.
+	 * @deprecated 7.0.1 6.0.7 To correct misspelling.
 	 *
 	 * @param int     $post_id (optional) Which post we are looking for the All link.
 	 * @param boolean $echo    (optional) Should be echoed along side returning the value.
+	 * _deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 	 *
 	 * @return string  Link reference to all events in a recurrent event.
 	 */
@@ -198,10 +199,11 @@ if ( ! function_exists( 'tribe_all_occurrences_link' ) ) {
 			/**
 			 * Filters the "all occurrences" link.
 			 * @since 6.0.7
-			 * @deprecated 6.0.7 To correct misspelling.
+			 * @deprecated 7.0.1 6.0.7 To correct misspelling.
 			 *
 			 * @param string $link The link HTML string.
 			 */
+			_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 			$cache_links[ $cache_id ] = apply_filters_deprecated(
 				'tribe_all_occurences_link',
 				[ $tribe_ecp->getLink( 'all', $post_id ) ],
@@ -823,14 +825,24 @@ if ( ! function_exists( 'tribe_display_saved_organizer' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_organizer() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$current_organizer_id = TEC::instance()->defaults()->organizer_id();
 		$current_organizer = ( $current_organizer_id != 'none' && $current_organizer_id != 0 && $current_organizer_id ) ? tribe_get_organizer( $current_organizer_id ) : __( 'No default set', 'tribe-events-calendar-pro' );
-		$current_organizer = esc_html( $current_organizer );
-		echo '<p class="tribe-field-indent description">' . sprintf( __( 'The current default organizer is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $current_organizer . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default organizer, 3: closing strong tag. */
+				esc_html__( 'The current default organizer is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $current_organizer ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -840,14 +852,24 @@ if ( ! function_exists( 'tribe_display_saved_venue' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_venue() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$current_venue_id = TEC::instance()->defaults()->venue_id();
 		$current_venue = ( $current_venue_id != 'none' && $current_venue_id != 0 && $current_venue_id ) ? tribe_get_venue( $current_venue_id ) : __( 'No default set', 'tribe-events-calendar-pro' );
-		$current_venue = esc_html( $current_venue );
-		echo '<p class="tribe-field-indent tribe-field-description description">' . sprintf( __( 'The current default venue is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $current_venue . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default venue, 3: closing strong tag. */
+				esc_html__( 'The current default venue is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $current_venue ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -857,14 +879,24 @@ if ( ! function_exists( 'tribe_display_saved_address' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_address() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->address();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default address is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default address, 3: closing strong tag. */
+				esc_html__( 'The current default address is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -874,14 +906,24 @@ if ( ! function_exists( 'tribe_display_saved_city' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_city() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->city();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default city is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default city, 3: closing strong tag. */
+				esc_html__( 'The current default city is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -891,14 +933,24 @@ if ( ! function_exists( 'tribe_display_saved_state' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_state() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->state();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-state">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default state, 3: closing strong tag. */
+				esc_html__( 'The current default state/province is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -908,14 +960,24 @@ if ( ! function_exists( 'tribe_display_saved_province' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_province() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->province();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-province">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default state/province, 3: closing strong tag. */
+				esc_html__( 'The current default state/province is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -925,14 +987,24 @@ if ( ! function_exists( 'tribe_display_saved_zip' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_zip() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->zip();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default postal code/zip code is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default postal code/zip code, 3: closing strong tag. */
+				esc_html__( 'The current default postal code/zip code is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -942,32 +1014,51 @@ if ( ! function_exists( 'tribe_display_saved_country' ) ) {
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_country() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->country();
 		$option = empty( $option[1] ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option[1];
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default country is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default country, 3: closing strong tag. */
+				esc_html__( 'The current default country is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
 if ( ! function_exists( 'tribe_display_saved_phone' ) ) {
 	/**
-	}
 	 * Displays the saved phone
 	 * Used in the settings screen
 	 *
 	 * @return void
-	 * @deprecated
+	 * @deprecated 7.0.1
 	 * @todo move this to the settings classes and remove
 	 */
 	function tribe_display_saved_phone() {
+		_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 		$option = TEC::instance()->defaults()->phone();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
-		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default phone is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+
+		printf(
+			'<p class="tribe-field-description venue-default-info description">%s</p>',
+			sprintf(
+				/* translators: 1: Opening strong tag, 2: the current default phone, 3: closing strong tag. */
+				esc_html__( 'The current default phone is: %1$s%2$s%3$s', 'tribe-events-calendar-pro' ),
+				'<strong>',
+				esc_html( $option ),
+				'</strong>'
+			)
+		);
 	}
 }
 
@@ -1032,7 +1123,7 @@ if ( ! function_exists( 'tec_events_pro_maybe_unserialize' ) ) {
 	/**
 	 * Unserializes data only if it was serialized.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 *
 	 * @param mixed      $data            Data that might be unserialized.
 	 * @param bool|array $allowed_classes Array of classes that are allowed to be unserialized.

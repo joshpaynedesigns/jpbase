@@ -27,7 +27,7 @@ class Settings_Controller extends Controller {
 	 * @return void The Controller methods are hooked to the appropriate WordPress and TEC actions and filters.
 	 */
 	public function do_register(): void {
-		add_filter( 'tribe_settings_tab_fields', [ $this, 'update_tec_settings' ], 20 );
+		add_filter( 'tec_general_settings_viewing_section', [ $this, 'update_tec_settings' ], 20 );
 		add_filter( 'tribe_get_option_recurrenceMaxMonthsAfter', [ $this, 'filter_option_value' ], 0 );
 	}
 
@@ -39,7 +39,7 @@ class Settings_Controller extends Controller {
 	 * @return void The filters hooked by this controller are unregistered.
 	 */
 	public function unregister(): void {
-		remove_filter( 'tribe_settings_tab_fields', [ $this, 'update_tec_settings' ], 20 );
+		remove_filter( 'tec_general_settings_viewing_section', [ $this, 'update_tec_settings' ], 20 );
 		remove_filter( 'tribe_get_option_recurrenceMaxMonthsAfter', [ $this, 'filter_option_value' ], 0 );
 	}
 

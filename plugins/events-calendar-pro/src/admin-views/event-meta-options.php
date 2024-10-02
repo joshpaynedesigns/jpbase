@@ -1,8 +1,25 @@
-<div id="modern-tribe-info">
+<?php
+/**
+ * Event Meta Options view.
+ *
+ * @since 7.0.1
+ */
 
-	<h2><?php esc_html_e( 'Additional Fields', 'tribe-events-calendar-pro' ); ?></h2>
-
-	<p><?php printf( esc_html__( 'Add additional fields to your event admin pages by configuring the fields and options here. Your custom additional fields then display on the event admin so that anyone creating events can add unique event information such as food options, recommended age groups, or parking details. %s', 'tribe-events-calendar-pro' ), '<a href="https://theeventscalendar.com/knowledgebase/pro-additional-fields/?utm_campaign=in-app&utm_medium=plugin-ecp&utm_source=settings" target="_blank">' . esc_html__( 'Read more', 'tribe-events-calendar-pro' ) . '</a>' ); ?></p>
+?>
+<div class="tec-settings-form__header-block">
+	<h3 id="tec-events-pro-defaults-venue-title" class="tec-settings-form__section-header">
+		<?php esc_html_e( 'Additional Fields', 'tribe-events-calendar-pro' ); ?>
+	</h3>
+	<p class="tec-settings-form__section-description">
+		<?php
+		printf(
+			/* translators: 1: Opening tag for URL to the knowledgebase article, 2: closing anchor tag. */
+			esc_html__( 'Add additional fields to your event admin pages by configuring the fields and options here. %1$sRead more%2$s', 'tribe-events-calendar-pro' ),
+			sprintf( '<a href="%s" target="_blank">', esc_url( 'https://evnt.is/additional-fields' ) ),
+			'</a>'
+		);
+		?>
+	</p>
 </div>
 
 <div id="tribe-additional-fields" class="tribe-additional-fields">
