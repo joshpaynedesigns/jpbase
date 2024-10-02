@@ -22,21 +22,20 @@ class Tribe__Events__Pro__Admin__Settings {
 	 * @return void
 	 */
 	public function hook() {
-		add_filter( 'tribe_settings_tab_fields', array( $this, 'inject_mobile_fields' ), 10, 2 );
+		add_filter( 'tec_events_settings_display_calendar_display_section', [ $this, 'inject_mobile_fields' ] );
 	}
 
 	/**
 	 * Filters the Settings Fields to add the mobile fields
 	 *
-	 * @param  array  $settings An Array for The Events Calendar fields
-	 * @param  string $id       Which tab you are dealing field
+	 * @param array  $settings   An Array for The Events Calendar fields.
+	 * @param string $deprecated Deprecated argument.
 	 *
 	 * @return array
 	 */
-	public function inject_mobile_fields( $settings, $id ) {
-		// We don't care about other tabs
-		if ( 'display' !== $id ) {
-			return $settings;
+	public function inject_mobile_fields( $settings, $deprecated = null ) {
+		if ( null !== $deprecated ) {
+			_deprecated_argument( __METHOD__, '7.0.1', 'The second argument is no longer used.' );
 		}
 
 		// Include the fields and replace with the return from the include

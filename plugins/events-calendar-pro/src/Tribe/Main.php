@@ -1,5 +1,6 @@
 <?php
 
+use TEC\Events_Pro\Admin\Controller as Admin_Controller;
 use TEC\Events_Pro\Base\Query_Filters as Base_Query_Filters;
 use TEC\Events_Pro\Compatibility\Event_Automator\Zapier\Zapier_Provider;
 use TEC\Events_Pro\Views\Hide_End_Time_Provider;
@@ -89,7 +90,10 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const VERSION = '7.0.2.1';
+		/**
+		 * The Events Calendar Pro Version
+		 */
+		const VERSION = '7.1.0';
 
 		/**
 		 * The Events Calendar Required Version
@@ -97,7 +101,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 *
 		 * @deprecated 4.6
 		 */
-		const REQUIRED_TEC_VERSION = '6.6.2';
+		const REQUIRED_TEC_VERSION = '6.7.0';
 
 		/**
 		 * Constructor.
@@ -132,7 +136,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			add_action( 'parse_query', [ $this, 'set_post_id_for_recurring_event_query' ], 101 );
 
 			add_action( 'tribe_settings_do_tabs', [ $this, 'add_settings_tabs' ] );
-			add_filter( 'tec_events_display_settings_tab_fields', [ $this, 'filter_display_settings_tab_fields' ], 10 );
 
 			add_filter( 'tribe_events_template_paths', [ $this, 'template_paths' ] );
 
@@ -497,7 +500,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			/**
 			 * Fires after the Events Calendar PRO has been initialized.
 			 *
-			 * @since TBD
+			 * @since 7.0.3
 			 */
 			do_action( 'tec_events_pro_init' );
 		}
@@ -713,8 +716,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			);
 
 			require_once $this->pluginPath . 'src/admin-views/tribe-options-defaults.php';
-			// $defaultsTab defined in above included file.
-			new Tribe__Settings_Tab( 'defaults', __( 'Default Content', 'tribe-events-calendar-pro' ), $defaultsTab );
 			// The single-entry array at the end allows for the save settings button to be displayed.
 			new Tribe__Settings_Tab(
 				'additional-fields',
@@ -743,10 +744,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * Filter the display settings fields.
 		 *
 		 * @since 6.0.4
+		 * @deprecated 7.0.1 - Moved to TEC\Events_Pro\Admin\Settings
 		 *
 		 * @param array $fields The current fields.
 		 */
 		public function filter_display_settings_tab_fields( $fields ) {
+			_deprecated_function( __METHOD__, '7.0.1', 'TEC\Events_Pro\Admin\Settings::filter_tec_events_settings_display_calendar_display_section' );
 			$sample_date = strtotime( 'January 15 ' . date( 'Y' ) );
 
 			$fields = Tribe__Main::array_insert_after_key(
@@ -760,12 +763,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 						'default'         => false,
 						'validation_type' => 'boolean',
 					],
-				]
-			);
-			$fields = Tribe__Main::array_insert_after_key(
-				'hideRelatedEvents',
-				$fields,
-				[
 					'week_view_hide_weekends' => [
 						'type'            => 'checkbox_bool',
 						'label'           => __( 'Hide weekends on Week View', 'tribe-events-calendar-pro' ),
@@ -846,8 +843,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @param array $fields The current fields.
 		 */
 		public function filter_dates_settings_tab_fields( $fields ) {
-
-
 			return $fields;
 		}
 
@@ -1846,6 +1841,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if ( class_exists( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' ) ) {
 				tribe_register_provider( '\\TEC\\Events_Pro\\Custom_Tables\\V1\\Provider' );
 			}
+
+			// Set up Admin Provider.
+			tribe_register_provider( Admin_Controller::class );
 
 			// Set up Site Health.
 			tribe_register_provider( TEC\Events_Pro\Site_Health\Provider::class );

@@ -132,7 +132,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		add_action( 'admin_init', [ $this, 'maybe_generate_geopoints_for_all_venues' ] );
 		add_action( 'admin_init', [ $this, 'maybe_offer_generate_geopoints' ] );
 		add_filter( 'tribe-events-bar-views', [ $this, 'setup_view_for_bar' ], 25, 1 );
-		add_filter( 'tec_events_display_settings_tab_fields', [ $this, 'inject_settings' ], 10 );
+		add_filter( 'tribe_display_settings_maps_section', [ $this, 'inject_settings' ], 10 );
 		add_filter( 'tribe-events-bar-filters', [ $this, 'setup_geoloc_filter_in_bar' ], 1, 1 );
 
 		add_filter( 'tribe_events_rewrite_rules_custom', [ $this, 'add_routes' ], 10, 3 );
@@ -1443,7 +1443,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	private function fix_geoloc_data_button() {
 		$url = $this->get_fix_venues_url();
 
-		return sprintf( '<a href="%s" class="button">%s</a>', esc_url( $url ), __( 'Fix venues data', 'tribe-events-calendar-pro' ) );
+		return sprintf( '<a href="%s" class="button-secondary">%s</a>', esc_url( $url ), __( 'Fix venues data', 'tribe-events-calendar-pro' ) );
 	}
 
 	/**

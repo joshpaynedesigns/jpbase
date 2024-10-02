@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Relevanssi integration
 Description: Relevanssi integration for FacetWP
-Version: 0.7.3
+Version: 0.8.2
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-relevanssi
@@ -31,18 +31,25 @@ class FacetWP_Relevanssi
             add_filter( 'posts_results', [ $this, 'posts_results' ], 10, 2 );
             add_filter( 'facetwp_facet_filter_posts', [ $this, 'search_facet' ], 10, 2 );
             add_filter( 'facetwp_facet_search_engines', [ $this, 'search_engines' ] );
+            add_filter( 'facetwp_settings_admin', [ $this, 'admin_settings' ], 10, 2 );
         }
     }
 
 
     /**
      * Run and cache the relevanssi_do_query()
-     * 
+     *
      * @return bool
      * @since 0.7
      */
     function is_main_query( $is_main_query, $query ) {
-        if ( $is_main_query && $query->is_search() && ! empty( $query->get( 's' ) ) ) {
+
+        $is_enabled = ( 'no' === FWP()->helper->get_setting( 'rel_disable_default_search', 'no' ) );
+
+        if ( $query->is_main_query() && $query->is_search() && ! $is_enabled ) {
+            return false;
+        }
+        elseif ( $is_main_query && $query->is_search() && ! empty( $query->get( 's' ) ) ) {
             $this->keywords = $query->get( 's' );
             $this->posts = $this->run_query( $this->keywords );
             $query->set( 'using_relevanssi', true );
@@ -60,7 +67,7 @@ class FacetWP_Relevanssi
      * Modify FacetWP's render() query to use Relevanssi's results while bypassing
      * WP core search. We're using this additional query to support custom query
      * modifications, such as for FacetWP's sort box.
-     * 
+     *
      * The hook priority (1000) is important because this needs to run after
      * FacetWP_Request->update_query_vars()
      */
@@ -79,7 +86,6 @@ class FacetWP_Relevanssi
                 }
                 else {
                     $query->set( 'post_types', $query->get( 'post_type' ) );
-                    $query->set( 'post_type', '' );
                 }
 
                 if ( '' === $query->get( 'orderby' ) ) {
@@ -93,10 +99,10 @@ class FacetWP_Relevanssi
     /**
      * If [facetwp => false] then it's the get_filtered_post_ids() query. Return
      * the raw Relevanssi results to prevent the additional query.
-     * 
+     *
      * If [facetwp => true] and [first_run => true] then it's the main WP query. Return
      * a non-null value to kill the query, since we don't use the results.
-     * 
+     *
      * If [facetwp => true] and [first_run => false] then it's the FacetWP render() query.
      */
     function posts_pre_query( $posts, $query ) {
@@ -166,6 +172,9 @@ class FacetWP_Relevanssi
                 $return = 'continue';
             }
             elseif ( ! empty( FWP()->unfiltered_post_ids ) ) {
+                if ( 'no' == $facet['enable_relevance'] ) {
+                    add_filter( 'facetwp_use_search_relevancy', '__return_false' );
+                }
                 $return = $this->run_query( $selected_values, 'ids', FWP()->unfiltered_post_ids );
             }
         }
@@ -192,6 +201,9 @@ class FacetWP_Relevanssi
         $search->set( 'paged', 1 );
         $search->set( 'post__in', $post__in );
         $search->set( 'posts_per_page', $limit );
+        if ( $GLOBALS['wp_query']->is_search() ) {
+            $search->set( 'post_type', get_query_var( 'post_type' ) );
+        }
         $search->set( 'orderby', get_query_var( 'orderby' ) );
         $search->set( 'order', get_query_var( 'order' ) );
         $search->set( 'fields', $fields );
@@ -208,6 +220,22 @@ class FacetWP_Relevanssi
     function search_engines( $engines ) {
         $engines['relevanssi'] = 'Relevanssi';
         return $engines;
+    }
+
+
+    /**
+     * Add admin settings
+     */
+    function admin_settings( $settings, $class ) {
+
+        $settings['relevanssi']['label'] = 'Relevanssi';
+        $settings['relevanssi']['fields']['rel_disable_default_search'] = [
+            'label' => 'Disable Facet on default search page',
+            'notes' => 'Prevents facet from use on default search page',
+            'html' => $class->get_setting_html( 'rel_disable_default_search', 'toggle' )
+        ];
+
+        return $settings;
     }
 }
 

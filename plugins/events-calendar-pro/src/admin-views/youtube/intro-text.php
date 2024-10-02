@@ -17,10 +17,10 @@
  */
 
 ?>
-<h3 id="tribe-events-virtual-youtube-credentials" class="tribe-settings-youtube-application__title">
-	<?php echo esc_html_x( 'YouTube Live', 'API connection header', 'tribe-events-calendar-pro' ); ?>
-</h3>
-<div class="tec-youtube-accounts-messages">
+<div class="tec-settings-form__header-block">
+	<h3 id="tec-events-pro-youtube-title" class="tec-settings-form__section-header tec-settings-form__section-header--sub">
+		<?php echo esc_html_x( 'YouTube Live', 'API connection header', 'tribe-events-calendar-pro' ); ?>
+	</h3>
 	<?php
 		$this->template( 'components/message', [
 		'message' => $message,

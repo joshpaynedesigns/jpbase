@@ -25,6 +25,8 @@ return array(
     'RRule\\RRuleInterface' => $vendorDir . '/rlanvin/php-rrule/src/RRuleInterface.php',
     'RRule\\RSet' => $vendorDir . '/rlanvin/php-rrule/src/RSet.php',
     'RRule\\RfcParser' => $vendorDir . '/rlanvin/php-rrule/src/RfcParser.php',
+    'TEC\\Events_Pro\\Admin\\Controller' => $baseDir . '/src/Events_Pro/Admin/Controller.php',
+    'TEC\\Events_Pro\\Admin\\Settings' => $baseDir . '/src/Events_Pro/Admin/Settings.php',
     'TEC\\Events_Pro\\Base\\Query_Filters' => $baseDir . '/src/Events_Pro/Base/Query_Filters.php',
     'TEC\\Events_Pro\\Block_Templates\\Controller' => $baseDir . '/src/Events_Pro/Block_Templates/Controller.php',
     'TEC\\Events_Pro\\Block_Templates\\Single_Venue\\Single_Block_Template' => $baseDir . '/src/Events_Pro/Block_Templates/Single_Venue/Single_Block_Template.php',

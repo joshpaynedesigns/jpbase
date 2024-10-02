@@ -3,6 +3,7 @@
 namespace TEC\Events_Pro\Linked_Posts\Organizer;
 
 use TEC\Common\Contracts\Provider\Controller as Controller_Contract;
+use Tribe__Settings_Tab as Tab;
 
 /**
  * Class Controller.
@@ -95,7 +96,7 @@ class Controller extends Controller_Contract {
 	 * @since   6.2.0
 	 */
 	public function add_filters(): void {
-		add_filter( 'tec_events_display_settings_tab_fields', [ $this, 'filter_inject_settings' ], 14 );
+		add_action( 'tec_events_settings_tab_display', [ $this, 'add_organizer_tab' ], 14 );
 	}
 
 	/**
@@ -104,7 +105,7 @@ class Controller extends Controller_Contract {
 	 * @since   6.2.0
 	 */
 	public function remove_filters(): void {
-		remove_filter( 'tec_events_display_settings_tab_fields', [ $this, 'filter_inject_settings' ], 14 );
+		remove_action( 'tec_events_settings_tab_display', [ $this, 'add_organizer_tab' ], 14 );
 	}
 
 	/**
@@ -177,6 +178,7 @@ class Controller extends Controller_Contract {
 	 * Inject settings into the provided fields.
 	 *
 	 * @since   6.2.0
+	 * @deprecated 7.0.1
 	 *
 	 * @param array $fields The fields into which the settings should be injected.
 	 *
@@ -184,6 +186,23 @@ class Controller extends Controller_Contract {
 	 *
 	 */
 	public function filter_inject_settings( $fields ): array {
+		_deprecated_function( __METHOD__, '7.0.1', 'add_organizer_tab' );
+
 		return $this->container->make( Settings::class )->inject_display_settings( $fields );
+	}
+
+	/**
+	 * Create the Orgganize tab in the settings page.
+	 *
+	 * @since 7.0.1
+	 *
+	 * @param Tab $display_tab The display settings tab.
+	 *
+	 * @return void
+	 */
+	public function add_organizer_tab( Tab $display_tab ): void {
+		/** @var Settings $settings */
+		$settings = $this->container->make( Settings::class );
+		$settings->add_organizer_tab( $display_tab );
 	}
 }

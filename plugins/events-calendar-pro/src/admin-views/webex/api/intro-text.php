@@ -17,26 +17,6 @@
  */
 
 ?>
-<h3 id="tec-webex-application-credentials" class="tec-settings-webex-application__title">
+<h3 id="tec-webex-application-credentials" class="tec-settings-webex-application__title tec-settings-form__section-header  tec-settings-form__section-header--sub">
 	<?php echo esc_html_x( 'Webex', 'API connection header', 'tribe-events-calendar-pro' ); ?>
 </h3>
-<p>
-	<?php
-	$url = 'https://evnt.is/1b53';
-	echo sprintf(
-		'%1$s %2$s. <a href="%3$s" target="_blank">%4$s</a>',
-		esc_html_x(
-			'You need to connect your site to a Webex account to be able to generate Webex links for your',
-		'Settings help text for multiple Webex accounts.',
-		'tribe-events-calendar-pro'
-		),
-		tribe_get_virtual_event_label_plural_lowercase(),
-		esc_url( $url ),
-		esc_html_x(
-			'Read more about adding and managing Webex Accounts.',
-			'Settings link text for multiple Webex accounts.',
-			'tribe-events-calendar-pro'
-		)
-	);
-	?>
-</p>

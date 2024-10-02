@@ -11,7 +11,7 @@
  * @link http://evnt.is/1aiy
  *
  * @version 5.7.0
- * @version TBD Now allows for hiding the event end time with $show_end_time.
+ * @version 7.0.3 Now allows for hiding the event end time with $show_end_time.
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  * @var bool $show_end_time Flag to disable end time from displaying.

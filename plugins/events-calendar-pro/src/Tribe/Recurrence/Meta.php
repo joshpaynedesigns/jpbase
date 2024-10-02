@@ -4,7 +4,7 @@
 /**
  * Tribe__Events__Pro__Recurrence__Meta
  *
- * WordPress hooks and filters controlling event recurrence
+ * WordPress hooks and filters controlling event recurrence.
  */
 class Tribe__Events__Pro__Recurrence__Meta {
 
@@ -29,26 +29,26 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 *                  common to all the Recurrence Instance Engines.
 	 */
 	public static function init( $all = true ) {
-		$actions = array(
-			array( 'tribe_events_date_display', array( __CLASS__, 'loadRecurrenceData' ), 10, 1 ),
-			array( 'pre_get_comments', array( __CLASS__, 'set_post_id_for_recurring_event_comment_queries' ), 10, 1 ),
-			array( 'comment_post_redirect', array( __CLASS__, 'fix_redirect_after_comment_is_posted' ), 10, 2 ),
-			array( 'wp_update_comment_count', array( __CLASS__, 'update_comment_counts_on_child_events' ), 10, 3 ),
-			array(
+		$actions = [
+			[ 'tribe_events_date_display', [ __CLASS__, 'loadRecurrenceData' ], 10, 1 ],
+			[ 'pre_get_comments', [ __CLASS__, 'set_post_id_for_recurring_event_comment_queries' ], 10, 1 ],
+			[ 'comment_post_redirect', [ __CLASS__, 'fix_redirect_after_comment_is_posted' ], 10, 2 ],
+			[ 'wp_update_comment_count', [ __CLASS__, 'update_comment_counts_on_child_events' ], 10, 3 ],
+			[
 				'manage_' . Tribe__Events__Main::POSTTYPE . '_posts_custom_column',
-				array( __CLASS__, 'populate_custom_list_table_columns' ),
+				[ __CLASS__, 'populate_custom_list_table_columns' ],
 				10,
 				2,
-			),
-			array( 'wp_before_admin_bar_render', array( __CLASS__, 'admin_bar_render' ), 10, 1 ),
-			array( 'tribe_community_events_enqueue_resources', array( __CLASS__, 'enqueue_recurrence_data' ), 10, 1 ),
-			array(
+			],
+			[ 'wp_before_admin_bar_render', [ __CLASS__, 'admin_bar_render' ], 10, 1 ],
+			[ 'tribe_community_events_enqueue_resources', [ __CLASS__, 'enqueue_recurrence_data' ], 10, 1 ],
+			[
 				'tribe_events_community_form_before_template',
-				array( __CLASS__, 'output_recurrence_json_data' ),
+				[ __CLASS__, 'output_recurrence_json_data' ],
 				10,
 				1,
-			),
-		);
+			],
+		];
 
 		if ( $all ) {
 			array_push( $actions,
@@ -81,29 +81,29 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			add_action( $tag, $callback, $priority, $args );
 		}
 
-		$filters = array(
-			array( 'get_edit_post_link', array( __CLASS__, 'filter_edit_post_link' ), 10, 3 ),
-			array( 'preprocess_comment', array( __CLASS__, 'set_parent_for_recurring_event_comments' ), 10, 1 ),
-			array( 'comments_array', array( __CLASS__, 'set_comments_array_on_child_events' ), 10, 2 ),
-			array(
+		$filters = [
+			[ 'get_edit_post_link', [ __CLASS__, 'filter_edit_post_link' ], 10, 3 ],
+			[ 'preprocess_comment', [ __CLASS__, 'set_parent_for_recurring_event_comments' ], 10, 1 ],
+			[ 'comments_array', [ __CLASS__, 'set_comments_array_on_child_events' ], 10, 2 ],
+			[
 				'manage_' . Tribe__Events__Main::POSTTYPE . '_posts_columns',
-				array( __CLASS__, 'list_table_column_headers' ),
+				[ __CLASS__, 'list_table_column_headers' ],
 				10,
 				1,
-			),
-			array( 'post_class', array( __CLASS__, 'add_recurring_event_post_classes' ), 10, 3 ),
-			array( 'post_row_actions', array( __CLASS__, 'edit_post_row_actions' ), 10, 2 ),
-			array( 'tribe_settings_tab_fields', array( __CLASS__, 'inject_settings' ), 10, 2 ),
-			array(
+			],
+			[ 'post_class', [ __CLASS__, 'add_recurring_event_post_classes' ], 10, 3 ],
+			[ 'post_row_actions', [ __CLASS__, 'edit_post_row_actions' ], 10, 2 ],
+			[ 'tec_general_settings_viewing_section', [ __CLASS__, 'inject_settings' ], 10, 1 ],
+			[
 				'tribe_events_pro_output_recurrence_data',
-				array( __CLASS__, 'maybe_fix_datepicker_output' ),
+				[ __CLASS__, 'maybe_fix_datepicker_output' ],
 				10,
 				2,
-			),
-		);
+			],
+		];
 
 		if ( $all ) {
-			$filters[] = array( 'posts_request', array( 'Tribe__Events__Pro__Recurrence__Queries', 'collapse_sql' ), 10, 2 );
+			$filters[] = [ 'posts_request', [ 'Tribe__Events__Pro__Recurrence__Queries', 'collapse_sql' ], 10, 2 ];
 		}
 
 		foreach ( $filters as $filter ) {
@@ -111,6 +111,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			if ( has_filter( $tag, $callback ) ) {
 				continue;
 			}
+
 			add_filter( $tag, $callback, $priority, $args );
 		}
 
@@ -135,7 +136,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		);
 
 		/**
-		 * Register Notices
+		 * Register Notices.
 		 */
 		if ( $all ) {
 			self::reset_scheduler();
@@ -200,27 +201,27 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Checks to fix all the required datepicker dates to the correct format
+	 * Checks to fix all the required datepicker dates to the correct format.
 	 *
-	 * @param  array $recurrence The Recurrence meta rules
+	 * @param  array $recurrence The Recurrence meta rules.
 	 *
-	 * @return array              Recurrence Meta after maybe fixing the data
+	 * @return array              Recurrence Meta after maybe fixing the data.
 	 */
 	public static function maybe_fix_datepicker_output( $recurrence, $post_id ) {
 		if ( empty( $recurrence['exclusions'] ) ) {
 			return $recurrence;
 		}
 
-		// Fetch the datepicker current format
+		// Fetch the datepicker current format.
 		$datepicker_format = Tribe__Date_Utils::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
 
 		foreach ( $recurrence['exclusions'] as &$exclusion ) {
-			// Only do something if the exclusion is custom+date
+			// Only do something if the exclusion is custom+date.
 			if ( empty( $exclusion['custom'] ) || 'Date' !== $exclusion['custom']['type'] ) {
 				continue;
 			}
 
-			// Actually do the conversion of output
+			// Actually do the conversion of output.
 			if ( ! empty( $exclusion['custom']['date']['date'] ) ) {
 				$formatted = date( $datepicker_format, strtotime( $exclusion['custom']['date']['date'] ) );
 				$exclusion['custom']['date']['date'] = $formatted;
@@ -232,9 +233,9 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				}
 			}
 
-			// If there's no value, clean the output of the custom date
+			// If there's no value, clean the output of the custom date.
 			if ( isset( $exclusion['custom']['date']['date'] ) && ! $exclusion['custom']['date']['date'] ) {
-				$exclusion = Tribe__Utils__Array::set( $exclusion, array( 'custom', 'date', 'date' ), '' );
+				$exclusion = Tribe__Utils__Array::set( $exclusion, [ 'custom', 'date', 'date' ], '' );
 			}
 		}
 
@@ -242,7 +243,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Change the link for a recurring event to edit its series
+	 * Change the link for a recurring event to edit its series.
 	 *
 	 * @return void
 	 */
@@ -266,31 +267,31 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		}
 		// We need to make sure we're editing the correct post (in cases where we show events on venue pages, etc), and the user can do so.
 		if ( get_edit_post_link( $post->ID ) === $menu_parent->href && current_user_can( 'edit_post', $post->ID ) ) {
-			$wp_admin_bar->add_node( array(
+			$wp_admin_bar->add_node( [
 				'id'     => 'edit-series',
 				'title'  => __( 'Edit Series', 'tribe-events-calendar-pro' ),
 				'parent' => 'edit',
 				'href'   => $menu_parent->href,
-			) );
-			$wp_admin_bar->add_node( array(
+			] );
+			$wp_admin_bar->add_node( [
 				'id'     => 'split-single',
 				'title'  => __( 'Break from Series', 'tribe-events-calendar-pro' ),
 				'parent' => 'edit',
 				'href'   => esc_url( wp_nonce_url( self::get_split_series_url( $post->ID, false, false ), 'tribe_split_' . $post->ID ) ),
-				'meta'   => array(
+				'meta'   => [
 					'class' => 'tribe-split-single',
-				),
-			) );
+				],
+			] );
 			if ( ! empty( $post->post_parent ) ) {
-				$wp_admin_bar->add_node( array(
+				$wp_admin_bar->add_node( [
 					'id'     => 'split-series',
 					'title'  => __( 'Edit Future Events', 'tribe-events-calendar-pro' ),
 					'parent' => 'edit',
 					'href'   => esc_url( wp_nonce_url( self::get_split_series_url( $post->ID, false, true ), 'tribe_split_' . $post->ID ) ),
-					'meta'   => array(
+					'meta'   => [
 						'class' => 'tribe-split-all',
-					),
-				) );
+					],
+				] );
 			}
 		}
 	}
@@ -334,7 +335,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			$first_id_in_series = $post->post_parent ? $post->post_parent : $post->ID;
 			if ( isset( $actions['edit'] ) && 'trash' != $post->post_status ) {
 				if ( current_user_can( 'edit_post', $post->ID ) ) {
-					$split_actions          = array();
+					$split_actions          = [];
 					$split_actions['split'] = sprintf( '<a href="%s" class="tribe-split tribe-split-single" title="%s">%s</a>',
 						esc_url( wp_nonce_url( self::get_split_series_url( $post->ID, false, false ), 'tribe_split_' . $post->ID ) ),
 						esc_attr( __( 'Break this event out of its series and edit it independently', 'tribe-events-calendar-pro' ) ),
@@ -400,7 +401,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			return;
 		}
 
-		$args = array( 'action' => 'tribe_split' );
+		$args = [ 'action' => 'tribe_split' ];
 		if ( $all ) {
 			$args['split_all'] = 1;
 		}
@@ -414,7 +415,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	public static function handle_split_request() {
-		// TODO: would be nice to have a way to add it back into the series (i.e., an undo)
+		// TODO: would be nice to have a way to add it back into the series (i.e., an undo).
 		$post_id = isset( $_REQUEST['post'] ) ? $_REQUEST['post'] : 0;
 		check_admin_referer( 'tribe_split_' . $post_id );
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
@@ -513,19 +514,19 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	/**
 	 * Comments on recurring events should be kept with the parent event
 	 *
-	 * @param array $commentdata
+	 * @param array $comment_data
 	 *
 	 * @return array
 	 */
-	public static function set_parent_for_recurring_event_comments( $commentdata ) {
-		if ( isset( $commentdata['comment_post_ID'] ) && tribe_is_recurring_event( $commentdata['comment_post_ID'] ) ) {
-			$event = get_post( $commentdata['comment_post_ID'] );
+	public static function set_parent_for_recurring_event_comments( $comment_data ) {
+		if ( isset( $comment_data['comment_post_ID'] ) && tribe_is_recurring_event( $comment_data['comment_post_ID'] ) ) {
+			$event = get_post( $comment_data['comment_post_ID'] );
 			if ( ! empty( $event->post_parent ) ) {
-				$commentdata['comment_post_ID'] = $event->post_parent;
+				$comment_data['comment_post_ID'] = $event->post_parent;
 			}
 		}
 
-		return $commentdata;
+		return $comment_data;
 	}
 
 	/**
@@ -568,10 +569,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			/** @var wpdb $wpdb */
 			global $wpdb;
 
-			$wpdb->update( $wpdb->posts, array( 'comment_count' => $new_count ), array(
-				'post_parent' => $parent_id,
-				'post_type'   => Tribe__Events__Main::POSTTYPE,
-			) );
+			$wpdb->update(
+				$wpdb->posts,
+				[ 'comment_count' => $new_count ],
+				[
+					'post_parent' => $parent_id,
+					'post_type'   => Tribe__Events__Main::POSTTYPE,
+				]
+			);
 
 			$child_ids = self::children()->get_ids( $parent_id );
 
@@ -598,11 +603,11 @@ class Tribe__Events__Pro__Recurrence__Meta {
 						)
 					);
 				} elseif ( empty( $comment_author ) ) {
-					$comments = get_comments( array(
+					$comments = get_comments( [
 						'post_id' => $event->post_parent,
 						'status'  => 'approve',
 						'order'   => 'ASC',
-					) );
+					] );
 				} else {
 					$comments = $wpdb->get_results(
 						$wpdb->prepare(
@@ -620,12 +625,12 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Update event recurrence when a recurring event is saved
+	 * Update event recurrence when a recurring event is saved.
 	 *
-	 * @param integer $event_id id of the event to update
-	 * @param array   $data     data defining the recurrence of this event
+	 * @param integer $event_id Id of the event to update.
+	 * @param array   $data     Data defining the recurrence of this event.
 	 *
-	 * @return bool `true` on success, `false` on failure
+	 * @return bool `true` on success, `false` on failure.
 	 */
 	public static function updateRecurrenceMeta( $event_id, $data ) {
 		if ( ! isset( $data['recurrence'] ) ) {
@@ -658,9 +663,9 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}//end updateRecurrenceMeta
 
 	/**
-	 * Displays the events recurrence form on the event editor screen
+	 * Displays the events recurrence form on the event editor screen.
 	 *
-	 * @param integer $post_id ID of the current event
+	 * @param integer $post_id ID of the current event.
 	 *
 	 * @return void
 	 */
@@ -671,12 +676,12 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		}
 
 		/**
-		 * Control if the recurrence meta is displayed
+		 * Control if the recurrence meta is displayed.
 		 *
 		 * @since 4.4.35
 		 *
-		 * @param bool $display By default is true
-		 * @param int $post_id The ID of the post where the meta box is being included
+		 * @param bool $display By default is true.
+		 * @param int $post_id The ID of the post where the meta box is being included.
 		 */
 		$show_recurrence_meta = apply_filters( 'tribe_events_pro_show_recurrence_meta_box', true, $post_id );
 
@@ -687,7 +692,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			return; // don't show recurrence fields for instances of a recurring event
 		}
 
-		$recurrence = array();
+		$recurrence = [];
 		if ( $post_id ) {
 			$recurrence = self::getRecurrenceMeta( $post_id );
 		}
@@ -705,7 +710,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-recurrence' );
 
 		if ( $post_id ) {
-			// convert array to variables that can be used in the view
+			// Convert array to variables that can be used in the view.
 			$recurrence = self::getRecurrenceMeta( $post_id );
 
 			/**
@@ -727,29 +732,29 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			'tribe_events_pro_recurrence_strings',
 			apply_filters(
 				'tribe_events_pro_recurrence_strings',
-				array(
+				[
 					'date'       => self::date_strings(),
 					'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
-					'exclusion'  => array(),
-				)
+					'exclusion'  => [],
+				]
 			)
 		);
 	}
 
 	/**
-	 * Outputs recurrence data in JSON format when localize script won't work
+	 * Outputs recurrence data in JSON format when localize script won't work.
 	 *
-	 * @param int $post_id Post ID of event
+	 * @param int $post_id Post ID of event.
 	 */
-	public static function output_recurrence_json_data( $post_id, $recurrence = array() ) {
-		// convert array to variables that can be used in the view
+	public static function output_recurrence_json_data( $post_id, $recurrence = [] ) {
+		// Convert array to variables that can be used in the view.
 		$recurrence = self::getRecurrenceMeta( $post_id, $recurrence );
 
 		/**
-		 * Creates a way to filter the output of recurrence meta depending on the ID
+		 * Creates a way to filter the output of recurrence meta depending on the ID.
 		 *
-		 * @var $recurrence Meta Info
-		 * @var $post_id    the post ID
+		 * @var $recurrence Meta Info.
+		 * @var $post_id    The post ID.
 		 */
 		$recurrence = apply_filters( 'tribe_events_pro_output_recurrence_data', $recurrence, $post_id );
 		?>
@@ -765,10 +770,10 @@ class Tribe__Events__Pro__Recurrence__Meta {
 
 	/**
 	 * Setup an error message if there is a problem with a given recurrence.
-	 * The message is saved in an option to survive the page load and is deleted after being displayed
+	 * The message is saved in an option to survive the page load and is deleted after being displayed.
 	 *
-	 * @param array $event The event object that is being saved
-	 * @param array $msg   The message to display
+	 * @param array $event_id The event object that is being saved.
+	 * @param array $msg      The message to display.
 	 *
 	 * @return void
 	 */
@@ -782,7 +787,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Display an error message if there is a problem with a given recurrence and clear it from the cache
+	 * Display an error message if there is a problem with a given recurrence and clear it from the cache.
 	 *
 	 * @return void
 	 */
@@ -800,10 +805,10 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Convenience method for turning event meta into keys available to turn into PHP variables
+	 * Convenience method for turning event meta into keys available to turn into PHP variables.
 	 *
-	 * @param integer $post_id         ID of the event being updated
-	 * @param array   $recurrence_data The actual recurrence data
+	 * @param integer $post_id         ID of the event being updated.
+	 * @param array   $recurrence_data The actual recurrence data.
 	 *
 	 * @return array
 	 */
@@ -857,10 +862,10 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Convenience method for turning event meta into keys available to turn into PHP variables
+	 * Convenience method for turning event meta into keys available to turn into PHP variables.
 	 *
-	 * @param integer $post_id         ID of the event being updated
-	 * @param         $recurrence_data array The actual recurrence data
+	 * @param integer $post_id         ID of the event being updated.
+	 * @param array   $recurrence_data The actual recurrence data.
 	 *
 	 * @return array
 	 */
@@ -871,7 +876,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 
 		$utils = new Tribe__Events__Pro__Recurrence__Utils;
 
-		$record = array();
+		$record = [];
 
 		if ( $recurrence_data ) {
 			$record['EventStartDate'] = empty( $recurrence_data['EventStartDate'] ) ? tribe_get_start_date( $post_id ) : $recurrence_data['EventStartDate'];
@@ -881,23 +886,23 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			$record['end']            = empty( $recurrence_data['end'] ) ? null : $recurrence_data['end'];
 			$record['end-count']      = empty( $recurrence_data['end-count'] ) ? null : $recurrence_data['end-count'];
 
-			$record['custom']             = array();
+			$record['custom']             = [];
 			$record['custom']['type']     = empty( $recurrence_data['custom-type'] ) ? null : $recurrence_data['custom-type'];
 			$record['custom']['interval'] = empty( $recurrence_data['custom-interval'] ) ? null : $recurrence_data['custom-interval'];
 
 			$record['custom']['same-time'] = 'yes';
 			$record['custom']['day']['same-time'] = 'yes';
 
-			$record['custom']['week']              = array();
+			$record['custom']['week']              = [];
 			$record['custom']['week']['day']       = empty( $recurrence_data['custom-week-day'] ) ? null : $recurrence_data['custom-week-day'];
 			$record['custom']['week']['same-time'] = 'yes';
 
-			$record['custom']['month']              = array();
+			$record['custom']['month']              = [];
 			$record['custom']['month']['number']    = empty( $recurrence_data['custom-month-number'] ) ? null : $recurrence_data['custom-month-number'];
 			$record['custom']['month']['day']       = empty( $recurrence_data['custom-month-day'] ) ? null : $recurrence_data['custom-month-day'];
 			$record['custom']['month']['same-time'] = 'yes';
 
-			$record['custom']['year']              = array();
+			$record['custom']['year']              = [];
 			$record['custom']['year']['month']     = empty( $recurrence_data['custom-year-month'] ) ? null : $recurrence_data['custom-year-month'];
 			$record['custom']['year']['filter']    = empty( $recurrence_data['custom-year-filter'] ) ? null : $recurrence_data['custom-year-filter'];
 			$record['custom']['year']['number']    = empty( $recurrence_data['custom-year-month-number'] ) ? null : Tribe__Events__Pro__Recurrence__Series_Rules_Factory::intToOrdinal( $recurrence_data['custom-year-month-number'] );
@@ -939,15 +944,15 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	/**
 	 * Clean up meta array by providing defaults.
 	 *
-	 * @param  array $meta
+	 * @param  array $meta Meta array to clean up.
 	 *
-	 * @return array of $meta merged with defaults
+	 * @return array of $meta Merged with defaults.
 	 */
-	protected static function recurrenceMetaDefault( $meta = array() ) {
-		$default_meta = array(
-			'rules'      => array(),
-			'exclusions' => array(),
-		);
+	protected static function recurrenceMetaDefault( $meta = [] ) {
+		$default_meta = [
+			'rules'      => [],
+			'exclusions' => [],
+		];
 
 		if ( $meta ) {
 			if ( isset( $meta['rules'] ) ) {
@@ -963,8 +968,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	/**
 	 * Recurrence validation method.  This is checked after saving an event, but before splitting a series out into multiple occurrences
 	 *
-	 * @param int   $event_id        The event object that is being saved
-	 * @param array $recurrence_meta Recurrence information for this event
+	 * @param int   $event_id        The event object that is being saved.
+	 * @param array $recurrence_meta Recurrence information for this event.
 	 *
 	 * @return bool
 	 */
@@ -1016,15 +1021,15 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Fetches child event IDs
+	 * Fetches child event IDs.
 	 *
 	 * @param int
 	 * $post_id Post ID
-	 * @param array $args    Array of arguments for get_posts
+	 * @param array $args    Array of arguments for get_posts.
 	 *
 	 * @deprecated 4.0.1
 	 */
-	public static function get_child_event_ids( $post_id, $args = array() ) {
+	public static function get_child_event_ids( $post_id, $args = [] ) {
 		_deprecated_function( __METHOD__, '4.0.1', 'Tribe__Events__Pro__Recurrence__Meta::children()->get_ids()' );
 
 		return self::children()->get_ids( $post_id, $args );
@@ -1042,14 +1047,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		$parent_sql = $wpdb->prepare( $parent_sql, $slug, Tribe__Events__Main::POSTTYPE );
 		$parent_id  = $wpdb->get_var( $parent_sql );
 		if ( empty( $parent_id ) ) {
-			return array();
+			return [];
 		}
 		$children_sql = "SELECT ID FROM {$wpdb->posts} WHERE ID=%d OR post_parent=%d AND post_type=%s";
 		$children_sql = $wpdb->prepare( $children_sql, $parent_id, $parent_id, Tribe__Events__Main::POSTTYPE );
 		$all_ids      = $wpdb->get_col( $children_sql );
 
 		if ( empty( $all_ids ) ) {
-			return array();
+			return [];
 		}
 
 		$cache->set( 'events_by_slug_' . $slug, $all_ids, Tribe__Cache::NO_EXPIRATION, 'save_post' );
@@ -1058,8 +1063,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Get the start dates of all instances of the event,
-	 * in ascending order
+	 * Get the start dates of all instances of the event in ascending order.
 	 *
 	 * @param int $request_post The post ID of the requested post, this might not be the Series parent, but the ID
 	 *                          of any post in the Series.
@@ -1068,7 +1072,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 */
 	public static function get_start_dates( $request_post ) {
 		if ( empty( $request_post ) ) {
-			return array();
+			return [];
 		}
 
 		// We get the parent first to make sure we leverage the cache correctly, that is set for the series parent.
@@ -1125,14 +1129,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 * This method takes care of temporarily unhooking our 'before_delete_post' callback
 	 * to avoid the deleted instance being added to the exclusion list.
 	 *
-	 * @param $instance_id
-	 * @param $start_date
+	 * @param string $instance_id The ID of the event to delete.
+	 * @param string $start_date  The start date of the event to delete.
 	 */
 	public static function delete_unexcluded_event( $instance_id, $start_date ) {
 		do_action( 'tribe_events_deleting_child_post', $instance_id, $start_date );
-		remove_action( 'before_delete_post', array( __CLASS__, 'handle_delete_request' ) );
+		remove_action( 'before_delete_post', [ __CLASS__, 'handle_delete_request' ] );
 		wp_delete_post( $instance_id, true );
-		add_action( 'before_delete_post', array( __CLASS__, 'handle_delete_request' ) );
+		add_action( 'before_delete_post', [ __CLASS__, 'handle_delete_request' ] );
 	}
 
 	public static function save_pending_events( $event_id ) {
@@ -1181,24 +1185,24 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Get Excluded Dates for New Events in Series
+	 * Get Excluded Dates for New Events in Series.
 	 *
 	 * @since 4.4.20
 	 *
-	 * @param $recurrences object a recurrence object
-	 * @param $earliest_date int a unix timestamp
-	 * @param $latest_date int a unix timestamp
+	 * @param object $recurrences A recurrence object.
+	 * @param int $earliest_date  A unix timestamp.
+	 * @param int $latest_date    A unix timestamp.
 	 *
 	 * @return array
 	 */
 	private static function get_excluded_dates( $recurrences, $earliest_date, $latest_date ) {
 
 		if ( empty( $recurrences['exclusions'] ) ) {
-			return array();
+			return [];
 		}
 
 		// find days we should exclude
-		$exclusions = array();
+		$exclusions = [];
 		foreach ( $recurrences['exclusions'] as &$recurrence ) {
 			if ( ! $recurrence ) {
 				continue;
@@ -1217,10 +1221,10 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	public static function get_recurrence_for_event( $event_id ) {
 		$recurrence_meta = self::getRecurrenceMeta( $event_id );
 
-		$recurrences = array(
-			'rules'      => array(),
-			'exclusions' => array(),
-		);
+		$recurrences = [
+			'rules'      => [],
+			'exclusions' => [],
+		];
 
 		// Used in generating all-day durations below.
 		$parent_start_date = strtotime( get_post_meta( $event_id, '_EventStartDate', true ) );
@@ -1232,11 +1236,11 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			return $recurrences;
 		}
 
-		foreach ( array( 'rules', 'exclusions' ) as $rule_type ) {
+		foreach ( [ 'rules', 'exclusions' ] as $rule_type ) {
 			foreach ( $recurrence_meta[ $rule_type ] as &$recurrence ) {
 				$rule = Tribe__Events__Pro__Recurrence__Series_Rules_Factory::instance()->build_from( $recurrence, $rule_type );
 
-				// recurrence meta entry might be malformed
+				// recurrence meta entry might be malformed.
 				if ( is_wp_error( $rule ) ) {
 					// let's not process it and let's not try to fix it as it might be a third-party modification
 					tribe( 'logger' )->log_debug( "Broken recurrence data detected for event #{$event_id}", __CLASS__ );
@@ -1334,11 +1338,11 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	public static function get_duration_in_seconds( array $duration ) {
 		$total = 0;
 
-		$expected = array(
+		$expected = [
 			'days'    => 0,
 			'hours'   => 0,
 			'minutes' => 0
-		);
+		];
 
 		$duration = array_merge( $expected, $duration );
 
@@ -1368,7 +1372,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 */
 	public static function getSeriesRules( $postId ) {
 		$recurrence_meta = self::getRecurrenceMeta( $postId );
-		$rules           = array();
+		$rules           = [];
 
 		foreach ( $recurrence_meta['rules'] as &$recurrence ) {
 			$rule = Tribe__Events__Pro__Recurrence__Series_Rules_Factory::instance()->build_from( $recurrence );
@@ -1393,7 +1397,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		$recurrence_rules = self::getRecurrenceMeta( $postId );
 		$start_date       = Tribe__Events__Main::get_series_start_date( $postId );
 
-		$output_text = array();
+		$output_text = [];
 
 		// if there is a description override for recurrences, return that instead of building it dynamically
 		if ( ! empty( $recurrence_rules['description'] ) ) {
@@ -1413,8 +1417,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 * @return array
 	 */
 	public static function date_strings() {
-		$strings = array(
-			'weekdays'          => array(
+		return [
+			'weekdays'          => [
 				__( 'Monday' ),
 				__( 'Tuesday' ),
 				__( 'Wednesday' ),
@@ -1423,8 +1427,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				__( 'Saturday' ),
 				__( 'Sunday' ),
 				_x( 'day', 'placeholder used where the true day of the day is determined dynamically', 'tribe-events-calendar-pro' ),
-			),
-			'months'            => array(
+			],
+			'months'            => [
 				__( 'January' ),
 				__( 'February' ),
 				__( 'March' ),
@@ -1437,8 +1441,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				__( 'October' ),
 				__( 'November' ),
 				__( 'December' ),
-			),
-			'time_spans' => array(
+			],
+			'time_spans'        => [
 				'day'               => _x( 'day', 'Used when displaying the word "day" in "the last day" or "the first day"', 'tribe-events-calendar-pro' ),
 				'days'              => _x( 'days', 'Used when displaying the word "days" in e.g. "every 3 days"', 'tribe-events-calendar-pro' ),
 				'week'              => _x( 'week', 'Used when displaying the word "week" in "the last week" or "the first week"', 'tribe-events-calendar-pro' ),
@@ -1447,7 +1451,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				'months'            => _x( 'months', 'Used when displaying the word "months" in e.g. "every 3 months"', 'tribe-events-calendar-pro' ),
 				'year'              => _x( 'year', 'Used when displaying the word "year" in e.g. "every year"', 'tribe-events-calendar-pro' ),
 				'years'             => _x( 'years', 'Used when displaying the word "years" in e.g. "every 2 years"', 'tribe-events-calendar-pro' ),
-			),
+			],
 			'collection_joiner' => _x( 'and', 'Joins the last item in a list of items (i.e. the "and" in Monday, Tuesday, and Wednesday)', 'tribe-events-calendar-pro' ),
 			'day_placeholder'   => _x( '[day]', 'Placeholder text for a day of the week (or days of the week) before the user has selected any', 'tribe-events-calendar-pro' ),
 			'month_placeholder' => _x( '[month]', 'Placeholder text for a month (or months) before the user has selected any', 'tribe-events-calendar-pro' ),
@@ -1459,9 +1463,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			'fifth_x'           => _x( 'the fifth %1$s', 'Used when displaying: "the fifth Monday" or "the fifth day"', 'tribe-events-calendar-pro' ),
 			'last_x'            => _x( 'the last %1$s', 'Used when displaying: "the last Monday" or "the last day"', 'tribe-events-calendar-pro' ),
 			'day'               => _x( 'day', 'Used when displaying the word "day" in "the last day" or "the first day"', 'tribe-events-calendar-pro' ),
-		);
-
-		return $strings;
+		];
 	}
 
 	/**
@@ -1514,7 +1516,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		}
 
 		// Gets the interval, defaulting to 1
-		$interval = intval( Tribe__Utils__Array::get( $rule, array( 'custom', 'interval' ), $interval ) );
+		$interval = intval( Tribe__Utils__Array::get( $rule, [ 'custom', 'interval' ], $interval ) );
 
 		$start_date = strtotime( tribe_get_start_date( $event_id, true, Tribe__Date_Utils::DBDATETIMEFORMAT ) );
 		$end_date   = strtotime( tribe_get_end_date( $event_id, true, Tribe__Date_Utils::DBDATETIMEFORMAT ) );
@@ -1576,7 +1578,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		$key = $type;
 
 		if ( 'weekly' === $type ) {
-			$weekdays = array();
+			$weekdays = [];
 
 			foreach ( $rule['custom']['week']['day'] as $day ) {
 				$weekdays[] = $date_strings['weekdays'][ $day - 1 ];
@@ -1592,8 +1594,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			}
 		} elseif ( 'monthly' === $type ) {
 			$same_day     = empty( $rule['custom']['month']['same-day'] ) || 'yes' === $rule['custom']['month']['same-day'];
-			$month_number = Tribe__Utils__Array::get( $rule, array( 'custom', 'month', 'number' ), $month_number );
-			$month_day    = Tribe__Utils__Array::get( $rule, array( 'custom', 'month', 'day' ), $day_number );
+			$month_number = Tribe__Utils__Array::get( $rule, [ 'custom', 'month', 'number' ], $month_number );
+			$month_day    = Tribe__Utils__Array::get( $rule, [ 'custom', 'month', 'day' ], $day_number );
 
 			// need to check month number is a number
 			if ( ( $same_day && 1 == $interval ) || $month_number ) {
@@ -1691,7 +1693,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			$series_end = date_i18n( tribe_get_date_format( true ), strtotime( $rule['end'] ) );
 		}
 
-		$text = str_replace( array(
+		$text = str_replace(
+			[
 				'[count]',
 				'[day_number]',
 				'[days_of_week]',
@@ -1712,8 +1715,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				'week(s)',
 				'month(s)',
 				'year(s)',
-			),
-			array(
+			],
+			[
 				$count,
 				$day_number,
 				$days_of_week,
@@ -1734,7 +1737,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				'weeks',
 				'months',
 				'years',
-			),
+			],
 			$text
 		);
 
@@ -1752,7 +1755,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 * @return The human readable string
 	 */
 	private static function daysToText( $days ) {
-		$day_words = array(
+		$day_words = [
 			__( 'Monday', 'tribe-events-calendar-pro' ),
 			__( 'Tuesday', 'tribe-events-calendar-pro' ),
 			__( 'Wednesday', 'tribe-events-calendar-pro' ),
@@ -1760,7 +1763,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			__( 'Friday', 'tribe-events-calendar-pro' ),
 			__( 'Saturday', 'tribe-events-calendar-pro' ),
 			__( 'Sunday', 'tribe-events-calendar-pro' ),
-		);
+		];
 		$count     = count( $days );
 		$day_text  = '';
 
@@ -1780,14 +1783,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	}
 
 	/**
-	 * Convert an array of month ids into a human readable string
+	 * Convert an array of month ids into a human readable string.
 	 *
-	 * @param array $months The month ids
+	 * @param array $months The month ids.
 	 *
-	 * @return The human readable string
+	 * @return $month_text The human readable string.
 	 */
 	private static function monthsToText( $months ) {
-		$month_words = array(
+		$month_words = [
 			__( 'January', 'tribe-events-calendar-pro' ),
 			__( 'February', 'tribe-events-calendar-pro' ),
 			__( 'March', 'tribe-events-calendar-pro' ),
@@ -1800,7 +1803,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			__( 'October', 'tribe-events-calendar-pro' ),
 			__( 'November', 'tribe-events-calendar-pro' ),
 			__( 'December', 'tribe-events-calendar-pro' ),
-		);
+		];
 		$count       = count( $months );
 		$month_text  = '';
 
@@ -1822,67 +1825,53 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	/**
 	 * Adds setting for hiding subsequent occurrences by default.
 	 *
-	 *
-	 * @param array  $args
-	 * @param string $id
+	 * @param array  $fields     The array of fields to inject the new field into.
+	 * @param string $deprecated Deprecated parameter.
 	 *
 	 * @return array
 	 */
-	public static function inject_settings( $args, $id ) {
+	public static function inject_settings( $fields, $deprecated = null ) {
 
-		if ( $id == 'general' ) {
-			$args = Tribe__Main::array_insert_before_key(
-				'amalgamate-duplicates',
-				$args,
-				[
-					'recurrenceMaxMonthsAfter'         => [
+		$fields = Tribe__Main::array_insert_before_key(
+			'enable_month_view_cache',
+			$fields,
+			[
+				'hideSubsequentRecurrencesDefault' => [
+					'type'            => 'checkbox_bool',
+					'label'           => __( 'Recurring event instances', 'tribe-events-calendar-pro' ),
+					'tooltip'         => __( 'Show only the first instance of each recurring event (only affects list-style views).', 'tribe-events-calendar-pro' ),
+					'default'         => false,
+					'validation_type' => 'boolean',
+				],
+				'userToggleSubsequentRecurrences'  => [
+					'type'            => 'checkbox_bool',
+					'label'           => __( 'Front-end recurring event instances toggle', 'tribe-events-calendar-pro' ),
+					'tooltip'         => __( 'Allow users to decide whether to show all instances of a recurring event on list-style views.', 'tribe-events-calendar-pro' ),
+					'default'         => false,
+					'validation_type' => 'boolean',
+				],
+				'recurrenceMaxMonthsAfter'         => [
 
-						'type'            => 'text',
-						'size'            => 'small',
-						'label'           => __( 'Create recurring events in advance for', 'tribe-events-calendar-pro' ),
-						'tooltip'         => __( 'Recurring events will be created this far in advance', 'tribe-events-calendar-pro' ),
-						'validation_type' => 'positive_int',
-						'default'         => 24,
+					'type'            => 'text',
+					'size'            => 'small',
+					'label'           => __( 'Create recurring events in advance for', 'tribe-events-calendar-pro' ),
+					'tooltip'         => __( 'Recurring events will be created this far in advance', 'tribe-events-calendar-pro' ),
+					'validation_type' => 'positive_int',
+					'default'         => 24,
 
-					],
-					'recurrenceMaxMonthsBefore'        => [
-						'type'            => 'text',
-						'size'            => 'small',
-						'label'           => __( 'Clean up recurring events after', 'tribe-events-calendar-pro' ),
-						'tooltip'         => __( 'Automatically remove recurring event instances older than this', 'tribe-events-calendar-pro' ),
-						'validation_type' => 'positive_int',
-						'default'         => 24,
-					],
-				]
-			);
+				],
+				'recurrenceMaxMonthsBefore'        => [
+					'type'            => 'text',
+					'size'            => 'small',
+					'label'           => __( 'Clean up recurring events after', 'tribe-events-calendar-pro' ),
+					'tooltip'         => __( 'Automatically remove recurring event instances older than this', 'tribe-events-calendar-pro' ),
+					'validation_type' => 'positive_int',
+					'default'         => 24,
+				],
+			]
+		);
 
-			$args = Tribe__Main::array_insert_before_key(
-				'enable_month_view_cache',
-				$args,
-				[
-					'hideSubsequentRecurrencesDefault' => [
-						'type'            => 'checkbox_bool',
-						'label'           => __( 'Recurring event instances', 'tribe-events-calendar-pro' ),
-						'tooltip'         => __( 'Show only the first instance of each recurring event (only affects list-style views).', 'tribe-events-calendar-pro' ),
-						'default'         => false,
-						'validation_type' => 'boolean',
-					],
-					'userToggleSubsequentRecurrences'  => [
-						'type'            => 'checkbox_bool',
-						'label'           => __( 'Front-end recurring event instances toggle', 'tribe-events-calendar-pro' ),
-						'tooltip'         => __( 'Allow users to decide whether to show all instances of a recurring event on list-style views.', 'tribe-events-calendar-pro' ),
-						'default'         => false,
-						'validation_type' => 'boolean',
-					],
-				]
-			);
-
-			add_filter( 'tribe_field_div_end', array( __CLASS__, 'add_months_to_settings_field' ), 100, 2 );
-
-		}
-
-
-		return $args;
+		return $fields;
 	}
 
 	/**
@@ -1892,7 +1881,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 	 * @return string
 	 */
 	public static function add_months_to_settings_field( $html, $field ) {
-		if ( in_array( $field->name, array( 'recurrenceMaxMonthsBefore', 'recurrenceMaxMonthsAfter' ) ) ) {
+		if ( in_array( $field->name, [ 'recurrenceMaxMonthsBefore', 'recurrenceMaxMonthsAfter' ] ) ) {
 			$html = __( ' months', 'tribe-events-calendar-pro' ) . $html;
 		}
 
@@ -2009,16 +1998,13 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		// Reset the scheduler, it will unhook it too.
 		self::reset_scheduler();
 
-		remove_action( 'tribe_events_update_meta', array(
-			__CLASS__,
-			'updateRecurrenceMeta',
-		), 20 );
-		remove_action( 'wp_trash_post', array( __CLASS__, 'handle_trash_request' ) );
-		remove_action( 'untrashed_post', array( __CLASS__, 'handle_untrash_request' ) );
-		remove_action( 'admin_notices', array( __CLASS__, 'showRecurrenceErrorFlash' ) );
-		remove_action( 'tribe_recurring_event_error', array( __CLASS__, 'setupRecurrenceErrorMsg' ) );
-		remove_action( 'admin_action_tribe_split', array( __CLASS__, 'handle_split_request' ) );
-		remove_filter( 'posts_request', array( 'Tribe__Events__Pro__Recurrence__Queries', 'collapse_sql' ) );
+		remove_action( 'tribe_events_update_meta', [ __CLASS__, 'updateRecurrenceMeta' ], 20 );
+		remove_action( 'wp_trash_post', [ __CLASS__, 'handle_trash_request' ] );
+		remove_action( 'untrashed_post', [ __CLASS__, 'handle_untrash_request' ] );
+		remove_action( 'admin_notices', [ __CLASS__, 'showRecurrenceErrorFlash' ] );
+		remove_action( 'tribe_recurring_event_error', [ __CLASS__, 'setupRecurrenceErrorMsg' ] );
+		remove_action( 'admin_action_tribe_split', [ __CLASS__, 'handle_split_request' ] );
+		remove_filter( 'posts_request', [ 'Tribe__Events__Pro__Recurrence__Queries', 'collapse_sql' ] );
 
 		// Unregister the notices.
 		Tribe__Admin__Notices::instance()->remove( 'editing-all-recurrences' );
@@ -2058,7 +2044,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		remove_filter( 'post_row_actions', [ __CLASS__, 'edit_post_row_actions' ] );
 		remove_action( 'wp_before_admin_bar_render', [ __CLASS__, 'admin_bar_render' ] );
 
-		remove_filter( 'tribe_settings_tab_fields', [ __CLASS__, 'inject_settings' ] );
+		remove_filter( 'tec_general_settings_viewing_section', [ __CLASS__, 'inject_settings' ] );
 
 		remove_action( 'tribe_community_events_enqueue_resources', [ __CLASS__, 'enqueue_recurrence_data' ] );
 		remove_action( 'tribe_events_community_form_before_template', [ __CLASS__, 'output_recurrence_json_data' ] );

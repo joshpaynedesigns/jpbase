@@ -17,14 +17,16 @@
  * @var Url $url An instance of the URL handler.
  */
 
-$authorize_link      = $url->to_authorize();
-$connect_label       = _x( 'Add Microsoft Account', 'Label to connect an account to the Microsoft API.', 'tribe-events-calendar-pro' );
+$authorize_link = $url->to_authorize();
+$connect_label  = _x( 'Add Microsoft Account', 'Label to connect an account to the Microsoft API.', 'tribe-events-calendar-pro' );
 
 $classes = [
-	'button'                                                        => true,
-	'tec-events-virtual-meetings-api-settings_add-account-button'   => true,
+	'button'                                => true,
+	'tec-events-virtual-meetings-api-settings_add-account-button' => true,
 	'tec-events-virtual-meetings-microsoft-settings_add-account-button' => true,
+	'tec-settings-form__add-account-button'                                  => true,
 ];
+
 ?>
 <a
 	href="<?php echo esc_url( $authorize_link ); ?>"
@@ -33,10 +35,10 @@ $classes = [
 	<span class="dashicons dashicons-plus"></span>
 	<?php echo esc_html( $connect_label ); ?>
 </a>
-<div class="tec-events-virtual-meetings-api-settings_add-account-button-helper-text tec-events-virtual-meetings-microsoft-settings_add-account-button-helper-text">
+<p class="tec-events-virtual-meetings-api-settings_add-account-button-helper-text tec-events-virtual-meetings-microsoft-settings_add-account-button-helper-text">
 	<?php
 	$url = 'https://evnt.is/1b9c';
-	echo sprintf(
+	printf(
 		'<a href="%1$s" target="_blank">%2$s</a>',
 		esc_url( $url ),
 		esc_html_x(
@@ -46,4 +48,4 @@ $classes = [
 		)
 	);
 	?>
-</div>
+</p>

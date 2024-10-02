@@ -2,7 +2,7 @@
 /**
  * The Power Automate service provider.
  *
- * @since TBD
+ * @since 7.0.3
  * @package TEC\Event_Automator\Power_Automate
  */
 
@@ -19,7 +19,7 @@ use TEC\Event_Automator\Power_Automate\Settings;
 /**
  * Class Power_Automate_Provider
  *
- * @since TBD
+ * @since 7.0.3
  *
  * @package TEC\Event_Automator\Power_Automate
  */
@@ -27,7 +27,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Binds and sets up implementations.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 */
 	public function register() {
 		if ( ! self::is_active() ) {
@@ -44,7 +44,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Returns whether the event status should register, thus activate, or not.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 *
 	 * @return bool Whether the event status should register or not.
 	 */
@@ -55,7 +55,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Adds the actions required for event status.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 */
 	protected function add_actions() {
 		add_action( 'rest_api_init', [ $this, 'register_endpoints' ] );
@@ -67,10 +67,10 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Adds the filters required by Power Automate.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 */
 	protected function add_filters() {
-		add_filter( 'tribe_addons_tab_fields', [ $this, 'filter_tec_integrations_tab_fields' ] );
+		add_filter( 'tec_settings_gmaps_js_api_start', [ $this, 'filter_tec_integrations_tab_fields' ] );
 		add_filter( 'rest_pre_dispatch', [ $this, 'pre_dispatch_verification_for_create_events' ], 10, 3 );
 		add_filter( 'rest_request_before_callbacks', [ $this, 'modify_rest_api_params_before_validatio_of_create_events' ], 1, 3 );
 	}
@@ -78,7 +78,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Registers the REST API endpoints for Power Automate.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 */
 	public function register_endpoints() {
 		$this->container->make( Canceled_Events::class )->register();
@@ -90,7 +90,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Adds the endpoint to the Power Automate endpoint dashboard filter.
 	 *
-	 * @since TBD
+	 * @since 7.0.3
 	 */
 	public function add_endpoints_to_dashboard() {
 		$this->container->make( New_Events::class )->add_to_dashboard();
@@ -102,7 +102,7 @@ class Power_Automate_Provider extends Service_Provider {
 	/**
 	 * Filters the fields in the Events > Settings > Integrations tab to Power Automate settings.
 	 *
-	 * @since TBD Migrated from Common to Events Calendar Pro.
+	 * @since 7.0.3 Migrated from Common to Events Calendar Pro.
 	 *
 	 * @param array<string,array> $fields The current fields.
 	 *
@@ -120,7 +120,7 @@ class Power_Automate_Provider extends Service_Provider {
 	 * Verify token and login user before dispatching the request.
 	 * Done on `rest_pre_dispatch` to be able to set current user to pass validation capability checks.
 	 *
-	 * @since TBD Migrated from Common to Events Calendar Pro.
+	 * @since 7.0.3 Migrated from Common to Events Calendar Pro.
 	 *
 	 * @param mixed           $result  Response to replace the requested version with. Can be anything
 	 *                                 a normal endpoint can return, or null to not hijack the request.

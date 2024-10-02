@@ -24,15 +24,11 @@ class Settings {
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
 	 *
 	 * @param array<string,mixed> $fields The current setting fields for the tab.
-	 * @param string              $tab    The current tab slug.
+	 * @param string              $deprecated    The current tab slug.
 	 *
 	 * @return array<string,mixed> The tab fields, modified if required.
 	 */
-	public function inject_extension_settings( $fields, $tab ) {
-		if ( 'online-events' !== $tab ) {
-			return $fields;
-		}
-
+	public function inject_extension_settings( $fields, $deprecated = null ) {
 		$fields['info-box-description']['html'] = wp_kses_post(
 			sprintf(
 			/* Translators: Opening and closing tags. */

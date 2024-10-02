@@ -22,7 +22,11 @@ if ( empty( $message ) ) {
 	return;
 }
 
-$message_classes = [ 'tec-events-virtual-settings-message__wrap' ];
+$message_classes = [
+	'tec-events-virtual-settings-message__wrap',
+	'tec-settings-form__section-description',
+];
+
 if ( ! empty( $add_classes ) ) {
 	array_push( $message_classes, $add_classes );
 }

@@ -17,14 +17,19 @@
  */
 
 ?>
-<h3 id="tribe-events-virtual-facebook-credentials" class="tribe-settings-facebook-application__title">
-	<?php echo esc_html_x( 'Facebook Live Video', 'API connection header', 'tribe-events-calendar-pro' ); ?>
-</h3>
-<div class="tec-facebook-app-messages">
-	<?php
-	$this->template( 'components/message', [
-		'message' => $message,
-		'type'    => 'standard',
-	] );
-	?>
+<div class="tec-settings-form__header-block">
+	<h3 id="tribe-events-virtual-facebook-credentials" class="tribe-settings-facebook-application__title tec-settings-form__section-header tec-settings-form__section-header--sub">
+		<?php echo esc_html_x( 'Facebook Live Video', 'API connection header', 'tribe-events-calendar-pro' ); ?>
+	</h3>
+	<div class="tec-facebook-app-messages">
+		<?php
+		$this->template(
+			'components/message',
+			[
+				'message' => $message,
+				'type'    => 'standard',
+			]
+		);
+		?>
+	</div>
 </div>

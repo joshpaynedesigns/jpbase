@@ -58,26 +58,39 @@ class Provider extends Service_Provider {
 	 */
 	public function remove_old_recurrence_cleaners() {
 		// Hide from settings page.
-		add_filter( 'tribe_settings_tab_fields', function ( $args, $id ) {
-			if ( $id == 'general' ) {
+		add_filter(
+			'tec_general_settings_viewing_section',
+			function ( $args ) {
 				unset( $args['recurrenceMaxMonthsBefore'] );
-			}
 
-			return $args;
-		}, 99, 2 );
+				return $args;
+			},
+			99,
+			2
+	);
 
 		// Remove scheduled cleaner tasks.
-		add_action( 'init', function () {
-			$scheduler = Tribe__Events__Pro__Recurrence__Meta::$scheduler;
-			remove_action( Tribe__Events__Pro__Recurrence__Scheduler::CRON_HOOK, [
-				$scheduler,
-				'clean_up_old_recurring_events'
-			], 10 );
-			remove_action( 'update_option_' . Tribe__Main::OPTIONNAME, [
-				Tribe__Events__Pro__Recurrence__Old_Events_Cleaner::instance(),
-				'clean_up_old_recurring_events',
-			], 10 );
-		}, 999 );
+		add_action(
+			'init',
+			function () {
+				$scheduler = Tribe__Events__Pro__Recurrence__Meta::$scheduler;
+				remove_action( Tribe__Events__Pro__Recurrence__Scheduler::CRON_HOOK,
+					[
+						$scheduler,
+						'clean_up_old_recurring_events'
+					],
+					10
+				);
+				remove_action( 'update_option_' . Tribe__Main::OPTIONNAME,
+					[
+						Tribe__Events__Pro__Recurrence__Old_Events_Cleaner::instance(),
+						'clean_up_old_recurring_events',
+					],
+					10
+				);
+			},
+			999
+	);
 	}
 
 	/**
