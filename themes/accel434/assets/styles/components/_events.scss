@@ -108,7 +108,11 @@
       }
 
       .tribe-events-calendar-list__event-title {
-        line-height: rem(16);
+        line-height: rem(24);
+
+        a {
+          border-bottom: none !important;
+        }
       }
 
       .tribe-events-calendar-list__event-venue {
