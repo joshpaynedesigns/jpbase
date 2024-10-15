@@ -35,10 +35,7 @@ $section_classes = ns_decide_section_classes();
 
 <section class="projects-feed-section <?php echo $section_classes; ?>">
     <div class="wrap">
-        <?php if (! empty($section_title)) : ?>
-            <h2 class="section-title"><?php echo $section_title ?></h2>
-        <?php endif; ?>
-
+        <?php ns_section_header($section_title, 'basemb text-center'); ?>
         <div class="projects-feed-outer ns-slider-arrows-wrap">
             <div class="projects-feed">
                 <?php foreach ($projects as $project) : ?>
