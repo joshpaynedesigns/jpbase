@@ -24,7 +24,7 @@ if (!empty($event_category)) {
     $e_arch_link = '/events/';
 }
 
-$section_classes = ns_decide_section_classes('white');
+$section_classes = ns_decide_section_classes();
 
 ?>
 
