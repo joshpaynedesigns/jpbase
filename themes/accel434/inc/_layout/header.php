@@ -24,7 +24,7 @@ function ns_regular_menus_output()
                 <div class="header-nav-wrap">
                     <?php if (has_nav_menu('secondary-nav')) : ?>
                         <div class="secondary-nav-wrap">
-                            <?php wp_nav_menu(array( 'menu' => 'secondary-nav' )); ?>
+                            <?php wp_nav_menu(array( 'theme_location' => 'secondary-nav' )); ?>
                             <?php if (shortcode_exists('gtranslate')) : ?>
                                 <div class=""><?php echo do_shortcode('[gtranslate]'); ?></div>
                             <?php endif; ?>
@@ -32,7 +32,7 @@ function ns_regular_menus_output()
                     <?php endif; ?>
                     <?php if (has_nav_menu('primary')) : ?>
                         <div class="primary-nav-wrap">
-                            <?php wp_nav_menu(array( 'menu' => 'primary' )); ?>
+                            <?php wp_nav_menu(array( 'theme_location' => 'primary' )); ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -62,7 +62,7 @@ function ns_mobile_menu()
                 <?php wp_nav_menu(array( 'theme_location' => 'primary' )); ?>
             <?php endif; ?>
             <?php if (has_nav_menu('secondary-nav')) : ?>
-                <?php wp_nav_menu(array( 'menu' => 'secondary-nav' )); ?>
+                <?php wp_nav_menu(array( 'theme_location' => 'secondary-nav' )); ?>
             <?php endif; ?>
         </div>
         <?php
