@@ -661,3 +661,9 @@ function ec_search_form_label($text)
 {
     return esc_attr('Site Search');
 }
+
+// Generic Login Error Message
+add_filter('login_errors', 'generic_login_error');
+function generic_login_error() {
+  return 'Login failed. Check your username and password.';
+}
