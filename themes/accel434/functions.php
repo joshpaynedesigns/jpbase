@@ -455,13 +455,20 @@ function ns_hide_email($email)
     return '<span id="' . $id . '">[javascript protected email address]</span>' . $script;
 }
 
-/** * Remove editor menu
+/*** Remove editor menu
  */
 function remove_editor_menu()
 {
     remove_action('admin_menu', '_add_themes_utility_last', 101);
 }
 add_action('_admin_menu', 'remove_editor_menu', 1);
+
+/*** Remove plugin editor menu
+ */
+function remove_plugin_editor() {
+  remove_submenu_page( 'plugins.php', 'plugin-editor.php' );
+}
+add_action('admin_init', 'remove_plugin_editor');
 
 /**
  * Add Custom Post Type archive to WordPress search link query
