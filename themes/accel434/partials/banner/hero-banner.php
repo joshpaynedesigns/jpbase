@@ -48,7 +48,7 @@ if ($hide_banner_options == 'hide_banner_image') {
         <div class="banner_slide <?php echo $txt_color; ?>" style="background-image: url(<?php echo $bg_image_url; ?>)">
             <div class="wrap">
                 <div class="banner_content">
-                    <?php if (is_singular('post') || is_singular('tribe_events') || is_singular('location')) : ?>
+                    <?php if (is_singular('post') || is_singular('tribe_events') || is_singular('location') || is_singular('tribe_event_series')) : ?>
                         <span id="heading-one" class="banner_title"><?php echo $title; ?></span>
                     <?php else : ?>
                         <h1 class="banner_title"><?php echo $title; ?></h1>
