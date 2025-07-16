@@ -1,5 +1,9 @@
 .slick-slider {
   background: url("../../images/loader.gif");
+
+  &:not(.slick-initialized) {
+    display: none !important;
+  }
 }
 
 .slick-slider .slick-list {

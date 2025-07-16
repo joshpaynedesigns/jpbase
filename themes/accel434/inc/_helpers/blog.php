@@ -35,7 +35,7 @@ function ns_blog_block($id, $display_date = true, $image_class = null)
                         <?php echo $short_description ?>
                     </div>
                 <?php endif; ?>
-                <a class="read-more arrow-link" href="<?php echo $permalink ?>">Read More</a>
+                <a class="read-more arrow-link" href="<?php echo $permalink ?>">View Post</a>
             </div>
         </div>
     <?php
