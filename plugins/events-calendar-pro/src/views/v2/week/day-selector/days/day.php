@@ -38,7 +38,7 @@ $label = sprintf( __( 'Has %s', 'tribe-events-calendar-pro' ), tribe_get_event_l
 ?>
 <li class="tribe-events-pro-week-day-selector__days-list-item">
 	<button
-		<?php tribe_classes( $day_classes ) ?>
+		<?php tec_classes( $day_classes ); ?>
 		aria-expanded="<?php echo esc_attr( $selected ); ?>"
 		aria-controls="tribe-events-pro-week-mobile-events-day-<?php echo esc_attr( $day[ 'datetime' ] ); ?>"
 		data-js="tribe-events-pro-week-day-selector-day"

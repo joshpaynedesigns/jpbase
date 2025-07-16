@@ -3,10 +3,6 @@
  * The Dependency Injection container.
  *
  * @package lucatume\DI52
- *
- * @license GPL-3.0
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
  */
 
 namespace TEC\Common\lucatume\DI52;

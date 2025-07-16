@@ -34,7 +34,7 @@ class Assets extends Service_Provider {
 	public function register() {
 		$plugin = Pro_Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-events-list-skeleton',
 			'widget-events-list-skeleton.css',
@@ -54,7 +54,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-events-list-full',
 			'widget-events-list-full.css',
@@ -77,7 +77,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-countdown-skeleton',
 			'widget-countdown-skeleton.css',
@@ -96,7 +96,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-countdown-full',
 			'widget-countdown-full.css',
@@ -118,7 +118,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-countdown',
 			'views/widget-countdown.js',
@@ -139,7 +139,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-featured-venue-skeleton',
 			'widget-featured-venue-skeleton.css',
@@ -159,7 +159,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-featured-venue-full',
 			'widget-featured-venue-full.css',
@@ -182,7 +182,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-shortcode-based-skeleton',
 			'widget-shortcode-skeleton.css',
@@ -204,7 +204,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-widgets-v2-shortcode-based-full',
 			'widget-shortcode-full.css',
@@ -229,7 +229,7 @@ class Assets extends Service_Provider {
 		$widget_overrides_stylesheet = \Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/widget-calendar.css' );
 
 		if ( ! empty( $widget_overrides_stylesheet ) ) { // @todo determine if the usage of this is still needed.
-			tribe_asset(
+			tec_asset(
 				$plugin,
 				\Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
 				$widget_overrides_stylesheet,
@@ -247,7 +247,7 @@ class Assets extends Service_Provider {
 
 		$plugin = Pro_Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-admin-widget',
 			'admin-widget.js',

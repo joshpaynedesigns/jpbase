@@ -58,7 +58,7 @@ extends Tribe__Editor__Blocks__Abstract {
 	 * @return void
 	 */
 	public function assets() {
-		tribe_asset(
+		tec_asset(
 			Tribe__Events__Pro__Main::instance(),
 			'tribe-events-pro-' . $this->slug(),
 			'app/' . $this->slug() . '/frontend.css',

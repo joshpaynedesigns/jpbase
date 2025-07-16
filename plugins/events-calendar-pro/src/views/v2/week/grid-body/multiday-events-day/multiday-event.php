@@ -27,7 +27,7 @@ $classes = \Tribe\Events\Pro\Views\V2\week_view_multiday_classes( $event, $day, 
 $should_display = in_array( $day, $event->displays_on, true ) || ( ! $event->starts_this_week && $week_start_date === $day );
 ?>
 <div class="tribe-events-pro-week-grid__multiday-event-wrapper">
-	<article <?php tribe_classes( $classes ) ?> data-event-id="<?php echo esc_attr( $event->ID ); ?>">
+	<article <?php tec_classes( $classes ); ?> data-event-id="<?php echo esc_attr( $event->ID ); ?>">
 		<?php $this->template( 'week/grid-body/multiday-events-day/multiday-event/hidden', [ 'event' => $event ] ); ?>
 		<?php
 		// Either the event starts today or it starts earlier and this day is the first day of the week.

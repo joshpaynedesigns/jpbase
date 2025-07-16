@@ -308,6 +308,7 @@
             if (opts.minDate.length && opts.maxDate.length) {
                 new fDate(this, opts);
             } else {
+                this.value = '';
                 let emptyText = $this.attr('data-empty');
                 $this.attr('placeholder', emptyText).attr('disabled','disabled').addClass('disabled');
             }
@@ -441,6 +442,14 @@
         $parent.find('.facetwp-overflow').toggleClass('facetwp-hidden');
     });
 
+    $().on('facetwp-loaded', function() {
+        $('.facetwp-type-hierarchy .facetwp-overflow').each(function() {
+            var num = $(this).find('.facetwp-link').len();
+            var $el = $(this).next('.facetwp-toggle');
+            $el.text($el.text().replace('{num}', num));
+        });
+    });
+
     /* ======== Number Range ======== */
 
     FWP.hooks.addAction('facetwp/refresh/number_range', function($this, facet_name) {
@@ -500,81 +509,174 @@
 
     /* ======== Proximity ======== */
 
-    $().on('facetwp-loaded', function() {
+    $().on('facetwp-loaded', async function() {
         var $locations = $('.facetwp-location');
 
-        if ($locations.len() < 1) {
+        if ($locations.nodes.length < 1) {
             return;
         }
 
         if (! FWP.loaded) {
             window.FWP_MAP = window.FWP_MAP || {};
-            FWP_MAP.sessionToken = new google.maps.places.AutocompleteSessionToken();
-            FWP_MAP.autocompleteService = new google.maps.places.AutocompleteService();
-            FWP_MAP.placesService = new google.maps.places.PlacesService(
-                document.createElement('div')
-            );
 
-            // We need FWP_JSON available to grab the queryDelay
-            $().on('input', '.facetwp-location', FWP.helper.debounce(function(e) {
-                var val = $(e.target).val();
-                var $facet = $(e.target).closest('.facetwp-facet');
 
-                if ('' == val || val.length < FWP_JSON['proximity']['minLength']) {
-                    $facet.find('.location-results').addClass('facetwp-hidden');
-                    return;
+            if ( 'place-class' == FWP.settings.places ) { // check places place-class
+
+                try {
+                    const { AutocompleteSessionToken, AutocompleteSuggestion } = await google.maps.importLibrary("places");
+    
+                    $().on('input', '.facetwp-location', FWP.helper.debounce(function(e) {
+                        const val = $(e.target).val();
+                        const $facet = $(e.target).closest('.facetwp-facet');
+    
+                        if (!val || val.length < FWP_JSON['proximity']['minLength']) {
+                            $facet.find('.location-results').addClass('facetwp-hidden');
+                            return;
+                        }
+    
+                        FWP_MAP.token ||= new AutocompleteSessionToken();
+    
+                        const request = {
+                            input: val,
+                            sessionToken: FWP_MAP.token,
+                            ...FWP_JSON['proximity']['autocomplete_options']
+                        };
+    
+                        AutocompleteSuggestion.fetchAutocompleteSuggestions(request)
+                            .then(({ suggestions }) => {
+                                if (suggestions && suggestions.length > 0) {
+                                    let html = '';
+                                    suggestions.forEach((suggestion, index) => {                                    
+                                        let result = suggestion.placePrediction;
+                                        const css = (0 === index) ? ' active' : '';
+                                        html += '<div class="location-result' + css + '" data-place-id="' + result.placeId + '" data-index="' + index + '">';
+                                        html += '<span class="result-main">' + (result.mainText?.toString() ?? '') + '</span> ';
+                                        html += '<span class="result-secondary">' + (result.secondaryText?.toString() ?? '') + '</span>';
+                                        html += '<span class="result-description facetwp-hidden">' + (result.text?.toString() ?? '') + '</span>';
+                                        html += '</div>';
+                                    });
+    
+                                    html += '<div class="location-attribution"><div class="powered-by-google"></div></div>';
+                                    $facet.find('.location-results').html(html).removeClass('facetwp-hidden');
+                                } else {
+                                    $facet.find('.location-results').html('').addClass('facetwp-hidden'); // Clear results if no predictions
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error fetching predictions:", error);
+                                $facet.find('.location-results').html('<div class="location-error">Error fetching results.</div>').removeClass('facetwp-hidden'); // Display error message
+                            });
+    
+                    }, FWP_JSON['proximity']['queryDelay']));
+    
+                } catch (error) {
+                    console.error("Error loading Places library:", error);
                 }
 
-                var options = FWP_JSON['proximity']['autocomplete_options'];
-                options.sessionToken = FWP_MAP.sessionToken;
-                options.input = val;
+            } else { // places places-service
 
-                FWP_MAP.autocompleteService.getPredictions(options, function(results, status) {
-                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        var html = '';
+                await google.maps.importLibrary("places");
 
-                        results.forEach(function(result, index) {
-                            var css = (0 === index) ? ' active' : '';
-                            html += '<div class="location-result' + css + '" data-id="' + result.place_id + '" data-index="' + index + '">';
-                            html += '<span class="result-main">' + result.structured_formatting.main_text + '</span> ';
-                            html += '<span class="result-secondary">' + result.structured_formatting.secondary_text + '</span>';
-                            html += '<span class="result-description facetwp-hidden">' + result.description + '</span>';
-                            html += '</div>';
-                        });
+                FWP_MAP.sessionToken = new google.maps.places.AutocompleteSessionToken();
+                FWP_MAP.autocompleteService = new google.maps.places.AutocompleteService();
+                FWP_MAP.placesService = new google.maps.places.PlacesService(
+                    document.createElement('div')
+                );
 
-                        html += '<div class="location-attribution"><div class="powered-by-google"></div></div>';
+                // We need FWP_JSON available to grab the queryDelay
+                $().on('input', '.facetwp-location', FWP.helper.debounce(function(e) {
+                    var val = $(e.target).val();
+                    var $facet = $(e.target).closest('.facetwp-facet');
 
-                        $facet.find('.location-results').html(html).removeClass('facetwp-hidden');
+                    if ('' == val || val.length < FWP_JSON['proximity']['minLength']) {
+                        $facet.find('.location-results').addClass('facetwp-hidden');
+                        return;
                     }
-                });
-            }, FWP_JSON['proximity']['queryDelay']));
-        }
+
+                    var options = FWP_JSON['proximity']['autocomplete_options'];
+                    options.sessionToken = FWP_MAP.sessionToken;
+                    options.input = val;
+
+                    FWP_MAP.autocompleteService.getPredictions(options, function(results, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            var html = '';
+
+                            results.forEach(function(result, index) {
+                                var css = (0 === index) ? ' active' : '';
+                                html += '<div class="location-result' + css + '" data-id="' + result.place_id + '" data-index="' + index + '">';
+                                html += '<span class="result-main">' + result.structured_formatting.main_text + '</span> ';
+                                html += '<span class="result-secondary">' + result.structured_formatting.secondary_text + '</span>';
+                                html += '<span class="result-description facetwp-hidden">' + result.description + '</span>';
+                                html += '</div>';
+                            });
+
+                            html += '<div class="location-attribution"><div class="powered-by-google"></div></div>';
+
+                            $facet.find('.location-results').html(html).removeClass('facetwp-hidden');
+                        }
+                    });
+                }, FWP_JSON['proximity']['queryDelay']));
+            }
+        } // end check places
 
         $locations.each(function(el, idx) {
             $(this).trigger('keyup');
         });
     });
 
-    $().on('click', '.location-result', function() {
-        var $facet = $(this).closest('.facetwp-facet');
-        var place_id = $(this).attr('data-id');
+    $().on('click', '.location-result', async function() {
+
+        if ( 'place-class' == FWP.settings.places ) { // check places place-class
+
+            const $facet = $(this).closest('.facetwp-facet');
+            const placeId = $(this).attr('data-place-id');
+
+            const { Place, AutocompleteSessionToken } = await google.maps.importLibrary("places");
+
+            FWP_MAP.token ||= new AutocompleteSessionToken();
+
+            // Fields parameter for Place Details request
+            const fields = ['location']; // Request only the location
+            const place = new Place({ id: placeId, sessionToken: FWP_MAP.token });
+
+            place.fetchFields({ fields })
+                .then(() => {
+                    $facet.find('.facetwp-lat').val(place.location.lat());
+                    $facet.find('.facetwp-lng').val(place.location.lng());
+                    FWP.autoload();
+                })
+                .catch((error) => {
+                    console.error("Error fetching place details:", error);
+                    // Handle the error appropriately (e.g., display an error message to the user)
+                });
+                
+            FWP_MAP.token = null; // clear session token
+
+        } else {
+
+            var $facet = $(this).closest('.facetwp-facet');
+            var place_id = $(this).attr('data-id');
+
+            FWP_MAP.placesService.getDetails({
+                placeId: place_id,
+                fields: ['geometry'],
+                sessionToken: FWP_MAP.sessionToken,
+            }, function(place, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    $facet.find('.facetwp-lat').val(place.geometry.location.lat());
+                    $facet.find('.facetwp-lng').val(place.geometry.location.lng());
+                    FWP.autoload();
+                }
+            });
+
+        }
+
         var description = $(this).find('.result-description').text();
-
-        FWP_MAP.placesService.getDetails({
-            placeId: place_id,
-            fields: ['geometry'],
-            sessionToken: FWP_MAP.sessionToken,
-        }, function(place, status) {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                $facet.find('.facetwp-lat').val(place.geometry.location.lat());
-                $facet.find('.facetwp-lng').val(place.geometry.location.lng());
-                FWP.autoload();
-            }
-        });
-
         $('.facetwp-location').val(description);
         $('.location-results').addClass('facetwp-hidden');
     });
+
+    /* ======== Proximity ======== */
 
     $().on('click', '.facetwp-type-proximity .locate-me', function(e) {
         var $this = $(this);
@@ -592,45 +694,71 @@
             return;
         }
 
-        // loading icon
         $this.addClass('f-loading');
 
         // HTML5 geolocation
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) { // Success callback
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
 
-            $lat.val(lat);
-            $lng.val(lng);
+                    $lat.val(lat);
+                    $lng.val(lng);
 
-            var geocoder = new google.maps.Geocoder();
-            var latlng = {lat: parseFloat(lat), lng: parseFloat(lng)};
-            geocoder.geocode({'location': latlng}, function(results, status) {
-                if (status === google.maps.GeocoderStatus.OK) {
-                    $input.val(results[0].formatted_address);
+                    var geocoder = new google.maps.Geocoder();
+                    var latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+                    geocoder.geocode({ 'location': latlng }, function(results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            $input.val(results[0].formatted_address);
+                        } else {
+                            console.error("Geocoder failed due to: " + status);
+                            $input.val('Your location'); // Fallback
+                            alert("Could not determine your address."); // Inform user
+                        }
+                        $this.addClass('f-reset');
+                        FWP.autoload();
+                    });
+
+                    $this.removeClass('f-loading');
+
+                    FWP.hooks.doAction('facetwp/geolocation/success', {
+                        'facet': $facet,
+                        'position': position
+                    });
+                },
+                function(error) { // Error callback
+                    $this.removeClass('f-loading');
+                    let errorMessage = "Could not get your location.";
+
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "User denied the request for Geolocation.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "Location information is unavailable.";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "The request to get user location timed out.";
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            errorMessage = "An unknown error occurred.";
+                            break;
+                    }
+
+                    console.error("Geolocation error: " + errorMessage, error);
+                    alert(errorMessage); // Inform user
+                    FWP.hooks.doAction('facetwp/geolocation/error', {
+                        'facet': $facet,
+                        'error': error
+                    });
                 }
-                else {
-                    $input.val('Your location');
-                }
-                $this.addClass('f-reset');
-                FWP.autoload();
-            });
-
+            );
+        } else {
+            // Browser doesn't support Geolocation
             $this.removeClass('f-loading');
-
-            FWP.hooks.doAction('facetwp/geolocation/success', {
-                'facet': $facet,
-                'position': position
-            });
-        },
-        function(error) {
-            $this.removeClass('f-loading');
-
-            FWP.hooks.doAction('facetwp/geolocation/error', {
-                'facet': $facet,
-                'error': error
-            });
-        });
+            alert("Your browser doesn't support Geolocation.");
+        }
     });
 
     $().on('keyup', '.facetwp-location', function(e) {
@@ -812,7 +940,8 @@
                 range: opts.range,
                 start: opts.start,
                 step: parseFloat(opts.step),
-                connect: true
+                connect: true,
+                handleAttributes: opts.handle_attributes
             }, { 'facet_name': facet_name });
 
             if ($this.hasClass('ready')) {

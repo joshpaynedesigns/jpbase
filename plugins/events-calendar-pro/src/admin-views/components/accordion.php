@@ -43,11 +43,11 @@ if ( ! empty( $classes_panel ) ) {
 
 ?>
 <div
-	<?php tribe_classes( $accordion_wrap_classes ); ?>
+	<?php tec_classes( $accordion_wrap_classes ); ?>
 >
 	<button
 		type="button"
-		<?php tribe_classes( $accordion_button_classes ); ?>
+		<?php tec_classes( $accordion_button_classes ); ?>
 		data-js="tribe-events-accordion-trigger"
 		aria-controls="<?php echo esc_html( $id ); ?>"
 		aria-expanded="<?php echo $expanded ? 'true' : 'false'; ?>"
@@ -70,7 +70,7 @@ if ( ! empty( $classes_panel ) ) {
 	</button>
 
 	<div
-		<?php tribe_classes( $accordion_panel_classes ); ?>
+		<?php tec_classes( $accordion_panel_classes ); ?>
 		aria-hidden="<?php echo $expanded ? 'false' : 'true'; ?>"
 		id="<?php echo esc_html( $id ); ?>"
 		<?php

@@ -245,6 +245,9 @@ class Duplicate {
 		$event   = tribe_get_event( $post );
 		$postarr = wp_parse_args( $overrides, $this->get_event_data_for_duplication( $event ) );
 
+		$event_cost = $postarr['meta_input']['_EventCost'] ?? [];
+		unset( $postarr['meta_input']['_EventCost'] );
+
 		$duplicated_id = wp_insert_post( $postarr );
 		$duplicated    = get_post( $duplicated_id );
 
@@ -252,6 +255,12 @@ class Duplicate {
 		$organizer_ids = tribe_get_organizer_ids( $event->ID );
 		foreach ( $organizer_ids as $organizer_id ) {
 			add_post_meta( $duplicated_id, '_EventOrganizerID', $organizer_id );
+		}
+
+		if ( ! empty( $event_cost ) && is_array( $event_cost ) ) {
+			foreach ( $event_cost as $cost ) {
+				add_post_meta( $duplicated_id, '_EventCost', $cost );
+			}
 		}
 
 		if ( ! empty( $duplicated ) ) {
@@ -311,49 +320,72 @@ class Duplicate {
 	 * @return array<string|mixed> An array of values uses to duplicate an event.
 	 */
 	protected function get_event_data_for_duplication( $event ) {
+		$meta = get_post_meta( $event->ID );
+
+		/**
+		 * Filter the keys to include when duplicating an event.
+		 *
+		 * @since 7.2.0
+		 *
+		 * @param array<string> $keys_to_include An array of meta keys to include when duplicating an event.
+		 * @param WP_Post       $event           The current event post object, as decorated by the `tribe_get_event` function.
+		 */
+		$keys_to_include = apply_filters(
+			'tec_events_pro_custom_tables_v1_duplicate_meta_data',
+			[
+				'_thumbnail_id'              ,
+				'_EventStartDate'            ,
+				'_EventEndDate'              ,
+				'_EventStartDateUTC'         ,
+				'_EventEndDateUTC'           ,
+				'_EventAllDay'               ,
+				'_EventTimezone'             ,
+				'_EventTimezoneAbbr'         ,
+				'_EventHideFromUpcoming'     ,
+				'_tribe_featured'            ,
+				'_EventVenueID'              ,
+				'_EventShowMap'              ,
+				'_EventShowMapLink'          ,
+				'_tribe_events_status_reason',
+				'_tribe_events_status'       ,
+				'_EventURL'                  ,
+				'_EventCost'                 ,
+				'_EventCurrencySymbol'       ,
+				'_EventCurrencyPosition'     ,
+				'_EventRecurrence'           ,
+				'_EventCurrencyCode'         ,
+				'_EventDateTimeSeparator'    ,
+				'_EventTimeRangeSeparator'   ,
+				'_EventDuration'             ,
+				Blocks_Meta::$rules_key      ,
+				Blocks_Meta::$exclusions_key ,
+				Blocks_Meta::$description_key,
+			],
+			$event
+		);
+
+		$meta_input = array_map(
+			static fn( $v ) => maybe_unserialize( $v['0'] ?? '' ),
+			array_intersect_key( $meta, array_flip( $keys_to_include ) )
+		);
+
+		$meta_input['_EventCost'] = $meta['_EventCost'] ?? [];
+
 		$duplicate_args = [
-				'post_type'             => TEC::POSTTYPE,
-				'post_title'            => $event->post_title,
-				'post_content'          => $event->post_content,
-				'post_content_filtered' => $event->post_content_filtered,
-				'post_excerpt'          => $event->post_excerpt,
-				'post_status'           => 'draft',
-				'post_parent'           => $event->post_parent,
-				'comment_status'        => $event->comment_status,
-				'ping_status'           => $event->ping_status,
-				'post_password'         => $event->post_password,
-				'to_ping'               => $event->to_ping,
-				'pinged'                => $event->pinged,
-				'menu_order'            => $event->menu_order,
-				'meta_input'            => [
-						'_thumbnail_id'               => get_post_thumbnail_id( $event->ID ),
-						'_EventStartDate'             => $event->start_date,
-						'_EventEndDate'               => $event->end_date,
-						'_EventStartDateUTC'          => $event->start_date_utc,
-						'_EventEndDateUTC'            => $event->end_date_utc,
-						'_EventAllDay'                => $event->all_day,
-						'_EventTimezone'              => $event->timezone,
-						'_EventTimezoneAbbr'          => get_post_meta( $event->ID, '_EventTimezoneAbbr', true ),
-						'_EventHideFromUpcoming'      => get_post_meta( $event->ID, '_EventHideFromUpcoming', true ),
-						'_tribe_featured'             => $event->featured,
-						'_EventVenueID'               => tribe_get_venue_id( $event->ID ),
-						'_EventShowMap'               => get_post_meta( $event->ID, '_EventShowMap', true ),
-						'_EventShowMapLink'           => get_post_meta( $event->ID, '_EventShowMapLink', true ),
-						'_tribe_events_status_reason' => get_post_meta( $event->ID, '_tribe_events_status_reason', true ),
-						'_tribe_events_status'        => get_post_meta( $event->ID, '_tribe_events_status', true ),
-						'_EventURL'                   => tribe_get_event_website_url( $event->ID ),
-						'_EventCost'                  => get_post_meta( $event->ID, '_EventCost', true ),
-						'_EventCurrencySymbol'        => get_post_meta( $event->ID, '_EventCurrencySymbol', true ),
-						'_EventCurrencyPosition'      => get_post_meta( $event->ID, '_EventCurrencyPosition', true ),
-						'_EventRecurrence'            => get_post_meta( $event->ID, '_EventRecurrence', true ),
-						'_EventCostDescription'       => get_post_meta( $event->ID, '_EventCostDescription', true ),
-						'_EventCurrencyCode'          => get_post_meta( $event->ID, '_EventCurrencyCode', true ),
-						'_EventDateTimeSeparator'     => get_post_meta( $event->ID, '_EventDateTimeSeparator', true ),
-						'_EventTimeRangeSeparator'    => get_post_meta( $event->ID, '_EventTimeRangeSeparator', true ),
-						Blocks_Meta::$rules_key       => get_post_meta( $event->ID, Blocks_Meta::$rules_key, true ),
-						Blocks_Meta::$exclusions_key  => get_post_meta( $event->ID, Blocks_Meta::$exclusions_key, true ),
-						Blocks_Meta::$description_key => get_post_meta( $event->ID, Blocks_Meta::$description_key, true ),
-				],
+			'post_type'             => TEC::POSTTYPE,
+			'post_title'            => $event->post_title,
+			'post_content'          => $event->post_content,
+			'post_content_filtered' => $event->post_content_filtered,
+			'post_excerpt'          => $event->post_excerpt,
+			'post_status'           => 'draft',
+			'post_parent'           => $event->post_parent,
+			'comment_status'        => $event->comment_status,
+			'ping_status'           => $event->ping_status,
+			'post_password'         => $event->post_password,
+			'to_ping'               => $event->to_ping,
+			'pinged'                => $event->pinged,
+			'menu_order'            => $event->menu_order,
+			'meta_input'            => array_filter( $meta_input ),
 		];
 
 		/**

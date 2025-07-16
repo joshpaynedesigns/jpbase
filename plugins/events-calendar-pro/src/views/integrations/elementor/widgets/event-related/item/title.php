@@ -24,9 +24,9 @@ if ( ! $event_link ) {
 	return;
 }
 ?>
-<<?php echo tag_escape( $event_title_tag ); ?> <?php tribe_classes( $widget->get_title_class() ); ?>>
+<<?php echo tag_escape( $event_title_tag ); ?> <?php tec_classes( $widget->get_title_class() ); ?>>
 	<a
-		<?php tribe_classes( $widget->get_title_link_class() ); ?>
+		<?php tec_classes( $widget->get_title_link_class() ); ?>
 		href="<?php echo esc_url( $event_link ); ?>"
 		rel="bookmark"
 	>

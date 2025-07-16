@@ -31,7 +31,7 @@ if ( $is_premium || empty( $event ) || ( isset( $event->venues ) && $event->venu
 }
 ?>
 <div
-	<?php tribe_classes( $classes ); ?>
+	<?php tec_classes( $classes ); ?>
 	data-js="tribe-events-pro-map-no-venue-modal"
 >
 	<?php if ( $is_premium ) : ?>

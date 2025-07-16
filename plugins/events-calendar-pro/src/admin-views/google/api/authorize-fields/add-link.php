@@ -23,14 +23,14 @@ $connect_label  = _x( 'Add Google Account', 'Label to connect an account to the 
 $classes = [
 	'button'                                                         => true,
 	'tec-settings-form__add-account-button' => true,
-	'tec-events-virtual-meetings-api-settings_add-account-button' => true, 
+	'tec-events-virtual-meetings-api-settings_add-account-button' => true,
 	'tec-events-virtual-meetings-google-settings_add-account-button' => true,
 ];
 
 ?>
 <a
 	href="<?php echo esc_url( $authorize_link ); ?>"
-	<?php tribe_classes( $classes ); ?>
+	<?php tec_classes( $classes ); ?>
 >
 	<span class="dashicons dashicons-plus"></span>
 	<?php echo esc_html( $connect_label ); ?>

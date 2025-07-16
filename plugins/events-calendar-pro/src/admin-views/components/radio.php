@@ -38,11 +38,11 @@ if ( ! empty( $classes_wrap ) ) {
 
 ?>
 <div
-	<?php tribe_classes( $wrap_classes ); ?>
+	<?php tec_classes( $wrap_classes ); ?>
 >
 	<label
 		for="<?php echo esc_attr( "{$metabox_id}-api-{$api_id}-{$type}-type" ); ?>"
-		<?php tribe_classes( $label_classes ); ?>
+		<?php tec_classes( $label_classes ); ?>
 	>
 		<input
 			id="<?php echo esc_attr( "{$metabox_id}-api-{$api_id}-{$type}-type" ); ?>"

@@ -16,7 +16,7 @@
  * @var string       $shortcode_string  String to be passed to `do_shortcode`.
  * @var array        $container_classes Array classes applied to the widget container.
  *
- * @see tribe_classes()
+ * @see tec_classes()
  *
  */
 
@@ -25,7 +25,7 @@ use \Tribe__Template as Template;
 ?>
 
 <?php $this->template( 'components/before' ); ?>
-<div <?php tribe_classes( $container_classes ); ?>>
+<div <?php tec_classes( $container_classes ); ?>>
 
 	<?php $this->template( 'components/title' ); ?>
 

@@ -13,8 +13,8 @@ Plugin Name: EWWW Image Optimizer
 Plugin URI: https://wordpress.org/plugins/ewww-image-optimizer/
 Description: Smaller Images, Faster Sites, Happier Visitors. Comprehensive image optimization that doesn't require a degree in rocket science.
 Author: Exactly WWW
-Version: 7.9.0
-Requires at least: 6.3
+Version: 8.2.0
+Requires at least: 6.5
 Requires PHP: 7.4
 Author URI: https://ewww.io/
 License: GPLv3
@@ -34,7 +34,7 @@ if ( ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < 70400 ) {
 	add_action( 'admin_notices', 'ewww_image_optimizer_dual_plugin' );
 } elseif ( false === strpos( add_query_arg( '', '' ), 'ewwwio_disable=1' ) ) {
 
-	define( 'EWWW_IMAGE_OPTIMIZER_VERSION', 790 );
+	define( 'EWWW_IMAGE_OPTIMIZER_VERSION', 820 );
 
 	if ( WP_DEBUG && function_exists( 'memory_get_usage' ) ) {
 		$ewww_memory = 'plugin load: ' . memory_get_usage( true ) . "\n";
@@ -109,7 +109,7 @@ if ( ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < 70400 ) {
 	 */
 	require_once EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'unique.php';
 	/**
-	 * All the 'common' functions for both EWWW IO plugins.
+	 * All the 'common' functions from back when we had two EWWW IO plugins (also slowly being replaced with oop).
 	 */
 	require_once EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'common.php';
 	/**
@@ -120,10 +120,6 @@ if ( ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < 70400 ) {
 	 * The setup functions for EWWW IO.
 	 */
 	require_once EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'classes/class-plugin.php';
-	/**
-	 * Class for local optimization tool installation/valication.
-	 */
-	require_once EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'classes/class-local.php';
 	/**
 	 * The main function to return a single EWWW\Plugin object to functions elsewhere.
 	 *

@@ -20,7 +20,6 @@ use TEC\Events\Custom_Tables\V1\Models\Validators\Valid_Event;
 use TEC\Events\Custom_Tables\V1\Models\Validators\Valid_Event_Model;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Validators\Valid_Series;
 use WP_Post;
-use function WP_CLI\Utils\iterator_map;
 
 /**
  * Class Series_Relationship
@@ -36,7 +35,7 @@ use function WP_CLI\Utils\iterator_map;
  */
 class Series_Relationship extends Model {
 	/**
-	 * {@inheritdoc }
+	 * @var array<string,string> The validations map for the model.
 	 */
 	protected $validations = [
 		'relationship_id' => Integer_Key::class,
@@ -46,7 +45,7 @@ class Series_Relationship extends Model {
 	];
 
 	/**
-	 * {@inheritdoc }
+	 * @var array<string,string> The formatters map for the model.
 	 */
 	protected $formatters = [
 		'relationship_id' => Integer_Key_Formatter::class,
@@ -56,12 +55,12 @@ class Series_Relationship extends Model {
 	];
 
 	/**
-	 * {@inheritdoc}
+	 * @var string The table name for the model.
 	 */
 	protected $table = 'tec_series_relationships';
 
 	/**
-	 * {@inheritdoc}
+	 * @var string The primary key column name for the model.
 	 */
 	protected $primary_key = 'relationship_id';
 
@@ -122,8 +121,8 @@ class Series_Relationship extends Model {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param string|int $post_id
-	 * @param bool       $by_occurrence
+	 * @param string|int $post_id The Post ID of the Event.
+	 * @param bool       $by_occurrence Whether to include the occurrence in the cache key.
 	 *
 	 * @return string
 	 */
@@ -145,24 +144,31 @@ class Series_Relationship extends Model {
 		$cache = tribe_cache();
 
 		// Prevents Errors for posts that don't have occurrence ID.
-		$posts = array_filter( (array) $posts, static function ( $post ) {
-			return $post instanceof \WP_Post && isset( $post->_tec_occurrence );
-		} );
+		$posts = array_filter(
+			(array) $posts,
+			static function ( $post ) {
+				return $post instanceof \WP_Post && isset( $post->_tec_occurrence );
+			}
+		);
 
 		$occurrences = wp_list_pluck( $posts, '_tec_occurrence' );
-		$to_fetch = array_unique( wp_list_pluck( $occurrences, 'post_id' ) );
+		$to_fetch    = array_unique( wp_list_pluck( $occurrences, 'post_id' ) );
 
 		// Prevent running a Query for already primed cache post IDs.
-		[ $all, $to_fetch ] = array_reduce( $to_fetch, static function ( array $carry, int $id ) use ( $cache ): array {
-			$cache_key = static::get_cache_key( $id );
-			if ( isset( $cache[ $cache_key ] ) ) {
-				$carry[0][] = $cache[ $cache_key ];
-			} else {
-				$carry[1][] = $id;
-			}
+		[ $all, $to_fetch ] = array_reduce(
+			$to_fetch,
+			static function ( array $carry, int $id ) use ( $cache ): array {
+				$cache_key = static::get_cache_key( $id );
+				if ( isset( $cache[ $cache_key ] ) ) {
+					$carry[0][] = $cache[ $cache_key ];
+				} else {
+					$carry[1][] = $id;
+				}
 
-			return $carry;
-		}, [ [], [] ] );
+				return $carry;
+			},
+			[ [], [] ]
+		);
 
 		if ( empty( $to_fetch ) ) {
 			return array_filter( $all );
@@ -170,7 +176,7 @@ class Series_Relationship extends Model {
 
 		$fetched_relationships = [];
 		if ( count( $to_fetch ) ) {
-			$generator = static::where_in( 'event_post_id', $to_fetch )->all();
+			$generator             = static::where_in( 'event_post_id', $to_fetch )->all();
 			$fetched_relationships = iterator_to_array( $generator, false );
 		}
 
@@ -183,7 +189,7 @@ class Series_Relationship extends Model {
 			$relationship = null;
 			if ( isset( $series_relationship_ids[ $event_post_id ] ) ) {
 				$relationship_key = $series_relationship_ids[ $event_post_id ];
-				$relationship = $all[ $relationship_key ];
+				$relationship     = $all[ $relationship_key ];
 			}
 			$cache_key = static::get_cache_key( $event_post_id );
 

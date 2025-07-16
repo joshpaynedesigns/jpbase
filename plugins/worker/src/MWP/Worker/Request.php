@@ -56,6 +56,12 @@ class MWP_Worker_Request
 
     protected $signatureNoHostHeaderName = 'MWP-Signature-G';
 
+    protected $signatureAlgorithmHeaderName = 'MWP-Signature-Algorithm';
+
+    protected $serviceSignatureSHA256HeaderName = 'MWP-V2-Service-Signature';
+
+    protected $signatureNoHostSHA256HeaderName = 'MWP-V2-Signature-G';
+
     /**
      * Header that contains the communication key.
      * Must be compliant with {@link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html RFC 2616}
@@ -192,32 +198,47 @@ class MWP_Worker_Request
             throw new RuntimeException('Request is already initialized.');
         }
         $this->initialized = true;
-        $header = '';
+        $header            = '';
         if (null !== $this->getHeader($this->signatureHeaderName)) {
             $header = base64_decode($this->getHeader($this->signatureHeaderName));
         }
 
-        $this->attributes['action']            = $this->getHeader($this->actionHeaderName);
-        $this->attributes['id']                = $this->getHeader($this->messageIdHeaderName);
-        $this->attributes['signature']         = $header;
-        $this->attributes['key_name']          = $this->getHeader($this->keyNameHeaderName);
-        $this->attributes['service_signature'] = $this->getHeader($this->serviceSignatureHeaderName);
-        $this->attributes['no_host_signature'] = $this->getHeader($this->signatureNoHostHeaderName);
-        $this->attributes['communication_key'] = $this->getHeader($this->communicationKeyHeaderName);
-        $this->attributes['site_id']           = $this->getHeader($this->siteIdHeaderName);
-        $this->attributes['data']              = null;
-        $this->attributes['params']            = null;
-        $this->attributes['setting']           = null;
-        $this->attributes['user']              = null;
-        $this->attributes['authenticated']     = false;
-        $this->attributes['protocol']          = (int)$this->getHeader($this->protocolVersionHeaderName);
+        $this->attributes['action']                   = $this->getHeader($this->actionHeaderName);
+        $this->attributes['id']                       = $this->getHeader($this->messageIdHeaderName);
+        $this->attributes['signature']                = $header;
+        $this->attributes['key_name']                 = $this->getHeader($this->keyNameHeaderName);
+        $this->attributes['service_signature']        = $this->getHeader($this->serviceSignatureHeaderName);
+        $this->attributes['service_signature_v2'] = $this->getHeader($this->serviceSignatureSHA256HeaderName);
+        $this->attributes['no_host_signature']        = $this->getHeader($this->signatureNoHostHeaderName);
+        $this->attributes['no_host_signature_v2'] = $this->getHeader($this->signatureNoHostSHA256HeaderName);
+        $this->attributes['communication_key']        = $this->getHeader($this->communicationKeyHeaderName);
+        $this->attributes['site_id']                  = $this->getHeader($this->siteIdHeaderName);
+        $this->attributes['data']                     = null;
+        $this->attributes['params']                   = null;
+        $this->attributes['setting']                  = null;
+        $this->attributes['user']                     = null;
+        $this->attributes['authenticated']            = false;
+        $this->attributes['protocol']                 = (int)$this->getHeader($this->protocolVersionHeaderName);
+        $this->attributes['signature_algorithm']      = null;
 
         if (!empty($this->attributes['service_signature'])) {
             $this->attributes['service_signature'] = base64_decode($this->attributes['service_signature']);
         }
 
+        if (!empty($this->attributes['service_signature_v2'])) {
+            $this->attributes['service_signature_v2'] = base64_decode($this->attributes['service_signature_v2']);
+        }
+
+        if (!empty($this->getHeader($this->signatureAlgorithmHeaderName))) {
+            $this->attributes['signature_algorithm'] = $this->getHeader($this->signatureAlgorithmHeaderName);
+        }
+
         if (!empty($this->attributes['no_host_signature'])) {
             $this->attributes['no_host_signature'] = base64_decode($this->attributes['no_host_signature']);
+        }
+
+        if (!empty($this->attributes['no_host_signature_v2'])) {
+            $this->attributes['no_host_signature_v2'] = base64_decode($this->attributes['no_host_signature_v2']);
         }
 
         // Do we have {"params":{...}} inside of body?
@@ -327,12 +348,27 @@ class MWP_Worker_Request
         return $this->attributes['service_signature'];
     }
 
+    public function getServiceSignatureV2()
+    {
+        return $this->attributes['service_signature_v2'];
+    }
+
+    public function getSignatureAlgorithm()
+    {
+        return $this->attributes['signature_algorithm'];
+    }
+
     /**
      * @return null|string
      */
     public function getNoHostSignature()
     {
         return $this->attributes['no_host_signature'];
+    }
+
+    public function getNoHostSignatureV2()
+    {
+        return $this->attributes['no_host_signature_v2'];
     }
 
     /**

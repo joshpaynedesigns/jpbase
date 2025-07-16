@@ -40,11 +40,11 @@ if ( empty( $wrap_attrs ) ) {
 }
 ?>
 <div
-	<?php tribe_classes( $wrap_classes ); ?>
+	<?php tec_classes( $wrap_classes ); ?>
 	<?php tribe_attributes( $wrap_attrs ) ?>
 >
 	<label
-		<?php tribe_classes( $label_classes ); ?>
+		<?php tec_classes( $label_classes ); ?>
 		for="<?php echo esc_attr( $id ); ?>"
 	>
 		<?php echo esc_html( $label ); ?>

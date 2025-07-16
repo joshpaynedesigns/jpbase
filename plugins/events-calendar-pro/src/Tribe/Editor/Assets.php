@@ -20,10 +20,10 @@ class Tribe__Events__Pro__Editor__Assets {
 	public function register() {
 		$plugin = Tribe__Events__Pro__Main::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-pro-gutenberg-vendor',
-			'app/vendor.js',
+			'custom-tables-v1/app/vendor.js',
 			/**
 			 * @todo revise this dependencies
 			 */
@@ -48,7 +48,7 @@ class Tribe__Events__Pro__Editor__Assets {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-pro-gutenberg-main',
 			'app/main.js',
@@ -79,32 +79,21 @@ class Tribe__Events__Pro__Editor__Assets {
 					'domain' => 'tribe-events-calendar-pro',
 					'path'   => Main::instance()->pluginPath . 'lang',
 				],
+				'group_path'   => get_class( $plugin ) . '-packages',
 			]
 		);
 
-		tribe_asset(
-			$plugin,
-			'tribe-pro-gutenberg-vendor-styles',
-			'app/vendor.css',
-			[],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => false,
-				'localize'     => [],
-				'conditionals' => tribe_callback( 'events.editor', 'is_events_post_type' ),
-			]
-		);
-
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-pro-gutenberg-main-styles',
-			'app/main.css',
+			'app/style-main.css',
 			[],
 			'enqueue_block_editor_assets',
 			[
 				'in_footer'    => false,
 				'localize'     => [],
 				'conditionals' => tribe_callback( 'events.editor', 'is_events_post_type' ),
+				'group_path'   => get_class( $plugin ) . '-packages',
 			]
 		);
 	}

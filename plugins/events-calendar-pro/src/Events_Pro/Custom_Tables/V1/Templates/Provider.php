@@ -161,7 +161,7 @@ class Provider extends Service_Provider {
 	public function register_assets() {
 		$plugin = Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-single-style',
 			'custom-tables-v1/single.css',

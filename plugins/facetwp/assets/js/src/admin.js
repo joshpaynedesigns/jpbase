@@ -1388,6 +1388,27 @@
                     this.initCodeMirror('marker-content-editor', 'marker_content', false);
                 }
             },
+            watch: {
+                'facet.ui_type': function(val) {
+                    switch (val) {
+                        case 'radio':
+                            Vue.delete(this.facet, 'multiple');
+                            Vue.delete(this.facet, 'show_expanded');
+                            Vue.delete(this.facet, 'hierarchical');
+                            break;
+                        case 'dropdown':
+                            Vue.delete(this.facet, 'multiple');
+                            Vue.delete(this.facet, 'show_expanded');
+                            break;
+                        case 'checkboxes':
+                            Vue.delete(this.facet, 'multiple');
+                            break;
+                        case 'fselect':
+                            Vue.delete(this.facet, 'show_expanded');
+                            break;
+                    }
+                }
+            },
             methods: {
                 setName(e) {
                     this.facet.name = this.$root.sanitizeName(e.target.innerHTML);
@@ -1722,15 +1743,6 @@
                     let fields = self.getFields(aliases);
                     let html = '';
 
-                    // Add UI-dependant fields
-                    if ('undefined' !== typeof facet_obj.ui_fields) {
-                        if ('undefined' !== typeof self.facet.ui_type && '' != self.facet.ui_type) {
-                            let ui_fields = facet_obj.ui_fields[self.facet.ui_type];
-                            aliases = aliases.concat(ui_fields);
-                            fields = fields.concat(this.getFields(ui_fields));
-                        }
-                    }
-
                     let combined = ['label', 'name', 'type', 'source', '_code'].concat(fields);
 
                     // Remove irrelevant settings
@@ -1779,9 +1791,13 @@
                 }
             },
             watch: {
-                'facet.type': function(val) {
+                'facet.type': function(val,oldVal) {
                     if ('search' == val || 'pager' == val || 'reset' == val || 'sort' == val) {
                         Vue.delete(this.facet, 'source');
+                    }
+                    if ( val !== oldVal && 'undefined' != typeof this.facet.ui_type ) {
+                        // reset ui_type when changing facet type
+                        Vue.delete(this.facet, 'ui_type');
                     }
                     if ('map' == val) {
                         this.$nextTick(() => {
@@ -1850,24 +1866,6 @@
             mounted() {
                 fSelect(this.$el, { 'placeholder': 'Choose facets' });
             }
-        });
-
-        Vue.component('ui-type', {
-            props: {
-                facet: Object
-            },
-            created() {
-                this.ui_fields = FWP.facet_types[this.facet.type].ui_fields || [];
-                this.sorted = Object.keys(this.ui_fields).reverse();
-                if ('undefined' === typeof this.facet['ui_type'] || this.facet['ui_type'].length < 1) {
-                    this.facet['ui_type'] = this.sorted[0];
-                }
-            },
-            template: `
-            <select class="facet-ui-type" v-model="facet.ui_type">
-                <option v-for="name in sorted" :value="name" :selected="facet.ui_type == name">{{ FWP.facet_types[name].label }}</option>
-            </select>
-            `
         });
 
         Vue.component('sort-options', {
@@ -2084,6 +2082,9 @@
                     if ('support' === which) {
                         this.is_support_loaded = true;
                     }
+                    const url = new URL(location);
+                    url.searchParams.set("tab", which);
+                    history.pushState({}, "", url);
                 },
                 getItemLabel() {
                     return this.editing.label;
@@ -2269,6 +2270,157 @@
                         }
                     })
                 },
+                
+                checkApi(testTypes, apikey) {
+
+                    const statuses = {};
+                    const doTests = testTypes.split(",");
+
+                    const updateStatus = ( test, message, status = 'none', action = 'none' ) => {
+                        const testEl = document.querySelector('.facetwp-api-status .test-' + test);
+                        testEl.innerHTML = message;
+                        testEl.classList = '';
+                        testEl.classList.add( 'test-'+test );
+                        testEl.classList.add( 'status-'+status);
+                        testEl.classList.add( 'action-'+action);
+                        statuses[test] = status;
+                    }
+                    
+                    if (!/AIza[0-9A-Za-z\-_]{35}/.test(apikey)) {
+                        alert( FWP.__('Your Google Maps API key format is invalid. Please check your key before continuing.') );
+                        return false; // Invalid format
+                    }
+
+                    const prompt = FWP.__('Each test will count as one billable API request in your Google Cloud account. Continue?');
+                    if (confirm(prompt)) {
+                        updateStatus( 'status', FWP.__('Testing ... '), 'testing', 'testing' );
+                    } else {
+                        return;
+                    }
+
+                    const testFunctions = {};
+
+                    testFunctions.checkPlaces = async () => {
+                        updateStatus( 'places', FWP.__('Checking Places API (New) ...'), 'testing', 'testing' );                        
+                        const placeUrl = `https://places.googleapis.com/v1/places/ChIJj61dQgK6j4AR4GeTYWZsKWw?fields=id,displayName,formattedAddress&key=${apikey}`;
+
+                        try {
+                            const response = await fetch(placeUrl);
+                            if (!response.ok) {
+                                if ('403' == response.status) {
+                                    throw new Error('permission denied');
+                                } else {
+                                    throw new Error('unknown error');
+                                }
+                            } else {
+                                updateStatus('places', '<span>' + FWP.__('Places API (New)') + ' </span> – <span class="status">' + FWP.__('connected ') + '</span>', 'pass', 'testing');
+                            }
+                        } catch (error) {
+                            updateStatus('places', '<span>' + FWP.__('Places API (New)') + ' </span> – <span class="status">' + FWP.__('connection failed: ') + error.message + '</span>', 'fail', 'testing');
+                        }
+                    }
+                    
+                    testFunctions.checkPlaceslegacy = async () => {
+                        updateStatus( 'placeslegacy', FWP.__('Checking Places API (Legacy) ...'), 'testing', 'testing' );                        
+                        
+                        this.loadGmaps(apikey);
+
+                        const {PlacesService} = await google.maps.importLibrary("places");
+
+                        const service = new PlacesService(
+                            document.createElement('div')
+                        );
+
+                        service.getDetails({
+                            placeId: 'ChIJj61dQgK6j4AR4GeTYWZsKWw',
+                            fields: ['geometry']
+                        }, function(place, status) {
+                            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                updateStatus('placeslegacy', '<span>' + FWP.__('Places API (Legacy)') + ' </span> – <span class="status">' + FWP.__('connected ') + '</span>', 'pass', 'testing');
+                            } else {
+                                updateStatus('placeslegacy', '<span>' + FWP.__('Places API (Legacy)') + ' </span> – <span class="status">' + FWP.__('connection failed: ') + status + '</span>', 'fail', 'testing');
+                            }
+                        });
+                    }
+
+                    testFunctions.checkGeocoder = async () => {                        
+                        updateStatus( 'geocoder', FWP.__('Checking Geocoding API ...'), 'testing', 'testing' ); 
+
+                        this.loadGmaps(apikey);
+
+                        const {Geocoder} = await google.maps.importLibrary("geocoding");                        
+                        const latlng = { lat: 40.714224, lng: -73.961452 };
+                        const geocoding = new Geocoder;
+
+                        geocoding.geocode({ 'location': latlng }, function(results, status) {
+                            if (status === google.maps.GeocoderStatus.OK) {
+                                updateStatus('geocoder', '<span>' + FWP.__('Geocoding API') + ' </span> – <span class="status">' + FWP.__('connected ') + '</span>', 'pass', 'testing');
+                            } else {
+                                updateStatus('geocoder', '<span>' + FWP.__('Geocoding API') + ' </span> – <span class="status">' + FWP.__('connection failed: ') + status + '</span>', 'fail', 'testing');
+                            }
+                        });
+                    }
+
+                    testFunctions.checkMaps = async () => {
+
+                        updateStatus( 'maps', FWP.__('Checking Maps JavaScript API ...'), 'testing', 'testing' );    
+
+                        this.loadGmaps(apikey);
+
+                        const { Map } = await google.maps.importLibrary("maps");
+
+                        const mapDiv = document.createElement("div");
+                        mapDiv.id = "map";
+                        mapDiv.style.width = "1px";
+                        mapDiv.style.height = "1px";
+                        document.getElementsByTagName('body')[0].appendChild(mapDiv);
+                        const map = new Map(document.getElementById("map"), {
+                            center: { lat: -34.397, lng: 150.644 },
+                            zoom: 8,
+                        });
+                        map.addListener('tilesloaded', function() {
+                            updateStatus( 'maps', '<span>' + FWP.__('Maps JavaScript API') + ' </span> – <span class="status">' + FWP.__('connected') + '</span>', 'pass', 'testing' );
+                        });
+
+                    }
+
+                    const validTests = [ 'maps', 'places', 'placeslegacy', 'geocoder' ];
+                    validTests.forEach((t) => {
+                        if ( doTests.includes(t) ) {
+                            let tn = "check"+t.charAt(0).toUpperCase()+t.slice(1);
+                            testFunctions[tn]();
+                        } 
+                    });
+                                
+
+                    setTimeout(() => {
+                        updateStatus( 'status', FWP.__('Test results:'), 'done', 'testing' );
+                        'testing' !== statuses.maps || updateStatus( 'maps', '<span>' + FWP.__('Maps JavaScript API') + ' </span> – <span class="status">' + FWP.__('connection failed') + '</span>', 'fail', 'testing' );
+                        'testing' !== statuses.geocoder || updateStatus( 'geocoder', '<span>' + FWP.__('Geocoding API') + ' </span> – <span class="status">' + FWP.__('connection failed') + '</span>', 'fail', 'testing' );
+                        'testing' !== statuses.places || updateStatus( 'places', '<span>' + FWP.__('Places API (New)') + ' </span> – <span class="status">' + FWP.__('connection failed') + '</span>', 'fail', 'testing' );
+                        'testing' !== statuses.placeslegacy || updateStatus( 'placeslegacy', '<span>' + FWP.__('Places API (Legacy)') + ' </span> – <span class="status">' + FWP.__('connection failed') + '</span>', 'fail', 'testing' );
+
+                    }, "2000");
+
+                },
+                loadGmaps(apikey) {                   
+                    /** we can only load the maps scripts once without reloading the page */
+                    if ( !this.$root.gmapsLoaded ) {
+                        let scriptTag = document.createElement('script');
+                        scriptTag.id = "fwp-gmaps-api";
+                        scriptTag.innerText = '(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=\`https://maps.${c}apis.com/maps/api/js?\`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({ key: "'+apikey+'", v: "quarterly", });';
+                        document.getElementsByTagName('head')[0].appendChild(scriptTag);
+                        this.$root.gmapsLoaded = true;
+                    }
+                },
+                resetCheckApi() {
+                    let prompt = FWP.__('FacetWP\'s settings page needs to reload to test a different Google Maps API key. Unsaved changes to other settings will be discarded. Continue?');
+                    if (confirm(prompt)) {
+                        window.location.reload();
+                    } else {
+                        return;
+                    }
+                },
                 isNameEditable({name}) {
                     this.is_name_editable = ('' == name || 'new_' == name.substr(0, 4));
                 },
@@ -2309,7 +2461,17 @@
                 document.addEventListener('click', this.documentClick);
             },
             mounted() {
+                let params = new URLSearchParams(document.location.search);
+                let tab = params.get("tab");
+                null == tab || !['facets', 'templates', 'settings', 'support'].includes(tab) || this.tabClick(tab);
                 this.getProgress();
+            },
+            watch: {
+                'app.settings.gmaps_api_key': function(oldVal,newVal) {
+                    if ( this.$root.gmapsLoaded && oldVal != newVal && '' != newVal) {
+                        this.$root.gmapsChanged = true;
+                    }
+                }
             }
         });
     }
@@ -2331,6 +2493,35 @@
 
         $().on('click', '.facetwp-response-wrap', () => {
             $('.facetwp-response').toggleClass('visible');
+        });
+
+        $().on('click', '.export-all', (e) => {
+            let $opts = $('.export-items').next('.fs-wrap');
+            let selectedType = "undefined" != typeof e.target.dataset.value ? e.target.dataset.value+"-" : "";
+            $opts.find('.fs-option:not(.selected)').each(function() {
+                let $opt = $(this);
+                if ( $opt.attr('data-value').includes(selectedType) ) {
+                    $opt.trigger('click');
+                }
+            });
+            $opts.find('.fs-option.selected').each(function() {
+                let $opt = $(this);
+                if ( !$opt.attr('data-value').includes(selectedType) ) {
+                    $opt.trigger('click');
+                }
+            });
+            $opts.nodes[0]._rel.fselect.open();
+            e.stopImmediatePropagation();
+        });
+
+        $().on('click', '.export-none', (e) => {
+            let $opts = $('.export-items').next('.fs-wrap');
+            $opts.find('.fs-option.selected').each(function() {
+                let $opt = $(this);
+                $opt.trigger('click');
+            });
+            $opts.nodes[0]._rel.fselect.open();
+            e.stopImmediatePropagation();
         });
 
         // Export

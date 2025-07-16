@@ -43,6 +43,10 @@ class FacetWP_Integration_WooCommerce
         if ( apply_filters( 'facetwp_woocommerce_support_categories_display', false ) ) {
             include( FACETWP_DIR . '/includes/integrations/woocommerce/taxonomy.php' );
         }
+
+        // Prevent WooCommerce breadcrumb from showing "Page X" on page 1 and higher when there are facet selections or pre-selected facets
+        add_filter( 'woocommerce_get_breadcrumb', [ $this, 'prevent_wc_breadcrumb_paged' ], 9999, 2 );
+
     }
 
 
@@ -164,7 +168,17 @@ class FacetWP_Integration_WooCommerce
 
                 if ( false !== $term ) {
                     $params['term_id'] = $term->term_id;
+                    $params['parent_id'] = $term->parent;
                     $params['facet_display_value'] = $term->name;
+
+                    $params['depth'] = count( get_ancestors( $term->term_id, $taxonomy, 'taxonomy' ) );
+
+                    $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
+
+                    // handle parent_term setting
+                    if ( isset( $facet['parent_term'] ) && 0 < $facet['parent_term'] && !term_is_ancestor_of( $facet['parent_term'], $params['term_id'], $taxonomy ) ) {
+                        $params['facet_value'] = ''; // don't index
+                    }
                 }
             }
         }
@@ -578,6 +592,23 @@ class FacetWP_Integration_WooCommerce
         $sort = FWP()->helper->get_setting( 'prefix' ) . 'sort';
         return isset( $_GET[ $sort ] ) ? 'menu_order' : $orderby;
     }
+
+
+    /**
+     * Prevent WooCommerce breadcrumb from showing "Page X" on page 1 and higher when there are facet selections or pre-selected facets
+     * @since 4.3.6
+     */
+    function prevent_wc_breadcrumb_paged( $crumbs, $breadcrumb ) {
+
+        if ( function_exists( 'FWP' ) && !empty( FWP()->request->url_vars )  ) {
+            if ( get_query_var( 'paged' ) >= 1 && 'subcategories' !== woocommerce_get_loop_display_mode() ) {
+                array_pop( $crumbs );
+            }
+        }
+
+        return $crumbs;
+    }
+
 }
 
 

@@ -79,7 +79,7 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 			$rules_container_classes[] = 'recurrence-container--lock';
 		}
 		?>
-		<div <?php tribe_classes( $rules_container_classes ); ?>>
+		<div <?php tec_classes( $rules_container_classes ); ?>>
 			<?php
 			if ( $lock_rules_ui ) {
 				echo '<div class="recurrence-lock-overlay"></div>';
@@ -495,7 +495,7 @@ $rule_prefix = 'exclusion';
 			$exclusions_container_classes[] = 'recurrence-container--lock';
 		}
 		?>
-		<div <?php tribe_classes( $exclusions_container_classes ); ?>>
+		<div <?php tec_classes( $exclusions_container_classes ); ?>>
 			<?php
 			if ( $lock_exclusions_ui ) {
 				echo '<div class="recurrence-lock-overlay"></div>';

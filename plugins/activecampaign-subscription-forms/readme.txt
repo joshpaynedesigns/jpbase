@@ -1,10 +1,12 @@
 === ActiveCampaign - Forms, Site Tracking, Live Chat ===
 Contributors: activecampaign
-Tags: activecampaign, active campaign, email-marketing, newsletter, marketing-automation, subscribe, forms, emails, automation, live-chat, customer-messaging, customer-experience-automation
+Tags: activecampaign, marketing automation, email marketing, AI agent, business growth
 Requires at least: 2.0
 Requires PHP: 5.4
-Tested up to: 6.5
+Tested up to: 6.8
 Stable tag: trunk
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Add ActiveCampaign contact forms and live chat to any post, page, or sidebar. Also enable ActiveCampaign site tracking for your WordPress blog.
 
@@ -105,9 +107,19 @@ Please make sure that your login information is correct, and that you have at le
 
 With [ActiveCampaign Postmark](https://postmarkapp.com/?utm_source=activecampaign&utm_medium=referral&utm_campaign=activecampaign_wordpress) — that’s ActiveCampaign’s transactional email provider — you can make sure your transactional emails (including password reset emails, form notifications, or account setup emails) are getting delivered, every time. With WordPress’ default mailer, crucial transactional emails often end up in the spam folder or aren’t delivered at all. With Postmark, deliverability issues are a thing of the past. [Learn more about Postmark for WordPress →](https://wordpress.org/plugins/postmark-approved-wordpress-plugin)
 
+= How can I report security bugs?
+
+You can report security bugs through ActiveCampaign's security disclosure form here: [Report a security vulnerability.](https://www.activecampaign.com/security/report-an-issue)
+
 
 
 == Changelog ==
+= 8.1.18 =
+* Update supported versions of WordPress
+
+= 8.1.17 =
+* Security fix to address XSS vulnerability with API URL and API Key verification
+
 = 8.1.16 =
 * Verifying 6.5 compatibility, updated listing
 

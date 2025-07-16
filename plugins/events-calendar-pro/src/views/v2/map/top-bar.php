@@ -9,8 +9,14 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @version 5.0.1
+ * @version 7.6.1
+ *
+ * @since 7.6.1 Added the Category Color Picker.
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 ?>
 <div class="tribe-events-c-top-bar tribe-events-header__top-bar">
@@ -20,6 +26,8 @@
 	<?php $this->template( 'components/top-bar/today' ); ?>
 
 	<?php $this->template( 'map/top-bar/datepicker' ); ?>
+
+	<?php $this->template( 'components/top-bar/category-color-picker' ); ?>
 
 	<?php $this->template( 'components/top-bar/actions' ); ?>
 

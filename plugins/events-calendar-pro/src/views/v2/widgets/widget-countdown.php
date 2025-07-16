@@ -35,9 +35,9 @@ if ( empty( $event ) ) {
 	return;
 }
 ?>
-<div <?php tribe_classes( $compatibility_classes ); ?>>
+<div <?php tec_classes( $compatibility_classes ); ?>>
 	<div
-		<?php tribe_classes( $container_classes ); ?>
+		<?php tec_classes( $container_classes ); ?>
 		data-js="tribe-events-view"
 		data-view-rest-url="<?php echo esc_url( $rest_url ); ?>"
 		data-view-manage-url="<?php echo esc_attr( $should_manage_url ); ?>"

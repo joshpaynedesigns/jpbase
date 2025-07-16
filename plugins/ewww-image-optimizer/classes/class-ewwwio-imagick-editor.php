@@ -1,6 +1,6 @@
 <?php
 /**
- * Class and methods to integrate with the WP_Image_Editor_Imagick class and other extensions.
+ * Class and methods to extend the WP_Image_Editor_Imagick class.
  *
  * @link https://ewww.io
  * @package EWWW_Image_Optimizer
@@ -66,36 +66,48 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 	protected $indexed_max_colors = false;
 
 	/**
+	 * Whether an indexed grayscale image needs further processing to reduce the palette.
+	 *
+	 * @access protected
+	 * @var int
+	 */
+	protected $indexed_grayscale_alpha_problem = false;
+
+	/**
 	 * Gets the bit depth for PNG images and checks for indexed-color mode.
 	 *
-	 * Access the file directly, as we cannot currently rely on Imagick to identify
-	 * palette images with alpha support.
+	 * Access the file directly, in case Imagick fails to identify the number of colors in an indexed image.
 	 *
-	 * @since 6.6.0
+	 * @since 7.7.0
+	 * @since 8.1.5 Only used to get the bit depth when IM returns 8 and getImageColors() isn't working.
+	 *
+	 * @return int The bit depth for PNG images, 8 by default.
 	 */
 	protected function get_png_color_depth() {
+		ewwwio_debug_message( '<b>' . __METHOD__ . '()</b>' );
+		$bit_depth = 8;
 		if ( 'image/png' !== $this->mime_type ) {
-			return;
+			return $bit_depth;
 		}
 		if ( wp_is_stream( $this->file ) ) {
-			return;
+			return $bit_depth;
 		}
 		if ( ! is_file( $this->file ) ) {
-			return;
+			return $bit_depth;
 		}
 		if ( filesize( $this->file ) < 24 ) {
-			return;
+			return $bit_depth;
 		}
 
 		$file_handle = fopen( $this->file, 'rb' );
 
 		if ( ! $file_handle ) {
-			return;
+			return $bit_depth;
 		}
 
 		$png_header = fread( $file_handle, 4 );
 		if ( chr( 0x89 ) . 'PNG' !== $png_header ) {
-			return;
+			return $bit_depth;
 		}
 
 		// Move forward 8 bytes.
@@ -104,7 +116,7 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 
 		// Make sure we have an IHDR.
 		if ( 'IHDR' !== $png_ihdr ) {
-			return;
+			return $bit_depth;
 		}
 
 		// Skip past the dimensions.
@@ -115,7 +127,7 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 		// per palette index (not per pixel).
 		//
 		// Valid values are 1, 2, 4, 8, and 16, although not all values are allowed for all color types.
-		$this->indexed_pixel_depth = ord( (string) fread( $file_handle, 1 ) );
+		$bit_depth = ord( (string) fread( $file_handle, 1 ) );
 
 		// Color type is a single-byte integer that describes the interpretation of the image data.
 		// Color type codes represent sums of the following values:
@@ -130,11 +142,10 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 		// Valid values are 0, 2, 3, 4, and 6.
 		$color_type = ord( (string) fread( $file_handle, 1 ) );
 
-		if ( 3 === (int) $color_type ) {
-			$this->indexed_color_encoded = true;
-		}
-
 		fclose( $file_handle );
+
+		ewwwio_debug_message( "detected bit depth $bit_depth, color type $color_type" );
+		return $bit_depth;
 	}
 
 	/**
@@ -216,15 +227,17 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 		}
 		$return_parent = false; // An indicator for whether we should short-circuit and use the parent thumbnail_image method.
 		$ewww_status   = get_transient( 'ewww_image_optimizer_cloud_status' );
-		if ( 'image/gif' === $this->mime_type && ! ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' ) ) {
+		if (
+			'image/gif' === $this->mime_type &&
+			! ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' )
+		) {
 			$gifsicle_path = ewwwio()->local->get_path( 'gifsicle' );
 			if ( empty( $gifsicle_path ) ) {
 				ewwwio_debug_message( 'no gifsicle to resize an animated GIF' );
 				$return_parent = true;
 			}
 		}
-		// If this is a GIF, and we have no gifsicle, and there's an API key, but the status isn't 'great',
-		// double-check the key to see if the status has changed before bailing.
+		// If this is a GIF, and we have no gifsicle, and there's an API key, but the status isn't 'great'.
 		if (
 			'image/gif' === $this->mime_type &&
 			empty( $gifsicle_path ) &&
@@ -235,23 +248,20 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 			ewwwio_debug_message( 'no API key to resize an animated GIF' );
 			$return_parent = true;
 		}
-		// If this is some other image, and there's an API key, but the status isn't 'great',
-		// double-check the key to see if the status has changed before bailing.
+		// If this is some other image, and there's an API key, but the status isn't 'great'.
 		if (
 			'image/gif' !== $this->mime_type &&
 			false === strpos( $ewww_status, 'great' ) &&
-			ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' ) &&
-			! ewww_image_optimizer_cloud_verify( ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' ) )
+			ewww_image_optimizer_get_option( 'ewww_image_optimizer_cloud_key' )
 		) {
 			ewwwio_debug_message( 'no API to resize the image' );
 			$return_parent = true;
 		}
-		// If this isn't a GIF, or if the GIF isn't animated, then bail--we don't yet support "better resizing" for non-GIFs.
+		// If this isn't a GIF, or if the GIF isn't animated, then bail.
 		if ( 'image/gif' !== $this->mime_type || ! ewww_image_optimizer_is_animated( $this->file ) ) {
 			ewwwio_debug_message( 'not an animated GIF' );
 			$return_parent = true;
 		}
-		// TODO: Possibly handle crop, rotate, and flip down the road.
 		if ( $this->modified ) {
 			ewwwio_debug_message( 'image already altered, leave it alone' );
 			$return_parent = true;
@@ -350,14 +360,30 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 		}
 
 		if ( 'image/png' === $this->mime_type ) {
+			$png_color_type      = '6';
+			$png_has_alpha       = false;
+			$alpha_channel_depth = 1;
+			if ( method_exists( $this->image, 'getImageProperty' ) ) {
+				$png_color_type = $this->image->getImageProperty( 'png:IHDR.color-type-orig' );
+			}
 			ewwwio_debug_message( 'this image is type: ' . $this->image->getImageType() );
-			$this->get_png_color_depth();
-			if ( $this->indexed_color_encoded ) {
+			ewwwio_debug_message( 'this image has color type: ' . $png_color_type );
+			if ( '3' === $png_color_type ) {
 				$current_colors = 500; // Fail-safe for more than any indexed PNG could have.
 				if ( is_callable( array( $this->image, 'getImageColors' ) ) ) {
 					$current_colors = $this->image->getImageColors();
+					ewwwio_debug_message( "image has $current_colors colors" );
 				}
-				switch ( $this->indexed_pixel_depth ) {
+				$bit_depth = 8;
+				if ( is_callable( array( $this->image, 'getImageDepth' ) ) ) {
+					$bit_depth = (int) $this->image->getImageDepth();
+					// Only use the direct file method if the current colors is higher than normal.
+					// We'll need an accurate bit depth in that case, to make sure we properly set the maximum.
+					if ( $bit_depth >= 8 && $current_colors > 256 ) {
+						$bit_depth = $this->get_png_color_depth();
+					}
+				}
+				switch ( $bit_depth ) {
 					case 8:
 						$max_colors = 255;
 						break;
@@ -374,7 +400,15 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 						$max_colors = 255;
 				}
 				$this->indexed_max_colors = min( $max_colors, $current_colors );
-				ewwwio_debug_message( "indexed image with pixel depth {$this->indexed_pixel_depth} limiting to {$this->indexed_max_colors} colors" );
+				if ( is_callable( array( $this->image, 'getImageAlphaChannel' ) ) && $this->image->getImageAlphaChannel() ) {
+					ewwwio_debug_message( 'image has alpha channel' );
+					$png_has_alpha = true;
+					if ( is_callable( array( $this->image, 'getImageChannelDepth' ) ) && defined( 'Imagick::CHANNEL_ALPHA' ) ) {
+						$alpha_channel_depth = $this->image->getImageChannelDepth( Imagick::CHANNEL_ALPHA );
+						ewwwio_debug_message( "alpha channel depth is $alpha_channel_depth" );
+					}
+				}
+				ewwwio_debug_message( "indexed image with pixel depth {$bit_depth} limiting to {$this->indexed_max_colors} colors" );
 			}
 		}
 
@@ -445,28 +479,28 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 				$this->image->setOption( 'png:compression-filter', '5' );
 				$this->image->setOption( 'png:compression-level', '9' );
 				$this->image->setOption( 'png:compression-strategy', '1' );
-				if ( $this->indexed_color_encoded
-					&& is_callable( array( $this->image, 'getImageAlphaChannel' ) )
-					&& $this->image->getImageAlphaChannel()
-				) {
-					$this->image->setOption( 'png:include-chunk', 'tRNS' );
-				} else {
-					$this->image->setOption( 'png:exclude-chunk', 'all' );
-				}
-			}
-
-			if ( $this->indexed_color_encoded ) {
-				if ( ! empty( $this->indexed_max_colors ) && ! ewww_image_optimizer_pngquant_reduce_available() ) {
-					ewwwio_debug_message( "doing quantizeImage on $this->file ($dst_w,$dst_h) to reduce palette to $this->indexed_max_colors" );
-					$this->image->quantizeImage( $this->indexed_max_colors, $this->image->getColorspace(), 0, false, false );
-					ewwwio_debug_message( "originally we had $current_colors colors, and now we have " . $this->image->getImageColors() );
-					/**
-					 * ImageMagick likes to convert gray indexed images to grayscale.
-					 * So, if the colorspace has changed to 'gray', use the png8 format
-					 * to ensure it stays indexed.
-					 */
-					if ( Imagick::COLORSPACE_GRAY === $this->image->getImageColorspace() ) {
-						$this->image->setOption( 'png:format', 'png8' );
+				if ( '3' === $png_color_type ) {
+					if ( $png_has_alpha ) {
+						$this->image->setOption( 'png:include-chunk', 'tRNS' );
+					} else {
+						$this->image->setOption( 'png:exclude-chunk', 'all' );
+					}
+					if ( ! empty( $this->indexed_max_colors ) && ! ewww_image_optimizer_pngquant_reduce_available() ) {
+						ewwwio_debug_message( "doing quantizeImage on $this->file ($dst_w,$dst_h) to reduce colors from " . $this->image->getImageColors() . " to $this->indexed_max_colors" );
+						$this->image->quantizeImage( $this->indexed_max_colors, $this->image->getColorspace(), 0, false, false );
+						ewwwio_debug_message( "originally we had $current_colors colors, and now we have " . $this->image->getImageColors() );
+						/**
+						 * ImageMagick likes to convert gray indexed images to grayscale.
+						 * So, if the colorspace has changed to 'gray', use the png8 format
+						 * to ensure it stays indexed.
+						 */
+						if ( $alpha_channel_depth > 1 && Imagick::COLORSPACE_GRAY === $this->image->getImageColorspace() ) {
+							ewwwio_debug_message( 'COLORSPACE_GRAY found, but alpha channel is too complicated for png8 mode' );
+							$this->indexed_grayscale_alpha_problem = true;
+						} elseif ( Imagick::COLORSPACE_GRAY === $this->image->getImageColorspace() ) {
+							ewwwio_debug_message( 'COLORSPACE_GRAY found, setting png:format = png8' );
+							$this->image->setOption( 'png:format', 'png8' );
+						}
 					}
 				}
 			}
@@ -552,7 +586,7 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 
 			if ( ! is_wp_error( $resize_result ) && ! $duplicate ) {
 				if ( is_string( $resize_result ) ) {
-					$resized = $this->_save_ewwwio_file( $resize_result );
+					$resized = $this->_save_file_from_string( $resize_result );
 					unset( $resize_result );
 					// Note sure this bit is necessary, but just to be safe.
 					$this->image->clear();
@@ -637,28 +671,21 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 	 * @param string $mime_type Optional. The mimetype of the file.
 	 * @return WP_Error|array The full path, base filename, and mimetype.
 	 */
-	protected function _save_ewwwio_file( $image, $filename = null, $mime_type = null ) {
+	protected function _save_file_from_string( $image, $filename = null, $mime_type = null ) {
 		ewwwio_debug_message( '<b>wp_image_editor_imagick::' . __FUNCTION__ . '()</b>' );
 		list( $filename, $extension, $mime_type ) = $this->get_output_format( $filename, $mime_type );
 		if ( ! $filename ) {
 			$filename = $this->generate_filename( null, null, $extension );
 		}
 		if ( wp_is_stream( $filename ) ) {
-			$imagick = new Imagick();
-			try {
-				$imagick->readImageBlob( $image );
-			} catch ( Exception $e ) {
-				return new WP_Error( 'image_save_error', $e->getMessage(), $filename );
-			}
 			unset( $this->ewww_image );
-			return parent::_save( $imagick, $filename, $mime_type );
+			return parent::_save( $this->image, $filename, $mime_type );
 		}
 		if ( ! is_string( $image ) ) {
 			unset( $this->ewww_image );
 			return parent::_save( $image, $filename, $mime_type );
 		}
-		global $ewww_preempt_editor;
-		if ( ( ! defined( 'EWWWIO_EDITOR_OVERWRITE' ) || ! EWWWIO_EDITOR_OVERWRITE ) && ewwwio_is_file( $filename ) && empty( $ewww_preempt_editor ) ) {
+		if ( apply_filters( 'ewwwio_editor_prevent_overwrite', true ) && ewwwio_is_file( $filename ) ) {
 			ewwwio_debug_message( "detected existing file: $filename" );
 			$current_size = wp_getimagesize( $filename );
 			if ( $current_size && (int) $this->size['width'] === (int) $current_size[0] && (int) $this->size['height'] === (int) $current_size[1] ) {
@@ -700,37 +727,27 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param resource $image An Imagick image object.
+	 * @param resource $image An Imagick image object. Not actually used for some reason.
 	 * @param string   $filename Optional. The name of the file to be saved to.
 	 * @param string   $mime_type Optional. The mimetype of the file.
 	 * @return WP_Error| array The full path, base filename, width, height, and mimetype.
 	 */
 	protected function _save( $image, $filename = null, $mime_type = null ) {
 		ewwwio_debug_message( '<b>wp_image_editor_imagick::' . __FUNCTION__ . '()</b>' );
-		global $ewww_preempt_editor;
-		$special_palettes = array( 'PNG1', 'PNG2', 'PNG4', 'PNG8' );
+
 		// If something is in the 'ewww_image' property, meaning this is likely a GIF that has been
 		// resized by EWWW IO, and the image wasn't otherwise cropped, rotated, etc.
 		if ( ! empty( $this->ewww_image ) && ! $this->modified ) {
-			return $this->_save_ewwwio_file( $this->ewww_image, $filename, $mime_type );
+			return $this->_save_file_from_string( $this->ewww_image, $filename, $mime_type );
 		}
-		if ( ! empty( $ewww_preempt_editor ) || ! defined( 'EWWW_IMAGE_OPTIMIZER_ENABLE_EDITOR' ) || ! EWWW_IMAGE_OPTIMIZER_ENABLE_EDITOR ) {
-			ewwwio_debug_message( 'EWWW editor not enabled, using parent _save()' );
-			$saved = parent::_save( $image, $filename, $mime_type );
-			if ( ! is_wp_error( $saved ) && $this->indexed_color_encoded && ! empty( $saved['path'] ) ) {
-				ewwwio_debug_message( "reducing to $this->indexed_max_colors colors" );
-				ewww_image_optimizer_reduce_palette( $saved['path'], $this->indexed_max_colors );
-			}
-			if ( is_wp_error( $saved ) ) {
-				ewwwio_debug_message( 'editor error: ' . $saved->get_error_message() );
-			}
-			return $saved;
-		}
+
 		list( $filename, $extension, $mime_type ) = $this->get_output_format( $filename, $mime_type );
 		if ( ! $filename ) {
 			$filename = $this->generate_filename( null, null, $extension );
 		}
-		if ( ( ! defined( 'EWWWIO_EDITOR_OVERWRITE' ) || ! EWWWIO_EDITOR_OVERWRITE ) && ewwwio_is_file( $filename ) ) {
+		\ewwwio_debug_message( "saving $filename" );
+
+		if ( apply_filters( 'ewwwio_editor_prevent_overwrite', true ) && ewwwio_is_file( $filename ) ) {
 			ewwwio_debug_message( "detected existing file: $filename" );
 			$current_size = wp_getimagesize( $filename );
 			if ( $current_size && (int) $this->size['width'] === (int) $current_size[0] && (int) $this->size['height'] === (int) $current_size[1] ) {
@@ -744,25 +761,169 @@ class EWWWIO_Imagick_Editor extends WP_Image_Editor_Imagick {
 				);
 			}
 		}
-		$saved = parent::_save( $image, $filename, $mime_type );
 
-		if ( ! is_wp_error( $saved ) ) {
-			if ( ! $filename ) {
-				$filename = $saved['path'];
+		$sharp_yuv = defined( 'EIO_WEBP_SHARP_YUV' ) && EIO_WEBP_SHARP_YUV ? true : false;
+		if ( empty( $sharp_yuv ) && \ewww_image_optimizer_get_option( 'ewww_image_optimizer_sharpen' ) ) {
+			$sharp_yuv = true;
+		}
+		$profiles = array();
+		try {
+			// Store original format.
+			$orig_format = $this->image->getImageFormat();
+			\ewwwio_debug_message( "original format is $orig_format" );
+
+			if ( 'image/webp' === $mime_type ) {
+				if ( ewww_image_optimizer_get_option( 'ewww_image_optimizer_metadata_remove' ) ) {
+					// Getting possible color profiles.
+					$profiles = $this->image->getImageProfiles( 'icc', true );
+				}
+				\ewwwio_debug_message( 'checking colorspace for WebP (in case of incompatible CMYK)' );
+				$color = $this->image->getImageColorspace();
+				\ewwwio_debug_message( "color space is $color" );
+				if ( Imagick::COLORSPACE_CMYK === $color ) {
+					\ewwwio_debug_message( 'found CMYK image' );
+					if ( \ewwwio_is_file( EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'vendor/icc/sRGB2014.icc' ) ) {
+						\ewwwio_debug_message( 'adding sRGB2014.icc profile' );
+						$icc_profile = file_get_contents( EWWW_IMAGE_OPTIMIZER_PLUGIN_PATH . 'vendor/icc/sRGB2014.icc' );
+						$this->image->profileImage( 'icc', $icc_profile );
+					}
+					\ewwwio_debug_message( 'attempting SRGB transform' );
+					$this->image->transformImageColorspace( Imagick::COLORSPACE_SRGB );
+					\ewwwio_debug_message( 'removing icc profile' );
+					$this->image->setImageProfile( '*', null );
+					$profiles = array();
+				}
 			}
-			if ( ewwwio_is_file( $filename ) ) {
-				if ( $this->indexed_color_encoded && ! empty( $filename ) ) {
-					ewwwio_debug_message( "reducing to $this->indexed_max_colors colors" );
-					ewww_image_optimizer_reduce_palette( $filename, $this->indexed_max_colors );
+
+			$this->image->setImageFormat( strtoupper( $this->get_extension( $mime_type ) ) );
+
+			if ( 'image/webp' === $mime_type ) {
+				if ( $sharp_yuv ) {
+					\ewwwio_debug_message( 'enabling sharp_yuv' );
+					$this->image->setOption( 'webp:use-sharp-yuv', 'true' );
 				}
 
-				ewww_image_optimizer( $filename );
-				ewwwio_debug_message( "image editor (imagick) saved: $filename" );
-				$image_size = ewww_image_optimizer_filesize( $filename );
-				ewwwio_debug_message( "image editor size: $image_size" );
+				if ( \ewww_image_optimizer_get_option( 'ewww_image_optimizer_metadata_remove' ) ) {
+					\ewwwio_debug_message( 'removing meta' );
+					$this->image->stripImage();
+					if ( ! empty( $profiles ) ) {
+						\ewwwio_debug_message( 'adding color profile to WebP' );
+						$this->image->profileImage( 'icc', $profiles['icc'] );
+					}
+				}
+			}
+		} catch ( Exception $e ) {
+			return new WP_Error( 'image_save_error', $e->getMessage(), $filename );
+		}
+
+		if ( method_exists( $this->image, 'setInterlaceScheme' )
+			&& method_exists( $this->image, 'getInterlaceScheme' )
+			&& defined( 'Imagick::INTERLACE_PLANE' )
+		) {
+			$orig_interlace = $this->image->getInterlaceScheme();
+
+			/** This filter is documented in wp-includes/class-wp-image-editor-gd.php */
+			if ( apply_filters( 'image_save_progressive', false, $mime_type ) ) {
+				$this->image->setInterlaceScheme( Imagick::INTERLACE_PLANE ); // True - line interlace output.
+			} else {
+				$this->image->setInterlaceScheme( Imagick::INTERLACE_NO ); // False - no interlace output.
 			}
 		}
-		ewwwio_memory( __FUNCTION__ );
-		return $saved;
+
+		$write_image_result = $this->write_image( $this->image, $filename );
+		if ( is_wp_error( $write_image_result ) ) {
+			return $write_image_result;
+		}
+
+		try {
+			// Reset original format.
+			$this->image->setImageFormat( $orig_format );
+
+			if ( isset( $orig_interlace ) ) {
+				$this->image->setInterlaceScheme( $orig_interlace );
+			}
+		} catch ( Exception $e ) {
+			return new WP_Error( 'image_save_error', $e->getMessage(), $filename );
+		}
+
+		// Set correct file permissions.
+		$stat  = stat( dirname( $filename ) );
+		$perms = $stat['mode'] & 0000666; // Same permissions as parent folder, strip off the executable bits.
+		chmod( $filename, $perms );
+
+		if ( ewwwio_is_file( $filename ) ) {
+			if ( $this->indexed_max_colors ) {
+				ewwwio_debug_message( "reducing to $this->indexed_max_colors colors" );
+				ewww_image_optimizer_reduce_palette( $filename, $this->indexed_max_colors, $this->indexed_grayscale_alpha_problem );
+			}
+
+			global $ewww_preempt_editor;
+			if ( empty( $ewww_preempt_editor ) && defined( 'EWWW_IMAGE_OPTIMIZER_ENABLE_EDITOR' ) && EWWW_IMAGE_OPTIMIZER_ENABLE_EDITOR ) {
+				ewww_image_optimizer( $filename );
+			}
+			ewwwio_debug_message( "image editor (imagick) saved: $filename" );
+			$image_size = ewww_image_optimizer_filesize( $filename );
+			ewwwio_debug_message( "image editor size: $image_size" );
+		}
+
+		return array(
+			'path'      => $filename,
+			/** This filter is documented in wp-includes/class-wp-image-editor-gd.php */
+			'file'      => wp_basename( apply_filters( 'image_make_intermediate_size', $filename ) ),
+			'width'     => $this->size['width'],
+			'height'    => $this->size['height'],
+			'mime-type' => $mime_type,
+			'filesize'  => wp_filesize( $filename ),
+		);
+	}
+
+	/**
+	 * Writes an image to a file or stream.
+	 *
+	 * @since 8.1.0
+	 *
+	 * @param Imagick $image An Imagick image object.
+	 * @param string  $filename The destination filename or stream URL.
+	 * @return true|WP_Error
+	 */
+	private function write_image( $image, $filename ) {
+		if ( wp_is_stream( $filename ) ) {
+			/*
+			 * Due to reports of issues with streams with `Imagick::writeImageFile()` and `Imagick::writeImage()`, copies the blob instead.
+			 * Checks for exact type due to: https://www.php.net/manual/en/function.file-put-contents.php
+			 */
+			if ( file_put_contents( $filename, $image->getImageBlob() ) === false ) {
+				return new WP_Error(
+					'image_save_error',
+					sprintf(
+						/* translators: %s: PHP function name. */
+						__( '%s failed while writing image to stream.', 'ewww-image-optimizer' ),
+						'<code>file_put_contents()</code>'
+					),
+					$filename
+				);
+			} else {
+				return true;
+			}
+		} else {
+			$dirname = dirname( $filename );
+
+			if ( ! wp_mkdir_p( $dirname ) ) {
+				return new WP_Error(
+					'image_save_error',
+					sprintf(
+						/* translators: %s: Directory path. */
+						__( 'Unable to create directory %s. Is its parent directory writable by the server?', 'ewww-image-optimizer' ),
+						esc_html( $dirname )
+					)
+				);
+			}
+
+			try {
+				return $image->writeImage( $filename );
+			} catch ( Exception $e ) {
+				return new WP_Error( 'image_save_error', $e->getMessage(), $filename );
+			}
+		}
 	}
 }

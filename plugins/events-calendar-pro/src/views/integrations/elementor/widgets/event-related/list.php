@@ -22,7 +22,7 @@ if ( empty( $events ) ) {
 }
 ?>
 
-<ul <?php tribe_classes( $widget->get_list_class() ); ?>>
+<ul <?php tec_classes( $widget->get_list_class() ); ?>>
 	<?php
 	foreach ( $events as $event ) {
 		$this->template( 'views/integrations/elementor/widgets/event-related/list-item', [ 'event' => $event ] );

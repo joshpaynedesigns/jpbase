@@ -197,15 +197,17 @@ class Tribe__Events__Pro__Editor__Blocks__Additional_Field extends Tribe__Editor
 	 * @return void
 	 */
 	public function assets() {
-		tribe_asset(
-			Tribe__Events__Pro__Main::instance(),
+		$events_pro = Tribe__Events__Pro__Main::instance();
+		tec_asset(
+			$events_pro,
 			'tribe-events-pro-additional-fields-fe',
-			'app/additional-fields/frontend.css',
-			array(),
+			'additional-fields/frontend.css',
+			[],
 			'wp_enqueue_scripts',
-			array(
-				'conditionals' => array( $this, 'has_block' ),
-			)
+			[
+				'conditionals' => [ $this, 'has_block' ],
+				'group_path'   => get_class( $events_pro ) . '-packages',
+			]
 		);
 	}
 }

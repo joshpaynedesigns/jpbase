@@ -9,7 +9,7 @@
                 let $el = $(this);
                 if (! $el.hasClass('disabled')) {
                     $el.attr('role', 'checkbox');
-                    $el.attr('aria-checked', $el.hasClass('checked') ? 'true' : 'false');
+                    $el.attr('aria-checked', $el.hasClass('checked') || $el.hasClass('selected') ? 'true' : 'false');
                     $el.attr('aria-label', $el.text());
                     $el.attr('tabindex', 0);
                 }

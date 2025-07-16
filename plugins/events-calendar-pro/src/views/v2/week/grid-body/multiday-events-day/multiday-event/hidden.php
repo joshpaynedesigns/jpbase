@@ -19,7 +19,7 @@
  */
 
 ?>
-<div class="tribe-events-pro-week-grid__multiday-event-hidden">
+<div class="tribe-events-pro-week-grid__multiday-event-hidden" aria-hidden="true">
 	<?php $this->template( 'week/grid-body/multiday-events-day/multiday-event/hidden/date', [ 'event' => $event ] ); ?>
 	<?php $this->template( 'week/grid-body/multiday-events-day/multiday-event/hidden/link', [ 'event' => $event ] ); ?>
 </div>

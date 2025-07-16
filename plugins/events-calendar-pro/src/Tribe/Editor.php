@@ -140,22 +140,23 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 	public function assets() {
 		$events_pro = Tribe__Events__Pro__Main::instance();
 
-		tribe_asset(
+		tec_asset(
 			$events_pro,
 			'gutenberg-events-pro-admin-additional-fields-admin-style',
-			'app/admin/additional-fields.css',
-			array(),
+			'admin/additional-fields.css',
+			[],
 			'admin_enqueue_scripts',
-			array(
-				'conditionals' => array( $this, 'maybe_load_custom_field_assets' ),
-			)
+			[
+				'conditionals' => [ $this, 'maybe_load_custom_field_assets' ],
+				'group_path'   => get_class( $events_pro ) . '-packages',
+			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$events_pro,
 			'gutenberg-events-pro-admin-additional-fields-behavior',
 			'admin/admin-additional-fields.js',
-			array(),
+			[],
 			'admin_enqueue_scripts',
 			array(
 				'conditionals' => array( $this, 'maybe_load_custom_field_assets' ),

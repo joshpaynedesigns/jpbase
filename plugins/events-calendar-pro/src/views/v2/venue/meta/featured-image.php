@@ -29,7 +29,7 @@ $classes = [
 ];
 
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
 	<a
 		href="<?php echo esc_url( $venue->permalink ); ?>"
 		title="<?php echo esc_attr( $venue->title ); ?>"

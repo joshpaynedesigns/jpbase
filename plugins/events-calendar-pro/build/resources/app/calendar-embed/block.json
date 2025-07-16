@@ -1,0 +1,102 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "tec/calendar-embed",
+  "version": "0.1.0",
+  "title": "Calendar Embed",
+  "category": "tribe-events",
+  "supports": {
+    "html": true
+  },
+  "editorStyle": "file:./index.css",
+  "attributes": {
+    "view": {
+      "type": "string",
+      "default": "month"
+    },
+    "events_per_page": {
+      "type": "integer",
+      "default": 12
+    },
+    "month_events_per_day": {
+      "type": "integer",
+      "default": 3
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    },
+    "exclude_category": {
+      "type": "string",
+      "default": ""
+    },
+    "tag": {
+      "type": "string",
+      "default": ""
+    },
+    "tax_operand": {
+      "type": "string",
+      "default": "OR"
+    },
+    "date": {
+      "type": "string",
+      "default": ""
+    },
+    "keyword": {
+      "type": "string",
+      "default": ""
+    },
+    "exclude_tag": {
+      "type": "string",
+      "default": ""
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "past": {
+      "type": "boolean",
+      "default": false
+    },
+    "tribe_bar": {
+      "type": "boolean",
+      "default": true
+    },
+    "filter_bar": {
+      "type": "boolean",
+      "default": false
+    },
+    "author": {
+      "type": "integer",
+      "default": ""
+    },
+    "organizer": {
+      "type": "integer",
+      "default": ""
+    },
+    "venue": {
+      "type": "integer",
+      "default": ""
+    },
+    "isPreview": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "example": {
+    "attributes": {
+      "view": "month",
+      "events_per_page": 1,
+      "isPreview": true
+    },
+    "viewportWidth": 850
+  },
+  "textdomain": "events-calendar-pro",
+  "editorScript": "file:./index.js",
+  "keywords": [
+    "events",
+    "calendar",
+    "dates"
+  ],
+  "render": "file:./render.php"
+}

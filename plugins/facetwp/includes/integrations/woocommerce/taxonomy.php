@@ -70,7 +70,7 @@ class FacetWP_Integration_WooCommerce_Taxonomy
      * @since 3.3.10
      */
     function append_url_vars( $term_link, $term, $taxonomy ) {
-        if ( 'product_cat' == $taxonomy ) {
+        if ( 'product_cat' == $taxonomy && did_action( 'woocommerce_shop_loop_header' ) && !did_action( 'woocommerce_after_shop_loop' ) ) {
             $query_string = filter_var( $_SERVER['QUERY_STRING'], FILTER_SANITIZE_URL );
 
             if ( ! empty( $query_string ) ) {

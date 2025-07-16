@@ -17,6 +17,7 @@ use TEC\Events_Pro\Custom_Tables\V1\Series\Providers\Base;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Providers\Modifications;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Providers\Theme_Compatibility;
 use TEC\Events_Pro\Custom_Tables\V1\Updates\Relationships;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Event;
 use Tribe__Events__Main as TEC;
 use WP_Post;
 
@@ -99,6 +100,15 @@ class Provider extends Service_Provider {
 		} else {
 			add_action( 'init', $this->container->callback( Series::class, 'register_post_type_or_fail' ) );
 		}
+
+		add_filter( 'tec_events_qr_valid_screens', [ $this, 'add_series_screens' ] );
+		add_filter( 'tec_events_qr_code_supported_post_types', [ $this, 'add_series_to_qr_types' ] );
+		add_filter( 'tec_events_qr_code_redirection_type', [ $this, 'add_series_to_qr_redirection' ], 10, 2 );
+		add_filter( 'tec_events_qr_code_post_types', [ $this, 'add_series_post_type' ], 10, 1 );
+		add_filter( 'tec_events_qr_widget_options', [ $this, 'add_series_to_qr_widget_options' ], 10, 1 );
+		add_filter( 'tec_events_qr_widget_fields', [ $this, 'add_series_to_qr_widget_fields' ], 10, 1 );
+		add_filter( 'tec_events_qr_redirection_url', [ $this, 'send_to_next_event_in_series' ], 10, 3 );
+		add_action( 'add_meta_boxes', [ $this, 'add_qr_code_meta_box' ] );
 	}
 
 	/**
@@ -343,5 +353,208 @@ class Provider extends Service_Provider {
 			// Update the option with the new list of post types.
 			update_option( TEC::OPTIONNAME, $options );
 		}
+	}
+
+	/**
+	 * Adds Series post type screens to the list of valid screens for QR code assets.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param array $valid_screens Array of screen IDs where QR code assets should be loaded.
+	 *
+	 * @return array The filtered list of valid screens.
+	 */
+	public function add_series_screens( array $valid_screens ): array {
+		$series_screens = [ 'edit-' . Series::POSTTYPE, Series::POSTTYPE ];
+
+		return array_merge( $valid_screens, $series_screens );
+	}
+
+	/**
+	 * Adds the Series post type to the list of post types that support QR codes.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param array $supported Array of supported post types.
+	 *
+	 * @return array The filtered list of supported post types.
+	 */
+	public function add_series_to_qr_types( array $supported ): array {
+		$supported[] = Series::POSTTYPE;
+		return $supported;
+	}
+
+	/**
+	 * Adds the QR code meta box.
+	 *
+	 * @since 7.5.0
+	 * @return void
+	 */
+	public function add_qr_code_meta_box(): void {
+		$screen = get_current_screen();
+		if ( $screen && 'add' === $screen->action ) {
+			return;
+		}
+
+		add_meta_box(
+			'tec-events-qr-code',
+			esc_html__( 'QR Code', 'the-events-calendar' ),
+			[ $this, 'render_qr_code_meta_box' ],
+			Series::POSTTYPE,
+			'side',
+			'default'
+		);
+	}
+
+	/**
+	 * Renders the QR code meta box.
+	 *
+	 * @since 7.5.0
+	 * @return void
+	 */
+	public function render_qr_code_meta_box(): void {
+		tribe( \TEC\Events\QR\QR_Code::class )->render_qr_code_meta_box();
+	}
+
+	/**
+	 * Filters the redirection type for QR codes.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param string  $redirection The redirection type ('specific' or 'next').
+	 * @param WP_Post $post The post object.
+	 *
+	 * @return string The filtered redirection type.
+	 */
+	public function add_series_to_qr_redirection( string $redirection, WP_Post $post ): string {
+		if ( tribe_is_recurring_event( $post ) || Series::POSTTYPE === $post->post_type ) {
+			return 'next';
+		}
+
+		return $redirection;
+	}
+
+	/**
+	 * Adds Series to the list of post types that support QR codes.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param array $supported_post_types Array of supported post types.
+	 *
+	 * @return array The filtered list of supported post types.
+	 */
+	public function add_series_post_type( array $supported_post_types ): array {
+		$supported_post_types[] = Series::POSTTYPE;
+		return $supported_post_types;
+	}
+
+	/**
+	 * Adds Series to the list of post types that support QR codes.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param array $options The array of options.
+	 *
+	 * @return array The filtered array of options.
+	 */
+	public function add_series_to_qr_widget_options( array $options ): array {
+
+		$options[] = [
+			'value' => 'next',
+			'text'  => _x( 'Redirect to the next event in a series', 'Next event in series redirection option', 'the-events-calendar' ),
+		];
+
+		return $options;
+	}
+
+	/**
+	 * Adds Series to the list of fields for the QR Code widget.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param array $fields The array of fields.
+	 *
+	 * @return array The filtered array of fields.
+	 */
+	public function add_series_to_qr_widget_fields( $fields ): array {
+		$args = [
+			'posts_per_page' => -1,
+			'post_type'      => Series::POSTTYPE,
+			'post_status'    => 'publish',
+			'orderby'        => 'ID',
+			'order'          => 'DESC',
+		];
+
+		$series_query = get_posts( $args );
+		if ( ! empty( $series_query ) ) {
+			foreach ( $series_query as $series ) {
+				$series_options[] = [
+					'value' => $series->ID,
+					'text'  => "{$series->ID} - {$series->post_title}",
+				];
+			}
+		} else {
+			$series_options[] = [
+				'value' => '',
+				'text'  => esc_html__( 'No Series have been created yet.', 'the-events-calendar' ),
+			];
+		}
+
+		$fields['series_id'] = [
+			'id'             => 'series_id',
+			'label'          => _x( 'Series ID:', 'The label for the series ID setting.', 'the-events-calendar' ),
+			'type'           => 'dropdown',
+			'parent_classes' => 'hidden',
+			'classes'        => 'tribe-dependent',
+			'options'        => $series_options,
+			'dependency'     => [
+				'ID' => 'redirection',
+				'is' => 'next',
+			],
+		];
+
+		return $fields;
+	}
+
+	/**
+	 * Get the URL for the next event in a series.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @param string $url The URL to redirect to.
+	 * @param array  $data The data array.
+	 * @param object $context The context object.
+	 *
+	 * @return string The URL to redirect to.
+	 */
+	public function send_to_next_event_in_series( $url, $data, $context ): string {
+
+		if ( ! isset( $data['qr_type'] ) || ! isset( $data['post_id'] ) ) {
+			return $url;
+		}
+
+		if ( 'next' !== $data['qr_type'] ) {
+			return $url;
+		}
+
+		$next_event_id = Event::next_in_series( (int) $data['post_id'] );
+		if ( null === $next_event_id ) {
+			return $url;
+		}
+
+		$url = get_permalink( $next_event_id );
+
+		/**
+		 * Filters the URL for the next event in a series redirection.
+		 *
+		 * @since 7.5.0
+		 *
+		 * @param string $url     The URL to redirect to.
+		 * @param array  $data    The data array.
+		 * @param object $context The context object.
+		 */
+		$url = apply_filters( 'tec_events_qr_next_series_event_url', $url, $data, $context );
+
+		return esc_url( $url );
 	}
 }

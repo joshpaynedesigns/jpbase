@@ -101,16 +101,15 @@ if ( $event->multiday ) {
 $event_title = wp_kses_post( get_the_title( $event->ID ) );
 
 $aria_label = sprintf(
-	/* translators: %1$s: event date tag, in M j. format, %2$s: event date time, %3$s: event title, %4$s: event (singular) */
-	__( '%1$s %2$s %3$s. Click to select %4$s.', 'tribe-events-calendar-pro' ),
+	/* translators: %1$s: event date tag, in M j. format, %2$s: event date time, %3$s: event title */
+	__( '%1$s %2$s %3$s.', 'tribe-events-calendar-pro' ),
 	$event_date_tag,
 	$event_date_time,
-	$event_title,
-	tribe_get_event_label_singular_lowercase()
+	$event_title
 );
 ?>
 <div
-	<?php tribe_classes( $wrapper_classes ) ?>
+	<?php tec_classes( $wrapper_classes ); ?>
 	<?php echo $data_src_attr; ?>
 	data-js="tribe-events-pro-map-event-card-wrapper"
 	data-event-id="<?php echo esc_attr( $event->ID ); ?>"
@@ -123,7 +122,7 @@ $aria_label = sprintf(
 		aria-expanded="<?php echo esc_attr( $aria_expanded ); ?>"
 		aria-label="<?php echo esc_attr( $aria_label ); ?>"
 	>
-		<article <?php tribe_classes( $article_classes ); ?>>
+		<article <?php tec_classes( $article_classes ); ?>>
 			<div class="tribe-common-g-row tribe-events-pro-map__event-row">
 
 				<?php $this->template( 'map/event-cards/event-card/date-tag', [ 'event' => $event ] ); ?>

@@ -31,7 +31,6 @@ use Tribe\Events\Virtual\Meetings\Google_Provider;
 use Tribe\Events\Virtual\Meetings\Microsoft_Provider;
 use Tribe\Events\Virtual\Meetings\Webex_Provider;
 use Tribe\Events\Virtual\Meetings\YouTube_Provider;
-use Tribe\Events\Virtual\Meetings\Zoom\Url;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
 use Tribe\Events\Virtual\Views\V2\Widgets\Widget;
 use Tribe\Events\Views\V2\Template_Bootstrap;
@@ -354,6 +353,11 @@ class Hooks extends Service_Provider {
 
 		add_action(
 			'tribe_events_pro_shortcode_tribe_events_before_assets',
+			[ $this, 'action_include_assets' ]
+		);
+
+		add_action(
+			'tec_events_calendar_embeds_enqueue_scripts',
 			[ $this, 'action_include_assets' ]
 		);
 		// Generic Widgets.

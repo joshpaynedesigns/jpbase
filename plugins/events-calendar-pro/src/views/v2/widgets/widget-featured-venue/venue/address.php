@@ -27,11 +27,7 @@ if (
 
 ?>
 <div class="tribe-common-h7 tribe-common-h--alt tribe-events-widget-featured-venue__venue-info-group tribe-events-widget-featured-venue__venue-info-group--address">
-	<em
-		class="tribe-events-widget-featured-venue__venue-icon"
-		aria-label="<?php esc_attr_e( 'Address', 'tribe-events-calendar-pro' ); ?>"
-		title="<?php esc_attr_e( 'Address', 'tribe-events-calendar-pro' ); ?>"
-	>
+	<em class="tribe-events-widget-featured-venue__venue-icon" >
 		<?php
 		$this->template(
 			'components/icons/map-pin',
@@ -44,9 +40,11 @@ if (
 		);
 		?>
 	</em>
+	<span class="tribe-events-widget-featured-venue__venue-icon-text tribe-common-a11y-visual-hide">
+		<?php esc_html_e( 'Address', 'tribe-events-calendar-pro' ); ?>
+	</span>
 
 	<div class="tribe-events-widget-featured-venue__venue-content tribe-events-widget-featured-venue__venue-address-info">
-
 		<?php if ( ! empty( $venue->address ) ) : ?>
 			<div class="tribe-events-widget-featured-venue__venue-address-info-street">
 				<?php echo esc_html( $venue->address ); ?>

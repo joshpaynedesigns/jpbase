@@ -146,7 +146,7 @@ class Columns {
 
 		$start_date = Dates::immutable( $end_date, $event->timezone );
 
-		echo esc_html( $start_date->format( $format ) );
+		echo esc_html( $start_date->format_i18n( $format ) );
 	}
 
 	/**
@@ -184,7 +184,7 @@ class Columns {
 	 * @return void The start_date column value is echoed, if required.
 	 */
 	private function render_start_date_column( int $post_id ): void {
-		$format = tribe_get_date_format( true );;
+		$format = tribe_get_date_format( true );
 		$event = Event::find( $post_id, 'post_id' );
 		if ( $event instanceof Event ) {
 			$start_date = Dates::immutable( $event->start_date, $event->timezone );
@@ -198,12 +198,12 @@ class Columns {
 			if ( $event->has_recurrence() ) {
 				echo '<div style="display: flex; align-items: start;">';
 				echo '<span style="flex-grow: 1;">';
-				echo esc_html( $start_date->format( $format ) );
+				echo esc_html( $start_date->format_i18n( $format ) );
 				echo '</span>';
 				echo '<svg style="margin-left: 10px; margin-top: 3px;" viewBox="0 0 12 12" width="12" height="12"><title>' . $title . '</title><use xlink:href="#recurring" /></svg>';
 				echo '</div>';
 			} else {
-				echo esc_html( $start_date->format( $format ) );
+				echo esc_html( $start_date->format_i18n( $format ) );
 			}
 		} else {
 			echo tribe_get_start_date( $post_id, false, $format );

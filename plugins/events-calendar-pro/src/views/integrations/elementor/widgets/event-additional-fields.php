@@ -22,7 +22,7 @@ if ( empty( $fields ) ) {
 	return;
 }
 ?>
-<div class="<?php tribe_classes( $widget->get_wrapper_class() ); ?>">
+<div class="<?php tec_classes( $widget->get_wrapper_class() ); ?>">
 	<?php
 	$this->template( 'views/integrations/elementor/widgets/event-additional-fields/header' );
 	?>

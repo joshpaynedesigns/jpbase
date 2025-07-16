@@ -1,6 +1,6 @@
 <?php
 /**
- * View: Map View - Single Event Recurring Icon
+ * View: Map Event Cards - Single Event Recurring Icon
  *
  * Override this template in your own theme by creating a file at:
  * [your-theme]/tribe/events-pro/v2/map/event-cards/event-card/event/date-time/recurring.php
@@ -10,8 +10,12 @@
  * @link https://evnt.is/1aiy
  *
  * @since 5.2.0
+ * @since 7.6.1 Added $icon_description parameter and updated the template to use it for the accessible label.
  *
- * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @version 7.6.1
+ *
+ * @var WP_Post $event            The event post object with properties added by the `tribe_get_event` function.
+ * @var string  $icon_description The description of the icon. Used for the accessible label. (optional)
  *
  * @see tribe_get_event() For the format of the event object.
  */
@@ -19,10 +23,14 @@
 if ( empty( $event->recurring ) ) {
 	return;
 }
+
+if ( empty( $icon_description ) ) {
+	$icon_description = __( 'Recurring', 'tribe-events-calendar-pro' );
+}
 ?>
-<em
-	class="tribe-events-pro-map__event-datetime-recurring-icon"
-	title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
->
+<em class="tribe-events-pro-map__event-datetime-recurring-icon">
 	<?php $this->template( 'components/icons/recurring', [ 'classes' => [ 'tribe-events-pro-map__event-datetime-recurring-icon-svg' ] ] ); ?>
 </em>
+<span class="tribe-events-pro-map__event-datetime-recurring-text tribe-common-a11y-visual-hide">
+	<?php echo esc_html( $icon_description ); ?>
+</span>

@@ -20,6 +20,6 @@ use Tribe\Events\Views\V2\Template_Bootstrap;
  */
 tribe_asset_enqueue_group( Event_Assets::$group_key );
 ?>
-<div <?php tribe_classes( $attributes['className'], 'tribe-block', 'tec-block__single-venue' ); ?>>
+<div <?php tec_classes( $attributes['className'], 'tribe-block', 'tec-block__single-venue' ); ?>>
 	<?php echo tribe( Template_Bootstrap::class )->get_view_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, StellarWP.XSS.EscapeOutput.OutputNotEscaped ?>
 </div>

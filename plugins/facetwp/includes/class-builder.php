@@ -34,7 +34,10 @@ class FacetWP_Builder
 
         $counter = 0;
         $settings = $layout['settings'];
-        $this->custom_css = $settings['custom_css'];
+
+        $this->custom_css = "@media (max-width: 480px) { \n    body .facetwp-template .fwpl-layout,  \n    body .facetwp-template-static .fwpl-layout { grid-template-columns: 1fr; } \n} \n";
+
+        $this->custom_css .= $settings['custom_css'];
 
         $selector = '.fwpl-layout';
         $selector .= empty( $settings['name'] ) ? '' : '.' . $settings['name'];
@@ -46,6 +49,9 @@ class FacetWP_Builder
             $selector => [
                 'grid-template-columns' => 'repeat(' . $settings['num_columns'] . ', 1fr)',
                 'grid-gap' => $settings['grid_gap'] . 'px'
+            ],
+            '.fwpl-btn'  => [
+                'text-decoration' =>  'none'
             ],
             $selector . ' .fwpl-result' => $this->build_styles( $settings )
         ];
@@ -574,6 +580,10 @@ class FacetWP_Builder
             $return = false;
         }
 
+        if ( 'text-decoration' === $prop && 'none' === $value ) {
+            $return = true;
+        }
+
         return $return;
     }
 
@@ -878,10 +888,12 @@ class FacetWP_Builder
 
     /**
      * Initialize CodeMirror for Listing Builder editors
-     * @since 4.3.1
+     * @since 4.3.2
      */
-    function initialize_builder_editor() {
-        $fwp_editor_settings = wp_enqueue_code_editor( array( 'type' => 'php' ) );
-        wp_localize_script( 'jquery', 'fwp_editor_settings', $fwp_editor_settings );
+    function initialize_builder_editor( $hook ) {
+        if ( 'settings_page_facetwp' == $hook ) {
+            $fwp_editor_settings = wp_enqueue_code_editor( array( 'type' => 'php' ) );
+            wp_localize_script( 'jquery', 'fwp_editor_settings', $fwp_editor_settings );
+        }
     }
 }

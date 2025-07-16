@@ -14,14 +14,14 @@
  * Plugin URI:        https://bettersearchreplace.com
  * Update URI:        https://bettersearchreplace.com
  * Description:       A small plugin for running a search/replace on your WordPress database.
- * Version:           1.4.8
+ * Version:           1.4.10
  * Author:            Delicious Brains
  * Author URI:        https://bettersearchreplace.com
  * License:           GPL-3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       better-search-replace
  * Domain Path:       /languages
- * Network:			  true
+ * Network:           true
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,22 +49,15 @@ if ( ! defined( 'WPINC' ) ) {
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since 1.0.0
  */
 function run_better_search_replace_pro() {
-
-	// Allows for overriding the capability required to run the plugin.
-	$cap = apply_filters( 'bsr_capability', 'manage_options' );
-
-	// Only load for admins.
-	if ( current_user_can( $cap ) ) {
-
+	if ( bsr_enabled_for_user() ) {
 		/**
 		 * The core plugin class that is used to define internationalization,
 		 * dashboard-specific hooks, and public-facing site hooks.
 		 */
 		if ( ! function_exists( 'run_better_search_replace' ) ) {
-
 			// Defines the path to the main plugin file.
 			define( 'BSR_FILE', __FILE__ );
 
@@ -75,7 +68,7 @@ function run_better_search_replace_pro() {
 			define( 'BSR_URL', plugin_dir_url( BSR_FILE ) );
 
 			// Defines the current version of the plugin.
-			define( 'BSR_VERSION', '1.4.8' );
+			define( 'BSR_VERSION', '1.4.10' );
 
 			// Defines the name of the plugin.
 			define( 'BSR_NAME', 'Better Search Replace Pro' );
@@ -86,14 +79,12 @@ function run_better_search_replace_pro() {
 			require BSR_PATH . 'includes/class-bsr-main.php';
 			$plugin = new Better_Search_Replace();
 			$plugin->run();
-
 		} else {
 			add_action( 'admin_notices', 'bsr_conflict_notice' );
 		}
-
 	}
-
 }
+
 add_action( 'after_setup_theme', 'run_better_search_replace_pro' );
 
 /**
@@ -105,8 +96,29 @@ add_action( 'after_setup_theme', 'run_better_search_replace_pro' );
  */
 function bsr_conflict_notice() {
 	?>
-
-	<div class="error"><p><?php _e( 'Better Search Replace Pro has been installed successfully, but requires Better Search Replace (free version) to be deactivated.', 'better-search-replace' ); ?></p></div>
-
+	<div class="error">
+		<p>
+			<?php
+			_e(
+				'Better Search Replace Pro has been installed successfully, but requires Better Search Replace (free version) to be deactivated.',
+				'better-search-replace'
+			);
+			?>
+		</p>
+	</div>
 	<?php
+}
+
+if ( ! function_exists( 'bsr_enabled_for_user' ) ) {
+	/**
+	 * Is the current user allowed to use BSR?
+	 *
+	 * @return bool
+	 */
+	function bsr_enabled_for_user() {
+		// Allows for overriding the capability required to run the plugin.
+		$cap = apply_filters( 'bsr_capability', 'manage_options' );
+
+		return current_user_can( $cap );
+	}
 }

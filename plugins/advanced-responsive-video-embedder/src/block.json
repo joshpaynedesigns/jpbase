@@ -13,7 +13,7 @@
         "vimeo",
         "odysee"
     ],
-    "version": "10.3.2",
+    "version": "10.6.12",
     "textdomain": "advanced-responsive-video-embedder",
     "supports": {
         "align": [
@@ -32,7 +32,13 @@
         }
     },
     "editorScript": "arve-block",
-    "editorStyle": "arve-block",
+    "editorStyle": [
+        "arve-block",
+        "arve",
+        "arve-pro",
+        "arve-sticky-videos",
+        "arve-random-video"
+    ],
     "viewScript": [
         "arve",
         "arve-pro",
@@ -56,7 +62,7 @@
             "type": "boolean"
         },
         "controls": {
-            "type": "boolean"
+            "type": "string"
         },
         "title": {
             "type": "string"
@@ -70,14 +76,17 @@
         "mode": {
             "type": "string"
         },
+        "lazyload_style": {
+            "type": "string"
+        },
         "thumbnail": {
             "type": "string"
         },
         "hide_title": {
-            "type": "boolean"
+            "type": "string"
         },
         "grow": {
-            "type": "boolean"
+            "type": "string"
         },
         "fullscreen": {
             "type": "string"
@@ -89,28 +98,28 @@
             "type": "string"
         },
         "disable_links": {
-            "type": "boolean"
+            "type": "string"
         },
         "align": {
             "type": "string"
         },
         "arve_link": {
-            "type": "boolean"
+            "type": "string"
         },
         "duration": {
             "type": "string"
         },
         "autoplay": {
-            "type": "boolean"
+            "type": "string"
         },
         "lightbox_maxwidth": {
             "type": "integer"
         },
         "sticky": {
-            "type": "boolean"
+            "type": "string"
         },
         "sticky_on_mobile": {
-            "type": "boolean"
+            "type": "string"
         },
         "sticky_position": {
             "type": "string"
@@ -136,11 +145,14 @@
         "encrypted_media": {
             "type": "boolean"
         },
+        "credentialless": {
+            "type": "boolean"
+        },
         "lightbox_aspect_ratio": {
             "type": "string"
         },
         "invidious": {
-            "type": "boolean"
+            "type": "string"
         },
         "thumbnail_url": {
             "type": "string"

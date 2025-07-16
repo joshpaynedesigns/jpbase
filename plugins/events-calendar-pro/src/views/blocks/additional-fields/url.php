@@ -24,7 +24,7 @@ $default_classes = [ 'tribe-block', 'tribe-block__additional-field', 'tribe-bloc
 // Add the custom classes from the block attributes.
 $classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ $attributes['className'] ] ) : $default_classes;
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
 	<h3><?php echo esc_html( $label ); ?></h3>
 	<a href="<?php echo esc_url( $value ); ?>"><?php echo esc_html( $value ); ?></a>
 </div>

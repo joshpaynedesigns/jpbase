@@ -6,12 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir   = dirname($vendorDir);
 
 return array(
-	'2d1e3b3e432aed88c61afcb4f6d8c262' => array(
-		'version' => '2024.08.22.18.50.32',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/load-files.php'
-	),
-	'83b8ee913c5d2d5a8f26b42bc5db8bfb' => array(
-		'version' => '2024.08.22.18.50.32',
-		'path'    => $vendorDir . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php'
+	'b7fa01507ebc12cee9d707bcd605cd1e' => array(
+		'version' => 'dev-master',
+		'path'    => $vendorDir . '/nextgenthemes/wp-settings/includes/WP/init.php'
 	),
 );

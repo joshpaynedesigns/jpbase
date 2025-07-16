@@ -33,7 +33,7 @@ if ( ! empty( $embed_classes ) ) {
 ?>
 <div class="tribe-events-virtual-single-youtube__embed-wrap">
 	<figure
-		<?php tribe_classes( $youtube_embed_classes ); ?>
+		<?php tec_classes( $youtube_embed_classes ); ?>
 	>
 		<div class="tribe-events-virtual-single-youtube__wrapper">
 			<?php echo $embed // phpcs:ignore ?>

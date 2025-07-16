@@ -25,7 +25,7 @@ if ( empty( $events ) ) {
 	return;
 }
 ?>
-<div <?php tribe_classes( $widget->get_container_class() ); ?>>
+<div <?php tec_classes( $widget->get_container_class() ); ?>>
 	<?php
 	$this->template( 'views/integrations/elementor/widgets/event-related/header' );
 

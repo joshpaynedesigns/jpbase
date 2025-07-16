@@ -1,95 +1,76 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE\Admin;
 
+use JsonException;
+use WP_Error;
 use Nextgenthemes\WP\Admin\Notices;
-
 use function Nextgenthemes\ARVE\is_gutenberg;
 use function Nextgenthemes\ARVE\settings;
-use function Nextgenthemes\ARVE\settings_sections;
+use function Nextgenthemes\ARVE\settings_tabs;
 use function Nextgenthemes\ARVE\options;
-
-use function Nextgenthemes\WP\enqueue_asset;
 use function Nextgenthemes\WP\remote_get_json_cached;
 use function Nextgenthemes\WP\str_contains_any;
-use function Nextgenthemes\WP\register_asset;
-use function Nextgenthemes\WP\get_constant;
-
-use const Nextgenthemes\ARVE\PREMIUM_SECTIONS;
-use const Nextgenthemes\ARVE\PREMIUM_URL_PREFIX;
-use const Nextgenthemes\ARVE\PRO_VERSION_REQUIRED;
+use function Nextgenthemes\WP\ver;
+use const Nextgenthemes\ARVE\ADDON_NAMES;
 use const Nextgenthemes\ARVE\PLUGIN_DIR;
 use const Nextgenthemes\ARVE\PLUGIN_FILE;
 use const Nextgenthemes\ARVE\ALLOWED_HTML;
 use const Nextgenthemes\ARVE\VERSION;
 
-function action_admin_init_setup_messages(): void {
+function addon_outdated_notice( string $name ): void {
 
-	if ( defined( '\Nextgenthemes\ARVE\Pro\VERSION' ) && version_compare( PRO_VERSION_REQUIRED, \Nextgenthemes\ARVE\Pro\VERSION, '>' ) ) {
+	$version_const_name = '\\Nextgenthemes\\ARVE\\' . $name . '\\VERSION';
+	$req_ver_const_name = '\\Nextgenthemes\\ARVE\\' . strtoupper( $name ) . '_VERSION_REQUIRED';
+	$version            = defined( $version_const_name ) ? constant( $version_const_name ) : '';
+	$req_ver            = defined( $req_ver_const_name ) ? constant( $req_ver_const_name ) : '';
+
+	if ( $version && version_compare( $version, $req_ver, '<' ) ) {
 		$msg = sprintf(
-			// Translators: %1$s Pro Version required
-			__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. If you have setup your license <a href="%2$s">here</a> semi auto updates should work (Admin panel notice and auto install on confirmation). If not please <a href="%3$s">report it</a> and manually update as <a href="%4$s">described here.</a>', 'advanced-responsive-video-embedder' ),
-			PRO_VERSION_REQUIRED,
+			// Translators: %1$s Addon Name, %2$s Version required, %3$s Setup URL, %4$s Manual URL,
+			__(
+				'Your ARVE %1$s Addon is outdated, you need version %2$s or later. If you have setup your license <a href="%3$s">here</a> semi auto updates should work (Admin panel notice and install on confirmation). If not please manually update as <a href="%4$s">described here.</a>',
+				'advanced-responsive-video-embedder'
+			),
+			$name,
+			$req_ver,
 			esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
-			'https://nextgenthemes.com/support/',
 			'https://nextgenthemes.com/plugins/arve/documentation/installation/'
 		);
 
-		if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) ) {
-			$msg = sprintf(
-				// Translators: %1$s Pro Version required
-				__( 'Your ARVE Pro Addon is outdated, you need version %1$s or later. Pre release updates my need a manual update. Download from <a href="%2$s">your account</a>.', 'advanced-responsive-video-embedder' ),
-				PRO_VERSION_REQUIRED,
-				esc_url( get_admin_url() . 'options-general.php?page=nextgenthemes' ),
-				'https://nextgenthemes.com/my-account/'
-			);
-		}
-
 		Notices::instance()->register_notice(
-			'ngt-arve-outdated-pro-v' . PRO_VERSION_REQUIRED,
+			'ngt-arve-' . $name . '-outdated-v' . $req_ver,
 			'notice-error',
-			wp_kses( $msg, ALLOWED_HTML, array( 'htts', 'https' ) ),
+			wp_kses( $msg, ALLOWED_HTML, array( 'https' ) ),
 			array(
 				'cap' => 'update_plugins',
 			)
 		);
+	}
+}
+
+function action_admin_init_setup_messages(): void {
+
+	foreach ( ADDON_NAMES as $addon_name ) {
+		addon_outdated_notice( $addon_name );
 	}
 
 	if ( display_pro_ad() ) {
 		Notices::instance()->register_notice(
 			'ngt-arve-addon-ad',
 			'notice-info',
-			wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) ),
+			wp_kses( ad_html(), ALLOWED_HTML, array( 'https' ) ),
 			array(
 				'cap' => 'install_plugins',
 			)
 		);
 	}
 
-	$object_cache_msg = get_option( 'arve_object_cache_msg' );
+	if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) && version_compare( VERSION, get_latest_beta(), '<' ) ) {
 
-	if ( $object_cache_msg ) {
-
-		Notices::instance()->register_notice(
-			'arve_object_cache_msg',
-			'notice-warning',
-			wp_kses(
-				$object_cache_msg,
-				ALLOWED_HTML,
-				array( 'htts', 'https' )
-			),
-			array(
-				'cap'   => 'manage_options',
-				'scope' => 'global',
-			)
-		);
-
-		Notices::instance()->restore_notice( 'arve_object_cache_msg' );
-		delete_option( 'arve_object_cache_msg' );
-	}
-
-	$beta_ver = get_latest_beta();
-
-	if ( str_contains_any( VERSION, array( 'alpha', 'beta' ) ) && version_compare( VERSION, $beta_ver, '<' ) ) {
+		$beta_ver = get_latest_beta();
 
 		Notices::instance()->register_notice(
 			"ngt-arve-beta-$beta_ver",
@@ -103,7 +84,7 @@ function action_admin_init_setup_messages(): void {
 					esc_url( 'https://nextgenthemes.com/support/' )
 				),
 				ALLOWED_HTML,
-				array( 'http', 'https' )
+				array( 'https' )
 			),
 			array(
 				'cap' => 'install_plugins',
@@ -122,46 +103,11 @@ function action_admin_init_setup_messages(): void {
 				sprintf(
 					// Translators: %1$s URL, %2$s version tag.
 					__( 'For the ARVE Block to work you currently need the <a href="%1$s">Gutenberg plugin</a> active or <a href="$2$s">WP 6.6-RC2</a> or later. Reason is unknown at the time of writing this.', 'advanced-responsive-video-embedder' ),
-					\admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
+					admin_url( 'plugin-install.php?s=Gutenberg%2520Team&tab=search&type=term' ),
 					esc_url( 'https://wordpress.org/news/2024/07/wordpress-6-6-rc2/' )
 				),
 				ALLOWED_HTML,
-				array( 'http', 'https' )
-			),
-			array(
-				'cap' => 'install_plugins',
-			)
-		);
-	}
-
-	if ( is_plugin_active( 'classic-editor/classic-editor.php' ) &&
-		version_compare( $GLOBALS['wp_version'], '6.6-beta2', '<' )
-	) {
-		Notices::instance()->register_notice(
-			'ngt-arve-need-classic-editor-needs-6.6',
-			'notice-info',
-			wp_kses(
-				sprintf(
-					// Translators: %s URL.
-					__(
-						'Apologies, for the ARVE button in Classic Editor to work you need WP 6.6 that is about to release 2024-07-16. Three not ideal options for the time being:
-						<ul>
-							<li>
-								You can create the shortcodes manually and wait for the regular 6.6 update.
-							</li>
-							<li>
-								Update WordPress already to the 6.6 release candidate 2 (basically ready) <a href="%s">6.6-RC2</a>.
-							</li>
-							<li>
-								Downgrade ARVE to 10.1.1 (with WP-Rollback for example).
-							</li>
-						</ul>',
-						'advanced-responsive-video-embedder'
-					),
-					esc_url( 'https://wordpress.org/news/2024/07/wordpress-6-6-rc2/' )
-				),
-				ALLOWED_HTML,
-				array( 'http', 'https' )
+				array( 'https' )
 			),
 			array(
 				'cap' => 'install_plugins',
@@ -189,7 +135,7 @@ function get_latest_beta(): string {
 
 function ad_html(): string {
 
-	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interrested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
+	$html = esc_html__( 'Hi, this is Nico(las Jonas) the author of the ARVE Advanced Responsive Video Embedder plugin. If you are interested in additional features and/or want to support the work I do on this plugin please consider buying the Pro Addon.', 'advanced-responsive-video-embedder' );
 
 	$html = "<p>$html</p><ul>";
 
@@ -241,51 +187,49 @@ function widget_text(): void {
 	printf( '<a href="%s">ARVE Pro Addon Features</a>:', 'https://nextgenthemes.com/plugins/arve-pro/' );
 
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_readfile
-	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'htts', 'https' ) );
+	echo wp_kses( ad_html(), ALLOWED_HTML, array( 'https' ) );
 }
 
 function register_shortcode_ui(): void {
 
-	$settings = settings( 'shortcode' );
+	$settings = settings( 'shortcode' )->get_all();
 
-	foreach ( $settings as $k => $v ) :
+	foreach ( $settings as $key => $s ) :
 
-		switch ( $v['type'] ) {
+		$field = array(
+			'attr'  => $key,
+			'label' => $s->label,
+		);
+
+		if ( ! empty( $s->placeholder ) ) {
+			$field['meta']['placeholder'] = $s->placeholder;
+		}
+
+		if ( 'thumbnail' === $key ) {
+			$field['type']        = 'attachment';
+			$field['libraryType'] = array( 'image' );
+			$field['addButton']   = __( 'Select Image', 'advanced-responsive-video-embedder' );
+			$field['frameTitle']  = __( 'Select Image', 'advanced-responsive-video-embedder' );
+		}
+
+		switch ( $s->type ) {
 			case 'boolean':
-				$v['type']    = 'select';
-				$v['options'] = array(
-					array(
-						'value' => '',
-						'label' => esc_html__( 'Default', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'yes',
-						'label' => esc_html__( 'Yes', 'advanced-responsive-video-embedder' ),
-					),
-					array(
-						'value' => 'no',
-						'label' => esc_html__( 'No', 'advanced-responsive-video-embedder' ),
-					),
-				);
+				$field['type'] = 'checkbox';
 				break;
 			case 'string':
-				$v['type'] = 'text';
+				if ( $s->options ) {
+					$field['type']    = 'select';
+					$field['options'] = convert_to_shortcode_ui_options( $s->options );
+				} else {
+					$field['type'] = 'text';
+				}
 				break;
 			case 'integer':
-				$v['type'] = 'number';
+				$field['type'] = 'number';
 				break;
 		}
 
-		if ( 'thumbnail' === $k ) {
-			$v['type'] = 'attachment';
-		}
-
-		if ( ! empty( $v['placeholder'] ) ) {
-			$v['meta']['placeholder'] = $v['placeholder'];
-		}
-
-		$v['attr'] = $k;
-		$attrs[]   = $v;
+		$attrs[] = $field;
 	endforeach;
 
 	shortcode_ui_register_for_shortcode(
@@ -296,6 +240,26 @@ function register_shortcode_ui(): void {
 			'attrs'         => $attrs,
 		)
 	);
+}
+
+/**
+ * Converts an associative array to an array of options suitable for Shortcode UI.
+ * Each key-value pair in the input array is transformed into an associative array
+ * with 'value' and 'label' keys.
+ *
+ * @param array $arr An associative array with keys as option values and values as option labels.
+ *
+ * @return array An array of associative arrays, each containing 'value' and 'label' keys.
+ */
+function convert_to_shortcode_ui_options( array $arr ): array {
+	$result = array();
+	foreach ( $arr as $key => $value ) {
+		$result[] = array(
+			'value' => $key,
+			'label' => $value,
+		);
+	}
+	return $result;
 }
 
 function add_dashboard_widget(): void {
@@ -329,36 +293,26 @@ function add_action_links( array $links ): array {
 
 	if ( ! is_plugin_active( 'arve-pro/arve-pro.php' ) ) {
 
-		$extra_links['buy_pro_addon'] = sprintf(
+		$links['buy_pro_addon'] = sprintf(
 			'<a href="%s"><strong style="display: inline;">%s</strong></a>',
 			'https://nextgenthemes.com/plugins/arve-pro/',
-			__( 'Buy Pro Addon', 'advanced-responsive-video-embedder' )
+			__( 'Get Lazyload, Lightbox and more', 'advanced-responsive-video-embedder' )
 		);
 	}
 
-	$extra_links['donate'] = sprintf(
-		'<a href="https://nextgenthemes.com/donate/"><strong style="display: inline;">%s</strong></a>',
-		esc_html__( 'Donate', 'advanced-responsive-video-embedder' )
-	);
-
-	$extra_links['settings'] = sprintf(
-		'<a href="%s">%s</a>',
-		esc_url( admin_url( 'options-general.php?page=nextgenthemes_arve' ) ),
-		esc_html__( 'Settings', 'advanced-responsive-video-embedder' )
-	);
-
-	return array_merge( $extra_links, $links );
+	return $links;
 }
 
 function admin_enqueue_styles(): void {
 
-	enqueue_asset(
-		array(
-			'handle' => 'advanced-responsive-video-embedder',
-			'src'    => plugins_url( 'build/admin.css', PLUGIN_FILE ),
-			'path'   => PLUGIN_DIR . '/build/admin.css',
-			'deps'   => array( 'nextgenthemes-settings' ),
-		)
+	// This shit prevents 'arve-admin-css was added to the iframe incorrectly.' error but it doesn't work with enqueue_block_editor_assets
+	// if ( did_action( 'wp_enqueue_editor' ) ) { return; }
+
+	wp_enqueue_style(
+		'arve-admin',
+		plugins_url( 'build/admin.css', PLUGIN_FILE ),
+		array( 'nextgenthemes-settings' ),
+		ver( PLUGIN_DIR . '/build/admin.css', VERSION ),
 	);
 }
 
@@ -375,49 +329,38 @@ function get_first_glob( string $pattern ): string {
 
 function admin_enqueue_scripts(): void {
 
-	foreach ( settings( 'shortcode' ) as $k => $v ) {
+	foreach ( settings( 'shortcode' )->get_all() as $k => $v ) {
 		$options[ $k ] = '';
 	}
 
 	$settings_data = array(
 		'options'          => $options,
 		'nonce'            => wp_create_nonce( 'wp_rest' ),
-		'settings'         => settings( 'shortcode' ),
-		'sections'         => settings_sections(),
-		'premiumSections'  => PREMIUM_SECTIONS,
-		'premiumUrlPrefix' => PREMIUM_URL_PREFIX,
+		'settings'         => settings( 'shortcode' )->to_array(),
+		'tabs'             => settings_tabs(),
 	);
 
-	if ( ! is_gutenberg() ) {
-
-		register_asset(
-			array(
-				'handle'               => 'arve-shortcode-dialog',
-				'src'                  => plugins_url( '/src/shortcode-dialog.js', PLUGIN_FILE ),
-				'path'                 => PLUGIN_DIR . '/src/shortcode-dialog.js',
-				'inline_script_before' => $settings_data,
-				'strategy'             => 'defer',
-			)
-		);
-	}
-
-	enqueue_asset(
-		array(
-			'handle'               => 'arve-admin',
-			'src'                  => plugins_url( 'build/admin.js', PLUGIN_FILE ),
-			'path'                 => PLUGIN_DIR . '/build/admin.js',
-			'inline_script_before' => 'var arveSCSettings = ' . \wp_json_encode( $settings_data ) . ';',
-		)
+	wp_register_script(
+		'arve-admin',
+		plugins_url( 'build/admin.js', PLUGIN_FILE ),
+		array(),
+		ver( PLUGIN_DIR . '/build/admin.js', VERSION ),
+		array( 'strategy' => 'defer' ),
 	);
+	wp_add_inline_script(
+		'arve-admin',
+		'var arveSCSettings = ' . wp_json_encode( $settings_data ) . ';',
+		'before'
+	);
+	wp_enqueue_script( 'arve-admin' );
 
 	if ( is_plugin_active( 'shortcode-ui/shortcode-ui.php' ) ) {
-		enqueue_asset(
-			array(
-				'handle' => 'arve-admin-sc-ui',
-				'path'   => PLUGIN_DIR . '/build/shortcode-ui.js',
-				'src'    => plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
-				'deps'   => array( 'shortcode-ui' ),
-			)
+		wp_enqueue_script(
+			'arve-admin-sc-ui',
+			plugins_url( 'build/shortcode-ui.js', PLUGIN_FILE ),
+			array( 'shortcode-ui' ),
+			ver( PLUGIN_DIR . '/build/shortcode-ui.js', VERSION ),
+			array( 'strategy' => 'defer' ),
 		);
 	}
 }

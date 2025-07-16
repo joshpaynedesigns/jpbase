@@ -133,6 +133,7 @@ class FacetWP_Ajax
             global $wpdb;
 
             $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}facetwp_index" );
+            $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}facetwp_temp" );
             delete_option( 'facetwp_version' );
             delete_option( 'facetwp_indexing' );
             delete_option( 'facetwp_indexing_data' );

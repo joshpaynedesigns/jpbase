@@ -59,6 +59,7 @@ class Event_Cleaner {
 	 * recurring events.
 	 *
 	 * @since 6.0.12
+	 * @since 7.3.1 Adjust SQL to ignore trashed imported events during cleanup.
 	 *
 	 * @param string $sql The original query to retrieve expired events. Unused, but required by the filter.
 	 *
@@ -74,10 +75,10 @@ class Event_Cleaner {
 		return "SELECT {$occurrence_table}.occurrence_id + $base AS provisional_id
 				FROM {$wpdb->posts}
 			    	INNER JOIN {$occurrence_table} ON {$wpdb->posts}.ID = {$occurrence_table}.post_id
-				WHERE {$wpdb->posts}.post_type = '%1s'
-					AND {$occurrence_table}.end_date_utc <= DATE_SUB( CURRENT_TIMESTAMP(), INTERVAL %2d %3s )
-					AND {$wpdb->posts}.post_status != 'trash'
+				WHERE {$wpdb->posts}.post_type = " . '"%1$s"' . "
+					AND {$occurrence_table}.end_date_utc <= DATE_SUB( CURRENT_TIMESTAMP(), INTERVAL " . '%2$d %4$s' . " )
+					AND {$wpdb->posts}.post_status NOT IN ( 'trash', 'tribe-ignored' )
 				ORDER BY {$occurrence_table}.start_date_utc ASC, {$occurrence_table}.end_date_utc ASC
-				LIMIT %3d";
+				LIMIT " . '%3$d';
 	}
 }

@@ -31,6 +31,7 @@ class Provider extends Service_Provider {
 	 */
 	public function register() {
 		$this->container->singleton( Provisional_ID_Generator::class, Provisional_ID_Generator::class );
+		$this->container->singleton( Meta::class, Meta::class );
 
 		if ( is_multisite() ) {
 			$this->register_multisite_actions();
@@ -38,6 +39,7 @@ class Provider extends Service_Provider {
 
 		add_action( 'wp_insert_post', [ $this, 'flush_cache' ] );
 		add_action( 'save_post_' . TEC::POSTTYPE, [ $this, 'flush_event_cache' ] );
+		add_filter( 'update_post_metadata', $this->container->callback( Meta::class, 'update_metadata' ), 0, 5 );
 	}
 
 	/**

@@ -10,6 +10,7 @@
  * @link https://evnt.is/1aiy
  *
  * @since 5.1.1
+ * @since 7.5.0 Remove hidden links from tab navigation.
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *
@@ -22,9 +23,7 @@
 <a
 	href="<?php echo esc_url( $event->permalink ); ?>"
 	class="tribe-events-pro-week-grid__multiday-event-hidden-link"
-	data-js="tribe-events-tooltip"
-	data-tooltip-content="#tribe-events-tooltip-content-<?php echo esc_attr( $event->ID ); ?>"
-	aria-describedby="tribe-events-tooltip-content-<?php echo esc_attr( $event->ID ); ?>"
+	tabindex="-1"
 >
 	<?php $this->template( 'week/grid-body/multiday-events-day/multiday-event/hidden/link/featured', [ 'event' => $event ] ); ?>
 	<?php $this->template( 'week/grid-body/multiday-events-day/multiday-event/hidden/link/title', [ 'event' => $event ] ); ?>

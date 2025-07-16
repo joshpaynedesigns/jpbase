@@ -19,7 +19,7 @@ if ( empty( $show_event_datetime ) ) {
 }
 ?>
 <<?php echo tag_escape( $datetime_tag ); ?>
-	<?php tribe_classes( $widget->get_datetime_class() ); ?>
+	<?php tec_classes( $widget->get_datetime_class() ); ?>
 >
 	<?php echo wp_kses_post( tribe_events_event_schedule_details( $event ) ); ?>
 </<?php echo tag_escape( $datetime_tag ); ?>>

@@ -34,7 +34,7 @@ if (
 ?>
 
 <div
-	<?php tribe_classes( $day_classes ) ?>
+	<?php tec_classes( $day_classes ); ?>
 	id="tribe-events-pro-week-mobile-events-day-<?php echo esc_attr( $day_date ); ?>"
 	aria-hidden="<?php echo esc_attr( $hidden ); ?>"
 >

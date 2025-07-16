@@ -15,6 +15,7 @@ use Tribe\Events\Virtual\Integrations\Abstract_Users;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Event_Meta;
 use Tribe\Events\Virtual\Metabox;
 use Tribe__Utils__Array as Arr;
+use Tribe__Cache_Listener as Cache_Listener;
 
 /**
  * Class Users
@@ -87,6 +88,7 @@ class Users extends Abstract_Users {
 	 * Get the alternative users that can be used as hosts.
 	 *
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
+	 * @since 7.4.1 - Add caching.
 	 *
 	 * @param array<string,mixed>   An array of Zoom Users to use as the alternative hosts.
 	 * @param string $selected_alt_hosts The list of alternative host emails.
@@ -96,6 +98,24 @@ class Users extends Abstract_Users {
 	 * @return array|bool|mixed An array of Zoom Users to use as the alternative hosts.
 	 */
 	public function get_alternative_users( $alternative_hosts = [], $selected_alt_hosts = '', $current_host = '', $account_id = null ) {
+		$cache = tribe_cache();
+
+		// Generate cache ID as MD5 of all method parameters.
+		$cache_id_data = [
+			'alternative_hosts'  => $alternative_hosts,
+			'selected_alt_hosts' => $selected_alt_hosts,
+			'current_host'       => $current_host,
+			'account_id'         => $account_id,
+		];
+		$cache_id      = __CLASS__ . '_alt_hosts_' . md5( wp_json_encode( $cache_id_data ) );
+		$cache_trigger = Cache_Listener::TRIGGER_UPDATED_OPTION;
+
+		$alt_hosts = $cache->get_transient( $cache_id, $cache_trigger );
+
+		if ( $alt_hosts !== false ) {
+			return $alt_hosts;
+		}
+
 		$all_users = $this->get_formatted_hosts_list( $account_id );
 
 		$selected_alt_hosts = explode( ';', $selected_alt_hosts );
@@ -122,6 +142,23 @@ class Users extends Abstract_Users {
 			},
 			$alternative_hosts
 		);
+
+		/**
+		 * Filters the cache duration for alternative hosts data.
+		 *
+		 * This filter allows developers to modify how long the alternative hosts data
+		 * should be cached in transients. The default duration is one hour (HOUR_IN_SECONDS).
+		 *
+		 * @since 7.4.1
+		 *
+		 * @param int    $duration    The cache duration in seconds. Default HOUR_IN_SECONDS.
+		 * @param string $cache_id    The unique identifier for this cache entry.
+		 * @param array  $alt_hosts   The alternative hosts data being cached.
+		 * @param string $account_id  The Zoom account ID associated with these hosts.
+		 */
+		$cache_duration = (int) apply_filters( 'tec_events_pro_virtual_alternative_hosts_cache_duration', HOUR_IN_SECONDS, $cache_id, $alternative_hosts_email_id, $account_id );
+
+		$cache->set_transient( $cache_id, $alternative_hosts_email_id, $cache_duration, $cache_trigger );
 
 		return $alternative_hosts_email_id;
 	}

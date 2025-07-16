@@ -36,15 +36,18 @@ if ( ! $series instanceof WP_Post ) {
 }
 
 $title_classes = tec_get_series_marker_label_classes( $series, $event );
+
+// translators: %s: event series title.
+$aria_label = sprintf( __( 'Event series: %s', 'tribe-events-calendar-pro' ), get_the_title( $series->ID ) );
 ?>
 
 <span class="tribe-events-calendar-series-archive__container">
 	<a
 		href="<?php the_permalink( $series->ID ); ?>"
+		aria-label="<?php echo esc_attr( $aria_label ); ?>"
 		class="tribe-events-calendar-series-archive__link"
-		title="<?php esc_attr_e('Event Series', 'tribe-events-calendar-pro'); ?>"
 	>
 		<?php tribe( Templates::class )->template( 'components/icons/series', [ 'classes' => [ 'tribe-events-series-archive__icon' ] ] ); ?>
-		<span <?php tribe_classes( $title_classes ); ?> ><?php echo get_the_title( $series->ID ); ?></span>
+		<span <?php tec_classes( $title_classes ); ?> ><?php echo esc_html( get_the_title( $series->ID ) ); ?></span>
 	</a>
 </span>

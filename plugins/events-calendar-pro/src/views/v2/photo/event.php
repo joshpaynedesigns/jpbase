@@ -23,7 +23,7 @@ if ( ! empty( $event->featured ) ) {
 	$classes[] = 'tribe-events-pro-photo__event--featured';
 }
 ?>
-<article <?php tribe_classes( $classes ) ?>>
+<article <?php tec_classes( $classes ); ?>>
 
 	<?php $this->template( 'photo/event/featured-image', [ 'event' => $event ] ); ?>
 
@@ -31,6 +31,7 @@ if ( ! empty( $event->featured ) ) {
 		<?php $this->template( 'photo/event/date-tag', [ 'event' => $event ] ); ?>
 		<div class="tribe-events-pro-photo__event-details">
 			<?php $this->template( 'photo/event/date-time', [ 'event' => $event ] ); ?>
+			<?php $this->template( 'photo/event/category', [ 'event' => $event ] ); ?>
 			<?php $this->template( 'photo/event/title', [ 'event' => $event ] ); ?>
 			<?php $this->template( 'photo/event/cost', [ 'event' => $event ] ); ?>
 		</div>

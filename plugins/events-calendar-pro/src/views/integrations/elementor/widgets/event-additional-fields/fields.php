@@ -16,7 +16,7 @@ if ( empty( $fields ) ) {
 	return;
 }
 ?>
-<dl <?php tribe_classes( $widget->get_wrapper_class() ); ?>>
+<dl <?php tec_classes( $widget->get_wrapper_class() ); ?>>
 	<?php foreach ( $fields as $field ) : ?>
 		<?php
 		$this->template( 'views/integrations/elementor/widgets/event-additional-fields/field/label', [ 'field' => $field ] );

@@ -21,12 +21,12 @@ $container_classes['tribe-events-widget-featured-venue__event-row--featured'] = 
 
 $event_classes = tribe_get_post_class( [ 'tribe-events-widget-featured-venue__event' ], $event->ID );
 ?>
-<div <?php tribe_classes( $container_classes ); ?>>
+<div <?php tec_classes( $container_classes ); ?>>
 
 	<?php $this->template( 'widgets/widget-featured-venue/events-list/event/date-tag', [ 'event' => $event ] ); ?>
 
 	<div class="tribe-common-g-col tribe-events-widget-featured-venue__event-wrapper">
-		<article <?php esc_html( tribe_classes( $event_classes ) ); ?>>
+		<article <?php esc_html( tec_classes( $event_classes ) ); ?>>
 			<div class="tribe-events-widget-featured-venue__event-details">
 
 				<header class="tribe-events-widget-featured-venue__event-header">

@@ -428,7 +428,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			]
 		);
 
-		if ( did_action( 'tribe_tickets_plugin_loaded' ) ) {
+		if ( did_action( 'tec_tickets_fully_loaded' ) ) {
 			$this->add_control(
 				'tickets',
 				[

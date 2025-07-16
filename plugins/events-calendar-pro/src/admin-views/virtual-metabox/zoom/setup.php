@@ -53,7 +53,7 @@ $metabox_id = 'tribe-events-virtual';
 		</a>
 
 		<div
-			<?php tribe_classes( $zoom_message_classes ); ?>
+			<?php tec_classes( $zoom_message_classes ); ?>
 			role="alert"
 		>
 			<?php echo $message; ?>

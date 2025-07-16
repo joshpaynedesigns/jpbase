@@ -1,4 +1,7 @@
 <?php
+use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\WP_Query_Monitor;
+use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\Custom_Tables_Query_Monitor;
+
 class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	const SCHEDULED_TASK = 'tribe_events_pro_process_recurring_events';
 
@@ -37,7 +40,13 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	public function manage_scheduled_task() {
 		add_action( 'tribe_events_pro_blog_deactivate', array( $this, 'clear_scheduled_task' ) );
 		add_action( self::SCHEDULED_TASK, array( $this, 'process_queue' ), 20, 0 );
-		$this->register_scheduled_task();
+
+		// Prevents problems with text domain loading too early.
+		if ( did_action( 'init' ) || doing_action( 'init' ) ) {
+			$this->register_scheduled_task();
+		} else {
+			add_action( 'init', [ $this, 'register_scheduled_task' ] );
+		}
 	}
 
 
@@ -132,12 +141,16 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	 * @return boolean
 	 */
 	protected function next_waiting_event() {
-		$waiting_events = get_posts( array(
-			'post_type'      => Tribe__Events__Main::POSTTYPE,
-			'post_parent'    => 0,
-			'meta_key'       => Tribe__Events__Pro__Recurrence__Queue::EVENT_QUEUE,
-			'posts_per_page' => 1,
-		) );
+		$waiting_events = get_posts(
+			[
+				'post_type'                                => Tribe__Events__Main::POSTTYPE,
+				'post_parent'                              => 0,
+				'meta_key'                                 => Tribe__Events__Pro__Recurrence__Queue::EVENT_QUEUE,
+				'posts_per_page'                           => 1,
+				WP_Query_Monitor::ignore_flag()            => true,
+				Custom_Tables_Query_Monitor::ignore_flag() => true,
+			]
+		);
 
 		if ( empty( $waiting_events ) ) {
 			$this->current_event_id = 0;
