@@ -17,6 +17,6 @@ if ( empty( $field ) ) {
 	return;
 }
 ?>
-<dt <?php tribe_classes( $widget->get_field_label_class() ); ?>>
+<dt <?php tec_classes( $widget->get_field_label_class() ); ?>>
 	<?php echo wp_kses_post( $field['label'] ); ?>
 </dt>

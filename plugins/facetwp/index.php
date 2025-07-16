@@ -2,11 +2,13 @@
 /*
 Plugin Name: FacetWP
 Description: Advanced Filtering for WordPress
-Version: 4.3.3
+Version: 4.4.1
+Text Domain: fwp-front
+Domain Path: /languages
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 
-Copyright 2024 FacetWP, LLC
+Copyright 2025 FacetWP, LLC
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -58,7 +60,7 @@ class FacetWP
         }
 
         // setup variables
-        define( 'FACETWP_VERSION', '4.3.3' );
+        define( 'FACETWP_VERSION', '4.4.1' );
         define( 'FACETWP_DIR', dirname( __FILE__ ) );
         define( 'FACETWP_URL', plugins_url( '', __FILE__ ) );
         define( 'FACETWP_BASENAME', plugin_basename( __FILE__ ) );

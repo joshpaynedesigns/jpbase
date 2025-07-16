@@ -30,11 +30,11 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_SetPluginInfo($this->getWordPressContext(), $this->getBrand()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AddConnectionKeyInfo($this->getWordPressContext()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_SetHitCounter($this->getWordPressContext(), $this->getHitCounter(), $this->getRequestStack(), $this->getParameter('hit_counter_blacklisted_ips'), $this->getParameter('hit_counter_blacklisted_user_agents')));
-        $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AutomaticLogin($this->getWordPressContext(), $this->getNonceManager(), $this->getSigner(), $this->getConfiguration(), $this->getSessionStore()));
+        $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AutomaticLogin($this->getWordPressContext(), $this->getNonceManager(), $this->getSigner(), $this->getSigner256(), $this->getConfiguration(), $this->getSessionStore()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_CommandListener($this->getWordPressContext(), $this->getSigner(), $this->getConfiguration(), $this->getNonceManager()));
 
-        $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AuthenticateServiceRequest($this->getConfiguration(), $this->getSigner(), $this->getWordPressContext()));
-        $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_VerifyConnectionInfo($this->getWordPressContext(), $this->getSigner()));
+        $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AuthenticateServiceRequest($this->getConfiguration(), $this->getSigner(),$this->getSigner256(), $this->getWordPressContext()));
+        $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_VerifyConnectionInfo($this->getWordPressContext(), $this->getSigner(), $this->getSigner256()));
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AuthenticateRequest($this->getConfiguration(), $this->getSigner(), $this->getWordPressContext()));
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_SetErrorHandler($this->getErrorLogger(), $this->getErrorHandler(), $this->getRequestStack(), $this->getResponseCallback(), $this, $this->getParameter('log_errors'), $this->getParameter('fatal_error_reserved_memory_size')));
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AttachJsonMessageHandler($this->getLogger(), $this->getJsonMessageHandler()));

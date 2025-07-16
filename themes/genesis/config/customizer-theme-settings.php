@@ -319,7 +319,7 @@ return [
 			],
 			'genesis_footer'       => [
 				'active_callback' => function() {
-					return is_null( apply_filters( 'genesis_footer_output', null, '', '' ) );
+					return apply_filters( 'genesis_footer_output', '', '', '' ) === '';
 				},
 				'title'           => __( 'Footer', 'genesis' ),
 				'panel'           => 'genesis',

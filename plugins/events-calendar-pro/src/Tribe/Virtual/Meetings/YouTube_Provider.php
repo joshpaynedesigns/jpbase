@@ -17,6 +17,7 @@ use Tribe\Events\Virtual\Plugin;
 use Tribe\Events\Virtual\Traits\With_Nonce_Routes;
 use Tribe__Admin__Helpers as Admin_Helpers;
 use WP_Post;
+use Tribe__Events__Pro__Main as Pro;
 
 /**
  * Class YouTube_Provider
@@ -198,8 +199,9 @@ class YouTube_Provider extends Meeting_Provider {
 	protected function enqueue_assets() {
 		$admin_helpers = Admin_Helpers::instance();
 
-		tribe_asset(
-			tribe( Plugin::class ),
+		$pro = Pro::instance();
+		tec_asset(
+			$pro,
 			'tribe-events-virtual-youtube-settings-js',
 			'events-virtual-youtube-settings.js',
 			[ 'jquery', 'tribe-events-views-v2-accordion' ],
@@ -209,10 +211,10 @@ class YouTube_Provider extends Meeting_Provider {
 					'operator' => 'OR',
 					[ $admin_helpers, 'is_screen' ],
 				],
-				'localize' => [
+				'localize'     => [
 					'name' => 'tribe_events_virtual_youtube_settings_strings',
-					'data' => [
-						'deleteConfirm'  => static::get_youtube_confirmation_to_delete_account(),
+					'data' => fn() => [
+						'deleteConfirm' => static::get_youtube_confirmation_to_delete_account(),
 					],
 				],
 			]

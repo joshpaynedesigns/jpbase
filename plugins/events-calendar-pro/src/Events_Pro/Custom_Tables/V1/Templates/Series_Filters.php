@@ -252,7 +252,17 @@ class Series_Filters {
 			return $template;
 		}
 
-		add_filter( 'the_content', [ $this, 'inject_content' ] );
+		/**
+		 * Filters whether series content should be injected into the post content. Default is true.
+		 *
+		 * @since 7.3.0
+		 *
+		 * @param bool   Whether to enable series content injection.
+		 * @param string Which template this is related to.
+		 */
+		if ( apply_filters( 'tec_events_pro_enable_series_content_injection', true, $template ) ) {
+			add_filter( 'the_content', [ $this, 'inject_content' ] );
+		}
 
 		// Just returning the template located by the theme is fine: we just need to inject the content.
 		return $template;

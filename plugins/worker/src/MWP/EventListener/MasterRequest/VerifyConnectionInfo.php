@@ -19,10 +19,13 @@ class MWP_EventListener_MasterRequest_VerifyConnectionInfo implements Symfony_Ev
 
     private $signer;
 
-    public function __construct(MWP_WordPress_Context $context, MWP_Signer_Interface $signer)
+    private $signer256;
+
+    public function __construct(MWP_WordPress_Context $context, MWP_Signer_Interface $signer, MWP_Signer_Interface $signer256)
     {
-        $this->context = $context;
-        $this->signer  = $signer;
+	    $this->context   = $context;
+	    $this->signer    = $signer;
+	    $this->signer256 = $signer256;
     }
 
     public static function getSubscribedEvents()
@@ -42,12 +45,15 @@ class MWP_EventListener_MasterRequest_VerifyConnectionInfo implements Symfony_Ev
 
         $data = $request->getData();
 
-        if (empty($data['add_site_signature']) || empty($data['add_site_signature_id'])) {
+        if ((empty($data['add_site_signature']) && empty($data['add_site_signature_v2']))
+            || empty($data['add_site_signature_id'])) {
             throw new MWP_Worker_Exception(MWP_Worker_Exception::CONNECTION_SIGNATURE_EMPTY);
         }
 
-        $connectionSignature = base64_decode($data['add_site_signature']);
-        $publicKeyId         = $data['add_site_signature_id'];
+	    $connectionSignature       = base64_decode( $data['add_site_signature'] );
+	    $connectionSignatureV2     = base64_decode( $data['add_site_signature_v2'] );
+	    $connectionSignatureV2Algo = $data['add_site_signature_v2_algo'];
+	    $publicKeyId               = $data['add_site_signature_id'];
 
         $publicKeyId       = preg_replace('{[^a-z0-9_]}i', '', $publicKeyId);
         $publicKeyLocation = dirname(__FILE__).'/../../../../publickeys/'.$publicKeyId.'.pub';
@@ -63,8 +69,9 @@ class MWP_EventListener_MasterRequest_VerifyConnectionInfo implements Symfony_Ev
         $message = json_encode(array('setting' => $request->getSetting(), 'params' => $request->getParams())).strtolower($request->getCommunicationKey());
 
         $verify = $this->signer->verify($message, $connectionSignature, $publicKey);
+        $verifyV2 = $this->signer256->verify($message, $connectionSignatureV2, $publicKey, $connectionSignatureV2Algo);
 
-        if (!$verify) {
+        if (!$verify && !$verifyV2) {
             throw new MWP_Worker_Exception(MWP_Worker_Exception::CONNECTION_SIGNATURE_NOT_VALID, "Invalid message signature. Deactivate and activate the ManageWP Worker plugin on this site, then re-add it to your ManageWP account.");
         }
 

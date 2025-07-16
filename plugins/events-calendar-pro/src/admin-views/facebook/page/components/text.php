@@ -23,14 +23,14 @@
  * @var string               $value         The value of the text field.
  */
 ?>
-<div <?php tribe_classes( $classes_wrap ); ?> >
+<div <?php tec_classes( $classes_wrap ); ?> >
 	<fieldset class="tribe-settings-facebook-page-details__field tribe-field tribe-field-text">
 		<legend class="tribe-settings-facebook-page-details__label tribe-field-label">
 			<?php echo esc_html( $label ); ?>
 		</legend>
 		<div class="tribe-settings-facebook-page-details__field-wrap tribe-field-wrap">
 			<input
-				<?php tribe_classes( $classes_input ); ?>
+				<?php tec_classes( $classes_input ); ?>
 				type="text"
 				name="<?php echo esc_html( $name ); ?>"
 				placeholder="<?php echo esc_html( $placeholder ); ?>"

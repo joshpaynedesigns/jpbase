@@ -63,6 +63,16 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
                 $max = $min;
             }
 
+            /**
+             * Enclose type defaults
+             * default min or max to 
+             * opposite value
+             **/
+            if ( 'enclose' == $compare_type ) {
+                $min = ( false !== $min ) ? $min : $max;
+                $max = ( false !== $max ) ? $max : $min;
+            }
+
             $min = ( false !== $min ) ? $min : '0000-00-00';
             $max = ( false !== $max ) ? $max : '3000-12-31';
 

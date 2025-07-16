@@ -17,6 +17,7 @@ use Tribe__Events__Main as TEC;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Series as Series_Model;
 use TEC\Events_Pro\Custom_Tables\V1\Series\Relationship;
 use Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta as Blocks_Meta_Keys;
+use Tribe__Events__Pro__Recurrence__Queue as Recurrence_Queue;
 
 /**
  * Class Single_Rule_Event_Migration_Strategy.
@@ -126,6 +127,9 @@ class Single_Rule_Event_Migration_Strategy implements Strategy_Interface {
 		if ( $count === 0 ) {
 			throw new Migration_Exception( 'No occurrences created.' );
 		}
+
+		// Ensure that after the event is migrated, it's no longer an event that needs processing.
+		delete_post_meta( $this->post_id, Recurrence_Queue::EVENT_QUEUE );
 
 		$event_report->add_series( get_post( $series_post_id ) );
 

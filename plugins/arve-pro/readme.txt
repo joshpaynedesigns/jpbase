@@ -2,7 +2,7 @@
 Donate link: https://nextgenthemes.com/donate/
 Tag: lightbox, lazyload
 Requires at least: 6.3
-Tested up to: 6.5
+Tested up to: 6.8
 Requires PHP: 7.4
 License: GPL 3.0
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,6 +18,42 @@ Lazyload, Lightbox and more for ARVE
 Please read the [official documentation](https://wordpress.org/support/article/managing-plugins/#installing-plugins) for that.
 
 ## Changelog ##
+
+= 2025-03-21 7.1.0 =
+* Fix: Link Lightbox now working.
+* Improved: Do additional caching for thumbnails and YouTube data API responses. Do not call API again when there is an error.
+
+= 2025-03-17 7.0.6 =
+* Improved: No longer self execute when ARVE is not up-to-date and running.
+
+= 2025-03-15 7.0.5 =
+* Improved: Remove asset wrappers.
+* Fix: Card thumbnail not visible in Firefox.
+
+= 2025-03-08 7.0.2 =
+* Fix: Broken thumbnails on old YouTube videos.
+
+= 2025-03-08 7.0.1 =
+* Improved: srcset generation.
+* New: Ability you use custom YouTube Data API key.
+
+= 2025-03-08 7.0.0 =
+* New: Introducing a new 'card' style available with `thumbnail_style` parameter and option.
+* Improved: Title tags are no longer `h5` tags but just `div` and some font styles from your themes `h3` are used instead.
+* Improved: JavaScript part of the plugin almost completely rewritten in more modern and better code. No longer uses official YouTube iframe api script instead a minimalistic replacement is used. Vimeo iframe API is loaded on first click on a lazyload video instead of on pageload.
+
+= 2025-01-22 6.1.1 =
+* Fix: Make sure `srcset` is not set when a thumbnail url is manually set.
+
+= 2025-01-22 6.1.1 =
+* Fix: Make sure `srcset` is not set when a thumbnail url is manually set.
+
+= 2024-12-05 6.1.0 =
+
+* New: Thumbnail, Title, Description ... support for `banned.video`
+* Improved: Use `sizes=auto` for thumbnails.
+* Improved: Lazyload mode defaults. Featured Image as thumbnail fallback is now enabled by default. If not set Lazyload now has a default black image with some lines on it.
+* Fix: Hide `.navbar` elements when lightbox is open.
 
 = 2024-07-06 6.0.4 =
 

@@ -39,6 +39,13 @@ class Service_Provider extends Plugin_Merge_Provider_Abstract {
 		// Register ECP specific services.
 		$this->container->register( Power_Automate_Provider::class );
 		$this->container->register( Zapier_Provider::class );
+
+		/**
+		 * Fires when Event Automator is fully loaded.
+		 *
+		 * @since 7.5.0
+		 */
+		do_action( 'tec_event_automator_fully_loaded' );
 	}
 
 	/**

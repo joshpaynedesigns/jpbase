@@ -41,14 +41,32 @@ $classes['tribe-events-pro-organizer__meta--has-taxonomy']       = $has_taxonomy
 $conditionals = compact( 'has_content', 'has_details', 'has_featured_image', 'has_taxonomy' );
 $template_vars = array_merge( [ 'organizer' => $organizer, ], $conditionals )
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
 	<div class="tec-events-c-view-box-border">
 		<?php $this->template( 'organizer/meta/featured-image', $template_vars ); ?>
 
 		<?php if ( $has_content || $has_details || $has_taxonomy ) : ?>
-			<div <?php tribe_classes( [ 'tribe-events-pro-organizer__meta-data', 'tribe-common-g-col' => ( $has_content || $has_details || $has_taxonomy ) ] );?>>
+			<div
+				<?php
+				tec_classes(
+					[
+						'tribe-events-pro-organizer__meta-data',
+						'tribe-common-g-col' => ( $has_content || $has_details || $has_taxonomy ),
+					]
+				);
+				?>
+			>
 
-				<div <?php tribe_classes( [ 'tribe-events-pro-organizer__meta-row', 'tribe-common-g-row' => ( $has_content || $has_details || $has_taxonomy ) ] );?>>
+				<div
+					<?php
+					tec_classes(
+						[
+							'tribe-events-pro-organizer__meta-row',
+							'tribe-common-g-row' => ( $has_content || $has_details || $has_taxonomy ),
+						]
+					);
+					?>
+				>
 
 					<?php $this->template( 'organizer/meta/details', $template_vars ); ?>
 

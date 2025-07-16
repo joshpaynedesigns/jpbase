@@ -1,12 +1,8 @@
 <?php
-/**
- * @license GPL-2.0
- *
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
- */
 
 namespace TEC\Common\StellarWP\Assets;
+
+use InvalidArgumentException;
 
 class Assets {
 	/**
@@ -682,8 +678,9 @@ class Assets {
 	 * Register the Assets on the correct hooks.
 	 *
 	 * @since 1.0.0
+	 * @since 1.4.5 Ensure the method accepts only `null` or an `Asset` instance or an array of `Asset[]` instances.
 	 *
-	 * @param array|Asset|null $assets Array of asset objects, single asset object, or null.
+	 * @param Asset[]|Asset|null $assets Array of asset objects, single asset object, or null.
 	 *
 	 * @return void
 	 */
@@ -694,18 +691,27 @@ class Assets {
 		)
 		) {
 			// Registering the asset now would trigger a doing_it_wrong notice: queue the assets to be registered later.
+			if ( $assets === null || empty( $assets ) ) {
+				return;
+			}
 
 			if ( ! is_array( $assets ) ) {
 				$assets = [ $assets ];
 			}
 
-			// Register later, avoid the doing_it_wrong notice.
-			$this->assets = array_merge( $this->assets, $assets );
+			foreach ( $assets as $asset ) {
+				if ( ! $asset instanceof Asset ) {
+					throw new InvalidArgumentException( 'Assets in register_in_wp() must be of type Asset' );
+				}
+
+				// Register later, avoid the doing_it_wrong notice.
+				$this->assets[ $asset->get_slug() ] = $asset;
+			}
 
 			return;
 		}
 
-		if ( is_null( $assets ) ) {
+		if ( null === $assets ) {
 			$assets = $this->get();
 		}
 
@@ -713,51 +719,60 @@ class Assets {
 			$assets = [ $assets ];
 		}
 
+		if ( empty( $assets ) ) {
+			return;
+		}
+
 		foreach ( $assets as $asset ) {
+			if ( ! $asset instanceof Asset ) {
+				throw new InvalidArgumentException( 'Assets in register_in_wp() must be of type Asset' );
+			}
+
 			// Asset is already registered.
 			if ( $asset->is_registered() ) {
 				continue;
 			}
 
+			$asset_slug = $asset->get_slug();
+
 			if ( 'js' === $asset->get_type() ) {
 				// Script is already registered.
-				if ( wp_script_is( $asset->get_slug(), 'registered' ) ) {
+				if ( wp_script_is( $asset_slug, 'registered' ) ) {
 					continue;
 				}
 
-				$dependencies = $asset->get_dependencies();
-
-				// If the asset is a callable, we call the function,
-				// passing it the asset and expecting back an array of dependencies.
-				if ( is_callable( $dependencies ) ) {
-					$dependencies = $dependencies( $asset );
-				}
-
-				wp_register_script( $asset->get_slug(), $asset->get_url(), $dependencies, $asset->get_version(), $asset->is_in_footer() );
+				wp_register_script( $asset_slug, $asset->get_url(), $asset->get_dependencies(), $asset->get_version(), $asset->is_in_footer() );
 
 				// Register that this asset is actually registered on the WP methods.
 				// @phpstan-ignore-next-line
-				if ( wp_script_is( $asset->get_slug(), 'registered' ) ) {
+				if ( wp_script_is( $asset_slug, 'registered' ) ) {
 					$asset->set_as_registered();
+				}
+
+				if (
+					! empty( $asset->get_translation_path() )
+					&& ! empty( $asset->get_textdomain() )
+				) {
+					wp_set_script_translations( $asset_slug, $asset->get_textdomain(), $asset->get_translation_path() );
 				}
 			} else {
 				// Style is already registered.
-				if ( wp_style_is( $asset->get_slug(), 'registered' ) ) {
+				if ( wp_style_is( $asset_slug, 'registered' ) ) {
 					continue;
 				}
 
-				wp_register_style( $asset->get_slug(), $asset->get_url(), $asset->get_dependencies(), $asset->get_version(), $asset->get_media() );
+				wp_register_style( $asset_slug, $asset->get_url(), $asset->get_dependencies(), $asset->get_version(), $asset->get_media() );
 
 				// Register that this asset is actually registered on the WP methods.
 				// @phpstan-ignore-next-line
-				if ( wp_style_is( $asset->get_slug(), 'registered' ) ) {
+				if ( wp_style_is( $asset_slug, 'registered' ) ) {
 					$asset->set_as_registered();
 				}
 
 				$style_data = $asset->get_style_data();
 				if ( $style_data ) {
 					foreach ( $style_data as $datum_key => $datum_value ) {
-						wp_style_add_data( $asset->get_slug(), $datum_key, $datum_value );
+						wp_style_add_data( $asset_slug, $datum_key, $datum_value );
 					}
 				}
 			}

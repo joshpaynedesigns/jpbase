@@ -61,7 +61,16 @@
 			</option>
 		<?php endforeach; ?>
 	</select>
-	<div <?php tribe_classes( [ 'tec-events-pro-series__edit-link-container', 'hidden' => ! $has_selection ] ); ?>>
+	<div
+		<?php
+		tec_classes(
+			[
+				'tec-events-pro-series__edit-link-container',
+				'hidden' => ! $has_selection,
+			]
+		);
+		?>
+	>
 		<a href="<?php echo esc_url( $edit_series_link ); ?>" class="tec-events-pro-series__edit-link" target="_blank" rel="noopener noreferrer">
 			<?php esc_html_e( 'Edit series', 'tribe-events-calendar-pro' ); ?>
 		</a>

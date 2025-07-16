@@ -1,14 +1,31 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 use WP_Error;
 
-function arve_errors(): \WP_Error {
-	return Base::get_instance()->get_errors();
+function arve_errors(): WP_Error {
+
+	static $instance = null;
+
+	if ( null === $instance ) {
+		$instance = new WP_Error();
+	}
+
+	return $instance;
 }
 
 function get_host_properties(): array {
 	return require __DIR__ . '/providers.php';
+}
+
+function is_card( array $a ): bool {
+
+	$is_ll_mode = in_array( $a['mode'], [ 'lazyload', 'lightbox' ], true );
+
+	return ( $is_ll_mode && 'card' === $a['lazyload_style'] );
 }
 
 /**
@@ -38,40 +55,17 @@ function gcd( int $a, int $b ): int {
 	return $b ? gcd( $b, $a % $b ) : $a;
 }
 
-function load_textdomain(): void {
-
-	\load_plugin_textdomain(
-		'advanced-responsive-video-embedder',
-		false,
-		dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-	);
-}
-
-/**
- * @return string|false
- */
-function check_filetype( string $url, string $ext ) {
-
-	$check = wp_check_filetype( $url, wp_get_mime_types() );
-
-	if ( strtolower( $check['ext'] ) === $ext ) {
-		return $check['type'];
-	} else {
-		return false;
-	}
-}
-
 /**
  * Calculates seconds based on youtube times if needed
  *
- * @param string $yttime   The 't=1h25m13s' or t=123 part of youtube URLs.
+ * @param string $time   The 't=1h25m13s' or t=123 part of youtube URLs.
  *
  * @return int Starttime in seconds.
  */
-function youtube_time_to_seconds( string $yttime ): int {
+function youtube_time_to_seconds( string $time ): int {
 
-	if ( \is_numeric( $yttime ) ) {
-		return (int) $yttime;
+	if ( is_numeric( $time ) ) {
+		return (int) $time;
 	}
 
 	$pattern = '/' .
@@ -79,7 +73,7 @@ function youtube_time_to_seconds( string $yttime ): int {
 		'(?<m>[0-9]+m)?' .
 		'(?<s>[0-9]+s)?/';
 
-	preg_match( $pattern, $yttime, $matches );
+	preg_match( $pattern, $time, $matches );
 
 	foreach ( array( 'h', 'm', 's' ) as $m ) {
 		if ( ! isset( $matches[ $m ] ) ) {
@@ -127,6 +121,8 @@ function disabled_on_feeds(): bool {
 	return is_feed() && ! options()['feed'] ? true : false;
 }
 
+
+
 /**
  * @param string|int $time
  */
@@ -139,17 +135,17 @@ function seconds_to_iso8601_duration( $time ): string {
 		'S' => 1,
 	);
 
-	$str    = 'P';
-	$istime = false;
+	$str     = 'P';
+	$is_time = false;
 
 	foreach ( $units as  $unit_name => $unit ) {
 		$quot  = intval( $time / $unit );
 		$time -= $quot * $unit;
 		$unit  = $quot;
 		if ( $unit > 0 ) {
-			if ( ! $istime && in_array( $unit_name, array( 'H', 'M', 'S' ), true ) ) { // There may be a better way to do this
-				$str   .= 'T';
-				$istime = true;
+			if ( ! $is_time && in_array( $unit_name, array( 'H', 'M', 'S' ), true ) ) { // There may be a better way to do this
+				$str    .= 'T';
+				$is_time = true;
 			}
 			$str .= strval( $unit ) . $unit_name;
 		}
@@ -191,6 +187,10 @@ function is_gutenberg(): bool {
 	return $use_block_editor;
 }
 
+function is_amp(): bool {
+	return function_exists( __NAMESPACE__ . '\AMP\is_amp' ) && AMP\is_amp();
+}
+
 /**
  * Register oEmbed Widget.
  *
@@ -210,6 +210,10 @@ function translation( string $context ): string {
 
 	switch ( $context ) {
 		// Pro
+		case 'link_removed':
+			return __( 'link removed', 'advanced-responsive-video-embedder' );
+		case 'video':
+			return __( 'Video', 'advanced-responsive-video-embedder' );
 		case 'play_video': // deprecated
 			return __( 'Play video', 'advanced-responsive-video-embedder' );
 		case 'latest_video_from_youtube_channel_could_not_be_detected':
@@ -224,10 +228,10 @@ function translation( string $context ): string {
 		case 'arve_cached_thumbnail_for':
 			// Translators: %1$s URL, %2$s title.
 			return __( 'ARVE cached thumbnail for %s', 'advanced-responsive-video-embedder' );
-		case 'by_clicking_below_you_consent':
+		case 'by_clicking_play_you_consent':
 			// Translators: %1$s domain name, %2$s URL, %3$s privacy policy URL, %4$s privacy policy title.
 			return __(
-				'By clicking below, you consent to load content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
+				'By clicking play, you consent to load content from %1$s in a <a href="%2$s">privacy enhanced iframe</a> and setting a cookie on this site to store your choice. See <a href="%3$s">%4$s</a>.',
 				'advanced-responsive-video-embedder'
 			);
 		default:

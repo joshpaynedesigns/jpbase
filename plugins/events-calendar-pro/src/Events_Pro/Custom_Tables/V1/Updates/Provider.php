@@ -358,7 +358,7 @@ class Provider extends Service_Provider implements Provider_Contract {
 	 *                                 if required.
 	 *
 	 * @return void The method will have the side-effect of updating the request information
-	 *              in the Request object and in the reques super-globals.
+	 *              in the Request object and in the request super-globals.
 	 */
 	public function redirect_rest_request( WP_REST_Request $request ): void {
 		$this->container->make( Controller::class )->redirect_request( $request );

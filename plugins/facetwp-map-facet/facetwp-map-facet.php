@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Map Facet
 Description: Map facet type
-Version: 1.1
+Version: 1.2
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-map-facet
@@ -12,8 +12,9 @@ Domain Path: /languages
 
 defined( 'ABSPATH' ) or exit;
 
-define( 'FACETWP_MAP_FACET_VERSION', '1.1' );
-
+if ( ! defined( 'FACETWP_MAP_FACET_VERSION' ) ) {
+	define( 'FACETWP_MAP_FACET_VERSION', '1.2' );
+}
 
 /**
  * FacetWP registration hook
@@ -25,7 +26,7 @@ add_filter( 'facetwp_facet_types', function( $facet_types ) {
 
 
 /**
- * Hierarchy Select facet class
+ * Map Facet addon facet class
  */
 class FacetWP_Facet_Map_Addon
 {
@@ -34,10 +35,14 @@ class FacetWP_Facet_Map_Addon
     public $map_facet;
     public $proximity_facet;
     public $proximity_coords;
+    public $field_defaults;
 
 
     function __construct() {
         $this->label = __( 'Map', 'facetwp-map-facet' );
+        $this->field_defaults = [
+            'map_design' => 'light-dream'
+        ];
 
         define( 'FACETWP_MAP_URL', plugins_url( '', __FILE__ ) );
 
@@ -459,8 +464,8 @@ class FacetWP_Facet_Map_Addon
         <div class="facetwp-row">
             <div>
                 <div class="facetwp-tooltip">
-                    <?php _e( 'Longitude', 'facetwp-map-facet' ); ?>:
-                    <div class="facetwp-tooltip-content"><?php _e( '(Optional) use a separate longitude field', 'facetwp-map-facet' ); ?></div>
+                    <?php _e( 'Longitude', 'facetwp-map-facet' ); ?>
+                    <div class="facetwp-tooltip-content"><?php _e( '(Optional) use a separate longitude field.', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
             <div>
@@ -471,7 +476,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Map design', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Map design', 'facetwp-map-facet' ); ?></div>
             <div>
                 <select class="facet-map-design">
                     <option value="default"><?php _e( 'Default', 'facetwp-map-facet' ); ?></option>
@@ -483,13 +488,13 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Enable filtering button', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Enable filtering button label', 'facetwp-map-facet' ); ?></div>
             <div>
                 <input type="text" class="facet-btn-label" placeholder="<?php echo facetwp_i18n( __( 'Enable map filtering', 'facetwp-map-facet' ) ); ?>" />
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Reset button', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Reset button label', 'facetwp-map-facet' ); ?></div>
             <div>
                 <input type="text" class="facet-reset-label" placeholder="<?php  echo facetwp_i18n( __( 'Reset', 'facetwp-map-facet' ) ); ?>" />
             </div>
@@ -497,7 +502,7 @@ class FacetWP_Facet_Map_Addon
         <div class="facetwp-row">
             <div>
                 <div class="facetwp-tooltip">
-                    <?php _e( 'Marker clustering', 'facetwp-map-facet' ); ?>:
+                    <?php _e( 'Marker clustering', 'facetwp-map-facet' ); ?>
                     <div class="facetwp-tooltip-content"><?php _e( 'Group markers into clusters?', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
@@ -511,8 +516,8 @@ class FacetWP_Facet_Map_Addon
         <div class="facetwp-row">
             <div>
                 <div class="facetwp-tooltip">
-                    <?php _e( 'Ajax marker content', 'facetwp-map-facet' ); ?>:
-                    <div class="facetwp-tooltip-content"><?php _e( 'Dynamically load marker content, which could improve load times for pages containing many map markers', 'facetwp-map-facet' ); ?></div>
+                    <?php _e( 'Ajax marker content', 'facetwp-map-facet' ); ?>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Dynamically load marker content on click of markers, which could improve load times for pages with many markers.', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
             <div>
@@ -523,7 +528,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Marker limit', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Marker limit', 'facetwp-map-facet' ); ?></div>
             <div>
                 <select class="facet-limit">
                     <option value="all"><?php _e( 'Show all results', 'facetwp-map-facet' ); ?></option>
@@ -532,17 +537,24 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Map width / height', 'facetwp-map-facet' ); ?>:</div>
+
+            <div>
+                <div class="facetwp-tooltip">
+                  <?php _e( 'Map width / height', 'facetwp-map-facet' ); ?>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Set width and height of the map. Without units, px is assumed. Use other CSS units if needed, e.g. 100% for responsive full width of the parent container. Don\'t use 100% for the height if the map\'s container does not have a fixed height, else the map will have no height and will not show.', 'facetwp-map-facet' ); ?></div>
+                </div>
+            </div>
             <div>
                 <input type="text" class="facet-map-width" placeholder="<?php _e( 'Width', 'facetwp-map-facet' ); ?>" style="width:96px" />
                 <input type="text" class="facet-map-height" placeholder="<?php _e( 'Height', 'facetwp-map-facet' ); ?>" style="width:96px" />
+
             </div>
         </div>
         <div class="facetwp-row">
             <div>
                 <div class="facetwp-tooltip">
-                    <?php _e( 'Zoom min / max', 'facetwp-map-facet' ); ?>:
-                    <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20)?', 'facetwp-map-facet' ); ?></div>
+                    <?php _e( 'Zoom min / max', 'facetwp-map-facet' ); ?>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Set zoom bounds (between 1 and 20).', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
             <div>
@@ -553,8 +565,8 @@ class FacetWP_Facet_Map_Addon
         <div class="facetwp-row">
             <div>
                 <div class="facetwp-tooltip">
-                    <?php _e( 'Fallback lat / lng / zoom', 'facetwp-map-facet' ); ?>:
-                    <div class="facetwp-tooltip-content"><?php _e( 'Center the map here if there are no results', 'facetwp-map-facet' ); ?></div>
+                    <?php _e( 'Fallback lat / lng / zoom', 'facetwp-map-facet' ); ?>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Center the map here, and set a custom zoom level, if there are no results.', 'facetwp-map-facet' ); ?></div>
                 </div>
             </div>
             <div>
@@ -564,7 +576,7 @@ class FacetWP_Facet_Map_Addon
             </div>
         </div>
         <div class="facetwp-row">
-            <div><?php _e( 'Marker content', 'facetwp-map-facet' ); ?>:</div>
+            <div><?php _e( 'Marker content', 'facetwp-map-facet' ); ?></div>
             <div>
                 <textarea class="facet-marker-content" id="marker-content-editor" v-model="facet.marker_content"></textarea>
                 <p class="note"><?php _e( 'To search your code, click in the editor, then use Ctrl+F (Windows/Linux) or Cmd+F (Mac).', 'facetwp-map-facet' ); ?></p>
@@ -605,6 +617,15 @@ class FacetWP_Facet_Map_Addon
                     $latlng = explode( ',', $latlng );
                     $params['facet_value'] = $latlng[0];
                     $params['facet_display_value'] = $latlng[1];
+                }
+
+                /** make sure lat and lng are valid floats **/
+                $params['facet_value'] = $params['facet_value'] == (float)$params['facet_value'] ? (float)$params['facet_value'] : '';
+                $params['facet_display_value'] = $params['facet_display_value'] == (float)$params['facet_display_value'] ? (float)$params['facet_display_value'] : '';
+
+                /** check for valid range of lat and lng */
+                if  ( '' == $params['facet_value'] || '' == $params['facet_display_value'] || 90 < abs( $params['facet_value'] ) || 180 < abs( $params['facet_display_value'] ) ) {
+                    $params['facet_value'] = ''; // don't index
                 }
             }
         }

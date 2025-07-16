@@ -19,9 +19,9 @@ if ( empty( $show_name ) ) {
 	return;
 }
 ?>
-<<?php echo tag_escape( $name_tag ); ?> <?php tribe_classes( $widget->get_name_base_class() ); ?>>
+<<?php echo tag_escape( $name_tag ); ?> <?php tec_classes( $widget->get_name_base_class() ); ?>>
 	<?php if ( ! empty( $link_venue_name ) ) : ?>
-		<a <?php tribe_classes( $widget->get_name_base_class() . '-link' ); ?> href="<?php echo esc_url( get_permalink( $venue['id'] ) ); ?>">
+		<a <?php tec_classes( $widget->get_name_base_class() . '-link' ); ?> href="<?php echo esc_url( get_permalink( $venue['id'] ) ); ?>">
 	<?php endif; ?>
 	<?php echo wp_kses_post( $venue['name'] ); ?>
 	<?php if ( ! empty( $link_venue_name ) ) : ?>

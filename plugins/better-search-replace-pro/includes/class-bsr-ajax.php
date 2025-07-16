@@ -104,7 +104,7 @@ class BSR_AJAX {
 	 */
 	public function process_search_replace() {
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
 			return;
 		}
 
@@ -259,8 +259,8 @@ class BSR_AJAX {
 	public function append_report( $table, $report, $args ) {
 
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
-			return;
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+			return false;
 		}
 
 		// Retrieve the existing transient.
@@ -312,7 +312,7 @@ class BSR_AJAX {
 	public function process_backup() {
 
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
 			return;
 		}
 
@@ -421,15 +421,19 @@ class BSR_AJAX {
 
 		}
 
-		$download_url = wp_nonce_url( get_admin_url() . 'admin-post.php?action=bsr_download_backup', 'bsr_download_backup', 'bsr_download_backup' );
+		// Build download URL for redirect (not display), so that params are not improperly escaped and work as intended.
+		$download_url = get_admin_url( null, 'admin-post.php' );
+		$download_url = add_query_arg( 'action', 'bsr_download_backup', $download_url );
+		$download_url = add_query_arg( 'bsr_download_backup', wp_create_nonce( 'bsr_download_backup' ), $download_url );
+		$download_url = esc_url_raw( $download_url );
 
 		// Store results in an array.
 		$result = array(
-			'step' 				=> $step,
-			'page' 				=> $page,
-			'percentage'		=> $percentage,
-			'url' 				=> $download_url,
-			'bsr_data' 			=> build_query( $args ),
+			'step'       => $step,
+			'page'       => $page,
+			'percentage' => $percentage,
+			'url'        => $download_url,
+			'bsr_data'   => build_query( $args ),
 		);
 
 		if ( isset( $message ) ) {
@@ -443,12 +447,10 @@ class BSR_AJAX {
 
 	/**
 	 * Processes a database import.
-	 * @access public
 	 */
 	public function process_import() {
-
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
 			return;
 		}
 
@@ -459,66 +461,96 @@ class BSR_AJAX {
 			parse_str( $_POST['bsr_data'], $args );
 		}
 
-		$db 				= new BSR_DB();
-		$page 				= isset( $_REQUEST['bsr_page'] ) ? absint( $_REQUEST['bsr_page'] ) : 0;
-		$file 				= isset( $args['file'] ) ? $args['file'] : '';
-		$total_pages 		= isset( $args['total_pages'] ) ? absint( $args['total_pages'] ) : $db->get_total_pages_from_file( $file );
-		$completed_pages 	= isset( $args['completed_pages'] ) ? absint( $args['completed_pages'] ) : 0;
-		$profile 			= isset( $args['profile'] ) ? $args['profile'] : '';
-		$import 			= $db->run_import( $file, $page );
+		$db   = new BSR_DB();
+		$page = isset( $_REQUEST['bsr_page'] ) ? absint( $_REQUEST['bsr_page'] ) : 0;
+		$file = empty( $args['file'] ) ? '' : trim( $args['file'] );
+
+		// Must have either a previously generated file path or the standard manual file path.
+		if ( $db->get_file_path() !== $file && BSR_DB::get_manual_file_path() !== $file ) {
+			$err = new WP_Error(
+				'bsr-invalid-file-path-error',
+				__( 'Could not validate upload file path, please try again.', 'better-search-replace' )
+			);
+			wp_send_json_error( $err, 422 );
+			exit;
+		}
+
+		if ( ! file_exists( $file ) ) {
+			$err = new WP_Error(
+				'bsr-upload-file-not-found-error',
+				__( 'Could not find upload file on server, please try again.', 'better-search-replace' )
+			);
+			wp_send_json_error( $err, 422 );
+			exit;
+		}
+
+		$total_pages = isset( $args['total_pages'] ) ? absint( $args['total_pages'] ) : $db->get_total_pages_from_file( $file );
+
+		// Must have some pages to process.
+		if ( false === $total_pages || 0 === $total_pages ) {
+			$err = new WP_Error(
+				'bsr-no-sql-statements-error',
+				__(
+					'Could not find any SQL statements to process in the uploaded file, please try again.',
+					'better-search-replace'
+				)
+			);
+			wp_send_json_error( $err, 422 );
+			exit;
+		}
+
+		$completed_pages = isset( $args['completed_pages'] ) ? absint( $args['completed_pages'] ) : 0;
+		$profile         = isset( $args['profile'] ) ? $args['profile'] : '';
+		$import          = $db->run_import( $file, $page );
 
 		$completed_pages++;
 
 		if ( false == $import['import_complete'] ) {
 			$page++;
 			$percentage = $completed_pages / $total_pages * 100 . '%';
-			$step = 0;
+			$step       = 0;
 		} else {
-			$step = 'done';
-			$page = 'done';
-			$percentage ='100%';
+			$step       = 'done';
+			$page       = 'done';
+			$percentage = '100%';
 
 			// Remove import file.
 			BSR_Admin::delete_file();
 		}
 
 		$bsr_data = array(
-			'total_pages' 		=> $total_pages,
-			'completed_pages' 	=> $completed_pages,
-			'file' 				=> $file,
-			'profile' 			=> $profile
+			'total_pages'     => $total_pages,
+			'completed_pages' => $completed_pages,
+			'file'            => $file,
+			'profile'         => $profile,
 		);
 
 		$result = array(
-			'step'				=> $step,
-			'page' 				=> $page,
-			'percentage' 		=> $percentage,
-			'url'				=> get_admin_url() . 'tools.php?page=better-search-replace&import=true&result=true',
-			'bsr_data'			=> $bsr_data
+			'step'       => $step,
+			'page'       => $page,
+			'percentage' => $percentage,
+			'url'        => get_admin_url() . 'tools.php?page=better-search-replace&import=true&result=true',
+			'bsr_data'   => $bsr_data,
 		);
 
 		if ( 'done' === $step ) {
-
 			// Maybe run a search/replace.
 			if ( 'undefined' !== $profile && '' !== $profile ) {
-
 				$profiles = BSR_Admin::get_profiles();
 
-				if ( isset( $profiles[$profile] ) ) {
-					$profiles[$profile]['is_import'] = true;
-					$result['next_action'] 	= 'process_search_replace';
-					$result['message'] 		= __( 'Running search/replace...', 'better-search-replace' );
-					$result['bsr_data'] 	= build_query( $profiles[$profile] );
+				if ( isset( $profiles[ $profile ] ) ) {
+					$profiles[ $profile ]['is_import'] = true;
+					$result['next_action']             = 'process_search_replace';
+					$result['message']                 = __( 'Running search/replace...', 'better-search-replace' );
+					$result['bsr_data']                = build_query( $profiles[ $profile ] );
 				} else {
 					// Rename the temporary tables.
 					$db->rename_temp_tables();
 				}
-
 			} else {
 				// Rename the temporary tables.
 				$db->rename_temp_tables();
 			}
-
 		}
 
 		echo json_encode( $result );
@@ -527,11 +559,12 @@ class BSR_AJAX {
 
 	/**
 	 * Handles file uploads via AJAX.
+	 *
 	 * @access public
 	 */
 	public function upload_import() {
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
 			return;
 		}
 
@@ -540,44 +573,64 @@ class BSR_AJAX {
 		$db->generate_salt();
 
 		$file        = $db->get_file_path();
-		$upload_dir  = wp_upload_dir();
-		$manual_file = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';
+		$manual_file = BSR_DB::get_manual_file_path();
 
 		// Figure out which file we want to import.
-		if ( isset( $_FILES['bsr_import_file' ] ) ) {
-
+		if ( isset( $_FILES['bsr_import_file'] ) ) {
 			$ext = substr( $_FILES['bsr_import_file']['name'], -3 );
 
 			if ( 'sql' === $ext || '.gz' === $ext ) {
-				$temp = $_FILES['bsr_import_file']['tmp_name'];
-				$dest = $file;
-				$upload_method 	= 'ajax';
+				$temp          = $_FILES['bsr_import_file']['tmp_name'];
+				$dest          = $file;
+				$upload_method = 'ajax';
+
+				if ( ! file_exists( $temp ) ) {
+					$err = new WP_Error(
+						'bsr-tmp-file-not-found-error',
+						__( 'Could not upload file to temporary location, please try again.', 'better-search-replace' )
+					);
+					wp_send_json_error( $err, 422 );
+					exit;
+				}
 
 				if ( '.gz' === $ext ) {
 					$dest = $dest . '.gz';
 				}
 
-				move_uploaded_file( $temp, $dest );
+				if ( ! move_uploaded_file( $temp, $dest ) ) {
+					$err = new WP_Error(
+						'bsr-tmp-file-not-moved-error',
+						__( 'Could not move uploaded file into place, please try again.', 'better-search-replace' )
+					);
+					wp_send_json_error( $err, 422 );
+					exit;
+				}
 
 				if ( '.gz' === $ext ) {
-					BSR_Admin::decompress_file( $dest, $file );
+					if ( ! BSR_Admin::decompress_file( $dest, $file ) ) {
+						$err = new WP_Error(
+							'bsr-tmp-file-not-decompressed-error',
+							__( 'Could not decompress uploaded file, please try again.', 'better-search-replace' )
+						);
+						wp_send_json_error( $err, 422 );
+						exit;
+					}
 				}
 			}
-
 		} elseif ( file_exists( $manual_file ) ) {
 			$upload_method = 'manual';
-			$file = $manual_file;
+			$file          = $manual_file;
 		} else {
-			$file = 'not_found';
+			$file          = 'not_found';
 			$upload_method = 'none';
 		}
 
 		$result = array(
-			'file' 			=> $file,
-			'upload_method' => $upload_method
+			'file'          => $file,
+			'upload_method' => $upload_method,
 		);
 
-		if ( isset( $_POST['profile'] ) && ! empty( $_POST['profile' ] ) ) {
+		if ( isset( $_POST['profile'] ) && ! empty( $_POST['profile'] ) ) {
 			$result['profile'] = sanitize_text_field( $_POST['profile'] );
 		}
 
@@ -585,7 +638,6 @@ class BSR_AJAX {
 		echo json_encode( $result );
 		exit;
 	}
-
 }
 
 $bsr_ajax = new BSR_AJAX;

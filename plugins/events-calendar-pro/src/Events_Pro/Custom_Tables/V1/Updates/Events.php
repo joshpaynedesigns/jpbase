@@ -544,10 +544,12 @@ class Events {
 
 		// Duplicate the original Event as a single event.
 		$ditch_unnecessary_values = static function ( $duplicate_args, $event ) {
-			unset( $duplicate_args['meta_input']['_EventRecurrence'],
+			unset(
+				$duplicate_args['meta_input']['_EventRecurrence'],
 				$duplicate_args['meta_input'][ Blocks_Meta::$rules_key ],
 				$duplicate_args['meta_input'][ Blocks_Meta::$exclusions_key ],
-				$duplicate_args['meta_input'][ Blocks_Meta::$description_key ]
+				$duplicate_args['meta_input'][ Blocks_Meta::$description_key ],
+				$duplicate_args['meta_input']['_EventDuration']
 			);
 
 			return $duplicate_args;
@@ -662,6 +664,18 @@ class Events {
 
 		// The cache should be cleared after our above modifications.
 		$this->provisional_post->clear_occurrence_cache( $occurrence_id );
+
+		// Determine event's duration after moves and store it if not impossible value.
+		$start_date_utc = get_post_meta( $single_post->ID, '_EventStartDateUTC', true );
+		$end_date_utc   = get_post_meta( $single_post->ID, '_EventEndDateUTC', true );
+		if ( ! empty( $start_date_utc ) && ! empty( $end_date_utc ) ) {
+			$start_date_object = Dates::immutable( $start_date_utc, 'UTC' );
+			$end_date_object   = Dates::immutable( $end_date_utc, 'UTC' );
+			$duration          = $end_date_object->getTimestamp() - $start_date_object->getTimestamp();
+			if ( $duration > 0 ) {
+				update_post_meta( $single_post->ID, '_EventDuration', $duration );
+			}
+		}
 
 		return $single_post->ID;
 	}

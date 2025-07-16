@@ -17,6 +17,7 @@ use TEC\Events\Custom_Tables\V1\WP_Query\Monitors\Query_Monitor;
 use TEC\Events_Pro\Custom_Tables\V1\Events\Provisional\ID_Generator as Provisional_ID_Generator;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post_Cache;
+use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post_Meta;
 use TEC\Events_Pro\Custom_Tables\V1\WP_Query\Repository\Custom_Tables_Query_Filters;
 use TEC\Common\Contracts\Service_Provider;
 use Tribe__Repository__Query_Filters;
@@ -50,26 +51,45 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		$this->container->singleton( self::class, self::class );
 		$this->container->singleton( Condense_Events_Series::class, Condense_Events_Series::class );
 		$this->container->singleton( Replace_Results::class, Replace_Results::class );
-		$this->container->singleton( Provisional_Post::class, function () {
-			remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
-			$provisional_post = new Provisional_Post(
-				$this->container->make( Provisional_Post_Cache::class ),
-				$this,
-				$this->container->make( 'cache' )
-			);
-			add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
-			add_filter( 'get_post_metadata', [ $this, 'hydrate_tec_occurrence_meta' ], 10, 3 );
+		$this->container->singleton(
+			Provisional_Post::class,
+			function () {
+				remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+				$provisional_post = new Provisional_Post(
+					$this->container->make( Provisional_Post_Cache::class ),
+					$this,
+					$this->container->make( 'cache' )
+				);
+				add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 
-			return $provisional_post;
-		} );
+				return $provisional_post;
+			}
+		);
+		$this->container->singleton(
+			Provisional_Post_Meta::class,
+			function () {
+				remove_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
+				$provisional_post = new Provisional_Post_Meta();
+				add_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
+				add_filter( 'get_post_metadata', [ $this, 'hydrate_tec_occurrence_meta' ], 10, 3 );
+
+				return $provisional_post;
+			}
+		);
 		$this->container->singleton( Custom_Query_Filters::class, function () {
 			$base = tribe( Provisional_ID_Generator::class )->current();
 
 			return new Custom_Query_Filters( $base, $this->container->make( Provisional_Post::class ) );
 		} );
 
+		if ( ! has_filter( 'add_post_metadata', [ $this, 'add_post_metadata_filter' ] ) ) {
+			add_filter( 'add_post_metadata', [ $this, 'add_post_metadata_filter' ], 10, 5 );
+		}
 		if ( ! has_filter( 'query', [ $this, 'hydrate_provisional_post' ] ) ) {
 			add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+		}
+		if ( ! has_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ] ) ) {
+			add_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
 		}
 
 		if ( ! has_action(
@@ -167,6 +187,32 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	}
 
 	/**
+	 * Hijacks and handles the post meta add for provisional post IDs.
+	 *
+	 * @since 7.3.0
+	 *
+	 * @param mixed  $check Whether to bypass the internal add.
+	 * @param int    $object_id The post ID.
+	 * @param string $meta_key The meta key.
+	 * @param mixed  $meta_value The meta value.
+	 * @param bool   $unique Whether this meta is unique or allows multiple.
+	 *
+	 * @return false|int|mixed
+	 */
+	public function add_post_metadata_filter( $check, $object_id, $meta_key, $meta_value, $unique ) {
+		// Don't recurse this filter, so remove ourself.
+		remove_filter( 'add_post_metadata', [ $this, 'add_post_metadata_filter' ], 10 );
+		$provisional_post = tribe( Provisional_Post::class );
+		if ( $provisional_post->is_provisional_post_id( $object_id ) ) {
+			$occurrence = $provisional_post->get_occurrence_row( $object_id );
+			$check      = add_post_meta( $occurrence->post_id, $meta_key, $meta_value, $unique );
+		}
+		add_filter( 'add_post_metadata', [ $this, 'add_post_metadata_filter' ], 10, 5 );
+
+		return $check;
+	}
+
+	/**
 	 * Inspects and potentially modifies a WP_Query object for `eventSequence` queries.
 	 *
 	 * @since 6.0.11
@@ -229,7 +275,9 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 	 * @since 6.0.0
 	 */
 	public function unregister() {
-		remove_action( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+		remove_filter( 'add_post_metadata', [ $this, 'add_post_metadata_filter' ], 10 );
+		remove_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
+		remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 		remove_action(
 			'tec_events_custom_tables_v1_custom_tables_query_results',
 			[ $this, 'hydrate_provisional_post_caches' ]
@@ -325,6 +373,27 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 		remove_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
 		$query_sql = $this->container->make( Provisional_Post::class )->hydrate_provisional_post_query( $query_sql );
 		add_filter( 'query', [ $this, 'hydrate_provisional_post' ], 200 );
+
+		return $query_sql;
+	}
+
+	/**
+	 * Hydrates the cache around a provisional post meta query.
+	 *
+	 * @since 7.3.0
+	 *
+	 * @param string $query_sql The query string.
+	 *
+	 * @return string The modified query string.
+	 */
+	public function hydrate_provisional_postmeta( $query_sql ) {
+		if ( $this->noop ) {
+			return $query_sql;
+		}
+
+		remove_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
+		$query_sql = $this->container->make( Provisional_Post_Meta::class )->hydrate_provisional_postmeta_query( $query_sql );
+		add_filter( 'query', [ $this, 'hydrate_provisional_postmeta' ], 200 );
 
 		return $query_sql;
 	}
@@ -541,7 +610,7 @@ class Provider extends Service_Provider implements \TEC\Events\Custom_Tables\V1\
 			return $meta_value;
 		}
 
-		return $this->container->make( Provisional_Post::class )
+		return $this->container->make( Provisional_Post_Meta::class )
 			->hydrate_tec_occurrence_meta( $meta_value, $object_id, $meta_key );
 	}
 

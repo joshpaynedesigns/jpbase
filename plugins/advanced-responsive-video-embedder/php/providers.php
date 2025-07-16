@@ -1,4 +1,8 @@
-<?php return array(
+<?php
+
+declare(strict_types = 1);
+
+return array(
 	'alugha' => array(
 		'name'           => 'Alugha',
 		'regex'          => '#https?://(www\\.)?alugha\\.com/(1/)?videos/(?<id>[a-z0-9_\\-]+)#i',
@@ -20,23 +24,25 @@
 	'archiveorg' => array(
 		'name'           => 'Archive.org',
 		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?archive\\.org/(details|embed)/(?<id>[0-9a-z\\-]+)#i',
+		'regex'          => '#https?://(www\\.)?archive\\.org/(details|embed)/(?<id>[0-9a-z\\-_]+)#i',
 		'embed_url'      => 'https://www.archive.org/embed/%s/',
 		'default_params' => '',
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://archive.org/details/arashyekt4_gmail_Cat',
-				'id'  => 'arashyekt4',
+				'url' => 'https://archive.org/details/cure_20211214',
+				'id'  => 'cure_20211214',
 			),
 		),
 	),
 	'bannedvideo' => array(
-		'name'      => 'Banned.video',
-		'oembed'    => false,
-		'regex'     => '#https://banned\\.video/watch\\?id=(?<id>[a-z0-9]+)#i',
-		'embed_url' => 'https://api.banned.video/embed/%s',
-		'tests'     => array(
+		'name'           => 'Banned.video',
+		'oembed'         => true, // ARVE Pro will inject fake oembed data from their graphQL API
+		'regex'          => '#https://(banned\\.video|madmaxworld\\.tv|cantcensortruth\\.com)/watch\\?id=(?<id>[a-z0-9]+)#i',
+		'embed_url'      => 'https://api.banned.video/embed/%s',
+		'auto_title'     => true,
+		'auto_thumbnail' => true,
+		'tests'          => array(
 			0 => array(
 				'url' => 'https://banned.video/watch?id=5ffe509f0d763c3dca0e8ad7',
 				'id'  => '5ffe509f0d763c3dca0e8ad7',
@@ -67,24 +73,24 @@
 		'tests'        => array(
 			0 => array(
 				'url'               => 'https://players.brightcove.net/624246174001/BJXA5Px6f_default/index.html?videoId=5809251338001',
-				'account_id'        => 624246174001,
+				'account_id'        => '624246174001',
 				'brightcove_player' => 'BJXA5Px6f',
 				'brightcove_embed'  => 'default',
-				'id'                => 5809251338001,
+				'id'                => '5809251338001',
 			),
 			1 => array(
 				'url'               => 'http://players.brightcove.net/1160438696001/default_default/index.html?videoId=4587535845001',
-				'account_id'        => 1160438696001,
+				'account_id'        => '1160438696001',
 				'brightcove_player' => 'default',
 				'brightcove_embed'  => 'default',
-				'id'                => 4587535845001,
+				'id'                => '4587535845001',
 			),
 			2 => array(
 				'url'               => 'http://players.brightcove.net/5107476400001/B1xUkhW8i_default/index.html?videoId=5371391223001',
-				'account_id'        => 5107476400001,
+				'account_id'        => '5107476400001',
 				'brightcove_player' => 'B1xUkhW8i',
 				'brightcove_embed'  => 'default',
-				'id'                => 5371391223001,
+				'id'                => '5371391223001',
 			),
 		),
 	),
@@ -98,18 +104,6 @@
 			0 => array(
 				'url' => 'https://www.brighteon.com/e7d18308-7cae-4a04-8a42-7088a8bea02c',
 				'id'  => 'e7d18308-7cae-4a04-8a42-7088a8bea02c',
-			),
-		),
-	),
-	'cantcensortruthcom' => array(
-		'name'      => 'cantcensortruth.com',
-		'oembed'    => false,
-		'regex'     => '#https://cantcensortruth\\.com/watch\\?id=(?<id>[a-z0-9]+)#i',
-		'embed_url' => 'https://api.banned.video/embed/%s',
-		'tests'     => array(
-			0 => array(
-				'url' => 'https://cantcensortruth.com/watch?id=601218b0de226411596203ae',
-				'id'  => '601218b0de226411596203ae',
 			),
 		),
 	),
@@ -227,6 +221,12 @@
 	'html5' => array(
 		'name'         => 'mp4 or webm video files',
 		'aspect_ratio' => false,
+		'tests'        => array(
+			0 => array(
+				'url' => 'https://example.org/video.mp4',
+				'id'  => 'https://example.org/video.mp4',
+			),
+		),
 	),
 	'iframe' => array(
 		'name'           => 'ARVE general iframe embed',
@@ -255,8 +255,21 @@
 		),
 	),
 	'imdb' => array(
-		'name'         => 'IMDB',
-		'requires_src' => true,
+		'name'             => 'IMDB',
+		'requires_src'     => true,
+		'regex'            => '#https?://www\.imdb\.com/[a-z0-9/]+/(?<id>vi[0-9]+)/#i',
+		'embed_url'        => 'https://www.imdb.com/video/embed/%s/',
+		'oembed'           => false,
+		'tests'            => array(
+			0 => array(
+				'url' => 'https://www.imdb.com/video/vi356174105/?ref_=ttvi_vi_imdb_2',
+				'id'  => 'vi356174105',
+			),
+			1 => array(
+				'url' => 'https://www.imdb.com/video/embed/vi336244761/?autoplay=false&width=480',
+				'id'  => 'vi336244761',
+			),
+		),
 	),
 	'kickstarter' => array(
 		'name'           => 'Kickstarter',
@@ -285,11 +298,11 @@
 		'tests'          => array(
 			0 => array(
 				'url' => 'http://www.klagemauer.tv/9106',
-				'id'  => 9106,
+				'id'  => '9106',
 			),
 			1 => array(
 				'url' => 'http://www.kla.tv/9122',
-				'id'  => 9122,
+				'id'  => '9122',
 			),
 		),
 	),
@@ -302,8 +315,8 @@
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://livestream.com/accounts/23470201/events/7021166',
-				'id'  => '23470201/events/7021166',
+				'url' => 'https://livestream.com/accounts/4091035/events/8205804/videos/174917539',
+				'id'  => '4091035/events/8205804/videos/174917539',
 			),
 			1 => array(
 				'url' => 'https://livestream.com/accounts/467901/events/2015991/videos/17500857/player?width=640&height=360&enableInfo=true&defaultDrawer=&autoPlay=true&mute=false',
@@ -320,7 +333,7 @@
 		'tests'        => array(
 			0 => array(
 				'url' => 'https://my.mail.ru/video/embed/1475383959813619758',
-				'id'  => 1475383959813619758,
+				'id'  => '1475383959813619758',
 			),
 		),
 	),
@@ -333,11 +346,11 @@
 		'tests'          => array(
 			0 => array(
 				'url' => 'http://www.metacafe.com/watch/11433151/magical-handheld-fireballs/',
-				'id'  => 11433151,
+				'id'  => '11433151',
 			),
 			1 => array(
 				'url' => 'http://www.metacafe.com/watch/11322264/everything_wrong_with_robocop_in_7_minutes/',
-				'id'  => 11322264,
+				'id'  => '11322264',
 			),
 		),
 	),
@@ -349,14 +362,10 @@
 		'auto_thumbnail' => false,
 		'tests'          => array(
 			0 => array(
-				'url' => 'https://myspace.com/myspace/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-live-/109471212',
-				'id'  => 109471212,
+				'url' => 'https://myspace.com/onetwowatch/video/dark-rooms-the-shadow-that-looms-o-er-my-heart-/109471212',
+				'id'  => '109471212',
 			),
 		),
-	),
-	'ooyala' => array(
-		'name'         => 'ooyala',
-		'requires_src' => true,
 	),
 	'qq' => array(
 		'name'           => 'v.qq.com',
@@ -382,6 +391,11 @@
 		'default_params' => 'rel=0',
 		'auto_thumbnail' => true,
 		'auto_title'     => true,
+		'tests'          => array(
+			0 => array(
+				'url' => 'https://rumble.com/v5ry3zq-liz-gunn-lawfare-case-appeal.html?e9s=src_v1_ucp',
+			),
+		),
 	),
 	'okru' => array(
 		'name'        => 'ok.ru',
@@ -421,20 +435,6 @@
 			),
 		),
 	),
-	'snotr' => array(
-		'name'           => 'Snotr',
-		'oembed'         => false,
-		'regex'          => '#https?://(www\\.)?snotr\\.com/(video|embed)/(?<id>[0-9]+)#i',
-		'embed_url'      => 'https://www.snotr.com/embed/%s',
-		'rebuild_url'    => 'https://www.snotr.com/video/%s',
-		'auto_thumbnail' => false,
-		'tests'          => array(
-			0 => array(
-				'url' => 'https://www.snotr.com/video/12314/How_big_a_truck_blind_spot_really_is',
-				'id'  => 12314,
-			),
-		),
-	),
 	'ted' => array(
 		'name'           => 'TED Talks',
 		'oembed'         => true,
@@ -455,6 +455,12 @@
 		'oembed'         => true,
 		'auto_thumbnail' => true,
 		'aspect_ratio'   => false,
+		'tests'          => array(
+			0 => array(
+				'url' => 'https://www.tiktok.com/@rk.k1ng/video/7291715819325721861?q=gaza%20horror&t=1738957782468',
+				'id'  => '7291715819325721861',
+			),
+		),
 	),
 	'twitch' => array(
 		'name'           => 'Twitch',
@@ -475,7 +481,7 @@
 			),
 			2 => array(
 				'url'     => 'https://www.twitch.tv/imaqtpie/v/95318019',
-				'id'      => 95318019,
+				'id'      => '95318019',
 				'api_img' => 'https://static-cdn.jtvnw.net/jtv_user_pictures/imaqtpie',
 			),
 		),
@@ -503,21 +509,21 @@
 		'regex'          => '#https?://(player\\.)?vimeo\\.com/((video/)|(channels/[a-z]+/)|(groups/[a-z]+/videos/))?(?<id>[0-9]+)(/(?<vimeo_secret>[0-9a-z]+))?#i',
 		'embed_url'      => 'https://player.vimeo.com/video/%s',
 		'rebuild_url'    => 'https://vimeo.com/%s',
-		'default_params' => 'transparent=0&title=1&byline=0&portrait=0',
+		'default_params' => 'transparent=0&title=1&byline=0&portrait=0&dnt=1',
 		'auto_thumbnail' => true,
 		'auto_title'     => true,
 		'tests'          => array(
 			0 => array(
 				'url' => 'https://vimeo.com/124400795',
-				'id'  => 124400795,
+				'id'  => '124400795',
 			),
 			1 => array(
 				'url' => 'https://player.vimeo.com/video/265932452',
-				'id'  => 265932452,
+				'id'  => '265932452',
 			),
 			2 => array(
 				'url' => 'https://vimeo.com/909011674/f862274b67?share=copy',
-				'id'  => 909011674,
+				'id'  => '909011674',
 			),
 		),
 	),
@@ -564,7 +570,7 @@
 		'oembed'         => true,
 		'regex'          => '#https?://([a-z0-9.-]+)wistia\\.(net|com)/(medias|embed/iframe)/(?<id>[a-z0-9]+)#i',
 		'embed_url'      => 'https://fast.wistia.net/embed/iframe/%s',
-		'default_params' => '',
+		'default_params' => 'dnt=1',
 		'tests'          => array(
 			0 => array(
 				'url' => 'https://fast.wistia.net/embed/iframe/g5pnf59ala',
@@ -585,7 +591,28 @@
 		'tests'          => array(
 			0 => array(
 				'url' => 'http://www.xtube.com/watch.php?v=1234',
-				'id'  => 1234,
+				'id'  => '1234',
+			),
+		),
+	),
+	'xhamster' => array(
+		'name'           => 'xHamster',
+		'oembed'         => false,
+		'regex'          => '#https://([a-z]+.)?xhamster\.com/(videos/[a-z0-9-]+-|xembed\.php\?video=)(?<id>[a-z0-9]{7,9})$#i',
+		'embed_url'      => 'https://xhamster.com/xembed.php?video=%s',
+		'auto_thumbnail' => false,
+		'tests'          => array(
+			0 => array(
+				'url' => 'https://xhamster.com/videos/some-test-video-title-1234567',
+				'id'  => '1234567',
+			),
+			1 => array(
+				'url' => 'https://ge.xhamster.com/videos/some-test-video-title-1234567',
+				'id'  => '1234567',
+			),
+			2 => array(
+				'url' => 'https://xhamster.com/xembed.php?video=1234567',
+				'id'  => '1234567',
 			),
 		),
 	),
@@ -629,7 +656,10 @@
 	'youtube' => array(
 		'name'           => 'YouTube',
 		'oembed'         => true,
-		'regex'          => '#https?://(www\\.)?(youtube\\.com\\/\\S*((\\/e(mbed))?\\/|watch\\?(\\S*?&?v\\=))|youtu\\.be\\/)(?<id>[a-zA-Z0-9_-]{6,11})#i',
+		# old regex
+		#'regex'          => '#https?://(www\\.)?(youtube\\.com\\/\\S*((\\/e(mbed))?\\/|watch\\?(\\S*?&?v\\=))|youtu\\.be\\/)(?<id>[a-zA-Z0-9_-]{6,11})#i',
+		# https://regex101.com/r/OY96XI/1
+		'regex'          => '/(?:https?:)?(?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\S*?[^\w\s-])(?<id>[\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/i',
 		'embed_url'      => 'https://www.youtube.com/embed/%s',
 		'rebuild_url'    => 'https://www.youtube.com/watch?v=%s',
 		'default_params' => 'iv_load_policy=3&modestbranding=1&rel=0&autohide=1&playsinline=0',
@@ -650,11 +680,11 @@
 			),
 			5 => array(
 				'url' => 'https://www.youtube.com/watch?v=VeigCZuxnfY&list=PL1pJFUVKQ7ES1piZxljCvMTJCYpVBnwYU&index=15',
-				'id'  => 'VeigCZuxnfY&list=PL1pJFUVKQ7ES1piZxljCvMTJCYpVBnwYU',
+				'id'  => 'VeigCZuxnfY',
 			),
 			6 => array(
 				'url' => 'https://youtu.be/b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
-				'id'  => 'b8m9zhNAgKs?list=PLI_7Mg2Z_-4I-W_lI55D9lBUkC66ftHMg',
+				'id'  => 'b8m9zhNAgKs',
 			),
 		),
 		'specific_tests' => array(
@@ -687,10 +717,6 @@
 		'tests'          => array(
 			0 => array(
 				'url' => 'https://www.youtube.com/playlist?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
-				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
-			),
-			1 => array(
-				'url' => 'https://www.youtube.com/watch?list=PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk&v=cyoffsDl4Hw',
 				'id'  => 'PLMUvgtCRyn-6obmhiDS4n5vYQN3bJRduk',
 			),
 		),

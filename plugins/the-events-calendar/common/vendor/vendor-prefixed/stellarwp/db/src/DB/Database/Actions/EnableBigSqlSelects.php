@@ -1,10 +1,4 @@
 <?php
-/**
- * @license GPL-2.0
- *
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
- */
 
 declare( strict_types=1 );
 

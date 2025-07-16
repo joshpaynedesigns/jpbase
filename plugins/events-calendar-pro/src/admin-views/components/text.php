@@ -24,7 +24,7 @@
  * @var array<string,string> $attrs         Associative array of attributes of the text input.
  */
 ?>
-<div <?php tribe_classes( $classes_wrap ); ?> >
+<div <?php tec_classes( $classes_wrap ); ?> >
 	<label
 		class="screen-reader-text tec-events-virtual-meetings-control__label"
 		for="<?php echo esc_attr( $id ); ?>"
@@ -33,7 +33,7 @@
 	</label>
 	<input
 		id="<?php echo esc_attr( $id ); ?>"
-		<?php tribe_classes( $classes_input ); ?>
+		<?php tec_classes( $classes_input ); ?>
 		type="text"
 		name="<?php echo esc_html( $name ); ?>"
 		placeholder="<?php echo esc_html( $placeholder ); ?>"

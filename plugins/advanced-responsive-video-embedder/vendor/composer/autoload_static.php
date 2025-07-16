@@ -4,11 +4,10 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
+class ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610
 {
     public static $files = array (
-        '2d1e3b3e432aed88c61afcb4f6d8c262' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/load-files.php',
-        '83b8ee913c5d2d5a8f26b42bc5db8bfb' => __DIR__ . '/..' . '/nextgenthemes/wp-shared/includes/WP/Admin/load-admin-files.php',
+        'b7fa01507ebc12cee9d707bcd605cd1e' => __DIR__ . '/..' . '/nextgenthemes/wp-settings/includes/WP/init.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -37,9 +36,9 @@ class ComposerStaticInit9efe32db768b97aefc1d2657c3980c69
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9efe32db768b97aefc1d2657c3980c69::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9efe32db768b97aefc1d2657c3980c69::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9efe32db768b97aefc1d2657c3980c69::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitfa4ebaf22f08a8b822c80bc4efcf7610::$classMap;
 
         }, null, ClassLoader::class);
     }

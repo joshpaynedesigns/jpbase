@@ -60,6 +60,7 @@ class Settings {
 	 * Adds the YouTube API fields to the ones in the Events > Settings > APIs tab.
 	 *
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
+	 * @since 7.3.2 Add API application class to the wrapper.
 	 *
 	 * @param array<string,array> $fields The current fields.
 	 *
@@ -68,8 +69,9 @@ class Settings {
 	public function add_fields( array $fields = [] ) {
 		$wrapper_classes = tribe_get_classes(
 			[
+				'tec-settings-api-application'       => true,
 				'tribe-settings-youtube-integration' => true,
-				'tribe-common' => true,
+				'tribe-common'                       => true,
 			]
 		);
 

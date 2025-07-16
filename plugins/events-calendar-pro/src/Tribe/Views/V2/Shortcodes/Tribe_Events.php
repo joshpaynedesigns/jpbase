@@ -556,6 +556,8 @@ class Tribe_Events extends Shortcode_Abstract {
 	 *
 	 * @since 5.5.0
 	 *
+	 * @deprecated 7.4.4
+	 *
 	 * @param array   $locations An array of read and write location in the shape of the `Context::$locations` one,
 	 *                           `[ <location> => [ 'read' => <read_locations>, 'write' => <write_locations> ] ]`.
 	 * @param Context $context   Instance of the context.
@@ -563,26 +565,6 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @return array Locations after removing the request based ones.
 	 */
 	public function remove_request_based_context_locations( array $locations, Context $context ) {
-		foreach ( $locations as $key => $location ) {
-			// no read locations we bail.
-			if ( empty( $location['read'] ) ) {
-				continue;
-			}
-
-			// Check if this location has a read for.
-			if ( ! empty( $location['read'][ Context::REQUEST_VAR ] ) ) {
-				unset( $locations[ $key ]['read'][ Context::REQUEST_VAR ] );
-			}
-			if ( ! empty( $location['read'][ Context::QUERY_VAR ] ) ) {
-				unset( $locations[ $key ]['read'][ Context::QUERY_VAR ] );
-			}
-			if ( ! empty( $location['read'][ Context::WP_MATCHED_QUERY ] ) ) {
-				unset( $locations[ $key ]['read'][ Context::WP_MATCHED_QUERY ] );
-			}
-			if ( ! empty( $location['read'][ Context::WP_PARSED ] ) ) {
-				unset( $locations[ $key ]['read'][ Context::WP_PARSED ] );
-			}
-		}
 
 		return $locations;
 	}
@@ -679,14 +661,7 @@ class Tribe_Events extends Shortcode_Abstract {
 			return '';
 		}
 
-		$context = new Context();
-
-		/**
-		 * Please if you don't understand what these are doing, don't touch this.
-		 */
-		add_filter( 'tribe_context_locations', [ $this, 'remove_request_based_context_locations' ], 1000, 2 );
-		$context->dangerously_repopulate_locations();
-		$context->refresh();
+		$context = tribe_context();
 
 		// Before anything happens we set a DB ID and value for this shortcode entry.
 		$this->set_database_params();
@@ -694,9 +669,10 @@ class Tribe_Events extends Shortcode_Abstract {
 		// Modifies the Context for the shortcode params.
 		$context = $this->alter_context( $context );
 
+		$context->disable_read_from( [ Context::REQUEST_VAR, Context::QUERY_VAR, Context::WP_MATCHED_QUERY, Context::WP_PARSED ] );
+
 		// Fetches if we have a specific view are building.
 		$view_slug = $this->get_argument( 'view', $context->get( 'view' ) );
-
 
 		// Toggle the shortcode required modifications.
 		$this->toggle_view_hooks( true );
@@ -755,13 +731,6 @@ class Tribe_Events extends Shortcode_Abstract {
 
 		// Toggle the shortcode required modifications.
 		$this->toggle_view_hooks( false );
-
-		/**
-		 * Please if you don't understand what these are doing, don't touch this.
-		 */
-		remove_filter( 'tribe_context_locations', [ $this, 'remove_request_based_context_locations' ], 1000 );
-		$context->dangerously_repopulate_locations();
-		$context->refresh();
 
 		return $html;
 	}
@@ -869,7 +838,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				$month_slug = Month_View::get_view_slug();
 				$manager    = tribe( Views_Manager::class );
 				$views      = $manager->get_publicly_visible_views();
-				$view_slug  = in_array( $month_slug, $views ) ? $month_slug : $manager->get_default_view_slug();
+				$view_slug  = ! empty( $views[ $month_slug ] ) ? $month_slug : $manager->get_default_view_slug();
 
 				$context_args['view']               = $view_slug;
 				$context_args['event_display_mode'] = $view_slug;
@@ -883,8 +852,9 @@ class Tribe_Events extends Shortcode_Abstract {
 		}
 
 		if ( ! empty( $arguments['past'] ) && tribe_is_truthy( $arguments['past'] ) ) {
-			$context_args['past']        = tribe_is_truthy( $arguments['past'] );
-			$context_args['ends_before'] = tribe_end_of_day( current_time( 'mysql' ) );
+			$context_args['past']              = tribe_is_truthy( $arguments['past'] );
+			$context_args['ends_before']       = tribe_end_of_day( current_time( 'mysql' ) );
+			$context_args['latest_event_date'] = tribe_end_of_day( current_time( 'mysql' ) );
 			// Make sure this isn't set to avoid logic conflicts.
 			unset( $context_args['starts_after'] );
 		}

@@ -79,6 +79,11 @@ class FacetWP_Indexer
         if ( 'auto-draft' == get_post_status( $post_id ) ) {
             return;
         }
+        
+        // late check to disable indexing after __construct is already loaded
+        if ( !apply_filters( 'facetwp_indexer_is_enabled', true ) ) {
+            return;
+        }
 
         $this->index( $post_id );
         $this->is_saving = false;
@@ -158,7 +163,8 @@ class FacetWP_Indexer
      * @since 0.8.0
      */
     function set_object_terms( $object_id ) {
-        if ( ! $this->is_saving ) {
+        // late check to disable indexing after __construct is already loaded
+        if ( ! $this->is_saving && apply_filters( 'facetwp_indexer_is_enabled', true )  ) {
             $this->index( $object_id );
         }
     }
@@ -213,8 +219,8 @@ class FacetWP_Indexer
         }
 
         // Resume indexing?
-        $offset = (int) ( $_POST['offset'] ?? 0 );
-        $attempt = (int) ( $_POST['retries'] ?? 0 );
+        $offset = (int) ( $_POST['facetwp_offset'] ?? 0 );
+        $attempt = (int) ( $_POST['facetwp_retries'] ?? 0 );
 
         if ( 0 < $offset ) {
             $post_ids = json_decode( get_option( 'facetwp_indexing' ), true );
@@ -313,6 +319,8 @@ class FacetWP_Indexer
             'orderby'           => 'ID',
             'cache_results'     => false,
             'no_found_rows'     => true,
+            'ignore_custom_sort' => true,
+            'suppress_filters'	=> true
         ];
 
         if ( is_int( $post_id ) ) {
@@ -595,8 +603,8 @@ class FacetWP_Indexer
                     'timeout'   => 0.02,
                     'body'      => [
                         'action'    => 'facetwp_resume_index',
-                        'offset'    => $num_indexed,
-                        'retries'   => $retries + 1,
+                        'facetwp_offset'    => $num_indexed,
+                        'facetwp_retries'   => $retries + 1,
                         'touch'     => $touch
                     ]
                 ];
@@ -692,6 +700,9 @@ class FacetWP_Indexer
                 // Compare using both original and encoded values
                 foreach ( $temp as $val ) {
                     $val = trim( $val );
+                    if ( empty( $val ) ) {
+                        continue;
+                    }
                     $val_encoded = htmlentities( $val );
                     $val_decoded = html_entity_decode( $val );
                     $values[ $val ] = true;
@@ -699,7 +710,9 @@ class FacetWP_Indexer
                     $values[ $val_decoded ] = true;
                 }
 
-                $output[ $name ] = [ 'type' => $type, 'values' => array_keys( $values ) ];
+                if ( ! empty( $values) ) {
+                    $output[ $name ] = [ 'type' => $type, 'values' => array_keys( $values ) ];
+                }
             }
         }
 

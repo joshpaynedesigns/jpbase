@@ -22,9 +22,9 @@ if ( empty( $organizer ) ) {
 	return;
 }
 ?>
-<<?php echo tag_escape( $organizer_name_tag ); ?> <?php tribe_classes( $widget->get_name_base_class() ); ?>>
+<<?php echo tag_escape( $organizer_name_tag ); ?> <?php tec_classes( $widget->get_name_base_class() ); ?>>
 	<?php if ( $link_organizer_name && ! empty( $organizer['link'] ) ) : ?>
-		<a <?php tribe_classes( $widget->get_name_base_class() . '-link' ); ?> href="<?php echo esc_url( $organizer['link'] ); ?>">
+		<a <?php tec_classes( $widget->get_name_base_class() . '-link' ); ?> href="<?php echo esc_url( $organizer['link'] ); ?>">
 	<?php endif; ?>
 		<?php echo esc_html( $organizer['name'] ); ?>
 	<?php if ( $link_organizer_name && ! empty( $organizer['link'] ) ) : ?>

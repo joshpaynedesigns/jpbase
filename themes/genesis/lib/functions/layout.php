@@ -25,6 +25,9 @@ add_action( 'genesis_setup', 'genesis_create_initial_layouts' );
  *  - full-width-content
  *
  * @since 1.4.0
+ * @since 3.6.0 Labels now default to English slugs and are later loaded in
+ * genesis_register_layout_labels() once we can run translation functions
+ * in after_setup_theme.
  */
 function genesis_create_initial_layouts() {
 
@@ -37,6 +40,26 @@ function genesis_create_initial_layouts() {
 		genesis_register_layout( $layout_id, $layout_args );
 	}
 
+}
+
+add_action( 'after_setup_theme', 'genesis_register_layout_labels' );
+/**
+ * Defer registration of Genesis default layout labels.
+ *
+ * Translation functions can not be run in genesis_setup() since WP 6.7, so we
+ * have to defer layout label registration until after the theme loads.
+ *
+ * @since 3.6.0
+ **/
+function genesis_register_layout_labels() {
+	global $_genesis_layouts;
+
+	$labels = genesis_get_config( 'layouts-labels' );
+	foreach ( $_genesis_layouts as $layout_id => $layout_args ) {
+		if ( isset( $labels[ $layout_id ] ) && isset( $labels[ $layout_id ]['label'] ) ) {
+			$_genesis_layouts[ $layout_id ]['label'] = $labels[ $layout_id ]['label'];
+		}
+	}
 }
 
 /**
@@ -77,7 +100,7 @@ function genesis_register_layout( $id = '', $args = [] ) {
 	}
 
 	$defaults = [
-		'label' => __( 'No Label Selected', 'genesis' ),
+		'label' => 'No Label Selected',
 		'img'   => GENESIS_ADMIN_IMAGES_URL . '/layouts/none.gif',
 		'type'  => [ 'site' ],
 	];

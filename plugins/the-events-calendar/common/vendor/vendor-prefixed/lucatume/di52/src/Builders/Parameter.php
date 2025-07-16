@@ -3,10 +3,6 @@
  * The representation of a builder parameter.
  *
  * @package TEC\Common\lucatume\DI52\Builders
- *
- * @license GPL-3.0
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
  */
 
 namespace TEC\Common\lucatume\DI52\Builders;

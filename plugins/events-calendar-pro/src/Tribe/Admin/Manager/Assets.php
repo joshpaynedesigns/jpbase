@@ -35,7 +35,7 @@ class Assets extends Service_Provider {
 	public function register() {
 		$plugin = Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-admin-manager',
 			'admin/manager-page.js',
@@ -59,7 +59,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-admin-manager-styles',
 			'admin/manager-page.css',

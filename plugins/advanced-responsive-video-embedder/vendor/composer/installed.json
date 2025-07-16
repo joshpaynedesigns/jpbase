@@ -2,42 +2,43 @@
     "packages": [
         {
             "name": "automattic/jetpack-autoloader",
-            "version": "v3.0.9",
-            "version_normalized": "3.0.9.0",
+            "version": "v5.0.5",
+            "version_normalized": "5.0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/jetpack-autoloader.git",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec"
+                "reference": "7bf3172e73c27c72d01d6de4796a41c7abc06d5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/a571038214fc3e142e10f38d1bb97e470fa7b0ec",
-                "reference": "a571038214fc3e142e10f38d1bb97e470fa7b0ec",
+                "url": "https://api.github.com/repos/Automattic/jetpack-autoloader/zipball/7bf3172e73c27c72d01d6de4796a41c7abc06d5a",
+                "reference": "7bf3172e73c27c72d01d6de4796a41c7abc06d5a",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1 || ^2.0",
-                "php": ">=7.0"
+                "composer-plugin-api": "^2.2",
+                "php": ">=7.2"
             },
             "require-dev": {
-                "automattic/jetpack-changelogger": "^4.2.5",
-                "composer/composer": "^1.1 || ^2.0",
-                "yoast/phpunit-polyfills": "1.1.0"
+                "automattic/jetpack-changelogger": "^6.0.2",
+                "automattic/phpunit-select-config": "^1.0.1",
+                "composer/composer": "^2.2",
+                "yoast/phpunit-polyfills": "^3.0.0"
             },
-            "time": "2024-07-10T07:51:07+00:00",
+            "time": "2025-03-21T09:05:50+00:00",
             "type": "composer-plugin",
             "extra": {
-                "autotagger": true,
                 "class": "Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin",
+                "autotagger": true,
                 "mirror-repo": "Automattic/jetpack-autoloader",
+                "branch-alias": {
+                    "dev-trunk": "5.0.x-dev"
+                },
                 "changelogger": {
                     "link-template": "https://github.com/Automattic/jetpack-autoloader/compare/v${old}...v${new}"
                 },
                 "version-constants": {
                     "::VERSION": "src/AutoloadGenerator.php"
-                },
-                "branch-alias": {
-                    "dev-trunk": "3.0.x-dev"
                 }
             },
             "installation-source": "dist",
@@ -63,33 +64,27 @@
                 "wordpress"
             ],
             "support": {
-                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v3.0.9"
+                "source": "https://github.com/Automattic/jetpack-autoloader/tree/v5.0.5"
             },
             "install-path": "../automattic/jetpack-autoloader"
         },
         {
-            "name": "nextgenthemes/wp-shared",
-            "version": "2024.08.22.18.50.32",
-            "version_normalized": "2024.08.22.18.50.32",
+            "name": "nextgenthemes/wp-settings",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../nextgenthemes/wp-shared",
-                "reference": "115035a41d4fdd0335fe41078132f45151fd8015"
+                "url": "../../../../../../dev/composer-packages/wp-settings",
+                "reference": "8570f0355e41c34591139b5b891b62617e4f444b"
             },
             "require": {
                 "php": ">=7.4"
             },
-            "type": "wp-package",
+            "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "files": [
-                    "includes/WP/load-files.php",
-                    "includes/WP/Admin/load-admin-files.php"
-                ]
-            },
-            "scripts": {
-                "update-alpine": [
-                    "wget https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js -O ./includes/WP/Admin/alpine.js"
+                    "includes/WP/init.php"
                 ]
             },
             "license": [
@@ -104,12 +99,12 @@
                 "symlink": false,
                 "relative": true
             },
-            "install-path": "../nextgenthemes/wp-shared"
+            "install-path": "../nextgenthemes/wp-settings"
         }
     ],
     "dev": true,
     "dev-package-names": [
         "automattic/jetpack-autoloader",
-        "nextgenthemes/wp-shared"
+        "nextgenthemes/wp-settings"
     ]
 }

@@ -17,6 +17,6 @@ if ( empty( $field ) ) {
 	return;
 }
 ?>
-<dd <?php tribe_classes( $widget->get_field_value_class() ); ?>>
+<dd <?php tec_classes( $widget->get_field_value_class() ); ?>>
 	<?php echo wp_kses_post( $field['value'] ); ?>
 </dd>

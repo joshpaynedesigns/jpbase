@@ -54,7 +54,7 @@ class Assets extends Service_Provider {
 	public function register() {
 		$plugin = Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-skeleton',
 			'views-skeleton.css',
@@ -68,7 +68,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-full',
 			'views-full.css',
@@ -89,7 +89,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-print',
 			'views-print.css',
@@ -110,7 +110,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-nanoscroller',
 			'vendor/nanoscroller/jquery.nanoscroller.js',
@@ -118,7 +118,7 @@ class Assets extends Service_Provider {
 			null
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-week-grid-scroller',
 			'views/week-grid-scroller.js',
@@ -135,7 +135,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-week-day-selector',
 			'views/week-day-selector.js',
@@ -152,7 +152,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-week-multiday-toggle',
 			'views/week-multiday-toggle.js',
@@ -169,7 +169,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-week-event-link',
 			'views/week-event-link.js',
@@ -185,7 +185,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-map-events-scroller',
 			'views/map-events-scroller.js',
@@ -202,7 +202,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-map-events',
 			'views/map-events.js',
@@ -218,7 +218,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-swiper',
 			'vendor/swiper/dist/js/swiper.js',
@@ -227,7 +227,7 @@ class Assets extends Service_Provider {
 			[]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-map-provider-google-maps',
 			'views/map-provider-google-maps.js',
@@ -243,7 +243,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-map-no-venue-modal',
 			'views/map-no-venue-modal.js',
@@ -259,7 +259,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-tooltip-pro',
 			'views/tooltip-pro.js',
@@ -276,7 +276,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-multiday-events-pro',
 			'views/multiday-events-pro.js',
@@ -293,7 +293,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-toggle-recurrence',
 			'views/toggle-recurrence.js',
@@ -309,7 +309,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-pro-views-v2-datepicker-pro',
 			'views/datepicker-pro.js',
@@ -330,7 +330,7 @@ class Assets extends Service_Provider {
 		$overrides_stylesheet = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/tribe-events-pro.css' );
 
 		if ( ! empty( $overrides_stylesheet ) ) {
-			tribe_asset(
+			tec_asset(
 				$plugin,
 				'tribe-events-pro-views-v2-override-style',
 				$overrides_stylesheet,
@@ -351,7 +351,7 @@ class Assets extends Service_Provider {
 		$widget_overrides_stylesheet = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/widget-calendar.css' );
 
 		if ( ! empty( $widget_overrides_stylesheet ) ) {
-			tribe_asset(
+			tec_asset(
 				$plugin,
 				Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
 				$widget_overrides_stylesheet,
@@ -426,8 +426,6 @@ class Assets extends Service_Provider {
 		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-override-style', '__return_false' );
 		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-style', '__return_false' );
 		add_filter( 'tribe_asset_enqueue_tribe-events-full-pro-calendar-style', '__return_false' );
-		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-pro-mobile-style', '__return_false' );
-		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-full-pro-mobile-style', '__return_false' );
 
 		remove_action( 'wp_enqueue_scripts', [ Plugin::instance(), 'enqueue_pro_scripts' ], 8 );
 	}

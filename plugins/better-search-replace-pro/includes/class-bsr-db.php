@@ -92,6 +92,18 @@ class BSR_DB {
 	}
 
 	/**
+	 * Get the file path that manually uploaded files are expected to be.
+	 *
+	 * @return string
+	 */
+	public static function get_manual_file_path() {
+		$upload_dir  = wp_upload_dir();
+		$manual_file = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';
+
+		return $manual_file;
+	}
+
+	/**
 	 * Returns an array of tables in the database.
 	 * @access public
 	 * @param  $temp Whether we should use the temporary prefix.
@@ -201,23 +213,29 @@ class BSR_DB {
 
 	/**
 	 * Gets the total number of pages in the sql file.
-	 * @access public
-	 * @return int
+	 *
+	 * @param string $file
+	 *
+	 * @return int|false
 	 */
-	public function get_total_pages_from_file( $file = '' ) {
+	public function get_total_pages_from_file( $file ) {
+		if ( empty( $file ) ) {
+			return false;
+		}
 
-		if ( $file === '' ) {
-			$file = $this->get_file_path();
+		$fh = fopen( $file, 'r' );
+
+		if ( false === $fh || ! is_resource( $fh ) ) {
+			return false;
 		}
 
 		// The defaults.
-		$fh 		= fopen( $file, 'r' );
-		$queries 	= 0;
-		$file_size	= filesize( $file );
-		$page_size 	= $this->get_page_size();
+		$queries   = 0;
+		$file_size = filesize( $file );
+		$page_size = $this->get_page_size();
 
 		// Run through file and count number of queries.
-		while( !feof( $fh ) ) {
+		while ( ! feof( $fh ) ) {
 			$query = trim( stream_get_line( $fh, $file_size, ';' . PHP_EOL ) );
 			if ( empty( $query ) ) {
 				continue;
@@ -227,7 +245,8 @@ class BSR_DB {
 
 		// Calculate and return number of pages.
 		$pages = ceil( $queries / $page_size );
-		return $pages;
+
+		return absint( $pages );
 	}
 
 	/**
@@ -243,8 +262,8 @@ class BSR_DB {
 	public function backup_table( $table, $page, $temp = false ) {
 
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
-			return;
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+			return [];
 		}
 
 		// Load up the default settings for this chunk.
@@ -329,13 +348,17 @@ class BSR_DB {
 
 	/**
 	 * Runs a database import.
-	 * @access public
+	 *
+	 * @param string $file
+	 * @param int    $page
+	 *
+	 * @return array
 	 */
 	public function run_import( $file = '', $page = 0 ) {
 
 		// Bail if not authorized.
-		if ( ! check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
-			return;
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_ajax_nonce', 'bsr_ajax_nonce' ) ) {
+			return [];
 		}
 
 		// Some defaults
@@ -376,8 +399,11 @@ class BSR_DB {
 					$query = $this->str_replace_first( 'DROP TABLE IF EXISTS `', 'DROP TABLE IF EXISTS `bsrtmp_', $query );
 				} elseif ( substr( $query, 0, 13 ) === 'LOCK TABLES `' ) {
 					$query = $this->str_replace_first( 'LOCK TABLES `', 'LOCK TABLES `bsrtmp_', $query );
+				} elseif ( substr( $query, 0, 13 ) === 'UNLOCK TABLES' ) {
+					// Supported, but no change necessary.
 				} else {
-					// Nothing to do here.
+					// SQL statement not supported.
+					continue;
 				}
 
 				if ( $this->wpdb->query( $query ) === false ) {
@@ -460,17 +486,19 @@ class BSR_DB {
 	}
 
 	/**
-	 * Adapated from interconnect/it's search/replace script.
+	 * Adapted from interconnect/it's search/replace script.
 	 *
 	 * Modified to use WordPress wpdb functions instead of PHP's native mysql/pdo functions,
 	 * and to be compatible with batch processing via AJAX.
 	 *
-	 * @link https://interconnectit.com/products/search-and-replace-for-wordpress-databases/
+	 * @link   https://interconnectit.com/products/search-and-replace-for-wordpress-databases/
 	 *
 	 * @access public
-	 * @param  string 	$table 	The table to run the replacement on.
-	 * @param  int 		$page  	The page/block to begin the query on.
-	 * @param  array 	$args 	An associative array containing arguements for this run.
+	 *
+	 * @param string $table The table to run the replacement on.
+	 * @param int    $page  The page/block to begin the query on.
+	 * @param array  $args  An associative array containing arguements for this run.
+	 *
 	 * @return array
 	 */
 	public function srdb( $table, $page, $args ) {
@@ -630,21 +658,22 @@ class BSR_DB {
 	}
 
 	/**
-	 * Adapated from interconnect/it's search/replace script.
+	 * Adapted from interconnect/it's search/replace script.
 	 *
-	 * @link https://interconnectit.com/products/search-and-replace-for-wordpress-databases/
+	 * @link   https://interconnectit.com/products/search-and-replace-for-wordpress-databases/
 	 *
 	 * Take a serialised array and unserialise it replacing elements as needed and
 	 * unserialising any subordinate arrays and performing the replace on those too.
 	 *
 	 * @access private
-	 * @param  string 			$from       		String we're looking to replace.
-	 * @param  string 			$to         		What we want it to be replaced with
-	 * @param  array  			$data       		Used to pass any subordinate arrays back to in.
-	 * @param  boolean 			$serialised 		Does the array passed via $data need serialising.
-	 * @param  sting|boolean 	$case_insensitive 	Set to 'on' if we should ignore case, false otherwise.
 	 *
-	 * @return string|array	The original array with all elements replaced as needed.
+	 * @param string        $from             String we're looking to replace.
+	 * @param string        $to               What we want it to be replaced with
+	 * @param array         $data             Used to pass any subordinate arrays back to in.
+	 * @param boolean       $serialised       Does the array passed via $data need serialising.
+	 * @param sting|boolean $case_insensitive Set to 'on' if we should ignore case, false otherwise.
+	 *
+	 * @return string|array    The original array with all elements replaced as needed.
 	 */
 	public function recursive_unserialize_replace( $from = '', $to = '', $data = '', $serialised = false, $case_insensitive = false ) {
 		try {

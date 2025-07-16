@@ -76,6 +76,10 @@ class Widgets_Manager extends Manager_Abstract {
 	public function should_swap_legacy() {
 		global $post;
 
+		if ( ! $post instanceof \WP_Post ) {
+			return false;
+		}
+
 		// Prevent display on singular tribe_event post type. Since `is_singular` is not reliable in the admin, we'll check another way as well.
 		if ( is_singular( TEC::POSTTYPE ) ) {
 			return true;

@@ -49,6 +49,13 @@ class Settings {
 					'default'         => false,
 					'validation_type' => 'boolean',
 				],
+				'photo_view_force_grid'   => [
+					'type'            => 'checkbox_bool',
+					'label'           => __( 'Display images as a grid on Photo View', 'tribe-events-calendar-pro' ),
+					'tooltip'         => __( 'Check this to enforce an aspect ratio of 16:9 for photos on the photo view.', 'tribe-events-calendar-pro' ),
+					'default'         => false,
+					'validation_type' => 'boolean',
+				],
 			]
 		);
 	}

@@ -1,37 +1,42 @@
-# Copyright (C) 2024 StudioPress
+# Copyright (C) 2025 StudioPress
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Genesis 3.5.0\n"
+"Project-Id-Version: Genesis 3.6.0\n"
 "Report-Msgid-Bugs-To: StudioPress <translations@studiopress.com>\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-18T16:31:23+00:00\n"
+"POT-Creation-Date: 2025-03-19T10:00:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.7.1\n"
+"X-Generator: WP-CLI 2.12.0-alpha\n"
 "X-Domain: genesis\n"
 
 #. Theme Name of the theme
+#: style.css
 #: lib/admin/site-health.php:31
 msgid "Genesis"
 msgstr ""
 
 #. Theme URI of the theme
+#: style.css
 msgid "https://my.studiopress.com/themes/genesis/"
 msgstr ""
 
 #. Description of the theme
+#: style.css
 msgid "The industry standard for Premium WordPress Themes."
 msgstr ""
 
 #. Author of the theme
+#: style.css
 msgid "StudioPress"
 msgstr ""
 
 #. Author URI of the theme
+#: style.css
 msgid "https://www.studiopress.com/"
 msgstr ""
 
@@ -354,7 +359,7 @@ msgstr ""
 
 #: config/customizer-theme-settings.php:113
 #: lib/views/help/genesis-breadcrumbs.php:15
-#: lib/js/build/breadcrumbs-toggle.js:40
+#: lib/js/build/breadcrumbs-toggle.js:865
 #: lib/js/editor/breadcrumbs-toggle.js:43
 msgid "Breadcrumbs"
 msgstr ""
@@ -525,14 +530,12 @@ msgstr ""
 #: config/customizer-theme-settings.php:333
 #: lib/admin/install.php:56
 #: lib/classes/Upgrade/Upgrade_DB_3100.php:56
-#: tests/Unit/lib/classes/Upgrade/Upgrade_DB_3100.php:62
 msgid "Copyright"
 msgstr ""
 
 #: config/customizer-theme-settings.php:333
 #: lib/admin/install.php:56
 #: lib/classes/Upgrade/Upgrade_DB_3100.php:56
-#: tests/Unit/lib/classes/Upgrade/Upgrade_DB_3100.php:62
 msgid "on"
 msgstr ""
 
@@ -555,27 +558,27 @@ msgstr ""
 msgid "Footer Scripts"
 msgstr ""
 
-#: config/layouts.php:27
+#: config/layouts-labels.php:26
 msgid "Content, Primary Sidebar"
 msgstr ""
 
-#: config/layouts.php:33
+#: config/layouts-labels.php:29
 msgid "Primary Sidebar, Content"
 msgstr ""
 
-#: config/layouts.php:39
+#: config/layouts-labels.php:32
 msgid "Content, Primary Sidebar, Secondary Sidebar"
 msgstr ""
 
-#: config/layouts.php:44
+#: config/layouts-labels.php:35
 msgid "Secondary Sidebar, Primary Sidebar, Content"
 msgstr ""
 
-#: config/layouts.php:49
+#: config/layouts-labels.php:38
 msgid "Secondary Sidebar, Content, Primary Sidebar"
 msgstr ""
 
-#: config/layouts.php:54
+#: config/layouts-labels.php:41
 #: lib/views/help/cpt-archive-layout.php:25
 #: lib/views/help/genesis-layout.php:25
 msgid "Full Width Content"
@@ -1005,15 +1008,11 @@ msgstr ""
 msgid "Recent Posts:"
 msgstr ""
 
-#: lib/functions/layout.php:80
-msgid "No Label Selected"
-msgstr ""
-
-#: lib/functions/layout.php:580
+#: lib/functions/layout.php:603
 msgid "The default is true, so remove the third argument."
 msgstr ""
 
-#: lib/functions/layout.php:583
+#: lib/functions/layout.php:606
 msgid "Use `genesis_get_structural_wrap()` instead."
 msgstr ""
 
@@ -1166,11 +1165,11 @@ msgstr ""
 msgid "Widgets in this widget area will display after single entries."
 msgstr ""
 
-#: lib/init.php:163
+#: lib/init.php:226
 msgid "Primary Navigation Menu"
 msgstr ""
 
-#: lib/init.php:164
+#: lib/init.php:227
 msgid "Secondary Navigation Menu"
 msgstr ""
 
@@ -1638,7 +1637,7 @@ msgid "Read more about noarchive"
 msgstr ""
 
 #: lib/views/help/genesis-layout.php:15
-#: lib/js/build/layout-toggle.js:20
+#: lib/js/build/layout-toggle.js:543
 #: lib/js/editor/layout-toggle.js:40
 msgid "Default Layout"
 msgstr ""
@@ -1832,7 +1831,7 @@ msgstr ""
 
 #: lib/views/meta-boxes/genesis-cpt-archives-layout-settings.php:20
 #: lib/views/meta-boxes/genesis-inpost-layout-box.php:24
-#: lib/js/build/layout-toggle.js:20
+#: lib/js/build/layout-toggle.js:570
 #: lib/js/editor/layout-toggle.js:62
 msgid "Select Layout"
 msgstr ""
@@ -2224,7 +2223,7 @@ msgstr ""
 #: lib/widgets/featured-post-widget.php:467
 #: lib/widgets/featured-post-widget.php:601
 #: lib/widgets/user-profile-widget.php:161
-#: lib/js/build/title-toggle.js:26
+#: lib/js/build/title-toggle.js:368
 #: lib/js/editor/title-toggle.js:42
 msgid "Title"
 msgstr ""
@@ -2508,197 +2507,163 @@ msgstr ""
 msgid "Search this website"
 msgstr ""
 
-#: tests/fixtures/config-array-for-customizer-tests.php:21
-msgid "Genesis is the best"
-msgstr ""
-
-#: tests/fixtures/config-array-for-customizer-tests.php:22
-msgid "Genesis is the best."
-msgstr ""
-
-#: tests/fixtures/config-array-for-customizer-tests.php:28
-msgid "Best Genesis Title"
-msgstr ""
-
-#: tests/fixtures/config-array-for-customizer-tests.php:32
-msgid "Is this the best Genesis ever? "
-msgstr ""
-
-#: tests/fixtures/config-array-for-customizer-tests.php:42
-msgid "Genesis Can Be Better"
-msgstr ""
-
-#: tests/fixtures/config-array-for-customizer-tests.php:46
-msgid "Can Genesis be better? "
-msgstr ""
-
-#: tests/System/lib/admin/customizer.php:188
-#: tests/System/lib/admin/customizer.php:229
-msgid "Genesis Blue"
-msgstr ""
-
-#: tests/System/lib/admin/customizer.php:189
-#: tests/System/lib/admin/customizer.php:230
-msgid "Genesis Custom"
-msgstr ""
-
 #. translators: should match the “Homepage” label from Settings -> Reading. Note lowercase t in 'the'.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:145
 #: lib/js/components/breadcrumbs-toggle-info.js:86
 msgid "the Homepage"
 msgstr ""
 
 #. translators: should match the “Posts Page ” label from Settings -> Reading. Note lowercase t in 'the'.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:149
 #: lib/js/components/breadcrumbs-toggle-info.js:91
 msgid "the Posts Page"
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:245
 #: lib/js/components/breadcrumbs-toggle-info.js:195
 msgid "Breadcrumbs now enabled on %s."
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:248
 #: lib/js/components/breadcrumbs-toggle-info.js:199
 msgid "Breadcrumbs now disabled on %s."
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:264
 #: lib/js/components/breadcrumbs-toggle-info.js:216
 msgid "Disabling breadcrumbs on %s..."
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:267
 #: lib/js/components/breadcrumbs-toggle-info.js:220
 msgid "Enabling breadcrumbs on %s..."
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:277
 #: lib/js/components/breadcrumbs-toggle-info.js:233
 msgid "Breadcrumbs are enabled on %s. "
 msgstr ""
 
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:280
 #: lib/js/components/breadcrumbs-toggle-info.js:236
 msgid "Disable breadcrumbs."
 msgstr ""
 
 #. translators: %s: the current page label, such as “Pages” or “the Homepage”.
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:286
 #: lib/js/components/breadcrumbs-toggle-info.js:242
 msgid "Breadcrumbs are disabled on %s."
 msgstr ""
 
-#: lib/js/build/breadcrumbs-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:289
 #: lib/js/components/breadcrumbs-toggle-info.js:245
 msgid "Enable breadcrumbs."
 msgstr ""
 
-#: lib/js/build/breadcrumbs-toggle.js:24
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/breadcrumbs-toggle.js:309
+#: lib/js/build/image-toggle.js:223
 #: lib/js/components/breadcrumbs-toggle-info.js:269
 #: lib/js/components/image-toggle-info.js:171
 msgid "Entries"
 msgstr ""
 
-#: lib/js/build/breadcrumbs-toggle.js:40
+#: lib/js/build/breadcrumbs-toggle.js:868
 #: lib/js/editor/breadcrumbs-toggle.js:46
 msgid "Hide Breadcrumbs"
 msgstr ""
 
-#: lib/js/build/custom-classes.js:19
+#: lib/js/build/custom-classes.js:52
 #: lib/js/components/body-class-text-control.js:26
 msgid "Body Class"
 msgstr ""
 
-#: lib/js/build/custom-classes.js:27
+#: lib/js/build/custom-classes.js:122
 #: lib/js/components/post-class-text-control.js:26
 msgid "Post Class"
 msgstr ""
 
-#: lib/js/build/custom-classes.js:43
+#: lib/js/build/custom-classes.js:496
 #: lib/js/editor/custom-classes.js:37
 msgid "Custom Classes"
 msgstr ""
 
-#: lib/js/build/footer-widgets-toggle.js:26
+#: lib/js/build/footer-widgets-toggle.js:368
 #: lib/js/editor/footer-widgets-toggle.js:42
 msgid "Footer Widgets"
 msgstr ""
 
-#: lib/js/build/footer-widgets-toggle.js:26
+#: lib/js/build/footer-widgets-toggle.js:371
 #: lib/js/editor/footer-widgets-toggle.js:45
 msgid "Hide Footer Widgets"
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:160
 #: lib/js/components/image-toggle-info.js:99
 msgid "Featured images now enabled on %s."
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:163
 #: lib/js/components/image-toggle-info.js:103
 msgid "Featured images now disabled on %s."
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:178
 #: lib/js/components/image-toggle-info.js:118
 msgid "Disabling images on %s..."
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:181
 #: lib/js/components/image-toggle-info.js:122
 msgid "Enabling images on %s..."
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:191
 #: lib/js/components/image-toggle-info.js:135
 msgid "Featured images are enabled on %s. "
 msgstr ""
 
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:194
 #: lib/js/components/image-toggle-info.js:138
 msgid "Disable images."
 msgstr ""
 
 #. translators: %s: the current page type, such as “Pages” or “Posts”.
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:200
 #: lib/js/components/image-toggle-info.js:144
 msgid "Featured images are disabled on %s."
 msgstr ""
 
-#: lib/js/build/image-toggle.js:24
+#: lib/js/build/image-toggle.js:203
 #: lib/js/components/image-toggle-info.js:147
 msgid "Enable images."
 msgstr ""
 
-#: lib/js/build/image-toggle.js:37
+#: lib/js/build/image-toggle.js:775
 #: lib/js/editor/image-toggle.js:40
 msgid "Images"
 msgstr ""
 
-#: lib/js/build/image-toggle.js:37
+#: lib/js/build/image-toggle.js:778
 #: lib/js/editor/image-toggle.js:43
 msgid "Hide Featured Image"
 msgstr ""
 
-#: lib/js/build/layout-toggle.js:20
+#: lib/js/build/layout-toggle.js:568
 #: lib/js/editor/layout-toggle.js:58
 msgid "Layout"
 msgstr ""
 
-#: lib/js/build/title-toggle.js:26
+#: lib/js/build/title-toggle.js:371
 #: lib/js/editor/title-toggle.js:45
 msgid "Hide Title"
 msgstr ""

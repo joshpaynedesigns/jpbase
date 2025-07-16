@@ -62,27 +62,38 @@ class By_Day_View_Compatibility extends TEC_By_Day_View_Compatibility {
 		$use_site_timezone = Timezones::is_mode( 'site' );
 		$start_date_prop   = $use_site_timezone ? 'start_date_utc' : 'start_date';
 		$end_date_prop     = $use_site_timezone ? 'end_date_utc' : 'end_date';
+		$ids_chunk_size    = tec_query_batch_size( __METHOD__ );
 
-		$prepared       = [];
-		$base           = $this->provisional_id_generator->current();
-		$occurrence_ids = array_map( static function ( $provisional_id ) use ( $base ) {
-			return $provisional_id > $base ? $provisional_id - $base : $provisional_id;
-		}, $result_ids );
+		$prepared             = [];
+		$base                 = $this->provisional_id_generator->current();
+		$occurrence_ids       = array_map(
+			static function ( $provisional_id ) use ( $base ) {
+				return $provisional_id > $base ? $provisional_id - $base : $provisional_id;
+			},
+			$result_ids 
+		);
+		$occurrence_ids_count = count( $occurrence_ids );
 
 		/** @var Occurrence $occurrence */
 		$column = 'occurrence_id';
 
-		$occurrences = Occurrence::order_by( $start_date_prop, 'ASC' )
-		                    ->find_all( $occurrence_ids, $column );
+		while ( $occurrence_ids_count ) {
+			$ids_chunk            = array_splice( $occurrence_ids, 0, $ids_chunk_size );
+			$occurrence_ids_count = count( $occurrence_ids );
+			$occurrences          = Occurrence::where_in( $column, $ids_chunk )->all();
 
-		foreach ( $occurrences as $occurrence ) {
-			$prepared[ $base + $occurrence->occurrence_id ] = (object) [
-				'ID'         => $base + $occurrence->occurrence_id,
-				'start_date' => $occurrence->{$start_date_prop},
-				'end_date'   => $occurrence->{$end_date_prop},
-				'timezone'   => get_post_meta( $occurrence->post_id, '_EventTimezone', true ),
-			];
+			foreach ( $occurrences as $occurrence ) {
+				/** @var Occurrence $occurrence */
+				$prepared[ $base + $occurrence->occurrence_id ] = (object) [
+					'ID'         => $base + $occurrence->occurrence_id,
+					'start_date' => $occurrence->{$start_date_prop},
+					'end_date'   => $occurrence->{$end_date_prop},
+					'timezone'   => get_post_meta( $occurrence->post_id, '_EventTimezone', true ),
+				];
+			}
 		}
+
+		$prepared = wp_list_sort( $prepared, 'start_date', 'ASC' );
 
 		return $prepared;
 	}

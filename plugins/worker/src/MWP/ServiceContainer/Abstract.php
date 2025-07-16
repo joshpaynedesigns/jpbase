@@ -39,6 +39,8 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
 
     private $signer;
 
+	private $signer256;
+
     private $crypter;
 
     private $nonceManager;
@@ -391,6 +393,15 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
 
         return $this->signer;
     }
+
+	public function getSigner256()
+	{
+		if ($this->signer256 === null) {
+			$this->signer256 =  MWP_Signer_Factory::createOpenSslSigner();
+		}
+
+		return $this->signer256;
+	}
 
     /**
      * @return MWP_Signer_Interface

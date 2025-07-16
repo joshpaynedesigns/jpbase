@@ -2,12 +2,12 @@
 /**
  * Class Tribe__Events__Pro__Plugin_Register
  */
-class  Tribe__Events__Pro__Plugin_Register extends Tribe__Abstract_Plugin_Register {
+class Tribe__Events__Pro__Plugin_Register extends Tribe__Abstract_Plugin_Register {
 
 	protected $main_class   = 'Tribe__Events__Pro__Main';
 	protected $dependencies = [
 		'parent-dependencies' => [
-			'Tribe__Events__Main' => '6.7.0-dev',
+			'Tribe__Events__Main' => '6.13.0-dev',
 		],
 	];
 

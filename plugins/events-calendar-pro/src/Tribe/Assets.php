@@ -26,7 +26,7 @@ class Tribe__Events__Pro__Assets {
 		$pro = Tribe__Events__Pro__Main::instance();
 
 		// Vendor
-		tribe_assets(
+		tec_assets(
 			$pro,
 			[
 				[ 'tribe-events-pro-imagesloaded', 'vendor/imagesloaded/imagesloaded.pkgd.js', [ 'tribe-events-pro' ] ],
@@ -40,7 +40,7 @@ class Tribe__Events__Pro__Assets {
 		);
 
 		// Vendor: Admin
-		tribe_assets(
+		tec_assets(
 			$pro,
 			[
 				[ 'tribe-events-pro-handlebars', 'vendor/handlebars/handlebars.min.js' ],
@@ -51,7 +51,7 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tec-events-pro-single',
 			'events-single.css',
@@ -63,18 +63,7 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
-			$pro,
-			'tribe-pro',
-			'pro.js',
-			[],
-			null,
-			[
-				'priority' => 5,
-			]
-		);
-
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe_events-premium-admin-style',
 			'events-admin.css',
@@ -85,7 +74,7 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe_events-premium-admin-style',
 			'events-admin.css',
@@ -93,7 +82,7 @@ class Tribe__Events__Pro__Assets {
 			[ 'tribe_venues_enqueue', 'tribe_events_enqueue' ]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe_events-premium-admin',
 			'events-admin.js',
@@ -103,24 +92,24 @@ class Tribe__Events__Pro__Assets {
 				'localize' => [
 					[
 						'name' => 'TribeEventsProAdmin',
-						'data' => apply_filters( 'tribe_events_pro_localize_script', [], 'TribeEventsProAdmin', Tribe__Events__Main::POSTTYPE.'-premium-admin' )
+						'data' => static fn () => apply_filters( 'tribe_events_pro_localize_script', [], 'TribeEventsProAdmin', Tribe__Events__Main::POSTTYPE . '-premium-admin' ),
 					],
 					[
 						'name' => 'tribe_events_pro_recurrence_strings',
-						'data' => apply_filters(
+						'data' => static fn () => apply_filters(
 							'tribe_events_pro_recurrence_strings',
 							[
 								'date'       => Tribe__Events__Pro__Recurrence__Meta::date_strings(),
 								'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
 								'exclusion'  => [],
 							]
-						)
+						),
 					],
 				],
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe-events-full-pro-calendar-style',
 			'tribe-events-pro-full.css',
@@ -136,7 +125,7 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe-events-calendar-pro-style',
 			$this->get_style_file(),
@@ -155,7 +144,7 @@ class Tribe__Events__Pro__Assets {
 		$override_sheet = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/tribe-events-pro.css' );
 
 		if ( ! empty( $override_sheet ) && file_exists( $override_sheet ) ) {
-			tribe_asset(
+			tec_asset(
 				$pro,
 				'tribe-events-calendar-pro-override-style',
 				$override_sheet,
@@ -168,16 +157,20 @@ class Tribe__Events__Pro__Assets {
 			);
 		}
 
-		tribe_asset(
-			$pro,
-			Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
-			Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/widget-calendar.css' ),
-			[],
-			null,
-			[]
-		);
+		$widget_overrides_stylesheet = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/widget-calendar.css' );
 
-		tribe_asset(
+		if ( ! empty( $widget_overrides_stylesheet ) ) {
+			tec_asset(
+				$pro,
+				Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
+				$widget_overrides_stylesheet,
+				[],
+				null,
+				[]
+			);
+		}
+
+		tec_asset(
 			$pro,
 			'tec-pro-widget-blocks',
 			'app/widgets.js',
@@ -189,13 +182,14 @@ class Tribe__Events__Pro__Assets {
 				'in_footer'    => false,
 				'conditionals' => [ $this, 'is_edit_screen' ],
 				'priority'     => 201,
+				'group_path'   => get_class( $pro ) . '-packages',
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tec-pro-widget-blocks-styles',
-			'app/widgets.css',
+			'app/style-widgets.css',
 			[
 				'wp-widgets',
 				'tribe-select2-css',
@@ -204,10 +198,11 @@ class Tribe__Events__Pro__Assets {
 			[
 				'in_footer'    => false,
 				'conditionals' => [ $this, 'is_edit_screen' ],
+				'group_path'   => get_class( $pro ) . '-packages',
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe-events-pro-mini-calendar-block-styles',
 			'tribe-events-pro-mini-calendar-block.css',
@@ -218,7 +213,7 @@ class Tribe__Events__Pro__Assets {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$pro,
 			'tribe_events-premium-recurrence',
 			'events-recurrence.js',
@@ -302,16 +297,16 @@ class Tribe__Events__Pro__Assets {
 			'full'  => 'tribe-events-pro-full.css',
 		];
 
-		// By default we go with `tribe`
-		$file = $stylesheets['tribe'];
+		// By default we go with `full`.
+		$file = $stylesheets['full'];
 
-		// if we have one we use it
+		// If we have one we use it.
 		if ( isset( $stylesheets[ $name ] ) ) {
 			$file = $stylesheets[ $name ];
 		}
 
 		/**
-		 * Allows filtering of the Stylesheet file for Events Calendar Pro
+		 * Allows filtering of the Stylesheet file for Events Calendar Pro.
 		 *
 		 * @deprecated  4.4.30
 		 *

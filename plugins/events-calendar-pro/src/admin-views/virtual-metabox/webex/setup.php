@@ -51,7 +51,7 @@ $metabox_id = 'tribe-events-virtual';
 		</a>
 
 		<div
-			<?php tribe_classes( $message_classes ); ?>
+			<?php tec_classes( $message_classes ); ?>
 			role="alert"
 		>
 			<?php echo $message; ?>

@@ -14,7 +14,7 @@
  * @var Template        $this              Instance of template engine used to render this view.
  * @var Widget_Abstract $widget            Instance of the widget that invoked this view.
  *
- * @see     tribe_classes()
+ * @see tec_classes()
  *
  */
 

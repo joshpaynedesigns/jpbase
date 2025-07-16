@@ -25,7 +25,7 @@ $classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ 
 ?>
 <?php $this->template( 'blocks/related-events/title' ); ?>
 
-<ul <?php tribe_classes( $classes ); ?>>
+<ul <?php tec_classes( $classes ); ?>>
 	<?php foreach ( $events as $event ) : ?>
 		<?php $this->template( 'blocks/related-events/event', array( 'event' => $event ) ); ?>
 	<?php endforeach; ?>

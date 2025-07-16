@@ -38,7 +38,7 @@ $classes['tribe-events-pro-map__event-tooltip--has-slider'] = $has_multiple_even
 	class="tribe-events-pro-map__event-tooltip-template"
 	data-js="tribe-events-pro-map-event-tooltip-template"
 >
-	<div <?php tribe_classes( $classes ); ?>>
+	<div <?php tec_classes( $classes ); ?>>
 		<?php if ( $has_multiple_events ) : ?>
 			<div
 				class="tribe-events-pro-map__event-tooltip-slider-container tribe-swiper-container"

@@ -314,12 +314,6 @@
     opacity: 1;
 }
 
-/* Listing Builder */
-
-.fwpl-btn {
-    text-decoration: none;
-}
-
 /* CSS animations */
 
 @keyframes spin {
@@ -348,13 +342,4 @@
     background-size: 12px 12px;
     background-repeat: no-repeat;
     background-position: right center;
-}
-
-/* Layout builder */
-
-@media (max-width: 480px) {
-    body .facetwp-template .fwpl-layout,
-    body .facetwp-template-static .fwpl-layout {
-        grid-template-columns: 1fr;
-    }
 }

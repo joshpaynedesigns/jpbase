@@ -18,7 +18,7 @@ if ( $hide_weekends ) {
 	$classes[] = 'tribe-events-pro-week-day-selector--hide-weekends';
 }
 ?>
-<section <?php tribe_classes( $classes ); ?>>
+<section <?php tec_classes( $classes ); ?>>
 
 	<?php $this->template( 'week/day-selector/days' ); ?>
 

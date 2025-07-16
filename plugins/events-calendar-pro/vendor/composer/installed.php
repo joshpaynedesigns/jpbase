@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'the-events-calendar/events-pro',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => 'a9ca289375906e89d70304205b7d20958efe259c',
+        'pretty_version' => 'dev-release/T25.flash',
+        'version' => 'dev-release/T25.flash',
+        'reference' => '78b8a20b627ba729e79fba2ae8126c26cf7672fb',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -29,9 +29,9 @@
             'dev_requirement' => false,
         ),
         'the-events-calendar/events-pro' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'a9ca289375906e89d70304205b7d20958efe259c',
+            'pretty_version' => 'dev-release/T25.flash',
+            'version' => 'dev-release/T25.flash',
+            'reference' => '78b8a20b627ba729e79fba2ae8126c26cf7672fb',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

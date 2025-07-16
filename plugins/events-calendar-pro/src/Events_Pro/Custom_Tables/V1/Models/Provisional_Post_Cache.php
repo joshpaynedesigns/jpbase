@@ -108,7 +108,7 @@ class Provisional_Post_Cache {
 			$to_hydrate
 		] = array_reduce( $occurrences_ids, function ( array $carry, int $occurrence_id ) use ( $cache ): array {
 			$cache_key = "event_occurrence_$occurrence_id";
-			$cached = $cache[ $cache_key ];
+			$cached    = $cache[ $cache_key ];
 			if ( $cached instanceof Occurrence ) {
 				$carry[0][] = $cached;
 			} else {
@@ -119,12 +119,21 @@ class Provisional_Post_Cache {
 		}, [ [], [] ] );
 
 		if ( ! empty( $to_hydrate ) ) {
-			$fetched = [];
-			foreach ( Occurrence::where_in( 'occurrence_id', $to_hydrate )->all() as $occurrence ) {
-				$fetched[] = $occurrence;
-				$cache_key = "event_occurrence_{$occurrence->occurrence_id}";
-				$cache[ $cache_key ] = $occurrence;
+			$fetched          = [];
+			$chunk_size       = tec_query_batch_size( __METHOD__ );
+			$to_hydrate_count = count( $to_hydrate );
+
+			while ( $to_hydrate_count ) {
+				$to_hydrate_chunk = array_splice( $to_hydrate, 0, $chunk_size );
+				$to_hydrate_count = count( $to_hydrate );
+
+				foreach ( Occurrence::where_in( 'occurrence_id', $to_hydrate_chunk )->all() as $occurrence ) {
+					$fetched[]           = $occurrence;
+					$cache_key           = "event_occurrence_{$occurrence->occurrence_id}";
+					$cache[ $cache_key ] = $occurrence;
+				}
 			}
+
 			$occurrences = array_merge( $occurrences, $fetched );
 		}
 

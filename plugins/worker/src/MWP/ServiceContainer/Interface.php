@@ -97,6 +97,11 @@ interface MWP_ServiceContainer_Interface
      */
     public function getSigner();
 
+	/**
+	 * @return MWP_Signer_Interface
+	 */
+	public function getSigner256();
+
     /**
      * @return MWP_Crypter_Interface
      */

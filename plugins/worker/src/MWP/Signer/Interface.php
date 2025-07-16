@@ -14,8 +14,9 @@ interface MWP_Signer_Interface
      * @param string $data
      * @param string $signature
      * @param string $publicKey
+     * @param string|null $algorithm
      *
      * @return bool
      */
-    public function verify($data, $signature, $publicKey);
+    public function verify($data, $signature, $publicKey, $algorithm = null);
 }

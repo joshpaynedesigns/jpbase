@@ -13,7 +13,6 @@
  *
  * @package TribeEventsCalendarPro
  * @version 4.4.28
- *
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,14 +23,19 @@ $posts = tribe_get_related_posts();
 
 if ( is_array( $posts ) && ! empty( $posts ) ) : ?>
 
-<h2 class="tribe-events-related-events-title"><?php printf( __( 'Related %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
+<h2 class="tribe-events-related-events-title">
+	<?php
+		// translators: %s: event label plural.
+		printf( esc_html__( 'Related %s', 'tribe-events-calendar-pro' ), esc_html( tribe_get_event_label_plural() ) );
+	?>
+</h2>
 
 <ul class="tribe-related-events tribe-clearfix">
 	<?php foreach ( $posts as $post ) : ?>
 	<li>
 		<?php $thumb = ( has_post_thumbnail( $post->ID ) ) ? get_the_post_thumbnail( $post->ID, 'large' ) : '<img src="' . esc_url( trailingslashit( Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/tribe-related-events-placeholder.png' ) . '" alt="' . esc_attr( get_the_title( $post->ID ) ) . '" />'; ?>
 		<div class="tribe-related-events-thumbnail">
-			<a href="<?php echo esc_url( tribe_get_event_link( $post ) ); ?>" class="url" rel="bookmark" tabindex="-1"><?php echo $thumb ?></a>
+			<a href="<?php echo esc_url( tribe_get_event_link( $post ) ); ?>" class="url" rel="bookmark" tabindex="-1" aria-hidden="true" role="presentation"><?php echo wp_kses_post( $thumb ); ?></a>
 		</div>
 		<div class="tribe-related-event-info">
 			<h3 class="tribe-related-events-title"><a href="<?php echo tribe_get_event_link( $post ); ?>" class="tribe-event-url" rel="bookmark"><?php echo get_the_title( $post->ID ); ?></a></h3>

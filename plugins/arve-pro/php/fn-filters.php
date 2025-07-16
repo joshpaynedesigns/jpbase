@@ -1,8 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE\Pro;
 
+use WP_Error;
 use function Nextgenthemes\ARVE\translation;
-use function Nextgenthemes\ARVE\build_tag;
+use function Nextgenthemes\ARVE\arve_errors;
 use function Nextgenthemes\WP\remote_get_body_cached;
 
 function latest_youtube_video_from_channel( array $a ): array {
@@ -20,23 +24,23 @@ function latest_youtube_video_from_channel( array $a ): array {
 	$response = remote_get_body_cached( 'https://www.youtube.com/feeds/videos.xml?channel_id=' . $matches['channel'] );
 
 	if ( is_wp_error( $response ) ) {
-		$a['errors']->add(
+		arve_errors()->add(
 			2,
 			$response->get_error_message()
 		);
 	} else {
 
-		$a['url'] = extract_video_id_with_regex( $response, $matches['channel'], $a['errors'] );
+		$a['url'] = extract_video_id_with_regex( $response, $matches['channel'], arve_errors() );
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 
-			$simplexml_url = extract_video_id_with_simplexml( $response, $matches['channel'], $a['errors'] );
+			$simplexml_url = extract_video_id_with_simplexml( $response, $matches['channel'], arve_errors() );
 
 			if ( $a['url'] !== $simplexml_url ) {
 
 				$url = $a['url'];
 
-				$a['errors']->add(
+				arve_errors()->add(
 					'fatal',
 					"Mismatch between<br> regex____: $url <br>simplexml: $simplexml_url",
 				);
@@ -52,10 +56,10 @@ function latest_youtube_video_from_channel( array $a ): array {
  *
  * @param string $xml Playlist XML.
  * @param string $channel The channel to extract the video ID for.
- * @param \WP_Error $errors The error object to add errors to.
+ * @param WP_Error $errors The error object to add errors to.
  * @return string The extracted video ID, or an empty string if not found.
  */
-function extract_video_id_with_regex( string $xml, string $channel_id, \WP_Error $errors ): string {
+function extract_video_id_with_regex( string $xml, string $channel_id, WP_Error $errors ): string {
 
 	preg_match(
 		'#<yt:videoId>([^<]+)</yt:videoId>#m',
@@ -70,7 +74,7 @@ function extract_video_id_with_regex( string $xml, string $channel_id, \WP_Error
 		$errors->add(
 			'fatal',
 			sprintf(
-				translation('latest_video_from_youtube_channel_could_not_be_detected'),
+				translation( 'latest_video_from_youtube_channel_could_not_be_detected' ),
 				esc_url( 'https://youtube.com/channel/' . $channel_id ),
 			)
 		);
@@ -86,10 +90,10 @@ function extract_video_id_with_regex( string $xml, string $channel_id, \WP_Error
  *
  * @param string $xml Playlist XML.
  * @param string $channel The channel to extract the video ID for.
- * @param \WP_Error $errors The error object to add errors to.
+ * @param WP_Error $errors The error object to add errors to.
  * @return string The extracted video ID, or an empty string if not found.
  */
-function extract_video_id_with_simplexml( string $xml, string $channel_id, \WP_Error $errors ): string {
+function extract_video_id_with_simplexml( string $xml, string $channel_id, WP_Error $errors ): string {
 
 	$xml = simplexml_load_string( $xml );
 
@@ -101,7 +105,7 @@ function extract_video_id_with_simplexml( string $xml, string $channel_id, \WP_E
 			'fatal',
 			sprintf(
 				// Translators: URL.
-				translation('latest_video_from_youtube_channel_could_not_be_detected'),
+				translation( 'latest_video_from_youtube_channel_could_not_be_detected' ),
 				esc_url( $channel_url )
 			)
 		);
@@ -110,25 +114,6 @@ function extract_video_id_with_simplexml( string $xml, string $channel_id, \WP_E
 	} else {
 		return 'https://youtube.com/watch?v=' . (string) $xml->entry[0]->children( 'yt', true )->videoId[0];
 	}
-}
-
-function lightbox_link( string $html, array $a ): string {
-
-	if ( 'link-lightbox' !== $a['mode'] ) {
-		return $html;
-	}
-
-	$html = build_tag(
-		[
-			'name'       => 'lightbox-link',
-			'tag'        => 'a',
-			'inner_html' => trim( $a['title'] ),
-			'attr'       => bigger_picture_attr( $a ),
-		],
-		$a
-	);
-
-	return $html;
 }
 
 /**
@@ -142,10 +127,10 @@ function iframe_attr( array $iframe_attr, array $a ): array {
 
 	if ( $a['disable_links'] && ! empty( $iframe_attr['sandbox'] ) ) {
 
-		$sandbox_arr = \explode( ' ', $iframe_attr['sandbox'] );
-		$sandbox_arr = \array_diff( $sandbox_arr, [ 'allow-popups', 'allow-popups-to-escape-sandbox' ] );
+		$sandbox_arr = explode( ' ', $iframe_attr['sandbox'] );
+		$sandbox_arr = array_diff( $sandbox_arr, [ 'allow-popups', 'allow-popups-to-escape-sandbox' ] );
 
-		$iframe_attr['sandbox'] = \implode( ' ', $sandbox_arr );
+		$iframe_attr['sandbox'] = implode( ' ', $sandbox_arr );
 	}
 
 	return $iframe_attr;

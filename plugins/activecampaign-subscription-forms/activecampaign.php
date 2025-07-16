@@ -4,7 +4,7 @@ Plugin Name: ActiveCampaign
 Plugin URI: http://www.activecampaign.com/apps/wordpress
 Description: Allows you to add ActiveCampaign contact forms to any post, page, or sidebar. Also allows you to embed <a href="http://www.activecampaign.com/help/site-event-tracking/" target="_blank">ActiveCampaign site tracking</a> code in your pages. To get started, please activate the plugin and add your <a href="http://www.activecampaign.com/help/using-the-api/" target="_blank">API credentials</a> in the <a href="options-general.php?page=activecampaign">plugin settings</a>.
 Author: ActiveCampaign
-Version: 8.1.16
+Version: 8.1.18
 Author URI: http://www.activecampaign.com
 */
 
@@ -67,6 +67,8 @@ Author URI: http://www.activecampaign.com
 ## version 8.1.14: Fixing shortcode CSS display in Form Preview
 ## version 8.1.15: Security fix to address SSRF vulnerability with API URL verification and wp_safe_remote_get. Removing unreachable deprecated curl code
 ## version 8.1.16: Verify 6.5 Compatibility. Updated listing
+## version 8.1.17: Security fix to address XSS vulnerability with API URL and API Key verification
+## version 8.1.18: Update readme.txt, address supported version of WordPress
 
 define("ACTIVECAMPAIGN_URL", "");
 define("ACTIVECAMPAIGN_API_KEY", "");
@@ -210,7 +212,10 @@ function activecampaign_plugin_options()
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // saving the settings page.
 
-        if ($_POST["api_url"] && $_POST["api_key"]) {
+        $sanitizedApiUrl = sanitize_text_field($_POST["api_url"]);
+        $sanitizedApiKey = sanitize_text_field($_POST["api_key"]);
+
+        if ($sanitizedApiUrl && $sanitizedApiKey) {
             //Nonce check for preventing CSRF
             if (isset($_REQUEST["_wpnonce"])) {
                 $nonce = $_REQUEST["_wpnonce"];
@@ -222,14 +227,15 @@ function activecampaign_plugin_options()
             }
 
             // Verify host against whitelist of known domains
-            if(!activecampaign_verify_api_host($_POST["api_url"])){
-                echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid API URL \"{$_POST["api_url"]}\" please ensure https without extra whitespace.", "menu-activecampaign") . "</p>";
+            if(!activecampaign_verify_api_host($sanitizedApiUrl)){
+                $access_denied_string = "Access denied: Invalid API URL " . $sanitizedApiUrl .  ". Please ensure the API URL uses https, and has no extra whitespace.";
+                echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __($access_denied_string, "menu-activecampaign") . "</p>";
             }
             else{
-                $ac = new ActiveCampaignWordPress($_POST["api_url"], $_POST["api_key"]);
+                $ac = new ActiveCampaignWordPress($sanitizedApiUrl, $sanitizedApiKey);
 
                 if (!(int)$ac->credentials_test()) {
-                    echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid credentials (URL and/or API key). \"{$_POST["api_url"]}\"", "menu-activecampaign") . "</p>";
+                    echo "<p style='margin: 0 0 20px; padding: 14px; font-size: 14px; color: #873c3c; font-family:arial; background: #ec9999; line-height: 19px; border-radius: 5px; overflow: hidden;'>" . __("Access denied: Invalid credentials (URL and/or API key). \"{$sanitizedApiUrl}\"", "menu-activecampaign") . "</p>";
                 } else {
                     $instance = $_POST;
 

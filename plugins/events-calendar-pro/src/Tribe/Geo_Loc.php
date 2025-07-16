@@ -13,12 +13,12 @@ use Tribe__Events__Main as TEC;
 class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 
 	/**
-	 * Meta key for the venue Latitude
+	 * Meta key for the venue Latitude.
 	 */
 	const LAT = '_VenueLat';
 
 	/**
-	 * Meta key for the venue Longitude
+	 * Meta key for the venue Longitude.
 	 */
 	const LNG = '_VenueLng';
 
@@ -37,12 +37,12 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	const ADDRESS = '_VenueGeoAddress';
 
 	/**
-	 * Option key for the Geoloc settings
+	 * Option key for the Geoloc settings.
 	 */
 	const OPTIONNAME = 'tribe_geoloc_options';
 
 	/**
-	 * Cache key for the geo point at the center of all site's venues
+	 * Cache key for the geo point at the center of all site's venues.
 	 */
 	const ESTIMATION_CACHE_KEY = 'geoloc_center_point_estimation';
 
@@ -59,7 +59,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	const EARTH_RADIUS = 6371;
 
 	/**
-	 * Deprecated once we reverted the geolocalization changes to this class
+	 * Deprecated once we reverted the geolocalization changes to this class.
 	 *
 	 * @since      4.4.24
 	 * @deprecated 4.4.24.2
@@ -67,7 +67,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	const GEODATE = '_VenueGeoDateUTC';
 
 	/**
-	 * Deprecated once we reverted the geolocalization changes to this class
+	 * Deprecated once we reverted the geolocalization changes to this class.
 	 *
 	 * @since      4.4.24
 	 * @deprecated 4.4.24.2
@@ -82,45 +82,45 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	protected static $options;
 
 	/**
-	 * Slug of the map view
+	 * Slug of the map view.
 	 *
 	 * @var mixed|void
 	 */
 	public $rewrite_slug;
 
 	/**
-	 * Limit for the distance search
+	 * Limit for the distance search.
 	 *
 	 * @var int
 	 */
 	private $selected_geofence;
 
 	/**
-	 * Cache of how many venues we "fixed" (ie: generated geopoints for)
+	 * Cache of how many venues we "fixed" (ie: generated geopoints for).
 	 *
 	 * @var int
 	 */
 	private $last_venues_fixed_count = 0;
 
 	/**
-	 * Singleton instance of this class
+	 * Singleton instance of this class.
 	 *
 	 * @var Tribe__Events__Pro__Geo_Loc
 	 */
 	private static $instance;
 
 	/**
-	 * Whether or not the OVER_QUERY_LIMIT notification has been displayed
+	 * Whether or not the OVER_QUERY_LIMIT notification has been displayed.
 	 *
 	 * @var boolean
 	 */
 	private $over_query_limit_displayed = false;
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 */
 	public function __construct() {
-		$this->rewrite_slug = Tribe__Settings_Manager::get_option( 'geoloc_rewrite_slug', __( 'map', 'tribe-events-calendar-pro' ) );
+		$this->rewrite_slug = 'map'; // Converted to translated string on init, below.
 
 		add_action( 'tribe_events_venue_updated', [ $this, 'save_venue_geodata' ], 10, 2 );
 		add_action( 'tribe_events_venue_created', [ $this, 'save_venue_geodata' ], 10, 2 );
@@ -132,7 +132,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		add_action( 'admin_init', [ $this, 'maybe_generate_geopoints_for_all_venues' ] );
 		add_action( 'admin_init', [ $this, 'maybe_offer_generate_geopoints' ] );
 		add_filter( 'tribe-events-bar-views', [ $this, 'setup_view_for_bar' ], 25, 1 );
-		add_filter( 'tribe_display_settings_maps_section', [ $this, 'inject_settings' ], 10 );
+		add_filter( 'tec_events_settings_display_maps_section', [ $this, 'inject_settings' ], 10 );
 		add_filter( 'tribe-events-bar-filters', [ $this, 'setup_geoloc_filter_in_bar' ], 1, 1 );
 
 		add_filter( 'tribe_events_rewrite_rules_custom', [ $this, 'add_routes' ], 10, 3 );
@@ -145,10 +145,22 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 
 		add_action( 'admin_notices', [ $this, 'maybe_notify_about_google_over_limit' ] );
 		add_filter( 'tribe_events_google_map_link', [ $this, 'google_map_link' ], 10, 2 );
+		add_action( 'init', [ $this, 'init' ] );
 	}
 
 	/**
-	 * If the "Filters bar" add-on is active, setup the distance filter.
+	 * Initialize the class.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @return void
+	 */
+	public function init(): void {
+		$this->rewrite_slug = Tribe__Settings_Manager::get_option( 'geoloc_rewrite_slug', __( 'map', 'tribe-events-calendar-pro' ) );
+	}
+
+	/**
+	 * If the "Filters bar" add-on is active, set up the distance filter.
 	 */
 	public function setup_geoloc_filter_in_filters() {
 		if ( ! tribe_get_option( 'hideLocationSearch', false ) ) {
@@ -157,7 +169,8 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Enqueue Google Maps Geolocation JS in all archive views if needed: 1) if the "Near" search is present in Tribe Bar (if Hide Location Search is unchecked), 2) if we are rendering Map View
+	 * Enqueue Google Maps Geolocation JS in all archive views if needed: 1) if the "Near" search is present
+	 * in Tribe Bar (if Hide Location Search is unchecked), 2) if we are rendering Map View.
 	 */
 	public function scripts() {
 		if (
@@ -173,7 +186,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Inject the GeoLoc settings into the general TEC settings screen
+	 * Inject the GeoLoc settings into the general TEC settings screen.
 	 *
 	 * @since 3.0
 	 * @since 5.3.0 Change tooltip text.
@@ -328,7 +341,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Add the Map View to the view switcher in the Tribe Bar
+	 * Add the Map View to the view switcher in the Tribe Bar.
 	 *
 	 * @param array $views The current views in the Tribe Bar.
 	 *
@@ -346,7 +359,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Filter of the Values for Venues and add Overwrite Coordinates
+	 * Filter of the Values for Venues and add Overwrite Coordinates.
 	 *
 	 * @since  4.4.18
 	 *
@@ -367,7 +380,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Filter of the Columns for Venues and add Overwrite Coordinates
+	 * Filter of the Columns for Venues and add Overwrite Coordinates.
 	 *
 	 * @since  4.4.18
 	 *
@@ -382,7 +395,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Add the location filter in the Tribe Bar
+	 * Add the location filter in the Tribe Bar.
 	 *
 	 * @param array $filters The current filters in the Tribe Bar.
 	 *
@@ -417,7 +430,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Returns whether the user made a location search in the Tribe Bar
+	 * Returns whether the user made a location search in the Tribe Bar.
 	 *
 	 * @return bool
 	 */
@@ -557,10 +570,10 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		if ( $force ) {
 
 			if ( empty( $venues ) ) {
-				// there aren't any venues in the geofence, so let's kill the meta query so we don't get any results.
+				// There aren't any venues in the geofence, so let's kill the meta query, so we don't get any results.
 				$venues = -1;
 			} elseif ( is_array( $venues ) ) {
-				// we have venues...let's make sure they are unique.
+				// We have venues...let's make sure they are unique.
 				$venues = array_unique( $venues );
 			}
 
@@ -582,9 +595,9 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	/**
 	 * Adds the rewrite rules to make the map view work.
 	 *
-	 * @param array $rules 		 The current rewrite rules.
-	 * @param bool  $tribe_rewrite Whether the rewrite rules are being generated by TEC.
-	 * @param WP_Rewrite $wp_rewrite The WP_Rewrite object.
+	 * @param array      $rules         The current rewrite rules.
+	 * @param bool       $tribe_rewrite Whether the rewrite rules are being generated by TEC.
+	 * @param WP_Rewrite $wp_rewrite    The WP_Rewrite object.
 	 */
 	public function add_routes( $rules, $tribe_rewrite, $wp_rewrite = null ) {
 		// Prevent errors if this is used on and old version of TEC plugin.
@@ -631,7 +644,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		 *
 		 * @since 4.7.9
 		 *
-		 * @param array $new_rules      The geocode based rewrite rules.
+		 * @param array $new_rules     The geocode based rewrite rules.
 		 * @param array $bases         The rewrite bases used to generate the rewrite rules.
 		 * @param array $rewrite_slugs The rewrite slugs used to generate the rewrite rules.
 		 */
@@ -660,9 +673,9 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	 * Hooks into the venue save and if we don't have Geo Data for that address,
 	 * it calls the Google Maps API and grabs the Lat and Lng for that venue.
 	 *
-	 * @param int       $venue_id The The Venue post ID.
-	 * @param array     $data    An array of location data for the Venue as provided by WordPress.
-	 * @param bool|null $force   Whether to force the re-fetch of the geolocation data for the Venue or not.
+	 * @param int       $venue_id The Venue post ID.
+	 * @param array     $data     An array of location data for the Venue as provided by WordPress.
+	 * @param bool|null $force    Whether to force the re-fetch of the geolocation data for the Venue or not.
 	 *
 	 * @return bool Whether the Venue geolocation information was updated or not.
 	 *
@@ -738,7 +751,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 			return false;
 		}
 
-		// The basic Google Maps API key we provide doesn't support geo-coding queries.
+		// The basic Google Maps API key we provide doesn't support geocoding queries.
 		if ( tribe_is_using_basic_gmaps_api() ) {
 			return update_post_meta( $venue_id, self::ADDRESS, $address );
 		}
@@ -758,12 +771,34 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 				update_post_meta( $venue_id, self::LNG, $resolved['lng'] );
 				unset( $resolved['lng'] );
 			}
-			foreach ( $resolved as $key => $value ) {
-				update_post_meta( $venue_id, '_Venue' . $key, sanitize_text_field( $value ) );
+
+			/**
+			 * Allow users to choose whether they want to save the geocoded address results (true)
+			 * or the details they entered (false, default).
+			 *
+			 * @since 7.3.1
+			 *
+			 * @param bool $use_geocode_results
+			 */
+			$use_geocode_results = apply_filters( 'tec_events_pro_use_geocode_results', false );
+
+			/**
+			 * Check if the venue is the result of an import, or if the geocoded results should be used when manually
+			 * creating a venue, and then update the venue details.
+			 *
+			 * @since 7.3.1
+			 */
+			if (
+				'tribe_queue_ea_import_events' === tribe_get_request_var( 'action' )
+				|| $use_geocode_results
+			) {
+				foreach ( $resolved as $key => $value ) {
+					update_post_meta( $venue_id, '_Venue' . $key, sanitize_text_field( $value ) );
+				}
 			}
 		}
 
-		// Saving the aggregated address so we don't need to ping google on every save.
+		// Saving the aggregated address, so we don't need to ping google on every save.
 		update_post_meta( $venue_id, self::ADDRESS, $address );
 
 		$this->clear_min_max_coords_cache();
@@ -1398,7 +1433,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 				if ( in_array( 'route', $component->types, true ) ) {
 					$result['street'] = $component->long_name;
 				}
-				if ( in_array( 'number', $component->types, true ) ) {
+				if ( in_array( 'street_number', $component->types, true ) ) {
 					$result['number'] = $component->long_name;
 				}
 				if ( in_array( 'postal_code', $component->types, true ) ) {
@@ -1408,16 +1443,35 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 					$result['City'] = $component->long_name;
 				}
 				if ( in_array( 'administrative_area_level_1', $component->types, true ) ) {
-					$result['State'] = $component->long_name;
-				}
-				if ( in_array( 'administrative_area_level_2', $component->types, true ) ) {
 					$result['Province'] = $component->long_name;
 				}
 				if ( in_array( 'country', $component->types, true ) ) {
 					$result['Country'] = $component->long_name;
 				}
 			}
-			$result['Address'] = ( $result['street'] ?? '' ) . ' ' . ( $result['number'] ?? '' );
+
+			// If it's a US address, save administrative_area_level_1 in the State field instead.
+			if ( isset( $result['Country'] ) && $result['Country'] === 'United States' ) {
+				$result['State'] = $result['Province'];
+				unset( $result['Province'] );
+			}
+
+			/**
+			 * Allows changing the order of the street name and house number.
+			 *
+			 * @since 7.3.0
+			 *
+			 * @param string $address            The compiled address to be saved.
+			 * @param array  $result             Array of the address components to be saved.
+			 * @param object $address_components The address components received from the geocoding API.
+			 */
+			$result['Address'] = apply_filters(
+				'tec_events_pro_geolocation_address_format',
+				trim( ( $result['street'] ?? '' ) . ' ' . ( $result['number'] ?? '' ) ),
+				$result,
+				$geo_result->address_components
+			);
+
 			unset( $result['street'], $result['number'] );
 		}
 
@@ -1436,7 +1490,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Generates the button to add the geo data info to all venues that are missing it
+	 * Generates the button to add the geo data info to all venues that are missing it.
 	 *
 	 * @return string
 	 */
@@ -1491,7 +1545,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	 * If there are venues without geo data, offer the user to fix them.
 	 */
 	public function show_offer_to_fix_notice() {
-		$url = tribe( 'tec.main' )->settings()->get_url( [ 'tab' => 'display' ] );
+		$url = tribe( 'tec.main' )->settings()->get_url( [ 'tab' => 'display-maps-tab' ] );
 
 		?>
 		<div class="updated">
@@ -1578,7 +1632,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		}
 
 		// For back-compatibility purposes let's remove this.
-		delete_option( '_tribe_geoloc_fixed', 1 );
+		delete_option( '_tribe_geoloc_fixed' );
 
 		// Let's remove the note that fixes are needed.
 		delete_transient( '_tribe_geoloc_fix_needed' );
@@ -1590,7 +1644,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	}
 
 	/**
-	 * Static Singleton Factory Method
+	 * Static Singleton Factory Method.
 	 *
 	 * @return Tribe__Events__Pro__Geo_Loc
 	 */
@@ -1618,12 +1672,12 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		$is_venue = function_exists( 'tribe_is_venue' ) ? tribe_is_venue( $venue_id ) : false;
 
 		/**
-		 * Disable the behavior to add the coordinates if present on the Google Map Link
+		 * Disable the behavior to add the coordinates if present on the Google Map Link.
 		 *
 		 * @since 4.4.26
 		 *
-		 * @param $disable true to disable the behavior / false to keep doing it
-		 * @param $post_id The ID of the post being modified
+		 * @param bool $disable true to disable the behavior / false to keep doing it.
+		 * @param int  $post_id The ID of the post being modified.
 		 *
 		 * @return boolean
 		 */
@@ -1651,6 +1705,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 	 * Returns the URL to fix the Venues information.
 	 *
 	 * @since 5.0.1
+	 * @since 7.3.1 Corrected the settings page tab that is loaded after clicking the button.
 	 *
 	 * @return string The URL to fix the Venues.
 	 */
@@ -1658,7 +1713,7 @@ class Tribe__Events__Pro__Geo_Loc { // phpcs:ignore -- legacy class name
 		$url = tribe( 'tec.main' )->settings()->get_url(
 			[
 				'geoloc_fix_venues' => '1',
-				'tab'               => 'display',
+				'tab'               => 'display-maps-tab',
 			]
 		);
 		$url = wp_nonce_url( $url, 'geoloc_fix_venues' );

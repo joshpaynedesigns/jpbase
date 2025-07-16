@@ -104,7 +104,7 @@ class Controller extends Integration_Abstract {
 	 * @since 6.4.0
 	 */
 	public function register_editor_styles(): void {
-		tribe_asset(
+		tec_asset(
 			tribe( 'events-pro.main' ),
 			'tec-events-pro-elementor-icons',
 			'integrations/plugins/elementor/icons.css',
@@ -122,7 +122,7 @@ class Controller extends Integration_Abstract {
 	 * @since 6.4.0
 	 */
 	public function register_override_styles(): void {
-		tribe_asset(
+		tec_asset(
 			tribe( 'events-pro.main' ),
 			'tec-events-pro-elementor-widget-organizer-styles',
 			'integrations/plugins/elementor/widgets/organizer.css',

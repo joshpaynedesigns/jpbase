@@ -44,7 +44,8 @@ final class FacetWP_Helper
 
 
     /**
-     * Get available facet types
+     * Get available facet types     * 
+     * @since 4.4 Added Map type facet
      */
     function get_facet_types() {
         if ( ! empty( $this->facet_types ) ) {
@@ -66,6 +67,7 @@ final class FacetWP_Helper
             'number_range'  => 'Facetwp_Facet_Number_Range',
             'rating'        => 'FacetWP_Facet_Rating',
             'proximity'     => 'Facetwp_Facet_Proximity_Core',
+            'map'           => 'Facetwp_Facet_Map',
             'pager'         => 'FacetWP_Facet_Pager',
             'reset'         => 'FacetWP_Facet_Reset',
             'sort'          => 'FacetWP_Facet_Sort'
@@ -239,6 +241,25 @@ final class FacetWP_Helper
 
         foreach ( $this->get_facets() as $facet ) {
             if ( isset( $facet[ $setting ] ) && $value === $facet[ $setting ] ) {
+                $matches[] = $facet;
+            }
+        }
+
+        return $matches;
+    }
+
+
+    /**
+     * Fetch facets by data source type (prefix, ie tax, cf, acf ...)
+     * @param string $value
+     * @return array
+     * @since 4.4
+     */
+    function get_facets_by_datasource_type( $value ) {
+        $matches = [];
+
+        foreach ( $this->get_facets() as $facet ) {
+            if ( isset( $facet[ 'source' ] ) && false !== strpos( $facet['source'], $value ) ) {
                 $matches[] = $facet;
             }
         }

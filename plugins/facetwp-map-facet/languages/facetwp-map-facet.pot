@@ -1,32 +1,37 @@
-# Copyright (C) 2019 FacetWP, LLC
+# Copyright (C) 2025 FacetWP, LLC
 # This file is distributed under the same license as the FacetWP - Map Facet plugin.
+# Generated with WP-CLI: wp i18n make-pot . languages/facetwp-map-facet.pot --domain=facetwp-map-facet
 msgid ""
 msgstr ""
-"Project-Id-Version: FacetWP - Map Facet 0.5.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/facetwp-map-facet\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Project-Id-Version: FacetWP - Map Facet 1.1\n"
+"Report-Msgid-Bugs-To: https://facetwp.com/help-center/get-support/\n"
+"Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-01-14T08:36:55+00:00\n"
+"POT-Creation-Date: 2025-03-18T16:56:20+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.1.0-alpha-93d1e17\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: facetwp-map-facet\n"
 
 #. Plugin Name of the plugin
+#: facetwp-map-facet.php
 msgid "FacetWP - Map Facet"
 msgstr ""
 
 #. Description of the plugin
+#: facetwp-map-facet.php
 msgid "Map facet type"
 msgstr ""
 
 #. Author of the plugin
+#: facetwp-map-facet.php
 msgid "FacetWP, LLC"
 msgstr ""
 
 #. Author URI of the plugin
+#: facetwp-map-facet.php
 msgid "https://facetwp.com/"
 msgstr ""
 
@@ -34,124 +39,143 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: facetwp-map-facet.php:93
-#: facetwp-map-facet.php:344
+#: facetwp-map-facet.php:116
+#: facetwp-map-facet.php:448
+#: facetwp-map-facet.php:493
 msgid "Enable map filtering"
 msgstr ""
 
-#: facetwp-map-facet.php:97
-#: facetwp-map-facet.php:345
+#: facetwp-map-facet.php:120
+#: facetwp-map-facet.php:451
+#: facetwp-map-facet.php:499
 msgid "Reset"
 msgstr ""
 
-#: facetwp-map-facet.php:182
+#: facetwp-map-facet.php:222
 msgid "Your location"
 msgstr ""
 
-#: facetwp-map-facet.php:357
-msgid "Other data source"
-msgstr ""
-
-#: facetwp-map-facet.php:360
-msgid "Use a separate value for the longitude?"
-msgstr ""
-
-#: facetwp-map-facet.php:373
-msgid "Map design"
-msgstr ""
-
-#: facetwp-map-facet.php:376
-msgid "Default"
-msgstr ""
-
-#: facetwp-map-facet.php:377
-msgid "Light Dream"
-msgstr ""
-
-#: facetwp-map-facet.php:378
-msgid "Avocado World"
-msgstr ""
-
-#: facetwp-map-facet.php:379
-msgid "Blue Water"
-msgstr ""
-
-#: facetwp-map-facet.php:380
-msgid "Midnight Commander"
-msgstr ""
-
-#: facetwp-map-facet.php:386
-msgid "Marker clustering"
-msgstr ""
-
-#: facetwp-map-facet.php:389
-msgid "Group markers into clusters?"
-msgstr ""
-
-#: facetwp-map-facet.php:394
-msgid "Yes"
-msgstr ""
-
-#: facetwp-map-facet.php:395
-msgid "No"
-msgstr ""
-
-#: facetwp-map-facet.php:400
-msgid "Marker limit"
-msgstr ""
-
-#: facetwp-map-facet.php:403
-msgid "Show all results"
-msgstr ""
-
-#: facetwp-map-facet.php:404
-msgid "Show current page results"
-msgstr ""
-
-#: facetwp-map-facet.php:409
-msgid "Map width / height"
-msgstr ""
-
-#: facetwp-map-facet.php:411
-msgid "Width"
-msgstr ""
-
-#: facetwp-map-facet.php:412
-msgid "Height"
-msgstr ""
-
-#: facetwp-map-facet.php:417
-msgid "Zoom min / max"
-msgstr ""
-
-#: facetwp-map-facet.php:420
-msgid "Set zoom bounds (between 1 and 20)?"
-msgstr ""
-
-#: facetwp-map-facet.php:424
-msgid "Min"
-msgstr ""
-
-#: facetwp-map-facet.php:425
-msgid "Max"
-msgstr ""
-
-#: facetwp-map-facet.php:430
-msgid "Default lat / lng"
-msgstr ""
-
-#: facetwp-map-facet.php:433
-msgid "Center the map here if there are no results"
-msgstr ""
-
-#: facetwp-map-facet.php:437
-msgid "Latitude"
-msgstr ""
-
-#: facetwp-map-facet.php:438
+#: facetwp-map-facet.php:467
+#: facetwp-map-facet.php:574
 msgid "Longitude"
 msgstr ""
 
-#: facetwp-map-facet.php:442
+#: facetwp-map-facet.php:468
+msgid "(Optional) use a separate longitude field."
+msgstr ""
+
+#: facetwp-map-facet.php:479
+msgid "Map design"
+msgstr ""
+
+#: facetwp-map-facet.php:482
+msgid "Default"
+msgstr ""
+
+#: facetwp-map-facet.php:483
+msgid "Light Dream"
+msgstr ""
+
+#: facetwp-map-facet.php:484
+msgid "Avocado World"
+msgstr ""
+
+#: facetwp-map-facet.php:485
+msgid "Blue Water"
+msgstr ""
+
+#: facetwp-map-facet.php:486
+msgid "Midnight Commander"
+msgstr ""
+
+#: facetwp-map-facet.php:491
+msgid "Enable filtering button label"
+msgstr ""
+
+#: facetwp-map-facet.php:497
+msgid "Reset button label"
+msgstr ""
+
+#: facetwp-map-facet.php:505
+msgid "Marker clustering"
+msgstr ""
+
+#: facetwp-map-facet.php:506
+msgid "Group markers into clusters?"
+msgstr ""
+
+#: facetwp-map-facet.php:519
+msgid "Ajax marker content"
+msgstr ""
+
+#: facetwp-map-facet.php:520
+msgid "Dynamically load marker content on click of markers, which could improve load times for pages with many markers."
+msgstr ""
+
+#: facetwp-map-facet.php:531
+msgid "Marker limit"
+msgstr ""
+
+#: facetwp-map-facet.php:534
+msgid "Show all results"
+msgstr ""
+
+#: facetwp-map-facet.php:535
+msgid "Show current page results"
+msgstr ""
+
+#: facetwp-map-facet.php:543
+msgid "Map width / height"
+msgstr ""
+
+#: facetwp-map-facet.php:544
+msgid "Set width and height of the map. Without units, px is assumed. Use other CSS units if needed, e.g. 100% for responsive full width of the parent container. Don't use 100% for the height if the map's container does not have a fixed height, else the map will have no height and will not show."
+msgstr ""
+
+#: facetwp-map-facet.php:548
+msgid "Width"
+msgstr ""
+
+#: facetwp-map-facet.php:549
+msgid "Height"
+msgstr ""
+
+#: facetwp-map-facet.php:556
+msgid "Zoom min / max"
+msgstr ""
+
+#: facetwp-map-facet.php:557
+msgid "Set zoom bounds (between 1 and 20)."
+msgstr ""
+
+#: facetwp-map-facet.php:561
+msgid "Min"
+msgstr ""
+
+#: facetwp-map-facet.php:562
+msgid "Max"
+msgstr ""
+
+#: facetwp-map-facet.php:568
+msgid "Fallback lat / lng / zoom"
+msgstr ""
+
+#: facetwp-map-facet.php:569
+msgid "Center the map here, and set a custom zoom level, if there are no results."
+msgstr ""
+
+#: facetwp-map-facet.php:573
+msgid "Latitude"
+msgstr ""
+
+#: facetwp-map-facet.php:575
+msgid "Zoom (1-20)"
+msgstr ""
+
+#: facetwp-map-facet.php:579
 msgid "Marker content"
+msgstr ""
+
+#: facetwp-map-facet.php:582
+msgid "To search your code, click in the editor, then use Ctrl+F (Windows/Linux) or Cmd+F (Mac)."
 msgstr ""

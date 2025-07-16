@@ -100,7 +100,7 @@ class Provider extends Service_Provider {
 		/**
 		 * Series assets.
 		 */
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-add-event-to-series-css',
 			'custom-tables-v1/classic-editor-add-event-to-series.css',
@@ -113,7 +113,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-add-event-to-series-js',
 			'custom-tables-v1/classic-editor-add-event-to-series.js',
@@ -128,7 +128,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-trash-series-handler',
 			'custom-tables-v1/series-trash-handler.js',
@@ -138,7 +138,7 @@ class Provider extends Service_Provider {
 				'in_footer'    => true,
 				'localize'     => [
 					'name' => 'tecEventsProSeriesTrashHandler',
-					'data' => [
+					'data' => fn() => [
 						'messages' => [
 							'trash'  => [
 								'singular' =>
@@ -189,7 +189,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-edit-link-prompt',
 			'custom-tables-v1/edit-link-prompt.js',
@@ -214,7 +214,7 @@ class Provider extends Service_Provider {
 		/**
 		 * Classic & Block Events assets.
 		 */
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-editor-dialog-js',
 			'custom-tables-v1/editor-dialog.js',
@@ -260,7 +260,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-editor-dialog-css',
 			'custom-tables-v1/editor-dialog.css',
@@ -281,7 +281,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-editor-events-css',
 			'custom-tables-v1/editor-events.css',
@@ -306,7 +306,7 @@ class Provider extends Service_Provider {
 		/**
 		 * Classic Events assets.
 		 */
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-state-js',
 			'custom-tables-v1/classic-editor-events-state.js',
@@ -324,7 +324,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-dialog-js',
 			'custom-tables-v1/classic-editor-events-dialog.js',
@@ -364,7 +364,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-event-date-js',
 			'custom-tables-v1/classic-editor-events-event-date.js',
@@ -385,7 +385,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-off-start-js',
 			'custom-tables-v1/classic-editor-events-off-start.js',
@@ -402,7 +402,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-day-of-month-js',
 			'custom-tables-v1/classic-editor-events-day-of-month.js',
@@ -425,7 +425,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-locked-options-js',
 			'custom-tables-v1/classic-editor-events-locked-options.js',
@@ -448,7 +448,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-default-js',
 			'custom-tables-v1/classic-editor-events-default.js',
@@ -465,7 +465,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-sync-js',
 			'custom-tables-v1/classic-editor-events-sync.js',
@@ -492,7 +492,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-classic-editor-events-js',
 			'custom-tables-v1/classic-editor-events.js',
@@ -523,7 +523,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-event-series-metabox-js',
 			'custom-tables-v1/event-series-metabox.js',
@@ -538,7 +538,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-editor-events-classic-css',
 			'custom-tables-v1/editor-events-classic.css',
@@ -554,7 +554,7 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-blocks-editor-ct1-bundle',
 			'custom-tables-v1/app/ct1.js',
@@ -600,40 +600,31 @@ class Provider extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
-			'tec-events-pro-block-editor-blocks-css',
-			'custom-tables-v1/app/blocks.css',
-			[ 'tribe-pro-gutenberg-main-styles' ],
+			'tec-events-pro-blocks-editor-ct1-bundle-style',
+			'js/custom-tables-v1/app/style-ct1.css',
+			[],
 			'enqueue_block_editor_assets',
 			[
-				'in_footer'    => false,
+				'priority'     => 205,
 				'conditionals' => $context->is_blocks_event_post_screen(),
 				'groups'       => [ static::$block_event_group_key ],
-			]
-		);
-
-		tribe_asset(
-			$plugin,
-			'tec-events-pro-block-editor-elements-css',
-			'custom-tables-v1/app/elements.css',
-			[ 'tribe-pro-gutenberg-main-styles' ],
-			'enqueue_block_editor_assets',
-			[
-				'in_footer'    => false,
-				'conditionals' => $context->is_blocks_event_post_screen(),
-				'groups'       => [ static::$block_event_group_key ],
+				'group_path'   => get_class( $plugin ) . '-packages',
 			]
 		);
 
 		// Build a UI Lock on the current Request context and conditionally lock the UI.
-		$this->container->singleton( UI_Lock::class, function () {
-			$template   = $this->container->make( Tribe__Events__Pro__Editor__Template__Admin::class );
-			$request    = $this->container->make( Requests::class )->from_http_request();
-			$occurrence = $this->container->make( Occurrence::class );
+		$this->container->singleton(
+			UI_Lock::class,
+			function () {
+				$template   = $this->container->make( Tribe__Events__Pro__Editor__Template__Admin::class );
+				$request    = $this->container->make( Requests::class )->from_http_request();
+				$occurrence = $this->container->make( Occurrence::class );
 
-			return new UI_Lock( $request->get_param( 'id' ), $template, $occurrence );
-		} );
+				return new UI_Lock( $request->get_param( 'id' ), $template, $occurrence );
+			}
+		);
 		add_filter( 'tec_events_pro_lock_rules_ui', [ $this, 'lock_rules_ui' ] );
 		add_filter( 'tec_events_pro_lock_exclusions_ui', [ $this, 'lock_exclusions_ui' ] );
 	}

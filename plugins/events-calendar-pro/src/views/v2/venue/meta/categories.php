@@ -38,7 +38,7 @@ $index = 0;
 			"tribe-events-pro-venue__meta-categories-term--{$category->slug}",
 		];
 		?>
-		<span <?php tribe_classes( $classes ); ?>>
+		<span <?php tec_classes( $classes ); ?>>
 			<?php
 			// These two are intentionally printed with echos inside a single PHP tag to avoid having a space between them.
 			echo '<a class="tribe-events-pro-venue__meta-categories-term-link tribe-common-anchor" data-js="tribe-events-view-link" href="' . esc_url( get_term_link( $category ) ) . '">' . esc_html( $category_name ) . '</a>';

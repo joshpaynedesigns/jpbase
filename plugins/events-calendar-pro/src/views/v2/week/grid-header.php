@@ -33,7 +33,7 @@ $empty_header_column_classes = [
 	<div class="tribe-events-pro-week-grid__header-row" role="row">
 
 		<div
-			<?php tribe_classes( $empty_header_column_classes ); ?>
+			<?php tec_classes( $empty_header_column_classes ); ?>
 			role="gridcell"
 		>
 		</div>

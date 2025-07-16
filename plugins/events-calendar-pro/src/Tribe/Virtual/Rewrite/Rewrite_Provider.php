@@ -33,8 +33,7 @@ class Rewrite_Provider extends Service_Provider {
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
 	 */
 	public function register() {
-		$this->virtual_slug = sanitize_title( tribe_get_virtual_label_lowercase() );
-
+		add_action( 'init', [ $this, 'init' ] );
 		$this->add_filters();
 	}
 
@@ -50,6 +49,17 @@ class Rewrite_Provider extends Service_Provider {
 	}
 
 	/**
+	 * Initialize parts of the class that need to be loaded on the `init` hook.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @return void
+	 */
+	public function init(): void {
+		$this->virtual_slug = sanitize_title( tribe_get_virtual_label_lowercase() );
+	}
+
+	/**
 	 * Add rewrite routes for custom Virtual views.
 	 *
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
@@ -57,7 +67,6 @@ class Rewrite_Provider extends Service_Provider {
 	 * @param \Tribe__Events__Rewrite $rewrite The Tribe__Events__Rewrite object
 	 */
 	public function filter_add_routes( $rewrite ) {
-
 		$this->add_core_routes( $rewrite );
 		$this->add_pro_routes( $rewrite );
 	}

@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 Up until release 2.7.0, this project did _not_ follow semantic versioning. It followed the WordPress policy where updates of x and y in an x.y.z version number means a major release, and updates to z means a patch release.
 
+## [3.6.0] - 2025-03-20
+
+### Fixed
+
+* Fix “doing it wrong” textdomain notices under WordPress 6.7+ by deferring menu, layout and admin notice logic until `after_setup_theme`. If you still see notices after updating Genesis, check for child theme and plugin updates. For example, Genesis Sample and Genesis Blocks have also been updated to resolve textdomain notices.
+* Fix `str_contains` deprecation notice in the Customizer under PHP 8.2+ relating to custom footer output.
+
+### Changed
+
+* Developers: custom layouts created via `config/layouts.php` now defer loading of layout labels. If you use `config/layouts.php` in your child theme, you will need to (a) remove translation functions such as `__()` from `layouts.php` and (b) move your translated layout labels to `config/layouts-labels.php` to avoid “doing it wrong” notices with WordPress 6.7+. See Genesis layout docs for details: https://studiopress.github.io/genesis/developer-features/genesis-layouts/#default-genesis-layouts
+
 ## [3.5.0] - 2024-01-22
 
 ### Fixed

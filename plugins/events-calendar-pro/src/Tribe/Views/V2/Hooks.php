@@ -41,12 +41,11 @@ use Tribe\Events\Views\V2\Template;
 use Tribe__Context as Context;
 use Tribe__Customizer__Section as Customizer_Section;
 use Tribe__Events__Main as TEC;
-use Tribe__Events__Organizer as Organizer;
 use Tribe__Events__Pro__Main as Plugin;
 use Tribe__Events__Rewrite as TEC_Rewrite;
-use Tribe__Events__Venue as Venue;
 use WP_REST_Request as Request;
 use TEC\Common\Contracts\Service_Provider;
+use Tribe\Events\Pro\Views\V2\Views\Summary_View;
 
 /**
  * Class Hooks.
@@ -84,10 +83,12 @@ class Hooks extends Service_Provider {
 		add_action( 'tribe_template_after_include:events/v2/month/mobile-events/mobile-day/mobile-event/date/meta', [ $this, 'action_include_month_mobile_event_recurring_icon' ], 10, 3 );
 		add_action( 'tribe_events_views_v2_view_messages_before_render', [ $this, 'before_view_messages_render' ], 10, 3 );
 		add_action( 'wp_enqueue_scripts', [ $this, 'action_disable_assets_v1' ], 0 );
+		add_action( 'init', [ $this, 'init' ] );
 		add_action( 'tribe_events_pre_rewrite', [ $this, 'on_pre_rewrite' ], 6 );
 		add_action( 'template_redirect', [ $this, 'on_template_redirect' ], 50 );
 		add_action( 'tribe_template_after_include:events/v2/components/breadcrumbs', [ $this, 'action_include_organizer_meta' ], 10, 3 );
 		add_action( 'tribe_template_after_include:events/v2/components/breadcrumbs', [ $this, 'action_include_venue_meta' ], 10, 3 );
+		add_action( 'tec_events_calendar_embeds_enqueue_scripts', [ $this, 'include_assets' ] );
 	}
 
 	/**
@@ -150,6 +151,47 @@ class Hooks extends Service_Provider {
 
 		add_filter( 'tribe_is_by_date', [ $this, 'filter_tribe_is_by_date' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_cached_views', [ $this, 'filter_tribe_events_views_v2_cached_views' ], 10, 2 );
+		add_filter( 'tribe_events_views_v2_photo_view_html_classes', [ $this, 'filter_grid_photo_classes' ], 10, 1 );
+	}
+
+	/**
+	 * Includes the assets for Pro Views v2.
+	 *
+	 * @since 7.4.3
+	 *
+	 * @return void
+	 */
+	public function include_assets(): void {
+		tribe_asset_enqueue_group( Pro_Assets::$group_key );
+	}
+
+	/**
+	 * Triggers the initialization of elements that need to be loaded on the `init` hook.
+	 *
+	 * @since 7.5.0
+	 *
+	 * @return void
+	 */
+	public function init(): void {
+		if ( function_exists( 'tribe_register_view' ) ) {
+			tribe_register_view( 'summary', __( 'Summary', 'tribe-events-calendar-pro' ), Summary_View::class, 50, __( 'summary', 'tribe-events-calendar-pro' ) );
+		}
+	}
+
+	/**
+	 * Checks if our Photo Grid View option is selected and applies classes appropriately.
+	 *
+	 * @since 7.3.2
+	 *
+	 * @param array $classes List of container classes.
+	 * @return mixed The modified list of classes.
+	 */
+	public function filter_grid_photo_classes( $classes ) {
+		if ( tribe_get_option( 'photo_view_force_grid' ) ) {
+			$classes[] = 'tribe-events-pro-photo--grid';
+		}
+
+		return $classes;
 	}
 
 	/**

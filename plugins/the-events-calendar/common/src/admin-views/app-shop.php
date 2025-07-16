@@ -1,9 +1,15 @@
 <?php
+
+use TEC\Common\Admin\Conditional_Content\Black_Friday;
+
 /**
  * The template for the App Shop page.
  *
  * $main, $products, $bundles, $extensions must be defined before loading this file.
  */
+
+// No direct access.
+defined( 'ABSPATH' ) || exit;
 
 $all_products = [
 	'for-sale'  => [],
@@ -23,6 +29,12 @@ use Tribe\Admin\Troubleshooting;
 <div id="tribe-app-shop">
 
 	<?php
+		/**
+		 * Trigger the conditional content header notice.
+		 *
+		 * @since 6.8.2
+		 */
+		do_action( 'tec_conditional_content_header_notice' );
 		tribe( Troubleshooting::class )->admin_notice( 'app-shop' );
 	?>
 

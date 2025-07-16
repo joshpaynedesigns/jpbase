@@ -21,6 +21,7 @@ use Tribe__Events__Templates;
 use Tribe__Events__Main as TEC;
 use Tribe__Admin__Helpers as Admin_Helpers;
 use TEC\Common\Contracts\Service_Provider;
+use Tribe__Events__Pro__Main as ECP;
 
 /**
  * Register Assets.
@@ -84,10 +85,10 @@ class Assets extends Service_Provider {
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
 	 */
 	protected function enqueue_admin_assets() {
-		$plugin        = tribe( Plugin::class );
+		$plugin        = ECP::instance();
 		$admin_helpers = Admin_Helpers::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-admin-css',
 			'events-virtual-admin.css',
@@ -101,7 +102,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-admin-js',
 			'events-virtual-admin.js',
@@ -114,7 +115,7 @@ class Assets extends Service_Provider {
 				],
 				'localize'     => [
 					'name' => 'tribe_events_virtual_strings',
-					'data' => [
+					'data' => fn() => [
 						'deleteConfirm' => self::get_confirmation_to_delete_account(),
 					],
 				],
@@ -128,9 +129,9 @@ class Assets extends Service_Provider {
 	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
 	 */
 	protected function enqueue_frontend_assets() {
-		$plugin = tribe( Plugin::class );
+		$plugin = ECP::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-skeleton',
 			'events-virtual-skeleton.css',
@@ -143,7 +144,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-full',
 			'events-virtual-full.css',
@@ -160,7 +161,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-widgets-v2-common-skeleton',
 			'widgets-events-common-skeleton.css',
@@ -176,7 +177,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-widgets-v2-common-full',
 			'widgets-events-common-full.css',
@@ -196,7 +197,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-single-skeleton',
 			'events-virtual-single-skeleton.css',
@@ -209,7 +210,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-single-full',
 			'events-virtual-single-full.css',
@@ -229,7 +230,7 @@ class Assets extends Service_Provider {
 		$overrides_stylesheet = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/tribe-events-virtual-override.css' );
 
 		if ( ! empty( $overrides_stylesheet ) ) {
-			tribe_asset(
+			tec_asset(
 				$plugin,
 				'tribe-events-virtual-override',
 				$overrides_stylesheet,
@@ -247,7 +248,7 @@ class Assets extends Service_Provider {
 			);
 		}
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-single-v2-skeleton',
 			'events-virtual-single-v2-skeleton.css',
@@ -261,7 +262,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-single-v2-full',
 			'events-virtual-single-v2-full.css',
@@ -279,7 +280,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-v2-virtual-single-block',
 			'events-virtual-single-block.css',
@@ -298,7 +299,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-events-virtual-single-js',
 			'events-virtual-single.js',
@@ -310,14 +311,14 @@ class Assets extends Service_Provider {
 				'groups'       => [ static::$group_key ],
 				'localize'     => [
 					'name' => 'tribe_events_virtual_settings',
-					'data' => [
+					'data' => fn() => [
 						'facebookAppId' => static::get_facebook_app_id(),
 					],
 				],
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tribe-virtual-admin-v2-single-block',
 			'events-virtual-admin-single-block.css',
@@ -527,37 +528,6 @@ class Assets extends Service_Provider {
 		}
 
 		return true;
-	}
-
-	/**
-	 * If V1 is active enqueue the accordion script for YouTube feature.
-	 *
-	 * @since 7.0.0 Migrated to Events Pro from Events Virtual.
-	 *
-	 * @deprecated 1.12.0 - Deprecated with removal of Legacy-V1 views.
-	 */
-	protected function maybe_enqueue_accordion_for_v1() {
-		if ( tribe_events_views_v2_is_enabled() ) {
-			return;
-		}
-		$admin_helpers = Admin_Helpers::instance();
-
-		tribe_asset(
-			TEC::instance(),
-			'tribe-events-views-v2-accordion',
-			'views/accordion.js',
-			[
-				'jquery',
-				'tribe-common',
-			],
-			'admin_enqueue_scripts',
-			[
-				'conditionals' => [
-					'operator' => 'OR',
-					[ $admin_helpers, 'is_screen' ],
-				],
-			]
-		);
 	}
 
 	/**

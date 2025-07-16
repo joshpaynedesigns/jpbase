@@ -21,8 +21,7 @@ if ( ! empty( $classes ) ) {
 }
 ?>
 
-<svg <?php tribe_classes( $svg_classes ); ?> width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-	<title><?php _e('Event Series', 'tribe-events-calendar-pro'); ?></title>
+<svg <?php tec_classes( $svg_classes ); ?> width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 	<rect x="0.5" y="4.5" width="9" height="7" />
 	<path d="M2 2.5H11.5V10" />
 	<path d="M4 0.5H13.5V8" />
