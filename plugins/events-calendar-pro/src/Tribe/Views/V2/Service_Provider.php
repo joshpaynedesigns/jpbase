@@ -15,7 +15,7 @@ use Tribe\Events\Pro\Views\V2\Geo_Loc\Services\Service_Interface as Geo_Loc_API_
 use Tribe\Events\Pro\Views\V2\Views\Summary_View;
 use Tribe\Events\Pro\Event_Status\Event_Status_Provider;
 use TEC\Common\Contracts\Service_Provider as Provider_Contract;
-
+use Tribe\Events\Pro\Views\V2\Shortcodes\REST\V1\Provider as REST_Provider;
 
 /**
  * Class Service_Provider
@@ -36,13 +36,10 @@ class Service_Provider extends Provider_Contract {
 			return;
 		}
 
-		if ( function_exists( 'tribe_register_view' ) ) {
-			tribe_register_view( 'summary', __( 'Summary', 'tribe-events-calendar-pro' ), Summary_View::class, 50, __( 'summary', 'tribe-events-calendar-pro' ) );
-		}
-
 		require_once tribe( 'events-pro.main' )->pluginPath . 'src/Tribe/Views/V2/functions/classes.php';
 		tribe_register_provider( Widgets\Service_Provider::class );
 		tribe_register_provider( Shortcodes\Service_Provider::class );
+		tribe_register_provider( REST_Provider::class );
 		tribe_register_provider( Customizer\Service_Provider::class );
 		tribe_register_provider( Event_Status_Provider::class );
 

@@ -38,7 +38,7 @@
 		</div>
 
 		<div
-			<?php tribe_classes( $autodetect_message_classes ); ?>
+			<?php tec_classes( $autodetect_message_classes ); ?>
 			role="alert"
 		>
 		</div>

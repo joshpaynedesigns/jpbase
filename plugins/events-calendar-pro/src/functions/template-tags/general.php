@@ -148,11 +148,10 @@ if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
 	 *
 	 * @since 3.0.0
 	 * @since 5.0.0 Introduced caching based on Post ID or Parent Post ID.
-	 * @deprecated 7.0.1 6.0.7 To correct misspelling.
+	 * @deprecated 6.0.7 To correct misspelling.
 	 *
 	 * @param int     $post_id (optional) Which post we are looking for the All link.
 	 * @param boolean $echo    (optional) Should be echoed along side returning the value.
-	 * _deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 	 *
 	 * @return string  Link reference to all events in a recurrent event.
 	 */
@@ -198,12 +197,13 @@ if ( ! function_exists( 'tribe_all_occurrences_link' ) ) {
 			$tribe_ecp                = TEC::instance();
 			/**
 			 * Filters the "all occurrences" link.
-			 * @since 6.0.7
-			 * @deprecated 7.0.1 6.0.7 To correct misspelling.
+			 *
+			 * @since 3.0.0
+			 *
+			 * @deprecated 6.0.7 To correct misspelling.
 			 *
 			 * @param string $link The link HTML string.
 			 */
-			_deprecated_function( __METHOD__, '7.0.1', 'no replacement' );
 			$cache_links[ $cache_id ] = apply_filters_deprecated(
 				'tribe_all_occurences_link',
 				[ $tribe_ecp->getLink( 'all', $post_id ) ],
@@ -717,15 +717,16 @@ if ( ! function_exists( 'tribe_events_recurrence_tooltip' ) ) {
 
 if ( ! function_exists( 'tribe_events_pro_resource_url' ) ) {
 	/**
-	 * Returns or echoes a url to a file in the Events Calendar PRO plugin resources directory
+	 * Returns or echoes a url to a file in the Events Calendar PRO plugin built resources directory.
 	 *
-	 * @param string $resource the filename of the resource
-	 * @param bool $echo whether or not to echo the url
+	 * @param string $resource the filename of the resource.
+	 * @param bool   $echo whether or not to echo the url.
+	 *
 	 * @return string
-	 **/
+	 */
 	function tribe_events_pro_resource_url( $resource, $echo = false ) {
 		$extension      = pathinfo( $resource, PATHINFO_EXTENSION );
-		$resources_path = 'src/resources/';
+		$resources_path = 'build/';
 		switch ( $extension ) {
 			case 'css':
 				$resource_path = $resources_path . 'css/';

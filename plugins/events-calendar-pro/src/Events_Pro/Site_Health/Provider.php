@@ -1,5 +1,4 @@
 <?php
-// tec_debug_info_sections
 /**
  * Service Provider for interfacing with tec-common Site Health.
  *
@@ -8,9 +7,9 @@
  * @package TEC\Events_Pro\Site_Health
  */
 
- namespace TEC\Events_Pro\Site_Health;
+namespace TEC\Events_Pro\Site_Health;
 
- use TEC\Common\Contracts\Service_Provider;
+use TEC\Common\Contracts\Service_Provider;
 
  /**
   * Class Site_Health

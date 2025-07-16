@@ -1,6 +1,6 @@
 <?php
 /**
- * Widget: Featured Venue Event Recurring Icon
+ * View: Widget Featured Venue - Single Event Recurring Icon
  *
  * Override this template in your own theme by creating a file at:
  * [your-theme]/tribe/events-pro/v2/widgets/widget-featured-venue/events-list/event/date/recurring.php
@@ -9,34 +9,33 @@
  *
  * @link https://evnt.is/1aiy
  *
- * @since 5.3.0
+ * @since 5.0.0
+ * @since 7.6.1 Added $icon_description parameter and updated the template to use it for the accessible label.
  *
- * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @version 7.6.1
+ *
+ * @var WP_Post $event            The event post object with properties added by the `tribe_get_event` function.
+ * @var string  $icon_description The description of the icon. Used for the accessible label. (optional)
  *
  * @see tribe_get_event() For the format of the event object.
- *
- * @version 5.2.0
  */
 
 if ( empty( $event->recurring ) ) {
 	return;
 }
-$recurring_label = _x(
-	'Recurring',
-	'Recurring label for event in featured venue widget.',
-	'tribe-events-calendar-pro'
-);
 
+if ( empty( $icon_description ) ) {
+	$icon_description = __( 'Recurring', 'tribe-events-calendar-pro' );
+}
 ?>
 <a
 	href="<?php echo esc_url( $event->permalink_all ); ?>"
 	class="tribe-events-widget-featured-venue__event-datetime-recurring-link"
 >
-	<em
-		class="tribe-events-widget-featured-venue__event-datetime-recurring-icon"
-		aria-label="<?php echo esc_attr( $recurring_label ); ?>"
-		title="<?php echo esc_attr( $recurring_label ); ?>"
-	>
+	<em class="tribe-events-widget-featured-venue__event-datetime-recurring-icon">
 		<?php $this->template( 'components/icons/recurring', [ 'classes' => [ 'tribe-events-widget-featured-venue__event-datetime-recurring-icon-svg' ] ] ); ?>
 	</em>
+	<span class="tribe-events-widget-featured-venue__event-datetime-recurring-text tribe-common-a11y-visual-hide">
+		<?php echo esc_html( $icon_description ); ?>
+	</span>
 </a>

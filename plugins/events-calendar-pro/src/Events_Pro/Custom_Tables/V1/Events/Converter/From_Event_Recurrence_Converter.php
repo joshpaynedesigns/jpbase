@@ -530,7 +530,7 @@ class From_Event_Recurrence_Converter {
 		$timezone_string = $dtstart->getTimezone()->getName();
 		$formatted_start = $dtstart->format( 'Ymd\THis' );
 		// Get the end date, so we can compose a complete RDATE.
-		$end = new DateTime( null, $dtstart->getTimezone() );
+		$end = new DateTime( '', $dtstart->getTimezone() );
 		$end->setTimestamp( $dtstart->getTimestamp() );
 		$end->add( new DateInterval( 'PT' . $first_duration . 'S' ) );
 		$formatted_end = $end->format( 'Ymd\THis' );

@@ -41,7 +41,7 @@ class Provider extends Service_Provider {
 	public function enqueue_admin_script() {
 		$plugin = Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-event-manager-events.js',
 			'custom-tables-v1/event-manager-events.js',

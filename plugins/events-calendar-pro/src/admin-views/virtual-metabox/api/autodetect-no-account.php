@@ -33,7 +33,7 @@ if ( empty( $wrap_attrs ) ) {
 ?>
 
 <div
-	<?php tribe_classes( $wrap_classes ); ?>
+	<?php tec_classes( $wrap_classes ); ?>
 	<?php tribe_attributes( $wrap_attrs ) ?>
 >
 	<div class="tec-events-virtual-meetings-autodetect-api__message-inner">

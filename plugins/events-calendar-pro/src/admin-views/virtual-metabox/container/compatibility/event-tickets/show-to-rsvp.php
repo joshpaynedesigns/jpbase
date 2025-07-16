@@ -27,7 +27,7 @@ $classes = $disabled ? 'tribe-disabled' : '';
 <li>
 	<label
 		for="<?php echo esc_attr( "{$metabox_id}-show-to-rsvp-attendees" ); ?>"
-		<?php tribe_classes( $classes ); ?>
+		<?php tec_classes( $classes ); ?>
 	>
 		<input
 			id="<?php echo esc_attr( "{$metabox_id}-show-to-rsvp-attendees" ); ?>"

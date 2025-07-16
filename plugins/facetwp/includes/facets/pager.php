@@ -110,6 +110,7 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         $page = $this->pager_args['page'];
         $per_page = $this->pager_args['per_page'];
         $total_rows = $this->pager_args['total_rows'];
+        $total_rows_unfiltered = $this->pager_args['total_rows_unfiltered'];
         $total_pages = $this->pager_args['total_pages'];
 
         if ( -1 == $per_page ) {
@@ -130,6 +131,7 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
             $output = str_replace( '[lower]', $lower, $output );
             $output = str_replace( '[upper]', $upper, $output );
             $output = str_replace( '[total]', $total_rows, $output );
+            $output = str_replace( '[total_unfiltered]', $total_rows_unfiltered, $output );
             $output = str_replace( '[page]', $page, $output );
             $output = str_replace( '[per_page]', $per_page, $output );
             $output = str_replace( '[total_pages]', $total_pages, $output );

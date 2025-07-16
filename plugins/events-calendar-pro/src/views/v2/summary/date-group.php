@@ -26,7 +26,7 @@ if ( 1 < count( $events_for_date ) ) {
 $first_event = current( $events_for_date );
 $this->setup_postdata( $first_event );
 ?>
-<div <?php tribe_classes( $container_classes ); ?>>
+<div <?php tec_classes( $container_classes ); ?>>
 	<?php $this->template( 'summary/date-group/date-tag', [ 'event' => $first_event, 'group_date' => $group_date ] ); ?>
 	<div class="tribe-common-g-col tribe-events-pro-summary__event-wrapper">
 		<?php foreach ( $events_for_date as $event ) : ?>

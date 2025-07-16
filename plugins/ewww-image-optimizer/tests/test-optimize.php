@@ -47,6 +47,13 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 	public static $test_svg = '';
 
 	/**
+	 * The location of the test WebP image.
+	 *
+	 * @var string $test_webp
+	 */
+	public static $test_webp = '';
+
+	/**
 	 * The API key used for API-based tests.
 	 *
 	 * @var stringg $api_key
@@ -80,6 +87,10 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		$test_svg = download_url( 'https://ewwwio-test.sfo2.digitaloceanspaces.com/unit-tests/image-x-generic.svg' );
 		rename( $test_svg, $temp_upload_dir . wp_basename( $test_svg ) );
 		self::$test_svg = $temp_upload_dir . wp_basename( $test_svg );
+
+		$test_webp = download_url( 'https://ewwwio-test.sfo2.digitaloceanspaces.com/unit-tests/amie-roussel-unsplash.webp' );
+		rename( $test_webp, $temp_upload_dir . wp_basename( $test_webp ) );
+		self::$test_webp = $temp_upload_dir . wp_basename( $test_webp );
 
 		self::$api_key  = getenv( 'EWWWIO_API_KEY' );
 
@@ -175,6 +186,19 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Copies the test WebP to a temp file, optimizes it, and returns the results.
+	 *
+	 * @return array The results of the ewww_image_optimizer() function.
+	 */
+	protected function optimize_webp() {
+		ewwwio()->force = true;
+		$filename       = self::$test_webp . ".webp";
+		copy( self::$test_webp, $filename );
+		$results = ewww_image_optimizer( $filename );
+		return $results;
+	}
+
+	/**
 	 * Test default JPG optimization with WebP.
 	 */
 	function test_optimize_jpg_10() {
@@ -189,7 +213,7 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		update_site_option( 'ewww_image_optimizer_webp', '' );
 		$this->assertEquals( 1348499, filesize( $results[0] ) );
 		unlink( $results[0] );
-		$this->assertEquals( 200048, filesize( $results[0] . '.webp' ) );
+		$this->assertEqualsWithDelta( 200048, filesize( $results[0] . '.webp' ), 1000 );
 		if ( ewwwio_is_file( $results[0] . '.webp' ) ) {
 			unlink( $results[0] . '.webp' );
 		}
@@ -216,7 +240,7 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		$this->assertEquals( ewww_image_optimizer_get_orientation( $results[0], 'image/jpeg' ), 1 );
 		unlink( $results[0] );
 		// size of webp with meta.
-		$this->assertEquals( 219630, filesize( $results[0] . '.webp' ) );
+		$this->assertEqualsWithDelta( 219630, filesize( $results[0] . '.webp' ), 1000 );
 		if ( ewwwio_is_file( $results[0] . '.webp' ) ) {
 			unlink( $results[0] . '.webp' );
 		}
@@ -238,11 +262,13 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		update_site_option( 'ewww_image_optimizer_jpg_level', 20 );
 		update_site_option( 'ewww_image_optimizer_webp', true );
 		update_site_option( 'ewww_image_optimizer_cloud_key', self::$api_key );
+		add_filter( 'ewwwio_imagick_supports_webp', '__return_false' );
 		$results = $this->optimize_jpg();
 		update_option( 'ewww_image_optimizer_webp', '' );
 		update_option( 'ewww_image_optimizer_cloud_key', '' );
 		update_site_option( 'ewww_image_optimizer_webp', '' );
 		update_site_option( 'ewww_image_optimizer_cloud_key', '' );
+		remove_all_filters( 'ewwwio_imagick_supports_webp' );
 		$this->assertEquals( 1339854, filesize( $results[0] ) );
 		unlink( $results[0] );
 		$this->assertEquals( 187866, filesize( $results[0] . '.webp' ) );
@@ -267,11 +293,13 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		update_site_option( 'ewww_image_optimizer_jpg_level', 20 );
 		update_site_option( 'ewww_image_optimizer_webp', true );
 		update_site_option( 'ewww_image_optimizer_cloud_key', self::$api_key );
+		add_filter( 'ewwwio_imagick_supports_webp', '__return_false' );
 		$results = $this->optimize_jpg();
 		update_option( 'ewww_image_optimizer_webp', '' );
 		update_option( 'ewww_image_optimizer_cloud_key', '' );
 		update_site_option( 'ewww_image_optimizer_webp', '' );
 		update_site_option( 'ewww_image_optimizer_cloud_key', '' );
+		remove_all_filters( 'ewwwio_imagick_supports_webp' );
 		// size post opt.
 		$this->assertEquals( 1359406, filesize( $results[0] ) );
 		// orientation pre-rotation.
@@ -499,7 +527,7 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		update_site_option( 'ewww_image_optimizer_cloud_key', '' );
 		$this->assertEquals( 8900, filesize( $results[0] ) );
 		unlink( $results[0] );
-		$this->assertEquals( 8014, filesize( $results[0] . '.webp' ) );
+		$this->assertEquals( 8008, filesize( $results[0] . '.webp' ) );
 		if ( ewwwio_is_file( $results[0] . '.webp' ) ) {
 			unlink( $results[0] . '.webp' );
 		}
@@ -608,6 +636,25 @@ class EWWWIO_Optimize_Tests extends WP_UnitTestCase {
 		update_option( 'ewww_image_optimizer_cloud_key', '' );
 		update_site_option( 'ewww_image_optimizer_cloud_key', '' );
 		$this->assertEquals( 9518, filesize( $results[0] ) );
+		unlink( $results[0] );
+	}
+
+	/**
+	 * Test lossy WebP via API.
+	 */
+	function test_optimize_webp_20() {
+		if ( empty( self::$api_key ) ) {
+			self::markTestSkipped( 'No API key available.' );
+		}
+
+		update_option( 'ewww_image_optimizer_webp_level', 20 );
+		update_option( 'ewww_image_optimizer_cloud_key', self::$api_key );
+		update_site_option( 'ewww_image_optimizer_webp_level', 20 );
+		update_site_option( 'ewww_image_optimizer_cloud_key', self::$api_key );
+		$results = $this->optimize_webp();
+		update_option( 'ewww_image_optimizer_cloud_key', '' );
+		update_site_option( 'ewww_image_optimizer_cloud_key', '' );
+		$this->assertLessThan( 260000, filesize( $results[0] ) );
 		unlink( $results[0] );
 	}
 

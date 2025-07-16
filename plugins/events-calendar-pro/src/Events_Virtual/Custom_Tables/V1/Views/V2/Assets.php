@@ -10,9 +10,8 @@
 namespace TEC\Events_Virtual\Custom_Tables\V1\Views\V2;
 
 use Tribe\Events\Views\V2\Assets as Event_Assets;
-use Tribe\Events\Views\V2\Template_Bootstrap;
-use Tribe\Events\Virtual\Plugin;
 use TEC\Common\Contracts\Service_Provider;
+use Tribe__Events__Pro__Main as Pro;
 
 /**
  * Register Assets.
@@ -49,9 +48,9 @@ class Assets extends Service_Provider {
 		$this->container->singleton( static::class, $this );
 		$this->container->singleton( 'tec.virtual.custom-tables.v1.views.v2.assets', $this );
 
-		$plugin = tribe( Plugin::class );
+		$plugin = Pro::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-custom-tables-v1-events-virtual-skeleton',
 			'events-virtual-skeleton.css',
@@ -64,7 +63,7 @@ class Assets extends Service_Provider {
 			]
 		);
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-custom-tables-v1-events-virtual-full',
 			'events-virtual-full.css',

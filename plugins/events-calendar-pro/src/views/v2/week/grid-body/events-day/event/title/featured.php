@@ -22,9 +22,9 @@ if ( empty( $event->featured ) ) {
 	return;
 }
 ?>
-<em
-	class="tribe-events-pro-week-grid__event-title-featured-icon"
-	title="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
->
+<em class="tribe-events-pro-week-grid__event-title-featured-icon" >
 	<?php $this->template( 'components/icons/featured', [ 'classes' => [ 'tribe-events-pro-week-grid__event-title-featured-icon-svg' ] ] ); ?>
 </em>
+<span class="tribe-events-pro-week-grid__event-title-featured-text tribe-common-a11y-visual-hide">
+	<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>
+</span>

@@ -16,7 +16,7 @@
  */
 
 ?>
-<div class="tribe-events-pro-week-grid__events-row-header" role="rowheader">
+<div class="tribe-events-pro-week-grid__events-row-header" aria-hidden="true" role="presentation">
 	<time
 		class="tribe-events-pro-week-grid__events-time-tag tribe-events-pro-week-grid__events-time-tag--first tribe-common-a11y-visual-hide"
 		datetime="0:00"

@@ -24,9 +24,9 @@ use Tribe\Events\Virtual\Meetings\Zoom\Password;
 use Tribe\Events\Virtual\Meetings\Zoom\Template_Modifications;
 use Tribe\Events\Virtual\Meetings\Zoom\Users;
 use Tribe\Events\Virtual\Meetings\Zoom\Webinars;
-use Tribe\Events\Virtual\Plugin;
 use Tribe\Events\Virtual\Traits\With_Nonce_Routes;
 use Tribe__Events__Main as Events_Plugin;
+use Tribe__Events__Pro__Main as ECP;
 use Tribe__Admin__Helpers as Admin_Helpers;
 use WP_Post;
 
@@ -268,8 +268,10 @@ class Zoom_Provider extends Meeting_Provider {
 	protected function enqueue_assets() {
 		$admin_helpers = Admin_Helpers::instance();
 
-		tribe_asset(
-			tribe( Plugin::class ),
+		$ecp = ECP::instance();
+
+		tec_asset(
+			$ecp,
 			'tribe-events-virtual-api-admin-js',
 			'events-virtual-api-admin.js',
 			[ 'jquery', 'tribe-dropdowns' ],
@@ -281,15 +283,15 @@ class Zoom_Provider extends Meeting_Provider {
 				],
 				'localize' => [
 					'name' => 'tribe_events_virtual_placeholder_strings',
-					'data' => [
+					'data' => fn() => [
 						'video'         => Event_Meta::get_video_source_text(),
 					],
 				],
 			]
 		);
 
-		tribe_asset(
-			tribe( Plugin::class ),
+		tec_asset(
+			$ecp,
 			'tribe-events-virtual-zoom-admin-style',
 			'events-virtual-zoom-admin.css',
 			[],
@@ -302,8 +304,8 @@ class Zoom_Provider extends Meeting_Provider {
 			]
 		);
 
-		tribe_asset(
-			tribe( Plugin::class ),
+		tec_asset(
+			$ecp,
 			'tribe-events-virtual-api-settings-js',
 			'events-virtual-api-settings.js',
 			[ 'jquery' ],

@@ -38,7 +38,7 @@ $classes = [
 ];
 
 ?>
-<li <?php tribe_classes( $classes ); ?>>
+<li <?php tec_classes( $classes ); ?>>
 	<label for="<?php echo esc_attr( "{$metabox_id}-meetings-api-display-details" ); ?>">
 		<input
 			id="<?php echo esc_attr( "{$metabox_id}-meetings-api-display-details" ); ?>"

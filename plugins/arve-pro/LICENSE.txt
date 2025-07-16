@@ -1,3 +1,15 @@
+ARVE Pro Addon
+Copyright (c) 2024 Nicolas Jonas
+License: GPL 3.0
+
+Bigger Picture https://github.com/henrygd/bigger-picture
+Copyright (c) 2024 https://henrygd.me/
+License MIT
+
+Video Thumbnails (Some Thumbnail api code based on this)
+Copyright 2014 Sutherland Boswell
+License: GPL 2.0
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

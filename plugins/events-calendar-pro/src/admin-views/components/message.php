@@ -38,7 +38,7 @@ if ( ! empty( $message_classes ) ) {
 
 <div
 	id="tribe-events-virtual-settings-message"
-	<?php tribe_classes( $message_classes ); ?>
+	<?php tec_classes( $message_classes ); ?>
 >
 	<?php echo wp_kses_post( $message ); ?>
 </div>

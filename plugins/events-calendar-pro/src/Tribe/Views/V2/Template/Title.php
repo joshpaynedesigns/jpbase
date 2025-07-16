@@ -41,8 +41,8 @@ class Title extends TEC_Title {
 	 */
 	public function build_title( $title = '', $depth = true, $separator = ' &#8250; ' ) {
 		$context = $this->context ?: tribe_context();
-		$posts   = $this->get_posts();
-		$title = '';
+		$posts   = [];
+		$title   = '';
 
 		/**
 		 * Filter the plural Events label for PRO Views Title.
@@ -80,6 +80,8 @@ class Title extends TEC_Title {
 				date_i18n( $date_format, strtotime( tribe_get_first_week_day( $context->get( 'event_date' ) ) ) )
 			);
 		} else {
+			$posts = $this->get_posts();
+
 			// Resolve our view slug.
 			$view_slug = $context->get( 'event_display' );
 			if ( $view_slug === null || $view_slug === 'default' ) {

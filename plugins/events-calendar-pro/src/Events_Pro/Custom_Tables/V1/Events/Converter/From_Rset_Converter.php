@@ -275,7 +275,7 @@ class From_Rset_Converter {
 		}
 
 		// Set up a mutable date, so we can increment to the end time.
-		$end            = new DateTime( null, $start->getTimezone() );
+		$end            = new DateTime( '', $start->getTimezone() );
 		$end->setTimestamp( $start->getTimestamp() );
 		$end->add( new DateInterval( "PT{$duration}S" ) );
 

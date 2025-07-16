@@ -24,34 +24,34 @@ $url = GENESIS_ADMIN_IMAGES_URL . '/layouts/';
  */
 return [
 	'content-sidebar'         => [
-		'label'   => __( 'Content, Primary Sidebar', 'genesis' ),
+		'label'   => 'content-sidebar',
 		'img'     => $url . 'cs.gif',
 		'default' => is_rtl() ? false : true,
 		'type'    => [ 'site' ],
 	],
 	'sidebar-content'         => [
-		'label'   => __( 'Primary Sidebar, Content', 'genesis' ),
+		'label'   => 'sidebar-content',
 		'img'     => $url . 'sc.gif',
 		'default' => is_rtl() ? true : false,
 		'type'    => [ 'site' ],
 	],
 	'content-sidebar-sidebar' => [
-		'label' => __( 'Content, Primary Sidebar, Secondary Sidebar', 'genesis' ),
+		'label' => 'content-sidebar-sidebar',
 		'img'   => $url . 'css.gif',
 		'type'  => [ 'site' ],
 	],
 	'sidebar-sidebar-content' => [
-		'label' => __( 'Secondary Sidebar, Primary Sidebar, Content', 'genesis' ),
+		'label' => 'sidebar-sidebar-content',
 		'img'   => $url . 'ssc.gif',
 		'type'  => [ 'site' ],
 	],
 	'sidebar-content-sidebar' => [
-		'label' => __( 'Secondary Sidebar, Content, Primary Sidebar', 'genesis' ),
+		'label' => 'sidebar-content-sidebar',
 		'img'   => $url . 'scs.gif',
 		'type'  => [ 'site' ],
 	],
 	'full-width-content'      => [
-		'label' => __( 'Full Width Content', 'genesis' ),
+		'label' => 'full-width-content',
 		'img'   => $url . 'c.gif',
 		'type'  => [ 'site' ],
 	],

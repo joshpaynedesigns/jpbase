@@ -15,6 +15,7 @@ use Tribe__Events__Pro__Main as Plugin;
 use TEC\Common\Contracts\Service_Provider;
 use Tribe__Template;
 use WP_Post;
+use TEC\Events_Pro\Custom_Tables\V1\Templates\Templates;
 
 /**
  * Class Provider
@@ -24,6 +25,35 @@ use WP_Post;
  * @package TEC\Events_Pro\Custom_Tables\V1\Views\V2
  */
 class Provider extends Service_Provider {
+
+	/**
+	 * The redirection map for the templates that need to be replaced.
+	 *
+	 * @since 7.3.1
+	 *
+	 * @var array<string,string>
+	 */
+	protected const TEMPLATE_REDIRECTION_MAP = [// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
+		'list/event/recurring'                                                    => '/components/series-relationship-marker-link.php',
+		'widgets/widget-events-list/event/date/recurring'                         => '/components/series-relationship-icon-link.php',
+		'photo/event/date-time/recurring'                                         => '/components/series-relationship-icon-link.php',
+		'summary/date-group/event/date/recurring'                                 => '/components/series-relationship-icon-link.php',
+		'month/mobile-event/recurring'                                            => '/components/series-relationship-icon-link.php',
+		'month/calendar-event/multiday/recurring'                                 => '/components/series-relationship-icon.php',
+		'month/calendar-event/tooltip/recurring'                                  => '/components/series-relationship-icon-link.php',
+		'month/calendar-event/recurring'                                          => '/components/series-relationship-icon-link.php',
+		'week/mobile-events/day/event/date/recurring'                             => '/components/series-relationship-icon-link.php',
+		'week/grid-body/events-day/event/date/recurring'                          => '/components/series-relationship-icon.php',
+		'week/grid-body/events-day/event/tooltip/date/recurring'                  => '/components/series-relationship-icon-link.php',
+		'week/grid-body/multiday-events-day/multiday-event/bar/recurring'         => '/components/series-relationship-icon.php',
+		'week/grid-body/multiday-events-day/multiday-event/hidden/link/recurring' => '/components/series-relationship-icon.php',
+		'map/event-cards/event-card/event/date-time/recurring'                    => '/components/series-relationship-icon-link.php',
+		'map/event-cards/event-card/tooltip/date-time/recurring'                  => '/components/series-relationship-icon-link.php',
+		'day/event/recurring'                                                     => '/components/series-relationship-marker-link.php',
+		'recurrence/hide-recurring'                                               => '/recurrence/hide-recurring.php',
+		'widgets/widget-featured-venue/events-list/event/date/recurring'          => '/components/series-relationship-icon-link.php',
+	];
+	// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned, WordPress.Arrays.MultipleStatementAlignment.LongIndexSpaceBeforeDoubleArrow
 
 	/**
 	 * Key for the event archive group of assets.
@@ -41,9 +71,6 @@ class Provider extends Service_Provider {
 	 * @since 6.0.0
 	 */
 	public function register() {
-		// Hook late to replace the template files that might need replacing.
-		add_filter( 'tribe_template_file', [ $this, 'replace_template_files' ], 50, 3 );
-
 		// Replace the TEC implementation of the TEC By Day View compatibility class with an ECP geared one.
 		$this->container->singleton( TEC_By_Day_View_Compatibility::class, By_Day_View_Compatibility::class );
 
@@ -65,7 +92,7 @@ class Provider extends Service_Provider {
 	public function register_assets() {
 		$plugin = Plugin::instance();
 
-		tribe_asset(
+		tec_asset(
 			$plugin,
 			'tec-events-pro-archives-style',
 			'custom-tables-v1/archives.css',
@@ -116,6 +143,7 @@ class Provider extends Service_Provider {
 	 * Replaces templates files with ones managed by the plugin.
 	 *
 	 * @since 6.0.0
+	 * @since 7.3.1 Pass the overwritten files through hierarchy filters.
 	 *
 	 * @param string          $file     The path to the file the template system resolved.
 	 * @param array<string>   $name     The template name fragments.
@@ -126,28 +154,7 @@ class Provider extends Service_Provider {
 	public function replace_template_files( string $file, array $name, Tribe__Template $template ): string {
 		$template_name = implode( '/', $name );
 
-		$redirection_map = [
-			'list/event/recurring'                                                    => '/components/series-relationship-marker-link.php',
-			'widgets/widget-events-list/event/date/recurring'                         => '/components/series-relationship-icon-link.php',
-			'photo/event/date-time/recurring'                                         => '/components/series-relationship-icon-link.php',
-			'summary/date-group/event/date/recurring'                                 => '/components/series-relationship-icon-link.php',
-			'month/mobile-event/recurring'                                            => '/components/series-relationship-icon-link.php',
-			'month/calendar-event/multiday/recurring'                                 => '/components/series-relationship-icon.php',
-			'month/calendar-event/tooltip/recurring'                                  => '/components/series-relationship-icon-link.php',
-			'month/calendar-event/recurring'                                          => '/components/series-relationship-icon-link.php',
-			'week/mobile-events/day/event/date/recurring'                             => '/components/series-relationship-icon-link.php',
-			'week/grid-body/events-day/event/date/recurring'                          => '/components/series-relationship-icon.php',
-			'week/grid-body/events-day/event/tooltip/date/recurring'                  => '/components/series-relationship-icon-link.php',
-			'week/grid-body/multiday-events-day/multiday-event/bar/recurring'         => '/components/series-relationship-icon.php',
-			'week/grid-body/multiday-events-day/multiday-event/hidden/link/recurring' => '/components/series-relationship-icon.php',
-			'map/event-cards/event-card/event/date-time/recurring'                    => '/components/series-relationship-icon-link.php',
-			'map/event-cards/event-card/tooltip/date-time/recurring'                  => '/components/series-relationship-icon-link.php',
-			'day/event/recurring'                                                     => '/components/series-relationship-marker-link.php',
-			'recurrence/hide-recurring'                                               => '/recurrence/hide-recurring.php',
-			'widgets/widget-featured-venue/events-list/event/date/recurring'          => '/components/series-relationship-icon-link.php',
-		];
-
-		if ( empty( $redirection_map[ $template_name ] ) ) {
+		if ( empty( self::TEMPLATE_REDIRECTION_MAP[ $template_name ] ) ) {
 			return $file;
 		}
 
@@ -158,7 +165,42 @@ class Provider extends Service_Provider {
 
 		tribe_asset_enqueue_group( static::$event_archive_group_key );
 
-		return $root . $redirection_map[ $template_name ];
+		add_filter( 'tribe_template_file', [ $this, 'pass_overwritten_template_files_through_hierarchy_filters' ], 1000, 3 );
+
+		return $root . self::TEMPLATE_REDIRECTION_MAP[ $template_name ];
+	}
+
+	/**
+	 * Pass the overwritten template files through the hierarchy filters.
+	 *
+	 * @since 7.3.1
+	 *
+	 * @param string          $file     The path to the file the template system resolved.
+	 * @param array<string>   $name     The template name fragments.
+	 * @param Tribe__Template $template A reference to the currently resolving template instance.
+	 *
+	 * @return string The template path, modified if required.
+	 */
+	public function pass_overwritten_template_files_through_hierarchy_filters( string $file, array $name, Tribe__Template $template ) {
+		// Unhook the current function to avoid infinite loops.
+		remove_filter( 'tribe_template_file', [ $this, 'pass_overwritten_template_files_through_hierarchy_filters' ], 1000 );
+
+		$template_name = implode( '/', $name );
+
+		// Bail if there are no redirections.
+		if ( empty( self::TEMPLATE_REDIRECTION_MAP[ $template_name ] ) ) {
+			return $file;
+		}
+
+		// Unhook from the `replace_template_files` filter to prevent infinite loops.
+		remove_filter( 'tribe_template_file', [ $this, 'replace_template_files' ], 100 );
+
+		$result = tribe( Templates::class )->get_template_file( rtrim( ltrim( self::TEMPLATE_REDIRECTION_MAP[ $template_name ], '/' ), '.php' ) );
+
+		// Rehook the `replace_template_files` filter.
+		add_filter( 'tribe_template_file', [ $this, 'replace_template_files' ], 100, 3 );
+
+		return $result;
 	}
 
 	/**

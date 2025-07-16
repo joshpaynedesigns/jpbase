@@ -151,6 +151,13 @@ abstract class Taxonomy_Abstract extends Controller implements Taxonomy_Interfac
 	public function add_filters(): void {
 		add_filter( 'tribe_context_locations', [ $this, 'filter_context_locations' ] );
 
+		if ( ! did_action( 'init' ) && ! doing_action( 'init' ) ) {
+			// Hook itself to the init action, so we can be sure that the post type is registered.
+			add_action( 'init', [ $this, 'add_filters' ], 20 );
+
+			return;
+		}
+
 		$linked_post_type = $this->get_linked_post_type();
 		// Register the Linked Post Type Columns.
 		add_filter( "manage_{$linked_post_type}_posts_columns", [ $this, 'filter_include_taxonomy_to_linked_post_type_admin_table' ] );
@@ -1748,8 +1755,6 @@ abstract class Taxonomy_Abstract extends Controller implements Taxonomy_Interfac
 		);
 		// Bail when not the correct column.
 		if ( $column_name !== $this->get_wp_slug() ) {
-			echo $no_terms_html;
-
 			return;
 		}
 		$terms = wp_get_object_terms( $post_id, $this->get_wp_slug() );

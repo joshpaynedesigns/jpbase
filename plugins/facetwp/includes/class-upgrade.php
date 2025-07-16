@@ -113,6 +113,28 @@ class FacetWP_Upgrade
             }
         }
 
+        if ( version_compare( $this->last_version, '4.3.4', '<' ) ) {
+            if ( ! isset( $settings['settings']['enable_indexer'] ) ) {
+                $settings['settings']['enable_indexer'] = 'yes';
+                $changed = true;
+            }
+        }
+
+        if ( version_compare( $this->last_version, '4.4', '<' ) ) {
+            if ( ! isset( $settings['settings']['gmaps_api_key'] ) ) {
+                $settings['settings']['gmaps_api_key'] = '';
+                $changed = true;
+            }
+
+            if ( ! isset( $settings['settings']['places_version'] ) ) {
+                $api_key = defined( 'GMAPS_API_KEY' ) ? GMAPS_API_KEY : $settings['settings']['gmaps_api_key'];
+                $is_legacy = apply_filters( 'facetwp_gmaps_api_key', $api_key );
+
+                $settings['settings']['places_version'] = $is_legacy ? 'places-service' : 'place-class';
+                $changed = true;
+            }
+        }
+
         if ( $changed ) {
             update_option( 'facetwp_settings', json_encode( $settings ) );
         }

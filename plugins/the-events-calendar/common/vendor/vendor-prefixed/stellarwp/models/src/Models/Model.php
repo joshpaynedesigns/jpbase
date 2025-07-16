@@ -1,10 +1,4 @@
 <?php
-/**
- * @license GPL-3.0-or-later
- *
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
- */
 
 namespace TEC\Common\StellarWP\Models;
 
@@ -134,7 +128,7 @@ abstract class Model implements ModelInterface, Arrayable, JsonSerializable {
 	 * Whether the property is set or not. This is different from isset() because this considers a `null` value as
 	 * being set. Defaults are considered set as well.
 	 *
-	 * @unreleased
+	 * @since 1.2.2
 	 *
 	 * @return boolean
 	 */
@@ -145,7 +139,7 @@ abstract class Model implements ModelInterface, Arrayable, JsonSerializable {
 	/**
 	 * Check if there is a default value for a property.
 	 *
-	 * @unreleased
+	 * @since 1.2.2
 	 *
 	 * @param string $key Property name.
 	 *
@@ -334,6 +328,10 @@ abstract class Model implements ModelInterface, Arrayable, JsonSerializable {
 				return is_bool( $value );
 			case 'array':
 				return is_array( $value );
+			case 'float':
+				return is_float( $value );
+			case 'number':
+				return is_int( $value ) || is_float( $value );
 			default:
 				return $value instanceof $type;
 		}

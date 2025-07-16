@@ -10,24 +10,27 @@
  * @link https://evnt.is/1aiy
  *
  * @since 5.1.1
+ * @since 7.6.1 Added $icon_description parameter and updated the template to use it for the accessible label.
+ *
+ * @version 7.6.1
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @var string $icon_description The description of the icon. Used for the accessible label. (optional)
  *
  * @see tribe_get_event() For the format of the event object.
- *
- * @version 5.2.0
  */
 
 if ( empty( $event->featured ) ) {
 	return;
 }
+
+if ( empty( $icon_description ) ) {
+	$icon_description = __( 'Featured', 'tribe-events-calendar-pro' );
+}
 ?>
-<em
-	class="tribe-events-pro-photo__event-datetime-featured-icon"
-	title="<?php esc_attr_e( 'Featured', 'tribe-events-calendar-pro' ); ?>"
->
+<em class="tribe-events-pro-photo__event-datetime-featured-icon">
 	<?php $this->template( 'components/icons/featured', [ 'classes' => [ 'tribe-events-pro-photo__event-datetime-featured-icon-svg' ] ] ); ?>
 </em>
 <span class="tribe-events-pro-photo__event-datetime-featured-text">
-	<?php esc_html_e( 'Featured', 'tribe-events-calendar-pro' ); ?>
+	<?php echo esc_html( $icon_description ); ?>
 </span>

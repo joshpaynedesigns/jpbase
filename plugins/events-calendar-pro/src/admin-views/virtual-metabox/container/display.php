@@ -41,7 +41,7 @@ $embed_video_classes = [
 	</td>
 	<td class="tribe-table-field--top tribe-events-virtual-display__content">
 		<ul class="tribe-events-virtual-display__list">
-			<li <?php tribe_classes( $embed_video_classes ); ?>>
+			<li <?php tec_classes( $embed_video_classes ); ?>>
 				<label for="<?php echo esc_attr( "{$metabox_id}-embed-video" ); ?>">
 					<input
 						id="<?php echo esc_attr( "{$metabox_id}-embed-video" ); ?>"

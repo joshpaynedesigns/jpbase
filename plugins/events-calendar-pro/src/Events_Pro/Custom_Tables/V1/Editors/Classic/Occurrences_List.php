@@ -301,8 +301,8 @@ class Occurrences_List extends WP_List_Table {
 		$occurrence_post_id = tribe( Provisional_ID_Generator::class )->current() + $occurrence->occurrence_id;
 
 		$actions = [
-				'edit' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_edit_post_link( $occurrence_post_id ), 'Edit' ),
-				'view' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_permalink( $occurrence_post_id ), 'View' ),
+			'edit' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_edit_post_link( $occurrence_post_id ), esc_html__( 'Edit', 'tribe-events-calendar-pro' ) ),
+			'view' => sprintf( '<a href="%s" target="_blank" rel="noreferrer noopener">%s</a>', get_permalink( $occurrence_post_id ), esc_html__( 'View', 'tribe-events-calendar-pro' ) ),
 		];
 
 		$actions = array_merge( $actions, tribe( Post_Actions::class )->get_occurrence_action_links( $occurrence ) );
@@ -345,7 +345,7 @@ class Occurrences_List extends WP_List_Table {
 		$event = Event::where( 'event_id', $occurrence->event_id )->first();
 		$timezone = $event instanceof Event ? $event->timezone : 'UTC';
 		$format = tribe_get_date_format( true );
-		return Dates::immutable( $occurrence->start_date, $timezone )->format( $format );
+		return date_i18n( $format, Dates::immutable( $occurrence->start_date, $timezone )->format( 'U' ) );
 	}
 
 	/**

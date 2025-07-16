@@ -207,7 +207,7 @@ FWP.data.settings = FWP.hooks.applyFilters('facetwp/load_settings', FWP.data.set
             <?php foreach ( $settings as $key => $tab ) : ?>
             <div class="facetwp-settings-section" :class="{ active: active_subnav == '<?php echo $key; ?>' }">
                 <?php foreach ( $tab['fields'] as $field_data ) : ?>
-                <div class="facetwp-row">
+                <div class="facetwp-row"<?php if ( !empty($field_data['show']) ) echo 'v-show=\'' . $field_data['show'] . '\''; ?>>
                     <div>
                         <?php if ( isset( $field_data['notes'] ) ) : ?>
                         <div class="facetwp-tooltip">

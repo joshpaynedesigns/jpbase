@@ -14,7 +14,10 @@ class FacetWP_Integration_ACF
         add_filter( 'facetwp_indexer_query_args', [ $this, 'lookup_acf_fields' ] );
         add_filter( 'facetwp_indexer_post_facet', [ $this, 'index_acf_values' ], 1, 2 );
         add_filter( 'facetwp_acf_display_value', [ $this, 'index_source_other' ], 1, 2 );
+        add_filter( 'facetwp_index_source_other_value', [ $this, 'index_source_other' ], 10, 2 );
         add_filter( 'facetwp_builder_item_value', [ $this, 'layout_builder_values' ], 999, 2 );
+        add_action( 'edited_term', [ $this, 'edit_term' ], 10, 3 );
+        add_action( 'delete_term', [ $this, 'delete_term' ], 10, 3 );
     }
 
 
@@ -310,6 +313,15 @@ class FacetWP_Integration_ACF
 
         // true_false
         elseif ( 'true_false' == $type ) {
+
+            // Optionally index 'false' value as default for unsaved posts (for which $value is int(0))
+            $default_false = apply_filters( 'facetwp_index_acf_truefalse_default_false', false );
+
+            // Skip indexing if no explicit default (true) is set in the field settings, unless enabled with the hook.
+            if ($value === 0 && !$default_false) {
+                $value = '';
+            }
+
             $display_value = ( 0 < (int) $value ) ? __( 'Yes', 'fwp-front' ) : __( 'No', 'fwp-front' );
             $params['facet_value'] = $value;
             $params['facet_display_value'] = $display_value;
@@ -355,23 +367,38 @@ class FacetWP_Integration_ACF
             $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
 
             if ( ! empty( $facet['source_other'] ) ) {
-                $hierarchy = explode( '/', substr( $facet['source_other'], 4 ) );
 
-                // support "User Post Type" plugin
-                $object_id = apply_filters( 'facetwp_acf_object_id', $params['post_id'] );
+                if ( 0 === strpos( $facet['source_other'], 'acf/' ) ) {
+                    $hierarchy = explode( '/', substr( $facet['source_other'], 4 ) );
 
-                // get the value
-                $value = get_field( $hierarchy[0], $object_id, false );
+                    // support "User Post Type" plugin
+                    $object_id = apply_filters( 'facetwp_acf_object_id', $params['post_id'] );
 
-                // handle repeater values
-                if ( 1 < count( $hierarchy ) ) {
-                    $parent_field_key = array_shift( $hierarchy );
-                    $value = $this->process_field_value( $value, $hierarchy, $parent_field_key );
-                    $value = $value[ $this->repeater_row ];
+                    // get the value
+                    $value = get_field( $hierarchy[0], $object_id, false );
+                    // handle repeater values
+                    if ( 1 < count( $hierarchy ) ) {
+                        $parent_field_key = array_shift( $hierarchy );
+                        $value = $this->process_field_value( $value, $hierarchy, $parent_field_key );
+                        $value = $value[ $this->repeater_row ];
+                    }
+                    
+                } else {
+
+                    $other_params = $params;
+                    $other_params['facet_source'] = $facet['source_other'];
+                    $rows = FWP()->indexer->get_row_data( $other_params );
+                    $value = $rows[0]['facet_display_value'] ?? $params['facet_display_value'];
                 }
             }
 
             if ( 'date_range' == $facet['type'] ) {
+
+                // prevent null values from being run through format_date()
+                if ( $value === null ) {
+                    return ''; // skip
+                }    
+
                 $value = $this->format_date( $value );
             }
         }
@@ -379,11 +406,15 @@ class FacetWP_Integration_ACF
         return $value;
     }
 
-
     /**
      * Format dates in YYYY-MM-DD
      */
     function format_date( $str ) {
+
+        if ( $str === null ) {
+            return '';
+        } 
+
         if ( 8 == strlen( $str ) && ctype_digit( $str ) ) {
             $str = substr( $str, 0, 4 ) . '-' . substr( $str, 4, 2 ) . '-' . substr( $str, 6, 2 );
         }
@@ -529,6 +560,81 @@ class FacetWP_Integration_ACF
         }
 
         return $value;
+    }
+
+    /**
+     * Update the index when terms get saved
+     * @since 4.4
+     */
+    function edit_term( $term_id, $tt_id, $taxonomy ) {
+        global $wpdb;
+
+        $term = get_term( $term_id, $taxonomy );
+        $slug = FWP()->helper->safe_value( $term->slug );
+        $matches = FWP()->helper->get_facets_by_datasource_type( 'acf' );
+
+        if ( ! empty( $matches ) ) {
+
+            $facet_names = [];
+
+            foreach ( $matches AS $facet ) {
+                $source_parts = explode( '/', $facet['source'] );
+                $field_id = array_pop( $source_parts );
+                $field_object = get_field_object( $field_id );
+                if ( !empty( $field_object ) &&  'taxonomy' == $field_object['type'] ) {
+                    $facet_names[] = $facet['name'];
+                }
+            }
+
+            if ( !empty( $facet_names ) ) {
+
+                $facet_names = implode( "','", esc_sql( $facet_names ) );
+    
+                $wpdb->query( $wpdb->prepare( "
+                    UPDATE {$wpdb->prefix}facetwp_index
+                    SET facet_value = %s, facet_display_value = %s
+                    WHERE facet_name IN ('$facet_names') AND term_id = %d",
+                    $slug, $term->name, $term_id
+                ) );
+
+            }
+        }
+    }
+
+
+    /**
+     * Update the index when terms get deleted
+     * @since 4.4
+     */
+    function delete_term( $term_id, $tt_id, $taxonomy ) {
+        global $wpdb;
+
+        $matches = FWP()->helper->get_facets_by_datasource_type( 'acf' );
+
+        if ( ! empty( $matches ) ) {
+
+            $facet_names = [];
+
+            foreach ( $matches AS $facet ) {
+                $source_parts = explode( '/', $facet['source'] );
+                $field_id = array_pop( $source_parts );
+                $field_object = get_field_object( $field_id );
+                if ( !empty( $field_object ) && 'taxonomy' == $field_object['type'] ) {
+                    $facet_names[] = $facet['name'];
+                }
+            }
+
+            if ( !empty( $facet_names ) ) {
+
+                $facet_names = implode( "','", esc_sql( $facet_names ) );
+    
+                $wpdb->query( "
+                    DELETE FROM {$wpdb->prefix}facetwp_index
+                    WHERE facet_name IN ('$facet_names') AND term_id = $term_id"
+                );
+
+            }
+        }
     }
 }
 

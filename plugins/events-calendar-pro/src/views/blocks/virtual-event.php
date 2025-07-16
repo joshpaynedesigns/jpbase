@@ -18,7 +18,7 @@ $default_classes = [ 'tribe-block', 'tribe-block--virtual-event' ];
 // Add the custom classes from the block attributes.
 $classes = isset( $attributes['className'] ) ? array_merge( $default_classes, [ $attributes['className'] ] ) : $default_classes;
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
     <?php
 		/**
 		 * Action to allow injecting the block content from various providers.

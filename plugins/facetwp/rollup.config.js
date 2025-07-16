@@ -25,7 +25,7 @@ export default [{
         format: 'iife'
     },
     plugins: [
-        buble()
+        buble( { transforms: { asyncAwait: false } } )
     ]
 },
 {

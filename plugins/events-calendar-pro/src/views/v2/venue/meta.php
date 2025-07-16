@@ -46,12 +46,30 @@ $conditionals = compact( 'has_content', 'has_details', 'has_featured_image', 'ha
 $template_vars = array_merge( [ 'venue' => $venue, ], $conditionals )
 
 ?>
-<div <?php tribe_classes( $classes ); ?>>
+<div <?php tec_classes( $classes ); ?>>
 	<div class="tec-events-c-view-box-border">
 
-		<div <?php tribe_classes( [ 'tribe-events-pro-venue__meta-row', 'tribe-common-g-row' => ( $has_content || $has_details || $has_taxonomy || ( $has_map && $has_featured_image ) ) ] ); ?>>
+		<div
+			<?php
+			tec_classes(
+				[
+					'tribe-events-pro-venue__meta-row',
+					'tribe-common-g-row' => ( $has_content || $has_details || $has_taxonomy || ( $has_map && $has_featured_image ) ),
+				]
+			);
+			?>
+		>
 
-			<div <?php tribe_classes( [ 'tribe-events-pro-venue__meta-data', 'tribe-common-g-col' => ( $has_content || $has_details || $has_taxonomy || ( $has_map && $has_featured_image ) ) ] ); ?>>
+			<div
+				<?php
+				tec_classes(
+					[
+						'tribe-events-pro-venue__meta-data',
+						'tribe-common-g-col' => ( $has_content || $has_details || $has_taxonomy || ( $has_map && $has_featured_image ) ),
+					]
+				);
+				?>
+			>
 
 				<?php $this->template( 'venue/meta/featured-image', $template_vars ); ?>
 

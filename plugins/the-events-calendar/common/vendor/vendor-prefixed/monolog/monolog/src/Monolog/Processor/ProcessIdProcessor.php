@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /*
  * This file is part of the Monolog package.
@@ -7,9 +7,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- *
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
  */
 
 namespace TEC\Common\Monolog\Processor;
@@ -22,10 +19,9 @@ namespace TEC\Common\Monolog\Processor;
 class ProcessIdProcessor implements ProcessorInterface
 {
     /**
-     * @param  array $record
-     * @return array
+     * {@inheritDoc}
      */
-    public function __invoke(array $record)
+    public function __invoke(array $record): array
     {
         $record['extra']['process_id'] = getmypid();
 

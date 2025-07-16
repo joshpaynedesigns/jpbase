@@ -82,9 +82,9 @@ class Admin_List {
 				$relationship = $this->get_start_date_relationship( $post_id );
 
 				if ( $relationship !== null ) {
-					$start_date = Dates::immutable( $relationship->start_date, $relationship->timezone );
+					$start_date = Dates::immutable( $relationship->start_date, $relationship->timezone )->format( 'U' );
 					$format     = tribe_get_date_format( true );
-					echo esc_html( $start_date->format( $format ) );
+					echo esc_html( date_i18n( $format, $start_date ) );
 
 					return;
 				}

@@ -27,11 +27,11 @@ $classes = $disabled ? 'tribe-disabled' : '';
 <li>
 	<label
 		for="<?php echo esc_attr( "{$metabox_id}-show-to-ticket-attendees" ); ?>"
-		<?php tribe_classes( $classes ); ?>
+		<?php tec_classes( $classes ); ?>
 	>
 		<input
 			id="<?php echo esc_attr( "{$metabox_id}-show-to-ticket-attendees" ); ?>"
-			<?php tribe_classes( $classes ); ?>
+			<?php tec_classes( $classes ); ?>
 			name="<?php echo esc_attr( "{$metabox_id}[show-embed-to][]" ); ?>"
 			type="checkbox"
 			data-dependency-manual-control

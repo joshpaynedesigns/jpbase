@@ -45,7 +45,7 @@ $start = Timezones::is_mode( 'site' ) ? $event->dates->start_site : $event->date
 $start_time = Dates::time_between( $start->format( 'Y-m-d 0:0:0' ), $start->format( Dates::DBDATETIMEFORMAT ) );
 ?>
 <article
-	<?php tribe_classes( $classes ) ?>
+	<?php tec_classes( $classes ); ?>
 	data-js="tribe-events-pro-week-grid-event"
 	data-start-time="<?php echo esc_attr( $start_time ); ?>"
 	data-event-id="<?php echo esc_attr( $event->ID ); ?>"

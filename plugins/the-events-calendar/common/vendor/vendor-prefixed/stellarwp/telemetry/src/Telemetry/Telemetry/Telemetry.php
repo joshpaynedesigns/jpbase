@@ -5,10 +5,6 @@
  * @since 1.0.0
  *
  * @package StellarWP\Telemetry
- *
- * @license GPL-2.0-or-later
- * Modified using Strauss.
- * @see https://github.com/BrianHenryIE/strauss
  */
 
 namespace TEC\Common\StellarWP\Telemetry\Telemetry;
@@ -394,7 +390,7 @@ class Telemetry {
 	 * Gets the args for sending data to the telemetry server.
 	 *
 	 * @since 1.0.0
-	 * @since TBD - Updated to include the opted in user with the telemetry json.
+	 * @since 2.3.0 - Updated to include the opted in user with the telemetry json.
 	 *
 	 * @return array
 	 */

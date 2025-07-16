@@ -22,12 +22,12 @@ if ( empty( $event ) ) {
 }
 ?>
 
-<li <?php tribe_classes( $widget->get_list_item_class() ); ?>>
+<li <?php tec_classes( $widget->get_list_item_class() ); ?>>
 	<?php
 	$this->template( 'views/integrations/elementor/widgets/event-related/item/thumb' );
 	?>
 	<?php if ( $show_event_title || $show_event_datetime ) : ?>
-	<div <?php tribe_classes( $widget->get_widget_class() . '-info' ); ?>>
+	<div <?php tec_classes( $widget->get_widget_class() . '-info' ); ?>>
 	<?php endif; ?>
 		<?php
 		$this->template( 'views/integrations/elementor/widgets/event-related/item/title' );

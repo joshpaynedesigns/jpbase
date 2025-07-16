@@ -193,12 +193,24 @@ class Tribe__Events__Pro__Custom_Meta {
 				continue;
 			}
 
+			if ( ! isset( $data[ $custom_field['name'] ] ) ) {
+				continue;
+			}
+
 			$ordinary_field_name = wp_kses_data( $custom_field['name'] );
 			$searchable_field_name = '_' . $ordinary_field_name;
 
 			// Grab the new value and reset the searchable records container
 			$value = self::get_value_to_save( $custom_field['name'], $data );
+			if ( null === $value ) {
+				continue;
+			}
+
 			$searchable_records = array();
+
+			if ( is_string( $value ) && strstr( $value, '|' ) ) {
+				$value = explode( '|', $value );
+			}
 
 			// If multiple values have been assigned (ie, if this is a checkbox field or similar) then
 			// build a single pipe-separated field and a list of individual records

@@ -1,15 +1,19 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types = 1);
+
 namespace Nextgenthemes\ARVE;
 
 use WP_Error;
-use function Nextgenthemes\WP\get_var_dump;
+use WP_HTML_Tag_Processor;
 use function Nextgenthemes\WP\get_url_arg;
-use function Nextgenthemes\WP\ngt_get_block_wrapper_attributes;
-use function Nextgenthemes\WP\attr;
+use function Nextgenthemes\WP\apply_attr;
 use function Nextgenthemes\WP\check_product_keys;
+use function Nextgenthemes\WP\first_tag_attr;
 use function Nextgenthemes\WP\valid_url;
 use function Nextgenthemes\WP\str_contains_any;
 use function Nextgenthemes\WP\str_to_array;
+use function Nextgenthemes\WP\replace_links;
 
 class Video {
 
@@ -17,6 +21,7 @@ class Video {
 	private bool $arve_link;
 	private bool $autoplay;
 	private bool $controls;
+	private bool $credentialless;
 	private bool $disable_links;
 	private bool $grow;
 	private bool $hide_title;
@@ -27,12 +32,12 @@ class Video {
 	private bool $sticky_on_mobile;
 	private bool $invidious;
 
-	// ints
+	// int
 	private int $lightbox_maxwidth;
 	private int $maxwidth;
 	private int $volume;
 
-	// strings
+	// string
 	private ?string $url;
 	private string $account_id;
 	private string $align;
@@ -63,6 +68,7 @@ class Video {
 	private string $title;
 	private string $upload_date;
 	private ?string $lightbox_aspect_ratio;
+	private string $lazyload_style;
 
 	// html5
 	private string $av1mp4;
@@ -98,19 +104,17 @@ class Video {
 	// process data
 	private ?object $oembed_data;
 	private array $origin_data;
-	private WP_Error $errors;
 
 	/**
 	 * @param array <string, any> $args
 	 */
 	public function __construct( array $args ) {
-		$this->errors   = arve_errors();
 		$this->org_args = $args;
 		ksort( $this->org_args );
 	}
 
 	/**
-	 * Set the value of a property.
+	 * Prevent setting properties directly
 	 *
 	 * @param string $property The name of the property to set.
 	 * @param mixed $value The value to set for the property.
@@ -127,10 +131,11 @@ class Video {
 		$html = '';
 
 		try {
-			$this->shortcode_atts = \shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
+			$this->shortcode_atts = shortcode_atts( shortcode_pairs(), $this->org_args, 'arve' );
 
 			check_product_keys();
 			$this->process_shortcode_atts();
+			$this->oembed_data_errors();
 
 			$html .= get_error_html();
 			$html .= $this->build_html();
@@ -152,13 +157,18 @@ class Video {
 			//  $trace = '<br>Exception Trace:<br>' . var_export($e->getTrace(), true);
 			// }
 
-			$this->errors->add( $e->getCode(), $e->getMessage() . $trace );
+			arve_errors()->add( $e->getCode(), $e->getMessage() . $trace );
 
 			$html .= get_error_html();
 			$html .= $this->get_debug_info();
 		}
 
-		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars($this) );
+		return apply_filters( 'nextgenthemes/arve/html', $html, get_object_vars( $this ) );
+	}
+
+	private function oembed_data_errors(): void {
+
+		// TODO: add error message for missing oembed data
 	}
 
 	private function process_shortcode_atts(): void {
@@ -170,14 +180,10 @@ class Video {
 			$this->set_prop( $arg_name, $value );
 		}
 
-		if ( ! empty( $this->oembed_data->arve_error ) ) {
-			arve_errors()->add( 'oembed-data-error', $this->oembed_data->arve_error );
-		}
-
-		if ( ! empty( $this->oembed_data->arve_provider ) &&
+		if ( ! empty( $this->oembed_data->provider ) &&
 			! empty( $this->oembed_data->arve_iframe_src )
 		) {
-			$this->set_prop( 'provider', $this->oembed_data->arve_provider );
+			$this->set_prop( 'provider', $this->oembed_data->provider );
 			$this->set_prop( 'src', $this->oembed_data->arve_iframe_src );
 		}
 
@@ -185,7 +191,7 @@ class Video {
 		$this->detect_provider_and_id_from_url();
 
 		$this->set_prop( 'aspect_ratio', $this->arg_aspect_ratio( $this->aspect_ratio ) );
-		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars($this) ) );
+		$this->set_prop( 'thumbnail', apply_filters( 'nextgenthemes/arve/args/thumbnail', $this->thumbnail, get_object_vars( $this ) ) );
 		$this->set_prop( 'img_src', $this->arg_img_src( $this->img_src ) );
 
 		$this->set_video_properties_from_attachments();
@@ -219,7 +225,6 @@ class Video {
 
 	/**
 	 * If a iframe embed code is passed through the url argument, we extract src and ratio.
-	 *
 	 */
 	private function detect_from_embed_code(): void {
 
@@ -229,7 +234,7 @@ class Video {
 			return;
 		}
 
-		$p = new \WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
+		$p = new WP_HTML_Tag_Processor( $this->shortcode_atts['url'] );
 		$p->next_tag( 'iframe' );
 
 		$src = $p->get_attribute( 'src' );
@@ -282,7 +287,7 @@ class Video {
 			$src = add_query_arg( 'controls', '0', $src );
 		}
 
-		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars($this) );
+		$src = apply_filters( 'nextgenthemes/arve/args/iframe_src', $src, get_object_vars( $this ) );
 
 		return $src;
 	}
@@ -460,7 +465,7 @@ class Video {
 			}
 		}
 
-		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, get_object_vars($this) );
+		return apply_filters( 'nextgenthemes/arve/args/autoplay', $autoplay, get_object_vars( $this ) );
 	}
 
 	private function arg_img_src( string $img_src ): string {
@@ -472,7 +477,12 @@ class Video {
 				$img_src = wp_get_attachment_image_url( $this->thumbnail, 'small' );
 
 				if ( empty( $img_src ) ) {
-					arve_errors()->add( 'no-media-id', __( 'No attachment with that ID', 'advanced-responsive-video-embedder' ) );
+					arve_errors()->add(
+						'no-media-id',
+						// Translators: %s Value of thumbnail attribute
+						sprintf( __( 'No attachment with ID <code>%s</code>', 'advanced-responsive-video-embedder' ), $this->thumbnail ),
+						$this->thumbnail
+					);
 				}
 			} elseif ( valid_url( $this->thumbnail ) ) {
 
@@ -480,12 +490,17 @@ class Video {
 
 			} else {
 
-				arve_errors()->add( 'invalid-url', __( 'Not a valid thumbnail URL or Media ID given', 'advanced-responsive-video-embedder' ) );
+				arve_errors()->add(
+					'invalid-url-or-id',
+					// Translators: %s Value of thumbnail attribute
+					sprintf( __( 'No a valid thumbnail URL or Media ID given <code>%s</code>', 'advanced-responsive-video-embedder' ), $this->thumbnail ),
+					$this->thumbnail
+				);
 			}
 
 		endif; // thumbnail
 
-		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, get_object_vars($this) );
+		return (string) apply_filters( 'nextgenthemes/arve/args/img_src', $img_src, get_object_vars( $this ) );
 	}
 
 	/**
@@ -502,10 +517,10 @@ class Video {
 
 		if ( 'youtube' === $this->provider && str_contains( $this->url, '/shorts/' ) ) {
 			$ratio = '9:16';
-		} elseif ( ! empty( $this->oembed_data->width ) &&
-			is_numeric( $this->oembed_data->width ) &&
-			! empty( $this->oembed_data->height ) &&
-			is_numeric( $this->oembed_data->height )
+		} elseif ( ! empty( $this->oembed_data->width )
+			&& is_numeric( $this->oembed_data->width )
+			&& ! empty( $this->oembed_data->height )
+			&& is_numeric( $this->oembed_data->height )
 		) {
 			$ratio = $this->oembed_data->width . ':' . $this->oembed_data->height;
 		} else {
@@ -678,19 +693,19 @@ class Video {
 	 */
 	public function set_prop( string $prop_name, $value ): void {
 
-		if ( ! property_exists($this, $prop_name) ) {
+		if ( ! property_exists( $this, $prop_name ) ) {
 			throw new \Exception( esc_html( "'$prop_name' property does not exists" ) );
 		}
 
 		$url_args      = array_merge( VIDEO_FILE_EXTENSIONS, array( 'url' ) );
 		$type          = get_arg_type( $prop_name );
-		$property_type = ( new \ReflectionProperty(__CLASS__, $prop_name) )->getType()->getName();
+		$property_type = ( new \ReflectionProperty( __CLASS__, $prop_name ) )->getType()->getName();
 
 		if ( $type && $type !== $property_type ) {
 			throw new \Exception( esc_html( $prop_name ) . ' property has the wrong type' );
 		}
 
-		if ( in_array($prop_name, $url_args, true) ) {
+		if ( in_array( $prop_name, $url_args, true ) ) {
 			$this->$prop_name = validate_url( $prop_name, $value );
 			return;
 		}
@@ -714,6 +729,17 @@ class Video {
 		$this->$prop_name = $value;
 	}
 
+	private function card_consent_html(): string {
+
+		if ( is_card( get_object_vars( $this ) )
+			&& function_exists( __NAMESPACE__ . '\Privacy\consent_html' )
+		) {
+			return Privacy\consent_html( get_object_vars( $this ) );
+		}
+
+		return '';
+	}
+
 	private function build_html(): string {
 
 		if ( 'html5' === $this->provider ) {
@@ -722,34 +748,99 @@ class Video {
 			$this->build_iframe_attr();
 		}
 
-		$inner = $this->build_tag(
+		$block_attr = empty( $this->origin_data['gutenberg'] ) ? '' : ' ' . get_block_wrapper_attributes();
+
+		if ( is_amp() ) {
+
+			if ( 'html5' === $this->provider ) {
+				return $this->build_video_tag() . $this->build_seo_data();
+			} else {
+				return $this->build_iframe_tag() . $this->build_seo_data();
+			}
+		} elseif ( 'link-lightbox' === $this->mode && function_exists( __NAMESPACE__ . '\Pro\lightbox_link_html' ) ) {
+
+			$html = sprintf(
+				PHP_EOL . '<span class="arve"%s>%s%s</span>',
+				$block_attr,
+				Pro\lightbox_link_html( get_object_vars( $this ) ),
+				$this->build_seo_data()
+			);
+
+		} else {
+
+			$html = PHP_EOL . <<<HTML
+<div class="arve"{$block_attr}>
+	<div class="arve-inner">
+		<div class="arve-embed">
+			{$this->arve_embed_inner_html()}
+		</div>
+		{$this->card_html()}
+	</div>
+	{$this->card_consent_html()}
+	{$this->promote_link()}
+	{$this->build_seo_data()}
+</div>
+HTML;
+		}
+
+		$p = new WP_HTML_Tag_Processor( $html );
+
+		if ( ! $p->next_tag( [ 'class_name' => 'arve' ] ) ) {
+			wp_trigger_error( __FUNCTION__, 'failed to find .arve tag' );
+			return $p->get_updated_html();
+		}
+
+		$p->set_bookmark( 'arve' );
+
+		if ( $this->align ) {
+			$p->add_class( 'align' . $this->align );
+		}
+
+		apply_attr(
+			$p,
 			array(
-				'name'       => 'inner',
-				'tag'        => 'div',
-				'inner_html' => $this->arve_embed( $this->arve_embed_inner_html() ),
-				'attr'       => array(
-					'class' => 'arve-inner',
-				),
+				'data-mode'     => $this->mode,
+				'data-oembed'   => $this->oembed_data ? '1' : false,
+				'data-provider' => $this->provider,
+				'id'            => $this->uid,
+				'style'         => $this->maxwidth ? sprintf( 'max-width:%dpx;', $this->maxwidth ) : false,
 			)
 		);
 
-		$align_class = $this->align ? " align{$this->align}" : '';
+		if ( function_exists( __NAMESPACE__ . '\Pro\process_tags' ) ) {
+			$p = Pro\process_tags( $p, get_object_vars( $this ) );
+		}
 
-		return $this->build_tag(
-			array(
-				'name'       => 'arve',
-				'tag'        => 'div',
-				'inner_html' => $inner . $this->promote_link() . $this->build_seo_data(),
-				'attr'       => array(
-					'class'         => 'arve' . $align_class,
-					'data-mode'     => $this->mode,
-					'data-oembed'   => $this->oembed_data ? '1' : false,
-					'data-provider' => $this->provider,
-					'id'            => $this->uid,
-					'style'         => $this->maxwidth ? sprintf( 'max-width:%dpx;', $this->maxwidth ) : false,
-				),
-			)
-		);
+		if ( function_exists( __NAMESPACE__ . '\StickyVideos\process_tags' ) ) {
+			$p = StickyVideos\process_tags( $p, get_object_vars( $this ) );
+		}
+
+		if ( 'link-lightbox' !== $this->mode ) {
+
+			if ( ! $p->next_tag( [ 'class_name' => 'arve-embed' ] ) ) {
+				wp_trigger_error( __FUNCTION__, 'failed to find .arve-embed tag' );
+				return $p->get_updated_html();
+			}
+
+			if ( $this->aspect_ratio ) {
+				$p->add_class( 'arve-embed--has-aspect-ratio' );
+
+				if ( ! in_array( $this->aspect_ratio, array( '16:9', '375:211' ), true ) ) {
+					$ar = str_replace( ':', '/', $this->aspect_ratio );
+					$p->set_attribute( 'style', sprintf( 'aspect-ratio:%s', $ar ) );
+				}
+			}
+		}
+
+		return $p->get_updated_html();
+	}
+
+	private function card_html(): string {
+		if ( function_exists( __NAMESPACE__ . '\Pro\card_html' ) ) {
+			return Pro\card_html( get_object_vars( $this ) );
+		}
+
+		return '';
 	}
 
 	private function build_iframe_attr(): void {
@@ -774,21 +865,21 @@ class Video {
 		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy#directives
 		$allow_directives = [
 			'accelerometer'                   => 'none',
-			'ambient-light-sensor'            => 'none',
+			#'ambient-light-sensor'            => 'none',
 			'autoplay'                        => $this->autoplay ? 'self' : 'none',
-			'battery'                         => 'none',
-			'bluetooth'                       => 'none',
-			'browsing-topics'                 => 'none',
+			#'battery'                         => 'none',
+			#'bluetooth'                       => 'none',
+			#'browsing-topics'                 => 'none',
 			'camera'                          => ( 'zoom' === $this->provider ) ? 'self' : 'none',
 			'ch-ua'                           => 'none',
 			'clipboard-read'                  => 'none',
 			'clipboard-write'                 => 'self',
 			'display-capture'                 => 'none',
-			'document-domain'                 => 'none',
-			'domain-agent'                    => 'none',
+			#'document-domain'                 => 'none',
+			#'domain-agent'                    => 'none',
 			'encrypted-media'                 => $this->encrypted_media ? 'self' : 'none',
-			'execution-while-not-rendered'    => 'none',
-			'execution-while-out-of-viewport' => 'none',
+			#'execution-while-not-rendered'    => 'none',
+			#'execution-while-out-of-viewport' => 'none',
 			'gamepad'                         => 'none',
 			'geolocation'                     => 'none',
 			'gyroscope'                       => 'none',
@@ -800,18 +891,18 @@ class Video {
 			'magnetometer'                    => 'none',
 			'microphone'                      => ( 'zoom' === $this->provider ) ? 'self' : 'none',
 			'midi'                            => 'none',
-			'navigation-override'             => 'none',
-			'otp-credentials'                 => 'none',
+			#'navigation-override'             => 'none',
+			#'otp-credentials'                 => 'none',
 			'payment'                         => 'none',
 			'picture-in-picture'              => 'self',
 			'publickey-credentials-create'    => 'none',
 			'publickey-credentials-get'       => 'none',
 			'screen-wake-lock'                => 'none',
 			'serial'                          => 'none',
-			'speaker-selection'               => 'self',
-			'sync-xhr'                        => 'none',
+			#'speaker-selection'               => 'self',
+			'sync-xhr'                        => 'self', // viddler fails without this
 			'usb'                             => 'none',
-			'web-share'                       => 'self',
+			#'web-share'                       => 'self',
 			'window-management'               => 'none',
 			'xr-spatial-tracking'             => 'none',
 		];
@@ -828,41 +919,62 @@ class Video {
 		}
 
 		$this->iframe_attr = array(
-			'credentialless'  => '',
-			'referrerpolicy'  => $this->referrerpolicy(),
-			'allow'           => $allow,
-			'allowfullscreen' => '',
-			'class'           => $class,
-			'data-arve'       => $this->uid,
-			'data-src-no-ap'  => iframesrc_urlarg_autoplay( $this->src, $this->provider, false ),
-			'frameborder'     => '0',
-			'height'          => $this->height,
-			'name'            => $this->iframe_name,
-			'sandbox'         => $this->encrypted_media ? null : $sandbox,
-			'scrolling'       => 'no',
-			'src'             => $this->src,
-			'width'           => $this->width,
-			'title'           => $this->title,
-			'loading'         => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
+			'credentialless'     => $this->credentialless,
+			'referrerpolicy'     => $this->referrerpolicy(),
+			'allow'              => $allow,
+			'allowfullscreen'    => '',
+			'class'              => $class,
+			'data-lenis-prevent' => '',
+			'data-arve'          => $this->uid,
+			'data-src-no-ap'     => iframesrc_urlarg_autoplay( $this->src, $this->provider, false ),
+			'frameborder'        => '0',
+			'height'             => $this->height,
+			'name'               => $this->iframe_name,
+			'sandbox'            => $this->encrypted_media ? null : $sandbox,
+			'scrolling'          => 'no',
+			'src'                => $this->src,
+			'width'              => $this->width,
+			'title'              => $this->title,
+			'loading'            => ( 'normal' === $this->mode ) ? 'lazy' : 'eager',
 		);
 
-		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars($this) );
+		if ( function_exists( __NAMESPACE__ . '\Pro\iframe_attr' ) ) {
+			$this->iframe_attr = Pro\iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
+		}
+
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_iframe_attr' ) ) {
+			$this->iframe_attr = AMP\amp_iframe_attr( $this->iframe_attr, get_object_vars( $this ) );
+		}
+
+		$this->iframe_attr = apply_filters( 'nextgenthemes/arve/iframe_attr', $this->iframe_attr, get_object_vars( $this ) );
 	}
 
 	private function build_iframe_tag(): string {
 
-		if ( in_array($this->mode, [ 'lightbox', 'link-lightbox' ], true) ) {
+		if ( in_array( $this->mode, [ 'lightbox', 'link-lightbox' ], true ) ) {
 			return '';
 		}
 
-		return $this->build_tag(
-			array(
-				'name'       => 'iframe',
-				'tag'        => 'iframe',
-				'inner_html' => '',
-				'attr'       => $this->iframe_attr,
-			)
+		$tag  = $this->iframe_tag();
+		$html = first_tag_attr(
+			'<' . $tag . '></' . $tag . '>',
+			$this->iframe_attr
 		);
+
+		if ( 'lazyload' === $this->mode ) {
+			$html = '<noscript class="arve-noscript">' . $html . '</noscript>';
+		}
+
+		return $html;
+	}
+
+	private function iframe_tag(): string {
+
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_iframe_tag' ) ) {
+			return AMP\amp_iframe_tag( get_object_vars( $this ) );
+		}
+
+		return 'iframe';
 	}
 
 	private function referrerpolicy(): ?string {
@@ -903,7 +1015,12 @@ class Video {
 			'muted'              => $autoplay ? 'muted by ARVE because autoplay is on' : $this->muted,
 			'playsinline'        => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
 			'webkit-playsinline' => in_array( $this->mode, array( 'lightbox', 'link-lightbox' ), true ) ? '' : false,
+			'onloadstart'        => 'this.volume=' . ( $this->volume / 100 ),
 		);
+
+		if ( is_amp() && function_exists( __NAMESPACE__ . '\AMP\amp_video_attr' ) ) {
+			$this->video_attr = AMP\amp_video_attr( $this->video_attr );
+		}
 	}
 
 	private function build_video_tag(): string {
@@ -913,18 +1030,11 @@ class Video {
 		}
 
 		$attr = $this->video_attr;
+		$amp  = is_amp() ? 'amp-' : '';
 
-		if ( in_array( $this->mode, array( 'lazyload', 'lightbox' ), true ) ) {
-			$attr['controls'] = false;
-		}
-
-		return $this->build_tag(
-			array(
-				'name'       => 'video',
-				'tag'        => 'video',
-				'inner_html' => $this->video_sources_html . tracks_html( $this->tracks ),
-				'attr'       => $attr,
-			)
+		return first_tag_attr(
+			'<' . $amp . 'video>' . $this->video_sources_html . tracks_html( $this->tracks ) . '</' . $amp . 'video>',
+			$attr
 		);
 	}
 
@@ -943,7 +1053,7 @@ class Video {
 			static $show_options_debug = true;
 
 			if ( $show_options_debug ) {
-				$html .= sprintf( 'Options: <pre>%s</pre>', get_var_dump( options() ) );
+				$html .= sprintf( 'Options: <pre>%s</pre>', var_export( options(), true ) );
 			}
 
 			$show_options_debug = false;
@@ -977,7 +1087,7 @@ class Video {
 			$html .= sprintf(
 				'<pre style="%s">$a: %s</pre>',
 				esc_attr( $pre_style ),
-				esc_html( var_export( array_filter( get_object_vars($this) ), true ) )
+				esc_html( var_export( array_filter( get_object_vars( $this ) ), true ) )
 			);
 		}
 
@@ -992,27 +1102,24 @@ class Video {
 	private function arve_embed_inner_html(): string {
 
 		$html = '';
+		$lb   = PHP_EOL . "\t\t\t";
+
+		if ( $this->aspect_ratio ) {
+			$html .= sprintf(
+				'<div class="arve-ar" style="padding-top:%F%%"></div>' . $lb,
+				aspect_ratio_to_percentage( $this->aspect_ratio )
+			);
+		}
 
 		if ( 'html5' === $this->provider ) {
-			$html .= $this->build_video_tag();
+			$html .= $this->build_video_tag() . $lb;
 		} else {
-			$html .= $this->build_iframe_tag();
+			$html .= $this->build_iframe_tag() . $lb;
 		}
 
-		if ( 'normal' === $this->mode ) {
-			$html .= $this->build_tag( array( 'name' => 'description' ) );
+		if ( function_exists( __NAMESPACE__ . '\Pro\inner_html' ) ) {
+			$html .= Pro\inner_html( get_object_vars( $this ) );
 		}
-
-		if ( ! empty( $this->img_src ) ) {
-			$html .= $this->build_tag( array( 'name' => 'thumbnail' ) );
-		}
-
-		if ( $this->title ) {
-			$html .= $this->build_tag( array( 'name' => 'title' ) );
-		}
-
-		$html .= $this->build_tag( array( 'name' => 'button' ) );
-		$html .= $this->build_tag( array( 'name' => 'consent' ) );
 
 		return $html;
 	}
@@ -1025,7 +1132,7 @@ class Video {
 			return '';
 		}
 
-		$payload = array(
+		$seo = array(
 			'@context' => 'http://schema.org/',
 			'@id'      => get_permalink() . '#' . $this->uid,
 			'type'     => 'VideoObject',
@@ -1042,71 +1149,31 @@ class Video {
 			'description'      => 'description',
 		);
 
-		foreach ( $metas as $key => $val ) {
+		foreach ( $metas as $prop => $json_name ) {
 
-			if ( ! empty( $this->$key ) ) {
-				if ( 'duration' === $key && \is_numeric( $this->$key ) ) {
-					$this->$key = seconds_to_iso8601_duration( $this->$key );
-				}
-				$payload[ $val ] = trim( $this->$key );
+			if ( empty( $this->{$prop} ) ) {
+				continue;
+			}
+
+			if ( 'duration' === $prop && is_numeric( $this->$prop ) ) {
+				$seo[ $json_name ] = seconds_to_iso8601_duration( $this->$prop );
+			} elseif ( 'description' === $prop ) {
+				$seo[ $json_name ] = trim( replace_links( $this->$prop, '' ) );
+			} else {
+				$seo[ $json_name ] = trim( $this->$prop );
 			}
 		}
 
-		return '<script type="application/ld+json">' . wp_json_encode($payload) . '</script>';
-	}
-
-	/**
-	 * @param array <string, any> $tag
-	 */
-	private function build_tag( array $tag ): string {
-
-		$tag = apply_filters( "nextgenthemes/arve/{$tag['name']}", $tag, get_object_vars($this) );
-
-		if ( empty( $tag['tag'] ) ) {
-
-			$html = '';
-
-			if ( ! empty( $tag['inner_html'] ) ) {
-				$html = $tag['inner_html'];
-			}
-		} else {
-
-			if ( 'arve' === $tag['name'] && ! empty( $this->origin_data['gutenberg'] ) ) {
-				$attr = ngt_get_block_wrapper_attributes( $tag['attr'] );
-			} else {
-				$attr = attr( $tag['attr'] );
-			}
-
-			// Check if 'inner_html' is not empty or explicitly set to an empty string.
-			if ( ! empty( $tag['inner_html'] ) ||
-				( isset( $tag['inner_html'] ) && '' === $tag['inner_html'] )
-			) {
-				$inner_html = $tag['inner_html'] ? PHP_EOL . $tag['inner_html'] . PHP_EOL : '';
-
-				$html = sprintf(
-					'<%1$s%2$s>%3$s</%1$s>' . PHP_EOL,
-					esc_html( $tag['tag'] ),
-					$attr,
-					$inner_html
-				);
-				// Tag without closing tag
-			} else {
-				$html = sprintf(
-					'<%s%s>' . PHP_EOL,
-					esc_html( $tag['tag'] ),
-					$attr
-				);
-			}
-		}
-
-		return apply_filters( "nextgenthemes/arve/{$tag['name']}_html", $html, get_object_vars($this) );
+		return '<script type="application/ld+json">' . wp_json_encode( $seo ) . '</script>';
 	}
 
 	private function promote_link(): string {
 
 		if ( $this->arve_link && 'link-lightbox' !== $this->mode ) {
 			return sprintf(
-				'<a href="%s" title="%s" class="arve-promote-link" target="_blank">%s</a>',
+				'<div class="arve-promote">' .
+					'<small><a href="%s" title="%s" target="_blank">%s</a></small>' .
+				'</div>',
 				esc_url( 'https://nextgenthemes.com/plugins/arve-pro/' ),
 				esc_attr( __( 'Powered by Advanced Responsive Video Embedder WordPress plugin', 'advanced-responsive-video-embedder' ) ),
 				esc_html__( 'ARVE', 'advanced-responsive-video-embedder' )
@@ -1114,34 +1181,5 @@ class Video {
 		}
 
 		return '';
-	}
-
-	private function arve_embed( string $html ): string {
-
-		$ratio_span = '';
-		$class      = 'arve-embed';
-		$style      = false;
-
-		if ( $this->aspect_ratio ) {
-			$class     .= ' arve-embed--has-aspect-ratio';
-			$ratio_span = sprintf( '<span class="arve-ar" style="padding-top:%F%%"></span>', aspect_ratio_to_percentage( $this->aspect_ratio ) );
-
-			if ( ! in_array($this->aspect_ratio, array( '16:9', '375:211' ), true) ) {
-				$ar    = str_replace( ':', ' / ', $this->aspect_ratio );
-				$style = sprintf( 'aspect-ratio: %s', $ar );
-			}
-		}
-
-		return $this->build_tag(
-			array(
-				'name'       => 'embed',
-				'tag'        => 'div',
-				'inner_html' => $ratio_span . $html,
-				'attr'       => array(
-					'class' => $class,
-					'style' => $style,
-				),
-			)
-		);
 	}
 }

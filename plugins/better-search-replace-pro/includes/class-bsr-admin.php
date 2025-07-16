@@ -101,36 +101,60 @@ class BSR_Admin {
 
 	/**
 	 * Renders the result or error onto the better-search-replace admin page.
-	 * @access public
 	 */
 	public static function render_result() {
-
 		if ( isset( $_GET['import'] ) ) {
-			echo '<div class="updated bsr-updated" style="display: none;"><p>' . __( 'Database imported successfully.', 'better-search-replace' ) . '</p></div>';
+			echo '<div class="updated bsr-updated" style="display: none;"><p>' . __(
+					'Database imported successfully.',
+					'better-search-replace'
+				) . '</p></div>';
 		}
 
-		if ( isset( $_GET['result'] ) && $result = get_transient( 'bsr_results' ) ) {
-
-			if ( isset( $result['dry_run'] ) && $result['dry_run'] === 'on' ) {
-				$msg = sprintf( __( '<p><strong>DRY RUN:</strong> <strong>%d</strong> tables were searched, <strong>%d</strong> cells were found that need to be updated, and <strong>%d</strong> changes were made.</p><p><a href="%s" class="thickbox" title="Dry Run Details">Click here</a> for more details, or use the form below to run the search/replace.</p>', 'better-search-replace' ),
-					$result['tables'],
-					$result['change'],
-					$result['updates'],
-					get_admin_url() . 'admin-post.php?action=bsr_view_details&TB_iframe=true&width=800&height=500'
-				);
-			} else {
-				$msg = sprintf( __( '<p>During the search/replace, <strong>%d</strong> tables were searched, with <strong>%d</strong> cells changed in <strong>%d</strong> updates.</p><p><a href="%s" class="thickbox" title="Search/Replace Details">Click here</a> for more details.</p>', 'better-search-replace' ),
-					$result['tables'],
-					$result['change'],
-					$result['updates'],
-					get_admin_url() . 'admin-post.php?action=bsr_view_details&TB_iframe=true&width=800&height=500'
-				);
-			}
-
-			echo '<div class="updated bsr-updated" style="display: none;">' . $msg . '</div>';
-
+		// Trying to show results?
+		if ( ! isset( $_GET['result'] ) ) {
+			return;
 		}
 
+		$result = get_transient( 'bsr_results' );
+
+		// Have results with required fields set with correctly typed data?
+		if (
+			empty( $result ) ||
+			! isset( $result['tables'] ) ||
+			! is_int( $result['tables'] ) ||
+			! isset( $result['change'] ) ||
+			! is_int( $result['change'] ) ||
+			! isset( $result['updates'] ) ||
+			! is_int( $result['updates'] )
+		) {
+			return;
+		}
+
+		if ( isset( $result['dry_run'] ) && $result['dry_run'] === 'on' ) {
+			$msg = sprintf(
+				__(
+					'<p><strong>DRY RUN:</strong> <strong>%1$d</strong> tables were searched, <strong>%2$d</strong> cells were found that need to be updated, and <strong>%3$d</strong> changes were made.</p><p><a href="%4$s" class="thickbox" title="Dry Run Details">Click here</a> for more details, or use the form below to run the search/replace.</p>',
+					'better-search-replace'
+				),
+				$result['tables'],
+				$result['change'],
+				$result['updates'],
+				get_admin_url() . 'admin-post.php?action=bsr_view_details&TB_iframe=true&width=800&height=500'
+			);
+		} else {
+			$msg = sprintf(
+				__(
+					'<p>During the search/replace, <strong>%1$d</strong> tables were searched, with <strong>%2$d</strong> cells changed in <strong>%3$d</strong> updates.</p><p><a href="%4$s" class="thickbox" title="Search/Replace Details">Click here</a> for more details.</p>',
+					'better-search-replace'
+				),
+				$result['tables'],
+				$result['change'],
+				$result['updates'],
+				get_admin_url() . 'admin-post.php?action=bsr_view_details&TB_iframe=true&width=800&height=500'
+			);
+		}
+
+		echo '<div class="updated bsr-updated" style="display: none;">' . $msg . '</div>';
 	}
 
 	/**
@@ -444,14 +468,17 @@ class BSR_Admin {
 		register_setting( 'bsr_settings_fields', 'bsr_enable_gzip', 'esc_attr' );
 	}
 
-
+	/**
+	 * Perform any required upgrades.
+	 *
+	 * @return void
+	 */
 	public function upgrade_routine() {
 		$old_version = get_option( 'bsr_version' );
 
 		if ( $old_version !== BSR_VERSION ) {
 			if ( version_compare( '1.3.6', $old_version, '>' ) ) {
-				$upload_dir  = wp_upload_dir();
-				$old_file = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'bsr_db_backup.sql';
+				$old_file = BSR_DB::get_manual_file_path();
 				@unlink( $old_file );
 				@unlink( $old_file . '.gz' );
 			}
@@ -486,7 +513,7 @@ class BSR_Admin {
 			return;
 		}
 
-		if( ! $new_license && ! check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) ) {
+		if( ! $new_license && ! BSR_Utils::check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) ) {
 			return;
 		}
 
@@ -538,8 +565,9 @@ class BSR_Admin {
 		if( isset( $_POST['bsr_license_deactivate'] ) ) {
 
 			// run a quick security check
-		 	if( ! check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) )
+			if ( ! BSR_Utils::check_admin_referer( 'bsr_license_nonce', 'bsr_license_nonce' ) ) {
 				return; // get out if we didn't click the Activate button
+			}
 
 			// retrieve the license from the database
 			$license = trim( get_option( 'bsr_license_key' ) );
@@ -571,8 +599,7 @@ class BSR_Admin {
 	 * @access public
 	 */
 	public function download_backup() {
-		$cap = apply_filters( 'bsr_capability', 'manage_options' );
-		if ( ! current_user_can( $cap ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_download_backup', 'bsr_download_backup' ) ) {
 			return;
 		}
 
@@ -601,10 +628,7 @@ class BSR_Admin {
 	 * @access public
 	 */
 	public function download_sysinfo() {
-		check_admin_referer( 'bsr_download_sysinfo', 'bsr_sysinfo_nonce' );
-
-		$cap = apply_filters( 'bsr_capability', 'manage_options' );
-		if ( ! current_user_can( $cap ) ) {
+		if ( ! BSR_Utils::check_admin_referer( 'bsr_download_sysinfo', 'bsr_sysinfo_nonce' ) ) {
 			return;
 		}
 
@@ -654,23 +678,36 @@ class BSR_Admin {
 	}
 
 	/**
-	 * Uncompress a file.
+	 * Decompress a file.
+	 *
 	 * @access public
 	 *
-	 * @param  string $file The file to uncompress.
-	 * @param  string $dest The destination of the uncompressed file.
+	 * @param string $file The file to decompress.
+	 * @param string $dest The destination of the uncompressed file.
+	 *
 	 * @return string|boolean
 	 */
 	public static function decompress_file( $file, $dest ) {
-
 		$error = false;
 
 		if ( $fp_in = gzopen( $file, 'rb' ) ) {
-
 			if ( $fp_out = fopen( $dest, 'w' ) ) {
-				while( ! gzeof( $fp_in ) ) {
+				while ( ! gzeof( $fp_in ) ) {
 					$string = gzread( $fp_in, '4096' );
-					fwrite( $fp_out, $string, strlen( $string ) );
+
+					// Could not get uncompressed string, bail.
+					if ( false === $string ) {
+						$error = true;
+						break;
+					}
+
+					$bytes = fwrite( $fp_out, $string, strlen( $string ) );
+
+					// Could not write string to file, bail.
+					if ( false === $bytes ) {
+						$error = true;
+						break;
+					}
 				}
 				fclose( $fp_out );
 			} else {

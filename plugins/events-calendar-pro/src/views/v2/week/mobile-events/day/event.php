@@ -24,7 +24,7 @@ if ( ! empty( $event->featured ) ) {
 	$classes[] = 'tribe-events-pro-week-mobile-events__event--featured';
 }
 ?>
-<article <?php tribe_classes( $classes ) ?>>
+<article <?php tec_classes( $classes ); ?>>
 
 	<?php $this->template( 'week/mobile-events/day/event/featured-image', [ 'event' => $event ] ); ?>
 

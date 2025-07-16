@@ -22,7 +22,7 @@ class Tribe__Events__Pro__Integrations__Beaver_Builder__Page_Builder {
 
 					$plugin = 	Tribe__Events__Pro__Main::instance();
 
-					tribe_asset(
+					tec_asset(
 						$plugin,
 						'tribe-admin-widget-beaver-builder-compatibility',
 						'tec-beaver-builder-compat.css',

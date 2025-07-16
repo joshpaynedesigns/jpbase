@@ -3,8 +3,8 @@ Contributors: nsp-code
 Donate link: http://www.nsp-code.com/donate.php
 Tags: category order,terms order, taxonomy order, categories sort
 Requires at least: 2.8
-Tested up to: 6.6.1
-Stable tag: 1.8.6
+Tested up to: 6.8.2
+Stable tag: 1.9
 
 Order Categories and all custom taxonomies terms (hierarchically) using a Drag and Drop Sortable JavaScript capability. 
 
@@ -59,6 +59,22 @@ All ideas are welcome and i put them on my list to be implemented into the new v
 Consider upgrading to our advanced version of this plugin at a very resonable price <a target="_blank" href="http://www.nsp-code.com/premium-plugins/wordpress-plugins/advanced-taxonomy-terms-order/">Advanced Taxonomy Terms Order Order</a>
 
 == Change Log ==
+
+= 1.9 =
+ - Style and layout updates for the re-order interface.
+ - Add version to the CSS/JavaScript files to ensure latest data is loaded instead cached.
+ - WordPress 6.8.2 compatibility tag 
+
+= 1.8.8 =
+ - PHP 8.3.4 compatibility check
+ - Slight CSS and layout adjustments.
+ - WordPress 6.8 compatibility tag 
+
+= 1.8.7 =
+ - CSS adjustments for span action section.
+ - Option for term edit link. 
+ - Include the term edit link on the ReOrder interface. 
+ - Wordpress 6.7 compatibility check and tag update.
 
 = 1.8.6 =
  - Fix: TTO_addons class not loaded which makes the compatibility routines not triggering. 
@@ -253,7 +269,7 @@ Make sure you get the latest version
 
 == Localization ==
 
-Available in English, Dutch, French, Deutch, Slovak, Japanese, Traditional Chinese, Brazilian Portuguese, Hungarian, Ukrainian, Czech and Romanian
+Available in Catalan, Chinese (China), Chinese (Taiwan), Czech, Dutch, Dutch (Belgium), English (Australia), English (Canada), English (New Zealand), English (UK), English (US), French (France), Galician, German, Italian, Japanese, Norwegian (Bokmål), Polish, Portuguese (Portugal), Russian, Spanish (Chile), Spanish (Spain), Spanish (Venezuela), Swedish, and Turkish.
 Whant to contribute with a translation to your language? Please check at https://translate.wordpress.org/projects/wp-plugins/taxonomy-terms-order
 
 There isn't any Editors for your native language on plugin Contributors? You can help to moderate! https://translate.wordpress.org/projects/wp-plugins/taxonomy-terms-order/contributors

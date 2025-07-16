@@ -18,8 +18,8 @@ if ( empty( $show_thumbnail ) ) {
 }
 
 ?>
-<div <?php tribe_classes( $widget->get_thumbnail_class() ); ?>>
-	<a href="<?php echo esc_url( tribe_get_event_link( $event ) ); ?>" <?php tribe_classes( $widget->get_image_link_class() ); ?> rel="bookmark" tabindex="-1">
+<div <?php tec_classes( $widget->get_thumbnail_class() ); ?>>
+	<a href="<?php echo esc_url( tribe_get_event_link( $event ) ); ?>" <?php tec_classes( $widget->get_image_link_class() ); ?> rel="bookmark" tabindex="-1">
 	<?php
 	if ( has_post_thumbnail( $event->ID ) ) {
 		echo get_the_post_thumbnail( $event->ID, 'large' );

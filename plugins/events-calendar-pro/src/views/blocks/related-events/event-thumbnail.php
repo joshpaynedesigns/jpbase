@@ -23,5 +23,5 @@ $thumb = ( has_post_thumbnail( $event->ID ) )
 	: '<img src="' . esc_url( trailingslashit( Tribe__Events__Pro__Main::instance()->pluginUrl ) . 'src/resources/images/tribe-related-events-placeholder.png' ) . '" alt="' . esc_attr( get_the_title( $event->ID ) ) . '" />'; ?>
 
 <div class="tribe-related-events-thumbnail">
-	<a href="<?php echo esc_url( tribe_get_event_link( $event ) ); ?>" class="url" rel="bookmark" tabindex="-1"><?php echo $thumb ?></a>
+	<a href="<?php echo esc_url( tribe_get_event_link( $event ) ); ?>" class="url" rel="bookmark" tabindex="-1" aria-hidden="true"><?php echo wp_kses_post( $thumb ); ?></a>
 </div>

@@ -26,7 +26,7 @@ $classes = [
 ?>
 <a
 	href="<?php echo esc_url( $add_link ); ?>"
-	<?php tribe_classes( $classes ); ?>
+	<?php tec_classes( $classes ); ?>
 >
 	<span class="dashicons dashicons-plus tribe-events-virtual-meetings-facebook-settings__add-page-span"></span>
 	<?php echo esc_html( $connect_label ); ?>

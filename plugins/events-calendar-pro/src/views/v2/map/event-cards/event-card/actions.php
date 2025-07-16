@@ -28,7 +28,7 @@ $classes   = [ 'tribe-events-pro-map__event-actions', 'tribe-common-b3', 'tribe-
 $classes[] = $linked ? 'tribe-events-pro-map__event-actions--linked' : 'tribe-events-pro-map__event-actions--spacer';
 ?>
 <div
-	<?php tribe_classes( $classes ); ?>
+	<?php tec_classes( $classes ); ?>
 	<?php if ( $linked ) : ?>
 		id="tribe-events-pro-map-event-actions-<?php echo esc_attr( $event->ID );?>"
 		aria-hidden="<?php echo esc_attr( $aria_hidden ); ?>"

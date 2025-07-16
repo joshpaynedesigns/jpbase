@@ -20,7 +20,7 @@
 $event_classes = tribe_get_post_class( [ 'tribe-events-pro-summary__event', 'tribe-common-g-row', 'tribe-common-g-row--gutters' ], $event->ID );
 $event_classes['tribe-events-pro-summary__event-row--featured'] = $event->featured;
 ?>
-<article <?php tribe_classes( $event_classes ) ?>>
+<article <?php tec_classes( $event_classes ); ?>>
 
 	<div class="tribe-common-g-col tribe-events-pro-summary__event-details">
 

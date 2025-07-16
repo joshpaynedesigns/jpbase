@@ -35,6 +35,7 @@ use Tribe__Timezones as Timezones;
 use Tribe__Tracker as Modified_Fields_Tracker;
 use WP_Error;
 use WP_Post;
+use Tribe__Events__Pro__Recurrence__Queue as Recurrence_Queue;
 
 /**
  * Class Multi_Rule_Event_Migration_Strategy.
@@ -525,6 +526,9 @@ class Multi_Rule_Event_Migration_Strategy implements Strategy_Interface {
 			$occurrences_generated = $this->upsert_event( $clone->ID, $ical_string, $dtstart, $series_post->ID, $update_blocks_meta );
 			$event_report->add_created_event( $clone, $occurrences_generated );
 		}
+
+		// Ensure that after the event is migrated, it's no longer an event that needs processing.
+		delete_post_meta( $this->post_id, Recurrence_Queue::EVENT_QUEUE );
 
 		return $event_report->migration_success();
 	}

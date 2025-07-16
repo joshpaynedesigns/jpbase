@@ -35,6 +35,13 @@ class Events_Virtual_Provider extends Plugin_Merge_Provider_Abstract {
 		require_once EVENTS_CALENDAR_PRO_DIR . '/src/functions/template-tags/virtual.php';
 
 		tribe_events_virtual_load();
+
+		/**
+		 * Fires when Events Virtual is fully loaded.
+		 *
+		 * @since 7.5.0
+		 */
+		do_action( 'tec_events_virtual_fully_loaded' );
 	}
 
 	/**

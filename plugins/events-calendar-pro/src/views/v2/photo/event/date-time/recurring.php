@@ -10,26 +10,32 @@
  * @link https://evnt.is/1aiy
  *
  * @since 5.1.1
+ * @since 7.6.1 Added $icon_description parameter and updated the template to use it for the accessible label.
  *
- * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
+ * @version 7.6.1
+ *
+ * @var WP_Post $event            The event post object with properties added by the `tribe_get_event` function.
+ * @var string  $icon_description The description of the icon. Used for the accessible label. (optional)
  *
  * @see tribe_get_event() For the format of the event object.
- *
- * @version 5.2.0
  */
 
 if ( empty( $event->recurring ) ) {
 	return;
+}
+
+if ( empty( $icon_description ) ) {
+	$icon_description = __( 'Recurring', 'tribe-events-calendar-pro' );
 }
 ?>
 <a
 	href="<?php echo esc_url( $event->permalink_all ); ?>"
 	class="tribe-events-pro-photo__event-datetime-recurring-link"
 >
-	<em
-		class="tribe-events-pro-photo__event-datetime-recurring-icon"
-		title="<?php esc_attr_e( 'Recurring', 'tribe-events-calendar-pro' ) ?>"
-	>
+	<em class="tribe-events-pro-photo__event-datetime-recurring-icon">
 		<?php $this->template( 'components/icons/recurring', [ 'classes' => [ 'tribe-events-pro-photo__event-datetime-recurring-icon-svg' ] ] ); ?>
 	</em>
+	<span class="tribe-events-pro-photo__event-datetime-recurring-text tribe-common-a11y-visual-hide">
+		<?php echo esc_html( $icon_description ); ?>
+	</span>
 </a>

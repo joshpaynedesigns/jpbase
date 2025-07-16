@@ -60,11 +60,9 @@ interface SelectOption {
 
 interface OptionProps {
 	label: string;
-	tag: string;
+	tab: string;
 	type: string;
 	description?: string;
-	descriptionlink?: string;
-	descriptionlinktext?: string;
 	placeholder?: string;
 	options?: Record< string, string >;
 	ui?: 'image_upload';
@@ -74,26 +72,24 @@ interface OptionProps {
 
 const { name } = json;
 const { settings, options } = window.ArveBlockJsBefore;
-delete settings.align.options.center;
+delete settings?.align?.options?.center;
 const domParser = new DOMParser();
 
 /**
- * Keypair to gutenberg component
+ * Keypair to Gutenberg component
  * @param selectOptions
  */
-function PrepareSelectOptions( selectOptions: OptionProps ) {
-	const gboptions = [] as Array< SelectOption >;
+function PrepareSelectOptions(
+	selectOptions: Record< string, string > | undefined
+): Array< SelectOption > {
+	if ( ! selectOptions ) {
+		throw new Error( 'no options' );
+	}
 
-	Object.entries( selectOptions ).forEach( ( [ key, value ] ) => {
-		const o: SelectOption = {
-			label: value,
-			value: key,
-		};
-
-		gboptions.push( o );
-	} );
-
-	return gboptions;
+	return Object.entries( selectOptions ).map( ( [ key, value ] ) => ( {
+		label: value,
+		value: key,
+	} ) );
 }
 
 function changeTextControl( key: string, value: string, props ) {
@@ -121,17 +117,6 @@ function changeTextControl( key: string, value: string, props ) {
 		[ key ]: value,
 	} );
 }
-
-// function changeSelectControl( key: string, value: string, props ) {
-
-// 	if ( ! value ) {
-
-// 	}
-
-// 	props.setAttributes( {
-// 		[ key ]: value,
-// 	} );
-// }
 
 const mediaUploadRender = ( open: VoidFunction, val, url: string ): JSX.Element => {
 	return (
@@ -169,8 +154,6 @@ const mediaUploadRender = ( open: VoidFunction, val, url: string ): JSX.Element 
 	);
 };
 
-function select( val );
-
 function buildControls( props ) {
 	const controls = [] as Array< JSX.Element >;
 	const sectionControls = {} as sectionControls;
@@ -180,20 +163,33 @@ function buildControls( props ) {
 	let selectedMedia;
 
 	Object.values( settings ).forEach( ( option: OptionProps ) => {
-		sectionControls[ option.tag ] = [];
+		sectionControls[ option.tab ] = [];
 	} );
 
 	Object.entries( settings ).forEach( ( [ key, option ]: [ string, OptionProps ] ) => {
 		const val = props.attributes[ key ];
 		const url = '';
 
-		sectionControls[ option.tag ].push(
+		sectionControls[ option.tab ].push(
 			<Fragment key={ key + '-fragment' }>
+				{ 'select' === option.ui_element && (
+					<SelectControl
+						value={ val }
+						label={ option.label }
+						help={ createHelp( option?.description ) }
+						options={ PrepareSelectOptions( option.options ) }
+						onChange={ ( value ) => {
+							return props.setAttributes( {
+								[ key ]: '' === value ? undefined : value,
+							} );
+						} }
+					/>
+				) }
 				{ 'checkbox' === option.ui_element_type && (
 					<ToggleControl
 						key={ key }
 						label={ option.label }
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 						checked={ !! val }
 						onChange={ ( value ) => {
 							return props.setAttributes( {
@@ -206,30 +202,17 @@ function buildControls( props ) {
 					<TextControl
 						label={ option.label }
 						placeholder={ option.placeholder }
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 						value={ val }
 						onChange={ ( value ) => {
 							changeTextControl( key, value, props );
 						} }
 					/>
 				) }
-				{ 'select' === option.ui_element && (
-					<SelectControl
-						value={ val }
-						label={ option.label }
-						help={ createHelp( option ) }
-						options={ PrepareSelectOptions( option.options ) }
-						onChange={ ( value ) => {
-							return props.setAttributes( {
-								[ key ]: value,
-							} );
-						} }
-					/>
-				) }
 				{ 'image_upload' === option.ui && (
 					<BaseControl
 						className="editor-post-featured-image"
-						help={ createHelp( option ) }
+						help={ createHelp( option?.description ) }
 					>
 						<MediaUploadCheck fallback={ mediaUploadInstructions }>
 							<MediaUpload
@@ -279,7 +262,6 @@ function buildControls( props ) {
 											[ key + '_url' ]: '',
 										} );
 									} }
-									isLink
 									isDestructive
 								>
 									{ __( 'Remove Thumbnail' ) }
@@ -328,23 +310,33 @@ function buildControls( props ) {
 	// );
 }
 
-function createHelp( option: OptionProps ) {
-	if ( typeof option.description !== 'string' ) {
+function createHelp( description: string | undefined ): string | JSX.Element {
+	if ( ! description ) {
 		return '';
 	}
 
-	if ( typeof option.descriptionlinktext === 'string' ) {
-		const textSplit = option.description.split( option.descriptionlinktext );
+	const doc = domParser.parseFromString( description, 'text/html' );
+	const link = doc.querySelector( 'a' );
+	if ( link ) {
+		const href = link.getAttribute( 'href' ) || '';
+		const linkText = link.textContent || '';
+		description = doc.body.textContent || '';
+		const textSplit = description.split( linkText );
+
+		if ( textSplit.length !== 2 ) {
+			throw new Error( 'textSplit.length must be 2' );
+		}
 
 		return (
 			<>
 				{ textSplit[ 0 ] }
-				<a href={ option.descriptionlink }>{ option.descriptionlinktext }</a>
+				<a href={ href }>{ linkText }</a>
 				{ textSplit[ 1 ] }
 			</>
 		);
 	}
-	return option.description;
+
+	return description;
 }
 
 function capitalizeFirstLetter( str: string ): string {

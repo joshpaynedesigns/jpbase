@@ -10,10 +10,15 @@
 
 class MWP_Signer_OpenSslSigner implements MWP_Signer_Interface
 {
-    public function verify($data, $signature, $publicKey)
+    public function verify($data, $signature, $publicKey, $algorithm = null)
     {
-        /** @handled function */
-        $verify = @openssl_verify($data, $signature, $publicKey);
+        if ($algorithm == 'SHA256') {
+            /** @handled function */
+            $verify = @openssl_verify($data, $signature, $publicKey, OPENSSL_ALGO_SHA256);
+        } else {
+            /** @handled function */
+            $verify = @openssl_verify($data, $signature, $publicKey);
+        }
 
         if ($verify === -1) {
             $error     = $errorRow = '';

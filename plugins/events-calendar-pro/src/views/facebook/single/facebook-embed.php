@@ -29,7 +29,7 @@ if ( ! empty( $embed_classes ) ) {
 ?>
 <div class="tribe-events-virtual-single-facebook__embed-wrap">
 	<figure
-		<?php tribe_classes( $facebook_embed_classes ); ?>
+		<?php tec_classes( $facebook_embed_classes ); ?>
 	>
 		<div class="tribe-events-virtual-single-facebook__wrapper">
 			<?php echo $embed // phpcs:ignore ?>

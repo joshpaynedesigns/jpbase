@@ -17,11 +17,28 @@
 require_once __DIR__ . '/functions/requirements.php';
 require_once __DIR__ . '/classes/class-genesis-requirements-views.php';
 
-$genesis_requirements_messages = genesis_check_requirements();
+add_action( 'after_setup_theme', 'genesis_maybe_display_requirements_notices' );
+/**
+ * Display notices in admin if system requirements are not met.
+ *
+ * @since 3.6.0 Moved from file root to avoid notices when loading translations
+ * under WordPress 6.7+.
+ *
+ * @return void
+ */
+function genesis_maybe_display_requirements_notices() {
 
-if ( true !== $genesis_requirements_messages ) {
-	$genesis_requirements_views = new Genesis_Requirements_Views( $genesis_requirements_messages );
-	$genesis_requirements_views->add_hooks();
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$genesis_requirements_messages = genesis_check_requirements();
+
+	if ( true !== $genesis_requirements_messages ) {
+		$genesis_requirements_views = new Genesis_Requirements_Views( $genesis_requirements_messages );
+		$genesis_requirements_views->add_hooks();
+	}
+
 }
 
 spl_autoload_register( 'genesis_autoload_register' );
@@ -84,11 +101,13 @@ function genesis_autoload_register_psr4( $class_name ) {
  */
 do_action( 'genesis_pre' );
 
-add_action( 'genesis_init', 'genesis_i18n' );
+add_action( 'after_setup_theme', 'genesis_i18n' );
 /**
  * Load the Genesis textdomain for internationalization.
  *
  * @since 1.9.0
+ * @since 3.6.0 Moved from genesis_init to avoid notices when loading
+ * translations under WordPress 6.7+.
  */
 function genesis_i18n() {
 
@@ -156,27 +175,6 @@ function genesis_theme_support() {
 	add_theme_support( 'genesis-auto-updates' );
 	add_theme_support( 'genesis-breadcrumbs' );
 
-	// Maybe add support for Genesis menus.
-	if ( ! current_theme_supports( 'genesis-menus' ) ) {
-
-		$menus = [
-			'primary'   => __( 'Primary Navigation Menu', 'genesis' ),
-			'secondary' => __( 'Secondary Navigation Menu', 'genesis' ),
-		];
-
-		/**
-		 * Filter for the menus that Genesis supports by default.
-		 *
-		 * @since 2.3.0
-		 *
-		 * @param array $menus The array of supported menus.
-		 */
-		$menus = apply_filters( 'genesis_theme_support_menus', $menus );
-
-		add_theme_support( 'genesis-menus', $menus );
-
-	}
-
 	// Maybe add support for structural wraps.
 	if ( ! current_theme_supports( 'genesis-structural-wraps' ) ) {
 
@@ -208,6 +206,37 @@ function genesis_theme_support() {
 			]
 		);
 	}
+
+}
+
+add_action( 'after_setup_theme', 'genesis_maybe_add_genesis_menus' );
+/**
+ * Maybe add support for Genesis menus.
+ *
+ * @since 3.6.0 Moved from genesis_theme_support to avoid notices when loading
+ * translations under WordPress 6.7+.
+ */
+function genesis_maybe_add_genesis_menus() {
+
+	if ( current_theme_supports( 'genesis-menus' ) ) {
+		return;
+	}
+
+	$menus = [
+		'primary'   => __( 'Primary Navigation Menu', 'genesis' ),
+		'secondary' => __( 'Secondary Navigation Menu', 'genesis' ),
+	];
+
+	/**
+	 * Filter for the menus that Genesis supports by default.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param array $menus The array of supported menus.
+	 */
+	$menus = apply_filters( 'genesis_theme_support_menus', $menus );
+
+	add_theme_support( 'genesis-menus', $menus );
 
 }
 
@@ -259,10 +288,10 @@ function genesis_constants() {
 	// Define Theme Info Constants.
 	// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '3.5.0' );
-	define( 'PARENT_THEME_BRANCH', '3.5' );
+	define( 'PARENT_THEME_VERSION', '3.6.0' );
+	define( 'PARENT_THEME_BRANCH', '3.6' );
 	define( 'PARENT_DB_VERSION', '3301' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', strtotime( '18 January 2024' ) ) );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', strtotime( '20 March 2025' ) ) );
 
 	// Define Parent and Child Directory Location and URL Constants.
 	define( 'PARENT_DIR', get_template_directory() );

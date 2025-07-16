@@ -2,8 +2,8 @@
 Contributors: managewp,freediver
 Tags: manage multiple sites, backup, security, migrate, performance, analytics, Manage WordPress, Managed WordPress, WordPress management, WordPress manager, WordPress management, site management, control multiple sites, WordPress management dashboard, administration, automate, automatic, comments, clone, dashboard, duplicate, google analytics, login, manage, managewp, multiple, multisite, remote, seo, spam
 Requires at least: 3.1
-Tested up to: 6.5
-Stable tag: trunk
+Tested up to: 6.8
+Stable tag: 4.9.23
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/quick-guide-gplv3.html
 
@@ -55,6 +55,16 @@ Check out the [ManageWP promo video](https://vimeo.com/220647227).
 https://vimeo.com/220647227
 
 == Changelog ==
+= 4.9.23 =
+- Fix: Use OpenSSL for SHA256 hashing
+
+= 4.9.22 =
+- WordPress 6.8 compatibility bump
+- Fix: Compatibility with OpenSSL 3+
+
+= 4.9.21 =
+- WordPress 6.7 compatibility bump
+
 = 4.9.20 =
 - WordPress 6.5 compatibility bump
 
@@ -62,7 +72,6 @@ https://vimeo.com/220647227
 - Fix: Absolute path on Windows systems
 - Code cleanup
 
-== Changelog ==
 = 4.9.18 =
 - Fix: PHP 8.X Compatibility notices
 - WordPress 6.4 compatibility bump

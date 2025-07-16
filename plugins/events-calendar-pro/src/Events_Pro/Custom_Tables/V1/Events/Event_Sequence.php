@@ -2,11 +2,17 @@
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Events;
 
-use DateTime;
 use TEC\Events\Custom_Tables\V1\Models\Occurrence;
 use TEC\Events_Pro\Custom_Tables\V1\Models\Provisional_Post;
 use Tribe__Date_Utils;
 
+/**
+ * Class Event_Sequence.
+ *
+ * @since   7.4.5
+ *
+ * @package TEC\Events_Pro\Custom_Tables\V1\Events;
+ */
 class Event_Sequence {
 	/**
 	 * @since 6.1.1
@@ -67,7 +73,7 @@ class Event_Sequence {
 		// New occurrence, now add.
 		$this->post_meta[ $sequence ] = [
 			'start_date' => $occurrence->start_date,
-			'end_date'   => $occurrence->end_date
+			'end_date'   => $occurrence->end_date,
 		];
 
 		return true;
@@ -117,9 +123,9 @@ class Event_Sequence {
 		}
 
 		return Occurrence::where( 'post_id', $post_id )
-		                 ->where( 'start_date', $sequence_hash_table[ $sequence_number ]['start_date'] )
-		                 ->where( 'end_date', $sequence_hash_table[ $sequence_number ]['end_date'] )
-		                 ->first();
+						->where( 'start_date', $sequence_hash_table[ $sequence_number ]['start_date'] )
+						->where( 'end_date', $sequence_hash_table[ $sequence_number ]['end_date'] )
+						->first();
 	}
 
 	/**
@@ -148,7 +154,7 @@ class Event_Sequence {
 	 *
 	 * @since 6.1.1
 	 *
-	 * @param Occurrence $occurrence
+	 * @param Occurrence $occurrence The occurrence to find the sequence for.
 	 *
 	 * @return int|null The sequence ID if one is found.
 	 */
@@ -169,20 +175,31 @@ class Event_Sequence {
 	 * Checks if this occurrence has other occurrences that would be eligible for a sequence number.
 	 *
 	 * @since 6.1.1
+	 * @since 7.4.4   Improve logic to cache results and avoid duplicated queries.
 	 *
 	 * @param Occurrence $occurrence The occurrence that may have other occurrences that fall on the same start date as.
 	 *
 	 * @return bool Whether there is another occurrence on the same date.
 	 */
 	public static function has_occurrence_on_same_day( Occurrence $occurrence ): bool {
-		$start = Tribe__Date_Utils::build_date_object( $occurrence->start_date );
+		// We can trust the format of the Occurrence `start_date` field to be `Y-m-d H:i:s`.
+		[ $day_y_m_d ] = explode( ' ', $occurrence->start_date, 2 );
 
-		return ! ! Occurrence::where( 'start_date', '>=', $start->format( 'Y-m-d 00:00:00' ) )
-		                     ->where( 'start_date', '<=', $start->format( 'Y-m-d 23:59:59' ) )
-		                     ->where( 'occurrence_id', '!=', $occurrence->occurrence_id )
-		                     ->where( 'post_id', '=', $occurrence->post_id )
-		                     ->first();
+		$post_id   = $occurrence->post_id;
+		$cache_key = __METHOD__ . '_' . $day_y_m_d . '_' . $post_id;
+		$cache     = tribe_cache();
+		$count     = $cache[ $cache_key ];
 
+		if ( $count === false ) {
+			$count = Occurrence::where( 'post_id', $occurrence->post_id )
+								->where( 'start_date', '>=', $day_y_m_d . ' 00:00:00' )
+								->where( 'start_date', '<=', $day_y_m_d . ' 23:59:59' )
+								->count();
+
+			$cache[ $cache_key ] = $count;
+		}
+
+		return $count > 1;
 	}
 
 	/**
@@ -190,6 +207,7 @@ class Event_Sequence {
 	 * consideration for event sequence date ranges.
 	 *
 	 * @since 6.1.1
+	 * @since 7.4.4   Improve logic to cache results and avoid duplicated queries.
 	 *
 	 * @param numeric $post_id The post ID.
 	 * @param string  $date    The date to search on for an occurrence.
@@ -197,12 +215,22 @@ class Event_Sequence {
 	 * @return Occurrence|null The occurrence if one exists.
 	 */
 	public static function get_occurrence_on_same_day( $post_id, $date ): ?Occurrence {
-		$start = Tribe__Date_Utils::build_date_object( $date );
+		$start      = Tribe__Date_Utils::build_date_object( $date );
+		$day_y_m_d  = $start->format( 'Y-m-d' );
+		$cache_key  = __METHOD__ . '_' . $post_id . '_' . $day_y_m_d;
+		$cache      = tribe_cache();
+		$occurrence = $cache[ $cache_key ];
 
-		return Occurrence::where( 'post_id', $post_id )
-		                 ->where( 'start_date', '>=', $start->format( 'Y-m-d 00:00:00' ) )
-		                 ->where( 'start_date', '<=', $start->format( 'Y-m-d 23:59:59' ) )
-		                 ->first();
+		if ( $occurrence === false ) {
+			$occurrence = Occurrence::where( 'post_id', $post_id )
+									->where( 'start_date', '>=', $start->format( 'Y-m-d 00:00:00' ) )
+									->where( 'start_date', '<=', $start->format( 'Y-m-d 23:59:59' ) )
+									->first();
+
+			$cache[ $cache_key ] = $occurrence;
+		}
+
+		return $occurrence;
 	}
 
 	/**
@@ -211,6 +239,7 @@ class Event_Sequence {
 	 * will add incrementally as needed.
 	 *
 	 * @since 6.1.1
+	 * @since 7.4.4   Improve logic to cache results and avoid duplicated queries.
 	 *
 	 * @param Occurrence $occurrence The occurrence to sync other sequences for.
 	 *
@@ -219,14 +248,26 @@ class Event_Sequence {
 	public static function sync_sequences_for( Occurrence $occurrence ): int {
 		$count_added = 0;
 
-		$start = Tribe__Date_Utils::build_date_object( $occurrence->start_date );
-
 		// Find all occurrences that land on the same day in our same event.
-		$occurrences = Occurrence::where( 'start_date', '>=', $start->format( 'Y-m-d 00:00:00' ) )
-		                         ->where( 'start_date', '<=', $start->format( 'Y-m-d 23:59:59' ) )
-		                         ->where( 'post_id', '=', $occurrence->post_id )
-		                         ->order_by( 'start_date', 'ASC' )
-		                         ->get();
+		$post_id = $occurrence->post_id;
+
+		// We can trust the format of the Occurrence `start_date` field to be `Y-m-d H:i:s`.
+		[ $day_y_m_d ] = explode( ' ', $occurrence->start_date, 2 );
+
+		$cache_key   = __METHOD__ . '_' . $post_id . '_' . $day_y_m_d;
+		$cache       = tribe_cache();
+		$occurrences = $cache[ $cache_key ];
+
+		if ( $occurrences === false ) {
+			$occurrences = Occurrence::where( 'start_date', '>=', $day_y_m_d . ' 00:00:00' )
+									->where( 'start_date', '<=', $day_y_m_d . ' 23:59:59' )
+									->where( 'post_id', '=', $post_id )
+									->order_by( 'start_date', 'ASC' )
+									->get();
+
+			$cache[ $cache_key ] = $occurrences;
+		}
+
 		// Only one so let's bail.
 		if ( count( $occurrences ) <= 1 ) {
 			return $count_added;
@@ -236,7 +277,7 @@ class Event_Sequence {
 		// Find which occurrence in this day this is.
 		foreach ( $occurrences as $sameday_occurrence ) {
 			if ( $event_sequence_object->add_occurrence( $sameday_occurrence ) ) {
-				$count_added ++;
+				++$count_added;
 			}
 		}
 
