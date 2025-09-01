@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/advanced-custom-fields-pro/includes/Updater" isTestSource="false" packagePrefix="ACF" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/advanced-custom-fields-pro/src" isTestSource="false" packagePrefix="ACF" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/events-calendar-pro/src" isTestSource="false" packagePrefix="TEC" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/simple-page-ordering/10up-lib/wp-compat-validation-tool/src" isTestSource="false" packagePrefix="Simple_Page_Ordering_Validator" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/the-events-calendar/common/src" isTestSource="false" packagePrefix="TEC" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/the-events-calendar/common/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/the-events-calendar/common/src/Common" isTestSource="false" packagePrefix="TEC" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-content/plugins/the-events-calendar/src" isTestSource="false" packagePrefix="TEC" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-includes" isTestSource="false" packagePrefix="PHPMailer" />
+      <sourceFolder url="file://$MODULE_DIR$/wp-includes/SimplePie/src" isTestSource="false" packagePrefix="SimplePie" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
