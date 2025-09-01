@@ -1,0 +1,40 @@
+.attachments-section {
+  .attachment_icon {
+    align-items: center;
+    background-color: $light-blue;
+    display: flex;
+    height: rem(48);
+    justify-content: center;
+    width: rem(48);
+
+    svg {
+      max-width: rem(24);
+    }
+  }
+
+  .attachment_title {
+    color: $medium-gray;
+    transition: all $base-timing $base-duration;
+  }
+
+  a.attachment {
+    &:hover {
+      .attachment_title {
+        color: $light-blue;
+      }
+    }
+  }
+
+  .one2grid {
+    flex-direction: column;
+    gap: rem(16);
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+
+      .mobile-divider {
+        display: none;
+      }
+    }
+  }
+}

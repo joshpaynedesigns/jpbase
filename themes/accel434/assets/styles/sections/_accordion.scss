@@ -1,0 +1,84 @@
+.accordion-row {
+  transition: all $base-duration $base-timing;
+
+  &:hover,
+  &.active-ar {
+    border-color: #ccc;
+
+    .ac-row-title {
+      color: $blue;
+    }
+
+    .ac-row-toggle {
+      &:before,
+      &:after {
+        background: $blue;
+      }
+    }
+  }
+}
+
+.accordion-row-header {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ac-row-title {
+  font-size: 16px;
+  font-weight: bold;
+  max-width: 84%;
+  transition: all $base-duration $base-timing;
+  color: $medium-gray;
+  text-transform: none;
+}
+
+.ac-row-toggle {
+  position: relative;
+
+  &:before,
+  &:after {
+    background: $medium-gray;
+    content: "";
+    display: block;
+    height: rem(3);
+    position: absolute;
+    top: rem(-2);
+    transition: all $base-duration $base-timing;
+    width: rem(14);
+  }
+
+  &:before {
+    right: rem(15);
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    right: rem(7);
+    transform: rotate(-45deg);
+  }
+
+  .active-ar & {
+    &:before {
+      transform: rotate(-45deg);
+    }
+
+    &:after {
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.accordion-row-content {
+  display: none;
+  overflow: hidden;
+}
+
+.accordions-columns-wrap.one2gridlarge {
+  gap: $small-spacing;
+
+  @media ($large-screen-up) {
+    gap: 2rem;
+  }
+}

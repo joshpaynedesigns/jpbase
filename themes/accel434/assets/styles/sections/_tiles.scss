@@ -1,0 +1,46 @@
+.tiles {
+  .tile-blocks {
+    @media ($large-screen-up) {
+      display: flex;
+
+      &.tiles-2 .tile-block {
+        width: 50%;
+      }
+
+      &.tiles-3 .tile-block {
+        width: 33.33%;
+      }
+
+      &.tiles-4 .tile-block {
+        width: 25%;
+      }
+    }
+
+    .tile-block {
+      padding: $base-spacing * 3 $base-spacing * 2;
+      position: relative;
+
+      @media ($large-screen-up) {
+        padding: rem(75) rem(48);
+      }
+
+      .tile-block-excerpt {
+        position: relative;
+        z-index: 100;
+      }
+
+      &.has-image {
+        background-color: black;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        @include bg_overlay($dark-gray, 0.5);
+      }
+
+      &.bg-white,
+      &.bg-none {
+        border: 1px solid $light-gray;
+      }
+    }
+  }
+}

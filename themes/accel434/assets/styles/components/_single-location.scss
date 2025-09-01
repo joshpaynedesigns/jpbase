@@ -1,0 +1,28 @@
+.location-single {
+  h1.post-title {
+    font-size: rem(32);
+  }
+}
+
+.location-details {
+  background: $light-gray;
+  padding: rem(24);
+
+  @media ($large-screen-up) {
+    padding: rem(32);
+  }
+}
+
+.details-upper {
+  display: flex;
+  flex-direction: column;
+  gap: rem(24);
+
+  @media ($large-screen-up) {
+    flex-direction: row;
+  }
+
+  > div {
+    flex: 1;
+  }
+}

@@ -1,0 +1,59 @@
+.projects-feed-section {
+  .section-title {
+    text-align: center;
+  }
+
+  .projects-feed-outer {
+    position: relative;
+
+    @media ($medium-screen-up) {
+      margin-left: rem(-16);
+      width: calc(100% + rem(32));
+    }
+
+    .project {
+      padding: 0 rem(16);
+      display: block;
+
+      &:focus {
+        outline: none;
+      }
+
+      .project-img {
+        height: rem(200);
+        @include bg();
+        margin-bottom: rem(16);
+        display: block;
+      }
+
+      .project-info {
+        .project-title {
+          // font-size: rem(18);
+          // text-transform: uppercase;
+          font-weight: bold;
+        }
+
+        .project-cats {
+          margin-top: rem(-5);
+          margin-bottom: 0.7rem;
+          color: $base-font-color;
+        }
+
+        .project-blurb {
+          font-size: rem(14);
+          color: $base-font-color;
+        }
+
+        .project-link {
+          font-size: rem(14);
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+
+  .projects-feed-bottom {
+    margin-top: rem(32);
+    text-align: center;
+  }
+}

@@ -1,0 +1,94 @@
+.events-feed-section {
+  > .wrap {
+    display: flex;
+    flex-direction: column;
+    gap: rem(32);
+
+    @media ($xl-screen-up) {
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .events-title-wrap {
+    text-align: center;
+
+    @media ($xl-screen-up) {
+      text-align: left;
+    }
+  }
+
+  .events-slider-outer {
+    @media ($xl-screen-up) {
+      max-width: rem(750);
+    }
+  }
+
+  .event-item {
+    align-items: center;
+    display: flex;
+    gap: rem(16);
+    justify-content: center;
+    padding: rem(12);
+
+    @media ($medium-screen-up) {
+      gap: rem(22);
+    }
+
+    .event-date {
+      align-items: center;
+      background-color: $medium-gray;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      gap: rem(2);
+      height: rem(75);
+      justify-content: center;
+      line-height: 1;
+      transition: background-color $base-timing $base-duration;
+      width: rem(75);
+      aspect-ratio: 1/1;
+    }
+
+    .event-date-up {
+      font-size: rem(14);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .event-date-down {
+      font-size: rem(24);
+    }
+
+    .event-details {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+      line-height: 1;
+    }
+
+    .event-title {
+      color: $dark-gray;
+      font-size: rem(18);
+      font-weight: bold;
+      transition: all $base-timing $base-duration;
+    }
+
+    .event-link {
+      color: $blue;
+      font-size: rem(12);
+      font-weight: bold;
+    }
+
+    &:hover {
+      .event-date {
+        background-color: $blue;
+      }
+
+      .event-title {
+        color: $blue;
+      }
+    }
+  }
+}

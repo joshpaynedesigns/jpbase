@@ -1,0 +1,38 @@
+.logos-section {
+  .logos-slider {
+    position: relative;
+
+    .logo-slide {
+      padding: 0 rem(24);
+    }
+  }
+
+  .logos-cloud .logos-slides {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(12);
+    justify-content: center;
+
+    img {
+      display: block;
+      max-height: rem(48);
+
+      @media ($large-screen-up) {
+        max-height: rem(64);
+      }
+    }
+  }
+
+  .logo-link {
+    img {
+      transition: all $base-duration $base-timing;
+    }
+
+    &:hover {
+      img {
+        opacity: 0.6;
+      }
+    }
+  }
+}

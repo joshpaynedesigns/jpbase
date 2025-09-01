@@ -1,0 +1,11 @@
+$small-screen: rem(400);
+$medium-screen: rem(640);
+$large-screen: rem(900);
+$xl-screen: rem(1200);
+$full-screen: rem(1400);
+
+$small-screen-up: "min-width: 400px";
+$medium-screen-up: "min-width: 640px";
+$large-screen-up: "min-width: 900px";
+$xl-screen-up: "min-width: 1200px";
+$full-screen-up: "min-width: 1400px";

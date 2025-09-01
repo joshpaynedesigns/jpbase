@@ -1,0 +1,13 @@
+.location-arch-upper {
+  .facetwp-facet.facetwp-type-map {
+    margin-bottom: 0;
+  }
+}
+
+.location-arch-lower {
+  margin-top: rem(32);
+
+  @media ($large-screen-up) {
+    margin-top: rem(48);
+  }
+}

@@ -1,0 +1,155 @@
+.arve-sc-dialog {
+	--ngt-wp-body-bg: #f0f0f1;
+	box-sizing: border-box;
+	width: 900px;
+	max-width: 100dvw;
+
+	height: 100dvh;
+	padding: 0;
+	background-color: var(--ngt-wp-body-bg); // same as body from wp default styles
+	border: none;
+	border-radius: 5px;
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: inherit;
+	}
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, .8);
+	}
+
+	&[open] {
+		animation: arve-sc-dialog-zoom .4s cubic-bezier(.34, 1.56, .64, 1);
+
+		&::backdrop {
+			animation: arve-sc-dialog-fade .4s ease-out;
+		}
+	}
+
+	&:not([open]) {
+		display: none;
+	}
+
+	.media-modal-close {
+		right: 10px;
+	}
+
+	.media-modal-close[data-wp-on--click="actions.toggleHelp"] {
+		right: 52px;
+	}
+
+	.dashicons-editor-help::before {
+		content: "\f223" !important;
+	}
+}
+
+.arve-sc-dialog__wrap {
+	display: grid;
+	grid-template-areas:
+		"."
+		"."
+		".";
+	grid-template-rows:
+		auto
+		1fr
+		auto;
+	grid-template-columns: minmax(300px, 1fr);
+	gap: 0;
+	height: 100%;
+	container-type: inline-size;
+}
+
+.arve-sc-dialog__header {
+	height: .5rem; /* makes scroll visible */
+	text-align: end;
+
+	.media-modal-icon::before {
+		vertical-align: text-bottom; /* makes the help icon align with the close icon */
+	}
+}
+
+.arve-sc-dialog__body {
+	position: relative;
+	padding-right: 10px;
+	padding-left: 10px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background: /* Shadow covers */
+		linear-gradient(var(--ngt-wp-body-bg) 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), var(--ngt-wp-body-bg) 70%) 0 100%, /* Shadows */radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+	background-repeat: no-repeat;
+
+	/* Opera doesn't support this in the shorthand */
+	background-attachment: local, local, scroll, scroll;
+	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+	hr {
+		display: none;
+	}
+
+	.ngt-opt--url,
+	.ngt-opt--description,
+	.ngt-opt--random_video_url,
+	.ngt-opt--arve-random_video_urls {
+		grid-column: 1 / span 2 !important;
+	}
+}
+
+@container (min-width: 700px) {
+	.arve-sc-dialog__body {
+		display: grid;
+		grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+		row-gap: 1em;
+		column-gap: 2em;
+		padding-bottom: 4px;
+
+		.ngt-opt p {
+			margin: 0;
+		}
+	}
+}
+
+.ngt .arve-sc-dialog__close-btn {
+	width: 2.1rem;
+	height: 2.1rem;
+	font-size: 2rem;
+	background: none;
+	border: none;
+
+	.dashicons {
+		vertical-align: baseline;
+	}
+}
+
+.ngt .arve-sc-dialog__description {
+	margin-top: .2rem;
+}
+
+.arve-sc-dialog__footer {
+	padding: 10px;
+}
+
+#arve-shortcode {
+	margin-top: 1em;
+	font-size: 1.2em;
+	line-height: 1.2;
+}
+
+@keyframes arve-sc-dialog-zoom {
+	from {
+		transform: scale(.8);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes arve-sc-dialog-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

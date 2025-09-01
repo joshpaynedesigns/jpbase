@@ -1,0 +1,22 @@
+.skipLink {
+  height: 1px;
+  left: rem(-1000);
+  overflow: hidden;
+  position: absolute;
+  text-align: left;
+  top: rem(-1000);
+  width: 1px;
+}
+
+a.skipLink:active,
+a.skipLink:focus,
+a.skipLink:hover {
+  background-color: white;
+  height: auto;
+  left: 0;
+  overflow: visible;
+  padding: rem(10) rem(20);
+  top: 0;
+  width: auto;
+  z-index: 1000000;
+}

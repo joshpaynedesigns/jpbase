@@ -1,0 +1,1 @@
+function ga_skiplinks(){var fragmentID=location.hash.substring(1);fragmentID&&(fragmentID=document.getElementById(fragmentID))&&(!1===/^(?:a|select|input|button|textarea)$/i.test(fragmentID.tagName)&&(fragmentID.tabIndex=-1),fragmentID.focus())}window.addEventListener?window.addEventListener("hashchange",ga_skiplinks,!1):window.attachEvent("onhashchange",ga_skiplinks);

@@ -1,0 +1,46 @@
+.sidebar {
+  font-size: $base-font-size;
+  margin-top: rem(32);
+
+  @media ($large-screen-up) {
+    margin-top: 0;
+  }
+
+  ul {
+    line-height: 1.2rem;
+  }
+
+  li {
+    // border-bottom: $base-border;
+    margin-bottom: rem(16) !important;
+    // padding-bottom: rem(16) !important;
+    padding-left: 0 !important;
+
+    &:before {
+      display: none;
+    }
+
+    a {
+      color: #888;
+
+      &:hover {
+        color: $dark-gray;
+      }
+    }
+  }
+
+  p:last-child,
+  ul > li:last-child {
+    margin-bottom: 0;
+  }
+
+  .widget {
+    background-color: white;
+    margin-bottom: rem(32);
+
+    @media ($large-screen-up) {
+      margin-bottom: $base-spacing * 2;
+      padding: 0 0 0 rem(32);
+    }
+  }
+}

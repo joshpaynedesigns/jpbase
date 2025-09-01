@@ -1,0 +1,54 @@
+.ribbon-cta-section {
+  .ribbon-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: rem(16);
+    padding: rem(58);
+    text-align: center;
+
+    @media ($large-screen-up) {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+  }
+
+  &.contained {
+    .ribbon-content {
+      @media ($large-screen-up) {
+        padding-left: rem(80);
+        padding-right: rem(80);
+      }
+    }
+  }
+
+  .ribbon-text {
+    display: block;
+
+    @media ($large-screen-up) {
+      max-width: 70%;
+    }
+  }
+
+  .top-text,
+  .bottom-text {
+    color: white;
+    line-height: 1;
+    margin-bottom: 0;
+  }
+
+  .top-text {
+    @media ($large-screen-up) {
+      font-size: rem(36);
+    }
+  }
+
+  .bottom-text {
+    font-size: rem(24);
+    margin-top: rem(12);
+    font-weight: 300;
+  }
+}

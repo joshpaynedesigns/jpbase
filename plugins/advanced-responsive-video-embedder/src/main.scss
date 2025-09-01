@@ -1,0 +1,117 @@
+/* stylelint-disable selector-max-id, selector-no-qualifying-type */
+
+html,
+#html {
+
+	// Not want to target span (link-lightbox)
+	div.wp-block-nextgenthemes-arve-block,
+	div.arve {
+		display: block;
+		width: auto;
+		margin-bottom: 1.5em;
+		transition-timing-function: ease-in-out;
+		transition-duration: .35s;
+		transition-property: max-width, margin;
+
+		&.alignfull {
+			max-width: 100dvw !important;
+		}
+
+		&.alignleft,
+		&.alignright {
+			width: 100%;
+			margin-top: .4em;
+		}
+
+		&.alignleft {
+			margin-right: 1.5em;
+		}
+
+		&.alignright {
+			margin-left: 1.5em;
+		}
+
+		&[data-provider="tiktok"] .arve-embed {
+			height: 580px;
+		}
+	}
+
+	.arve-inner {
+		display: block;
+		width: auto;
+		padding: 0;
+		margin: 0;
+	}
+
+	.arve-embed {
+		position: relative;
+		display: block;
+		width: 100%;
+		max-height: 100dvh;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+
+	.arve-embed--has-aspect-ratio {
+		aspect-ratio: 16 / 9;
+
+		&::after {
+			display: block;
+			clear: both;
+			content: "";
+		}
+	}
+
+	.arve-thumbnail,
+	.arve-play-btn,
+	.arve-iframe {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: 100% !important;
+		height: 100% !important;
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
+	.arve-video {
+		width: 100%;
+		height: auto;
+		max-height: 100dvh;
+		padding: 0;
+		margin: 0;
+	}
+
+	.arve-iframe,
+	.arve-video {
+		background-color: #000;
+	}
+
+	.arve-promote {
+		text-align: end;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html,
+	#html {
+		.wp-block-nextgenthemes-arve-block,
+		.arve {
+			transition: none;
+		}
+	}
+}
+
+@supports (aspect-ratio: 16 / 9) {
+
+	html,
+	#html {
+		.arve-ar,
+		.arve-embed--has-aspect-ratio::after {
+			display: none;
+		}
+	}
+}

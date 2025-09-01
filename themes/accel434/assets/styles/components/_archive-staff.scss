@@ -1,0 +1,55 @@
+.staffTermStaffGrid.one24grid {
+  @media ($large-screen-up) {
+    row-gap: rem(64);
+  }
+}
+
+.post-type-archive-staff .staffTermSection {
+  margin-top: rem(48);
+
+  @media ($large-screen-up) {
+    margin-top: rem(64);
+  }
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.staffArchBlock {
+  .image-wrap {
+    overflow: hidden;
+    max-width: rem(400);
+    background-color: $light-blue;
+    margin-left: auto;
+    margin-right: auto;
+
+    img {
+      display: block;
+      width: 100%;
+      transition: all $base-timing $base-duration;
+    }
+  }
+
+  .name {
+    margin-top: rem(20);
+    font-size: rem(20);
+    transition: all $base-timing $base-duration;
+  }
+
+  .position {
+    color: $medium-gray;
+  }
+}
+
+.staffArchBlockLink {
+  &:hover {
+    .image-wrap img {
+      opacity: 0.4;
+    }
+
+    .name {
+      color: $light-blue;
+    }
+  }
+}

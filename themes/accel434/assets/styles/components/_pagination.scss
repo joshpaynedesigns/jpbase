@@ -1,0 +1,60 @@
+.pagination {
+  clear: both;
+  display: block;
+  margin-bottom: $base-spacing;
+  margin-top: rem(32);
+  text-align: center;
+
+  @media ($large-screen-up) {
+    margin-top: rem(48);
+  }
+
+  li,
+  .pagination-next,
+  .pagination-previous {
+    background: white;
+    border: $base-border;
+    border-radius: $base-border-radius;
+    display: inline-block;
+    padding: 0 !important;
+    transition: all $base-duration $base-timing;
+
+    &::before {
+      display: none;
+    }
+
+    a {
+      color: $base-font-color;
+      display: inline-block;
+      padding: $small-spacing $base-spacing;
+    }
+
+    &.active,
+    &:hover,
+    &:focus {
+      background: $blue;
+      a {
+        color: white;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      border: $base-border;
+      border-color: $blue;
+      a {
+        color: white;
+      }
+    }
+
+    &.pagination-omission {
+      border: 0px;
+
+      &.active,
+      &:hover,
+      &:focus {
+        background: transparent;
+      }
+    }
+  }
+}

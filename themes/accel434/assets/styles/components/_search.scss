@@ -1,0 +1,51 @@
+.search-form {
+  margin-bottom: $base-spacing;
+}
+
+// Search archive
+.search {
+  .entry-header {
+    margin-bottom: rem(16);
+
+    .entry-title {
+      padding-top: 0;
+      font-size: rem(36);
+      margin-bottom: 0.2rem;
+
+      a {
+        color: #111;
+      }
+    }
+
+    h2:before,
+    h2:after {
+      display: none;
+    }
+  }
+
+  .entry-meta {
+    .entry-time {
+      text-transform: uppercase;
+      font-size: rem(14);
+      color: #777;
+    }
+  }
+
+  article {
+    background-color: $light-gray;
+    padding: rem(32);
+    margin-bottom: $base-spacing;
+
+    .entry-content {
+      margin-bottom: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .search-result-footer {
+    margin-top: rem(16);
+  }
+}

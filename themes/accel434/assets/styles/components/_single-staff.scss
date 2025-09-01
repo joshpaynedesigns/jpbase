@@ -1,0 +1,42 @@
+.singleStaffDetailsInner {
+  background: $light-gray;
+  margin: 0 auto $base-spacing;
+  max-width: rem(350);
+  padding: $base-spacing;
+
+  img {
+    display: block;
+  }
+
+  @media screen and (min-width: rem(750)) {
+    margin-bottom: 0;
+    margin-right: $base-spacing;
+    min-width: rem(350);
+    width: rem(350);
+  }
+
+  .singleStaffName {
+    margin-top: $small-spacing;
+
+    .post-title {
+      font-size: rem(34);
+      margin-bottom: 0;
+    }
+  }
+}
+
+.singleStaffContact {
+  margin-top: $small-spacing;
+}
+
+.single-staff {
+  .content {
+    @media screen and (min-width: rem(750)) {
+      display: flex;
+    }
+  }
+
+  .entry-footer {
+    display: none;
+  }
+}

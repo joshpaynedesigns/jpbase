@@ -1,0 +1,34 @@
+.section-title {
+  margin: 0 0 $small-spacing;
+  line-height: 1;
+  transition: all $base-duration $base-timing;
+}
+
+.section-sub-title {
+  font-size: rem(20);
+  max-width: rem(800);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bg-blue,
+.bg-light-blue,
+.bg-dark-gray,
+.bg-medium-gray {
+  .section-title,
+  .section-sub-title {
+    color: white;
+  }
+
+  ul li {
+    color: white !important;
+
+    &::before {
+      background-color: white !important;
+    }
+  }
+
+  ol li {
+    color: white !important;
+  }
+}

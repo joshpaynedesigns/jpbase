@@ -1,0 +1,131 @@
+// Grids
+.onegrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.one24grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  @media ($medium-screen-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+  }
+
+  > div,
+  > a {
+    flex: 1;
+    max-width: rem(400);
+    width: 100%;
+
+    @media ($medium-screen-up) {
+      flex-basis: 45%;
+    }
+
+    @media ($large-screen-up) {
+      flex-basis: 20%;
+      max-width: 23%;
+    }
+  }
+}
+
+.one23grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media ($medium-screen-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  > div,
+  > a {
+    flex: 1;
+    max-width: rem(400);
+    width: 100%;
+
+    @media ($medium-screen-up) {
+      flex-basis: 45%;
+    }
+
+    @media ($large-screen-up) {
+      flex-basis: 30%;
+    }
+  }
+}
+
+.one3grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media ($large-screen-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  > div,
+  > a {
+    flex: 1;
+    max-width: rem(400);
+    width: 100%;
+
+    @media ($large-screen-up) {
+      flex-basis: 30%;
+    }
+  }
+}
+
+.one2grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media ($medium-screen-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: center;
+  }
+
+  > div,
+  > a {
+    flex: 1;
+    width: 100%;
+
+    @media ($medium-screen-up) {
+      flex-basis: 45%;
+    }
+  }
+}
+
+.one2gridlarge {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  @media ($large-screen-up) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  > div,
+  > a {
+    flex: 1;
+    width: 100%;
+
+    @media ($large-screen-up) {
+      flex-basis: 45%;
+    }
+  }
+}

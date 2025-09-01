@@ -1,0 +1,128 @@
+._form button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+.blue-button a,
+.blue-button button,
+.primary-button a,
+.primary-button button,
+.light-blue-button a,
+.light-blue-button button,
+.medium-gray-button a,
+.medium-gray-button button,
+.dark-gray-button a,
+.dark-gray-button button,
+.white-button a,
+.white-button button,
+.blue-button.fake-button > span,
+.primary-button.fake-button > span,
+.light-blue-button.fake-button > span,
+.medium-gray-button.fake-button > span,
+.dark-gray-button.fake-button > span,
+.white-button.fake-button > span {
+  appearance: none;
+  background-color: $blue;
+  border: 2px solid transparent;
+  color: white !important;
+  cursor: pointer;
+  display: inline-block;
+  font-family: $base-font-family;
+  font-size: rem(16);
+  font-weight: 500;
+  line-height: 1;
+  padding: rem(16) rem(34);
+  text-align: center;
+  text-decoration: none;
+  transition: all $base-duration $base-timing;
+  user-select: none;
+  vertical-align: middle;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    border-color: $blue;
+    color: $blue !important;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.small-button {
+  display: inline-block;
+
+  a {
+    font-size: rem(14);
+    padding: rem(13) rem(24);
+  }
+}
+
+@mixin button-set-up($color: $blue) {
+  background-color: $color;
+
+  &:hover,
+  &:focus {
+    border-color: $color;
+    color: $color !important;
+    outline: none;
+  }
+}
+
+.blue-button a,
+.blue-button input[type="submit"],
+.blue-button button,
+.blue-button.fake-button > span,
+.primary-button a,
+.primary-button input[type="submit"],
+.primary-button button,
+.primary-button.fake-button > span {
+  @include button-set-up($blue);
+}
+
+.light-blue-button a,
+.light-blue-button input[type="submit"],
+.light-blue-button button,
+.light-blue-button.fake-button > span {
+  @include button-set-up($light-blue);
+}
+
+.medium-gray-button a,
+.medium-gray-button input[type="submit"],
+.medium-gray-button button,
+.medium-gray-button.fake-button > span {
+  @include button-set-up($medium-gray);
+}
+
+.dark-gray-button a,
+.dark-gray-button input[type="submit"],
+.dark-gray-button button,
+.dark-gray-button.fake-button > span {
+  @include button-set-up($dark-gray);
+}
+
+.white-button a,
+.white-button input[type="submit"],
+.white-button button,
+.white-button.fake-button > span {
+  @include button-set-up(white);
+  color: $dark-gray !important;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.blue-button,
+.primary-button,
+.light-blue-button,
+.medium-gray-button,
+.dark-gray-button,
+.white-button {
+  display: inline-block;
+}

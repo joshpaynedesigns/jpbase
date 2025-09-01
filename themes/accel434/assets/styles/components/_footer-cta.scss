@@ -1,0 +1,54 @@
+.call-to-action.footer-cta {
+  @include bg;
+  background-color: $dark-gray;
+  display: block;
+  padding: $base-spacing * 5 0;
+  position: relative;
+  width: 100%;
+
+  .wrap {
+    position: relative;
+    z-index: 100;
+  }
+
+  .cta-content {
+    color: white;
+
+    p {
+      font-size: rem(24);
+      margin-bottom: $base-spacing;
+
+      &:last-of-type {
+        font-size: $base-font-size;
+      }
+    }
+  }
+
+  &.img-bg {
+    @include bg_overlay($dark-gray);
+  }
+
+  &.video-bg {
+    @include bg_overlay($dark-gray);
+    overflow: hidden;
+
+    @media ($large-screen-up) {
+      @include bg_overlay($dark-gray, 0);
+    }
+
+    .autoplay-video {
+      bottom: 0;
+      display: none;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+
+      @media ($large-screen-up) {
+        display: block;
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.boxes-section {
+  position: relative;
+
+  .boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(40);
+  }
+
+  .box {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    padding: rem(48);
+    position: relative;
+
+    @media (min-width: rem(400)) {
+      min-width: rem(200);
+    }
+
+    @media ($xl-screen-up) {
+      padding: rem(64) rem(56);
+    }
+
+    &.box-type-icon {
+      align-items: center;
+      text-align: center;
+    }
+
+    &.linked {
+      &:not(.has-button) {
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    }
+  }
+
+  .icon-wrap img {
+    height: auto;
+    max-width: rem(108);
+  }
+
+  .box-title {
+    @media ($large-screen-up) {
+      font-size: rem(40);
+    }
+  }
+
+  .fake-link {
+    font-size: rem(14);
+  }
+
+  .button-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(18);
+    align-items: center;
+  }
+}

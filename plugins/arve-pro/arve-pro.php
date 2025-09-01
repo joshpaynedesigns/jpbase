@@ -1,0 +1,34 @@
+<?php
+/**
+ * @link              https://nextgenthemes.com
+ * @since             1.0.0
+ * @package           Advanced_Responsive_Video_Embedder_Pro
+ *
+ * @wordpress-plugin
+ * Plugin Name:       ARVE Pro Addon
+ * Requires Plugins:  advanced-responsive-video-embedder
+ * Plugin URI:        https://nextgenthemes.com/plugins/arve-pro/
+ * Description:       Lazyload, Lightbox, automatic thumbnails + titles and more for ARVE
+ * Version:           7.1.0
+ * Author:            Nicolas Jonas
+ * Author URI:        https://nextgenthemes.com
+ * License:           GPL 3.0
+ * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain:       arve-pro
+ * Domain Path:       /languages
+ */
+
+declare(strict_types = 1);
+
+namespace Nextgenthemes\ARVE\Pro;
+
+const VERSION      = '7.1.0';
+const PLUGIN_FILE  = __FILE__;
+const PLUGIN_DIR   = __DIR__;
+const SRCSET_SIZES = [ 320, 640, 960, 1280, 1920 ];
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+require_once __DIR__ . '/php/init.php';

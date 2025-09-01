@@ -1,0 +1,27 @@
+.bg-dark-gray {
+  background-color: $dark-gray !important;
+}
+
+.bg-light-gray {
+  background-color: $light-gray !important;
+}
+
+.bg-medium-gray {
+  background-color: $medium-gray !important;
+}
+
+.bg-blue {
+  background-color: $blue !important;
+}
+
+.bg-light-blue {
+  background-color: $light-blue !important;
+}
+
+.bg-white {
+  background-color: white !important;
+}
+
+.grayscale {
+  filter: grayscale(100%);
+}

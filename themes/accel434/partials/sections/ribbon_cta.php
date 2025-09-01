@@ -1,0 +1,36 @@
+<?php
+$first_text = get_sub_field('line_one_text');
+$second_text = get_sub_field('line_two_text');
+$btn_details = get_sub_field('link_details');
+$bar_color = get_sub_field('ribbon_cta_bg_color');
+$contained_bar = get_sub_field('contained_bar');
+
+$outer_classes = "contained sectionmb sectionmt";
+if (!$contained_bar) {
+    $outer_classes = "bg-" . $bar_color . " not-contained";
+}
+
+?>
+
+<section class="ribbon-cta-section <?php echo $outer_classes ?>">
+    <div class="wrap">
+        <div class="ribbon-content color bg-<?php echo $bar_color ?>">
+            <?php if (! empty($first_text || $second_text)) : ?>
+                <div class="ribbon-text">
+                    <?php if (! empty($first_text)) : ?>
+                        <h3 class="top-text"><?php echo $first_text ?></h3>
+                    <?php endif; ?>
+
+                    <?php if (! empty($second_text)) : ?>
+                        <div class="bottom-text"><?php echo $second_text ?></div>
+                    <?php endif; ?>
+                </div>
+                <span class="button-wrap">
+            <?php else : ?>
+                <span class="button-wrap centered">
+            <?php endif; ?>
+                <?php echo ns_link_button($btn_details, 'white-button'); ?>
+            </span>
+        </div>
+    </div>
+</section>

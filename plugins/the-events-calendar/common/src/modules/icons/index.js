@@ -1,0 +1,9 @@
+export { ReactComponent as TEC } from './tec.svg';
+export { ReactComponent as Close } from './close.svg';
+export { ReactComponent as Alert } from './alert.svg';
+export { ReactComponent as Clipboard } from './clipboard.svg';
+export { ReactComponent as Cog } from './cog.svg';
+export { ReactComponent as Info } from './info.svg';
+export { ReactComponent as Pencil } from './pencil.svg';
+export { ReactComponent as Tag } from './tag.svg';
+export { ReactComponent as User } from './user.svg';

@@ -1,0 +1,16 @@
+.page-section-stories {
+  overflow: hidden;
+
+  .blog-feed-slider {
+    position: relative;
+
+    @media ($medium-screen-up) {
+      margin-left: -$base-spacing;
+      width: calc(100% + 3rem);
+    }
+  }
+
+  .story {
+    padding: 0 $base-spacing;
+  }
+}

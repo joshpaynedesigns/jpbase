@@ -1,0 +1,75 @@
+/* ## Site Containers
+--------------------------------------------- */
+
+.wrap,
+.tribe_event_series {
+  @include outer-container(rem(1200));
+  width: 90%;
+}
+
+.site-inner {
+  .wrap {
+    @media ($large-screen-up) {
+      @include outer-container(rem(1200));
+    }
+
+    .archIntroText {
+      margin-bottom: 3.5rem;
+    }
+  }
+}
+
+.single-post .post,
+.single-post .jump-table-content,
+.single-staff .site-inner,
+.single-tribe_venue .site-inner,
+.single-tribe_organizer .site-inner,
+.blog .site-inner,
+.archive .site-inner,
+.search .site-inner,
+.single-tribe_event_series .site-inner,
+.page-template-default .site-inner {
+  margin-bottom: $mobile-section-margin;
+  margin-top: $mobile-section-margin;
+  @media ($large-screen-up) {
+    margin-bottom: $desk-section-margin;
+    margin-top: $desk-section-margin;
+  }
+}
+
+.single-tribe_events .site-inner {
+  margin-top: $mobile-section-margin;
+  @media ($large-screen-up) {
+    margin-top: $desk-section-margin;
+  }
+}
+
+/* ## Column Widths and Positions
+--------------------------------------------- */
+/* ## Column Widths and Positions
+--------------------------------------------- */
+.content,
+.sidebar-primary,
+.full-width .content {
+  @include span-columns(12);
+}
+
+@media ($large-screen-up) {
+  .content-sidebar-wrap {
+    display: flex;
+    gap: rem(32);
+    justify-content: space-between;
+
+    .content {
+      @include span-columns(8);
+
+      .full-width-content & {
+        width: 100%;
+      }
+    }
+
+    .sidebar-primary {
+      @include span-columns(4);
+    }
+  }
+}

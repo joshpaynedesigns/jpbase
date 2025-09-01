@@ -1,0 +1,284 @@
+{
+    "key": "group_58e7e727dab2d",
+    "title": "Hero Banner",
+    "fields": [
+        {
+            "key": "field_58e7e727de98d",
+            "label": "Overall Design",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5bd738f753649",
+            "label": "Hide Banner Options",
+            "name": "hide_banner_options",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Select if the banner will show, be removed completely or hide just the banner image.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "show_banner": "Show Banner",
+                "hide_banner_image": "Hide Banner Image",
+                "hide_banner": "Hide Banner"
+            },
+            "allow_null": 0,
+            "default_value": "show_banner",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_58e7e727de99a",
+            "label": "Use Custom Height",
+            "name": "banner_custom_height",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Use a custom height for this banner? Otherwise we'll use the default setting in the theme settings.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5bd738f753649",
+                        "operator": "==",
+                        "value": "show_banner"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "70",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_58e7e727de9a3",
+            "label": "Height",
+            "name": "banner_height",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Select the banner's custom height.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_58e7e727de99a",
+                        "operator": "==",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_5bd738f753649",
+                        "operator": "==",
+                        "value": "show_banner"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Small",
+                "medium": "Medium",
+                "large": "Large",
+                "full-screen": "Full Screen"
+            },
+            "allow_null": 0,
+            "default_value": "medium",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_58e7e727de9ad",
+            "label": "Content",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_58e7e727e2823",
+            "label": "Text Color",
+            "name": "text_color",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Select the color of the text for this banner.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "light-text": "Light",
+                "dark-text": "Dark"
+            },
+            "allow_null": 0,
+            "default_value": "light-text",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_58e7e727e282c",
+            "label": "Overlay",
+            "name": "overlay",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Select the overlay that will show behind the text but in front of the image.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "no-overlay": "None",
+                "light-overlay": "Light",
+                "dark-overlay": "Dark"
+            },
+            "allow_null": 0,
+            "default_value": "dark-overlay",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_58e7e727e2835",
+            "label": "Title",
+            "name": "banner_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_58e7e727e283f",
+            "label": "Sub Title",
+            "name": "banner_sub_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_63a1c7ae3a07e",
+            "label": "Button",
+            "name": "banner_button",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5acb73a2681f0",
+            "label": "Banner Image",
+            "name": "banner_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "thumbnail"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_type",
+                "operator": "!=",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 22,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "featured_image"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1686170962
+}
