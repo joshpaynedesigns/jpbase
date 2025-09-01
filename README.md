@@ -1,4 +1,4 @@
-# Accelerated Theme
+# JPBase Theme
 
 ## Getting Started
 To get started, you will want to take the following steps:
